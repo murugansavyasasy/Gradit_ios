@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="SoftSkillCV" customModule="Gradit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="138" height="41"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="138" height="41"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KPb-fO-ARq">
+                        <rect key="frame" x="5" y="5" width="128" height="31"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="asd-zo-vFs">
+                                <rect key="frame" x="0.0" y="0.0" width="128" height="31"/>
+                                <color key="tintColor" systemColor="systemGray4Color"/>
+                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Option" image="square" catalog="system">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapButton:" destination="gTV-IL-0wX" eventType="touchUpInside" id="qjt-mo-TF3"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="asd-zo-vFs" firstAttribute="width" secondItem="KPb-fO-ARq" secondAttribute="width" id="7ky-WY-nCi"/>
+                            <constraint firstItem="asd-zo-vFs" firstAttribute="leading" secondItem="KPb-fO-ARq" secondAttribute="leading" id="Hwp-NQ-H3B"/>
+                            <constraint firstItem="asd-zo-vFs" firstAttribute="top" secondItem="KPb-fO-ARq" secondAttribute="top" id="K90-kN-i5h"/>
+                            <constraint firstAttribute="trailing" secondItem="asd-zo-vFs" secondAttribute="trailing" id="MIP-9z-MAk"/>
+                            <constraint firstAttribute="bottom" secondItem="asd-zo-vFs" secondAttribute="bottom" id="gIa-xv-dJR"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="KPb-fO-ARq" secondAttribute="bottom" constant="5" id="Qb5-V1-TEN"/>
+                <constraint firstAttribute="trailing" secondItem="KPb-fO-ARq" secondAttribute="trailing" constant="5" id="RSp-HX-v7B"/>
+                <constraint firstItem="KPb-fO-ARq" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="f2S-aR-dWm"/>
+                <constraint firstItem="KPb-fO-ARq" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="k07-cw-aJq"/>
+            </constraints>
+            <size key="customSize" width="138" height="41"/>
+            <connections>
+                <outlet property="CellView" destination="KPb-fO-ARq" id="63m-GP-ZeZ"/>
+                <outlet property="OptionBtn" destination="asd-zo-vFs" id="ink-Q9-DPe"/>
+            </connections>
+            <point key="canvasLocation" x="151.14503816793894" y="16.549295774647888"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="square" catalog="system" width="128" height="114"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

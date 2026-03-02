@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="43" id="KGk-i7-Jjw" customClass="SemCreditTableViewCell" customModule="Vs_GradItCollege" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="373" height="43"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="373" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g4L-st-eUb">
+                        <rect key="frame" x="0.0" y="0.0" width="373" height="43"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bpb-83-Adm">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="47"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mJS-6Z-MyA" customClass="UIViewX" customModule="Vs_GradItCollege" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="80" height="45"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eya-iy-KyG">
+                                                <rect key="frame" x="0.0" y="0.0" width="80" height="45"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="eya-iy-KyG" secondAttribute="trailing" id="H5k-5L-mSC"/>
+                                            <constraint firstAttribute="bottom" secondItem="eya-iy-KyG" secondAttribute="bottom" id="JPY-yD-zPB"/>
+                                            <constraint firstAttribute="width" constant="80" id="TBx-2z-OzL"/>
+                                            <constraint firstAttribute="height" constant="45" id="Z6M-JF-d2I"/>
+                                            <constraint firstItem="eya-iy-KyG" firstAttribute="leading" secondItem="mJS-6Z-MyA" secondAttribute="leading" id="dKq-Jh-0GG"/>
+                                            <constraint firstItem="eya-iy-KyG" firstAttribute="top" secondItem="mJS-6Z-MyA" secondAttribute="top" id="nRb-sc-Sdj"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="0.5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" name="ViewLineColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e4c-wD-2Vm" customClass="UIViewX" customModule="Vs_GradItCollege" customModuleProvider="target">
+                                        <rect key="frame" x="80" y="0.0" width="77" height="45"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ja7-6b-f1i">
+                                                <rect key="frame" x="0.0" y="0.0" width="77" height="45"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="ja7-6b-f1i" firstAttribute="leading" secondItem="e4c-wD-2Vm" secondAttribute="leading" id="3IW-Q2-hVq"/>
+                                            <constraint firstAttribute="height" constant="45" id="JDx-v8-Zn8"/>
+                                            <constraint firstAttribute="width" constant="77" id="V4M-JI-T9p"/>
+                                            <constraint firstItem="ja7-6b-f1i" firstAttribute="top" secondItem="e4c-wD-2Vm" secondAttribute="top" id="fVb-g3-S6b"/>
+                                            <constraint firstAttribute="bottom" secondItem="ja7-6b-f1i" secondAttribute="bottom" id="ohP-3L-Ler"/>
+                                            <constraint firstAttribute="trailing" secondItem="ja7-6b-f1i" secondAttribute="trailing" id="wWP-nY-W2Z"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" name="ViewLineColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="03i-5T-Mji" customClass="UIViewX" customModule="Vs_GradItCollege" customModuleProvider="target">
+                                        <rect key="frame" x="157" y="0.0" width="75" height="45"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aVG-0l-JPq">
+                                                <rect key="frame" x="0.0" y="0.0" width="75" height="45"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="aVG-0l-JPq" secondAttribute="bottom" id="5M5-hI-SLH"/>
+                                            <constraint firstItem="aVG-0l-JPq" firstAttribute="top" secondItem="03i-5T-Mji" secondAttribute="top" id="8tg-E2-llN"/>
+                                            <constraint firstAttribute="height" constant="45" id="BOf-pq-Pyk"/>
+                                            <constraint firstAttribute="width" constant="75" id="PsN-4f-3wZ"/>
+                                            <constraint firstAttribute="trailing" secondItem="aVG-0l-JPq" secondAttribute="trailing" id="SVt-nc-hPs"/>
+                                            <constraint firstItem="aVG-0l-JPq" firstAttribute="leading" secondItem="03i-5T-Mji" secondAttribute="leading" id="dLe-6c-qBB"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" name="ViewLineColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Nd-iX-VYn" customClass="UIViewX" customModule="Vs_GradItCollege" customModuleProvider="target">
+                                        <rect key="frame" x="232" y="0.0" width="72" height="45"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AY2-dn-4g8">
+                                                <rect key="frame" x="0.0" y="0.0" width="72" height="45"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="AY2-dn-4g8" secondAttribute="trailing" id="3Cn-nz-PRa"/>
+                                            <constraint firstAttribute="width" constant="72" id="O0C-2g-vnL"/>
+                                            <constraint firstItem="AY2-dn-4g8" firstAttribute="top" secondItem="8Nd-iX-VYn" secondAttribute="top" id="Tqj-nX-IDl"/>
+                                            <constraint firstAttribute="bottom" secondItem="AY2-dn-4g8" secondAttribute="bottom" id="Zhc-Dy-Qtp"/>
+                                            <constraint firstAttribute="height" constant="45" id="emX-Y0-LDE"/>
+                                            <constraint firstItem="AY2-dn-4g8" firstAttribute="leading" secondItem="8Nd-iX-VYn" secondAttribute="leading" id="lhw-AK-aXc"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" name="ViewLineColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wqu-pM-Zpg" customClass="UIViewX" customModule="Vs_GradItCollege" customModuleProvider="target">
+                                        <rect key="frame" x="304" y="0.0" width="68" height="45"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1yt-QB-Zm4">
+                                                <rect key="frame" x="0.0" y="0.0" width="68" height="45"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="68" id="OUn-jm-8kb"/>
+                                            <constraint firstItem="1yt-QB-Zm4" firstAttribute="top" secondItem="wqu-pM-Zpg" secondAttribute="top" id="Qax-Je-iHk"/>
+                                            <constraint firstItem="1yt-QB-Zm4" firstAttribute="leading" secondItem="wqu-pM-Zpg" secondAttribute="leading" id="VP5-te-eYA"/>
+                                            <constraint firstAttribute="trailing" secondItem="1yt-QB-Zm4" secondAttribute="trailing" id="keG-55-G2D"/>
+                                            <constraint firstAttribute="height" constant="45" id="mqq-Oi-leQ"/>
+                                            <constraint firstAttribute="bottom" secondItem="1yt-QB-Zm4" secondAttribute="bottom" id="y1W-Kv-C3m"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" name="ViewLineColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="wqu-pM-Zpg" firstAttribute="top" secondItem="Bpb-83-Adm" secondAttribute="top" id="170-3D-dIP"/>
+                                    <constraint firstItem="e4c-wD-2Vm" firstAttribute="top" secondItem="Bpb-83-Adm" secondAttribute="top" id="AmY-cg-g7e"/>
+                                    <constraint firstItem="mJS-6Z-MyA" firstAttribute="top" secondItem="Bpb-83-Adm" secondAttribute="top" id="ApG-At-Qfq"/>
+                                    <constraint firstAttribute="height" constant="47" id="Aps-bi-hf0"/>
+                                    <constraint firstItem="mJS-6Z-MyA" firstAttribute="leading" secondItem="Bpb-83-Adm" secondAttribute="leading" id="RkD-7I-aDx"/>
+                                    <constraint firstAttribute="width" constant="375" id="SaH-IU-a1r"/>
+                                    <constraint firstItem="03i-5T-Mji" firstAttribute="top" secondItem="Bpb-83-Adm" secondAttribute="top" id="d7q-yW-x2K"/>
+                                    <constraint firstItem="e4c-wD-2Vm" firstAttribute="leading" secondItem="mJS-6Z-MyA" secondAttribute="trailing" id="dlA-ge-5f3"/>
+                                    <constraint firstItem="8Nd-iX-VYn" firstAttribute="leading" secondItem="03i-5T-Mji" secondAttribute="trailing" id="p5K-6F-KFE"/>
+                                    <constraint firstItem="8Nd-iX-VYn" firstAttribute="top" secondItem="Bpb-83-Adm" secondAttribute="top" id="qXs-Se-v4o"/>
+                                    <constraint firstItem="03i-5T-Mji" firstAttribute="leading" secondItem="e4c-wD-2Vm" secondAttribute="trailing" id="w4M-CX-tde"/>
+                                    <constraint firstItem="wqu-pM-Zpg" firstAttribute="leading" secondItem="8Nd-iX-VYn" secondAttribute="trailing" id="yal-jM-IIT"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Bpb-83-Adm" firstAttribute="top" secondItem="g4L-st-eUb" secondAttribute="top" id="97Q-s9-EbC"/>
+                            <constraint firstItem="Bpb-83-Adm" firstAttribute="leading" secondItem="g4L-st-eUb" secondAttribute="leading" id="DIL-oT-lqp"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="g4L-st-eUb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="EhC-2Z-A9v"/>
+                    <constraint firstItem="g4L-st-eUb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="UUM-lV-AJO"/>
+                    <constraint firstAttribute="trailing" secondItem="g4L-st-eUb" secondAttribute="trailing" id="hGg-YX-mtP"/>
+                    <constraint firstAttribute="bottom" secondItem="g4L-st-eUb" secondAttribute="bottom" id="sp5-Wc-Q2d"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="categoryCellLabel" destination="eya-iy-KyG" id="KEw-Hf-fEp"/>
+                <outlet property="obtainedCellLabel" destination="aVG-0l-JPq" id="AfF-6T-3Zn"/>
+                <outlet property="semesterCellLabel" destination="ja7-6b-f1i" id="TE8-I1-xzp"/>
+                <outlet property="toBeObtainedCellLabel" destination="AY2-dn-4g8" id="F8D-Fv-PC1"/>
+                <outlet property="totalCellLabel" destination="1yt-QB-Zm4" id="bdn-84-L5i"/>
+            </connections>
+            <point key="canvasLocation" x="161.06870229007632" y="-50.352112676056343"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="ViewLineColor">
+            <color red="0.18400000035762787" green="0.30199998617172241" blue="0.54100000858306885" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

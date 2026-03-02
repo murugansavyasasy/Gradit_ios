@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="SelectRespienceCellTableViewCell" customModule="Gradit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sPg-dv-M4h">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eLx-KZ-C4v" customClass="CheckBoxTwo" customModule="Gradit" customModuleProvider="target">
+                                <rect key="frame" x="8" y="10" width="26" height="25"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="26" id="jAz-O3-nxI"/>
+                                    <constraint firstAttribute="height" constant="25" id="wjY-pn-omc"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" systemColor="systemPurpleColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ku-7S-kHX">
+                                <rect key="frame" x="42" y="12" width="268" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="eLx-KZ-C4v" firstAttribute="leading" secondItem="sPg-dv-M4h" secondAttribute="leading" constant="8" id="4gS-B2-xFT"/>
+                            <constraint firstItem="eLx-KZ-C4v" firstAttribute="top" secondItem="sPg-dv-M4h" secondAttribute="top" constant="10" id="LNR-VG-ofR"/>
+                            <constraint firstAttribute="bottom" secondItem="3Ku-7S-kHX" secondAttribute="bottom" constant="8" id="Lu0-Cb-Xs5"/>
+                            <constraint firstItem="3Ku-7S-kHX" firstAttribute="leading" secondItem="eLx-KZ-C4v" secondAttribute="trailing" constant="8" symbolic="YES" id="TU4-7F-ldQ"/>
+                            <constraint firstAttribute="trailing" secondItem="3Ku-7S-kHX" secondAttribute="trailing" constant="10" id="fCe-B2-6UN"/>
+                            <constraint firstItem="3Ku-7S-kHX" firstAttribute="top" secondItem="sPg-dv-M4h" secondAttribute="top" constant="12" id="nfg-zq-1jI"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="sPg-dv-M4h" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Oki-J1-Qxp"/>
+                    <constraint firstAttribute="trailing" secondItem="sPg-dv-M4h" secondAttribute="trailing" id="aPc-hx-5WG"/>
+                    <constraint firstItem="sPg-dv-M4h" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="hmq-ee-x5d"/>
+                    <constraint firstAttribute="bottom" secondItem="sPg-dv-M4h" secondAttribute="bottom" id="nPz-B2-fDX"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="checkboxess" destination="eLx-KZ-C4v" id="ufP-NA-4uA"/>
+                <outlet property="nameLabel" destination="3Ku-7S-kHX" id="C5I-Kb-mfQ"/>
+            </connections>
+            <point key="canvasLocation" x="71.755725190839698" y="19.718309859154932"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemPurpleColor">
+            <color red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

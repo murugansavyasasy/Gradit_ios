@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddEventsViewController" customModule="Gradit" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="webView" destination="YNP-Tb-CeT" id="Sg1-0O-j9c"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="puA-a8-Alu">
+                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GfW-t3-6HA">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2yq-KX-piJ">
+                                    <rect key="frame" x="8" y="9" width="35" height="38"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="35" id="AY4-LP-wEZ"/>
+                                        <constraint firstAttribute="height" constant="38" id="YZx-QU-PcR"/>
+                                    </constraints>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="left-arrow (1)"/>
+                                    <connections>
+                                        <action selector="btnBack:" destination="-1" eventType="touchUpInside" id="rfg-BN-b1s"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ad" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uSl-Vu-moB">
+                                    <rect key="frame" x="51" y="14" width="27" height="27"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="55" id="5sU-fx-RAd"/>
+                                <constraint firstItem="2yq-KX-piJ" firstAttribute="leading" secondItem="GfW-t3-6HA" secondAttribute="leading" constant="8" id="JQC-su-sVO"/>
+                                <constraint firstItem="uSl-Vu-moB" firstAttribute="top" secondItem="GfW-t3-6HA" secondAttribute="top" constant="14" id="MXX-VJ-7kg"/>
+                                <constraint firstItem="uSl-Vu-moB" firstAttribute="leading" secondItem="2yq-KX-piJ" secondAttribute="trailing" constant="8" symbolic="YES" id="T4c-xv-Zhu"/>
+                                <constraint firstItem="2yq-KX-piJ" firstAttribute="top" secondItem="GfW-t3-6HA" secondAttribute="top" constant="9" id="UbM-Nh-JPC"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k7r-js-OLe">
+                            <rect key="frame" x="0.0" y="55" width="414" height="1"/>
+                            <color key="backgroundColor" systemColor="labelColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="TJj-qb-4CY"/>
+                            </constraints>
+                        </view>
+                        <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YNP-Tb-CeT">
+                            <rect key="frame" x="0.0" y="56" width="414" height="758"/>
+                            <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <wkWebViewConfiguration key="configuration">
+                                <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                <wkPreferences key="preferences"/>
+                            </wkWebViewConfiguration>
+                        </wkWebView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="YNP-Tb-CeT" firstAttribute="top" secondItem="k7r-js-OLe" secondAttribute="bottom" id="9cT-nc-cgu"/>
+                        <constraint firstItem="GfW-t3-6HA" firstAttribute="top" secondItem="puA-a8-Alu" secondAttribute="top" id="Fga-qa-XTK"/>
+                        <constraint firstItem="k7r-js-OLe" firstAttribute="leading" secondItem="puA-a8-Alu" secondAttribute="leading" id="M9e-kT-WmB"/>
+                        <constraint firstItem="GfW-t3-6HA" firstAttribute="leading" secondItem="puA-a8-Alu" secondAttribute="leading" id="Ma7-oB-d8b"/>
+                        <constraint firstAttribute="trailing" secondItem="YNP-Tb-CeT" secondAttribute="trailing" id="OMh-H1-at3"/>
+                        <constraint firstItem="k7r-js-OLe" firstAttribute="top" secondItem="GfW-t3-6HA" secondAttribute="bottom" id="Pas-k4-KGS"/>
+                        <constraint firstItem="YNP-Tb-CeT" firstAttribute="leading" secondItem="puA-a8-Alu" secondAttribute="leading" id="Y15-Eb-zI6"/>
+                        <constraint firstAttribute="trailing" secondItem="k7r-js-OLe" secondAttribute="trailing" id="Y6e-jA-pAU"/>
+                        <constraint firstAttribute="trailing" secondItem="GfW-t3-6HA" secondAttribute="trailing" id="aPA-ny-soJ"/>
+                        <constraint firstAttribute="bottom" secondItem="YNP-Tb-CeT" secondAttribute="bottom" id="s8z-qO-zaI"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="puA-a8-Alu" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="0vT-eF-jdE"/>
+                <constraint firstItem="puA-a8-Alu" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4cY-hb-VBL"/>
+                <constraint firstItem="puA-a8-Alu" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Gyq-ox-mgy"/>
+                <constraint firstItem="puA-a8-Alu" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="tnb-Zo-5el"/>
+            </constraints>
+            <point key="canvasLocation" x="106" y="20"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="left-arrow (1)" width="32" height="32"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

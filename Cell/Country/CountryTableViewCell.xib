@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="45" id="KGk-i7-Jjw" customClass="CountryTableViewCell" customModule="Vs_GradItCollege" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BXS-P8-WAQ" customClass="UIViewX" customModule="Vs_GradItCollege" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2BK-Xf-rQs" customClass="CheckBox" customModule="Vs_GradItCollege" customModuleProvider="target">
+                                <rect key="frame" x="12" y="10" width="25" height="25"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="Qz5-ea-F8u"/>
+                                    <constraint firstAttribute="height" constant="25" id="WYI-ye-Ezg"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ce4-Wl-4a9">
+                                <rect key="frame" x="45" y="15" width="32" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="32" id="NNm-nG-dPt"/>
+                                    <constraint firstAttribute="height" constant="18" id="yQ5-PO-QpW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdu-p9-QNA">
+                                <rect key="frame" x="81" y="14" width="40" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="39U-Ib-zcL"/>
+                                    <constraint firstAttribute="width" constant="40" id="V8D-wK-twl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Ce4-Wl-4a9" firstAttribute="leading" secondItem="2BK-Xf-rQs" secondAttribute="trailing" constant="8" symbolic="YES" id="0id-0H-WT2"/>
+                            <constraint firstItem="2BK-Xf-rQs" firstAttribute="leading" secondItem="BXS-P8-WAQ" secondAttribute="leading" constant="12" id="7CS-YB-6YX"/>
+                            <constraint firstItem="gdu-p9-QNA" firstAttribute="top" secondItem="BXS-P8-WAQ" secondAttribute="top" constant="14" id="AmA-Te-ZNo"/>
+                            <constraint firstItem="2BK-Xf-rQs" firstAttribute="top" secondItem="BXS-P8-WAQ" secondAttribute="top" constant="10" id="gqP-VM-Jnr"/>
+                            <constraint firstItem="gdu-p9-QNA" firstAttribute="leading" secondItem="Ce4-Wl-4a9" secondAttribute="trailing" constant="4" id="n2R-rz-9g7"/>
+                            <constraint firstItem="Ce4-Wl-4a9" firstAttribute="top" secondItem="BXS-P8-WAQ" secondAttribute="top" constant="15" id="ozw-tp-azZ"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="BXS-P8-WAQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="EBc-9w-TTB"/>
+                    <constraint firstAttribute="bottom" secondItem="BXS-P8-WAQ" secondAttribute="bottom" id="Njl-bC-M1P"/>
+                    <constraint firstAttribute="trailing" secondItem="BXS-P8-WAQ" secondAttribute="trailing" id="m1i-lp-7TM"/>
+                    <constraint firstItem="BXS-P8-WAQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="uIB-mo-cud"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="cellPhnLable" destination="Ce4-Wl-4a9" id="lZN-Ut-0PG"/>
+                <outlet property="cellPhnNumberLable" destination="gdu-p9-QNA" id="KwR-ET-J22"/>
+                <outlet property="checkView" destination="2BK-Xf-rQs" id="SoU-0x-NgZ"/>
+                <outlet property="countryCellView" destination="BXS-P8-WAQ" id="pg1-tH-kAI"/>
+            </connections>
+            <point key="canvasLocation" x="427.536231884058" y="-3.3482142857142856"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MoreSubCollectionViewCell" customModule="Gradit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="337" height="499"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="337" height="499"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0cj-9O-bOf">
+                        <rect key="frame" x="10" y="10" width="317" height="479"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="OEl-FO-xdc">
+                                <rect key="frame" x="0.0" y="0.0" width="317" height="479"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R5s-jp-qaH">
+                                <rect key="frame" x="0.0" y="0.0" width="317" height="479"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vd2-OO-Gae">
+                                        <rect key="frame" x="5" y="5" width="307" height="469"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Vd2-OO-Gae" secondAttribute="trailing" constant="5" id="R6c-Ob-vms"/>
+                                    <constraint firstAttribute="bottom" secondItem="Vd2-OO-Gae" secondAttribute="bottom" constant="5" id="guu-Zo-xUv"/>
+                                    <constraint firstItem="Vd2-OO-Gae" firstAttribute="centerY" secondItem="R5s-jp-qaH" secondAttribute="centerY" id="iDX-vy-VVZ"/>
+                                    <constraint firstItem="Vd2-OO-Gae" firstAttribute="leading" secondItem="R5s-jp-qaH" secondAttribute="leading" constant="5" id="ixh-yt-HXp"/>
+                                    <constraint firstItem="Vd2-OO-Gae" firstAttribute="centerX" secondItem="R5s-jp-qaH" secondAttribute="centerX" id="qLr-AE-fT3"/>
+                                    <constraint firstItem="Vd2-OO-Gae" firstAttribute="top" secondItem="R5s-jp-qaH" secondAttribute="top" constant="5" id="wOD-E0-Vfm"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="OEl-FO-xdc" secondAttribute="trailing" id="54e-Ay-uJd"/>
+                            <constraint firstItem="R5s-jp-qaH" firstAttribute="top" secondItem="0cj-9O-bOf" secondAttribute="top" id="JFw-aP-3co"/>
+                            <constraint firstItem="OEl-FO-xdc" firstAttribute="leading" secondItem="0cj-9O-bOf" secondAttribute="leading" id="Ptl-vh-KGe"/>
+                            <constraint firstAttribute="bottom" secondItem="OEl-FO-xdc" secondAttribute="bottom" id="TGB-Vd-rDZ"/>
+                            <constraint firstAttribute="bottom" secondItem="R5s-jp-qaH" secondAttribute="bottom" id="VKi-ql-BLv"/>
+                            <constraint firstAttribute="trailing" secondItem="R5s-jp-qaH" secondAttribute="trailing" id="lq8-8W-iG0"/>
+                            <constraint firstItem="R5s-jp-qaH" firstAttribute="leading" secondItem="0cj-9O-bOf" secondAttribute="leading" id="vB5-d0-vXZ"/>
+                            <constraint firstItem="OEl-FO-xdc" firstAttribute="top" secondItem="0cj-9O-bOf" secondAttribute="top" id="zmJ-kN-Oce"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="0cj-9O-bOf" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="DHu-sa-PWC"/>
+                <constraint firstAttribute="bottom" secondItem="0cj-9O-bOf" secondAttribute="bottom" constant="10" id="mef-ua-6Jt"/>
+                <constraint firstItem="0cj-9O-bOf" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="qQb-Iw-kJf"/>
+                <constraint firstAttribute="trailing" secondItem="0cj-9O-bOf" secondAttribute="trailing" constant="10" id="tsB-5s-k6M"/>
+            </constraints>
+            <size key="customSize" width="337" height="499"/>
+            <connections>
+                <outlet property="image" destination="Vd2-OO-Gae" id="1ob-Dy-uYa"/>
+                <outlet property="scrolles" destination="R5s-jp-qaH" id="cJH-cc-SAN"/>
+                <outlet property="webvie" destination="OEl-FO-xdc" id="3oI-bt-I8j"/>
+            </connections>
+            <point key="canvasLocation" x="348.85496183206106" y="-42.605633802816904"/>
+        </collectionViewCell>
+    </objects>
+</document>

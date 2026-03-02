@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Gradit" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vB4-m7-xw5">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 2.7" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Elh-FF-XQR">
+                                        <rect key="frame" x="123.5" y="764" width="167" height="52"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="52" id="ROL-sJ-y2u"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="167" id="Rox-do-T4L"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="graditicons" translatesAutoresizingMaskIntoConstraints="NO" id="7fq-Nd-OAm">
+                                        <rect key="frame" x="0.0" y="90" width="414" height="128"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splach" translatesAutoresizingMaskIntoConstraints="NO" id="lLQ-js-85u">
+                                        <rect key="frame" x="0.0" y="263" width="414" height="407"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="lLQ-js-85u" firstAttribute="top" secondItem="vB4-m7-xw5" secondAttribute="top" constant="263" id="1kR-3b-II3"/>
+                                    <constraint firstItem="7fq-Nd-OAm" firstAttribute="leading" secondItem="vB4-m7-xw5" secondAttribute="leading" id="4XC-AX-vvH"/>
+                                    <constraint firstItem="lLQ-js-85u" firstAttribute="top" secondItem="7fq-Nd-OAm" secondAttribute="bottom" constant="45" id="Jkw-H4-cXy"/>
+                                    <constraint firstAttribute="bottom" secondItem="Elh-FF-XQR" secondAttribute="bottom" constant="46" id="Jti-GM-cKN"/>
+                                    <constraint firstItem="lLQ-js-85u" firstAttribute="centerX" secondItem="vB4-m7-xw5" secondAttribute="centerX" id="Kcz-Fe-Etf"/>
+                                    <constraint firstItem="Elh-FF-XQR" firstAttribute="top" secondItem="lLQ-js-85u" secondAttribute="bottom" constant="94" id="Rgd-Vs-eQ7"/>
+                                    <constraint firstItem="lLQ-js-85u" firstAttribute="leading" secondItem="vB4-m7-xw5" secondAttribute="leading" id="TDp-JL-ej6"/>
+                                    <constraint firstItem="lLQ-js-85u" firstAttribute="centerY" secondItem="vB4-m7-xw5" secondAttribute="centerY" constant="35.5" id="cDR-3o-6SH"/>
+                                    <constraint firstAttribute="trailing" secondItem="7fq-Nd-OAm" secondAttribute="trailing" id="lOf-bZ-IfZ"/>
+                                    <constraint firstItem="7fq-Nd-OAm" firstAttribute="top" secondItem="vB4-m7-xw5" secondAttribute="top" constant="90" id="lq1-Gk-qMg"/>
+                                    <constraint firstItem="Elh-FF-XQR" firstAttribute="centerX" secondItem="lLQ-js-85u" secondAttribute="centerX" id="rx1-gj-Gs3"/>
+                                    <constraint firstAttribute="trailing" secondItem="lLQ-js-85u" secondAttribute="trailing" id="yK5-Rv-S2P"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="vB4-m7-xw5" secondAttribute="bottom" id="BRK-zk-uFe"/>
+                            <constraint firstAttribute="trailing" secondItem="vB4-m7-xw5" secondAttribute="trailing" id="e54-AX-yKd"/>
+                            <constraint firstItem="vB4-m7-xw5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="flg-e2-Wdf"/>
+                            <constraint firstItem="vB4-m7-xw5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="t5D-Mj-ND5"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="gifimageView" destination="lLQ-js-85u" id="wsK-Ti-C4g"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-561" y="125"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Splach" width="512" height="385"/>
+        <image name="graditicons" width="925" height="800"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

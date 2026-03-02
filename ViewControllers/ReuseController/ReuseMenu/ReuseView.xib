@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReuseView" customModule="Gradit" customModuleProvider="target">
+            <connections>
+                <outlet property="SwipeUpImageTop" destination="ITm-wf-1Sv" id="N7a-DJ-41o"/>
+                <outlet property="arrowImg" destination="unj-BU-Y4J" id="1g2-mU-fnb"/>
+                <outlet property="cv" destination="xRG-sh-V3U" id="YT1-U7-k2u"/>
+                <outlet property="downView" destination="9Zn-UV-rCg" id="ZGj-XI-3rk"/>
+                <outlet property="menuImg" destination="Unf-rY-BSF" id="WMZ-Hm-9cJ"/>
+                <outlet property="swipeMenu" destination="BXM-17-GHV" id="b49-Sd-mlW"/>
+                <outlet property="swipeMenuHeight" destination="TFt-Bs-CDq" id="Wri-U3-fdv"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BXM-17-GHV">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="StaffSmallMenu" translatesAutoresizingMaskIntoConstraints="NO" id="Unf-rY-BSF">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
+                        </imageView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Zn-UV-rCg">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="up" translatesAutoresizingMaskIntoConstraints="NO" id="unj-BU-Y4J">
+                                    <rect key="frame" x="199" y="14" width="16" height="16"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCZ-bP-ZuD">
+                                    <rect key="frame" x="191" y="38" width="32" height="13.666666666666664"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="unj-BU-Y4J" firstAttribute="centerX" secondItem="9Zn-UV-rCg" secondAttribute="centerX" id="Dfg-ZE-Ml0"/>
+                                <constraint firstAttribute="width" constant="414" id="EcA-Z6-Ge5"/>
+                                <constraint firstAttribute="height" constant="88" id="F4y-QH-DJ5"/>
+                                <constraint firstItem="unj-BU-Y4J" firstAttribute="top" secondItem="9Zn-UV-rCg" secondAttribute="top" constant="14" id="ITm-wf-1Sv"/>
+                                <constraint firstItem="GCZ-bP-ZuD" firstAttribute="top" secondItem="unj-BU-Y4J" secondAttribute="bottom" constant="8" symbolic="YES" id="sMG-4a-vDs"/>
+                                <constraint firstItem="GCZ-bP-ZuD" firstAttribute="centerX" secondItem="9Zn-UV-rCg" secondAttribute="centerX" id="tFe-vg-MgV"/>
+                            </constraints>
+                        </view>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xRG-sh-V3U">
+                            <rect key="frame" x="0.0" y="67" width="414" height="53"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="9qn-Kr-apx">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Unf-rY-BSF" firstAttribute="leading" secondItem="BXM-17-GHV" secondAttribute="leading" id="1Rn-N1-hMq"/>
+                        <constraint firstAttribute="bottom" secondItem="Unf-rY-BSF" secondAttribute="bottom" id="4Qb-dF-RXw"/>
+                        <constraint firstItem="Unf-rY-BSF" firstAttribute="top" secondItem="BXM-17-GHV" secondAttribute="top" id="4b4-BF-D4T"/>
+                        <constraint firstItem="xRG-sh-V3U" firstAttribute="leading" secondItem="BXM-17-GHV" secondAttribute="leading" id="6VD-Ir-4kE"/>
+                        <constraint firstAttribute="trailing" secondItem="Unf-rY-BSF" secondAttribute="trailing" id="Akj-vi-8ks"/>
+                        <constraint firstItem="Unf-rY-BSF" firstAttribute="leading" secondItem="BXM-17-GHV" secondAttribute="leading" id="FYX-7M-jca"/>
+                        <constraint firstAttribute="height" constant="120" id="TFt-Bs-CDq"/>
+                        <constraint firstItem="xRG-sh-V3U" firstAttribute="top" secondItem="BXM-17-GHV" secondAttribute="top" constant="67" id="XTk-HP-Lb5"/>
+                        <constraint firstItem="Unf-rY-BSF" firstAttribute="top" secondItem="BXM-17-GHV" secondAttribute="top" id="a88-Lc-lDm"/>
+                        <constraint firstItem="9Zn-UV-rCg" firstAttribute="top" secondItem="BXM-17-GHV" secondAttribute="top" id="nwQ-T1-daT"/>
+                        <constraint firstAttribute="trailing" secondItem="Unf-rY-BSF" secondAttribute="trailing" id="qGC-bV-pP3"/>
+                        <constraint firstAttribute="bottom" secondItem="xRG-sh-V3U" secondAttribute="bottom" id="rvD-aq-u4X"/>
+                        <constraint firstItem="9Zn-UV-rCg" firstAttribute="leading" secondItem="BXM-17-GHV" secondAttribute="leading" id="sok-Vi-Rkd"/>
+                        <constraint firstAttribute="bottom" secondItem="Unf-rY-BSF" secondAttribute="bottom" id="tOC-ek-dgs"/>
+                        <constraint firstAttribute="trailing" secondItem="xRG-sh-V3U" secondAttribute="trailing" id="vwb-QK-Etc"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="BXM-17-GHV" secondAttribute="bottom" id="Gjs-fm-OCb"/>
+                <constraint firstItem="BXM-17-GHV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="PTq-Ij-gby"/>
+                <constraint firstItem="BXM-17-GHV" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="UCL-ZE-CdK"/>
+                <constraint firstItem="BXM-17-GHV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="VRu-lo-Upv"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="476.3358778625954" y="226.05633802816902"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="StaffSmallMenu" width="375" height="160"/>
+        <image name="up" width="16" height="16"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

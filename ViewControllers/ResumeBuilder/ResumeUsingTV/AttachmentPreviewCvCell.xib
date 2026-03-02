@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="AttachmentPreviewCvCell" customModule="Gradit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="264" height="344"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="264" height="344"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W68-H8-uYA">
+                        <rect key="frame" x="5" y="5" width="254" height="334"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Mzm-FH-1QG">
+                                <rect key="frame" x="5" y="5" width="244" height="324"/>
+                                <subviews>
+                                    <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Awh-Cq-wwB">
+                                        <rect key="frame" x="0.0" y="0.0" width="244" height="162"/>
+                                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <wkWebViewConfiguration key="configuration">
+                                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                            <wkPreferences key="preferences"/>
+                                        </wkWebViewConfiguration>
+                                    </wkWebView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NsK-qd-b9a">
+                                        <rect key="frame" x="0.0" y="162" width="244" height="162"/>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Mzm-FH-1QG" secondAttribute="bottom" constant="5" id="EVd-Cg-NhO"/>
+                            <constraint firstItem="Mzm-FH-1QG" firstAttribute="top" secondItem="W68-H8-uYA" secondAttribute="top" constant="5" id="I0e-Sl-RR0"/>
+                            <constraint firstItem="Mzm-FH-1QG" firstAttribute="leading" secondItem="W68-H8-uYA" secondAttribute="leading" constant="5" id="qLh-cE-Cwh"/>
+                            <constraint firstAttribute="trailing" secondItem="Mzm-FH-1QG" secondAttribute="trailing" constant="5" id="vdU-HT-IYy"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="W68-H8-uYA" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="8Br-gR-1RZ"/>
+                <constraint firstAttribute="trailing" secondItem="W68-H8-uYA" secondAttribute="trailing" constant="5" id="Gzo-Qc-I3h"/>
+                <constraint firstItem="W68-H8-uYA" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="HsB-PJ-L8N"/>
+                <constraint firstAttribute="bottom" secondItem="W68-H8-uYA" secondAttribute="bottom" constant="5" id="WVu-M6-I4P"/>
+            </constraints>
+            <size key="customSize" width="264" height="344"/>
+            <connections>
+                <outlet property="imageView" destination="NsK-qd-b9a" id="l91-Fm-0L2"/>
+                <outlet property="outerView" destination="W68-H8-uYA" id="AXp-Fi-zdc"/>
+                <outlet property="stackView" destination="Mzm-FH-1QG" id="w5E-Km-XdT"/>
+                <outlet property="webView" destination="Awh-Cq-wwB" id="dvo-Q4-n3x"/>
+            </connections>
+            <point key="canvasLocation" x="377.09923664122135" y="234.50704225352115"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

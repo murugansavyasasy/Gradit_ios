@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="269" id="KGk-i7-Jjw" customClass="AssignmentTableviewCel" customModule="Gradit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="331" height="269"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="331" height="269"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ui4-di-OuN">
+                        <rect key="frame" x="0.0" y="0.0" width="331" height="269"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Assignment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="teF-4J-8Jw">
+                                <rect key="frame" x="10" y="10" width="70" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="am4-Ic-OhM">
+                                <rect key="frame" x="0.0" y="34.5" width="331" height="194.5"/>
+                                <subviews>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Qgl-5k-fUF">
+                                        <rect key="frame" x="0.0" y="0.0" width="331" height="194.5"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cTV-NR-Ecp">
+                                            <size key="itemSize" width="128" height="128"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                    </collectionView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="Qgl-5k-fUF" firstAttribute="leading" secondItem="am4-Ic-OhM" secondAttribute="leading" id="CVJ-T1-y1O"/>
+                                    <constraint firstItem="Qgl-5k-fUF" firstAttribute="top" secondItem="am4-Ic-OhM" secondAttribute="top" id="DTl-AW-slQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="Qgl-5k-fUF" secondAttribute="bottom" id="WAn-oi-34W"/>
+                                    <constraint firstAttribute="trailing" secondItem="Qgl-5k-fUF" secondAttribute="trailing" id="oh2-U3-MkB"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4BD-pR-dwP" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
+                                <rect key="frame" x="253" y="5" width="70" height="28"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View All" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tE5-TN-zmQ">
+                                        <rect key="frame" x="11" y="6" width="48" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <constraints>
+                                    <constraint firstItem="tE5-TN-zmQ" firstAttribute="centerX" secondItem="4BD-pR-dwP" secondAttribute="centerX" id="0EB-v7-J1M"/>
+                                    <constraint firstAttribute="height" constant="28" id="KiT-rg-KCx"/>
+                                    <constraint firstItem="tE5-TN-zmQ" firstAttribute="centerY" secondItem="4BD-pR-dwP" secondAttribute="centerY" id="LP8-BJ-1IV"/>
+                                    <constraint firstAttribute="width" constant="70" id="fOT-gb-sXP"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="n13-Su-3Ey">
+                                <rect key="frame" x="15" y="237" width="301" height="26"/>
+                                <color key="pageIndicatorTintColor" name="eventdashcolorr"/>
+                                <color key="currentPageIndicatorTintColor" name="Principal"/>
+                            </pageControl>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="4BD-pR-dwP" secondAttribute="trailing" constant="8" id="0Rj-aY-uLo"/>
+                            <constraint firstAttribute="bottom" secondItem="n13-Su-3Ey" secondAttribute="bottom" constant="6" id="2oC-Ul-Wec"/>
+                            <constraint firstItem="teF-4J-8Jw" firstAttribute="top" secondItem="ui4-di-OuN" secondAttribute="top" constant="10" id="3Pp-Ez-lfC"/>
+                            <constraint firstItem="n13-Su-3Ey" firstAttribute="leading" secondItem="ui4-di-OuN" secondAttribute="leading" constant="15" id="6Ff-xd-hg8"/>
+                            <constraint firstItem="am4-Ic-OhM" firstAttribute="leading" secondItem="ui4-di-OuN" secondAttribute="leading" id="Ar1-Ln-7gb"/>
+                            <constraint firstAttribute="trailing" secondItem="am4-Ic-OhM" secondAttribute="trailing" id="WBv-kb-Ie3"/>
+                            <constraint firstItem="4BD-pR-dwP" firstAttribute="top" secondItem="ui4-di-OuN" secondAttribute="top" constant="5" id="XSS-Dl-1zd"/>
+                            <constraint firstItem="n13-Su-3Ey" firstAttribute="top" secondItem="am4-Ic-OhM" secondAttribute="bottom" constant="8" symbolic="YES" id="cih-Ej-Bqp"/>
+                            <constraint firstItem="am4-Ic-OhM" firstAttribute="top" secondItem="teF-4J-8Jw" secondAttribute="bottom" constant="10" id="gQi-m3-OX4"/>
+                            <constraint firstAttribute="trailing" secondItem="n13-Su-3Ey" secondAttribute="trailing" constant="15" id="o1T-7o-akS"/>
+                            <constraint firstItem="teF-4J-8Jw" firstAttribute="leading" secondItem="ui4-di-OuN" secondAttribute="leading" constant="10" id="ouY-a2-xd4"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ui4-di-OuN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="7Ts-yx-BUS"/>
+                    <constraint firstAttribute="trailing" secondItem="ui4-di-OuN" secondAttribute="trailing" id="7V1-fb-dyA"/>
+                    <constraint firstItem="ui4-di-OuN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="YJB-Ga-RR3"/>
+                    <constraint firstAttribute="bottom" secondItem="ui4-di-OuN" secondAttribute="bottom" id="htE-Co-Q3b"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="cv" destination="Qgl-5k-fUF" id="xww-Ay-AUt"/>
+                <outlet property="pageContorler" destination="n13-Su-3Ey" id="FUM-0X-D6e"/>
+                <outlet property="viewAll" destination="4BD-pR-dwP" id="XDR-dW-bMV"/>
+            </connections>
+            <point key="canvasLocation" x="145.6521739130435" y="89.397321428571431"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="Principal">
+            <color red="0.56499999761581421" green="0.14100000262260437" blue="0.46299999952316284" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="eventdashcolorr">
+            <color red="0.70599997043609619" green="0.88999998569488525" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

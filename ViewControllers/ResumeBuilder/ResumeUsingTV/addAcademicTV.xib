@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="260" id="KGk-i7-Jjw" customClass="addAcademicTV" customModule="Gradit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ShK-GM-HnN">
+                        <rect key="frame" x="20" y="10" width="280" height="230"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ec3-33-lMk">
+                                <rect key="frame" x="0.0" y="0.0" width="280" height="214"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2Ei-qG-SM5">
+                                        <rect key="frame" x="0.0" y="0.0" width="280" height="65.333333333333329"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="pcx-aF-7Ad">
+                                                <rect key="frame" x="0.0" y="0.0" width="135" height="65.333333333333329"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class/Degree" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tcq-do-D9D">
+                                                        <rect key="frame" x="0.0" y="0.0" width="135" height="20.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Class" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v67-nA-0ky" customClass="PaddedTextField" customModule="Gradit" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="25.333333333333336" width="135" height="40.000000000000007"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="E4v-pw-Loy"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="image" keyPath="rightImage" value="chevron.down" catalog="system"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </textField>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="0kN-ch-Ks0">
+                                                <rect key="frame" x="145" y="0.0" width="135" height="65.333333333333329"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="% of Marks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DPu-dG-Yrg">
+                                                        <rect key="frame" x="0.0" y="0.0" width="135" height="20.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Percentage" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fcz-q6-l8h" customClass="PaddedTextField" customModule="Gradit" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="25.333333333333336" width="135" height="40.000000000000007"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="n0L-48-AkH"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                                    </textField>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="zk2-Pe-svQ">
+                                        <rect key="frame" x="0.0" y="75.333333333333343" width="280" height="65.333333333333343"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="School/Institution" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="shy-zs-mt9">
+                                                <rect key="frame" x="0.0" y="0.0" width="280" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="OVb-q4-LCo">
+                                                <rect key="frame" x="0.0" y="23" width="280" height="40"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="IiV-4b-SYZ"/>
+                                                </constraints>
+                                                <color key="textColor" systemColor="labelColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Institution" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wop-jg-c9C" customClass="PaddedTextField" customModule="Gradit" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="25.333333333333343" width="280" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="Uij-1e-c6Y"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUd-Ef-oBg">
+                                        <rect key="frame" x="0.0" y="150.66666666666666" width="280" height="23.333333333333343"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Add Files" image="paperclip" catalog="system">
+                                            <color key="titleColor" systemColor="systemBlueColor"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addFilesAct:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="p6o-E0-YyD"/>
+                                        </connections>
+                                    </button>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="krS-AT-f9e">
+                                        <rect key="frame" x="0.0" y="184" width="280" height="30"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Huh-zi-CRb"/>
+                                        </constraints>
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="bos-BV-6jm">
+                                            <size key="itemSize" width="128" height="128"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                    </collectionView>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zGR-MX-SXW">
+                                <rect key="frame" x="-15" y="229" width="310" height="1"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="Xqx-gC-PAu"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TxH-MC-k9T">
+                                <rect key="frame" x="260" y="-5" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="N0s-0w-TVz"/>
+                                    <constraint firstAttribute="width" constant="25" id="xgN-Hc-17L"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="x.circle.fill" catalog="system"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="TxH-MC-k9T" secondAttribute="trailing" constant="-5" id="4rC-Ma-tm6"/>
+                            <constraint firstItem="TxH-MC-k9T" firstAttribute="top" secondItem="ShK-GM-HnN" secondAttribute="top" constant="-5" id="C1Q-yC-jOY"/>
+                            <constraint firstAttribute="trailing" secondItem="ec3-33-lMk" secondAttribute="trailing" id="DKu-Ft-tae"/>
+                            <constraint firstAttribute="bottom" secondItem="zGR-MX-SXW" secondAttribute="bottom" id="HUS-Xy-gbM"/>
+                            <constraint firstItem="zGR-MX-SXW" firstAttribute="leading" secondItem="ShK-GM-HnN" secondAttribute="leading" constant="-15" id="IC1-8D-zC8"/>
+                            <constraint firstItem="ec3-33-lMk" firstAttribute="leading" secondItem="ShK-GM-HnN" secondAttribute="leading" id="MNu-fa-UaZ"/>
+                            <constraint firstItem="zGR-MX-SXW" firstAttribute="top" secondItem="ec3-33-lMk" secondAttribute="bottom" constant="15" id="Mn6-rx-yFo"/>
+                            <constraint firstItem="ec3-33-lMk" firstAttribute="top" secondItem="ShK-GM-HnN" secondAttribute="top" id="Rah-L0-KX9"/>
+                            <constraint firstAttribute="trailing" secondItem="zGR-MX-SXW" secondAttribute="trailing" constant="-15" id="nSU-pr-Eni"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="ShK-GM-HnN" secondAttribute="bottom" constant="20" id="58Z-DH-IbW"/>
+                    <constraint firstAttribute="trailing" secondItem="ShK-GM-HnN" secondAttribute="trailing" constant="20" id="Ktk-mE-yag"/>
+                    <constraint firstItem="ShK-GM-HnN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Sy4-Xq-qZq"/>
+                    <constraint firstItem="ShK-GM-HnN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="ZI0-LG-NeO"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="ClassField" destination="v67-nA-0ky" id="6Ov-am-YhO"/>
+                <outlet property="ClassLbl" destination="tcq-do-D9D" id="xVV-HF-re0"/>
+                <outlet property="DeleteBtn" destination="TxH-MC-k9T" id="Hrf-M1-jDt"/>
+                <outlet property="InstitutetextField" destination="OVb-q4-LCo" id="ZCO-aP-dTr"/>
+                <outlet property="PercentageField" destination="fcz-q6-l8h" id="VUN-2j-UyB"/>
+                <outlet property="PercentageLbl" destination="DPu-dG-Yrg" id="qQB-eX-fxV"/>
+                <outlet property="SchoolField" destination="Wop-jg-c9C" id="9dL-YH-ydE"/>
+                <outlet property="SchoolLbl" destination="shy-zs-mt9" id="Ea8-Y8-5Ge"/>
+                <outlet property="addFilesBtn" destination="iUd-Ef-oBg" id="c61-hg-jmR"/>
+                <outlet property="filesCV" destination="krS-AT-f9e" id="gSA-Mb-EQv"/>
+                <outlet property="filesCVHeight" destination="Huh-zi-CRb" id="M8C-Na-Gqg"/>
+                <outlet property="separatorView" destination="zGR-MX-SXW" id="sbi-J5-KKj"/>
+            </connections>
+            <point key="canvasLocation" x="138.93129770992365" y="95.774647887323951"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="chevron.down" catalog="system" width="128" height="70"/>
+        <image name="paperclip" catalog="system" width="121" height="128"/>
+        <image name="x.circle.fill" catalog="system" width="128" height="123"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

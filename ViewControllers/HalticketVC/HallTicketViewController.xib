@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HallTicketViewController" customModule="Gradit" customModuleProvider="target">
+            <connections>
+                <outlet property="hallticketCv" destination="ghU-KL-Z2c" id="Qj7-tr-iu0"/>
+                <outlet property="pageController" destination="vao-pn-Csl" id="kXR-EW-Ecq"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xWb-Rl-ay9">
+                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zrT-qe-IRX">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CP5-ge-Rcw">
+                                    <rect key="frame" x="8" y="8" width="52" height="34"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="52" id="NXL-Qz-GJi"/>
+                                        <constraint firstAttribute="height" constant="34" id="RLQ-m1-Qmb"/>
+                                    </constraints>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="left-arrow (1)"/>
+                                    <connections>
+                                        <action selector="backbtns:" destination="-1" eventType="touchUpInside" id="53Z-jK-Yri"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HallTicket" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mzs-cV-Y6c">
+                                    <rect key="frame" x="68" y="15" width="79.5" height="21"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" name="FatherUnselector"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="0B4-E4-ul9"/>
+                                <constraint firstItem="CP5-ge-Rcw" firstAttribute="leading" secondItem="zrT-qe-IRX" secondAttribute="leading" constant="8" id="1W4-Pk-gjF"/>
+                                <constraint firstItem="CP5-ge-Rcw" firstAttribute="top" secondItem="zrT-qe-IRX" secondAttribute="top" constant="8" id="2Y5-bb-EgE"/>
+                                <constraint firstItem="Mzs-cV-Y6c" firstAttribute="leading" secondItem="CP5-ge-Rcw" secondAttribute="trailing" constant="8" symbolic="YES" id="OsM-Yd-BZr"/>
+                                <constraint firstItem="Mzs-cV-Y6c" firstAttribute="top" secondItem="zrT-qe-IRX" secondAttribute="top" constant="15" id="n5u-7U-SNn"/>
+                            </constraints>
+                        </view>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="ghU-KL-Z2c">
+                            <rect key="frame" x="0.0" y="50" width="414" height="725"/>
+                            <color key="backgroundColor" name="FatherUnselector"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="hXg-Db-nmN">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                        <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="vao-pn-Csl">
+                            <rect key="frame" x="149" y="783" width="117" height="26"/>
+                            <color key="pageIndicatorTintColor" name="StudentParent"/>
+                            <color key="currentPageIndicatorTintColor" systemColor="systemCyanColor"/>
+                        </pageControl>
+                    </subviews>
+                    <color key="backgroundColor" name="FatherUnselector"/>
+                    <constraints>
+                        <constraint firstItem="vao-pn-Csl" firstAttribute="leading" secondItem="xWb-Rl-ay9" secondAttribute="leading" constant="149" id="4oj-YJ-UDE"/>
+                        <constraint firstAttribute="trailing" secondItem="zrT-qe-IRX" secondAttribute="trailing" id="AHT-JK-1Tc"/>
+                        <constraint firstItem="ghU-KL-Z2c" firstAttribute="top" secondItem="zrT-qe-IRX" secondAttribute="bottom" id="Gec-kg-8QN"/>
+                        <constraint firstAttribute="trailing" secondItem="ghU-KL-Z2c" secondAttribute="trailing" id="f1c-I3-Wxx"/>
+                        <constraint firstItem="zrT-qe-IRX" firstAttribute="leading" secondItem="xWb-Rl-ay9" secondAttribute="leading" id="fAp-bm-ors"/>
+                        <constraint firstItem="ghU-KL-Z2c" firstAttribute="leading" secondItem="xWb-Rl-ay9" secondAttribute="leading" id="fd8-F7-RPt"/>
+                        <constraint firstItem="vao-pn-Csl" firstAttribute="top" secondItem="ghU-KL-Z2c" secondAttribute="bottom" constant="8" symbolic="YES" id="ksN-a0-Rb1"/>
+                        <constraint firstAttribute="bottom" secondItem="vao-pn-Csl" secondAttribute="bottom" constant="5" id="nua-bf-SOV"/>
+                        <constraint firstItem="zrT-qe-IRX" firstAttribute="top" secondItem="xWb-Rl-ay9" secondAttribute="top" id="ypQ-7g-kTG"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" name="FatherUnselector"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="xWb-Rl-ay9" secondAttribute="trailing" id="Qcq-uZ-wlO"/>
+                <constraint firstItem="xWb-Rl-ay9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Zu4-Hd-ECO"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="xWb-Rl-ay9" secondAttribute="bottom" id="lv3-d5-CQU"/>
+                <constraint firstItem="xWb-Rl-ay9" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="u9u-Aa-MSN"/>
+            </constraints>
+            <point key="canvasLocation" x="137.68115942028987" y="19.419642857142858"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="left-arrow (1)" width="32" height="32"/>
+        <namedColor name="FatherUnselector">
+            <color red="0.94499999284744263" green="0.93699997663497925" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="StudentParent">
+            <color red="0.075999997556209564" green="0.13199999928474426" blue="0.21500000357627869" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemCyanColor">
+            <color red="0.1960784314" green="0.67843137249999996" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

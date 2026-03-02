@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AddFooter" customModule="Gradit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="669" height="87"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bYg-AH-6yU">
+                    <rect key="frame" x="0.0" y="0.0" width="669" height="87"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZi-VN-VMv">
+                            <rect key="frame" x="20" y="5" width="629" height="77"/>
+                            <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Add another" image="plus" catalog="system">
+                                <color key="titleColor" systemColor="linkColor"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="TZi-VN-VMv" secondAttribute="trailing" constant="20" id="BU7-mk-VUF"/>
+                        <constraint firstAttribute="bottom" secondItem="TZi-VN-VMv" secondAttribute="bottom" constant="5" id="aFF-n1-BSo"/>
+                        <constraint firstItem="TZi-VN-VMv" firstAttribute="top" secondItem="bYg-AH-6yU" secondAttribute="top" constant="5" id="iyq-MC-Inw"/>
+                        <constraint firstItem="TZi-VN-VMv" firstAttribute="leading" secondItem="bYg-AH-6yU" secondAttribute="leading" constant="20" id="rtE-am-dPA"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="bYg-AH-6yU" secondAttribute="bottom" id="6VE-kM-bjW"/>
+                <constraint firstItem="bYg-AH-6yU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="BOi-XV-XTy"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="bYg-AH-6yU" secondAttribute="trailing" id="J9G-e8-tSC"/>
+                <constraint firstItem="bYg-AH-6yU" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Ouj-7A-9I4"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="AddButton" destination="TZi-VN-VMv" id="dEB-5Z-75p"/>
+            </connections>
+            <point key="canvasLocation" x="347.32824427480915" y="177.81690140845072"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="plus" catalog="system" width="128" height="113"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

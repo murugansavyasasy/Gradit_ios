@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="SenderEventCollectionViewCell" customModule="Vs_GradItCollege" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="140" height="150"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="140" height="150"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jau-J6-kxL">
+                        <rect key="frame" x="0.0" y="0.0" width="140" height="150"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2K7-Cd-m8Y">
+                                <rect key="frame" x="10" y="10" width="120" height="130"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="2K7-Cd-m8Y" firstAttribute="leading" secondItem="Jau-J6-kxL" secondAttribute="leading" constant="10" id="XC2-Gb-S6Y"/>
+                            <constraint firstAttribute="bottom" secondItem="2K7-Cd-m8Y" secondAttribute="bottom" constant="10" id="Z8P-SY-SZM"/>
+                            <constraint firstAttribute="trailing" secondItem="2K7-Cd-m8Y" secondAttribute="trailing" constant="10" id="amb-t8-V0k"/>
+                            <constraint firstItem="2K7-Cd-m8Y" firstAttribute="top" secondItem="Jau-J6-kxL" secondAttribute="top" constant="10" id="ygA-Lu-ita"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Jau-J6-kxL" secondAttribute="trailing" id="PPY-dh-ybl"/>
+                <constraint firstItem="Jau-J6-kxL" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="isS-vg-I9n"/>
+                <constraint firstAttribute="bottom" secondItem="Jau-J6-kxL" secondAttribute="bottom" id="mqF-vp-NEe"/>
+                <constraint firstItem="Jau-J6-kxL" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="tLx-4t-p89"/>
+            </constraints>
+            <size key="customSize" width="131" height="159"/>
+            <connections>
+                <outlet property="cellImageClickView" destination="Jau-J6-kxL" id="hM9-pz-eTj"/>
+                <outlet property="cellImageView" destination="2K7-Cd-m8Y" id="lnC-U8-Fwb"/>
+            </connections>
+            <point key="canvasLocation" x="161.83206106870227" y="-50"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

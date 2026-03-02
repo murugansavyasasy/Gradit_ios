@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MoreImageCCCollectionViewCell" customModule="Gradit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="225"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="200" height="225"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZyR-VE-nb7" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="225"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gLM-Cs-151">
+                                <rect key="frame" x="2" y="2" width="196" height="221"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Hb-iP-ZN8" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
+                                <rect key="frame" x="160" y="185" width="40" height="40"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pdf-file" translatesAutoresizingMaskIntoConstraints="NO" id="k0V-d5-09Q">
+                                        <rect key="frame" x="2" y="2" width="36" height="36"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="k0V-d5-09Q" firstAttribute="leading" secondItem="9Hb-iP-ZN8" secondAttribute="leading" constant="2" id="KAt-Bq-yoh"/>
+                                    <constraint firstAttribute="trailing" secondItem="k0V-d5-09Q" secondAttribute="trailing" constant="2" id="SQx-OD-NIj"/>
+                                    <constraint firstItem="k0V-d5-09Q" firstAttribute="top" secondItem="9Hb-iP-ZN8" secondAttribute="top" constant="2" id="VOP-oS-wXn"/>
+                                    <constraint firstAttribute="width" constant="40" id="tP6-Fv-GUI"/>
+                                    <constraint firstAttribute="height" constant="40" id="vfX-yQ-WXl"/>
+                                    <constraint firstAttribute="bottom" secondItem="k0V-d5-09Q" secondAttribute="bottom" constant="2" id="y1L-E0-ueH"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NTV-TF-PPr" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
+                                <rect key="frame" x="80" y="99.666666666666671" width="40" height="26"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bbG-VV-PqL">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="26"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="6Jg-7e-b1r"/>
+                                    <constraint firstAttribute="height" constant="26" id="Ayp-wr-nCA"/>
+                                    <constraint firstItem="bbG-VV-PqL" firstAttribute="leading" secondItem="NTV-TF-PPr" secondAttribute="leading" id="Vah-Mv-nMO"/>
+                                    <constraint firstItem="bbG-VV-PqL" firstAttribute="top" secondItem="NTV-TF-PPr" secondAttribute="top" id="Zy2-HI-o7L"/>
+                                    <constraint firstAttribute="trailing" secondItem="bbG-VV-PqL" secondAttribute="trailing" id="bfw-Xh-Uhr"/>
+                                    <constraint firstAttribute="bottom" secondItem="bbG-VV-PqL" secondAttribute="bottom" id="jr4-WT-WyK"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemGray4Color"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="gLM-Cs-151" secondAttribute="trailing" constant="2" id="OBS-Hg-Lzg"/>
+                            <constraint firstAttribute="bottom" secondItem="9Hb-iP-ZN8" secondAttribute="bottom" id="Q0w-Bc-9up"/>
+                            <constraint firstAttribute="trailing" secondItem="9Hb-iP-ZN8" secondAttribute="trailing" id="bwj-Ss-ZgJ"/>
+                            <constraint firstItem="NTV-TF-PPr" firstAttribute="centerY" secondItem="ZyR-VE-nb7" secondAttribute="centerY" id="dUD-WX-H54"/>
+                            <constraint firstAttribute="bottom" secondItem="gLM-Cs-151" secondAttribute="bottom" constant="2" id="f6k-yw-2kx"/>
+                            <constraint firstItem="gLM-Cs-151" firstAttribute="leading" secondItem="ZyR-VE-nb7" secondAttribute="leading" constant="2" id="fQE-Y8-Q9F"/>
+                            <constraint firstItem="gLM-Cs-151" firstAttribute="top" secondItem="ZyR-VE-nb7" secondAttribute="top" constant="2" id="qV4-j3-CX6"/>
+                            <constraint firstItem="NTV-TF-PPr" firstAttribute="centerX" secondItem="ZyR-VE-nb7" secondAttribute="centerX" id="sxe-Vg-OnE"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="ZyR-VE-nb7" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="N6t-5V-Of9"/>
+                <constraint firstAttribute="bottom" secondItem="ZyR-VE-nb7" secondAttribute="bottom" id="TKL-dV-fcG"/>
+                <constraint firstItem="ZyR-VE-nb7" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Tpj-rI-Vn6"/>
+                <constraint firstAttribute="trailing" secondItem="ZyR-VE-nb7" secondAttribute="trailing" id="xIY-2P-36X"/>
+            </constraints>
+            <size key="customSize" width="188" height="199"/>
+            <connections>
+                <outlet property="CellmageView" destination="gLM-Cs-151" id="Odv-Mz-bKx"/>
+                <outlet property="countLabl" destination="bbG-VV-PqL" id="LZy-Cj-LYI"/>
+                <outlet property="countView" destination="NTV-TF-PPr" id="LM4-jV-iFM"/>
+                <outlet property="fullView" destination="ZyR-VE-nb7" id="i9q-Kj-fcY"/>
+                <outlet property="pdfView" destination="9Hb-iP-ZN8" id="tsQ-Oz-FTM"/>
+            </connections>
+            <point key="canvasLocation" x="235.11450381679387" y="-27.816901408450704"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="pdf-file" width="256" height="256"/>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

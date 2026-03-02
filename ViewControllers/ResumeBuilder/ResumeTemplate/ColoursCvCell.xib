@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="ColoursCvCell" customModule="Gradit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kjK-hd-vdP">
+                        <rect key="frame" x="2" y="2" width="46" height="46"/>
+                        <subviews>
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ax5-08-YBi">
+                                <rect key="frame" x="10" y="10" width="26" height="26"/>
+                                <color key="backgroundColor" systemColor="systemTealColor"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Ax5-08-YBi" firstAttribute="top" secondItem="kjK-hd-vdP" secondAttribute="top" constant="10" id="9eM-YV-SwZ"/>
+                            <constraint firstAttribute="bottom" secondItem="Ax5-08-YBi" secondAttribute="bottom" constant="10" id="Dqb-8x-19r"/>
+                            <constraint firstItem="Ax5-08-YBi" firstAttribute="leading" secondItem="kjK-hd-vdP" secondAttribute="leading" constant="10" id="ary-lq-ViW"/>
+                            <constraint firstAttribute="trailing" secondItem="Ax5-08-YBi" secondAttribute="trailing" constant="10" id="mmT-Jn-9Yt"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="kjK-hd-vdP" secondAttribute="trailing" constant="2" id="Ntd-ID-Xqo"/>
+                <constraint firstItem="kjK-hd-vdP" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="2" id="drD-jL-e1d"/>
+                <constraint firstAttribute="bottom" secondItem="kjK-hd-vdP" secondAttribute="bottom" constant="2" id="g1Y-FQ-EUp"/>
+                <constraint firstItem="kjK-hd-vdP" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="t16-OS-1oz"/>
+            </constraints>
+            <connections>
+                <outlet property="Button" destination="Ax5-08-YBi" id="UiP-cy-uZY"/>
+                <outlet property="CellView" destination="kjK-hd-vdP" id="KAU-RJ-hu4"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="20"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemTealColor">
+            <color red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
