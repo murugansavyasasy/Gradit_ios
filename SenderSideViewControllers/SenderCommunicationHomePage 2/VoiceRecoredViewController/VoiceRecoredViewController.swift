@@ -10,7 +10,6 @@ import AVFAudio
 import AVFoundation
 import Alamofire
 import ObjectMapper
-import SwiftyJSON
 import KRProgressHUD
 
 

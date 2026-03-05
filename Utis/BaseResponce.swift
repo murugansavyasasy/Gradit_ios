@@ -8,48 +8,20 @@
 //
 
 import Foundation
-
-
-
-
-
 import Foundation
-
-
-
 import Alamofire
-
 import KRProgressHUD
-
 import SystemConfiguration
-
-
-
-
 
 final class BaseRequest{
 
-    
-
-    
-
     var valueHandle : ((AnyObject) -> ())?
-
     var errorHandle : ((NSError)->())?
 
-    
-
     enum MultiPartType {
-
         case string, file
-
     }
-
-    
-
     public typealias MultiDict = (type: MultiPartType, value: Any)
-
-    
 
     @discardableResult
 

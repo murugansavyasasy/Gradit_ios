@@ -270,7 +270,7 @@ class AlertHelper {
     static func showOKAlert(on viewController: UIViewController,
                              title: String?,
                              message: String?,
-                             okTitle: String = "OK",
+                             okTitle: String? = "OK",
                              okAction: (() -> Void)? = nil) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -285,8 +285,8 @@ class AlertHelper {
     static func showOKCancelAlert(on viewController: UIViewController,
                                    title: String?,
                                    message: String?,
-                                   okTitle: String = "OK",
-                                   cancelTitle: String = "Cancel",
+                                   okTitle: String? = "OK",
+                                   cancelTitle: String? = "Cancel",
                                    okAction: (() -> Void)? = nil,
                                    cancelAction: (() -> Void)? = nil) {
         

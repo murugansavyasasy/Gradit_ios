@@ -119,6 +119,7 @@ public final class DataStreamRequest: Request, @unchecked Sendable {
     ///                                       `underlyingQueue`, but can be passed another queue from a `Session`.
     ///   - eventMonitor:                     `EventMonitor` called for event callbacks from internal `Request` actions.
     ///   - interceptor:                      `RequestInterceptor` used throughout the request lifecycle.
+    ///   - shouldAutomaticallyResume:        Whether the instance should resume after the first response handler is added.
     ///   - delegate:                         `RequestDelegate` that provides an interface to actions not performed by
     ///                                       the `Request`.
     init(id: UUID = UUID(),
@@ -128,6 +129,7 @@ public final class DataStreamRequest: Request, @unchecked Sendable {
          serializationQueue: DispatchQueue,
          eventMonitor: (any EventMonitor)?,
          interceptor: (any RequestInterceptor)?,
+         shouldAutomaticallyResume: Bool?,
          delegate: any RequestDelegate) {
         self.convertible = convertible
         self.automaticallyCancelOnStreamError = automaticallyCancelOnStreamError
@@ -137,6 +139,7 @@ public final class DataStreamRequest: Request, @unchecked Sendable {
                    serializationQueue: serializationQueue,
                    eventMonitor: eventMonitor,
                    interceptor: interceptor,
+                   shouldAutomaticallyResume: shouldAutomaticallyResume,
                    delegate: delegate)
     }
 
@@ -199,7 +202,7 @@ public final class DataStreamRequest: Request, @unchecked Sendable {
     /// - Returns:              The `DataStreamRequest`.
     @discardableResult
     public func validate(_ validation: @escaping Validation) -> Self {
-        let validator: () -> Void = { [unowned self] in
+        let validator: @Sendable () -> Void = { [unowned self] in
             guard error == nil, let response else { return }
 
             let result = validation(request, response)

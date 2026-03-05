@@ -11,29 +11,18 @@ target 'Vs_GradItCollege' do
 pod "KRProgressHUD"
 pod 'ObjectMapper'
 pod 'Alamofire'
-
-pod 'HCVimeoVideoExtractor'
 pod 'DropDown'
 pod 'SDWebImage'
-pod 'AlamofireImage'
 pod "BSImagePicker"
 pod 'AWSS3'
 pod 'AWSCognito'
 pod 'AWSCore'
 pod 'FSCalendar'
-pod 'VimeoNetworking'
-pod 'ExpyTableView'
-pod 'SwiftyJSON'
 pod 'iOSDropDown'
 pod 'FirebaseMessaging'
-pod 'Fabric'
 pod 'FirebaseCrashlytics'
-
 pod 'GoogleUtilities'
-
 pod 'ALCameraViewController'
-
- 
 
   target 'Vs_GradItCollegeTests' do
     inherit! :search_paths

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -27,7 +27,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Pl-jK-nEC">
-                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H7c-4w-Xyh">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="65"/>
@@ -95,11 +95,11 @@
                             </constraints>
                         </stackView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="8ke-Ju-17L">
-                            <rect key="frame" x="0.0" y="120" width="393" height="639"/>
+                            <rect key="frame" x="0.0" y="120" width="393" height="546"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No data found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x53-hU-lyg">
-                            <rect key="frame" x="142.33333333333334" y="369.33333333333331" width="108.33333333333334" height="20.333333333333314"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No data found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x53-hU-lyg">
+                            <rect key="frame" x="15" y="323" width="363" height="20.333333333333314"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -109,16 +109,17 @@
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="8ke-Ju-17L" secondAttribute="bottom" id="86h-Lk-0GJ"/>
                         <constraint firstAttribute="trailing" secondItem="8ke-Ju-17L" secondAttribute="trailing" id="9w7-UP-ty9"/>
-                        <constraint firstItem="x53-hU-lyg" firstAttribute="centerX" secondItem="3Pl-jK-nEC" secondAttribute="centerX" id="Fh2-lB-i2Y"/>
                         <constraint firstItem="H7c-4w-Xyh" firstAttribute="leading" secondItem="3Pl-jK-nEC" secondAttribute="leading" id="Ine-aM-ZTQ"/>
                         <constraint firstItem="8ke-Ju-17L" firstAttribute="top" secondItem="G4z-4E-ilk" secondAttribute="bottom" constant="15" id="OJc-bT-2WD"/>
                         <constraint firstAttribute="trailing" secondItem="G4z-4E-ilk" secondAttribute="trailing" id="Px2-ex-FkS"/>
+                        <constraint firstItem="x53-hU-lyg" firstAttribute="leading" secondItem="3Pl-jK-nEC" secondAttribute="leading" constant="15" id="V9s-d7-7xQ"/>
                         <constraint firstItem="G4z-4E-ilk" firstAttribute="top" secondItem="H7c-4w-Xyh" secondAttribute="bottom" id="YRg-qs-9JR"/>
                         <constraint firstItem="8ke-Ju-17L" firstAttribute="leading" secondItem="3Pl-jK-nEC" secondAttribute="leading" id="apW-26-jWh"/>
                         <constraint firstItem="x53-hU-lyg" firstAttribute="centerY" secondItem="3Pl-jK-nEC" secondAttribute="centerY" id="dHi-jT-z8e"/>
                         <constraint firstAttribute="trailing" secondItem="H7c-4w-Xyh" secondAttribute="trailing" id="dNB-hJ-kT6"/>
                         <constraint firstItem="G4z-4E-ilk" firstAttribute="leading" secondItem="3Pl-jK-nEC" secondAttribute="leading" id="hkv-A0-yt5"/>
                         <constraint firstItem="H7c-4w-Xyh" firstAttribute="top" secondItem="3Pl-jK-nEC" secondAttribute="top" id="m20-2I-TKX"/>
+                        <constraint firstAttribute="trailing" secondItem="x53-hU-lyg" secondAttribute="trailing" constant="15" id="wab-PE-y0l"/>
                     </constraints>
                 </view>
             </subviews>
@@ -139,7 +140,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

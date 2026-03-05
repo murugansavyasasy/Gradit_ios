@@ -11,9 +11,7 @@ import Alamofire
 
 import ObjectMapper
 import CoreMedia
-import VimeoNetworking
 
-import SwiftyJSON
 import AVFoundation
 
 
@@ -872,12 +870,13 @@ else if videoDiscreption.text == ""{
 
 else{
     let imagePickerController = UIImagePickerController()
-    
     imagePickerController.delegate = self
-    
     imagePickerController.sourceType = .photoLibrary
-    
-    imagePickerController.mediaTypes = [kUTTypeMovie as String, kUTTypeVideo as String]
+//    imagePickerController.mediaTypes = [kUTTypeMovie as String, kUTTypeVideo as String]
+    imagePickerController.mediaTypes = [
+        UTType.movie.identifier,
+        UTType.video.identifier
+    ]
     
     present(imagePickerController, animated: true, completion: nil)
 }

@@ -34,7 +34,7 @@ class PlacementEventsVC: UIViewController, UITableViewDelegate, UITableViewDataS
         tableview.delegate = self
         tableview.dataSource = self
         noDataLbl.isHidden = true
-        Get_Placement_Evnets_Api()
+        getPlacementEventsApi()
     }
     
     override func viewDidLayoutSubviews() {
@@ -42,67 +42,82 @@ class PlacementEventsVC: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     //MARK: Api Call
-    func Get_Placement_Evnets_Api(){
-        
-        let param:[String: Any] = ["memberId":memberId ?? "","collegeId": Int(collegeId ?? "") ?? 0]
-        Get_PlacementEvents_Request.call_request(param: param) { [weak self] (res) in
+    func getPlacementEventsApi() {
+
+        let param: [String: String] = [
+            "memberId": memberId ?? "",
+            "collegeId": collegeId ?? ""
+        ]
+
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.placementEvent,
+            httpMethod: .get,
+            isBaseUrl: false,
+            queryParam: param,
+            requestBody: nil,
+        ) { [weak self] (result: Result<MemberEventsResponse, Error>) in
             
-            guard let eventsResponse = Mapper<MemberEventsResponse>().map(JSONString: res) else {
-                self?.noDataLbl.isHidden = false
-                return
+            guard let self = self else { return }
+
+            switch result {
+
+            case .success(let success):
+
+                self.EventData = success.data
+                self.noDataLbl.text = success.message
+                let isEmpty = self.EventData?.isEmpty ?? true
+                self.noDataLbl.isHidden = !isEmpty
+                self.tableview.isHidden = isEmpty
+                self.tableview.reloadData()
+
+            case .failure(let error):
+
+                self.EventData = []
+                self.noDataLbl.text = error.localizedDescription
+                self.noDataLbl.isHidden = false
+                self.tableview.isHidden = true
+                self.tableview.reloadData()
             }
-            
-            DispatchQueue.main.async {
-                
-                if eventsResponse.status == true {
-                    self?.EventData = eventsResponse.data
-                    self?.tableview.reloadData()
-                    self?.noDataLbl.text = eventsResponse.message
-                    if self?.EventData?.isEmpty == true{
-                        self?.noDataLbl.isHidden = false
-                    }else {
-                        self?.noDataLbl.isHidden = true
-                    }
-                    
-                }else {
-                    self?.noDataLbl.text = eventsResponse.message
-                    self?.noDataLbl.isHidden = false
-                    self?.EventData = eventsResponse.data
-                    self?.tableview.reloadData()
-                    self?.noDataLbl.text = eventsResponse.message
-                }
-            }
-            
         }
     }
     
-    func Get_Placement_Evnets_Historical_Api(){
+    func getPlacementEventsHistoricalApi() {
         
-        Get_Historical_PlacementEvents_Request.call_request(param: ["memberId":memberId ?? "", "collegeId": Int(collegeId ?? "") ?? 0]) { [weak self] (res) in
+        let param: [String: String] = [
+            "memberId": memberId ?? "",
+            "collegeId": collegeId ?? ""
+        ]
+        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.placementEventHistorical,
+            httpMethod: .get,
+            isBaseUrl: false,
+            queryParam: param,
+            requestBody: nil
+        ) { [weak self] (result: Result<MemberEventsResponse,Error>) in
             
-            guard let eventsResponse = Mapper<MemberEventsResponse>().map(JSONString: res) else {return}
+            guard let self = self else {return}
             
-            DispatchQueue.main.async {
+            switch result {
+            case .success(let success):
                 
-                if eventsResponse.status == true {
-                    self?.EventData = eventsResponse.data
-                    self?.tableview.reloadData()
-                    self?.noDataLbl.isHidden = true
-                    self?.noDataLbl.text = eventsResponse.message
-                    if self?.EventData?.isEmpty == true{
-                        self?.noDataLbl.isHidden = false
-                    }else {
-                        self?.noDataLbl.isHidden = true
-                    }
-                }else {
-                    self?.noDataLbl.isHidden = false
-                    self?.noDataLbl.text = eventsResponse.message
-                    self?.EventData = eventsResponse.data
-                    self?.tableview.reloadData()
-                    self?.noDataLbl.text = eventsResponse.message
-                }
+                self.EventData = success.data
+                self.noDataLbl.text = success.message
+                let isEmpty = self.EventData?.isEmpty ?? true
+                self.noDataLbl.isHidden = !isEmpty
+                self.tableview.isHidden = isEmpty
+                self.tableview.reloadData()
+                
+            case .failure(let failure):
+                
+                self.EventData = []
+                self.noDataLbl.text = failure.localizedDescription
+                self.noDataLbl.isHidden = false
+                self.tableview.isHidden = true
+                self.tableview.reloadData()
             }
         }
+        
     }
     
     func addUnderline(to selectedButton: UIButton, unselectedButton: UIButton) {
@@ -130,14 +145,13 @@ class PlacementEventsVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
     
     @IBAction func UpcomingAct(_ sender: Any) {
-        
         addUnderline(to: upcomingBtn, unselectedButton: HistoricalBtn)
-        Get_Placement_Evnets_Api()
+        getPlacementEventsApi()
     }
     
     @IBAction func HistoricalAct(_ sender: Any) {
         addUnderline(to: HistoricalBtn, unselectedButton: upcomingBtn)
-        Get_Placement_Evnets_Historical_Api()
+        getPlacementEventsHistoricalApi()
     }
     
     @IBAction func BackBtnAct(_ sender: Any) {

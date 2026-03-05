@@ -63,8 +63,6 @@
 		18914633290A69FE00034317 /* GetOtpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18914631290A69FE00034317 /* GetOtpViewController.xib */; };
 		18914637290A6B7A00034317 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18914635290A6B7A00034317 /* TermsViewController.swift */; };
 		18914638290A6B7A00034317 /* TermsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18914636290A6B7A00034317 /* TermsViewController.xib */; };
-		1891463E290A6BB100034317 /* CountryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1891463A290A6BB100034317 /* CountryRequest.swift */; };
-		1891463F290A6BB100034317 /* CountryResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1891463B290A6BB100034317 /* CountryResponce.swift */; };
 		18914640290A6BB100034317 /* CountryListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1891463C290A6BB100034317 /* CountryListViewController.xib */; };
 		18914641290A6BB100034317 /* CountryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1891463D290A6BB100034317 /* CountryListViewController.swift */; };
 		1891464C290A6BE600034317 /* ChangePasswordResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18914648290A6BE600034317 /* ChangePasswordResponce.swift */; };
@@ -352,8 +350,6 @@
 		5289B20A2A627512002D63CB /* SelectResipientsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5289B2082A627512002D63CB /* SelectResipientsViewController.swift */; };
 		5289B20B2A627512002D63CB /* SelectResipientsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5289B2092A627512002D63CB /* SelectResipientsViewController.xib */; };
 		528B0A262A56DA7D00AF7A54 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528B0A252A56DA7D00AF7A54 /* File.swift */; };
-		528B9E4C29E129CB00424A6F /* VersionCheckResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528B9E4B29E129CB00424A6F /* VersionCheckResp.swift */; };
-		528B9E4E29E129E100424A6F /* VersionCheckReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528B9E4D29E129E100424A6F /* VersionCheckReq.swift */; };
 		52905AAA29D5967400272E0F /* Videovimeo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52905AA929D5967400272E0F /* Videovimeo.swift */; };
 		52905AAE29D5F1C600272E0F /* SubmitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52905AAC29D5F1C600272E0F /* SubmitionViewController.swift */; };
 		52905AAF29D5F1C600272E0F /* SubmitionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52905AAD29D5F1C600272E0F /* SubmitionViewController.xib */; };
@@ -545,6 +541,7 @@
 		52FE201D29DE3A98008D548B /* AssigmentSubmissionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FE201B29DE3A98008D548B /* AssigmentSubmissionTableViewCell.swift */; };
 		52FE201E29DE3A98008D548B /* AssigmentSubmissionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52FE201C29DE3A98008D548B /* AssigmentSubmissionTableViewCell.xib */; };
 		8403A3D32B7CCD8D00BCF8D0 /* subjectRequstss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8403A3D22B7CCD8D00BCF8D0 /* subjectRequstss.swift */; };
+		84044C8B2F57F94F002D57CE /* ApiEndUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84044C8A2F57F944002D57CE /* ApiEndUrls.swift */; };
 		840B3D332B1899D20022363F /* SwipeableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840B3D322B1899D20022363F /* SwipeableView.swift */; };
 		840B3D352B1899DA0022363F /* SwipeableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840B3D342B1899DA0022363F /* SwipeableItems.swift */; };
 		840F009A2B29762E00C017CF /* Shinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840F00992B29762E00C017CF /* Shinner.swift */; };
@@ -557,6 +554,7 @@
 		842787F72BD8E0C400DD780D /* SenderEventDetailsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842787EC2BD8E0C300DD780D /* SenderEventDetailsPageViewController.swift */; };
 		842787F82BD8E0C400DD780D /* SenderEventDetailsPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842787ED2BD8E0C300DD780D /* SenderEventDetailsPageViewController.xib */; };
 		842787F92BD8E0C400DD780D /* SenderEventHomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842787EE2BD8E0C300DD780D /* SenderEventHomePageViewController.swift */; };
+		842A7C802F570F540038DA62 /* APiCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842A7C7F2F56C9380038DA62 /* APiCallManager.swift */; };
 		842D39392C09E1A6002F217B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842D39352C09E1A6002F217B /* CoreDataManager.swift */; };
 		842D393A2C09E1A6002F217B /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842D39362C09E1A6002F217B /* CoreDataStack.swift */; };
 		842D393B2C09E1A6002F217B /* DarwinNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842D39372C09E1A6002F217B /* DarwinNotificationCenter.swift */; };
@@ -614,6 +612,7 @@
 		8444FE9B2D1D2C9B00FC936C /* AwsResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8444FE962D1D2C6100FC936C /* AwsResp.swift */; };
 		8449BB102C3FA65A0098E717 /* PlusNewTextViewControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8449BB0F2C3FA65A0098E717 /* PlusNewTextViewControllerViewController.swift */; };
 		8449BB122C3FA6630098E717 /* PlusNewTextViewControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8449BB112C3FA6630098E717 /* PlusNewTextViewControllerViewController.xib */; };
+		844DBB2A2F59975700B85E60 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DBB292F59974000B85E60 /* Model.swift */; };
 		844DCA712AD67BEB00068A70 /* ExameCreactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DCA6F2AD67BEB00068A70 /* ExameCreactionViewController.swift */; };
 		844DCA722AD67BEB00068A70 /* ExameCreactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844DCA702AD67BEB00068A70 /* ExameCreactionViewController.xib */; };
 		844DCA762AD6816D00068A70 /* ExameCreationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DCA742AD6816D00068A70 /* ExameCreationTableViewCell.swift */; };
@@ -806,7 +805,6 @@
 		FA37170E2E5ACE120089D831 /* PlacementEventsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA37170C2E5ACE120089D831 /* PlacementEventsVC.xib */; };
 		FA3717112E5AD02F0089D831 /* PlacementEventTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA37170F2E5AD02F0089D831 /* PlacementEventTvCell.swift */; };
 		FA3717122E5AD02F0089D831 /* PlacementEventTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA3717102E5AD02F0089D831 /* PlacementEventTvCell.xib */; };
-		FA3717142E5AD46A0089D831 /* PlacementEventApiReq&Resp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3717132E5AD46A0089D831 /* PlacementEventApiReq&Resp.swift */; };
 		FA3717172E5AEA770089D831 /* PlacementCVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA3717162E5AEA770089D831 /* PlacementCVcell.xib */; };
 		FA3717182E5AEA770089D831 /* PlacementCVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3717152E5AEA770089D831 /* PlacementCVcell.swift */; };
 		FA3717962E5C40EC0089D831 /* PlacementTrainingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3717942E5C40EC0089D831 /* PlacementTrainingVC.swift */; };
@@ -946,8 +944,6 @@
 		18914631290A69FE00034317 /* GetOtpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GetOtpViewController.xib; sourceTree = "<group>"; };
 		18914635290A6B7A00034317 /* TermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		18914636290A6B7A00034317 /* TermsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TermsViewController.xib; sourceTree = "<group>"; };
-		1891463A290A6BB100034317 /* CountryRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryRequest.swift; sourceTree = "<group>"; };
-		1891463B290A6BB100034317 /* CountryResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryResponce.swift; sourceTree = "<group>"; };
 		1891463C290A6BB100034317 /* CountryListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryListViewController.xib; sourceTree = "<group>"; };
 		1891463D290A6BB100034317 /* CountryListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryListViewController.swift; sourceTree = "<group>"; };
 		18914648290A6BE600034317 /* ChangePasswordResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordResponce.swift; sourceTree = "<group>"; };
@@ -1234,8 +1230,6 @@
 		5289B2082A627512002D63CB /* SelectResipientsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectResipientsViewController.swift; sourceTree = "<group>"; };
 		5289B2092A627512002D63CB /* SelectResipientsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectResipientsViewController.xib; sourceTree = "<group>"; };
 		528B0A252A56DA7D00AF7A54 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		528B9E4B29E129CB00424A6F /* VersionCheckResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionCheckResp.swift; sourceTree = "<group>"; };
-		528B9E4D29E129E100424A6F /* VersionCheckReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionCheckReq.swift; sourceTree = "<group>"; };
 		52905AA929D5967400272E0F /* Videovimeo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Videovimeo.swift; sourceTree = "<group>"; };
 		52905AAC29D5F1C600272E0F /* SubmitionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitionViewController.swift; sourceTree = "<group>"; };
 		52905AAD29D5F1C600272E0F /* SubmitionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmitionViewController.xib; sourceTree = "<group>"; };
@@ -1436,6 +1430,7 @@
 		7A8056D6052CCD25EEC14991 /* Pods-Vs_GradItCollege-Vs_GradItCollegeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vs_GradItCollege-Vs_GradItCollegeUITests.release.xcconfig"; path = "Target Support Files/Pods-Vs_GradItCollege-Vs_GradItCollegeUITests/Pods-Vs_GradItCollege-Vs_GradItCollegeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7D55177D9B61481FAE53A1C1 /* Pods-Vs_GradItCollegeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vs_GradItCollegeTests.release.xcconfig"; path = "Target Support Files/Pods-Vs_GradItCollegeTests/Pods-Vs_GradItCollegeTests.release.xcconfig"; sourceTree = "<group>"; };
 		8403A3D22B7CCD8D00BCF8D0 /* subjectRequstss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = subjectRequstss.swift; sourceTree = "<group>"; };
+		84044C8A2F57F944002D57CE /* ApiEndUrls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiEndUrls.swift; sourceTree = "<group>"; };
 		840B3D322B1899D20022363F /* SwipeableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableView.swift; sourceTree = "<group>"; };
 		840B3D342B1899DA0022363F /* SwipeableItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableItems.swift; sourceTree = "<group>"; };
 		840F00992B29762E00C017CF /* Shinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shinner.swift; sourceTree = "<group>"; };
@@ -1448,6 +1443,7 @@
 		842787EC2BD8E0C300DD780D /* SenderEventDetailsPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderEventDetailsPageViewController.swift; sourceTree = "<group>"; };
 		842787ED2BD8E0C300DD780D /* SenderEventDetailsPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderEventDetailsPageViewController.xib; sourceTree = "<group>"; };
 		842787EE2BD8E0C300DD780D /* SenderEventHomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderEventHomePageViewController.swift; sourceTree = "<group>"; };
+		842A7C7F2F56C9380038DA62 /* APiCallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APiCallManager.swift; sourceTree = "<group>"; };
 		842D39352C09E1A6002F217B /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		842D39362C09E1A6002F217B /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		842D39372C09E1A6002F217B /* DarwinNotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarwinNotificationCenter.swift; sourceTree = "<group>"; };
@@ -1505,6 +1501,7 @@
 		8444FE982D1D2C6800FC936C /* CommonAwsUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAwsUpload.swift; sourceTree = "<group>"; };
 		8449BB0F2C3FA65A0098E717 /* PlusNewTextViewControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusNewTextViewControllerViewController.swift; sourceTree = "<group>"; };
 		8449BB112C3FA6630098E717 /* PlusNewTextViewControllerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlusNewTextViewControllerViewController.xib; sourceTree = "<group>"; };
+		844DBB292F59974000B85E60 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		844DCA6F2AD67BEB00068A70 /* ExameCreactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExameCreactionViewController.swift; sourceTree = "<group>"; };
 		844DCA702AD67BEB00068A70 /* ExameCreactionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExameCreactionViewController.xib; sourceTree = "<group>"; };
 		844DCA742AD6816D00068A70 /* ExameCreationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExameCreationTableViewCell.swift; sourceTree = "<group>"; };
@@ -1701,7 +1698,6 @@
 		FA37170C2E5ACE120089D831 /* PlacementEventsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlacementEventsVC.xib; sourceTree = "<group>"; };
 		FA37170F2E5AD02F0089D831 /* PlacementEventTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementEventTvCell.swift; sourceTree = "<group>"; };
 		FA3717102E5AD02F0089D831 /* PlacementEventTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlacementEventTvCell.xib; sourceTree = "<group>"; };
-		FA3717132E5AD46A0089D831 /* PlacementEventApiReq&Resp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlacementEventApiReq&Resp.swift"; sourceTree = "<group>"; };
 		FA3717152E5AEA770089D831 /* PlacementCVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementCVcell.swift; sourceTree = "<group>"; };
 		FA3717162E5AEA770089D831 /* PlacementCVcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlacementCVcell.xib; sourceTree = "<group>"; };
 		FA3717942E5C40EC0089D831 /* PlacementTrainingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementTrainingVC.swift; sourceTree = "<group>"; };
@@ -1943,6 +1939,7 @@
 		189145D3290A616E00034317 = {
 			isa = PBXGroup;
 			children = (
+				842A7C7E2F56C9120038DA62 /* API */,
 				84E502A62C12F59E008836C9 /* GoogleService-Info.plist */,
 				5289B2022A6159A4002D63CB /* ExamDeleteSubject */,
 				184D6CAD2A497010007DA4AB /* ExamSectionApi */,
@@ -2184,8 +2181,6 @@
 		18914639290A6BB100034317 /* CountryList */ = {
 			isa = PBXGroup;
 			children = (
-				1891463A290A6BB100034317 /* CountryRequest.swift */,
-				1891463B290A6BB100034317 /* CountryResponce.swift */,
 				1891463C290A6BB100034317 /* CountryListViewController.xib */,
 				1891463D290A6BB100034317 /* CountryListViewController.swift */,
 			);
@@ -3603,8 +3598,6 @@
 		528B9E4A29E1299900424A6F /* VersionCheckApi */ = {
 			isa = PBXGroup;
 			children = (
-				528B9E4B29E129CB00424A6F /* VersionCheckResp.swift */,
-				528B9E4D29E129E100424A6F /* VersionCheckReq.swift */,
 			);
 			path = VersionCheckApi;
 			sourceTree = "<group>";
@@ -4442,6 +4435,16 @@
 			path = SenderEventDetailsPage;
 			sourceTree = "<group>";
 		};
+		842A7C7E2F56C9120038DA62 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				844DBB292F59974000B85E60 /* Model.swift */,
+				84044C8A2F57F944002D57CE /* ApiEndUrls.swift */,
+				842A7C7F2F56C9380038DA62 /* APiCallManager.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		842D39382C09E1A6002F217B /* CoreDataManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -5139,7 +5142,6 @@
 				FA37170C2E5ACE120089D831 /* PlacementEventsVC.xib */,
 				FA37170F2E5AD02F0089D831 /* PlacementEventTvCell.swift */,
 				FA3717102E5AD02F0089D831 /* PlacementEventTvCell.xib */,
-				FA3717132E5AD46A0089D831 /* PlacementEventApiReq&Resp.swift */,
 				FA3717152E5AEA770089D831 /* PlacementCVcell.swift */,
 				FA3717162E5AEA770089D831 /* PlacementCVcell.xib */,
 				FA3717942E5C40EC0089D831 /* PlacementTrainingVC.swift */,
@@ -5217,8 +5219,6 @@
 			dependencies = (
 			);
 			name = Vs_GradItCollege;
-			packageProductDependencies = (
-			);
 			productName = Vs_GradItCollege;
 			productReference = 189145DC290A616E00034317 /* Gradit.app */;
 			productType = "com.apple.product-type.application";
@@ -5760,6 +5760,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				842A7C802F570F540038DA62 /* APiCallManager.swift in Sources */,
 				FA35D4B82E2119C10081E8CF /* SoftSkillCV.swift in Sources */,
 				52877F8D2A2DF35A00AE6DAE /* DepartmentRequest.swift in Sources */,
 				18BAB3E5290F9317009FC2AA /* ProfileDetailsTableViewCell.swift in Sources */,
@@ -5780,7 +5781,6 @@
 				848A62C22A992A62007F38E1 /* VerifyOtpViewController.swift in Sources */,
 				844DCA712AD67BEB00068A70 /* ExameCreactionViewController.swift in Sources */,
 				523D8113292E4628005280C2 /* VideoTableViewCell.swift in Sources */,
-				1891463F290A6BB100034317 /* CountryResponce.swift in Sources */,
 				18BAB415290F9349009FC2AA /* ProfileResponse.swift in Sources */,
 				52FD03A82A4AE56C0092D78B /* RightViewCell.swift in Sources */,
 				5247A47729B0CC6F004C1EDD /* VideoPlusPageViewController.swift in Sources */,
@@ -5844,6 +5844,7 @@
 				524045BE2930ABCE006FC70E /* CheckBox.swift in Sources */,
 				52A699F129ADDF310072C0D6 /* SenderImageAddViewController.swift in Sources */,
 				52F1D45F29D1B39C00CD5E86 /* EditAndDeleteExamRequest.swift in Sources */,
+				844DBB2A2F59975700B85E60 /* Model.swift in Sources */,
 				5245E51B293F733700925CBC /* SenderNoticeBoardCollegeResponce.swift in Sources */,
 				52F6AF88295466630006B9A1 /* CourseHomePageViewController.swift in Sources */,
 				188F780B29124824000CB50F /* AssignmentTableviewCel.swift in Sources */,
@@ -5895,7 +5896,6 @@
 				1891461A290A69C100034317 /* PreferencesUtil.swift in Sources */,
 				524C04BB29405D77000A6975 /* SenderImagePdfDeparmentResponce.swift in Sources */,
 				18E890292A27571900DF9BF2 /* SendercommuniReadRequest.swift in Sources */,
-				FA3717142E5AD46A0089D831 /* PlacementEventApiReq&Resp.swift in Sources */,
 				FA1AC0232DE82FDB0037B996 /* MyprofileTvCell.swift in Sources */,
 				5214AD0D2A67E734008397A3 /* ExaminationEditModalClas.swift in Sources */,
 				5284BDD4292E4DFD00120C74 /* AssigmentHomePageViewController.swift in Sources */,
@@ -5932,6 +5932,7 @@
 				528123A829BF84D600C08142 /* HodRespienViewController.swift in Sources */,
 				8403A3D32B7CCD8D00BCF8D0 /* subjectRequstss.swift in Sources */,
 				18CA99722A333D31006309E2 /* DeviceTokenRequest.swift in Sources */,
+				84044C8B2F57F94F002D57CE /* ApiEndUrls.swift in Sources */,
 				84A99DD52AC2A4BE00512FEB /* GetSubjectVcViewController.swift in Sources */,
 				1891462B290A69F600034317 /* ForgetResponce.swift in Sources */,
 				189145E0290A616E00034317 /* AppDelegate.swift in Sources */,
@@ -5977,7 +5978,6 @@
 				84A99DD82AC2A4BE00512FEB /* SenderExaminationPlusNextPageViewController.swift in Sources */,
 				52877F962A2DF4E500AE6DAE /* NoticeBoardTableViewCellsTableViewCell.swift in Sources */,
 				52A5770C2A3C654E0039E1E1 /* MessageSendReceiverSideRequest.swift in Sources */,
-				528B9E4E29E129E100424A6F /* VersionCheckReq.swift in Sources */,
 				52F1D46729D4103B00CD5E86 /* AssigmentImagePdfResponce.swift in Sources */,
 				52A699E729ADC0200072C0D6 /* SenderAssigAddViewController.swift in Sources */,
 				52C0DAE329D707070051F95F /* MoreImageViewController.swift in Sources */,
@@ -6036,7 +6036,6 @@
 				1891462E290A69F600034317 /* ForgetPasswordViewController.swift in Sources */,
 				52B8CFBE299E9C500065CBC3 /* FacultyVcViewController.swift in Sources */,
 				52F1D45929D1946600CD5E86 /* GetSubjectTvTableViewCell.swift in Sources */,
-				528B9E4C29E129CB00424A6F /* VersionCheckResp.swift in Sources */,
 				5262A56929A72CE700177D9C /* ChatTvTableViewCell.swift in Sources */,
 				52AAA7A529727A480047A696 /* PickPDFViewController.swift in Sources */,
 				84928CE42B3C0106007C18D5 /* SenderCommuTextTableViewCell.swift in Sources */,
@@ -6105,7 +6104,6 @@
 				52C0DADE29D6C57E0051F95F /* ExameViewResiverTableViewCell.swift in Sources */,
 				840F009A2B29762E00C017CF /* Shinner.swift in Sources */,
 				842787F72BD8E0C400DD780D /* SenderEventDetailsPageViewController.swift in Sources */,
-				1891463E290A6BB100034317 /* CountryRequest.swift in Sources */,
 				5284BD85292E4B6100120C74 /* ExaminationRequest.swift in Sources */,
 				842FD0D62AAB025300CE44A5 /* SpecificStudentViewController.swift in Sources */,
 				529D52FB2A0CF03D0083CA4A /* DashBoardRequest.swift in Sources */,

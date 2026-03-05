@@ -1,7 +1,5 @@
 PODS:
-  - Alamofire (5.10.1)
-  - AlamofireImage (4.3.0):
-    - Alamofire (~> 5.8)
+  - Alamofire (5.11.1)
   - ALCameraViewController (3.1)
   - AWSCognito (2.19.1):
     - AWSCore (= 2.19.1)
@@ -10,8 +8,6 @@ PODS:
     - AWSCore (= 2.19.1)
   - BSImagePicker (3.3.3)
   - DropDown (2.3.13)
-  - ExpyTableView (1.2.1)
-  - Fabric (1.10.2)
   - FirebaseCore (11.4.2):
     - FirebaseCoreInternal (< 12.0, >= 11.4.2)
     - GoogleUtilities/Environment (~> 8.0)
@@ -97,7 +93,6 @@ PODS:
   - GoogleUtilities/UserDefaults (8.0.2):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - HCVimeoVideoExtractor (0.0.4)
   - iOSDropDown (0.4.0)
   - KRActivityIndicatorView (3.0.8)
   - KRProgressHUD (3.4.8):
@@ -114,44 +109,33 @@ PODS:
   - SDWebImage (5.19.7):
     - SDWebImage/Core (= 5.19.7)
   - SDWebImage/Core (5.19.7)
-  - SwiftyJSON (5.0.2)
-  - VimeoNetworking (4.1.0)
 
 DEPENDENCIES:
   - Alamofire
-  - AlamofireImage
   - ALCameraViewController
   - AWSCognito
   - AWSCore
   - AWSS3
   - BSImagePicker
   - DropDown
-  - ExpyTableView
-  - Fabric
   - FirebaseCrashlytics
   - FirebaseMessaging
   - FSCalendar
   - GoogleUtilities
-  - HCVimeoVideoExtractor
   - iOSDropDown
   - KRProgressHUD
   - ObjectMapper
   - SDWebImage
-  - SwiftyJSON
-  - VimeoNetworking
 
 SPEC REPOS:
   trunk:
     - Alamofire
-    - AlamofireImage
     - ALCameraViewController
     - AWSCognito
     - AWSCore
     - AWSS3
     - BSImagePicker
     - DropDown
-    - ExpyTableView
-    - Fabric
     - FirebaseCore
     - FirebaseCoreExtension
     - FirebaseCoreInternal
@@ -163,7 +147,6 @@ SPEC REPOS:
     - FSCalendar
     - GoogleDataTransport
     - GoogleUtilities
-    - HCVimeoVideoExtractor
     - iOSDropDown
     - KRActivityIndicatorView
     - KRProgressHUD
@@ -172,20 +155,15 @@ SPEC REPOS:
     - PromisesObjC
     - PromisesSwift
     - SDWebImage
-    - SwiftyJSON
-    - VimeoNetworking
 
 SPEC CHECKSUMS:
-  Alamofire: 840d2a1ad82355b536ec6ba5f97e5bfa54600ca3
-  AlamofireImage: 843953fa97bee5f561cf05d83abd759e590b068d
+  Alamofire: eec6cd8f73b242b59e34153a606a909eb9864b14
   ALCameraViewController: 144dea45fd749a623aafd8cb7b10cea88499fcc3
   AWSCognito: f50de600804941d083af37a7568905f31a774727
   AWSCore: 55c154ae27efc5c98bdc30a0eeea5a35d10a2ab5
   AWSS3: 2272253b098d07803af8dd20ce6ce7302bcffb47
   BSImagePicker: 57900b323f951711608acaf97d52e9183530cb6d
   DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
-  ExpyTableView: 19cf224c2ff04b1ec215ec52bc4ba6f81fa809ed
-  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   FirebaseCore: 6b32c57269bd999aab34354c3923d92a6e5f3f84
   FirebaseCoreExtension: f1bc67a4702931a7caa097d8e4ac0a1b0d16720e
   FirebaseCoreInternal: 35731192cab10797b88411be84940d2beb33a238
@@ -197,7 +175,6 @@ SPEC CHECKSUMS:
   FSCalendar: 2d1d0d9398f12d439f55c1fe0f01525b151b8260
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
-  HCVimeoVideoExtractor: f29c70152171be0a3b18992df2a8c4a012c388d3
   iOSDropDown: ce9daa584eaa5567cafc1b633e3cc7eb6d9cea42
   KRActivityIndicatorView: c5c503bf56e54834382dd926b64ff47287ca0006
   KRProgressHUD: d0fb4e72428d312eb6966e84c543ea58fb1efbc7
@@ -206,9 +183,7 @@ SPEC CHECKSUMS:
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
   SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
-  SwiftyJSON: f5b1bf1cd8dd53cd25887ac0eabcfd92301c6a5a
-  VimeoNetworking: faca97d7b158a74d96afb460011e2dc69651c051
 
-PODFILE CHECKSUM: a48ec651526be36a384c2e88f87c80af56bfd53d
+PODFILE CHECKSUM: 934cc0ff70bbc76881d65499264119531b2548c6
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

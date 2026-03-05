@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -27,7 +27,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VrX-OG-f6R">
-                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZyQ-og-oYh">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="65"/>
@@ -95,11 +95,11 @@
                             </constraints>
                         </stackView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="b6X-Oc-ND6">
-                            <rect key="frame" x="0.0" y="120" width="393" height="639"/>
+                            <rect key="frame" x="0.0" y="120" width="393" height="546"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No data found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IGV-TN-lVc">
-                            <rect key="frame" x="142.33333333333334" y="369.33333333333331" width="108.33333333333334" height="20.333333333333314"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No data found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IGV-TN-lVc">
+                            <rect key="frame" x="15" y="323" width="363" height="20.333333333333314"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -110,9 +110,10 @@
                         <constraint firstItem="b6X-Oc-ND6" firstAttribute="top" secondItem="MXF-uq-zhh" secondAttribute="bottom" constant="15" id="0AV-qd-Hpa"/>
                         <constraint firstItem="ZyQ-og-oYh" firstAttribute="top" secondItem="VrX-OG-f6R" secondAttribute="top" id="57B-3v-TBF"/>
                         <constraint firstItem="ZyQ-og-oYh" firstAttribute="leading" secondItem="VrX-OG-f6R" secondAttribute="leading" id="8pL-VM-vq7"/>
+                        <constraint firstAttribute="trailing" secondItem="IGV-TN-lVc" secondAttribute="trailing" constant="15" id="9zo-Z0-eMp"/>
+                        <constraint firstItem="IGV-TN-lVc" firstAttribute="leading" secondItem="VrX-OG-f6R" secondAttribute="leading" constant="15" id="LPl-68-Y2M"/>
                         <constraint firstItem="b6X-Oc-ND6" firstAttribute="leading" secondItem="VrX-OG-f6R" secondAttribute="leading" id="MRU-cU-yWR"/>
                         <constraint firstItem="MXF-uq-zhh" firstAttribute="leading" secondItem="VrX-OG-f6R" secondAttribute="leading" id="TyY-Cp-gUm"/>
-                        <constraint firstItem="IGV-TN-lVc" firstAttribute="centerX" secondItem="VrX-OG-f6R" secondAttribute="centerX" id="UyX-gb-9UY"/>
                         <constraint firstAttribute="bottom" secondItem="b6X-Oc-ND6" secondAttribute="bottom" id="bS2-h6-3Ii"/>
                         <constraint firstItem="IGV-TN-lVc" firstAttribute="centerY" secondItem="VrX-OG-f6R" secondAttribute="centerY" id="fhy-8X-NrL"/>
                         <constraint firstAttribute="trailing" secondItem="ZyQ-og-oYh" secondAttribute="trailing" id="ibY-fk-75d"/>
@@ -139,7 +140,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

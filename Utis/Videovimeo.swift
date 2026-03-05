@@ -8,14 +8,12 @@
 import ObjectMapper
 
 class VimeoModalAndroid: Mappable {
+    
+var description : String!
 
 
 
-var description    :    String!
-
-
-
-var upload   :    VimeoUpload!
+var upload : VimeoUpload!
 
 
 

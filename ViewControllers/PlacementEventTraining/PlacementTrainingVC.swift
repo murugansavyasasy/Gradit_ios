@@ -34,7 +34,7 @@ class PlacementTrainingVC: UIViewController, UITableViewDelegate, UITableViewDat
         semesterNo = component?.last
         BackBtn.setTitleFont(style: .medium, size: 18)
         addUnderline(to: upcomingBtn, unselectedButton: HistoricalBtn)
-
+        
         noDataLbl.isHidden = true
         
         tableview.register(UINib(nibName: "PlacementEventTvCell", bundle: nil), forCellReuseIdentifier: "PlacementEventTvCell")
@@ -51,67 +51,76 @@ class PlacementTrainingVC: UIViewController, UITableViewDelegate, UITableViewDat
     //MARK: Api Call
     func Get_Placement_trainings_Api(){
         
-        let param: [String: Any] = ["departmentname": departmentName ?? "", "semesterno": Int(semesterNo ?? "") ?? 0, "collegeId": Int(collegeId ?? "") ?? 0]
+        let param: [String: String] = [
+            "departmentname": departmentName ?? "",
+            "semesterno": semesterNo ?? "",
+            "collegeId": collegeId ?? ""
+        ]
         
-        print("requestStr",param)
-        Get_PlacementTrainings_Request.call_request(param: param) { [weak self] (res) in
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.trainingEvent,
+            httpMethod: .get,
+            isBaseUrl: false,
+            queryParam: param,
+            requestBody: nil
+        ) { [weak self] (result: Result<TrainingResponse,Error>) in
             
-            guard let trainingResponse = Mapper<TrainingResponse>().map(JSONString: res) else {
-                self?.noDataLbl.isHidden = false
-                return
-            }
+            guard let self = self else { return }
             
-            DispatchQueue.main.async {
+            switch result {
+            case .success(let success):
                 
-                if trainingResponse.status == true {
-                    self?.trainingData = trainingResponse.data
-                    self?.tableview.reloadData()
-                    self?.noDataLbl.isHidden = true
-                    self?.noDataLbl.text = trainingResponse.message
-                    if self?.trainingData?.isEmpty == true{
-                        self?.noDataLbl.isHidden = false
-                    }else {
-                        self?.noDataLbl.isHidden = true
-                    }
-                }else {
-                    self?.noDataLbl.text = trainingResponse.message
-                    self?.noDataLbl.isHidden = false
-                    self?.trainingData = trainingResponse.data
-                    self?.tableview.reloadData()
-                    self?.noDataLbl.text = trainingResponse.message
-                }
+                trainingData = success.data
+                tableview.reloadData()
+                let isEmpty = trainingData?.isEmpty ?? true
+                noDataLbl.isHidden = !isEmpty
+                tableview.isHidden = isEmpty
+                tableview.reloadData()
+                
+            case .failure(let failure):
+                self.trainingData = []
+                self.noDataLbl.text = failure.localizedDescription
+                self.noDataLbl.isHidden = false
+                self.tableview.isHidden = true
+                self.tableview.reloadData()
             }
-            
         }
     }
     
     func Get_Placement_Training_Historical_Api(){
         
-        let param: [String: Any] = ["departmentname": departmentName ?? "", "semesterno": Int(semesterNo ?? "") ?? 0, "collegeId": Int(collegeId ?? "") ?? 0]
-        print("requestStr",param)
-        Get_Historical_PlacementTrainings_Request.call_request(param: param) { [weak self] (res) in
+        let param: [String: String] = [
+            "departmentname": departmentName ?? "",
+            "semesterno": semesterNo ?? "",
+            "collegeId": collegeId ?? ""
+        ]
+        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.trainingEventHistorical,
+            httpMethod: .get,
+            isBaseUrl: false,
+            queryParam: param,
+            requestBody: nil
+        ) { [weak self] (result: Result<TrainingResponse,Error>) in
             
-            guard let trainingResponse = Mapper<TrainingResponse>().map(JSONString: res) else {return}
+            guard let self = self else { return }
             
-            DispatchQueue.main.async {
+            switch result {
+            case .success(let success):
                 
-                if trainingResponse.status == true {
-                    self?.trainingData = trainingResponse.data
-                    self?.tableview.reloadData()
-                    self?.noDataLbl.isHidden = true
-                    self?.noDataLbl.text = trainingResponse.message
-                    if self?.trainingData?.isEmpty == true{
-                        self?.noDataLbl.isHidden = false
-                    }else {
-                        self?.noDataLbl.isHidden = true
-                    }
-                }else {
-                    self?.noDataLbl.text = trainingResponse.message
-                    self?.noDataLbl.isHidden = false
-                    self?.trainingData = trainingResponse.data
-                    self?.tableview.reloadData()
-                    self?.noDataLbl.text = trainingResponse.message
-                }
+                trainingData = success.data
+                tableview.reloadData()
+                let isEmpty = trainingData?.isEmpty ?? true
+                noDataLbl.isHidden = !isEmpty
+                tableview.isHidden = isEmpty
+                tableview.reloadData()
+                
+            case .failure(let failure):
+                self.trainingData = []
+                self.noDataLbl.text = failure.localizedDescription
+                self.noDataLbl.isHidden = false
+                self.tableview.isHidden = true
+                self.tableview.reloadData()
             }
         }
     }
@@ -122,7 +131,7 @@ class PlacementTrainingVC: UIViewController, UITableViewDelegate, UITableViewDat
             button.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
             button.tintColor = .black
         }
-
+        
         // Add underline to the selected button
         selectedButton.tintColor = .systemBlue
         let underline = UIView()
@@ -130,7 +139,7 @@ class PlacementTrainingVC: UIViewController, UITableViewDelegate, UITableViewDat
         underline.backgroundColor = .systemBlue
         underline.translatesAutoresizingMaskIntoConstraints = false
         selectedButton.addSubview(underline)
-
+        
         NSLayoutConstraint.activate([
             underline.heightAnchor.constraint(equalToConstant: 2),
             underline.leadingAnchor.constraint(equalTo: selectedButton.leadingAnchor),
@@ -138,7 +147,7 @@ class PlacementTrainingVC: UIViewController, UITableViewDelegate, UITableViewDat
             underline.bottomAnchor.constraint(equalTo: selectedButton.bottomAnchor)
         ])
     }
-
+    
     
     @IBAction func UpcomingAct(_ sender: Any) {
         
@@ -203,7 +212,7 @@ class PlacementTrainingVC: UIViewController, UITableViewDelegate, UITableViewDat
         
         return (dateText, timeText)
     }
-
+    
     
     func formatTrainingTime(startTime: String, endTime: String) -> String {
         // Formatter to parse "HH:mm"
@@ -234,7 +243,7 @@ class PlacementTrainingVC: UIViewController, UITableViewDelegate, UITableViewDat
         
         return "\(startFormatted) to \(endFormatted)"
     }
-
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return trainingData?.count ?? 0
@@ -257,29 +266,29 @@ class PlacementTrainingVC: UIViewController, UITableViewDelegate, UITableViewDat
         cell.eventDescriptionLbl.text = training?.trainingAbout
         cell.locationBtn.setTitle(training?.venue, for: .normal)
         
-         let formatted = formatEventDateTime(dateString: training?.trainingDate ?? "", timeString: training?.startTime ?? "")
-            cell.dateLbl.text = formatted.dateText
-            cell.dateLbl.numberOfLines = 2
-            cell.dateLbl.textAlignment = .center
-            
-            cell.timeLbl.text = formatted.timeText
-            cell.timeLbl.numberOfLines = 2
-            cell.timeLbl.textAlignment = .center
+        let formatted = formatEventDateTime(dateString: training?.trainingDate ?? "", timeString: training?.startTime ?? "")
+        cell.dateLbl.text = formatted.dateText
+        cell.dateLbl.numberOfLines = 2
+        cell.dateLbl.textAlignment = .center
         
-
+        cell.timeLbl.text = formatted.timeText
+        cell.timeLbl.numberOfLines = 2
+        cell.timeLbl.textAlignment = .center
+        
+        
         cell.eventModeLbl.text = training?.modeTraining
         cell.eligibleCourseDefLbl.text = "Applicable Batches"
         cell.eligibleCoursesLbl.text = training?.applicableBatches?.joined(separator: ",")
         cell.eligibilityCriteriaDefLbl.text = "Trainer Name"
         cell.EligibilityCriteriaLbl.text = training?.trainerName
         
-       // cell.scheduledTimeLbl.text = formatTrainingTime(startTime: training?.startTime ?? "", endTime: training?.endTime ?? "")
+        // cell.scheduledTimeLbl.text = formatTrainingTime(startTime: training?.startTime ?? "", endTime: training?.endTime ?? "")
         
         cell.scheduledTimeLbl.text = (training?.startTime ?? "") + " to " + (training?.endTime ?? "")
         
         let isoFormatter = ISO8601DateFormatter()
         isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-
+        
         // Try to parse the repeatUntil date
         let formattedDate: String
         if let repeatUntil = training?.repeatUntil,
@@ -291,14 +300,14 @@ class PlacementTrainingVC: UIViewController, UITableViewDelegate, UITableViewDat
         } else {
             formattedDate = training?.repeatUntil ?? "" // fallback to original string
         }
-
+        
         // Build final string
         let repeatText = "Repeats every \(training?.repeatTraining ?? "") \(training?.selectDay ?? "") until \(formattedDate)"
         cell.repeatsonLbl.text = repeatText
         
         cell.repeatsOnBaseView.isHidden = !(training?.recursiveTraining ?? false)
-//        tableview.beginUpdates()
-//        tableview.endUpdates()
+        //        tableview.beginUpdates()
+        //        tableview.endUpdates()
         
         return cell
     }

@@ -398,247 +398,210 @@ class ViewController: UIViewController {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
     func VersionCheck () {
         let defaults = UserDefaults.standard
         
         //var versionId = defaults.integer(forKey: DefaultsKeys.versionID)
         
-        let param : [String : Any] =
-        
-        
-        
-        [
-            
-            
-            
-            
-            
-            
-            
+        let param : [String : Any] = [
             "versionID" : DefaultsKeys.versionID,
-            
-            
-            
             "device_type" : "iphone"
-            
-            
-            
-            
-            
-            
-            
         ]
         
-        
-        
-        
-        
-        
-        
-        print("param",param)
-        
-        
-        
-        VersionCheckRequest.call_request(param: param)  {
-            
-            
-            
-            
-            
-            
-            
-            [self] (res) in
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            let VersionUpdate : VersionCheckResponce = Mapper<VersionCheckResponce>().map(JSONString: res)!
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            if VersionUpdate.Status == 1 {
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.versionCheck,
+            httpMethod: .get,
+            queryParam: param,
+            requestBody: nil
+        ) { [weak self] (result: Result<VersionCheckResponse,Error>) in
                 
+            guard let self = self else {return}
+            
+            switch result {
+            case .success(let success):
                 
-                versionCheck = VersionUpdate.versionData
+                versionCheck = success.versionData ?? []
                 
+                defaults.set(versionCheck.first?.videojson, forKey: DefaultsKeys.vimeoAccessToken)
                 
+                defaults.set(versionCheck.first?.feepaymentlink, forKey: DefaultsKeys.feepaymentlink)
                 
+                defaults.set(versionCheck.first?.videosizelimit, forKey: DefaultsKeys.videosizelimit)
                 
+                defaults.set(versionCheck.first?.videosizealert, forKey: DefaultsKeys.videosizealert)
                 
-                for i in versionCheck {
+                defaults.set(versionCheck.first?.isforceupdaterequired, forKey: DefaultsKeys.isforceupdaterequired)
+                
+                defaults.set(versionCheck.first?.isversionupdateavailable, forKey: DefaultsKeys.isversionupdateavailable)
+                
+                defaults.set(versionCheck.first?.versionalerttitle, forKey: DefaultsKeys.versionalerttitle)
+                
+                defaults.set(versionCheck.first?.versionalertcontent, forKey: DefaultsKeys.versionalertcontent)
+                
+                isversionupdateavailable = defaults.integer(forKey: DefaultsKeys.isversionupdateavailable)
+                
+                isforceupdaterequired = defaults.integer(forKey: DefaultsKeys.isforceupdaterequired)
+                
+                versionalertcontent  = defaults.string(forKey: DefaultsKeys.versionalertcontent)
+                
+                versionalerttitle = defaults.string(forKey: DefaultsKeys.versionalerttitle)
+                
+                if isversionupdateavailable == 1 {
                     
-                    
-               
-                    
-                    
-                    defaults.set(i.videojson, forKey: DefaultsKeys.vimeoAccessToken)
-                    
-                    defaults.set(i.feepaymentlink, forKey: DefaultsKeys.feepaymentlink)
-                    
-//                    defaults.set(i., forKey: <#T##String#>)
-                    
-                    
-                    
-                    
-                    
-                    defaults.set(i.videosizelimit, forKey: DefaultsKeys.videosizelimit)
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    defaults.set(i.videosizealert, forKey: DefaultsKeys.videosizealert)
-                    
-                    
-                    
-                    defaults.set(i.isforceupdaterequired, forKey: DefaultsKeys.isforceupdaterequired)
-                    
-                    defaults.set(i.isversionupdateavailable, forKey: DefaultsKeys.isversionupdateavailable)
-                    
-                    
-                    defaults.set(i.versionalerttitle, forKey: DefaultsKeys.versionalerttitle)
-                    
-                    defaults.set(i.versionalertcontent, forKey: DefaultsKeys.versionalertcontent)
-                    
-                    
-                    
-                    
-//                    print("paymentLink",)
-                    
-                    
-                    
-                    
-                    
-                    
-                    print("DefaultsKeys.vimeoAccessToken",DefaultsKeys.vimeoAccessToken)
-                    
-                    
-                    
-                    print("DefaultsKeys.",i.videojson)
-              
-                    
-                    isversionupdateavailable = defaults.integer(forKey: DefaultsKeys.isversionupdateavailable)
-                    
-                    
-                    
-                    isforceupdaterequired = defaults.integer(forKey: DefaultsKeys.isforceupdaterequired)
-                    
-                    versionalertcontent  = defaults.string(forKey: DefaultsKeys.versionalertcontent)
-                    
-                    
-                    
-                    versionalerttitle = defaults.string(forKey: DefaultsKeys.versionalerttitle)
-                    
-                    
-      
-                    
-                    if(isversionupdateavailable == 1){
+                    if isforceupdaterequired == 1{
                         
-                        
-                        let alert = UIAlertController(title: versionalerttitle, message:versionalertcontent, preferredStyle: UIAlertController.Style.alert)
-                        
-                        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { [self] action in
-                            
-                            if(isversionupdateavailable == 1 && isforceupdaterequired == 1)
-                                
-                            {
-                                
-                                let alert = UIAlertController(title: "Needs to Update", message: "New updates are available. Would you like to update them now?", preferredStyle: UIAlertController.Style.alert)
-                                
-                                //
-                                
-                                alert.addAction(UIAlertAction(title: "Update", style: UIAlertAction.Style.default, handler: { action in self.callAppStore()}))
-                                
-                                
-                                
-                                DispatchQueue.main.async{
-                                    
-                                    self.present(alert, animated: true, completion: nil)
-                                    
-                                }
-                                
-                            }else  if(isversionupdateavailable == 1 && isforceupdaterequired == 0) {
-                                
-                                let alert = UIAlertController(title: "Needs to Update", message: "New updates are available. Would you like to update them now?", preferredStyle: UIAlertController.Style.alert)
-                                
-                                alert.addAction(UIAlertAction(title: "Not Now", style: UIAlertAction.Style.default, handler: { action in self.loginDetails()}))
-                                
-                                alert.addAction(UIAlertAction(title: "Update", style: UIAlertAction.Style.default, handler: { action in self.callAppStore()}))
-                                
-                                
-                                
-                                DispatchQueue.main.async{
-                                    
-                                    self.present(alert, animated: true, completion: nil)
-                                    
-                                }
-                                
-                            }
-                            //
-                            else
-                            
-                            {
-                                
-                                self.loginDetails()
-                                
-                            }
-                       
-                        }))
-                        
-                        DispatchQueue.main.async
-                        
-                        {
-                            
-                            self.present(alert, animated: true, completion: nil)
-                            
+                        AlertHelper.showOKAlert(
+                            on: self,
+                            title: "Needs to Update",
+                            message: "New updates are available. Would you like to update them now?",
+                            okTitle: "Update"
+                        ) {
+                            self.callAppStore()
                         }
-                 
-                    }else{
+                    }else {
                         
-                        print("LoginDetailElsePart")
-                        
-                        loginDetails()
-                        
-                        
+                        AlertHelper.showOKCancelAlert(
+                            on: self,
+                            title: "Needs to Update",
+                            message: "New updates are available. Would you like to update them now?",
+                            okTitle: "Update",
+                            cancelTitle: "Not now") {
+                                self.callAppStore()
+                            } cancelAction: {
+                                self.loginDetails()
+                            }
                     }
-            
-                    print("VersionCheckSuccess")
                     
+                }else {
                     
-                    
+                    loginDetails()
                 }
                 
+            case .failure(let failure):
                 
-                
+                print("Error",failure.localizedDescription)
             }
             
-        }
+            }
+        
+//        VersionCheckRequest.call_request(param: param)  {
+//
+//            [self] (res) in
+//
+//            let VersionUpdate : VersionCheckResponce = Mapper<VersionCheckResponce>().map(JSONString: res)!
+//
+//
+//            if VersionUpdate.Status == 1 {
+//
+//
+//                versionCheck = VersionUpdate.versionData
+//
+//                for i in versionCheck {
+//
+//                    defaults.set(i.videojson, forKey: DefaultsKeys.vimeoAccessToken)
+//
+//                    defaults.set(i.feepaymentlink, forKey: DefaultsKeys.feepaymentlink)
+//
+//                    defaults.set(i.videosizelimit, forKey: DefaultsKeys.videosizelimit)
+//
+//                    defaults.set(i.videosizealert, forKey: DefaultsKeys.videosizealert)
+//
+//                    defaults.set(i.isforceupdaterequired, forKey: DefaultsKeys.isforceupdaterequired)
+//
+//                    defaults.set(i.isversionupdateavailable, forKey: DefaultsKeys.isversionupdateavailable)
+//
+//                    defaults.set(i.versionalerttitle, forKey: DefaultsKeys.versionalerttitle)
+//
+//                    defaults.set(i.versionalertcontent, forKey: DefaultsKeys.versionalertcontent)
+//
+//                    isversionupdateavailable = defaults.integer(forKey: DefaultsKeys.isversionupdateavailable)
+//
+//                    isforceupdaterequired = defaults.integer(forKey: DefaultsKeys.isforceupdaterequired)
+//
+//                    versionalertcontent  = defaults.string(forKey: DefaultsKeys.versionalertcontent)
+//
+//                    versionalerttitle = defaults.string(forKey: DefaultsKeys.versionalerttitle)
+//
+//                    if(isversionupdateavailable == 1){
+//
+//
+//                        let alert = UIAlertController(title: versionalerttitle, message:versionalertcontent, preferredStyle: UIAlertController.Style.alert)
+//
+//                        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { [self] action in
+//
+//                            if(isversionupdateavailable == 1 && isforceupdaterequired == 1)
+//
+//                            {
+//                                let alert = UIAlertController(title: "Needs to Update", message: "New updates are available. Would you like to update them now?", preferredStyle: UIAlertController.Style.alert)
+//
+//                                //
+//
+//                                alert.addAction(UIAlertAction(title: "Update", style: UIAlertAction.Style.default, handler: { action in self.callAppStore()}))
+//
+//
+//
+//                                DispatchQueue.main.async{
+//
+//                                    self.present(alert, animated: true, completion: nil)
+//
+//                                }
+//
+//                            }else  if(isversionupdateavailable == 1 && isforceupdaterequired == 0) {
+//
+//                                let alert = UIAlertController(title: "Needs to Update", message: "New updates are available. Would you like to update them now?", preferredStyle: UIAlertController.Style.alert)
+//
+//                                alert.addAction(UIAlertAction(title: "Not Now", style: UIAlertAction.Style.default, handler: { action in self.loginDetails()}))
+//
+//                                alert.addAction(UIAlertAction(title: "Update", style: UIAlertAction.Style.default, handler: { action in self.callAppStore()}))
+//
+//
+//
+//                                DispatchQueue.main.async{
+//
+//                                    self.present(alert, animated: true, completion: nil)
+//
+//                                }
+//
+//                            }
+//                            //
+//                            else
+//
+//                            {
+//
+//                                self.loginDetails()
+//
+//                            }
+//
+//                        }))
+//
+//                        DispatchQueue.main.async
+//
+//                        {
+//
+//                            self.present(alert, animated: true, completion: nil)
+//
+//                        }
+//
+//                    }else{
+//
+//                        print("LoginDetailElsePart")
+//
+//                        loginDetails()
+//
+//
+//                    }
+//
+//                    print("VersionCheckSuccess")
+//
+//
+//
+//                }
+//
+//
+//
+//            }
+//
+//        }
         
     }
     
