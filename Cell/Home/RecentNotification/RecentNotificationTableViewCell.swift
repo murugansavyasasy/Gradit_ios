@@ -109,7 +109,7 @@
 
 
 
-    let date: NSDate? = dateFormatterGet.date(from: recentNoti.createdondate) as NSDate?
+        let date: NSDate? = dateFormatterGet.date(from: recentNoti.createdondate ?? "") as NSDate?
 
     if let selectedCell = selectedCell, selectedCell == indexPath {
     cell.discreptionLbl.isHidden = false
@@ -269,62 +269,6 @@
 
     }
     }
-
-    func recentNotic(){
-
-    print("notidee")
-    let noti = DashBoardModal()
-
-    noti.collegeid = colgId
-
-    noti.userid = memberId
-
-    noti.priority = priority
-
-
-    let dashBoardStr = noti.toJSONString()
-
-
-    DashBoardRequest.call_request(param: dashBoardStr!) {
-    [self]
-    (res) in
-
-
-
-
-    let dashBoardResponse : DashBoardResponse = Mapper<DashBoardResponse>().map(JSONString: res)!
-
-
-    dashBoardDataList = dashBoardResponse.data
-    for i in dashBoardDataList{
-
-
-    if i.dashType == "Recent Notifications"{
-
-    RecentDatas = i.recentNotificationSubData
-
-    print("RecentDataTabelCell",RecentDatas)
-
-
-    }
-
-
-    tv.delegate = self
-    tv.dataSource = self
-    tv.reloadData()
-
-    }
-
-
-
-
-
-    }
-
-    }
-
-
-
     }
     class RecentPlayGesture : UITapGestureRecognizer {
 

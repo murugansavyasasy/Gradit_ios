@@ -282,61 +282,6 @@
     }
 
 
-    func LeaveRequest(){
-
-    print("notidee")
-    let noti = DashBoardModal()
-
-    noti.collegeid = colgId
-    noti.userid = memberId
-    noti.priority = priority
-
-    let dashBoardStr = noti.toJSONString()
-
-
-    DashBoardRequest.call_request(param: dashBoardStr!) {
-    [self]
-    (res) in
-
-
-
-
-    let dashBoardResponse : DashBoardResponse = Mapper<DashBoardResponse>().map(JSONString: res)!
-
-
-    dashBoardDataList = dashBoardResponse.data
-    for i in dashBoardDataList{
-
-    dashtype = i.dashType
-
-
-    if i.dashType == "Leave Request"{
-
-    LeaveRequestData =   i.leaveRequest
-
-    print("LeaveRequestDataCell",LeaveRequestData.count)
-
-
-    }
-
-    tv.delegate = self
-    tv.dataSource = self
-    tv.reloadData()
-
-    }
-
-
-
-
-
-    }
-
-
-
-
-    }
-
-
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 

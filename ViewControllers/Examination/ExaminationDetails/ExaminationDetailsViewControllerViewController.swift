@@ -419,8 +419,7 @@ class ExaminationDetailsViewControllerViewController: UIViewController,UITableVi
     
     func addApi(){
         
-        
-        let add = AddApiModal()
+        var add = AddApiModal()
         
         let defaults = UserDefaults.standard
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
@@ -432,57 +431,33 @@ class ExaminationDetailsViewControllerViewController: UIViewController,UITableVi
         add.college_id = colgId
         add.previous_add_id = prevoiusAddId
         
-        
-        let addstr = add.toJSONString()
-        
-        
-        print("moliess",addstr)
-        
-        addRequest.call_request(param: addstr!){ [self]
+        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .get, queryParam: nil, requestBody: nil
+        ) {[weak self] (result:Result<AddApiResponce,Error>) in
             
-            (res) in
+            guard let self = self else {return}
             
-            
-            
-            let addApis : AddApiResponce = Mapper<AddApiResponce>().map(JSONString: res)!
-            if addApis.Status == 1 {
-                addapiRef = addApis.data
-                
-                
-                for i in addApis.data{
+            switch result {
+            case .success(let success):
+                if success.Status == 1 {
+                    addapiRef = success.data ?? []
                     
-                    
-                    //
-                    
-                    bigImg.sd_setImage(with: URL(string: i.background_image), placeholderImage: UIImage(named: "ic_white"))
-                    
-                    
-                    smallImg.sd_setImage(with: URL(string: i.add_image), placeholderImage: UIImage(named: "ic_white"))
-                    
-                    let singleTap = ExamDetailsaddViewGesturess(target: self, action: #selector(adLoad))
-                    singleTap.url = i.add_url
-                    bigImg.isUserInteractionEnabled = true
-                    bigImg.addGestureRecognizer(singleTap)
-                    
-                    
+                    for i in addapiRef{
+                      
+                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
+                        
+                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
+                        
+                        let singleTap = adds(target: self, action: #selector(adLoad))
+                        singleTap.url = i.add_url
+                        bigImg.isUserInteractionEnabled = true
+                        bigImg.addGestureRecognizer(singleTap)
+                    }
                 }
                 
-                
-                
-                
-                
-                
+            case .failure(let failure):
+                print(failure.localizedDescription)
             }
-            
-            else{
-                
-                
-            }
-            
-            
         }
-        
-        
     }
     
     
@@ -598,186 +573,15 @@ class ExaminationDetailsViewControllerViewController: UIViewController,UITableVi
         
         let vc = ChangePasswordViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        
         present(vc, animated: true, completion: nil)
-        
-        
-        
-        
-        
-    }
-    
-    
-    
-    
-    @IBAction func priortyScreenVc(){
-        
-        
-        
-        let login = LoginModal ()
-        login.mobilenumber = MobileNumber
-        
-        
-        
-        let loginStr = login.toJSONString()
-        
-        loginRequest.call_request(param: loginStr!){ [self]
-            
-            (res) in
-            
-            
-            let loginResponse : LoginResponse =
-            Mapper<LoginResponse>().map(JSONString: res)!
-            
-            if (loginResponse.data.count == 1){
-                
-                let vc = HomeScreenViewController(nibName: nil, bundle: nil)
-                for i in loginResponse.data {
-                    
-                    
-                    let defaults = UserDefaults.standard
-                    defaults.set(i.colglogo, forKey: DefaultsKeys.colglogo)
-                    defaults.set(login.mobilenumber, forKey: DefaultsKeys.mobileNumber)
-                    
-                    defaults.set(i.loginas, forKey: DefaultsKeys.loginAsType)
-                    defaults.set(i.membername, forKey: DefaultsKeys.memberName)
-                    defaults.set(i.colgname, forKey: DefaultsKeys.colgName)
-                    defaults.set(i.colgid, forKey: DefaultsKeys.collegeid)
-                    defaults.set(i.memberid, forKey: DefaultsKeys.memberid)
-                    defaults.set(i.priority, forKey: DefaultsKeys.priority)
-                    defaults.set(i.colgcity, forKey:DefaultsKeys.colgcity)
-                    defaults.set(i.divid ,   forKey:DefaultsKeys.divid)
-                    defaults.set(i.divname, forKey: DefaultsKeys.divname)
-                    defaults.set(i.courseid,forKey: DefaultsKeys.courseid)
-                    
-                    print("coureeeee",i.courseid)
-                    defaults.set(i.coursename,forKey:DefaultsKeys.coursename)
-                    defaults.set(i.deptid,forKey: DefaultsKeys.deptid)
-                    defaults.set(i.deptname,forKey: DefaultsKeys.deptname)
-                    defaults.set(i.yearid,forKey: DefaultsKeys.yearid)
-                    defaults.set(i.yearname,forKey: DefaultsKeys.yearname)
-                    defaults.set(i.sectionid,forKey: DefaultsKeys.sectionid)
-                    defaults.set(i.sectionname,forKey: DefaultsKeys.sectionname)
-                    defaults.set(i.semesterid,forKey: DefaultsKeys.semesterid)
-                    defaults.set(i.semestername,forKey: DefaultsKeys.semestername)
-                    defaults.set(i.is_parent_target_enabled,forKey: DefaultsKeys.is_parent_target_enabled)
-                    
-                    
-                }
-                
-                
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true,completion: nil)
-            }
-            
-            
-            
-            
-            else{  let vc = PriorityViewController(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                vc.loginData = loginResponse.data
-                for i in loginResponse.data {
-                    let defaults = UserDefaults.standard
-                    
-                    
-                    defaults.set(loginResponse.data, forKey: "SavedStringArray")
-                    
-                    defaults.set(i.loginas, forKey: DefaultsKeys.loginAsType)
-                    defaults.set(i.membername, forKey: DefaultsKeys.memberName)
-                    defaults.set(i.colgname, forKey: DefaultsKeys.colgName)
-                    vc.loginType = i.loginas
-                    print("vc.loginAsType\( vc.loginType)")
-                    present(vc, animated: true,completion: nil)
-                }
-            }
-        }
-        
     }
     
     @IBAction func priorityVc() {
         
-        
-        
-        let login = LoginModal ()
-        login.mobilenumber = MobileNumber
-        login.Password = password
-        print("passsdded", login.Password)
-        
-        
-        let loginStr = login.toJSONString()
-        
-        loginRequest.call_request(param: loginStr!){ [self]
-            
-            (res) in
-            
-            
-            let loginResponse : LoginResponse =
-            Mapper<LoginResponse>().map(JSONString: res)!
-            
-            loginDatas = loginResponse.data
-            print("ctrss",loginDatas.count)
-            if (loginResponse.data.count >= 1){
-                
-                
-                
-                let vc = PriorityViewController(nibName: nil, bundle: nil)
-                for i in loginResponse.data{
-                    
-                    
-                    if i.priority == "p3"{
-                        vc.IdentfierLabel = "STAFF"
-                        vc.loginPrincipal.append(i)
-                        
-                    }
-                    
-                    else if i.priority == "p4"{
-                        vc.loginStudent.append(i)
-                        
-                    }
-                    
-                    
-                    else if i.priority == "p2"{
-                        
-                        vc.IdentfierLabel = "HOD"
-                        vc.loginPrincipal.append(i)
-                        
-                    }
-                    
-                    else if i.priority == "p1"{
-                        
-                        vc.IdentfierLabel = "PRINCIPAL"
-                        vc.loginPrincipal.append(i)
-                    }
-                    
-                    else if i.priority == "p5"{
-                        vc.IdentfierLabel = "PARENT"
-                        vc.loginPrincipal.append(i)
-                        
-                        
-                    }
-                    
-                    
-                    else if i.priority == "p6"{
-                        
-                        vc.IdentfierLabel = "NON TEACHING"
-                        vc.loginPrincipal.append(i)
-                    }
-                    
-                    
-                }
-                vc.modalPresentationStyle = .fullScreen
-                
-                present(vc, animated: true,completion: nil)
-                
-                
-                
-            }
-        }
-        
-        
+        let vc = PriorityViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true,completion: nil)
     }
-    
-    
     
     @IBAction func profileRedirect() {
         
@@ -818,18 +622,6 @@ class ExaminationDetailsViewControllerViewController: UIViewController,UITableVi
         
         dismiss(animated: true)
     }
-    
-    
-    // this part  bottom swipe  view.
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
 
 class ExamDetailsaddViewGesturess : UITapGestureRecognizer {

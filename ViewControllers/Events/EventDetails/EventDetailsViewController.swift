@@ -269,71 +269,47 @@ class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICo
     func addApi(){
         
         
-        let add = AddApiModal()
+        var add = AddApiModal()
         
         let defaults = UserDefaults.standard
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
-        print("EventDefaultsKeys.DeviceToken",deviceToken)
         add.member_id = userid
         add.mobile_no = MobileNumber
         add.priority = priority
         add.college_id = collegeid
         add.previous_add_id = previousAdId
         
-        
-        let addstr = add.toJSONString()
-        
-        
-        addRequest.call_request(param: addstr!){ [self]
+        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .get, queryParam: nil, requestBody: nil
+        ) {[weak self] (result:Result<AddApiResponce,Error>) in
             
-            (res) in
+            guard let self = self else {return}
             
-            
-            
-            let addApis : AddApiResponce = Mapper<AddApiResponce>().map(JSONString: res)!
-            
-            if addApis.Status == 1 {
-                addapiRef = addApis.data
-                
-                
-                for i in addApis.data{
+            switch result {
+            case .success(let success):
+                if success.Status == 1 {
+                    addapiRef = success.data ?? []
                     
-                    
-                    
-                    bigImg.sd_setImage(with: URL(string: i.background_image), placeholderImage: UIImage(named: "ic_white"))
-                    
-                    
-                    smallImg.sd_setImage(with: URL(string: i.add_image), placeholderImage: UIImage(named: "ic_white"))
-                    
-                    let singleTap = AddGuster(target: self, action: #selector(tapDetected))
-                    singleTap.url = i.add_url
-                    bigImg.isUserInteractionEnabled = true
-                    bigImg.addGestureRecognizer(singleTap)
-                    
-                    
+                    for i in addapiRef{
+                      
+                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
+                        
+                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
+                        
+                        let singleTap = adds(target: self, action: #selector(adLoad))
+                        singleTap.url = i.add_url
+                        bigImg.isUserInteractionEnabled = true
+                        bigImg.addGestureRecognizer(singleTap)
+                    }
                 }
                 
-                
-                
+            case .failure(let failure):
+                print(failure.localizedDescription)
             }
-            
-            else{
-                
-                
-            }
-            
-            
         }
         
-        
     }
-    
-    
-    
-    
-    
-    
+     
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

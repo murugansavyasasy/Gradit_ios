@@ -83,15 +83,17 @@ func startAutoScroll() {
 autoScrollTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
 }
 
-@objc func autoScroll() {
-let nextIndex = (currentIndex + 1) % circularData.count
-let nextIndexPath = IndexPath(item: nextIndex, section: 0)
-cv.scrollToItem(at: nextIndexPath, at: .right, animated: true)
-currentIndex = nextIndex
-
-pageContorler.currentPage = currentIndex
-
-}
+    @objc func autoScroll() {
+        if !circularData.isEmpty {
+            let nextIndex = (currentIndex + 1) % circularData.count
+            let nextIndexPath = IndexPath(item: nextIndex, section: 0)
+            cv.scrollToItem(at: nextIndexPath, at: .right, animated: true)
+            currentIndex = nextIndex
+            
+            pageContorler.currentPage = currentIndex
+        }
+        
+    }
 
 @objc func stopAutoScroll() {
 autoScrollTimer?.invalidate()
@@ -132,16 +134,16 @@ dateFormatterPrint.dateFormat = " dd MMM,yyyy"
 
 
 
-let date: NSDate? = dateFormatterGet.date(from: circular.createddate) as NSDate?
+    let date: NSDate? = dateFormatterGet.date(from: circular.createddate ?? "") as NSDate?
 
 cell.creatDate.text = dateFormatterPrint.string(from: date as! Date)
 
-var dateString2 = circular.circularCreatedtime
+var dateString2 = circular.createdtime
 let dateFormatter = DateFormatter()
 dateFormatter.dateFormat = "hh:mm:ss a"
 dateFormatter.locale = Locale.init(identifier: "en_US_POSIX")
 
-let dateObj = dateFormatter.date(from: dateString2!)
+let dateObj = dateFormatter.date(from: dateString2)
 dateFormatter.dateFormat = "hh:mm a"
 
 cell.createTime.text = (dateFormatter.string(from: dateObj!))
@@ -294,64 +296,6 @@ currentController?.present(vc, animated: true, completion: nil)
 func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 return CGSize(width: 278, height: 180)
 }
-
-func circular(){
-
-
-let noti = DashBoardModal()
-
-noti.collegeid = colgId
-noti.userid = memberId
-noti.priority = priority
-
-let dashBoardStr = noti.toJSONString()
-
-
-DashBoardRequest.call_request(param: dashBoardStr!) {
-[self]
-(res) in
-
-
-
-
-let dashBoardResponse : DashBoardResponse = Mapper<DashBoardResponse>().map(JSONString: res)!
-
-
-dashBoardDataList = dashBoardResponse.data
-for i in dashBoardDataList{
-
-dashtype = i.dashType
-
-
-if i.dashType == "Circular"{
-    
-    circularData =   i.circular
-    
-    print("circularcollection",circularData.count)
-    
-    
-}
-
-cv.delegate = self
-cv.dataSource = self
-cv.reloadData()
-
-}
-
-
-
-
-
-}
-
-
-
-
-}
-
-
-
-
 
 }
 

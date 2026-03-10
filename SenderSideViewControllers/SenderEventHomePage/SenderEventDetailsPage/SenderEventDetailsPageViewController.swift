@@ -709,103 +709,12 @@ func getCurrentViewController() -> UIViewController? {
     
 }
 
-
-
-
-
-@IBAction func priorityVc() {
-    
-    
-    
-    
-    
-    
-    
-    
-    let login = LoginModal ()
-    login.mobilenumber = MobileNumber
-    login.Password = password
-    print("passsdded", login.Password)
-    
-    
-    let loginStr = login.toJSONString()
-    
-    loginRequest.call_request(param: loginStr!){ [self]
+    @IBAction func priorityVc() {
         
-        (res) in
-        
-        
-        let loginResponse : LoginResponse =
-        Mapper<LoginResponse>().map(JSONString: res)!
-        
-        loginDatas = loginResponse.data
-        print("ctrss",loginDatas.count)
-        if (loginResponse.data.count >= 1){
-            
-            
-            
-            let vc = PriorityViewController(nibName: nil, bundle: nil)
-            for i in loginResponse.data{
-                
-                
-                if i.priority == "p3"{
-                    vc.IdentfierLabel = "STAFF"
-                    vc.loginPrincipal.append(i)
-                    
-                }
-                
-                else if i.priority == "p4"{
-                    vc.loginStudent.append(i)
-                    
-                }
-                
-                
-                else if i.priority == "p2"{
-                    
-                    vc.IdentfierLabel = "HOD"
-                    vc.loginPrincipal.append(i)
-                    
-                }
-                
-                else if i.priority == "p1"{
-                    
-                    vc.IdentfierLabel = "PRINCIPAL"
-                    vc.loginPrincipal.append(i)
-                }
-                
-                else if i.priority == "p5"{
-                    vc.IdentfierLabel = "PARENT"
-                    vc.loginPrincipal.append(i)
-                    
-                    
-                }
-                
-                
-                else if i.priority == "p6"{
-                    
-                    vc.IdentfierLabel = "NON TEACHING"
-                    vc.loginPrincipal.append(i)
-                }
-                
-                else if i.priority == "p7"{
-                    
-                    vc.IdentfierLabel = "UNIVERSITY HEAD"
-                    vc.loginPrincipal.append(i)
-                }
-                
-            }
-            vc.modalPresentationStyle = .fullScreen
-            
-            present(vc, animated: true,completion: nil)
-            
-            
-            
-        }
+        let vc = PriorityViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true,completion: nil)
     }
-    
-    
-    
-}
 
 
 

@@ -374,12 +374,11 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
     
     
     func getDeviceToken(){
-        let devicToken = DeviceTokenModal()
+        var devicToken = DeviceTokenModal()
         
         let defaults = UserDefaults.standard
         var mobileNum = defaults.string(forKey: DefaultsKeys.mobileNumber)
         
-        print("mobileNummobileNum",mobileNum)
         defaults.set( devicToken.devicetoken, forKey: DefaultsKeys.DEVICETOKEN)
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let myOtherVariable = appDelegate.DeviceToken
@@ -389,14 +388,16 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         devicToken.devicetype    = "iphone"
         devicToken.devicetoken    = myOtherVariable
         
-        let devicTokenStr = devicToken.toJSONString()
-        
-        DeviceTokenRequest.call_request(param: devicTokenStr!){ [self]
+        APiCallManager.shared.callApi(url: APIEndpoints.DeviceToken, httpMethod: .post, queryParam: nil, requestBody: devicToken) {[weak self] (result:Result<DeviceTokenResponse, any Error>) in
             
-            (res) in
+            guard let self = self else {return}
             
-            print("DeviceToken",res)
-            
+            switch result {
+            case .success(let success):
+                print(success.Message ?? "")
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
         }
     }
     
@@ -415,117 +416,79 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         
         print("homePagedashBoardList")
         
-        
-        let dashBoard = DashBoardModal()
+        var dashBoard = DashBoardModal()
         dashBoard.collegeid = colgId
-        
         dashBoard.userid = memberId
-        
         dashBoard.priority = priority
         
-        let dashBoardStr = dashBoard.toJSONString()
-        
-        print("dashBoarddashBoard",dashBoard.toJSON())
-        
-        DashBoardRequest.call_request(param: dashBoardStr!) {
-            [self]
-            (res) in
-            
-            let dashBoardResponse : DashBoardResponse = Mapper<DashBoardResponse>().map(JSONString: res)!
-            
-            
-            
-            if dashBoardResponse.Status == 1 {
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.DashboardApi_Live,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: dashBoard
+        ) {[weak self] (result:Result<DashBoardResponse, Error>) in
                 
-                dashBoardDataList =  dashBoardResponse.data
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let success):
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                    
-                    loadingCustom.stopAnimating()
-                    
-                    
-                    loadingCustom.isHidden  = true
-                    
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [weak self] in
+                    self?.loadingCustom.stopAnimating()
+                    self?.loadingCustom.isHidden  = true
                 }
                 
-                for i in dashBoardDataList {
+                if success.Status == 1 {
+                    dashBoardDataList =  success.data ?? []
                     
-                    
-                    
-                    if i.dashType == "Ad"{
+                    for i in dashBoardDataList {
                         
-                        AdvertismentData = i.dashSubData
-                        
-                        print("addd.coun",AdvertismentData.count)
+                        if i.type == "Ad"{
+                            AdvertismentData = i.dashSubData
+                            print("addd.coun",AdvertismentData.count)
+                        }else if i.type == "Emergency Notification"{
+                            emerData = i.emerSubData
+                        }else if i.type == "Attendance"{
+                            attendanceData = i.attendanceSubData
+                        }else if i.type == "Assignments"{
+                            assignmentData = i.assigment
+                        }else if i.type == "Notice Board" {
+                            noticeBoardData =   i.noticeSubData
+                        }else if i.type == "Circular"{
+                            circularData = i.circular
+                        }else if i.type == "Recent Notifications"{
+                            RecentData = i.recentNotificationSubData
+                        }else if i.type == "Leave Request"{
+                            LeaveeReq = i.leaveRequest
+                        }else if i.type == "Chat"{
+                            chatDatas = i.Chat
+                        }else if i.type == "Upcoming Events"{
+                            EventData = i.Events
+                        }
+                    }
+                }else {
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [weak self] in
+                        self?.loadingCustom.stopAnimating()
+                        self?.loadingCustom.isHidden  = true
                     }
                     
-                    else if i.dashType == "Emergency Notification"{
-                        
-                        emerData = i.emerSubData
-                        
-                    }
+                    let refreshAlert = UIAlertController(title: "MobileNumber Are Not Similar", message: success.Message, preferredStyle: UIAlertController.Style.alert)
                     
+                    refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                        UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
+                    }))
                     
-                    else if i.dashType == "Attendance"{
-                        
-                        attendanceData = i.attendanceSubData
-                        
-                    }
-                    
-                    else if i.dashType == "Assignments"{
-                        
-                        assignmentData = i.assigment
-                    }
-                    
-                    else if i.dashType == "Notice Board" {
-                        
-                        
-                        noticeBoardData =   i.noticeSubData
-                        
-                    }
-                    
-                    else if i.dashType == "Circular"{
-                        
-                        circularData = i.circular
-                        
-                    }
-                    
-                    else if i.dashType == "Recent Notifications"{
-                        
-                        RecentData = i.recentNotificationSubData
-                    }
-                    
-                    else if i.dashType == "Leave Request"{
-                        
-                        
-                        LeaveeReq = i.leaveRequest
-                    }
-                    
-                    else if i.dashType == "Chat"{
-                        
-                        chatDatas = i.Chat
-                    }
-                    
-                    else if i.dashType == "Upcoming Events"{
-                        
-                        EventData = i.Events
-                    }
-                    
+                    present(refreshAlert, animated: true, completion: nil)
                 }
-            }
-            
-            else{
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                    
-                    loadingCustom.stopAnimating()
-                    
-                    
-                    loadingCustom.isHidden  = true
-                    
+            case .failure(let failure):
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [weak self] in
+                    self?.loadingCustom.stopAnimating()
+                    self?.loadingCustom.isHidden  = true
                 }
                 
-                let refreshAlert = UIAlertController(title: "MobileNumber Are Not Similar", message: dashBoardResponse.Message, preferredStyle: UIAlertController.Style.alert)
+                let refreshAlert = UIAlertController(title: "MobileNumber Are Not Similar", message: failure.localizedDescription, preferredStyle: UIAlertController.Style.alert)
                 
                 refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
                     
@@ -533,13 +496,13 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                 }))
                 
                 present(refreshAlert, animated: true, completion: nil)
-    
             }
             
             tv.dataSource = self
             tv.delegate = self
             tv.reloadData()
-        }
+            
+            }
     }
     
     
@@ -567,17 +530,17 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         print("indexsss",indeRow)
         
         print("ordertypesss",dashBoardList.emerSubData)
-        if dashBoardList.dashType == "Ad" {
+        if dashBoardList.type == "Ad" {
             
-            indeRow = dashBoardList.dashOrder
+            indeRow = dashBoardList.order
             
             let cell = tableView.dequeueReusableCell(withIdentifier: advertisementIdentifier, for: indexPath)as! HomeTableViewCell
             
             for i in dashBoardList.dashSubData{
                 
                 
-                cell.bigImg.sd_setImage(with: URL(string: i.background_image), placeholderImage: UIImage(named: "ic_white"))
-                cell.smallImg.sd_setImage(with: URL(string: i.add_image), placeholderImage: UIImage(named: "ic_white"))
+                cell.bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
+                cell.smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
                 
                 let loadGesture = HomeViewGesture(target: self, action: #selector(adLoad))
                 
@@ -592,9 +555,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         
         
         
-        else if dashBoardList.dashType == "Emergency Notification" {
+        else if dashBoardList.type == "Emergency Notification" {
             print("indexsssulla",indeRow)
-            indeRow = dashBoardList.dashOrder
+            indeRow = dashBoardList.order
             
             let cell = tableView.dequeueReusableCell(withIdentifier: emergencyIdentifier, for: indexPath)as! EmergencyTableViewCell
             
@@ -624,9 +587,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
         }
         
-        else if dashBoardList.dashType == "Attendance" {
+        else if dashBoardList.type == "Attendance" {
             
-            indeRow = dashBoardList.dashOrder
+            indeRow = dashBoardList.order
             
             print("Attendance")
             
@@ -642,10 +605,10 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             return cell
         }
         
-        else if dashBoardList.dashType == "Assignments"  {
+        else if dashBoardList.type == "Assignments"  {
             
             
-            indeRow = dashBoardList.dashOrder
+            indeRow = dashBoardList.order
             
             
             let cell = tableView.dequeueReusableCell(withIdentifier: assignmentListIdentifier, for: indexPath)as! AssignmentTableviewCel
@@ -665,9 +628,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         }
         
         
-        else   if  dashBoardList.dashType == "Notice Board"  {
+        else   if  dashBoardList.type == "Notice Board"  {
             
-            indeRow = dashBoardList.dashOrder
+            indeRow = dashBoardList.order
             
             let cell = tableView.dequeueReusableCell(withIdentifier: noticeBoardIdentifier, for: indexPath)as! NoticeBoardTableViewCell
             
@@ -685,9 +648,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             return cell
             
             
-        } else   if dashBoardList.dashType == "Circular"{
+        } else   if dashBoardList.type == "Circular"{
             
-            indeRow = dashBoardList.dashOrder
+            indeRow = dashBoardList.order
             
             let cell = tableView.dequeueReusableCell(withIdentifier: CircularIdentifier, for: indexPath)as! CircularTableViewCell
             
@@ -703,9 +666,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             return cell
         }
-        else if dashBoardList.dashType == "Recent Notifications"   {
+        else if dashBoardList.type == "Recent Notifications"   {
             
-            indeRow = dashBoardList.dashOrder
+            indeRow = dashBoardList.order
             
             let cell = tableView.dequeueReusableCell(withIdentifier: recentNotificationIdentifier, for: indexPath)as! RecentNotificationTableViewCell
             
@@ -717,11 +680,11 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             return cell
         }
         
-        else if dashBoardList.dashType == "Upcoming Events" {
+        else if dashBoardList.type == "Upcoming Events" {
             
             print("Upcoming Events")
             
-            indeRow = dashBoardList.dashOrder
+            indeRow = dashBoardList.order
             let cell = tableView.dequeueReusableCell(withIdentifier: EventsIdentifier, for: indexPath)as! EventsTableViewCell
             
             cell.str = str
@@ -746,11 +709,11 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         }
         
         
-        else if dashBoardList.dashType == "Chat" {
+        else if dashBoardList.type == "Chat" {
             
             print("Chat......")
             
-            indeRow = dashBoardList.dashOrder
+            indeRow = dashBoardList.order
             let cell = tableView.dequeueReusableCell(withIdentifier: chatIdentifier, for: indexPath)as! HomePageChatTableViewCell
             
             cell.strName = strName
@@ -768,9 +731,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         }
         
         
-        else if dashBoardList.dashType == "Leave Request" {
+        else if dashBoardList.type == "Leave Request" {
             
-            indeRow = dashBoardList.dashOrder
+            indeRow = dashBoardList.order
             
             print("HomeScreenLeaveRequestTableViewCell",LeaveeReq.count)
             
@@ -807,8 +770,8 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         
         
         
-        if dashBoardLists.dashType == "Ad"{
-            indeRow = dashBoardLists.dashOrder
+        if dashBoardLists.type == "Ad"{
+            indeRow = dashBoardLists.order
             //
             
             if AdvertismentData.count != 0{
@@ -821,9 +784,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
         }
         
-        else if dashBoardLists.dashType ==  "Emergency Notification" {
+        else if dashBoardLists.type ==  "Emergency Notification" {
             
-            indeRow = dashBoardLists.dashOrder
+            indeRow = dashBoardLists.order
             
             if emerData.count == 0{
                 
@@ -873,9 +836,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         }
         
         
-        else if dashBoardLists.dashType == "Attendance"  {
+        else if dashBoardLists.type == "Attendance"  {
             
-            indeRow = dashBoardLists.dashOrder
+            indeRow = dashBoardLists.order
             
             
             
@@ -912,9 +875,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             }
         }
         
-        else if dashBoardLists.dashType == "Assignments"  {
+        else if dashBoardLists.type == "Assignments"  {
             
-            indeRow = dashBoardLists.dashOrder
+            indeRow = dashBoardLists.order
             
             
             if assignmentData.count != 0{
@@ -931,9 +894,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
         }
         
-        else if dashBoardLists.dashType == "Notice Board" {
+        else if dashBoardLists.type == "Notice Board" {
             
-            indeRow = dashBoardLists.dashOrder
+            indeRow = dashBoardLists.order
             
             if noticeBoardData.count != 0 {
                 
@@ -947,9 +910,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             }
         }
         
-        else if  dashBoardLists.dashType == "Circular"{
+        else if  dashBoardLists.type == "Circular"{
             
-            indeRow = dashBoardLists.dashOrder
+            indeRow = dashBoardLists.order
             
             if circularData.count != 0{
                 
@@ -963,9 +926,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             }
         }
         
-        else if  dashBoardLists.dashType == "Recent Notifications" {
+        else if  dashBoardLists.type == "Recent Notifications" {
             
-            indeRow = dashBoardLists.dashOrder
+            indeRow = dashBoardLists.order
             
             
             
@@ -1003,9 +966,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         }
         
         
-        else if  dashBoardLists.dashType == "Upcoming Events" {
+        else if  dashBoardLists.type == "Upcoming Events" {
             
-            indeRow = dashBoardLists.dashOrder
+            indeRow = dashBoardLists.order
             
             
             if EventData.count != 0{
@@ -1021,9 +984,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
         }
         
-        else if  dashBoardLists.dashType == "Chat" {
+        else if  dashBoardLists.type == "Chat" {
             
-            indeRow = dashBoardLists.dashOrder
+            indeRow = dashBoardLists.order
             
             
             for i in dashBoardLists.Chat{
@@ -1057,11 +1020,11 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         
         
         
-        else if  dashBoardLists.dashType == "Leave Request" {
+        else if  dashBoardLists.type == "Leave Request" {
             
             
             
-            indeRow = dashBoardLists.dashOrder
+            indeRow = dashBoardLists.order
             
             
             for i in dashBoardLists.leaveRequest{
@@ -2155,556 +2118,13 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         
         
     }
+    
     @IBAction func priorityVc() {
-        
-        
-        if priority == "p4"{
-            
-            let login = LoginModal ()
-            login.mobilenumber = MobileNumber
-            login.Password = passwords
-            print("passsdded", login.Password)
-            
-            
-            let loginStr = login.toJSONString()
-            
-            loginRequest.call_request(param: loginStr!){ [self]
-                
-                (res) in
-                
-                
-                let loginResponse : LoginResponse =
-                Mapper<LoginResponse>().map(JSONString: res)!
-                
-                loginDatas = loginResponse.data
-                print("ctrss",loginDatas.count)
-                if (loginResponse.data.count >= 1){
-                    
-                    
-                    
-                    let vc = PriorityViewController(nibName: nil, bundle: nil)
-                    
-                    for i in loginResponse.data{
-                        
-                        
-                        if i.priority == "p3"{
-                            vc.IdentfierLabel = "STAFF"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                        
-                        else if i.priority == "p4"{
-                            vc.loginStudent.append(i)
-                            
-                        }
-                        
-                        
-                        else if i.priority == "p2"{
-                            
-                            vc.IdentfierLabel = "HOD"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                        
-                        
-                        else if i.priority == "p7"{
-                            
-                            vc.IdentfierLabel = "GROUP HEAD"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                        else if i.priority == "p1"{
-                            
-                            vc.IdentfierLabel = "PRINCIPAL"
-                            vc.loginPrincipal.append(i)
-                        }
-                        
-                        else if i.priority == "p5"{
-                            vc.IdentfierLabel = "PARENT"
-                            vc.loginPrincipal.append(i)
-                            
-                            
-                        }
-                        
-                        
-                        else if i.priority == "p6"{
-                            
-                            vc.IdentfierLabel = "NON TEACHING"
-                            vc.loginPrincipal.append(i)
-                        }
-                        
-                    }
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    
-                    present(vc, animated: true,completion: nil)
-                    
-                }
-            }
-            
-        }
-        
-        
-        else if priority == "p1"{
-            
-            let login = LoginModal ()
-            login.mobilenumber = MobileNumber
-            login.Password = passwords
-            
-            
-            let loginStr = login.toJSONString()
-            
-            loginRequest.call_request(param: loginStr!){ [self]
-                
-                (res) in
-                
-                
-                let loginResponse : LoginResponse =
-                Mapper<LoginResponse>().map(JSONString: res)!
-                
-                logindataprinci = loginResponse.data
-                print("ctrss",logindataprinci.count)
-                if (loginResponse.data.count >= 1){
-                    
-                    
-                    
-                    let vc = PriorityViewController(nibName: nil, bundle: nil)
-                    
-                    for i in loginResponse.data{
-                        
-                        
-                        if i.priority == "p3"{
-                            vc.IdentfierLabel = "STAFF"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                        
-                        else if i.priority == "p4"{
-                            vc.loginStudent.append(i)
-                            
-                        }
-                        
-                        
-                        else if i.priority == "p2"{
-                            
-                            vc.IdentfierLabel = "HOD"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                        
-                        else if i.priority == "p1"{
-                            
-                            vc.IdentfierLabel = "PRINCIPAL"
-                            vc.loginPrincipal.append(i)
-                        }
-                        
-                        else if i.priority == "p5"{
-                            vc.IdentfierLabel = "PARENT"
-                            vc.loginPrincipal.append(i)
-                            
-                            
-                        }
-                        
-                        else if i.priority == "p6"{
-                            
-                            vc.IdentfierLabel = "NON TEACHING"
-                            vc.loginPrincipal.append(i)
-                        }
-                        
-                        else if i.priority == "p7"{
-                            
-                            vc.IdentfierLabel = "UNIVERSITY HEAD"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                    }
-                    
-                    
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    
-                    present(vc, animated: true,completion: nil)
-                    
-                    
-                    
-                }
-            }
-            
-        }
-        
-        
-        else if priority == "p2" || priority == "p3" {
-            
-            
-            let login = LoginModal ()
-            login.mobilenumber = MobileNumber
-            login.Password =  passwords
-            print("passsdded", login.Password)
-            
-            
-            let loginStr = login.toJSONString()
-            
-            loginRequest.call_request(param: loginStr!){ [self]
-                
-                (res) in
-                
-                
-                let loginResponse : LoginResponse =
-                Mapper<LoginResponse>().map(JSONString: res)!
-                
-                loginDatas = loginResponse.data
-                print("ctrss",loginDatas.count)
-                if (loginResponse.data.count >= 1){
-                    
-                    
-                    
-                    let vc = PriorityViewController(nibName: nil, bundle: nil)
-                    
-                    
-                    for i in loginResponse.data{
-                        
-                        
-                        if i.priority == "p3"{
-                            vc.IdentfierLabel = "STAFF"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                        
-                        else if i.priority == "p4"{
-                            vc.loginStudent.append(i)
-                            
-                        }
-                        
-                        
-                        else if i.priority == "p2"{
-                            
-                            vc.IdentfierLabel = "HOD"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                        
-                        else if i.priority == "p1"{
-                            
-                            vc.IdentfierLabel = "PRINCIPAL"
-                            vc.loginPrincipal.append(i)
-                        }
-                        
-                        else if i.priority == "p5"{
-                            vc.IdentfierLabel = "PARENT"
-                            vc.loginPrincipal.append(i)
-                            
-                            
-                        }
-                        
-                        else if i.priority == "p6"{
-                            
-                            vc.IdentfierLabel = "NON TEACHING"
-                            vc.loginPrincipal.append(i)
-                        }
-                        
-                        else if i.priority == "p7"{
-                            
-                            vc.IdentfierLabel = "UNIVERSITY HEAD"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                        
-                    }
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    
-                    present(vc, animated: true,completion: nil)
-                    
-                    
-                    
-                }
-            }
-            
-        }
-        
-        
-        else if priority == "p5"{
-            
-            
-            let login = LoginModal ()
-            login.mobilenumber = MobileNumber
-            login.Password = passwords
-            print("passsdded", login.Password)
-            
-            
-            let loginStr = login.toJSONString()
-            
-            loginRequest.call_request(param: loginStr!){ [self]
-                
-                (res) in
-                
-                
-                let loginResponse : LoginResponse =
-                Mapper<LoginResponse>().map(JSONString: res)!
-                
-                loginDatas = loginResponse.data
-                print("ctrss",loginDatas.count)
-                if (loginResponse.data.count >= 1){
-                    
-                    
-                    
-                    let vc = PriorityViewController(nibName: nil, bundle: nil)
-                    
-                    
-                    
-                    for i in loginResponse.data{
-                        
-                        
-                        if i.priority == "p3"{
-                            vc.IdentfierLabel = "STAFF"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                        
-                        else if i.priority == "p4"{
-                            vc.loginStudent.append(i)
-                            
-                        }
-                        
-                        
-                        else if i.priority == "p2"{
-                            
-                            vc.IdentfierLabel = "HOD"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                        
-                        else if i.priority == "p1"{
-                            
-                            vc.IdentfierLabel = "PRINCIPAL"
-                            vc.loginPrincipal.append(i)
-                        }
-                        
-                        else if i.priority == "p5"{
-                            vc.IdentfierLabel = "PARENT"
-                            vc.loginPrincipal.append(i)
-                            
-                            
-                        }
-                        
-                        else if i.priority == "p6"{
-                            
-                            vc.IdentfierLabel = "NON TEACHING"
-                            vc.loginPrincipal.append(i)
-                        }
-                        
-                        else if i.priority == "p7"{
-                            
-                            vc.IdentfierLabel = "UNIVERSITY HEAD"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                    }
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true,completion: nil)
-                    
-                    
-                }
-            }
-            
-        }
-        
-        
-        else if priority == "p6"{
-            
-            
-            let login = LoginModal ()
-            login.mobilenumber = MobileNumber
-            login.Password = passwords
-            print("passsdded", login.Password)
-            
-            
-            let loginStr = login.toJSONString()
-            
-            loginRequest.call_request(param: loginStr!){ [self]
-                
-                (res) in
-                
-                
-                let loginResponse : LoginResponse =
-                Mapper<LoginResponse>().map(JSONString: res)!
-                
-                loginDatas = loginResponse.data
-                print("ctrss",loginDatas.count)
-                if (loginResponse.data.count >= 1){
-                    
-                    
-                    
-                    let vc = PriorityViewController(nibName: nil, bundle: nil)
-                    
-                    
-                    
-                    for i in loginResponse.data{
-                        
-                        
-                        if i.priority == "p3"{
-                            vc.IdentfierLabel = "STAFF"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                        
-                        else if i.priority == "p4"{
-                            vc.loginStudent.append(i)
-                            
-                        }
-                        
-                        
-                        else if i.priority == "p2"{
-                            
-                            vc.IdentfierLabel = "HOD"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                        
-                        else if i.priority == "p1"{
-                            
-                            vc.IdentfierLabel = "PRINCIPAL"
-                            vc.loginPrincipal.append(i)
-                        }
-                        
-                        else if i.priority == "p5"{
-                            vc.IdentfierLabel = "PARENT"
-                            vc.loginPrincipal.append(i)
-                            
-                            
-                        }
-                        
-                        else if i.priority == "p6"{
-                            
-                            vc.IdentfierLabel = "NON TEACHING"
-                            vc.loginPrincipal.append(i)
-                        }
-                        
-                        
-                        else if i.priority == "p7"{
-                            
-                            vc.IdentfierLabel = "UNIVERSITY HEAD"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                    }
-                    
-                    
-                    
-                    
-                    print("logddd",loginResponse.data)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true,completion: nil)
-                    
-                    
-                    
-                }
-            }
-            
-            
-            
-        }
-        
-        else if priority == "p7"{
-            
-            
-            let login = LoginModal ()
-            login.mobilenumber = MobileNumber
-            login.Password = passwords
-            print("passsdded", login.Password)
-            
-            
-            let loginStr = login.toJSONString()
-            
-            loginRequest.call_request(param: loginStr!){ [self]
-                
-                (res) in
-                
-                
-                let loginResponse : LoginResponse =
-                Mapper<LoginResponse>().map(JSONString: res)!
-                
-                loginDatas = loginResponse.data
-                print("ctrss",loginDatas.count)
-                if (loginResponse.data.count >= 1){
-                    
-                    
-                    
-                    let vc = PriorityViewController(nibName: nil, bundle: nil)
-                    
-                    
-                    
-                    for i in loginResponse.data{
-                        
-                        
-                        if i.priority == "p3"{
-                            vc.IdentfierLabel = "STAFF"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                        
-                        else if i.priority == "p4"{
-                            vc.loginStudent.append(i)
-                            
-                        }
-                        
-                        
-                        else if i.priority == "p2"{
-                            
-                            vc.IdentfierLabel = "HOD"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                        
-                        else if i.priority == "p1"{
-                            
-                            vc.IdentfierLabel = "PRINCIPAL"
-                            vc.loginPrincipal.append(i)
-                        }
-                        
-                        else if i.priority == "p5"{
-                            vc.IdentfierLabel = "PARENT"
-                            vc.loginPrincipal.append(i)
-                            
-                            
-                        }
-                        
-                        else if i.priority == "p6"{
-                            
-                            vc.IdentfierLabel = "NON TEACHING"
-                            vc.loginPrincipal.append(i)
-                        }
-                        
-                        
-                        else if i.priority == "p7"{
-                            
-                            vc.IdentfierLabel = "UNIVERSITY HEAD"
-                            vc.loginPrincipal.append(i)
-                            
-                        }
-                    }
-                    
-                    
-                    
-                    
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true,completion: nil)
-                    
-                    
-                    
-                }
-            }
-            
-        }
-        
-    }
-    
-    
-    
-    
-    
+           
+           let vc = PriorityViewController(nibName: nil, bundle: nil)
+           vc.modalPresentationStyle = .fullScreen
+           present(vc, animated: true,completion: nil)
+       }
     
     @IBAction func helpRedirect() {
         

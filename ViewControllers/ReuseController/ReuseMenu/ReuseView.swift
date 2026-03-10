@@ -121,78 +121,50 @@ downView.addGestureRecognizer(swipeDown)
 }
 
 
-func MenuIdList() {
-
-let Menu = menuApiIdModal()
-
-Menu.college_id = colgId
-Menu.priority = priority
-Menu.user_id    = memberId
-
-
-let MenuidStr = Menu.toJSONString()
-
-
-UsermenuApiIdRequest.call_request(param: MenuidStr!){ [self]
-    
-    (res) in
-    
-    
-   guard let menuResp : menuApiIdResponce =
-            Mapper<menuApiIdResponce>().map(JSONString: res) else {return}
-    
-    print("order data",menuResp)
-    
-    if menuResp.Status == 1 {
+    func MenuIdList() {
         
-        MenuRefName = menuResp.data
+        var Menu = menuApiIdModal ()
+        Menu.college_id = colgId
+        Menu.priority = priority
+        Menu.user_id = memberId
         
-        DefaultsKeys.MenuRefName = MenuRefName
-        
-//        let a = "Resume Builder"
-////        let b = "Staff Wise attendance Report"
-//        
-//        strName.append(a)
-////        strName.append(b)
-//        str.append(a)
-//        str.append(b)
-        for i in MenuRefName{
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetParentUserMenuWithReadWriteAccess,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: Menu
+        ) {[weak self] (result:Result<menuApiIdResponce, Error>) in
             
+            guard let self = self else {return}
             
-            str.append(i.menu_slug)
-            strName.append(i.menu_name)
-            
-            print("is_read_enabled",i.is_read_enabled)
-            print("is_write_enabled",i.is_write_enabled)
-            is_read_enabled = String(i.is_read_enabled)
-            is_write_enabled = String(is_write_enabled)
-            
-            
-            
+            switch result {
+            case .success(let success):
+                
+                if success.Status == 1 {
+                    
+                    MenuRefName = success.data
+                    DefaultsKeys.MenuRefName = MenuRefName
+                    
+                    for i in MenuRefName{
+                        str.append(i.menu_slug)
+                        strName.append(i.menu_name)
+                        print("is_read_enabled",i.is_read_enabled)
+                        print("is_write_enabled",i.is_write_enabled)
+                        is_read_enabled = String(i.is_read_enabled)
+                        is_write_enabled = String(is_write_enabled)
+                    }
+                    
+                    cv.delegate = self
+                    cv.dataSource = self
+                    cv.reloadData()
+                }
+                
+                
+            case .failure(let failure):
+                print("Error:",failure.localizedDescription)
+            }
         }
-        
-        cv.delegate = self
-        cv.dataSource = self
-        cv.reloadData()
     }
-    
-    
-    else{
-        
-        
-        
-        
-    }
-    
-    
-    
-    
-}
-
-
-
-
-}
 
 
 

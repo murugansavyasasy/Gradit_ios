@@ -113,7 +113,7 @@
 
 
 
-    let date: NSDate? = dateFormatterGet.date(from: circular.eventdate) as NSDate?
+        let date: NSDate? = dateFormatterGet.date(from: circular.eventdate ?? "") as NSDate?
 
     print(dateFormatterPrint.string(from: date as! Date))
 
@@ -261,65 +261,5 @@
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: 278, height: 150)
     }
-
-
-    func event(){
-
-    print("notidee")
-    let noti = DashBoardModal()
-
-    noti.collegeid = colgId
-    noti.userid = memberId
-    noti.priority = priority
-
-    let dashBoardStr = noti.toJSONString()
-
-
-    DashBoardRequest.call_request(param: dashBoardStr!) {
-    [self]
-    (res) in
-
-
-
-
-    let dashBoardResponse : DashBoardResponse = Mapper<DashBoardResponse>().map(JSONString: res)!
-
-
-    dashBoardDataList = dashBoardResponse.data
-    for i in dashBoardDataList{
-
-    dashtype = i.dashType
-
-
-    if i.dashType == "Upcoming Events"{
-
-    EventData =   i.Events
-
-    print("circularcollection",EventData.count)
-
-
-    }
-
-    cv.delegate = self
-    cv.dataSource = self
-    cv.reloadData()
-
-    }
-
-
-
-
-
-    }
-
-
-
-
-    }
-
-
-
-
-
 
     }

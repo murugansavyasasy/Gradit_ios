@@ -12,33 +12,25 @@ import ObjectMapper
 class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,UICollectionViewDelegate {
     
     
-    
-    
     @IBOutlet weak var pageContorler: UIPageControl!
-    
     @IBOutlet weak var viewAll: UIViewX!
-    
-    
     @IBOutlet weak var cv: UICollectionView!
-    
     
     let cvIdentifier = "AssignmentCollectionViewCell"
     var assignmentDatas : [AssignmentsDashType] = []
     var dashBoardDataList : [DashBoardData] = []
-    
     var colgId : String!
     var memberId : String!
     var loginAsType : String!
     var priority : String!
     var str : [String] = []
-   
     var strName : [String] = []
     var is_read_enabled = ""
     var is_write_enabled = ""
-    
     var currentIndex = 0
     var autoScrollTimer: Timer?
     var pageCount : Int!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -137,7 +129,7 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
 
 
                 let date: NSDate? = dateFormatterGet.date(from: DateInFormat) as NSDate?
-               let date2: NSDate? = dateFormatterGet.date(from: assigment.submissiondate) as NSDate?
+        let date2: NSDate? = dateFormatterGet.date(from: assigment.submissiondate ?? "") as NSDate?
 
 
         cell.dateLbl.text = dateFormatterPrint.string(from: date as! Date)
@@ -187,7 +179,7 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
             
             let  play = attchmentClikc(target: self, action: #selector(attachmentVc))
             
-            for i in assigment.filepaths{
+            for i in assigment.filepaths ?? []{
                 
                 play.imagurl =  i
                 
@@ -235,51 +227,6 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
         }
         return nil
 
-    }
-    
-    func assigment(){
-        
-        let dashBoard = DashBoardModal()
-        dashBoard.collegeid = colgId
-        dashBoard.userid = memberId
-        dashBoard.priority = priority
-        
-        let dashBoardStr = dashBoard.toJSONString()
-        
-        
-        DashBoardRequest.call_request(param: dashBoardStr!) {
-            [self]
-            (res) in
-            
-            
-            
-            
-            let dashBoardResponse : DashBoardResponse = Mapper<DashBoardResponse>().map(JSONString: res)!
-            
-            
-            dashBoardDataList = dashBoardResponse.data
-            for i in dashBoardDataList{
-                
-                if i.dashType == "Assignments"{
-                    
-                    assignmentDatas = i.assigment
-                    
-                }
-                
-                cv.delegate = self
-                cv.dataSource = self
-                cv.reloadData()
-                
-            }
-            
-            
-            
-           
-        }
-        
-       
-        
-        
     }
     
     @IBAction func AssigmentViewAllVc(){

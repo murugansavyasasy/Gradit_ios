@@ -113,26 +113,13 @@ class VerifyOtpViewController: UIViewController,UITextFieldDelegate {
         print("confirmpassTestfield",confirmpassTestfield.text)
         
         
-        
-        
-        
-        
         if (newPassowrdTextfiled.text == ""){
-            
-            
-            
-            
             
             let refreshAlert = UIAlertController(title: "", message: "All Fields  Empty ", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 
-                
-                
             }))
-            
-            
-            
             
             present(refreshAlert, animated: true, completion: nil)
         }
@@ -140,21 +127,11 @@ class VerifyOtpViewController: UIViewController,UITextFieldDelegate {
         
         else if  (confirmpassTestfield.text == "") {
             
-            
-            
-            
-            
-            
             let refreshAlert = UIAlertController(title: "", message: "All Fields Or Empty ", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 
-                
-                
             }))
-            
-            
-            
             
             present(refreshAlert, animated: true, completion: nil)
         }
@@ -164,10 +141,6 @@ class VerifyOtpViewController: UIViewController,UITextFieldDelegate {
             
             confirmpass()
             
-            
-            
-            
-            
         }
         
         
@@ -176,119 +149,79 @@ class VerifyOtpViewController: UIViewController,UITextFieldDelegate {
             
             
             
-            
-            
-            
-            
             let refreshAlert = UIAlertController(title: "", message: "Password is Mismatch ", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 
                 
-                
             }))
-            
-            
-            
             
             present(refreshAlert, animated: true, completion: nil)
             
         }
         
-        
-        //
-        
-        
     }
-    
-    
-    
-    
-    
-    
     
     
     func confirmpass(){
         
-        
-        
-        
-        let verify = confirmPasswordModal()
+        var verify = confirmPasswordModal()
         
         verify.mobilenumber = mobileNumber
         verify.newpassword = confirmpassTestfield.text
         
-        
-        
-        let verifyStr = verify.toJSONString()
-        
-        
-        print("verifyStrverifyStr",verifyStr)
-        confirmPassRequest.call_request(param: verifyStr!){ [self]
-            
-            (res) in
-            
-            
-            let forgetResponse : ConfirmPassResp =
-            Mapper<ConfirmPassResp>().map(JSONString: res)!
-            
-            if forgetResponse.Status == 1 {
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.forgetpasswordReset,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: verify
+        ) { [weak self] (result:Result<ConfirmPassResp,Error>) in
                 
-                
-                
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5 ){ [self] in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let success):
+                if success.Status == 1 {
                     
-                    let refreshAlert = UIAlertController(title: "", message: forgetResponse.Message, preferredStyle: UIAlertController.Style.alert)
+                    let refreshAlert = UIAlertController(
+                        title: "",
+                        message: success.Message,
+                        preferredStyle: .alert
+                    )
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+                        guard let self = self else { return }
+                        
+                        let vc = LoginViewController(nibName: nil, bundle: nil)
+                        vc.mobile_num = mobileNumber
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                    }))
+                    
+                    present(refreshAlert, animated: true, completion: nil)
+                    
+                }else{
+                    
+                    let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
-                        
-                        
                     }))
-                    
-                    
-                    
                     
                     present(refreshAlert, animated: true, completion: nil)
                 }
-                   
-                
-                
-                let vc =  LoginViewController(nibName: nil, bundle: nil)
-                vc.mobile_num = mobileNumber
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true,completion: nil)
-                
-            }
-            
-            
-            else {
-                
-                
-                let refreshAlert = UIAlertController(title: "", message: forgetResponse.Message, preferredStyle: UIAlertController.Style.alert)
+            case .failure(let failure):
+                let refreshAlert = UIAlertController(title: "", message: failure.localizedDescription, preferredStyle: UIAlertController.Style.alert)
                 
                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                     
-                    
-                    
                 }))
                 
-                
-                
-                
                 present(refreshAlert, animated: true, completion: nil)
-                
-                
+            }
                 
             }
-        }
-        
-        
     }
-    
-    
-    
     
     
 }

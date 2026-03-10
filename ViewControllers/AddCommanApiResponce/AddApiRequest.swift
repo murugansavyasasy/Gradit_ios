@@ -37,13 +37,7 @@ class addRequest{
 
     private static func get_url() -> String{
 
-        
-
         return String(format: "%@/GetAddsForCollege", Constant.baseUrl)
-
-
-        
-
     }
 
     
