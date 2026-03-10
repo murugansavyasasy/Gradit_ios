@@ -121,232 +121,129 @@
     }
 
 
-    @IBAction  func loginVc() {
-
-
-
-
+@IBAction  func loginVc() {
+            
     if mobileNumberText.text!.isEmpty {
-
-
-
-
-
-    let refreshAlert = UIAlertController(title: "", message: "Invalid Mobile Number", preferredStyle: UIAlertController.Style.alert)
-
-    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-
-
-
-
-
-    }))
-    present(refreshAlert, animated: true, completion: nil)
-    }
-
-    else if (mobileNumberText.text?.count) != 10 {
-
-
-
-
-    let refreshAlert = UIAlertController(title: "", message: "Enter valid Mobile Number", preferredStyle: UIAlertController.Style.alert)
-
-    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-
-
-
-
-
-    }))
-    present(refreshAlert, animated: true, completion: nil)
-    }
-
-
-
-    else if  passwordText.text!.isEmpty{
-
-
-
-    let refreshAlert = UIAlertController(title: "", message: "Invalid Mobile Number ", preferredStyle: UIAlertController.Style.alert)
-
-    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-
-
-
-
-
-    }))
-    present(refreshAlert, animated: true, completion: nil)
-
+        
+        let refreshAlert = UIAlertController(title: "", message: "Invalid Mobile Number", preferredStyle: UIAlertController.Style.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+        }))
+        present(refreshAlert, animated: true, completion: nil)
+        
+    }else if (mobileNumberText.text?.count) != 10 {
+        
+        let refreshAlert = UIAlertController(title: "", message: "Enter valid Mobile Number", preferredStyle: UIAlertController.Style.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+            
+        }))
+        present(refreshAlert, animated: true, completion: nil)
+    }else if  passwordText.text!.isEmpty{
+        
+        let refreshAlert = UIAlertController(title: "", message: "Invalid Mobile Number ", preferredStyle: UIAlertController.Style.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+        }))
+        present(refreshAlert, animated: true, completion: nil)
+        
     } else{
-
-
-
-    let login = LoginModal ()
-    login.mobilenumber = mobileNumberText.text
-    login.Password     =  passwordText.text
-    print("lojff",login.Password)
-
-
-    let loginStr = login.toJSONString()
-
-    loginRequest.call_request(param: loginStr!){ [self]
-
-    (res) in
-
-
-    let loginResponse : LoginResponse =
-    Mapper<LoginResponse>().map(JSONString: res)!
-
-
-    if loginResponse.Status == 1 {
-
-
-
-
-
-    PreferencesUtil.saveToPrefs(key: Constant.keyId, value: res)
-
-    print("loginResponse.data.count",loginResponse.data.count)
-    if loginResponse.data.count == 1 {
-    let vc = HomeScreenViewController(nibName: nil, bundle: nil)
-    for i in loginResponse.data {
-
-
-    let defaults = UserDefaults.standard
-    defaults.set(i.colglogo, forKey: DefaultsKeys.colglogo)
-    defaults.set(mobileNumberText.text, forKey: DefaultsKeys.mobileNumber)
-    defaults.set(passwordText.text,forKey: DefaultsKeys.Password)
-
-    var getmobil = defaults.string(forKey: DefaultsKeys.mobileNumber)
-    var getpassword = defaults.string(forKey: DefaultsKeys.Password)
-    print("login.mobilenumber",getmobil)
-
-    print("login.passs",getpassword)
-    defaults.set(i.loginas, forKey: DefaultsKeys.loginAsType)
-    defaults.set(i.membername, forKey: DefaultsKeys.memberName)
-    defaults.set(i.colgname, forKey: DefaultsKeys.colgName)
-    defaults.set(i.colgid, forKey: DefaultsKeys.collegeid)
-    defaults.set(i.memberid, forKey: DefaultsKeys.memberid)
-    defaults.set(i.priority, forKey: DefaultsKeys.priority)
-    defaults.set(i.colgcity, forKey:DefaultsKeys.colgcity)
-    defaults.set(i.divid ,   forKey:DefaultsKeys.divid)
-    defaults.set(i.divname, forKey: DefaultsKeys.divname)
-    defaults.set(i.courseid,forKey: DefaultsKeys.courseid)
-
-    print("oois_allow_to_make_call",i.is_allow_to_make_call)
-    defaults.set(i.coursename,forKey:DefaultsKeys.coursename)
-    defaults.set(i.deptid,forKey: DefaultsKeys.deptid)
-    defaults.set(i.deptname,forKey: DefaultsKeys.deptname)
-    defaults.set(i.yearid,forKey: DefaultsKeys.yearid)
-    defaults.set(i.yearname,forKey: DefaultsKeys.yearname)
-    defaults.set(i.sectionid,forKey: DefaultsKeys.sectionid)
-    defaults.set(i.sectionname,forKey: DefaultsKeys.sectionname)
-    defaults.set(i.semesterid,forKey: DefaultsKeys.semesterid)
-    defaults.set(i.semestername,forKey: DefaultsKeys.semestername)
-    defaults.set(i.is_parent_target_enabled,forKey: DefaultsKeys.is_parent_target_enabled)
-    defaults.set(i.is_allow_to_make_call,forKey: DefaultsKeys.is_allow_to_make_call)
-
-    }
-
-
-    vc.modalPresentationStyle = .fullScreen
-    present(vc, animated: true,completion: nil)
-    }else{
-
-
-    let vc = PriorityViewController(nibName: nil, bundle: nil)
-    vc.modalPresentationStyle = .fullScreen
-
-
-
-    let defaults = UserDefaults.standard
-
-    defaults.set(mobileNumberText.text, forKey: DefaultsKeys.mobileNumber)
-    defaults.set(passwordText.text,forKey: DefaultsKeys.Password)
-
-    var getmobil = defaults.string(forKey: DefaultsKeys.mobileNumber)
-    var getpassword = defaults.string(forKey: DefaultsKeys.Password)
-    for i in loginResponse.data{
-
-
-    if i.priority == "p3"{
-    vc.IdentfierLabel = "STAFF"
-    vc.loginPrincipal.append(i)
-
-    }
-
-    else if i.priority == "p4"{
-    vc.loginStudent.append(i)
-
-    }
-
-
-    else if i.priority == "p2"{
-
-    vc.IdentfierLabel = "HOD"
-    vc.loginPrincipal.append(i)
-
-    }
-
-    else if i.priority == "p1"{
-
-    vc.IdentfierLabel = "PRINCIPAL"
-    vc.loginPrincipal.append(i)
-    }
-
-    else if i.priority == "p5"{
-    vc.IdentfierLabel = "PARENT"
-    vc.loginStudent.append(i)
-
-
-    }
-
-
-
-    else if i.priority == "p6"{
-
-    vc.IdentfierLabel = "NON TEACHING"
-    vc.loginPrincipal.append(i)
-    }
-
-
-
-    else if i.priority == "p7"{
-
-    vc.IdentfierLabel = "UNIVERSITY HEAD"
-    vc.loginPrincipal.append(i)
-    }
-
-
-    }
-
-
-    present(vc, animated: true,completion: nil)
-
-    }
-    }else{
-
-
-    let refreshAlert = UIAlertController(title: "", message: loginResponse.Message, preferredStyle: UIAlertController.Style.alert)
-
-    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-
-
-
-
-
-    }))
-    present(refreshAlert, animated: true, completion: nil)
-    }
-
-
-    }
-    }
         
+        var login = LoginModal ()
+        login.mobilenumber = mobileNumberText.text
+        login.Password     = passwordText.text
         
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.LoginFromApp,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: login
+        ) { [weak self] (result:Result<LoginResponse,Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let success):
+                if success.Status == 1 {
+                    
+                    let defaults = UserDefaults.standard
+                    
+                    defaults.set(mobileNumberText.text, forKey: DefaultsKeys.mobileNumber)
+                    defaults.set(passwordText.text,forKey: DefaultsKeys.Password)
+                    
+                    let loginData = success.data ?? []
+                    
+                    if let jsonData = try? JSONEncoder().encode(success),
+                       let jsonString = String(data: jsonData, encoding: .utf8) {
+                        PreferencesUtil.saveToPrefs(key: Constant.keyId, value: jsonString)
+                    }
+                    
+                    do {
+                        let encoded = try JSONEncoder().encode(loginData)
+                        UserDefaults.standard.set(encoded, forKey: DefaultsKeys.loginDataList)
+                    }catch{
+                        print("Encoding profiles failed:", error)
+                    }
+                    
+                    if loginData.count == 1 {
+                        let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+                        for i in loginData {
+                            
+                            defaults.set(i.colglogo, forKey: DefaultsKeys.colglogo)
+                            defaults.set(i.loginas, forKey: DefaultsKeys.loginAsType)
+                            defaults.set(i.membername, forKey: DefaultsKeys.memberName)
+                            defaults.set(i.colgname, forKey: DefaultsKeys.colgName)
+                            defaults.set(i.colgid, forKey: DefaultsKeys.collegeid)
+                            defaults.set(i.memberid, forKey: DefaultsKeys.memberid)
+                            defaults.set(i.priority, forKey: DefaultsKeys.priority)
+                            defaults.set(i.colgcity, forKey:DefaultsKeys.colgcity)
+                            defaults.set(i.divid ,   forKey:DefaultsKeys.divid)
+                            defaults.set(i.divname, forKey: DefaultsKeys.divname)
+                            defaults.set(i.courseid,forKey: DefaultsKeys.courseid)
+                            defaults.set(i.coursename,forKey:DefaultsKeys.coursename)
+                            defaults.set(i.deptid,forKey: DefaultsKeys.deptid)
+                            defaults.set(i.deptname,forKey: DefaultsKeys.deptname)
+                            defaults.set(i.yearid,forKey: DefaultsKeys.yearid)
+                            defaults.set(i.yearname,forKey: DefaultsKeys.yearname)
+                            defaults.set(i.sectionid,forKey: DefaultsKeys.sectionid)
+                            defaults.set(i.sectionname,forKey: DefaultsKeys.sectionname)
+                            defaults.set(i.semesterid,forKey: DefaultsKeys.semesterid)
+                            defaults.set(i.semestername,forKey: DefaultsKeys.semestername)
+                            defaults.set(i.is_parent_target_enabled,forKey: DefaultsKeys.is_parent_target_enabled)
+                            defaults.set(i.is_allow_to_make_call,forKey: DefaultsKeys.is_allow_to_make_call)
+                        }
+                        
+                        vc.modalPresentationStyle = .fullScreen
+                        present(vc, animated: true,completion: nil)
+                    }else{
+                        
+                        let vc = PriorityViewController(nibName: nil, bundle: nil)
+                        vc.modalPresentationStyle = .fullScreen
+                        present(vc, animated: true,completion: nil)
 
+                    }
+                }else {
+                    let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                    }))
+                    present(refreshAlert, animated: true, completion: nil)
+                }
+                
+            case .failure(let failure):
+                
+                let refreshAlert = UIAlertController(title: "", message: failure.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                
+                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                    
+                }))
+                present(refreshAlert, animated: true, completion: nil)
+            }
+            
+        }
     }
+}
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 

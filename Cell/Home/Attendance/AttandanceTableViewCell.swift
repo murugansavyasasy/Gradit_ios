@@ -43,7 +43,7 @@ class AttandanceTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDa
         
         tv.dataSource  = self
         tv.delegate = self
-        //        attendancess()
+        
         let rowNib = UINib(nibName: identifer, bundle: nil)
         
         tv.register(rowNib, forCellReuseIdentifier: identifer)
@@ -52,71 +52,6 @@ class AttandanceTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDa
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
-        
-    }
-    
-    
-    
-    func attendancess(){
-        
-        print("notidee")
-        let noti = DashBoardModal()
-        
-        noti.collegeid = colgId
-        noti.userid = memberId
-        noti.priority = priority
-        
-        let dashBoardStr = noti.toJSONString()
-        
-        print("dashBoardStr",dashBoardStr)
-        DashBoardRequest.call_request(param: dashBoardStr!) {
-            [self]
-            (res) in
-            
-            
-            
-            
-            let dashBoardResponse : DashBoardResponse = Mapper<DashBoardResponse>().map(JSONString: res)!
-            
-            
-            if dashBoardResponse.Status == 1 {
-                
-                
-                dash = dashBoardResponse.data
-                for i in dash{
-                    
-                    dashtypes = i.dashType
-                    
-                    
-                    if i.dashType == "Attendance"{
-                        
-                        attend = i.attendanceSubData
-                        
-                        print("nonoon",attend.count)
-                        
-                        
-                    }
-                    
-                    tv.delegate = self
-                    tv.dataSource = self
-                    tv.reloadData()
-                    
-                }
-                
-                
-                
-            }else{
-                
-                
-                
-                
-            }
-            
-            
-            
-            
-            
-        }
         
     }
     

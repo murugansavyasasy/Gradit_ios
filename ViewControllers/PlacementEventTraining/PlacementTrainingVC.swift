@@ -291,14 +291,14 @@ class PlacementTrainingVC: UIViewController, UITableViewDelegate, UITableViewDat
         
         // Try to parse the repeatUntil date
         let formattedDate: String
-        if let repeatUntil = training?.repeatUntil,
-           let date = isoFormatter.date(from: repeatUntil) {
+        if let repeatUntill = training?.repeatUntill,
+           let date = isoFormatter.date(from: repeatUntill) {
             let formatter = DateFormatter()
             formatter.dateFormat = "dd MMM yyyy"
             formatter.locale = Locale(identifier: "en_US_POSIX")
             formattedDate = formatter.string(from: date)
         } else {
-            formattedDate = training?.repeatUntil ?? "" // fallback to original string
+            formattedDate = training?.repeatUntill ?? "" // fallback to original string
         }
         
         // Build final string

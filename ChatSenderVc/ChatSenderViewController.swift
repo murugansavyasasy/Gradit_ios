@@ -398,8 +398,7 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
     
     func addApi(){
         
-        
-        let add = AddApiModal()
+        var add = AddApiModal()
         
         let defaults = UserDefaults.standard
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
@@ -412,52 +411,33 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
         add.college_id = colgId
         add.previous_add_id = PreviousAddId
         
-        
-        let addstr = add.toJSONString()
-        
-        
-        addRequest.call_request(param: addstr!){ [self]
+        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .get, queryParam: nil, requestBody: nil
+        ) {[weak self] (result:Result<AddApiResponce,Error>) in
             
-            (res) in
+            guard let self = self else {return}
             
-            
-            
-            let addApis : AddApiResponce = Mapper<AddApiResponce>().map(JSONString: res)!
-            
-            
-            if addApis.Status == 1{
-                addapiRef = addApis.data
-                
-                
-                for i in addApis.data{
+            switch result {
+            case .success(let success):
+                if success.Status == 1 {
+                    addapiRef = success.data ?? []
                     
-                    
-                    //
-                    
-                    bigImg.sd_setImage(with: URL(string: i.background_image), placeholderImage: UIImage(named: "ic_white"))
-                    
-                    
-                    smallImg.sd_setImage(with: URL(string: i.add_image), placeholderImage: UIImage(named: "ic_white"))
-                    
-                    let singleTap = adds(target: self, action: #selector(adLoad))
-                    singleTap.url = i.add_url
-                    bigImg.isUserInteractionEnabled = true
-                    bigImg.addGestureRecognizer(singleTap)
-                    
-                    
+                    for i in addapiRef{
+                      
+                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
+                        
+                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
+                        
+                        let singleTap = adds(target: self, action: #selector(adLoad))
+                        singleTap.url = i.add_url
+                        bigImg.isUserInteractionEnabled = true
+                        bigImg.addGestureRecognizer(singleTap)
+                    }
                 }
                 
-                
-                
+            case .failure(let failure):
+                print(failure.localizedDescription)
             }
-            else{
-                
-                
-            }
-            
         }
-        
-        
     }
     
     
@@ -467,11 +447,6 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
         vc.addWeurl = gesture.url
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true,completion: nil)
-        
-        
-        
-        
-        
     }
    
     
@@ -765,94 +740,9 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
     
     
     @IBAction func priorityVc() {
-        
-        
-        
-        
-        
-        
-        
-        
-        let login = LoginModal ()
-        login.mobilenumber = MobileNumber
-        login.Password = password
-        print("passsdded", login.Password)
-        
-        
-        let loginStr = login.toJSONString()
-        
-        loginRequest.call_request(param: loginStr!){ [self]
-            
-            (res) in
-            
-            
-            let loginResponse : LoginResponse =
-            Mapper<LoginResponse>().map(JSONString: res)!
-            
-            loginDatas = loginResponse.data
-            print("ctrss",loginDatas.count)
-            if (loginResponse.data.count >= 1){
-                
-                
-                
-                let vc = PriorityViewController(nibName: nil, bundle: nil)
-                for i in loginResponse.data{
-                    
-                    
-                    if i.priority == "p3"{
-                        vc.IdentfierLabel = "STAFF"
-                        vc.loginPrincipal.append(i)
-                        
-                    }
-                    
-                    else if i.priority == "p4"{
-                        vc.loginStudent.append(i)
-                        
-                    }
-                    
-                    
-                    else if i.priority == "p2"{
-                        
-                        vc.IdentfierLabel = "HOD"
-                        vc.loginPrincipal.append(i)
-                        
-                    }
-                    
-                    else if i.priority == "p1"{
-                        
-                        vc.IdentfierLabel = "PRINCIPAL"
-                        vc.loginPrincipal.append(i)
-                    }
-                    
-                    else if i.priority == "p5"{
-                        vc.IdentfierLabel = "PARENT"
-                        vc.loginPrincipal.append(i)
-                        
-                        
-                    }
-                    
-                    else if i.priority == "p6"{
-                        
-                        vc.IdentfierLabel = "NON TEACHING"
-                        vc.loginPrincipal.append(i)
-                    }
-                    
-                    else if i.priority == "p7"{
-                        
-                        vc.IdentfierLabel == "UNIVERSITY HEAD"
-                        vc.loginPrincipal.append(i)
-                    }
-                    
-                }
-                vc.modalPresentationStyle = .fullScreen
-                
-                present(vc, animated: true,completion: nil)
-                
-                
-                
-            }
-        }
-        
+        let vc = PriorityViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true,completion: nil)
     }
     
     @IBAction func profileRedirect() {

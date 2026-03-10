@@ -862,75 +862,44 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
     
     func MenuIdList() {
         
-        let Menu = menuApiIdModal()
+        var Menu = menuApiIdModal()
         
         Menu.college_id = collegeId
         Menu.priority = priority
-        Menu.user_id    = memberId
+        Menu.user_id = memberId
         
-        
-        let MenuidStr = Menu.toJSONString()
-        
-        
-        voiceAndTexRequest.call_request(param: MenuidStr!){ [self]
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetTextMessageBytype,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: Menu
+        ) {[weak self] (result:Result<menuApiIdResponce , Error>) in
             
-            (res) in
-            
-            
-            let menuResp : menuApiIdResponce =
-            Mapper<menuApiIdResponce>().map(JSONString: res)!
-            
-            print("order data",menuResp);
-            
-            MenuRefName = menuResp.data
-            
-            print("order data data",MenuRefName)
-            
-            
-            for i in 0..<MenuRefName.count{
+            guard let self = self else {return}
+            switch result {
+            case .success(let success):
                 
-                
-                CallEnabel = MenuRefName[i].menu_slug
-                if( MenuRefName[i].is_write_enabled == 1 && MenuRefName[i].menu_slug == "text") {
+                if success.Status == 1 {
+                    MenuRefName = success.data
                     
-                    plusView.isHidden = false
-                    
-                    
-                } else if (MenuRefName[i].is_write_enabled == 1 && MenuRefName[i].menu_slug == "voice"){
-                    
-                    
-                    
-                    micRecordView.isHidden = false
-                    
+                    for i in MenuRefName {
+                        
+                        CallEnabel = i.menu_slug
+                        
+                        if i.is_write_enabled == 1 {
+                            plusView.isHidden = !(i.menu_slug == "text")
+                            micRecordView.isHidden = !(i.menu_slug == "voice")
+                        }else {
+                            plusView.isHidden = true
+                            micRecordView.isHidden = true
+                        }
+                    }
                 }
                 
-                
-                else if( MenuRefName[i].is_write_enabled == 0 && MenuRefName[i].menu_slug == "text") {
-                    
-                    plusView.isHidden = true
-                    
-                    
-                } else if (MenuRefName[i].is_write_enabled == 0 && MenuRefName[i].menu_slug == "voice"){
-                    
-                    
-                    
-                    micRecordView.isHidden = true
-                    
-                }
-                
-                
+            case .failure(let failure):
+                print("Error:",failure.localizedDescription)
             }
-            
-            
-            
-            
-            
-            
-            
         }
-        
-        
-        
     }
     
     func ReadApi() {
@@ -1200,73 +1169,44 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
     func addApi(){
         
         
-        let add = AddApiModal()
+        var add = AddApiModal()
         
         let defaults = UserDefaults.standard
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
-        print("EventDefaultsKeys.DeviceToken",deviceToken)
         add.member_id = memberId
         add.mobile_no = MobileNumber
         add.priority = priority
         add.college_id = collegeId
         add.previous_add_id = previousAddId
-        print("add.previous_add_id",previousAddId)
         
-        
-        
-        let addstr = add.toJSONString()
-        
-        
-        print("mobilree", add.mobile_no)
-        addRequest.call_request(param: addstr!){ [self]
+        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .get, queryParam: nil, requestBody: nil
+        ) {[weak self] (result:Result<AddApiResponce,Error>) in
             
-            (res) in
+            guard let self = self else {return}
             
-            
-            previousAddId = previousAddId + 1
-            let addApis : AddApiResponce = Mapper<AddApiResponce>().map(JSONString: res)!
-            
-            
-            if addApis.Status == 1 {
-                addapiRef = addApis.data
-                
-                
-                for i in addApis.data{
+            switch result {
+            case .success(let success):
+                if success.Status == 1 {
+                    addapiRef = success.data ?? []
                     
-                    
-                    
-                    
-                    bigImg.sd_setImage(with: URL(string: i.background_image), placeholderImage: UIImage(named: "ic_white"))
-                    
-                    
-                    smallImg.sd_setImage(with: URL(string: i.add_image), placeholderImage: UIImage(named: "ic_white"))
-                    
-                    let singleTap = CommuniAdd(target: self, action: #selector(adLoad))
-                    singleTap.url = i.add_url
-                    bigImg.isUserInteractionEnabled = true
-                    bigImg.addGestureRecognizer(singleTap)
-                    
-                    
+                    for i in addapiRef{
+                      
+                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
+                        
+                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
+                        
+                        let singleTap = adds(target: self, action: #selector(adLoad))
+                        singleTap.url = i.add_url
+                        bigImg.isUserInteractionEnabled = true
+                        bigImg.addGestureRecognizer(singleTap)
+                    }
                 }
                 
-                
-                
-                
-                
-                
-                
-            }
-            
-            
-            else{
-                
-                
-                
-                
+            case .failure(let failure):
+                print(failure.localizedDescription)
             }
         }
-        
         
     }
     
@@ -1765,98 +1705,9 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
     
     @IBAction func priorityVc() {
         
-        
-        
-        
-        
-        
-        
-        
-        
-        let login = LoginModal ()
-        login.mobilenumber = MobileNumber
-        login.Password = password
-        print("passsdded", login.Password)
-        
-        
-        let loginStr = login.toJSONString()
-        
-        loginRequest.call_request(param: loginStr!){ [self]
-            
-            (res) in
-            
-            
-            let loginResponse : LoginResponse =
-            Mapper<LoginResponse>().map(JSONString: res)!
-            
-            loginDatas = loginResponse.data
-            print("ctrss",loginDatas.count)
-            if (loginResponse.data.count >= 1){
-                
-                
-                
-                let vc = PriorityViewController(nibName: nil, bundle: nil)
-                for i in loginResponse.data{
-                    
-                    
-                    if i.priority == "p3"{
-                        vc.IdentfierLabel = "STAFF"
-                        vc.loginPrincipal.append(i)
-                        
-                    }
-                    
-                    else if i.priority == "p4"{
-                        vc.loginStudent.append(i)
-                        
-                    }
-                    
-                    
-                    else if i.priority == "p2"{
-                        
-                        vc.IdentfierLabel = "HOD"
-                        vc.loginPrincipal.append(i)
-                        
-                    }
-                    
-                    else if i.priority == "p1"{
-                        
-                        vc.IdentfierLabel = "PRINCIPAL"
-                        vc.loginPrincipal.append(i)
-                    }
-                    
-                    else if i.priority == "p5"{
-                        vc.IdentfierLabel = "PARENT"
-                        vc.loginPrincipal.append(i)
-                        
-                        
-                    }
-                    
-                    else if i.priority == "p6"{
-                        
-                        vc.IdentfierLabel = "NON TEACHING"
-                        vc.loginPrincipal.append(i)
-                    }
-                    
-                    else if i.priority == "p7"{
-                        
-                        vc.IdentfierLabel = "UNIVERSITY HEAD"
-                        vc.loginPrincipal.append(i)
-                    }
-                }
-                vc.modalPresentationStyle = .fullScreen
-                
-                present(vc, animated: true,completion: nil)
-                
-                
-                
-            }
-        }
-        
-        
-        
-        
-        
-        
+        let vc = PriorityViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true,completion: nil)
     }
     
 }

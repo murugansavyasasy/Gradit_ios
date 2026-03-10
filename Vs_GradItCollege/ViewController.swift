@@ -132,271 +132,125 @@ class ViewController: UIViewController {
         
     }
     
- 
-    
-    
-    
-    
-    
-    
     
     func loginDetails() {
         
         let defaults = UserDefaults.standard
         
+        mobileNum      = defaults.string(forKey: DefaultsKeys.mobileNumber)
+        let password   = defaults.string(forKey: DefaultsKeys.Password)
+        termsCondition = defaults.string(forKey: DefaultsKeys.TermsAndCondition)
+        countryId      = defaults.string(forKey: DefaultsKeys.CountryId)
         
-        
-        mobileNum = defaults.string(forKey: DefaultsKeys.mobileNumber)
-        
-        
-        
-        let PasswordText = defaults.string(forKey: DefaultsKeys.Password)
-        
-        
-        
-        
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
-            
-            let defaults = UserDefaults.standard
-            
-            mobileNum = defaults.string(forKey:DefaultsKeys.mobileNumber)
-            
-            termsCondition = defaults.string(forKey: DefaultsKeys.TermsAndCondition)
-            
-            countryId = defaults.string(forKey: DefaultsKeys.CountryId)
-            
-            
-            
-            
-            
-            print("mobileNum123",mobileNum)
-            
-            print("termsCondition",termsCondition)
-            
-            print("countryId",countryId)
-            
-            
-            
-            if termsCondition != nil {
-                
-                
-                
-                if countryId != nil {
-                    
-                    
-                    
-                    if mobileNum != nil {
-                        
-//                        print("mobileNumTrue")
-                        
-                        let is_user_Select_country = PreferencesUtil.checkPrefs(key: Constant.keyId)
-                        
-                        //
-                        
-                        if is_user_Select_country{
-                            
-                            
-                            
-                            
-                            
-//                            print("go to Home")
-                            
-                            
-                            
-                            
-                            
-                            let login = LoginModal ()
-                            
-                            
-                            
-                            login.mobilenumber = mobileNum
-                            
-                            
-                            
-                            login.Password     =  PasswordText
-                           
-                            
-                            print("PasswordText",PasswordText)
-                          
-                            print("mobileNum123",mobileNum)
-                         
-                            let loginStr = login.toJSONString()
-                            
-                            
-                            
-                            loginRequest.call_request(param: loginStr!){ [self]
-                                
-                             
-                                
-                                (res) in
-                                
-                          
-                                
-                                let loginResponse : LoginResponse =
-                                
-                                
-                                
-                                Mapper<LoginResponse>().map(JSONString: res)!
-                             
-                                let vc = PriorityViewController(nibName: nil, bundle: nil)
-                                
-                                vc.modalPresentationStyle = .fullScreen
-                                
-                                for i in loginResponse.data{
-                                    
-                                    
-                                    if i.priority == "p3"{
-                                        vc.IdentfierLabel = "STAFF"
-                                        vc.loginPrincipal.append(i)
-                                    
-                                    }
-                                    
-                                    else if i.priority == "p4"{
-                                    vc.loginStudent.append(i)
-                                        
-                                    }
-                                    
-                                    
-                                    else if i.priority == "p2"{
-                                        
-                                        vc.IdentfierLabel = "HOD"
-                                        vc.loginPrincipal.append(i)
-                                    
-                                    }
-                                    
-                                    else if i.priority == "p1"{
-                                        
-                                        vc.IdentfierLabel = "PRINCIPAL"
-                                        vc.loginPrincipal.append(i)
-                                    }
-                                    
-                                    else if i.priority == "p5"{
-                                        vc.IdentfierLabel = "PARENT"
-                                        vc.loginStudent.append(i)
-                                        
-                                        
-                                    }
-                                    
-                                    else if i.priority == "p6"{
-                                        
-                                        vc.IdentfierLabel = "NON TEACHING"
-                                        vc.loginPrincipal.append(i)
-                                    }
-                                    
-                                    else if i.priority == "p7"{
-                                        
-                                        vc.IdentfierLabel = "UNIVERSITY HEAD"
-                                        vc.loginPrincipal.append(i)
-                                    }
-                                }
-                            
-                                
-                                print("dfrdd",loginResponse.data)
-                             
-                                vc.loginData = loginResponse.data
-                                
-                                present(vc, animated: true,completion: nil)
-                           
-                            }
-                      
-                            
-                        }else{
-                            
-                            
-                            
-                            let vc = LoginNewViewController(nibName: nil, bundle: nil)
-                            
-                            
-                            
-                            vc.modalPresentationStyle = .fullScreen
-                            
-                            
-                            
-                            self.present(vc, animated: true, completion: nil)
-                            
-                            
-                            
-                            print("LoginViewController")
-                       
-                            
-                        }
-                        
-                        
-                        
-                    }else{
-                        
-                        
-                        
-                        let vc = LoginNewViewController(nibName: nil, bundle: nil)
-                        
-                        
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        
-                        
-                        
-                        self.present(vc, animated: true, completion: nil)
-                        
-                        
-                        
-                        print("LoginViewController")
-                        
-                        
-                        
-                    }
-                    
-                }else{
-                    
-                    
-                    
-                    let vc = CountryListViewController(nibName: nil, bundle: nil)
-                    
-                    //
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    
-                    
-                    
-                    self.present(vc, animated: true, completion: nil)
-                    
-                    
-                    
-                    print("CountryListViewController")
-                    
-                    
-                    
-                    
-                    
-                }
-                
-        
-                
-            }else{
-                
-                let vc = TermsViewController(nibName: nil, bundle: nil)
-                
-                //
-                
-                vc.modalPresentationStyle = .fullScreen
-                
-                
-                
-                self.present(vc, animated: true, completion: nil)
-                
-                
-                
-                print("TermsViewController")
-                
-            }
-            
-       
+        // Terms check
+        guard termsCondition != nil else {
+            presentVC(TermsViewController())
+            return
         }
         
+        // Country check
+        guard countryId != nil else {
+            print("CountryListViewController")
+            presentVC(CountryListViewController())
+            return
+        }
         
+        // Mobile check
+        guard mobileNum != nil else {
+            print("LoginViewController")
+            presentVC(LoginNewViewController())
+            return
+        }
         
+        let isUserSelectCountry = PreferencesUtil.checkPrefs(key: Constant.keyId)
+        
+        guard isUserSelectCountry else {
+            print("LoginViewController")
+            presentVC(LoginNewViewController())
+            return
+        }
+        
+        var login = LoginModal()
+        login.mobilenumber = mobileNum
+        login.Password     = password
+        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.LoginFromApp,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: login
+        ) { [weak self] (result: Result<LoginResponse, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let success):
+                
+                if success.Status == 1 {
+                    
+                    let loginData = success.data ?? []
+                    
+                    do {
+                        let encoded = try JSONEncoder().encode(loginData)
+                        UserDefaults.standard.set(encoded, forKey: DefaultsKeys.loginDataList)
+                    }catch{
+                        print("Encoding profiles failed:", error)
+                    }
+                    
+                    if loginData.count == 1 {
+                        let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+                        for i in loginData {
+                            
+                            defaults.set(i.colglogo, forKey: DefaultsKeys.colglogo)
+                            defaults.set(i.loginas, forKey: DefaultsKeys.loginAsType)
+                            defaults.set(i.membername, forKey: DefaultsKeys.memberName)
+                            defaults.set(i.colgname, forKey: DefaultsKeys.colgName)
+                            defaults.set(i.colgid, forKey: DefaultsKeys.collegeid)
+                            defaults.set(i.memberid, forKey: DefaultsKeys.memberid)
+                            defaults.set(i.priority, forKey: DefaultsKeys.priority)
+                            defaults.set(i.colgcity, forKey:DefaultsKeys.colgcity)
+                            defaults.set(i.divid ,   forKey:DefaultsKeys.divid)
+                            defaults.set(i.divname, forKey: DefaultsKeys.divname)
+                            defaults.set(i.courseid,forKey: DefaultsKeys.courseid)
+                            defaults.set(i.coursename,forKey:DefaultsKeys.coursename)
+                            defaults.set(i.deptid,forKey: DefaultsKeys.deptid)
+                            defaults.set(i.deptname,forKey: DefaultsKeys.deptname)
+                            defaults.set(i.yearid,forKey: DefaultsKeys.yearid)
+                            defaults.set(i.yearname,forKey: DefaultsKeys.yearname)
+                            defaults.set(i.sectionid,forKey: DefaultsKeys.sectionid)
+                            defaults.set(i.sectionname,forKey: DefaultsKeys.sectionname)
+                            defaults.set(i.semesterid,forKey: DefaultsKeys.semesterid)
+                            defaults.set(i.semestername,forKey: DefaultsKeys.semestername)
+                            defaults.set(i.is_parent_target_enabled,forKey: DefaultsKeys.is_parent_target_enabled)
+                            defaults.set(i.is_allow_to_make_call,forKey: DefaultsKeys.is_allow_to_make_call)
+                        }
+                        
+                        vc.modalPresentationStyle = .fullScreen
+                        present(vc, animated: true,completion: nil)
+                    }else{
+                        
+                        let vc = PriorityViewController(nibName: nil, bundle: nil)
+                        vc.modalPresentationStyle = .fullScreen
+                        present(vc, animated: true,completion: nil)
+                        
+                    }
+                } else {
+                    
+                    presentVC(LoginNewViewController())
+                }
+                
+            case .failure(let error):
+                print("Error:", error.localizedDescription)
+                presentVC(LoginNewViewController())
+            }
+        }
     }
-    
+
+    private func presentVC(_ vc: UIViewController) {
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
     
     func VersionCheck () {
         let defaults = UserDefaults.standard
@@ -483,126 +337,6 @@ class ViewController: UIViewController {
             }
             
             }
-        
-//        VersionCheckRequest.call_request(param: param)  {
-//
-//            [self] (res) in
-//
-//            let VersionUpdate : VersionCheckResponce = Mapper<VersionCheckResponce>().map(JSONString: res)!
-//
-//
-//            if VersionUpdate.Status == 1 {
-//
-//
-//                versionCheck = VersionUpdate.versionData
-//
-//                for i in versionCheck {
-//
-//                    defaults.set(i.videojson, forKey: DefaultsKeys.vimeoAccessToken)
-//
-//                    defaults.set(i.feepaymentlink, forKey: DefaultsKeys.feepaymentlink)
-//
-//                    defaults.set(i.videosizelimit, forKey: DefaultsKeys.videosizelimit)
-//
-//                    defaults.set(i.videosizealert, forKey: DefaultsKeys.videosizealert)
-//
-//                    defaults.set(i.isforceupdaterequired, forKey: DefaultsKeys.isforceupdaterequired)
-//
-//                    defaults.set(i.isversionupdateavailable, forKey: DefaultsKeys.isversionupdateavailable)
-//
-//                    defaults.set(i.versionalerttitle, forKey: DefaultsKeys.versionalerttitle)
-//
-//                    defaults.set(i.versionalertcontent, forKey: DefaultsKeys.versionalertcontent)
-//
-//                    isversionupdateavailable = defaults.integer(forKey: DefaultsKeys.isversionupdateavailable)
-//
-//                    isforceupdaterequired = defaults.integer(forKey: DefaultsKeys.isforceupdaterequired)
-//
-//                    versionalertcontent  = defaults.string(forKey: DefaultsKeys.versionalertcontent)
-//
-//                    versionalerttitle = defaults.string(forKey: DefaultsKeys.versionalerttitle)
-//
-//                    if(isversionupdateavailable == 1){
-//
-//
-//                        let alert = UIAlertController(title: versionalerttitle, message:versionalertcontent, preferredStyle: UIAlertController.Style.alert)
-//
-//                        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { [self] action in
-//
-//                            if(isversionupdateavailable == 1 && isforceupdaterequired == 1)
-//
-//                            {
-//                                let alert = UIAlertController(title: "Needs to Update", message: "New updates are available. Would you like to update them now?", preferredStyle: UIAlertController.Style.alert)
-//
-//                                //
-//
-//                                alert.addAction(UIAlertAction(title: "Update", style: UIAlertAction.Style.default, handler: { action in self.callAppStore()}))
-//
-//
-//
-//                                DispatchQueue.main.async{
-//
-//                                    self.present(alert, animated: true, completion: nil)
-//
-//                                }
-//
-//                            }else  if(isversionupdateavailable == 1 && isforceupdaterequired == 0) {
-//
-//                                let alert = UIAlertController(title: "Needs to Update", message: "New updates are available. Would you like to update them now?", preferredStyle: UIAlertController.Style.alert)
-//
-//                                alert.addAction(UIAlertAction(title: "Not Now", style: UIAlertAction.Style.default, handler: { action in self.loginDetails()}))
-//
-//                                alert.addAction(UIAlertAction(title: "Update", style: UIAlertAction.Style.default, handler: { action in self.callAppStore()}))
-//
-//
-//
-//                                DispatchQueue.main.async{
-//
-//                                    self.present(alert, animated: true, completion: nil)
-//
-//                                }
-//
-//                            }
-//                            //
-//                            else
-//
-//                            {
-//
-//                                self.loginDetails()
-//
-//                            }
-//
-//                        }))
-//
-//                        DispatchQueue.main.async
-//
-//                        {
-//
-//                            self.present(alert, animated: true, completion: nil)
-//
-//                        }
-//
-//                    }else{
-//
-//                        print("LoginDetailElsePart")
-//
-//                        loginDetails()
-//
-//
-//                    }
-//
-//                    print("VersionCheckSuccess")
-//
-//
-//
-//                }
-//
-//
-//
-//            }
-//
-//        }
-        
     }
     
     

@@ -110,7 +110,7 @@
 
 
 
-    let date: NSDate? = dateFormatterGet.date(from: notice.createddate) as NSDate?
+        let date: NSDate? = dateFormatterGet.date(from: notice.createddate ?? "") as NSDate?
 
     print(dateFormatterPrint.string(from: date as! Date))
 
@@ -267,68 +267,6 @@
 
     //
     }
-
-
-
-    func notice(){
-
-    print("notidee")
-    let noti = DashBoardModal()
-
-    noti.collegeid = colgId
-    noti.userid = memberId
-    noti.priority = priority
-
-    let dashBoardStr = noti.toJSONString()
-
-
-    DashBoardRequest.call_request(param: dashBoardStr!) {
-    [self]
-    (res) in
-
-
-
-
-    let dashBoardResponse : DashBoardResponse = Mapper<DashBoardResponse>().map(JSONString: res)!
-
-
-    dash = dashBoardResponse.data
-    for i in dash{
-
-    dashtypes = i.dashType
-
-
-    if i.dashType == "Notice Board"{
-
-    noticeBoardData =   i.noticeSubData
-
-    print("nonoon",noticeBoardData)
-
-
-    }
-
-    cv.delegate = self
-    cv.dataSource = self
-    cv.reloadData()
-
-    }
-
-
-
-
-
-    }
-
-
-
-
-    }
-
-
-
-
-
-
 
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
