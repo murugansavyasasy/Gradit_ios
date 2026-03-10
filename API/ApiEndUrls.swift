@@ -17,6 +17,7 @@ struct APIEndpoints {
     static let DeviceToken = "DeviceToken"
     static let GetTextMessageBytype = "GetTextMessageBytype"
     static let GetAddsForCollege = "GetAddsForCollege"
+    static let GetOverallcountByMenuType = "GetOverallcountByMenuType"
     
     
     
@@ -24,4 +25,5 @@ struct APIEndpoints {
     static let placementEventHistorical = "students/student-placement-events-historical"
     static let trainingEvent = "students/student-career"
     static let trainingEventHistorical = "students/student-career-historical"
+
 }

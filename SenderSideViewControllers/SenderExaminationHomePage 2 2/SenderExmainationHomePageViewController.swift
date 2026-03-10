@@ -1437,7 +1437,7 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
     
     func overAllRefName() {
         
-        let overall = overAllModal()
+        var overall = overAllModal()
         
         overall.userid   =  memberId
         overall.menuid       = "3"
@@ -1447,87 +1447,49 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
         overall.appid        =   "2"
         overall.priority     = priority
         
-        
-        let overallStr = overall.toJSONString()
-        
-        
-        overAllRequest .call_request(param: overallStr!){ [self]
-            
-            (res) in
-            
-            print("order overallStr",overallStr)
-            let overallResp : overAllResponce =
-            Mapper<overAllResponce>().map(JSONString: res)!
-            
-            print("order data",overallResp)
-            
-            if overallResp.Status == 1{
-                overAllRef = overallResp.data
-                
-                for i in overAllRef{
-                    
-                    upcommingExamCountLabel.text = i.upcomingexams
-                    pastExamCoutLabel.text = i.pastexams
-                    
-                    if (i.upcomingexams == "0") && (i.pastexams == "0"){
-                        
-                        upcommingCountView.isHidden = true
-                        pastCountView.isHidden = true
-                        examsCountViews.isHidden = true
-                        
+        APiCallManager.shared.callApi(url:APIEndpoints.GetOverallcountByMenuType, httpMethod: .post, queryParam: nil, requestBody: overall) {[weak self] (result:Result<overAllResponce,Error>) in
+            guard let self = self else {return}
+            switch result {
+            case .success(let success):
+                if success.Status == 1{
+                    overAllRef = success.data ?? []
+                    for i in overAllRef{
+                        upcommingExamCountLabel.text = i.upcomingexams
+                        pastExamCoutLabel.text = i.pastexams
+                        if (i.upcomingexams == "0") && (i.pastexams == "0"){
+                            
+                            upcommingCountView.isHidden = true
+                            pastCountView.isHidden = true
+                            examsCountViews.isHidden = true
+                            
+                        }else if i.upcomingexams == "0" {
+                            
+                            upcommingCountView.isHidden = true
+                            pastCountView.isHidden = false
+                            examsCountViews.isHidden = false
+                            
+                        }
+                        else if i.pastexams == "0"{
+                            
+                            upcommingCountView.isHidden = false
+                            pastCountView.isHidden = true
+                            examsCountViews.isHidden = false
+                            
+                        }else {
+                            upcommingCountView.isHidden = false
+                            pastCountView.isHidden = false
+                            examsCountViews.isHidden = false
+                        }
                     }
-                    
-                    else if i.upcomingexams == "0" {
-                        
-                        upcommingCountView.isHidden = true
-                        pastCountView.isHidden = false
-                        examsCountViews.isHidden = false
-                        
-                    }
-                    else if i.pastexams == "0"{
-                        
-                        upcommingCountView.isHidden = false
-                        pastCountView.isHidden = true
-                        examsCountViews.isHidden = false
-                        
-                    }
-                    
-                    else {
-                        
-                        
-                        upcommingCountView.isHidden = false
-                        pastCountView.isHidden = false
-                        examsCountViews.isHidden = false
-                        
-                        
-                    }
-                    
-                    
-                    
-                    
+                    let a =  Int( upcommingExamCountLabel.text!)
+                    let b = Int(pastExamCoutLabel.text!)
+                    let c = a! + b!
+                    examTopCountLabel.text = String(c)
                 }
-                
-                
-                let a =  Int( upcommingExamCountLabel.text!)
-                let b = Int(pastExamCoutLabel.text!)
-                let c = a! + b!
-                
-                examTopCountLabel.text = String(c)
-                
-                
-                
-                
-            }
-            
-            else{
-                
-                
-                
+            case .failure(let error):
+                print("Error: \(error)")
             }
         }
-        
-        
-        
         
     }
     

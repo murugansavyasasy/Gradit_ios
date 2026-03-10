@@ -1299,7 +1299,7 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
     
     func overAllRefName() {
         
-        let overall = overAllModal()
+        var overall = overAllModal()
         
         overall.userid   =  memberId
         overall.menuid       = "5"
@@ -1309,76 +1309,74 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
         overall.appid        = "2"
         overall.priority     = priority
         
-        
-        let overallStr = overall.toJSONString()
-        
-        
-        overAllRequest .call_request(param: overallStr!){ [self]
-            
-            (res) in
-            
-            
-            let overallResp : overAllResponce =
-            Mapper<overAllResponce>().map(JSONString: res)!
-            
-            print("order data",overallResp)
-            
-            if overallResp.Status == 1{
-                overAllRef = overallResp.data
+        APiCallManager.shared.callApi(url: APIEndpoints.GetOverallcountByMenuType, httpMethod: .post, queryParam: nil, requestBody: overall) { [weak self] (result:Result<overAllResponce,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let success):
                 
-                for i in overAllRef{
+                if success.Status == 1{
+                    overAllRef = success.data ?? []
                     
-                    assigmentUpcommingCount.text = i.upcomingassignment
-                    assigmentPastCount.text = i.pastassignment
-                    if (i.upcomingassignment == "0") && (i.pastassignment == "0"){
+                    for i in overAllRef{
                         
-                        upcommingcountView.isHidden = true
-                        assigmentPastCountView.isHidden = true
-                        assigmentCountViews.isHidden = true
+                        assigmentUpcommingCount.text = i.upcomingassignment
+                        assigmentPastCount.text = i.pastassignment
+                        if (i.upcomingassignment == "0") && (i.pastassignment == "0"){
+                            
+                            upcommingcountView.isHidden = true
+                            assigmentPastCountView.isHidden = true
+                            assigmentCountViews.isHidden = true
+                            
+                        }
                         
+                        else if  i.upcomingassignment == "0"{
+                            
+                            upcommingcountView.isHidden = true
+                            assigmentPastCountView.isHidden = false
+                            assigmentCountViews.isHidden = false
+                            
+                        }
+                        
+                        else if i.pastassignment == "0"{
+                            
+                            upcommingcountView.isHidden = false
+                            assigmentPastCountView.isHidden = true
+                            assigmentCountViews.isHidden = false
+                            
+                        }
+                        
+                        else{
+                            
+                            upcommingcountView.isHidden = false
+                            assigmentPastCountView.isHidden = false
+                            assigmentCountViews.isHidden = false
+                            
+                        }
                     }
                     
-                    else if  i.upcomingassignment == "0"{
-                        
-                        upcommingcountView.isHidden = true
-                        assigmentPastCountView.isHidden = false
-                        assigmentCountViews.isHidden = false
-                        
-                    }
+                    let a =  Int( assigmentUpcommingCount.text!)
+                    let b = Int(assigmentPastCount.text!)
+                    let c = a! + b!
                     
-                    else if i.pastassignment == "0"{
-                        
-                        upcommingcountView.isHidden = false
-                        assigmentPastCountView.isHidden = true
-                        assigmentCountViews.isHidden = false
-                        
-                    }
-                    
-                    else{
-                        
-                        upcommingcountView.isHidden = false
-                        assigmentPastCountView.isHidden = false
-                        assigmentCountViews.isHidden = false
-                        
-                    }
+                    assigmentTopCount.text = String(c)
                 }
                 
-                let a =  Int( assigmentUpcommingCount.text!)
-                let b = Int(assigmentPastCount.text!)
-                let c = a! + b!
                 
-                assigmentTopCount.text = String(c)
-            }
-            
-            
-            else{
-                
+                else{
+                    
+                    upcommingcountView.isHidden = true
+                    assigmentPastCountView.isHidden = true
+                    assigmentCountViews.isHidden = true
+                    
+                }
+
+
+            case .failure(let error):
+                print("Error: \(error)")
                 upcommingcountView.isHidden = true
                 assigmentPastCountView.isHidden = true
                 assigmentCountViews.isHidden = true
-                
             }
-            
         }
     }
     
