@@ -313,6 +313,95 @@ struct menuApiDataDetails : Codable{
     var parent_id : Int
 }
 
+//MARK: Student Attendance
+struct attendanceAbsentResponce : Codable{
+    
+    var Status : Int?
+    var Message : String?
+    var data : [attendanceAbesentDataDetails]?
+}
+
+struct attendanceAbesentDataDetails : Codable{
+    
+    var subjectname : String?
+    var staff_name : String?
+    var attended_hour : String?
+    var absent_hour    : String?
+    var subject_id   : Int?
+    var staff_id   : Int?
+    var total_hour : Int?
+    var percentage : String?
+}
+
+//MARK: Student Leave Request
+struct leaveResponce : Codable{
+    var Status : Int?
+    var Message : String?
+    var data : [leaveDataDetails]?
+}
+
+struct leaveDataDetails : Codable{
+    
+    var createdon : String?
+    var applicationid : String?
+    var leaveapplicationtype : String?
+    var leavefromdate : String?
+    var leavetodate : String?
+    var numofdays : String?
+    var leavereason : String?
+    var leavestatus : String?
+    var leavestatusid : String?
+}
+
+//MARK: Get leave type
+struct GetLeaveTypeResponce : Codable{
+    
+    var Status : Int?
+    var Message : String?
+    var data : [GetLeaveDataDetails]?
+}
+
+struct GetLeaveDataDetails : Codable{
+
+    var leavetypeid : String?
+    var leavetypename : String?
+}
+
+//MARK: Manage leave
+struct manageLeaveResponce : Codable{
+    var Status : Int?
+    var Message : String?
+}
+
+
+//MARK: Sender Leave response
+struct getLeaveTypeForSenderResponce : Codable{
+    
+    var Status : Int?
+    var Message : String?
+    var data : [getLeaveApplicationDataDetails]?
+}
+
+struct getLeaveApplicationDataDetails : Codable{
+    
+    var studentid : String?
+    var studentname : String?
+    var coursename : String?
+    var departmentname : String?
+    var yearname : String?
+    var sectionname : String?
+    var semestername : String?
+    var applicationid : String?
+    var leaveapplicationtype : String?
+    var leavefromdate : String?
+    var leavetodate : String?
+    var leavereason : String?
+    var leavestatus : String?
+    var leavestatusid : String?
+    var numofdays : String?
+    var createdon : String?
+}
+
 
 // MARK: - Placement Event Response
 struct MemberEventsResponse: Codable {

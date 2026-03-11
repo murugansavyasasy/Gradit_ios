@@ -180,206 +180,124 @@ override func viewDidAppear(_ animated: Bool) {
 }
 
 
-override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    PreviousAddId = PreviousAddId+1
-    attendaneLblCount.layer.cornerRadius = 13
-    attendaneLblCount.layer.masksToBounds = true
-    
-    overrideUserInterfaceStyle = .light
-    
-    
-    
-    
-    
-    
-    
-    sideMenuView.isHidden = true
-    
-    pluPageView.isHidden = true
-    
-    let defaults =  UserDefaults.standard
-    
-    collegeid = defaults.string(forKey: DefaultsKeys.collegeid)
-    userid = defaults.string(forKey: DefaultsKeys.memberid)
-    
-    priority = defaults.string(forKey:DefaultsKeys.priority)
-    
-    sectionId = defaults.string(forKey: DefaultsKeys.sectionid)
-    departmentId = defaults.string(forKey: DefaultsKeys.deptid)
-    loginType = defaults.string(forKey: DefaultsKeys.loginAsType)
-    memberName = defaults.string(forKey: DefaultsKeys.memberName)
-    colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-    clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
-    
-    topMemberLabel.text = memberName
-    
-    MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
-    
-    password = defaults.string(forKey: DefaultsKeys.Password)
-    addApi()
-    
-
-    if priority == "p1"{
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        topLabels.text = "Principal"
+        PreviousAddId = PreviousAddId+1
+        attendaneLblCount.layer.cornerRadius = 13
+        attendaneLblCount.layer.masksToBounds = true
         
+        overrideUserInterfaceStyle = .light
+        
+        sideMenuView.isHidden = true
+        
+        pluPageView.isHidden = true
+        
+        let defaults =  UserDefaults.standard
+        
+        collegeid = defaults.string(forKey: DefaultsKeys.collegeid)
+        userid = defaults.string(forKey: DefaultsKeys.memberid)
+        priority = defaults.string(forKey:DefaultsKeys.priority)
+        sectionId = defaults.string(forKey: DefaultsKeys.sectionid)
+        departmentId = defaults.string(forKey: DefaultsKeys.deptid)
+        loginType = defaults.string(forKey: DefaultsKeys.loginAsType)
+        memberName = defaults.string(forKey: DefaultsKeys.memberName)
+        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        
+        topMemberLabel.text = memberName
+        
+        MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
+        
+        password = defaults.string(forKey: DefaultsKeys.Password)
+        addApi()
+        
+        
+        if priority == "p1"{
+            topLabels.text = "Principal"
+            view.backgroundColor = UIColor(named: "Principal" )
+            reusee.menuImg.image = UIImage(named: "principalBigMenu")
+        } else if priority == "p4"{
+            tapBarView.backgroundColor = UIColor(named: "StudentParent" )
+            view.backgroundColor = UIColor(named: "studentViewColors")
+            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
+            topLabels.text = "Student"
+        }else if priority == "p2" || priority == "p3"{
+            topLabels.text = "Teacher"
+            view.backgroundColor = UIColor(named: "Teaching Staff")
+            reusee.menuImg.image = UIImage(named: "HodImage")
+        }else if priority == "p5"{
+            tapBarView.backgroundColor = UIColor(named: "FatherColor" )
+            topLabels.text = "Father"
+            view.backgroundColor = UIColor(named: "FatherColor")
+            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
+        }
+        
+        swipeMenuHeight.constant = 150
+        reusee.call_back = { [self]
+            (val) in
+            
+            self.swipeMenuHeight.constant =  reusee.callid
+            
+            print("AttendanceViewController",reusee.callid)
+        }
+        
+        
+        let rownib = UINib(nibName: identifers, bundle: nil)
+        Tv.register(rownib, forCellReuseIdentifier: identifers)
+        
+        let rownib1 = UINib(nibName: indentifer2, bundle: nil)
+        Tv.register(rownib1, forCellReuseIdentifier: indentifer2)
+        
+        Tv.delegate = self
+        Tv.dataSource = self
+        
+        Attendance()
+        
+        
+        // tap Bar UiTapGuster.
+        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
+        redirectLoginView.addGestureRecognizer(loginRediectGesture)
+        
+        let plusPage = UITapGestureRecognizer(target: self, action: #selector(PlusPageVc))
+        pluPageView.addGestureRecognizer(plusPage)
+        
+        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
+        viewTap.addGestureRecognizer(menuGestureHide)
+        
+        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
+        notificationView.addGestureRecognizer(notificationGesture)
+        
+        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
+        refreshView.addGestureRecognizer(refreshGesture)
+        
+        let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
+        faqView.addGestureRecognizer(faqGesture)
+        
+        let helpGesture = UITapGestureRecognizer(target: self, action: #selector(helpRedirect))
+        helpView.addGestureRecognizer(helpGesture)
+        
+        let privacyPolicyGesture = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyRedirect))
+        privacyPolicyView.addGestureRecognizer(privacyPolicyGesture)
+        
+        let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
+        termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
+        
+        let profileGesture = UITapGestureRecognizer(target: self, action: #selector(profileRedirect))
+        profileView.addGestureRecognizer(profileGesture)
+        
+        let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
+        changeRolesView.addGestureRecognizer(changeRolesGesture)
+        
+        let tapvoe = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
+        topNameview.addGestureRecognizer(tapvoe)
+        
+        let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
+        logoutView.addGestureRecognizer(logoutGesture)
+        
+        let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
+        changePasswordView.addGestureRecognizer(chagePassword)
     }
-    
-    else if priority == "p4"{
-        tapBarView.backgroundColor = UIColor(named: "StudentParent" )
-        topLabels.text = "Student"
-        
-    }
-    
-    else if priority == "p2" || priority == "p3"{
-        
-        
-        topLabels.text = "Teacher"
-        
-    }
-    
-    else if priority == "p5"{
-        
-        tapBarView.backgroundColor = UIColor(named: "FatherColor" )
-        topLabels.text = "Father"
-        
-        
-        
-    }
-    if priority == "p1" {
-        
-        
-        print("PrincipalVieewwColor")
-        view.backgroundColor = UIColor(named: "Principal" )
-        
-        reusee.menuImg.image = UIImage(named: "principalBigMenu")
-        
-    }else if priority == "p4" {
-        
-        print("StudentVieewwColor")
-        view.backgroundColor = UIColor(named: "studentViewColors")
-        
-        
-        reusee.menuImg.image = UIImage(named: "studentSwipeImage")
-        
-    } else if priority == "p3" ||  priority == "p2" {
-        
-        print("HooodddVieewwColor")
-        view.backgroundColor = UIColor(named: "Teaching Staff")
-        
-        reusee.menuImg.image = UIImage(named: "HodImage")
-        
-    }
-    else if priority == "p5"{
-        
-        
-        
-        view.backgroundColor = UIColor(named: "FatherColor")
-        
-        reusee.menuImg.image = UIImage(named: "StaffBigMenu")
-        
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    swipeMenuHeight.constant = 150
-    reusee.call_back = { [self]
-        (val) in
-        
-        
-        self.swipeMenuHeight.constant =  reusee.callid
-        
-        print("AttendanceViewController",reusee.callid)
-        
-        
-    }
-    
-    
-    
-    
-    
-    let rownib = UINib(nibName: identifers, bundle: nil)
-    Tv.register(rownib, forCellReuseIdentifier: identifers)
-    
-    let rownib1 = UINib(nibName: indentifer2, bundle: nil)
-    Tv.register(rownib1, forCellReuseIdentifier: indentifer2)
-    
-    
-    
-    Attendance()
-    
- 
-    
-    // tap Bar UiTapGuster.
-    
-    
-    
-    let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-    redirectLoginView.addGestureRecognizer(loginRediectGesture)
-    
-    
-    let plusPage = UITapGestureRecognizer(target: self, action: #selector(PlusPageVc))
-    pluPageView.addGestureRecognizer(plusPage)
-    
-    
-    let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-    viewTap.addGestureRecognizer(menuGestureHide)
-    
-    let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-    notificationView.addGestureRecognizer(notificationGesture)
-    
-    let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-    refreshView.addGestureRecognizer(refreshGesture)
-    
-    
-    let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
-    faqView.addGestureRecognizer(faqGesture)
-    
-    let helpGesture = UITapGestureRecognizer(target: self, action: #selector(helpRedirect))
-    helpView.addGestureRecognizer(helpGesture)
-    //
-    
-    let privacyPolicyGesture = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyRedirect))
-    privacyPolicyView.addGestureRecognizer(privacyPolicyGesture)
-    
-    let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
-    termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
-    
-    let profileGesture = UITapGestureRecognizer(target: self, action: #selector(profileRedirect))
-    profileView.addGestureRecognizer(profileGesture)
-    //
-    
-    let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-    changeRolesView.addGestureRecognizer(changeRolesGesture)
-    
-    
-    let tapvoe = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-    topNameview.addGestureRecognizer(tapvoe)
-    
-    
-    let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
-    logoutView.addGestureRecognizer(logoutGesture)
-    
-    
-    
-    
-    let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
-    changePasswordView.addGestureRecognizer(chagePassword)
-    
-    
-    
-    
-    
-}
 
 
 @objc func dismissKeyboards() {
@@ -388,12 +306,6 @@ override func viewDidLoad() {
     view.endEditing(true)
     
 }
-
-
-
-
-
-
 
 
 override func viewWillAppear(_ animated: Bool) {
@@ -405,68 +317,30 @@ override func viewWillAppear(_ animated: Bool) {
     
 }
 
-
-
-
-
-
 func leaveApi(){
     
-    
-    let  leave = leaveRequestModal()
+    var  leave = leaveRequestModal()
     
     leave.collegeid = collegeid
     leave.staffid = userid
     
-    
-    let leavestr = leave.toJSONString()
-    
-    
-    LeaveHistoryRequest.call_request(param: leavestr!){ [self]
+    APiCallManager.shared.callApi(url: APIEndpoints.GetLeaveApplicationListForReceiverApp, httpMethod: .post, queryParam: nil, requestBody: leave) {[weak self] (result:Result<leaveResponce, Error>)  in
         
-        (res) in
+        guard let self = self else {return}
         
-        
-        
-        let addApis : leaveResponce = Mapper<leaveResponce>().map(JSONString: res)!
-        
-        
-        
-        if addApis.Status == 1 {
-            
-            
-            LeaveRefName = addApis.data
-            attendaneLblCount.text = String(LeaveRefName.count)
-            Tv.isHidden = false
-            Tv.isScrollEnabled = true
-            Tv.delegate = self
-            Tv.dataSource  = self
-            Tv.reloadData()
-            
-            
+        switch result {
+        case .success(let success):
+            if success.Status == 1{
+                LeaveRefName = success.data ?? []
+                attendaneLblCount.text = String(LeaveRefName.count)
+                Tv.isHidden = false
+                Tv.isScrollEnabled = true
+            }
+        case .failure(let Error):
+            print(Error.localizedDescription)
         }
-        
-        
-        else{
-            
-   
-            Tv.delegate = self
-            Tv.dataSource  = self
-            Tv.reloadData()
-            
-            
-            
-        }
-        
-        
-        
-        
-        
-        
+        Tv.reloadData()
     }
-    
-    
-    
 }
 
 
@@ -476,17 +350,11 @@ func leaveApi(){
 
 @IBAction func PlusPageVc(){
     
-    types = "1"
-    
-    
-    
     let vc = plusPageViewController(nibName: nil, bundle: nil)
     vc.PreviousAddId = PreviousAddId
-    vc.types = types
+    vc.types = "1"
     vc.modalPresentationStyle = .fullScreen
     present(vc, animated: true,completion: nil)
-    
-    
 }
 
 
@@ -538,71 +406,35 @@ func leaveApi(){
 
 
 func Attendance() {
-    // Handle the selected date
     
-    print("attendancestr1")
-    
-    
-    
-    let  attendance = attendanceAbesentModal()
+    var  attendance = attendanceAbesentModal()
     
     attendance.userid = Int(userid)
     attendance.priority = priority
     attendance.appid = 2
     
-    let attendancestr = attendance.toJSONString()
-    print("attendancestr \(attendancestr)")
-    
-    attendanceAbesntRequest.call_request(param: attendancestr!){ [self]
+    APiCallManager.shared.callApi(url: APIEndpoints.GetStudentWiseAttendanceSummary, httpMethod: .post, queryParam: nil, requestBody: attendance) {[weak self] (result:Result<attendanceAbsentResponce,Error>) in
         
-        (res) in
-        print("attendancestr2")
+        guard let self = self else {return}
         
-        
-        let attendances : attendanceAbsentResponce = Mapper<attendanceAbsentResponce>().map(JSONString: res)!
- 
-        
-        if attendances.Status == 1 {
+        switch result {
+        case .success(let success):
+            if success.Status == 1 {
+                adttendanceRef = success.data ?? []
             
-            print("attendancestr3")
-            adttendanceRef = attendances.data
-        
-            Tv.isHidden = false
-            Tv.isScrollEnabled = true
-            Tv.delegate = self
-            Tv.dataSource  = self
-            
-            Tv.reloadData()
-            
-            print("attendancestr4")
-            
-            
-            
-            
-            
+                Tv.isHidden = false
+                Tv.isScrollEnabled = true
+                Tv.reloadData()
+            }
+        case .failure(let failure):
+            print(failure.localizedDescription)
         }
-        
-        
-        else{
-            
-        }
-        //
-        //
-        //
-        
-        
-        
     }
-    
-    
-    
-    
 }
 
 
 
 func addApi(){
-    
     
     var add = AddApiModal()
     
@@ -615,7 +447,7 @@ func addApi(){
     add.college_id = collegeid
     add.previous_add_id = PreviousAddId
     
-    APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .get, queryParam: nil, requestBody: nil
+    APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
     ) {[weak self] (result:Result<AddApiResponce,Error>) in
         
         guard let self = self else {return}
@@ -698,8 +530,8 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         
         cell.AttendanceHourLbl.text = attendance.attended_hour
         cell.absentHourLbl.text = attendance.absent_hour
-        cell.staffNameLbl.text = ":" + "  " + attendance.staff_name
-        cell.subjectNamLbl.text = ":" + "  " + attendance.subjectname
+        cell.staffNameLbl.text = ":" + "  " + (attendance.staff_name ?? "")
+        cell.subjectNamLbl.text = ":" + "  " + (attendance.subjectname ?? "")
         
       
         
@@ -725,9 +557,9 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
             cell.progressView.subviews[1].clipsToBounds = true
             
             
-            cell.progressView.progress  = Float(attendance.percentage)!/Float(100)
+            cell.progressView.progress  = Float(attendance.percentage ?? "")!/Float(100)
             
-            cell.persentageLbl.text = " Attendance Percentage  :  " +  " "+String(attendance.percentage) + " % "
+            cell.persentageLbl.text = " Attendance Percentage  :  " +  " "+String(attendance.percentage ?? "") + " % "
             
         }
     
@@ -913,17 +745,13 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
     let vc = plusPageViewController(nibName: nil, bundle: nil)
     vc.PreviousAddId = PreviousAddId
     vc.types = types
-    vc.fromDate = gesture.fromdate
-    vc.todate = gesture.todate
+    vc.fromDateString = gesture.fromdate
+    vc.toDateString = gesture.todate
     vc.headerId = gesture.headerId
     vc.reasonss = gesture.reason
-    vc.noofday = gesture.numberofDays
     vc.leaveType = gesture.leaveTyp
     vc.modalPresentationStyle = .fullScreen
     present(vc, animated: true,completion: nil)
-    
-    
-    
 }
 
 @IBAction func deletesVc( gesture : deleteClick){
@@ -933,7 +761,7 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
     
     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
    
-        let mangeLeave = manageLeaveModal()
+        var mangeLeave = manageLeaveModal()
         
         mangeLeave.leavetypeid = gesture.memberId
         
@@ -948,63 +776,63 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
         mangeLeave.processtype = "delete"
         
         
-        let mangeLeaveStr = mangeLeave.toJSONString()
+//        let mangeLeaveStr = mangeLeave.toJSONString()
+//        
+//        
+//        
+//        print("yearAndSectionModalStr",mangeLeaveStr)
         
-        
-        
-        print("yearAndSectionModalStr",mangeLeaveStr)
-        
-        ManageLeaveRequest.call_request(param: mangeLeaveStr!) {
-            
-            [self]  (res) in
-         
-            let particular : [manageLeaveResponce] = Mapper<manageLeaveResponce>().mapArray(JSONString: res)!
-            
-            
-            for i in particular{
-                
-                if i.Status == 1 {
-                    
-                    
-                    let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                   
-                        Tv.delegate = self
-                        Tv.dataSource = self
-                        Tv.reloadData()
-                     
-                        leaveApi()
-                        
-                        
-                    }))
-                  
-                    present(refreshAlert, animated: true, completion: nil)
-                    
-               
-                }else{
-                   
-                    let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                  
-                        
-                    }))
-                  
-                    present(refreshAlert, animated: true, completion: nil)
-                    
-                    
-                    
-                    
-                }
-                
-                
-                
-            }
-            
-            
-        }
+//        ManageLeaveRequest.call_request(param: mangeLeaveStr!) {
+//            
+//            [self]  (res) in
+//         
+//            let particular : [manageLeaveResponce] = Mapper<manageLeaveResponce>().mapArray(JSONString: res)!
+//            
+//            
+//            for i in particular{
+//                
+//                if i.Status == 1 {
+//                    
+//                    
+//                    let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
+//                    
+//                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//                   
+//                        Tv.delegate = self
+//                        Tv.dataSource = self
+//                        Tv.reloadData()
+//                     
+//                        leaveApi()
+//                        
+//                        
+//                    }))
+//                  
+//                    present(refreshAlert, animated: true, completion: nil)
+//                    
+//               
+//                }else{
+//                   
+//                    let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
+//                    
+//                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+//                        
+//                  
+//                        
+//                    }))
+//                  
+//                    present(refreshAlert, animated: true, completion: nil)
+//                    
+//                    
+//                    
+//                    
+//                }
+//                
+//                
+//                
+//            }
+//            
+//            
+//        }
         
     }))
     

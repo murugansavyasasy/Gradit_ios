@@ -17,6 +17,11 @@ struct APIEndpoints {
     static let DeviceToken = "DeviceToken"
     static let GetTextMessageBytype = "GetTextMessageBytype"
     static let GetAddsForCollege = "GetAddsForCollege"
+    static let GetStudentWiseAttendanceSummary = "GetStudentWiseAttendanceSummary"
+    static let GetLeaveApplicationListForReceiverApp = "GetLeaveApplicationListForReceiverApp"
+    static let GetLeaveApplicationListForSenderApp = "GetLeaveApplicationListForSenderApp"
+    static let GetLeaveType = "GetLeaveType"
+    static let ManageLeaveapplication = "ManageLeaveapplication"
     
     
     

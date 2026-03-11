@@ -39,3 +39,39 @@ struct menuApiIdModal: Codable{
     var user_id    :  String?
     var priority   : String?
 }
+
+//MARK: Student Attendance
+struct attendanceAbesentModal : Codable{
+    
+    var userid : Int?
+    var priority : String?
+    var appid : Int?
+}
+
+//MARK: Student leaveRequest
+struct leaveRequestModal : Codable{
+    var collegeid : String?
+    var staffid : String?
+}
+
+//MARK: Get leave type
+struct GetLeaveTypeModal : Codable{
+
+    var appid : String?
+    var userid : String?
+}
+
+//MARK: Manage leave
+struct manageLeaveModal : Codable{
+  
+    var colgid : String?
+    var memberid : String?
+    var applicationid : String?
+    var leavetypeid : String?
+    var leavefromdate : String?
+    var leavetodate : String?
+    var numofdays : String?
+    var clgsectionid : String?
+    var leavereason : String?
+    var processtype : String?
+}

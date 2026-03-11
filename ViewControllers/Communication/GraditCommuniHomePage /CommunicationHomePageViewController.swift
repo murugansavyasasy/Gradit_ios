@@ -604,7 +604,7 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         add.college_id = collegeId
         add.previous_add_id = 1
         
-        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .get, queryParam: nil, requestBody: nil
+        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
         ) {[weak self] (result:Result<AddApiResponce,Error>) in
             
             guard let self = self else {return}

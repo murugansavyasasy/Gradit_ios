@@ -210,7 +210,8 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         password = defaults.string(forKey: DefaultsKeys.Password)
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         
-        
+        Tv.delegate = self
+        Tv.dataSource = self
         
         addApi()
         
@@ -434,149 +435,37 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
     }
     
     
-    
-    
-    
-    
     func leaveApi(id : String){
         
+        var  leave = leaveRequestModal()
+        leave.collegeid = collegeid
+        leave.staffid = userid
         
-        print("leavee1113333")
-        
-        
-        if id == "1"{
-            let  leave = leaveRequestModal()
+        APiCallManager.shared.callApi(url: APIEndpoints.GetLeaveApplicationListForSenderApp, httpMethod: .post, queryParam: nil, requestBody: leave) {[weak self] (result:Result<getLeaveTypeForSenderResponce, Error>) in
             
-            leave.collegeid = collegeid
-            leave.staffid = userid
+            guard let self = self else { return }
             
-            
-            let leavestr = leave.toJSONString()
-            
-            
-            getLeaveForSenderAppRequest.call_request(param: leavestr!){ [self]
+            switch result {
+            case .success(let success):
                 
-                (res) in
-                
-                
-                
-                let addApis : getLeaveTypeForSenderResponce = Mapper<getLeaveTypeForSenderResponce>().map(JSONString: res)!
-                
-                LeaveRefName = addApis.data
-                
-                if addApis.Status == 1 {
-                    
-                    
-                    
+                LeaveRefName = success.data ?? []
+                if success.Status == 1 {
                     attendaneLblCount.text = String(LeaveRefName.count)
                     noDataLabel.isHidden = true
-                    
-                    Tv.delegate = self
-                    Tv.dataSource  = self
-                    Tv.reloadData()
-                    
-                    
-                }
-                
-                
-                else{
-                    
-                    
-                    print("leavehistroy responce ",addApis.Message)
-                    //                noDataView.isHidden = false
-                    if addApis.Message == "No Records Found"{
-                        noDataLabel.isHidden = true
-                        
-                    }
-                    
-                    else{
-                        
-                        
-                        noDataLabel.isHidden = false
-                        
-                        noDataLabel.text = addApis.Message
-                        
-                    }
-                    
-                    
-                    Tv.delegate = self
-                    Tv.dataSource  = self
-                    Tv.reloadData()
-                    
-                    
-                }
-                
-            }
-            
-        }
-        
-        
-        
-        
-        else {
-            
-            
-            
-            let  leave = leaveRequestModal()
-            
-            leave.collegeid = collegeid
-            leave.staffid = userid
-            
-            
-            let leavestr = leave.toJSONString()
-            
-            
-            print("leavehistroy responce ",leavestr)
-            getLeaveForSenderAppRequest.call_request(param: leavestr!){ [self]
-                
-                (res) in
-                
-                
-                
-                let addApis : getLeaveTypeForSenderResponce = Mapper<getLeaveTypeForSenderResponce>().map(JSONString: res)!
-                
-                LeaveRefName = addApis.data
-                
-                if addApis.Status == 1 {
-                    
-                    
-                    
-                    attendaneLblCount.text = String(LeaveRefName.count)
-                    noDataLabel.isHidden = true
-                    
-                    Tv.delegate = self
-                    Tv.dataSource  = self
-                    Tv.reloadData()
-                    
-                    
-                }
-                
-                
-                else{
-                    
+                }else{
                     noDataLabel.isHidden = false
-                    
-                    print("leavehistroy responce ",addApis.Message)
-                    //
-                    noDataLabel.text = addApis.Message
-                    Tv.delegate = self
-                    Tv.dataSource  = self
-                    Tv.reloadData()
-                    
-                    
-                    
+                    noDataLabel.text = success.Message
                 }
                 
+                Tv.reloadData()
                 
-                
-                
-                
-                
+            case .failure(let failure):
+                LeaveRefName = []
+                noDataLabel.isHidden = false
+                noDataLabel.text = failure.localizedDescription
+                Tv.reloadData()
             }
-            
-            
         }
-        
     }
     
     
@@ -681,8 +570,6 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
                 
                 
                 attendanceTV.isHidden = false
-                attendanceTV.delegate = self
-                attendanceTV.dataSource  = self
                 attendanceTV.reloadData()
                 
                 
@@ -797,7 +684,7 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         add.college_id = collegeid
         add.previous_add_id = 2
         
-        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .get, queryParam: nil, requestBody: nil
+        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
         ) {[weak self] (result:Result<AddApiResponce,Error>) in
             
             guard let self = self else {return}
@@ -1187,20 +1074,7 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true,completion: nil)
         
-        
-        
-        attendanceTV.delegate = self
-        attendanceTV.dataSource = self
         attendanceTV.reloadData()
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
     }
     
@@ -1249,9 +1123,6 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
                     
                     present(refreshAlert, animated: true, completion: nil)
                     
-                    
-                    Tv.dataSource = self
-                    Tv.delegate = self
                     Tv.reloadData()
                     
                     leaveApi(id : "0")
@@ -1272,9 +1143,6 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
                     
                     present(refreshAlert, animated: true, completion: nil)
                     
-                    
-                    Tv.dataSource = self
-                    Tv.delegate = self
                     Tv.reloadData()
                     
                     
@@ -1350,8 +1218,6 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
                     
                     present(refreshAlert, animated: true, completion: nil)
                     
-                    Tv.dataSource = self
-                    Tv.delegate = self
                     Tv.reloadData()
                     
                     leaveApi(id : "0")
@@ -1372,8 +1238,6 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
                     
                     
                     present(refreshAlert, animated: true, completion: nil)
-                    Tv.dataSource = self
-                    Tv.delegate = self
                     Tv.reloadData()
                     
                     
