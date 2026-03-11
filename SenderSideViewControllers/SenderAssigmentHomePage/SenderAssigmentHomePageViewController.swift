@@ -2166,7 +2166,7 @@ func PastRefName() {
 
 func overAllRefName() {
     
-    let overall = overAllModal()
+    var overall = overAllModal()
     
     overall.userid   =  memberId
     overall.menuid       = "5"
@@ -2177,89 +2177,72 @@ func overAllRefName() {
     overall.priority     = priority
     
     
-    let overallStr = overall.toJSONString()
-    
-    
-    overAllRequest .call_request(param: overallStr!){ [self]
-        
-        (res) in
-        
-        
-        let overallResp : overAllResponce =
-        Mapper<overAllResponce>().map(JSONString: res)!
-        
-        print("order data",overallResp)
-        
-        if overallResp.Status == 1{
-            overAllRef = overallResp.data
-            
-            for i in overAllRef{
+    APiCallManager.shared.callApi(url: APIEndpoints.GetOverallcountByMenuType, httpMethod: .post, queryParam: nil, requestBody: overall) { [weak self] (result:Result<overAllResponce,Error>) in
+        guard let self = self else{return}
+        switch result {
+        case .success(let success):
+            if success.Status == 1{
+                overAllRef = success.data ?? []
                 
-                assigmentUpcommingCount.text = i.upcomingassignment
-                assigmentPastCount.text = i.pastassignment
-                if (i.upcomingassignment == "0") && (i.pastassignment == "0"){
+                for i in overAllRef{
                     
-                    upcommingcountView.isHidden = true
-                    assigmentPastCountView.isHidden = true
-                    assigmentCountViews.isHidden = true
+                    assigmentUpcommingCount.text = i.upcomingassignment
+                    assigmentPastCount.text = i.pastassignment
+                    if (i.upcomingassignment == "0") && (i.pastassignment == "0"){
+                        
+                        upcommingcountView.isHidden = true
+                        assigmentPastCountView.isHidden = true
+                        assigmentCountViews.isHidden = true
+                        
+                        
+                        
+                    }
                     
+                    else if  i.upcomingassignment == "0"{
+                        
+                        upcommingcountView.isHidden = true
+                        assigmentPastCountView.isHidden = false
+                        assigmentCountViews.isHidden = false
+                        
+                        
+                    }
                     
+                    else if i.pastassignment == "0"{
+                        
+                        upcommingcountView.isHidden = false
+                        assigmentPastCountView.isHidden = true
+                        assigmentCountViews.isHidden = false
+                        
+                        
+                        
+                    }
+                    
+                    else{
+                        
+                        upcommingcountView.isHidden = false
+                        assigmentPastCountView.isHidden = false
+                        assigmentCountViews.isHidden = false
+                        
+                        
+                    }
                     
                 }
                 
-                else if  i.upcomingassignment == "0"{
-                    
-                    upcommingcountView.isHidden = true
-                    assigmentPastCountView.isHidden = false
-                    assigmentCountViews.isHidden = false
-                    
-                    
-                }
                 
-                else if i.pastassignment == "0"{
-                    
-                    upcommingcountView.isHidden = false
-                    assigmentPastCountView.isHidden = true
-                    assigmentCountViews.isHidden = false
-                    
-                    
-                    
-                }
+                let a =  Int( assigmentUpcommingCount.text!)
+                let b = Int(assigmentPastCount.text!)
+                let c = a! + b!
                 
-                else{
-                    
-                    upcommingcountView.isHidden = false
-                    assigmentPastCountView.isHidden = false
-                    assigmentCountViews.isHidden = false
-                    
-                    
-                }
+                assigmentTopCount.text = String(c)
+                
+                
+                
                 
             }
-            
-            
-            let a =  Int( assigmentUpcommingCount.text!)
-            let b = Int(assigmentPastCount.text!)
-            let c = a! + b!
-            
-            assigmentTopCount.text = String(c)
-            
-            
-            
-            
+        case .failure(let error):
+            print("Error: \(error)")
         }
-        
-        else{
-            
-            
-            
-        }
-        
     }
-    
-    
-    
-    
     
 }
 

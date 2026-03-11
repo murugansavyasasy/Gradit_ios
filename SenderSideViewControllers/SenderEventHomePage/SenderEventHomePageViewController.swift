@@ -1261,7 +1261,7 @@ func addApi(){
 
 func overAllRefName() {
     
-    let overall = overAllModal()
+    var overall = overAllModal()
     
     overall.userid   =  memberId
     overall.menuid       = "9"
@@ -1271,99 +1271,88 @@ func overAllRefName() {
     overall.appid        = "2"
     overall.priority     = priority
     
-    
-    let overallStr = overall.toJSONString()
-    
-    print("mmmmm",overallStr)
-    
-    overAllRequest .call_request(param: overallStr!){ [self]
-        
-        (res) in
-        
-        
-        let overallResp : overAllResponce =
-        Mapper<overAllResponce>().map(JSONString: res)!
-        
-        print("order data",overallResp)
-        
-        if overallResp.Status == 1{
-            overAllRef = overallResp.data
-            
-            for i in overAllRef{
+    APiCallManager.shared.callApi(url: APIEndpoints.GetOverallcountByMenuType, httpMethod: .post, queryParam: nil, requestBody: overall) { [weak self] (result:Result<overAllResponce,Error>) in
+        guard let self = self else{return}
+        switch result{
+        case .success(let result):
+            if result.Status == 1{
+                overAllRef = result.data ?? []
                 
-                upcountLabel.text = i.upcomingevents
-                pastCountLabl.text = i.pastevents
-                if (i.unread == "0") && (i.read == "0"){
+                for i in overAllRef{
                     
-                    UpcountView.isHidden = true
-                    pastcountView.isHidden = true
-                    EventTableView.isHidden = true
+                    upcountLabel.text = i.upcomingevents
+                    pastCountLabl.text = i.pastevents
+                    if (i.unread == "0") && (i.read == "0"){
+                        
+                        UpcountView.isHidden = true
+                        pastcountView.isHidden = true
+                        EventTableView.isHidden = true
+                        
+                        
+                        
+                    }
+                    
+                    else if i.unread == "0"{
+                        
+                        
+                        UpcountView.isHidden = true
+                        pastcountView.isHidden = false
+                        EventTableView.isHidden = false
+                        
+                    }
+                    
+                    else if i.read == "0"{
+                        
+                        UpcountView.isHidden = false
+                        pastcountView.isHidden = true
+                        EventTableView.isHidden = false
+                        
+                        
+                    }
+                    
+                    else {
+                        
+                        UpcountView.isHidden = false
+                        pastcountView.isHidden = false
+                        EventTableView.isHidden = false
+                        
+                        
+                        
+                    }
                     
                     
                     
                 }
                 
-                else if i.unread == "0"{
-                    
-                    
-                    UpcountView.isHidden = true
-                    pastcountView.isHidden = false
-                    EventTableView.isHidden = false
-                    
-                }
                 
-                else if i.read == "0"{
-                    
-                    UpcountView.isHidden = false
-                    pastcountView.isHidden = true
-                    EventTableView.isHidden = false
-                    
-                    
-                }
+                let a =  Int( upcountLabel.text!)
+                let b = Int(pastCountLabl.text!)
+                let c = a! + b!
                 
-                else {
-                    
-                    UpcountView.isHidden = false
-                    pastcountView.isHidden = false
-                    EventTableView.isHidden = false
-                    
-                    
-                    
-                }
+                eventtopcountLabel.text = String(c)
+                
+                
+                
+                EventTableView.delegate = self
+                EventTableView.dataSource = self
+                
+                
+                EventTableView.reloadData()
+                
+                
+            }else{
+                
+                UpcountView.isHidden = true
+                pastcountView.isHidden = true
+                EventTableView.isHidden = true
                 
                 
                 
             }
-            
-            
-            let a =  Int( upcountLabel.text!)
-            let b = Int(pastCountLabl.text!)
-            let c = a! + b!
-            
-            eventtopcountLabel.text = String(c)
-            
-            
-            
-            EventTableView.delegate = self
-            EventTableView.dataSource = self
-            
-            
-            EventTableView.reloadData()
-            
-            
-        }else{
-            
-            UpcountView.isHidden = true
-            pastcountView.isHidden = true
-            EventTableView.isHidden = true
-            
-            
-            
+        case .failure(let error):
+            print("Error: \(error)")
         }
-        
     }
-    
-    
 }
 
 

@@ -1213,7 +1213,7 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
     
     func overAllRefName() {
         
-        let overall = overAllModal()
+        var overall = overAllModal()
         
         overall.userid   =  memberId
         overall.menuid       = "2"
@@ -1223,97 +1223,56 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
         overall.appid        = "2"
         overall.priority     = priority
         
-        
-        let overallStr = overall.toJSONString()
-        
-        print("order data233432",overall.toJSON())
-        overAllRequest .call_request(param: overallStr!){ [self]
-            
-            (res) in
-            
-            
-            let overallResp : overAllResponce =
-            Mapper<overAllResponce>().map(JSONString: res)!
-            
-            print("order data",overallResp)
-            
-            
-            if overallResp.Status == 1{
-                overAllRef = overallResp.data
+        APiCallManager.shared.callApi(url: APIEndpoints.GetOverallcountByMenuType, httpMethod: .post, queryParam: nil, requestBody: overall) { [weak self] (result:Result<overAllResponce,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let success):
                 
-                for i in overAllRef{
+                if success.Status == 1 {
+                    overAllRef = success.data ?? []
                     
-                    unreadCountLabel.text = i.unread
-                    readCountLabel.text = i.read
-                    if (i.unread == "0") && (i.read == "0"){
-                        
-                        unreadCountView.isHidden = true
-                        readCountView.isHidden = true
-                        communicationcountViews.isHidden = true
-                        
-                        
+                    for i in overAllRef{
+                        unreadCountLabel.text = i.unread
+                        readCountLabel.text = i.read
+                        if (i.unread == "0") && (i.read == "0"){
+                            
+                            unreadCountView.isHidden = true
+                            readCountView.isHidden = true
+                            communicationcountViews.isHidden = true
+                        }else if  i.unread == "0"{
+                            
+                            
+                            unreadCountView.isHidden = false
+                            readCountView.isHidden = true
+                            communicationcountViews.isHidden = false
+                        }else if i.read == "0"{
+                            unreadCountView.isHidden = true
+                            readCountView.isHidden = false
+                            communicationcountViews.isHidden = false
+                            
+                        }else{
+                            unreadCountView.isHidden = false
+                            readCountView.isHidden = false
+                            communicationcountViews.isHidden = false
+                        }
                     }
-                    
-                    else if  i.unread == "0"{
-                        
-                        
-                        unreadCountView.isHidden = false
-                        readCountView.isHidden = true
-                        communicationcountViews.isHidden = false
-                    }
-                    
-                    else if i.read == "0"{
-                        
-                        
-                        
-                        unreadCountView.isHidden = true
-                        readCountView.isHidden = false
-                        communicationcountViews.isHidden = false
-                        
-                    }
-                    
-                    else{
-                        
-                        
-                        unreadCountView.isHidden = false
-                        readCountView.isHidden = false
-                        communicationcountViews.isHidden = false
-                        
-                        
-                        
-                        
-                    }
-                    
+                    let a =  Int( unreadCountLabel.text!)
+                    let b = Int(readCountLabel.text!)
+                    let c = a! + b!
+                    communication.text = String(c)
+                }else{
+                    unreadCountView.isHidden = true
+                    readCountView.isHidden = true
+                    communicationcountViews.isHidden = true
                 }
-                
-                
-                
-                
-                let a =  Int( unreadCountLabel.text!)
-                let b = Int(readCountLabel.text!)
-                let c = a! + b!
-                
-                communication.text = String(c)
-                
-                
-                
-                
-            }
-            
-            else{
-                
-                
-                
-                
+
+            case .failure(let error):
+                print("Error: \(error)")
                 unreadCountView.isHidden = true
                 readCountView.isHidden = true
                 communicationcountViews.isHidden = true
-                
-                
-                
             }
         }
-        
     }
     
     

@@ -966,7 +966,7 @@ func upcoming() {
 
 func overAllRefName() {
     
-    let overall = overAllModal()
+    var overall = overAllModal()
     
     overall.userid   =  userid
     overall.menuid       = "9"
@@ -976,101 +976,49 @@ func overAllRefName() {
     overall.appid        = "2"
     overall.priority     = priority
     
-    let overallStr = overall.toJSONString()
     
-    
-    print("oooooooooo ",overall.toJSON())
-    
-    
-    
-    overAllRequest .call_request(param: overallStr!){ [self]
-        
-        (res) in
-        
-        
-        let overallResp : overAllResponce =
-        Mapper<overAllResponce>().map(JSONString: res)!
-        
-        print("order data",overallResp)
-        
-        
-        if overallResp.Status == 1 {
+    APiCallManager.shared.callApi(url: APIEndpoints.GetOverallcountByMenuType, httpMethod: .post, queryParam: nil, requestBody: overall) { [weak self] (result:Result<overAllResponce,Error>) in
+        guard let self = self else{return}
+        switch result{
+        case .success(let success):
             
-            overAllRef = overallResp.data
-            
-            
-            
-            
-            
-            pastCountLbl.text =  overAllRef[0].pastevents
-            upcomingcountLabl.text = overAllRef[0].upcomingevents
-            
-            if (overAllRef[0].pastevents == "0") && (overAllRef[0].upcomingevents == "0"){
+            if success.Status == 1 {
                 
+                overAllRef = success.data ?? []
+                pastCountLbl.text =  overAllRef.first?.pastevents
+                upcomingcountLabl.text = overAllRef.first?.upcomingevents
                 
-                eventTopCountView.isHidden = true
-                upcomingCountView.isHidden = true
-                pastCountView.isHidden = true
+                if (overAllRef.first?.pastevents == "0") && (overAllRef.first?.upcomingevents == "0"){
+                    eventTopCountView.isHidden = true
+                    upcomingCountView.isHidden = true
+                    pastCountView.isHidden = true
+                }else if overAllRef.first?.pastevents == "0"{
+                    
+                    upcomingCountView.isHidden = false
+                    eventTopCountView.isHidden = false
+                    pastCountView.isHidden = true
+                }else if overAllRef.first?.upcomingevents == "0"{
+                    
+                    upcomingCountView.isHidden = true
+                    eventTopCountView.isHidden = false
+                    pastCountView.isHidden = false
+                }else{
+                    upcomingCountView.isHidden = false
+                    eventTopCountView.isHidden = false
+                    pastCountView.isHidden = false
+                }
                 
+                let a =  Int(upcomingcountLabl.text!)
+                let b = Int(pastCountLbl.text!)
+                let c = a! + b!
                 
+                eventTopCountLabl.text = String(c)
                 
             }
-            
-            else if overAllRef[0].pastevents == "0"{
-                
-                upcomingCountView.isHidden = false
-                eventTopCountView.isHidden = false
-                pastCountView.isHidden = true
-                
-                
-                
-                
-            }
-            
-            else if overAllRef[0].upcomingevents == "0"{
-                
-                
-                upcomingCountView.isHidden = true
-                eventTopCountView.isHidden = false
-                pastCountView.isHidden = false
-                
-                
-                
-            }
-            
-            
-            else{
-                upcomingCountView.isHidden = false
-                eventTopCountView.isHidden = false
-                pastCountView.isHidden = false
-                
-                
-                
-                
-            }
-            
-            
-            
-            
-            
-            let a =  Int(upcomingcountLabl.text!)
-            let b = Int(pastCountLbl.text!)
-            let c = a! + b!
-            
-            
-            eventTopCountLabl.text = String(c)
-            
+        case .failure(let error):
+            print("Error: \(error)")
         }
-        
-        else{
-            
-            
-        }
-        
-        
     }
-    
-    
     
     
 }

@@ -1285,7 +1285,7 @@ func apread(gesture : String){
 
 func overAllRefName() {
     
-    let overall = overAllModal()
+    var overall = overAllModal()
     
     overall.userid   =  userid
     overall.menuid       = "6"
@@ -1296,107 +1296,60 @@ func overAllRefName() {
     overall.priority     = priority
     
     
-    
-    
-    let overallStr = overall.toJSONString()
-    
-    
-    overAllRequest .call_request(param: overallStr!){ [self]
-        
-        (res) in
-        
-        
-        let overallResp : overAllResponce =
-        Mapper<overAllResponce>().map(JSONString: res)!
-        
-        print("order data",overallResp)
-        
-        
-        
-        
-        if overallResp.Status == 1{
-            
-            
-            
-            
-            
-            overAllRef = overallResp.data
-            
-            
-            
-            
-            
-            
-            for i in overAllRef {
-                
-                
-                
-                departmentCountLabel.text = i.departmentcircular
-                collegeCountLabel.text = i.collegecircular
-                
-                if (i.departmentcircular == "0") && (i.collegecircular == "0"){
+    APiCallManager.shared.callApi(url: APIEndpoints.GetOverallcountByMenuType, httpMethod: .post, queryParam: nil, requestBody: overall) { [weak self] (result:Result<overAllResponce,Error>) in
+        guard let self = self else{return}
+        switch result{
+        case.success(let result):
+
+            if result.Status == 1{
+                overAllRef = result.data ?? []
+                for i in overAllRef {
+                    departmentCountLabel.text = i.departmentcircular
+                    collegeCountLabel.text = i.collegecircular
                     
-                    imageCountView.isHidden = true
-                    departmentCountView.isHidden = true
-                    collegeCountView.isHidden = true
-                    
+                    if (i.departmentcircular == "0") && (i.collegecircular == "0"){
+                        
+                        imageCountView.isHidden = true
+                        departmentCountView.isHidden = true
+                        collegeCountView.isHidden = true
+                    }else if i.departmentcircular == "0"{
+                        imageCountView.isHidden = false
+                        departmentCountView.isHidden = true
+                        collegeCountView.isHidden = false
+                        
+                    }else if i.collegecircular == "0"{
+                        
+                        
+                        imageCountView.isHidden = false
+                        departmentCountView.isHidden = false
+                        collegeCountView.isHidden = true
+                        
+                        
+                    }else{
+                        imageCountView.isHidden = false
+                        departmentCountView.isHidden = false
+                        collegeCountView.isHidden = false
+                        
+                    }
                 }
                 
+                let a =  Int(collegeCountLabel.text!)
+                let b = Int(departmentCountLabel.text!)
+                let c = a! + b!
                 
-                else if i.departmentcircular == "0"{
-                    
-                    
-                    imageCountView.isHidden = false
-                    departmentCountView.isHidden = true
-                    collegeCountView.isHidden = false
-                    
-                }
+                imageTopCountLabel.text = String(c)
                 
-                else if i.collegecircular == "0"{
-                    
-                    
-                    imageCountView.isHidden = false
-                    departmentCountView.isHidden = false
-                    collegeCountView.isHidden = true
-                    
-                    
-                }
+            }else{
                 
-                else{
-                    
-                    
-                    imageCountView.isHidden = false
-                    departmentCountView.isHidden = false
-                    collegeCountView.isHidden = false
-                    
-                }
-                //
+                imageCountView.isHidden = true
+                departmentCountView.isHidden = true
+                collegeCountView.isHidden = true
+                
             }
-            
-            
-            
-            let a =  Int(collegeCountLabel.text!)
-            let b = Int(departmentCountLabel.text!)
-            let c = a! + b!
-            
-            imageTopCountLabel.text = String(c)
-            
-            
-            
+        case.failure(let error):
+            print("Error: \(error)")
         }
-        
-        
-        else
-        {
-            
-            imageCountView.isHidden = true
-            departmentCountView.isHidden = true
-            collegeCountView.isHidden = true
-            
-        }
-        
     }
-    
     
 }
 
@@ -1446,9 +1399,6 @@ func addApi(){
         }
     }
 }
-
-
-// Tab Bar Nagivation
 
 
 

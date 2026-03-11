@@ -1097,7 +1097,7 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
     
     func overAllRefName() {
         
-        let overall = overAllModal()
+        var overall = overAllModal()
         
         overall.userid   =  memberId
         overall.menuid       = "3"
@@ -1107,103 +1107,55 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
         overall.appid        = "2"
         overall.priority     = priority
         
-        
-        let overallStr = overall.toJSONString()
-        
-        
-        overAllRequest .call_request(param: overallStr!){ [self]
-            
-            (res) in
-            
-            
-            let overallResp : overAllResponce =
-            Mapper<overAllResponce>().map(JSONString: res)!
-            
-            print("order data",overallResp)
-            
-            
-            
-            
-            
-            
-            
-            if overallResp.Status == 1{
+        APiCallManager.shared.callApi(url: APIEndpoints.GetOverallcountByMenuType, httpMethod: .post, queryParam: nil, requestBody: overall) { [weak self] (result:Result<overAllResponce,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let success):
                 
-                overAllRef = overallResp.data
-                
-                for i in overAllRef {
+                if success.Status == 1{
                     
+                    overAllRef = success.data ?? []
                     
-                    
-                    upcomingCountLabel.text = i.upcomingexams
-                    
-                    
-                    pastCountLabel.text = i.pastexams
-                    
-                    
-                    if (i.upcomingexams == "0") && (i.pastexams == "0"){
+                    for i in overAllRef {
+                        upcomingCountLabel.text = i.upcomingexams
+                        pastCountLabel.text = i.pastexams
                         
-                        topCountView.isHidden = true
-                        upcomingCountView.isHidden = true
-                        pastCountView.isHidden = true
-                        
+                        if (i.upcomingexams == "0") && (i.pastexams == "0"){
+                            topCountView.isHidden = true
+                            upcomingCountView.isHidden = true
+                            pastCountView.isHidden = true
+                        }else if i.upcomingexams == "0"{
+                            topCountView.isHidden = false
+                            upcomingCountView.isHidden = true
+                            pastCountView.isHidden = false
+                            
+                        }else if i.pastexams == "0"{
+                            topCountView.isHidden = false
+                            upcomingCountView.isHidden = false
+                            pastCountView.isHidden = true
+                        }else{
+                            topCountView.isHidden = false
+                            upcomingCountView.isHidden = false
+                            pastCountView.isHidden = false
+                            
+                        }
                     }
-                    
-                    
-                    else if i.upcomingexams == "0"{
-                        
-                        
-                        topCountView.isHidden = false
-                        upcomingCountView.isHidden = true
-                        pastCountView.isHidden = false
-                        
-                    }
-                    
-                    else if i.pastexams == "0"{
-                        
-                        
-                        topCountView.isHidden = false
-                        upcomingCountView.isHidden = false
-                        pastCountView.isHidden = true
-                        
-                        
-                    }
-                    
-                    else{
-                        
-                        
-                        topCountView.isHidden = false
-                        upcomingCountView.isHidden = false
-                        pastCountView.isHidden = false
-                        
-                    }
-                    //
+                    let a =  Int(upcomingCountLabel.text!)
+                    let b = Int(pastCountLabel.text!)
+                    let c = a! + b!
+                    ExamTopCountLabel.text = String(c)
+                }else{
+                    topCountView.isHidden = true
+                    upcomingCountView.isHidden = true
+                    pastCountView.isHidden = true
                 }
-                
-                
-                
-                let a =  Int(upcomingCountLabel.text!)
-                let b = Int(pastCountLabel.text!)
-                let c = a! + b!
-                
-                ExamTopCountLabel.text = String(c)
-                
-                
-                
-            }
-            
-            else{
-                
+            case .failure(let error):
+                print("Error: \(error)")
                 topCountView.isHidden = true
                 upcomingCountView.isHidden = true
                 pastCountView.isHidden = true
-                
-                
-                
             }
         }
-        
-        //
     }
     
     func addApi(){

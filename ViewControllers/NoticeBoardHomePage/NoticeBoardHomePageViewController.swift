@@ -743,7 +743,7 @@ class NoticeBoardHomePageViewController:
     
     func overAllRefName() {
         
-        let overall = overAllModal()
+        var overall = overAllModal()
         
         overall.userid   =  userid
         overall.menuid       = "7"
@@ -753,75 +753,66 @@ class NoticeBoardHomePageViewController:
         overall.appid        = "2"
         overall.priority     = priority
         
-        let overallStr = overall.toJSONString()
         
-        print("overalloverall",overall.toJSON())
-        
-        overAllRequest .call_request(param: overallStr!){ [self]
-            
-            (res) in
-            
-            
-            let overallResp : overAllResponce =
-            Mapper<overAllResponce>().map(JSONString: res)!
-            
-            print("order data",overallResp)
-            
-            
-            if overallResp.Status == 1{
+        APiCallManager.shared.callApi(url: APIEndpoints.GetOverallcountByMenuType, httpMethod: .post, queryParam: nil, requestBody: overall) { [weak self] (result:Result<overAllResponce,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let success):
                 
-                overAllRef = overallResp.data
-                
-                
-                for i in overAllRef {
+                if success.Status == 1{
                     
-                    departmentCountLabel.text = i.departmentnotice
-                    collegeCountLabel.text = i.collegenotice
+                    overAllRef = success.data ?? []
                     
-                    if (i.departmentnotice == "0") && (i.collegenotice == "0"){
+                    
+                    for i in overAllRef {
                         
-                        departmentCountView.isHidden = true
-                        collegeCountView.isHidden = true
-                        noticeBoardCountView.isHidden = true
+                        departmentCountLabel.text = i.departmentnotice
+                        collegeCountLabel.text = i.collegenotice
                         
+                        if (i.departmentnotice == "0") && (i.collegenotice == "0"){
+                            
+                            departmentCountView.isHidden = true
+                            collegeCountView.isHidden = true
+                            noticeBoardCountView.isHidden = true
+                            
+                        }
+                        
+                        else if i.departmentnotice == "0"{
+                            
+                            departmentCountView.isHidden = true
+                            collegeCountView.isHidden = false
+                            noticeBoardCountView.isHidden = false
+                            
+                        }
+                        
+                        else if i.collegenotice == "0"{
+                            
+                            
+                            departmentCountView.isHidden = false
+                            collegeCountView.isHidden = true
+                            noticeBoardCountView.isHidden = false
+                            
+                        }
+                        
+                        else{
+                            
+                            departmentCountView.isHidden = false
+                            collegeCountView.isHidden = false
+                            noticeBoardCountView.isHidden = false
+                            
+                        }
                     }
                     
-                    else if i.departmentnotice == "0"{
-                        
-                        departmentCountView.isHidden = true
-                        collegeCountView.isHidden = false
-                        noticeBoardCountView.isHidden = false
-                        
-                    }
+                    let a =  Int(collegeCountLabel.text!)
+                    let b = Int(departmentCountLabel.text!)
+                    let c = a! + b!
                     
-                    else if i.collegenotice == "0"{
-                        
-                        
-                        departmentCountView.isHidden = false
-                        collegeCountView.isHidden = true
-                        noticeBoardCountView.isHidden = false
-                        
-                    }
                     
-                    else{
-                        
-                        departmentCountView.isHidden = false
-                        collegeCountView.isHidden = false
-                        noticeBoardCountView.isHidden = false
-                        
-                    }
+                    noticeBoardCountLabel.text = String(c)
                 }
-                
-                let a =  Int(collegeCountLabel.text!)
-                let b = Int(departmentCountLabel.text!)
-                let c = a! + b!
-                
-                
-                noticeBoardCountLabel.text = String(c)
-            }
-            
-            else{
-                
+
+            case .failure(let error):
+                print("Error: \(error)")
             }
         }
     }

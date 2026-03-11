@@ -553,9 +553,9 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
             cell.persentageLbl.isHidden = false
             cell.progressView.layer.cornerRadius = 10
             cell.progressView.clipsToBounds = true
-            cell.progressView.layer.sublayers![1].cornerRadius = 10
-            cell.progressView.subviews[1].clipsToBounds = true
-            
+//            cell.progressView.layer.sublayers![1].cornerRadius = 10
+//            cell.progressView.subviews[1].clipsToBounds = true
+//            
             
             cell.progressView.progress  = Float(attendance.percentage ?? "")!/Float(100)
             

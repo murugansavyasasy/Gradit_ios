@@ -22,6 +22,7 @@ struct APIEndpoints {
     static let GetLeaveApplicationListForSenderApp = "GetLeaveApplicationListForSenderApp"
     static let GetLeaveType = "GetLeaveType"
     static let ManageLeaveapplication = "ManageLeaveapplication"
+    static let GetOverallcountByMenuType = "GetOverallcountByMenuType"
     
     
     
@@ -29,4 +30,5 @@ struct APIEndpoints {
     static let placementEventHistorical = "students/student-placement-events-historical"
     static let trainingEvent = "students/student-career"
     static let trainingEventHistorical = "students/student-career-historical"
+
 }

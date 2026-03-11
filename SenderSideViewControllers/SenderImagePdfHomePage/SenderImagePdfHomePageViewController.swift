@@ -1442,7 +1442,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
     
     func overAllRefName() {
         
-        let overall = overAllModal()
+        var overall = overAllModal()
         
         overall.userid   =  memberId
         overall.menuid       = "6"
@@ -1452,115 +1452,63 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         overall.appid        = "2"
         overall.priority     = priority
         
-        
-        
-        
-        
-        
-        
-        
-        let overallStr = overall.toJSONString()
-        
-        print("order data",overallStr)
-        
-        
-        
-        overAllRequest .call_request(param: overallStr!){ [self]
-            
-            (res) in
-            
-            
-            let overallResp : overAllResponce =
-            Mapper<overAllResponce>().map(JSONString: res)!
-            
-            print("order data",overallResp.toJSON())
-            
-            
-            
-            if overallResp.Status == 1{
-                overAllRef = overallResp.data
+        APiCallManager.shared.callApi(url: APIEndpoints.GetOverallcountByMenuType, httpMethod: .post, queryParam: nil, requestBody: overall) { [weak self] (result:Result<overAllResponce,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let success):
                 
-                
-                
-                
-                
-                
-                for i in overAllRef {
-                    
-                    
-                    
-                    departmentCountLabel.text = i.departmentcircular
-                    collegeCountLabel.text = i.collegecircular
-                    
-                    
-                    if (i.departmentcircular == "0") && (i.collegecircular == "0"){
+                if success.Status == 1{
+                    overAllRef = success.data ?? []
+                    for i in overAllRef {
+                        departmentCountLabel.text = i.departmentcircular
+                        collegeCountLabel.text = i.collegecircular
                         
-                        departmetCountView.isHidden = true
-                        collegeCountView.isHidden = true
-                        imageCountView.isHidden = true
-                        
-                        
+                        if (i.departmentcircular == "0") && (i.collegecircular == "0"){
+                            
+                            departmetCountView.isHidden = true
+                            collegeCountView.isHidden = true
+                            imageCountView.isHidden = true
+                            
+                            
+                        }else if i.departmentcircular == "0"{
+                            
+                            departmetCountView.isHidden = true
+                            collegeCountView.isHidden = false
+                            imageCountView.isHidden = false
+                            
+                        }else if i.collegecircular == "0"{
+                            
+                            departmetCountView.isHidden = false
+                            collegeCountView.isHidden = true
+                            imageCountView.isHidden = false
+                            
+                        }else {
+                            departmetCountView.isHidden = false
+                            collegeCountView.isHidden = false
+                            imageCountView.isHidden = false
+                        }
                     }
                     
-                    else if i.departmentcircular == "0"{
-                        
-                        departmetCountView.isHidden = true
-                        collegeCountView.isHidden = false
-                        imageCountView.isHidden = false
-                        
-                        
-                    }
+                    let a =  Int(collegeCountLabel.text!)
+                    let b = Int(departmentCountLabel.text!)
+                    let c = a! + b!
+                    imageTopCountLabel.text = String(c)
+                    imageTableView.delegate = self
+                    imageTableView.dataSource = self
+                    imageTableView.reloadData()
                     
-                    else if i.collegecircular == "0"{
-                        
-                        departmetCountView.isHidden = false
-                        collegeCountView.isHidden = true
-                        imageCountView.isHidden = false
-                        
-                        
-                    }
-                    
-                    else {
-                        
-                        departmetCountView.isHidden = false
-                        collegeCountView.isHidden = false
-                        imageCountView.isHidden = false
-                        
-                        
-                    }
-                    
-                    
-                    
+                }else{
+                    departmetCountView.isHidden = true
+                    collegeCountView.isHidden = true
+                    imageCountView.isHidden = true
                 }
-                
-                
-                
-                let a =  Int(collegeCountLabel.text!)
-                let b = Int(departmentCountLabel.text!)
-                let c = a! + b!
-                
-                imageTopCountLabel.text = String(c)
-                imageTableView.delegate = self
-                imageTableView.dataSource = self
-                
-                
-                imageTableView.reloadData()
-                
-            }
-            
-            else{
-                
-                
+            case .failure(let error):
+                print("Error: \(error)")
                 departmetCountView.isHidden = true
                 collegeCountView.isHidden = true
                 imageCountView.isHidden = true
-                
-                
             }
         }
-        
-        
-        
         
     }
     
