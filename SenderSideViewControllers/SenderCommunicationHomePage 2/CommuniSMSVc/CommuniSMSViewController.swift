@@ -1306,11 +1306,6 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
                         bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
                         
                         smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-//                        let singleTap = adds(target: self, action: #selector(adLoad))
-//                        singleTap.url = i.add_url
-                       // bigImg.isUserInteractionEnabled = true
-                        //bigImg.addGestureRecognizer(singleTap)
                     }
                 }
                 
@@ -1319,19 +1314,6 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
             }
         }
     }
-    
-    
-    // This part full  is swipe bottom view
-    
-    
-    
-    
-    
-    
-    
-    // Tab Bar Nagivation
-    
-    
     
     @IBAction func helpRedirect() {
         

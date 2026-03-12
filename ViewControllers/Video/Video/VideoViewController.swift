@@ -303,34 +303,23 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         
-        let filtered_list : [videoDataDetails] = Mapper<videoDataDetails>().mapArray(JSONString: cloneList.toJSONString()!)!
+        let filtered_list : [videoDataDetails] = cloneList
         
         
         if !searchText.isEmpty{
-            
-            
-            
+            let search = searchText.lowercased()
+
             videoRef = filtered_list.filter {
-                
-                
-                
-                $0.createdon.lowercased().contains(searchText.lowercased()) || $0.title.lowercased().contains(searchText.lowercased()) || $0.description.lowercased().contains(searchText.lowercased()) ||  $0.createdby.lowercased().contains(searchText.lowercased())
-                
-                
-                
+
+                ($0.createdon?.lowercased().contains(search) ?? false) ||
+                ($0.title?.lowercased().contains(search) ?? false) ||
+                ($0.description?.lowercased().contains(search) ?? false) ||
+                ($0.createdby?.lowercased().contains(search) ?? false)
+
             }
             
-            
-            
-            
         }else{
-            
-            
-            
             videoRef = filtered_list
-            
-            
-            
         }
         
         
@@ -490,14 +479,14 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         let Shopres : videoDataDetails = videoRef[indexPath.row]
         
-        let  a = Shopres.createdby.count*2
+        let  a = Shopres.createdby?.count ?? 0*2
         
         let b = a+170
         
         cell.sendbyWidth.constant = CGFloat(b)
         cell.sentByLableCell.text = Shopres.createdby
         cell.descriptionLableCell.text = Shopres.description
-        cell.titleLableCell.text  = Shopres.title.capitalized
+        cell.titleLableCell.text  = Shopres.title?.capitalized
         cell.dateTimeLabelCell.text = Shopres.createdon
         
         if Shopres.isappviewed == "1"{
@@ -565,7 +554,7 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         VideoTableViewCell
         
         
-        let Shopres : videoDataDetails = videoRef[indexPath.row]
+        var Shopres : videoDataDetails = videoRef[indexPath.row]
         
         
         
@@ -582,7 +571,7 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             
             if Shopres.isappviewed == "0"{
                 
-                apread(gesture : Shopres.detailid)
+                apread(gesture : Shopres.detailid ?? "")
                 
                 Shopres.isappviewed = "1"
                 cell.redDotImageView.isHidden = true
@@ -639,69 +628,56 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     func videoModals() {
         
-        let vedi = videoModal()
+        var vedi = videoModal()
         
         vedi.userid       =   userid
         vedi.collegeid     =  collegeid
         vedi.priority      =   priority
         
-        
-        let videoStr = vedi.toJSONString()
-        
-        
-        VideoRequest .call_request(param: videoStr!){ [self]
-            
-            (res) in
-            
-            
-            let VideoResp : videoResponce =
-            Mapper<videoResponce>().map(JSONString: res)!
-            
-            print("order data",VideoResp)
-            
-            if VideoResp.Status == 1 {
-                
-                
-                videoRef = VideoResp.data
-                
-                cloneList = VideoResp.data
-                noDataView.isHidden = true
-                noDataTextLabel.isHidden = true
-                
-                videoTableView.dataSource = self
-                videoTableView.delegate = self
-                
-                videoTableView.reloadData()
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+        APiCallManager.shared.callApi(url: APIEndpoints.GetVideoList, httpMethod: .post, queryParam: nil, requestBody: vedi) { [weak self] (result:Result<videoResponce,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let VideoResp):
+                if VideoResp.Status == 1 {
+                    videoRef = VideoResp.data ?? []
                     
-                    loadingCustom.stopAnimating()
+                    cloneList = VideoResp.data ?? []
+                    noDataView.isHidden = true
+                    noDataTextLabel.isHidden = true
                     
+                    videoTableView.dataSource = self
+                    videoTableView.delegate = self
                     
-                    loadingCustom.isHidden  = true
+                    videoTableView.reloadData()
                     
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                        
+                        self.loadingCustom.stopAnimating()
+                        
+                        
+                        self.loadingCustom.isHidden  = true
+                        
+                    }
+                    
+                }else{
+                    
+                    noDataView.isHidden = false
+                    noDataTextLabel.isHidden = false
+                    noDataTextLabel.text = VideoResp.Message
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                        
+                        self.loadingCustom.stopAnimating()
+                        
+                        
+                        self.loadingCustom.isHidden  = true
+                        
+                    }
                 }
-                
+
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
             }
-            else{
-                
-                noDataView.isHidden = false
-                noDataTextLabel.isHidden = false
-                noDataTextLabel.text = VideoResp.Message
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                    
-                    loadingCustom.stopAnimating()
-                    
-                    
-                    loadingCustom.isHidden  = true
-                    
-                }
-            }
-            
-            
         }
-        
-        
     }
     
     @IBAction func helpRedirect() {

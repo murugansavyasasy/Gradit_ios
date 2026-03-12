@@ -18,6 +18,17 @@ struct APIEndpoints {
     static let GetTextMessageBytype = "GetTextMessageBytype"
     static let GetAddsForCollege = "GetAddsForCollege"
     static let GetOverallcountByMenuType = "GetOverallcountByMenuType"
+    static let StudentAskQuestionForApp = "StudentAskQuestionForApp"
+    static let GetStudentChatScreenForApp = "GetStudentChatScreenForApp"
+    static let GetstaffdetailsForApp = "GetstaffdetailsForApp"
+    static let GetStaffClassesforChatForApp = "GetStaffClassesforChatForApp"
+    static let GetStaffChatScreenForApp = "GetStaffChatScreenForApp"
+    static let AnswerStudentQuestionForApp = "AnswerStudentQuestionForApp"
+    static let UnblockStudentForApp = "UnblockStudentForApp"
+    static let GetAssignmentListByType = "GetAssignmentListByType"
+    static let GetNoticeListByType = "GetNoticeListByType"
+    static let GetCircularListByType = "GetCircularListByType"
+    static let GetVideoList = "GetVideoList"
     
     
     

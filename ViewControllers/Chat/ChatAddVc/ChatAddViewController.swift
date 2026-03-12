@@ -10,7 +10,7 @@ import WebKit
 import KRProgressHUD
 
 class ChatAddViewController: UIViewController {
-
+    
     
     @IBOutlet weak var webView: WKWebView!
     
@@ -21,23 +21,20 @@ class ChatAddViewController: UIViewController {
         KRProgressHUD.show()
         
         let url = URL (string: addWeurl)
-
+        
         let requestObj = URLRequest(url: url!)
         webView.load(requestObj)
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now()+2.8) {
-           KRProgressHUD.dismiss()
+            KRProgressHUD.dismiss()
         }
         
-        
     }
-
-
+    
+    
     @IBAction func backBtn(_ sender: Any) {
         
         dismiss(animated: true)
         
     }
-    
-
 }
