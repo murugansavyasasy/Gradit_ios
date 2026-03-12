@@ -92,7 +92,7 @@ final class APiCallManager {
                 
             }catch{
                
-                self.completionOnMain(.failure(NetworkError.decodingError),completion: completion)
+                self.completionOnMain(.failure(error), completion: completion)
                 
             }
         }.resume()

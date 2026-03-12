@@ -139,6 +139,9 @@ class ExaminationDetailsViewControllerViewController: UIViewController,UITableVi
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
         password = defaults.string(forKey: DefaultsKeys.Password)
         topMemberLabel.text = mem
+        
+        tv.delegate = self
+        tv.dataSource  = self
        
         addApi()
         
@@ -360,59 +363,40 @@ class ExaminationDetailsViewControllerViewController: UIViewController,UITableVi
     
     func examView(){
         
-        
-        let examVieww = examViewModal()
+        var examVieww = examViewModal()
         
         examVieww.studentid = memberId
         examVieww.examheaderid = examHeaderId
         
-        
-        let examViewwStr = examVieww.toJSONString()
-        
-        
-        examViewResiverRequest.call_request(param: examViewwStr!){ [self]
+        APiCallManager.shared.callApi(url: APIEndpoints.GetStudentMarkDetailsForApp, httpMethod: .post, queryParam: nil, requestBody: examVieww) {[weak self] (result:Result<examViewResponce, Error>) in
             
-            (res) in
+            guard let self = self else {return}
             
-            
-            let examViewResp : examViewResponce =
-            Mapper<examViewResponce>().map(JSONString: res)!
-            
-            
-            if examViewResp.Status == 1 {
-                
-                
-                examViewPageRef = examViewResp.data
-                
-                noDataTextView.isHidden = true
-                noDataLabel.isHidden = true
-                tv.delegate = self
-                tv.dataSource  = self
-                tv.reloadData()
-                
-            }
-            
-            
-            else {
-                
-                
+            switch result {
+            case .success(let success):
+                if success.Status == 1 {
+                    examViewPageRef = success.data ?? []
+                    noDataTextView.isHidden = true
+                    noDataLabel.isHidden = true
+                    tv.reloadData()
+                    
+                }else {
+                    
+                    examViewPageRef = success.data ?? []
+                    noDataTextView.isHidden = false
+                    noDataLabel.isHidden = false
+                    noDataLabel.text = success.Message
+                    tv.reloadData()
+                }
+            case .failure(let failure):
+                examViewPageRef = []
                 noDataTextView.isHidden = false
                 noDataLabel.isHidden = false
-                noDataLabel.text = examViewResp.Message
-                
-                tv.delegate = self
-                tv.dataSource  = self
+                noDataLabel.text = failure.localizedDescription
                 tv.reloadData()
-                
-                
-                
             }
             
-            
         }
-        
-        
-        
     }
     
     

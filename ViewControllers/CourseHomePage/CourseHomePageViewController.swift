@@ -194,7 +194,7 @@ class CourseHomePageViewController: UIViewController,UITableViewDelegate,UITable
     
     func CourseRefModals() {
         
-        let Cour = courseModal()
+        var Cour = courseModal()
         
         Cour.user_id       = memberId
         Cour.college_id     = colgId
@@ -202,54 +202,65 @@ class CourseHomePageViewController: UIViewController,UITableViewDelegate,UITable
         Cour.sem_id      =   semesterid
         Cour.section_id   =    sectionid
         
-        
-        let courseStr = Cour.toJSONString()
-        
-        
-        courseRequest .call_request(param: courseStr!){ [self]
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetSubjectDetailsForSemester,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: Cour
+        ) {[weak self] (result:Result<courseResponce, Error>) in
             
-            (res) in
+            guard let self = self else { return }
             
-            
-            let courseResp : courseResponce =
-            Mapper<courseResponce>().map(JSONString: res)!
-            
-            print("order data",courseResp)
-            
-            if courseResp.Status == 1 {
-                
-                
-                courseRefName = courseResp.data
-                
-                
-                noDataView.isHidden = true
-                noDataTextLabel.isHidden = true
-                courseTabelView.delegate = self
-                courseTabelView.dataSource = self
-                
-                courseTabelView.reloadData()
-                
-                
-            }
-            
-            else{
-                
+            switch result {
+            case .success(let success):
+                if success.Status == 1 {
+                    
+                    courseRefName = success.data ?? []
+                    noDataView.isHidden = true
+                    noDataTextLabel.isHidden = true
+                    
+                }else{
+                    courseRefName = success.data ?? []
+                    noDataView.isHidden = false
+                    noDataTextLabel.isHidden = false
+                    noDataTextLabel.text = success.Message
+                }
+            case .failure(let failure):
+                courseRefName = []
                 noDataView.isHidden = false
                 noDataTextLabel.isHidden = false
-                noDataTextLabel.text = courseResp.Message
-                courseTabelView.delegate = self
-                courseTabelView.dataSource = self
-                
-                courseTabelView.reloadData()
-                
-                
+                noDataTextLabel.text = failure.localizedDescription
             }
-            
-            
-            
+            courseTabelView.reloadData()
         }
         
+      //  let courseStr = Cour.toJSONString()
         
+        
+//        courseRequest .call_request(param: courseStr!){ [self]
+//            
+//            (res) in
+//            
+//            
+//            let courseResp : courseResponce =
+//            Mapper<courseResponce>().map(JSONString: res)!
+//            
+//            print("order data",courseResp)
+//            
+//            if courseResp.Status == 1 {
+//                
+//                courseRefName = courseResp.data
+//                noDataView.isHidden = true
+//                noDataTextLabel.isHidden = true
+//                courseTabelView.reloadData()
+//            }else{
+//                
+//                noDataView.isHidden = false
+//                noDataTextLabel.isHidden = false
+//                noDataTextLabel.text = courseResp.Message
+//                courseTabelView.reloadData()
+//            }
+//        }
     }
     
     

@@ -1970,9 +1970,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
 func apread(gesture : String){
     
-    //
-    
-    let readApiStatus  = AppReadStatusModal()
+    var readApiStatus  = AppReadStatusModal()
     
     readApiStatus.msgtype = "assignment"
     readApiStatus.priority = priority
@@ -1980,30 +1978,17 @@ func apread(gesture : String){
     readApiStatus.detailsid = gesture
     print("sertt",gesture)
     
-    
-    let commuS = readApiStatus.toJSONString()
-    
-    ApiReadStatusRequest .call_request(param: commuS!){ [self]
+    APiCallManager.shared.callApi(url: APIEndpoints.Appreadstatus, httpMethod: .post, queryParam: nil, requestBody: readApiStatus) {[weak self]  (result:Result<ReadStausApiResponce, Error>) in
         
-        (res) in
+        guard let self = self else {return}
         
-        
-        let com : ReadStausApiResponce =
-        Mapper<ReadStausApiResponce>().map(JSONString: res)!
-        
-        
-        
-        assigmentTableView.delegate = self
-        assigmentTableView.dataSource = self
-        assigmentTableView.reloadData()
-        
-        
-        
+        switch result {
+        case .success(let success):
+            assigmentTableView.reloadData()
+        case .failure(let failure):
+            print(failure.localizedDescription)
+        }
     }
-    
-    //
-    
-    
 }
 
 func UpcommingRefName() {

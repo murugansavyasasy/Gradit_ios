@@ -23,6 +23,13 @@ struct APIEndpoints {
     static let GetLeaveType = "GetLeaveType"
     static let ManageLeaveapplication = "ManageLeaveapplication"
     static let GetOverallcountByMenuType = "GetOverallcountByMenuType"
+    static let GetEventListByType = "GetEventListByType"
+    static let Appreadstatus = "Appreadstatus"
+    static let GetExamListByType = "GetExamListByType"
+    static let GetStudentMarkDetailsForApp = "GetStudentMarkDetailsForApp"
+    static let GetSubjectDetailsForSemester = "GetSubjectDetailsForSemester"
+    static let getcategorylistforclgeid = "getcategorylistforclgeid"
+    static let categorywisestudentcreditdetails = "categorywisestudentcreditdetails"
     
     
     

@@ -1244,40 +1244,24 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
     
     func apread(gesture : String){
         
-        //        for i in collegeRef{
-        
-        let readApiStatus  = AppReadStatusModal()
+        var readApiStatus  = AppReadStatusModal()
         
         readApiStatus.msgtype = "circular"
         readApiStatus.priority = priority
         readApiStatus.userid = memberId
         readApiStatus.detailsid = gesture
-        print("sertt",gesture)
         
-        
-        let commuS = readApiStatus.toJSONString()
-        
-        ApiReadStatusRequest .call_request(param: commuS!){ [self]
+        APiCallManager.shared.callApi(url: APIEndpoints.Appreadstatus, httpMethod: .post, queryParam: nil, requestBody: readApiStatus) {[weak self]  (result:Result<ReadStausApiResponce, Error>) in
             
-            (res) in
+            guard let self = self else {return}
             
-            
-            let com : ReadStausApiResponce =
-            Mapper<ReadStausApiResponce>().map(JSONString: res)!
-            
-            
-            
-            imageTableView.delegate = self
-            imageTableView.dataSource = self
-            imageTableView.reloadData()
-            
-            
-            
+            switch result {
+            case .success(let success):
+                imageTableView.reloadData()
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
         }
-        
-        //        }
-        
-        
     }
     
     func departRefName() {

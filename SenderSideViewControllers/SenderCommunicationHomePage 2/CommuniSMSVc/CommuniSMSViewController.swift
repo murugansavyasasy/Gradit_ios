@@ -1034,43 +1034,25 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
     
     func apread(gesture : String){
         
-        
-        let readApiStatus  = AppReadStatusModal()
+        var readApiStatus  = AppReadStatusModal()
         
         readApiStatus.msgtype = type
         readApiStatus.priority = priority
         readApiStatus.userid = memberId
         readApiStatus.detailsid = gesture
         
-        
-        
-        let commuS = readApiStatus.toJSONString()
-        
-        ApiReadStatusRequest .call_request(param: commuS!){ [self]
+        APiCallManager.shared.callApi(url: APIEndpoints.Appreadstatus, httpMethod: .post, queryParam: nil, requestBody: readApiStatus) {[weak self]  (result:Result<ReadStausApiResponce, Error>) in
             
-            (res) in
+            guard let self = self else {return}
             
-            
-            let com : ReadStausApiResponce =
-            Mapper<ReadStausApiResponce>().map(JSONString: res)!
-            
-            
-            
-            tv.delegate = self
-            tv.dataSource = self
-            tv.reloadData()
-            
-            
-            
+            switch result {
+            case .success(let success):
+                tv.reloadData()
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
         }
-        
-        
-        
-        
     }
-    
-    
-    
     
     
     func ReadApi() {

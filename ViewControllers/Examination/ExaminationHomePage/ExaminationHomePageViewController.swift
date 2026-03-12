@@ -169,7 +169,8 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
         topMemberLabel.text = mem
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         
-        
+        examTableView.delegate = self
+        examTableView.dataSource = self
         
         overAllRefName()
         
@@ -338,224 +339,67 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
         
     }
     
-    
-    
-    
-    
-    
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
+        let text = searchText
         
-        
-        if examSegmentName.selectedSegmentIndex == 0 {
-            
-            
-            let filtered_list : [examDataDetails] = Mapper<examDataDetails>().mapArray(JSONString: cloneList.toJSONString()!)!
-            
-            
-            if !searchText.isEmpty{
-                
-                
-                
-                upcomings = filtered_list.filter {
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    $0.examname.lowercased().contains(searchText.lowercased()) || $0.createdbyname.lowercased().contains(searchText.lowercased()) || $0.syllabus.lowercased().contains(searchText.lowercased())  || $0.date.lowercased().contains(searchText.lowercased()) || $0.headerid.lowercased().contains(searchText.lowercased()) || $0.subjectname.lowercased().contains(searchText.lowercased())
-                    
-                    
-                    
-                }
-                
-                
-                
-                
+        if text.isEmpty {
+            if examSegmentName.selectedSegmentIndex == 0 {
+                upcomings = cloneList
             }else{
+                pasts = cloneList
+            }
+        }else {
+            
+            let filtered = cloneList.filter{
                 
-                
-                
-                upcomings = filtered_list
-                
-                
-                
-                print("pendingOrder")
-                
-                
-                
+                ($0.examname ?? "").localizedCaseInsensitiveContains(text) ||
+                ($0.createdbyname ?? "").localizedCaseInsensitiveContains(text) ||
+                ($0.syllabus ?? "").localizedCaseInsensitiveContains(text) ||
+                ($0.headerid ?? "").localizedCaseInsensitiveContains(text) ||
+                ($0.subjectname ?? "").localizedCaseInsensitiveContains(text)
             }
             
-            
-            
-            
-            
-            
-            
-            if upcomings.count > 0{
-                
-                
-                
-                print ("searchListPendigCount",upcomings.count)
-                noDataLabel.isHidden = true
-                noDataTextView.isHidden = true
-                
-                
-            }else{
-                
-                
-                
-                
-                noDataLabel.isHidden = false
-                noDataTextView.isHidden = false
-                noDataLabel.text = " No Records Found "
-                
-                
+            if examSegmentName.selectedSegmentIndex == 0 {
+                upcomings = filtered
+            }else {
+                pasts = filtered
             }
-            
-            
-            
         }
         
+        let count = examSegmentName.selectedSegmentIndex == 0
+        ? upcomings.count
+        : pasts.count
         
+        let hasData = count > 0
         
-        else if examSegmentName.selectedSegmentIndex == 1 {
-            
-            
-            
-            
-            let filtered_list : [examDataDetails] = Mapper<examDataDetails>().mapArray(JSONString: cloneList.toJSONString()!)!
-            
-            
-            
-            
-            if !searchText.isEmpty{
-                
-                
-                
-                pasts = filtered_list.filter {
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    $0.examname.lowercased().contains(searchText.lowercased()) || $0.createdbyname.lowercased().contains(searchText.lowercased()) || $0.syllabus.lowercased().contains(searchText.lowercased())  || $0.date.lowercased().contains(searchText.lowercased()) || $0.headerid.lowercased().contains(searchText.lowercased()) || $0.subjectname.lowercased().contains(searchText.lowercased())
-                    
-                    
-                    
-                }
-                
-                
-                
-                
-                
-                
-                
-            }else{
-                
-                
-                
-                pasts = filtered_list
-                
-                
-                
-                print("pendingOrder")
-                
-                
-                
-            }
-            
-            
-            
-            
-            
-            
-            
-            if pasts.count > 0{
-                
-                
-                
-                print ("searchListPendigCount",pasts.count)
-                
-                
-                noDataLabel.isHidden = true
-                noDataTextView.isHidden = true
-                
-            }else{
-                
-                
-                
-                
-                
-                noDataLabel.isHidden = false
-                noDataTextView.isHidden = false
-                noDataLabel.text = " No Records Found "
-                
-            }
-            
-            
-            
-            
-        }
-        
-        
+        noDataTextView.isHidden = hasData
+        noDataLabel.isHidden = hasData
+        noDataLabel.text = hasData ? "" : "No Records Found"
         
         examTableView.reloadData()
-        
-        
-        
-        
-        
-        
-        
     }
-    
     
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        
-        
-        
+         
         searchbar.endEditing(true)
-        
-        
-        
     }
-    
-    
-    
-    
-    
-    
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        
-        
         searchbar.resignFirstResponder()
-        
-        
-        
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
         
         searchbar.isHidden  = true
         searchFullView .isHidden = true
         noDataTextView.isHidden = true
         noDataLabel.isHidden = true
         
-        
         searchbar.resignFirstResponder()
-        
-        
-        
+           
     }
     
     
@@ -766,9 +610,9 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
             
             let upcom : examDataDetails = upcomings[indexPath.row]
             
-            cell.cellExamDate.text = upcom.date + " " + upcom.session
+            cell.cellExamDate.text = (upcom.date ?? "") + " " + (upcom.session ?? "")
             cell.cellSendByLabel.text = upcom.createdbyname
-            cell.cellExamName.text = upcom.examname.capitalized
+            cell.cellExamName.text = upcom.examname?.capitalized
             cell.cellExamVenue.text = upcom.examvenue
             
             cell.cellSyllabus.text = upcom.syllabus
@@ -792,7 +636,7 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
             
             cell.cellExamDate.text = past.date
             cell.cellSendByLabel.text = past.createdbyname
-            cell.cellExamName.text = past.examname.capitalized
+            cell.cellExamName.text = past.examname?.capitalized
             cell.cellExamVenue.text = past.examvenue
             cell.cellSyllabus.text = past.subjectname
             cell.cellSyllabus.text = past.syllabus
@@ -936,7 +780,7 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
     
     func upcommingRefName() {
         
-        let upcoming = examModal()
+        var upcoming = examModal()
         
         upcoming.userid   = memberId
         upcoming.collegeid = colgId
@@ -945,84 +789,65 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
         upcoming.priority = priority
         upcoming.type     = "upcomingexams"
         
-        
-        
-        
-        
-        let upcomingStr = upcoming.toJSONString()
-        
-        
-        examRequest.call_request(param: upcomingStr!){ [self]
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetExamListByType,
+            httpMethod:.post,
+            queryParam: nil,
+            requestBody: upcoming
+        ) {[weak self] (result:Result<examResponce, Error>) in
             
-            (res) in
+            guard let self = self else { return }
             
-            
-            let departResp : examResponce =
-            Mapper<examResponce>().map(JSONString: res)!
-            
-            
-            print("order data",departResp)
-            
-            
-            
-            if departResp.Status == 1{
+            switch result {
+            case .success(let success):
                 
-                upcomings = departResp.data
-                cloneList = departResp.data
-                
-                
-                noDataLabel.isHidden = true
-                noDataTextView.isHidden = true
-                examTableView.isScrollEnabled = true
-                examTableView.delegate = self
-                examTableView.dataSource = self
-                
-                examTableView.reloadData()
-                
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                if success.Status == 1{
                     
-                    loadingCustom.stopAnimating()
+                    upcomings = success.data ?? []
+                    cloneList = success.data ?? []
                     
+                    noDataLabel.isHidden = true
+                    noDataTextView.isHidden = true
+                    examTableView.isScrollEnabled = true
                     
-                    loadingCustom.isHidden  = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [weak self] in
+                        self?.loadingCustom.stopAnimating()
+                        self?.loadingCustom.isHidden  = true
+                    }
+                } else{
                     
+                    upcomings = success.data ?? []
+                    cloneList = success.data ?? []
+                    noDataLabel.isHidden = false
+                    noDataTextView.isHidden = false
+                    noDataLabel.text = success.Message
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [weak self] in
+                        self?.loadingCustom.stopAnimating()
+                        self?.loadingCustom.isHidden  = true
+                    }
                 }
-            }
-            
-            else{
-                
+            case .failure(let failure):
+                upcomings = []
+                cloneList = []
                 noDataLabel.isHidden = false
                 noDataTextView.isHidden = false
-                noDataLabel.text = departResp.Message
-                examTableView.delegate = self
-                examTableView.dataSource = self
+                noDataLabel.text = failure.localizedDescription
                 
-                examTableView.reloadData()
-                
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                    
-                    loadingCustom.stopAnimating()
-                    
-                    
-                    loadingCustom.isHidden  = true
-                    
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [weak self] in
+                    self?.loadingCustom.stopAnimating()
+                    self?.loadingCustom.isHidden  = true
                 }
             }
             
-            
-            
-            
+            examTableView.reloadData()
         }
-        
-        
     }
     
     
     func pastRefName() {
         
-        let past = examModal()
+        var past = examModal()
         
         past.userid   = memberId
         past.collegeid = colgId
@@ -1031,65 +856,35 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
         past.priority = priority
         past.type     = "pastexams"
         
-        
-        let pastStr = past.toJSONString()
-        
-        
-        examRequest .call_request(param: pastStr!){ [self]
+        APiCallManager.shared.callApi(url: APIEndpoints.GetExamListByType, httpMethod: .post, queryParam: nil, requestBody: past) {[weak self] (result:Result<examResponce, Error>) in
             
-            (res) in
+            guard let self = self else {return}
             
-            
-            let pastResp : examResponce =
-            Mapper<examResponce>().map(JSONString: res)!
-            
-            print("order data",pastResp)
-            
-            
-            
-            
-            print("order data",pastResp)
-            
-            
-            
-            if pastResp.Status == 1{
+            switch result {
+            case .success(let success):
                 
-                pasts = pastResp.data
-                
-                cloneList = pastResp.data
-                
-                
-                noDataLabel.isHidden = true
-                noDataTextView.isHidden = true
-                examTableView.delegate = self
-                examTableView.dataSource = self
-                examTableView.isScrollEnabled = true
-                
-                
-                examTableView.reloadData()
-                
-                
-            }
-            
-            else{
-                
+                if success.Status == 1{
+                    pasts = success.data ?? []
+                    cloneList = success.data ?? []
+                    noDataLabel.isHidden = true
+                    noDataTextView.isHidden = true
+                    examTableView.isScrollEnabled = true
+                    examTableView.reloadData()
+                }else{
+                    pasts = success.data ?? []
+                    noDataLabel.isHidden = false
+                    noDataTextView.isHidden = false
+                    noDataLabel.text = success.Message
+                    examTableView.reloadData()
+                }
+            case .failure(let failure):
+                pasts = []
                 noDataLabel.isHidden = false
                 noDataTextView.isHidden = false
-                noDataLabel.text = pastResp.Message
-                examTableView.delegate = self
-                examTableView.dataSource = self
-                
+                noDataLabel.text = failure.localizedDescription
                 examTableView.reloadData()
-                
-                
-                
             }
-            
-            
         }
-        
-        
-        
         
     }
     

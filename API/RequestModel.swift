@@ -75,3 +75,62 @@ struct manageLeaveModal : Codable{
     var leavereason : String?
     var processtype : String?
 }
+
+//MARK: Reciver events
+struct eventsModal : Codable{
+    var userid   :  String?
+    var appid    : String?
+    var priority : String?
+    var type     : String?
+}
+
+//MARK: read status
+struct AppReadStatusModal : Codable{
+    
+    var userid : String?
+    var msgtype : String?
+    var detailsid : String?
+    var priority : String?
+}
+
+//MARK: receiver exam
+struct examModal : Codable{
+    
+    var  userid         : String?
+    var  collegeid      : String?
+    var  sectionid      : String?
+    var  appid          : String?
+    var  priority       : String?
+    var  type           : String?
+}
+
+struct examViewModal : Codable{
+    var studentid : String?
+    var examheaderid : String?
+}
+
+//MARK: Get course details
+struct courseModal : Codable{
+    
+    var user_id    : String?
+    var college_id : String?
+    var dept_id    : String?
+    var sem_id     : String?
+    var section_id : String?
+}
+
+//MARK: Get category
+struct categoryModal : Codable{
+    
+    var  colgid          : String?
+    var  i_student_id    :  String?
+}
+
+//MARK: Credit
+struct creditModal : Codable{
+    
+    var colgid      : String?
+    var i_course_id : String?
+    var i_category_id : String?
+    var i_student_id : String?
+}
