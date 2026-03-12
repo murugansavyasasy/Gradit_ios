@@ -407,7 +407,7 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
         print("historys.durationhistorys.duration",historys.duration)
         
         if historys.duration != nil{
-            cell.durationLAbel.text = "00:00"+historys.duration
+            cell.durationLAbel.text = "00:00"+(historys.duration ?? "")
         }
         
         else{
@@ -909,47 +909,35 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
     
     func HistoryApi(){
         
-        let History = HistorySmsVoiceModal()
-        
+        var History = HistorySmsVoiceModal()
         
         History.priority = piroty
         History.userid = memberId
         History.appid = "1"
         
-        
-        let Historytr = History.toJSONString()
-        
-        
-     
-        HistoryVoiceReqs.call_request(param: Historytr!){ [self]
+        APiCallManager.shared.callApi(url: APIEndpoints.GetVoiceMessageHistory, httpMethod: .post, queryParam: nil, requestBody: History) {[weak self] (result:Result<HistorySmsVoiceResponce, Error>) in
             
-            (res) in
+            guard let self = self else {return}
             
-            
-            
-            let HistoryResp : HistorySmsVoiceResponce = Mapper<HistorySmsVoiceResponce>().map(JSONString: res)!
-            
-          
-            
-            if HistoryResp.Status == 1{
-                historyDataDetails =  HistoryResp.data
-                nodataLbl.isHidden = true
+            switch result {
+            case .success(let success):
+                
+                historyDataDetails =  success.data ?? []
+                nodataLbl.isHidden = !historyDataDetails.isEmpty
+                nodataLbl.text = success.Message
                 tv.delegate = self
                 tv.dataSource = self
                 tv.reloadData()
-            }
-            else{
                 
-                nodataLbl.text = HistoryResp.Message
+            case .failure(let failure):
+                historyDataDetails =  []
+                nodataLbl.text = failure.localizedDescription
                 nodataLbl.isHidden = false
                 tv.delegate = self
                 tv.dataSource = self
                 tv.reloadData()
-                
             }
-            
         }
-        
     }
     
     

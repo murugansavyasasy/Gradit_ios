@@ -274,7 +274,7 @@ class ViewController: UIViewController {
             switch result {
             case .success(let success):
                 
-                versionCheck = success.versionData ?? []
+                versionCheck = success.data ?? []
                 
                 defaults.set(versionCheck.first?.videojson, forKey: DefaultsKeys.vimeoAccessToken)
                 

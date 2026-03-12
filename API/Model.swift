@@ -11,7 +11,7 @@ import Foundation
 struct VersionCheckResponse : Codable{
     var Status: Int?
     var Message: String?
-    var versionData : [VersionCheckData]?
+    var data : [VersionCheckData]?
 }
 
 struct VersionCheckData : Codable{
@@ -517,10 +517,117 @@ struct creditDataDetails : Codable{
     var to_be_obtained : String?
 }
 
+//MARK: Sem credit
+
+struct semCreditDropDownResponce : Codable{
+    
+    var   Status     :     Int?
+    var   Message    : String?
+    var   data       : [semCreditDropDownDataDeails]?
+}
+
+struct semCreditDropDownDataDeails : Codable{
+    
+    var  semester_id : Int?
+    var  semseter_name : String?
+    var  semester_no : String?
+    var isSelected : Bool?
+}
+
+struct semCreditDetailsResponce : Codable{
+    
+    var  Status  : Int?
+    var  Message : String?
+    var  data    :  [semcreditDataDetails]?
+}
 
 
+struct semcreditDataDetails : Codable{
+    
+    var category_id     : Int?
+    var category_name   : String?
+    var list            : [CategoryList]?
+    var semester_name   : String?
+    var total_credits   : String?
+    var obtained        : String?
+    var to_be_obtained  : String?
+}
 
 
+struct CategoryList : Codable{
+    
+    var category_id     : Int?
+    var category_name   : String?
+    var semester_name   : String?
+    var total_credits   : String?
+    var obtained        : String?
+    var to_be_obtained  : String?
+}
+
+//MARK: Exam details
+struct examDetailsResponce : Codable{
+    
+    var   Status     : Int?
+    var   Message    : String?
+    var   data       : [examesDataDetails]?
+}
+
+struct examesDataDetails : Codable{
+    
+    var    sem_number          :  String?
+    var    subject_code        :  String?
+    var    subject_name        :  String?
+    var    amount              :  String?
+}
+
+//MARK: Hallticket
+struct HallticketResponce : Codable{
+    
+    var Status : Int?
+    var Message : String?
+    var data : [HallticketDataDetails]?
+}
+
+
+struct HallticketDataDetails : Codable{
+    
+    var course_code : String
+    var course_name : String
+    var department : String
+    var dob : String
+    var register_number : String
+    var student_name : String
+    var current_sem : String
+    var subject_sem_number : String
+    var subject_code: String
+    var subject_name : String
+    var exam_date : String
+    var exam_time : String
+    var arrear_regular : String
+    var course_wise_attendance : String
+    var overall_semester_attendance : String
+    var condonation_paid : String
+    var student_image : String
+    var college_logo  : String
+}
+
+//MARK: Voice history
+struct HistorySmsVoiceResponce : Codable{
+    
+    var Status : Int?
+    var Message : String?
+    var data    : [HistorySmsVoiceDataDetail]?
+}
+
+struct HistorySmsVoiceDataDetail : Codable{
+    
+    var headerid : String?
+    var timing   : String?
+    var msgcontent : String?
+    var description : String?
+    var duration : String?
+    var voicefile : String?
+}
 
 
 // MARK: - Placement Event Response

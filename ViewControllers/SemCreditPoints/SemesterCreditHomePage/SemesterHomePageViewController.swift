@@ -12,46 +12,24 @@ import DropDown
 @available(iOS 16.0, *)
 class SemesterHomePageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
-    
-    
     @IBOutlet weak var reusee: ReuseView!
-   
-    
     @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
-   
-    
     @IBOutlet weak var tv: UITableView!
-    
     @IBOutlet weak var headingView: UIView!
-    
     @IBOutlet weak var noDataTextView: UIView!
-    
     @IBOutlet weak var noDataLabel: UILabel!
-    
-    
-    
-    
     @IBOutlet weak var arrowImageViews: UIImageView!
     @IBOutlet weak var semCreditDropDownView: UIViewX!
-    
-    
     @IBOutlet weak var semCreditDropDownLabel: UILabel!
     
     var identiers = "SemCreditTableViewCell"
     let menuIdentifier = "MenuCollectionViewCell"
     var MenuRefName :[menuApiDataDetails] = []
-    
     var semCreditDropDownRef : [semCreditDropDownDataDeails] = []
     var allRefName  : [CategoryList] = []
     var RefNameDetails  : [semcreditDataDetails] = []
-    
     let dropDown = DropDown()
     var credsEc : String!
-    
-    var refN   : [CategoryList] = []
-    
-    
-    
     var colgId : String!
     var memberId : String!
     var deptid   : String!
@@ -60,10 +38,7 @@ class SemesterHomePageViewController: UIViewController,UITableViewDelegate,UITab
     var courseid   : String!
     var priority : String!
     var str : [String] = []
-    
     var strName : [String] = []
-    
-    
     var is_read_enabled = ""
     var is_write_enabled = ""
     
@@ -134,7 +109,6 @@ class SemesterHomePageViewController: UIViewController,UITableViewDelegate,UITab
                 }
    
         
-        
         let rowNib = UINib(nibName: identiers, bundle: nil)
         tv.register(rowNib, forCellReuseIdentifier: identiers)
         
@@ -150,8 +124,6 @@ class SemesterHomePageViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     
         print("counttt",allRefName.count)
@@ -160,11 +132,6 @@ class SemesterHomePageViewController: UIViewController,UITableViewDelegate,UITab
         }else{
             return RefNameDetails.count
         }
-        
-        
-        
-        
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -214,191 +181,120 @@ class SemesterHomePageViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     
-  
-    func semCreditDropDown(){
-        
-        let sem = semCreditDropDownModal()
-        sem.colgid  = colgId
+    func semCreditDropDown() {
+
+        var sem = semCreditDropDownModal()
+        sem.colgid = colgId
         sem.i_course_id = courseid
-        
-        
-        
-        let semCreditDropDownStr = sem.toJSONString()
-        
-        semCreditDropDownRequest.call_request(param: semCreditDropDownStr!){ [self]
-            (res) in
-            
-            let categoryResp : semCreditDropDownResponce =
-            Mapper<semCreditDropDownResponce>().map(JSONString: res)!
-            
-            semCreditDropDownRef = categoryResp.data
-            
-            var myArray: [String] = [ ]
-            var semIdArray :[Int] = [ ]
-            
-            semCreditDropDownRef.forEach {(arrType)  in
-                myArray.append((arrType.semseter_name))
-                
-                print("Ids",arrType.semester_id)
-                semIdArray.append(arrType.semester_id)
-                
-            }
-            
-            semCreditDropDownLabel.text = "--Selecte Semester--"
-            dropDown.anchorView = semCreditDropDownView
-            dropDown.dataSource = myArray
-            
-            dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-            dropDown.direction = .bottom
-            DropDown.appearance().backgroundColor = UIColor.white
-            
-            DropDown.appearance().cornerRadius = 8
-            DropDown.appearance().layer.borderColor = UIColor.red.cgColor
-            
-            dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-                print("Selected item: \(item) at index: \(index)")
-                print("myArray",myArray)
-                
-                self.credsEc = item
-                
-                let all = semcreditDetailsModal()
-                
-                all.colgid = colgId
-                all.i_course_id = courseid
-                all.i_semester_id =  semIdArray[index]
-                all.i_student_id = memberId
-                
-                
-                let allstr = all.toJSONString()
-                
-                
-                
-                print("gh",allstr)
-                
-                
-                if credsEc == "ALL" {
-                    
-                    semCreditDetailsRequestAll.call_request(param: allstr!){ [self]
-                        (res) in
-                        
-                        let allResp : semCreditDetailsResponce =
-                        Mapper<semCreditDetailsResponce>().map(JSONString: res)!
-                        
-                        print("kkkkkkkkkk",res)
-                        if allResp.Status == 1 {
-                            
-                            
-                            for i in allResp.data {
-                                
-                                refN = i.category_list
-                                //
-                                //
+
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.getsemesterlistforcourseid,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: sem
+        ) { [weak self] (result: Result<semCreditDropDownResponce, Error>) in
+
+            guard let self = self else { return }
+
+            switch result {
+
+            case .success(let success):
+
+                semCreditDropDownRef = success.data ?? []
+
+                let myArray = semCreditDropDownRef.map { $0.semseter_name ?? "" }
+                let semIdArray = semCreditDropDownRef.map { $0.semester_id }
+
+                self.semCreditDropDownLabel.text = "--Selecte Semester--"
+
+                self.dropDown.anchorView = self.semCreditDropDownView
+                self.dropDown.dataSource = myArray
+                self.dropDown.bottomOffset = CGPoint(
+                    x: 0,
+                    y: (self.dropDown.anchorView?.plainView.bounds.height)!
+                )
+
+                self.dropDown.direction = .bottom
+
+                DropDown.appearance().backgroundColor = .white
+                DropDown.appearance().cornerRadius = 8
+                DropDown.appearance().layer.borderColor = UIColor.red.cgColor
+
+                self.dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+
+                    guard let self = self else { return }
+
+                    print("Selected item: \(item) at index: \(index)")
+                    print("myArray", myArray)
+
+                    self.credsEc = item
+
+                    var all = semcreditDetailsModal()
+                    all.colgid = self.colgId
+                    all.i_course_id = self.courseid
+                    all.i_semester_id = semIdArray[index]
+                    all.i_student_id = self.memberId
+
+                    let apiURL = (self.credsEc == "ALL")
+                    ? APIEndpoints.semesterwisestudentcreditdetailsALL
+                    : APIEndpoints.semesterwisestudentcreditdetails
+
+                    APiCallManager.shared.callApi(
+                        url: apiURL,
+                        httpMethod: .post,
+                        queryParam: nil,
+                        requestBody: all
+                    ) { [weak self] (result: Result<semCreditDetailsResponce, Error>) in
+
+                        guard let self = self else { return }
+
+                        switch result {
+
+                        case .success(let response):
+
+                            if response.Status == 1 {
+
+                                if self.credsEc == "ALL" {
+
+                                    self.allRefName = response.data?.flatMap { $0.list ?? [] } ?? []
+
+                                } else {
+
+                                    self.RefNameDetails = response.data ?? []
+                                }
+
+                                self.headingView.isHidden = false
+                                self.noDataTextView.isHidden = true
+                                self.noDataLabel.isHidden = true
+
+                            } else {
+
+                                self.headingView.isHidden = true
+                                self.noDataTextView.isHidden = false
+                                self.noDataLabel.isHidden = false
+                                self.noDataLabel.text = response.Message
                             }
-                            allRefName.append(contentsOf: refN)
-                            
-                            headingView.isHidden = false
-                            noDataTextView.isHidden = true
-                            noDataLabel.isHidden = true
-                            tv.delegate = self
-                            tv.dataSource = self
-                            tv.reloadData()
-                            
-                            
+
+                            self.tv.delegate = self
+                            self.tv.dataSource = self
+                            self.tv.reloadData()
+
+                        case .failure(let error):
+
+                            print(error.localizedDescription)
                         }
-                        
-                        else{
-                            
-                            headingView.isHidden = true
-                            noDataTextView.isHidden = false
-                            noDataLabel.isHidden = false
-                            noDataLabel.text = allResp.Message
-                            tv.delegate = self
-                            tv.dataSource = self
-                            tv.reloadData()
-                            
-                        }
-                        
-                        
-                        
                     }
-                    
-                }
-                
-                
-                else{
-                    
-                    
-                    semCreditDetailsRequest.call_request(param: allstr!){ [self]
-                        (res) in
-                        
-                        let allResp : semCreditDetailsResponce =
-                        Mapper<semCreditDetailsResponce>().map(JSONString: res)!
-                        
-                        print("kkkkkkkkkk",res)
-                        if allResp.Status == 1 {
-                            
-                            if allResp.Status == 1 {
-                                //
-                                RefNameDetails = allResp.data
-                                
-                                headingView.isHidden = false
-                                noDataTextView.isHidden = true
-                                noDataLabel.isHidden = true
-                                tv.delegate = self
-                                tv.dataSource = self
-                                tv.reloadData()
-                                
-                                
-                            }
-                            
-                            else{
-                                
-                                headingView.isHidden = true
-                                noDataTextView.isHidden = false
-                                noDataLabel.isHidden = false
-                                noDataLabel.text = allResp.Message
-                                tv.delegate = self
-                                tv.dataSource = self
-                                tv.reloadData()
-                                
-                            }
-                            
-                            
-                            
-                        }
-                        
-                        
-                    }
-                    
-                    
-                    
+
                     self.semCreditDropDownLabel.text = item
-                    arrowImageViews.image = UIImage(named: "download")
+                    self.arrowImageViews.image = UIImage(named: "download")
                 }
-                
-                
+
+            case .failure(let error):
+
+                print(error.localizedDescription)
             }
-            
-            
         }
-        
-        
-        
-        
     }
-    
-    
-    
-    //this part bottom swipe view .
-    
-    
-    
-    
-  
-    
-    
-    
-    
     
     @IBAction func backBtn(_ sender: Any) {
         

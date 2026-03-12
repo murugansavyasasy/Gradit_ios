@@ -60,7 +60,8 @@ class ExamDetailsHomePageViewController: UIViewController,UITableViewDelegate,UI
         
         let rowNib = UINib(nibName: identifers, bundle: nil)
         examDetailsTabelView.register(rowNib, forCellReuseIdentifier: identifers)
-      
+        examDetailsTabelView.delegate = self
+        examDetailsTabelView.dataSource = self
         examRefname ()
         
      
@@ -153,57 +154,69 @@ class ExamDetailsHomePageViewController: UIViewController,UITableViewDelegate,UI
     
     func examRefname () {
         
-        let examDetail = examDetailsModal()
-        
-        
+        var examDetail = examDetailsModal()
         
         examDetail.colgid = colgId
         examDetail.i_course_id = courseid
         examDetail.i_semester_id = semesterid
         examDetail.i_student_id  = memberId
         
-        let examStr = examDetail.toJSONString()
-        
-        examDetailsRequest .call_request(param: examStr!){ [self]
+        APiCallManager.shared.callApi(url: APIEndpoints.getExamApplicationDetails, httpMethod: .post, queryParam: nil, requestBody: examDetail) {[weak self] (result:Result<examDetailsResponce, Error>) in
             
-            (res) in
+            guard let self = self else {return}
             
-            
-            let courseResp : examDetailsResponce =
-            Mapper<examDetailsResponce>().map(JSONString: res)!
-            
-            print("order data",courseResp)
-            
-            
-            examRef = courseResp.data
-            
-            print("dasrrrs",courseResp.Status)
-            if courseResp.Status == 1 {
+            switch result {
+            case .success(let success):
+                examRef = success.data ?? []
                 
-                noDataView.isHidden = true
-                noDataTextLabel.isHidden = true
-                examDetailsTabelView.delegate = self
-                examDetailsTabelView.dataSource = self
-                examDetailsTabelView.reloadData()
-           
-            }
-            
-            else{
-                
-                noDataTextLabel.text = courseResp.Message
+                if success.Status == 1 {
+                    
+                    noDataView.isHidden = true
+                    noDataTextLabel.isHidden = true
+                    examDetailsTabelView.reloadData()
+                }else{
+                    
+                    noDataTextLabel.text = success.Message
+                    noDataView.isHidden = false
+                    noDataTextLabel.isHidden = false
+                    examDetailsTabelView.reloadData()
+                }
+            case .failure(let failure):
+                examRef = []
+                noDataTextLabel.text = failure.localizedDescription
                 noDataView.isHidden = false
                 noDataTextLabel.isHidden = false
-                examDetailsTabelView.delegate = self
-                examDetailsTabelView.dataSource = self
                 examDetailsTabelView.reloadData()
-                
-            
             }
-            
-        
         }
         
+        //       let examStr = examDetail.toJSONString()
         
+        //        examDetailsRequest .call_request(param: examStr!){ [self]
+        //
+        //            (res) in
+        //
+        //
+        //            let courseResp : examDetailsResponce =
+        //            Mapper<examDetailsResponce>().map(JSONString: res)!
+        //
+        //
+        //
+        //            examRef = courseResp.data
+        //
+        //            if courseResp.Status == 1 {
+        //
+        //                noDataView.isHidden = true
+        //                noDataTextLabel.isHidden = true
+        //                examDetailsTabelView.reloadData()
+        //            }else{
+        //
+        //                noDataTextLabel.text = courseResp.Message
+        //                noDataView.isHidden = false
+        //                noDataTextLabel.isHidden = false
+        //                examDetailsTabelView.reloadData()
+        //            }
+        //        }
     }
     
     // this part  bottom swipe  view.
