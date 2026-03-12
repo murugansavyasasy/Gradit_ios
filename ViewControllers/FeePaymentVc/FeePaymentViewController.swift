@@ -21,8 +21,8 @@ class FeePaymentViewController: UIViewController,WKNavigationDelegate {
         webView.navigationDelegate = self
         let defaults = UserDefaults.standard
         
-        memberId = defaults.string(forKey: DefaultsKeys.memberid)!
-        feeUrl = defaults.string(forKey: DefaultsKeys.feepaymentlink)!
+        memberId = defaults.string(forKey: DefaultsKeys.memberid) ?? ""
+        feeUrl = defaults.string(forKey: DefaultsKeys.feepaymentlink) ?? ""
         
         let myURL = URL(string: feeUrl+memberId)
         let myRequest = URLRequest(url: myURL!)

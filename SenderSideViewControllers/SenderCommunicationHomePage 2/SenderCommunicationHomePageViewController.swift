@@ -1061,7 +1061,7 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         var overall = overAllModal()
         
         overall.userid   =  memberId
-        overall.menuid       = "2"
+        overall.menuid       = "16"
         overall.collegeid    =  collegeId
         overall.departmentid =  departmentId
         overall.sectionid    =   sectionId

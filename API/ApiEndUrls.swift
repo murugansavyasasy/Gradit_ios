@@ -30,6 +30,12 @@ struct APIEndpoints {
     static let GetSubjectDetailsForSemester = "GetSubjectDetailsForSemester"
     static let getcategorylistforclgeid = "getcategorylistforclgeid"
     static let categorywisestudentcreditdetails = "categorywisestudentcreditdetails"
+    static let getsemesterlistforcourseid = "getsemesterlistforcourseid"
+    static let semesterwisestudentcreditdetailsALL = "semesterwisestudentcreditdetailsALL"
+    static let semesterwisestudentcreditdetails = "semesterwisestudentcreditdetails"
+    static let getExamApplicationDetails = "getExamApplicationDetails"
+    static let getHallTicketDetails = "getHallTicketDetails"
+    
     
     
     

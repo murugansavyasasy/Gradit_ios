@@ -69,7 +69,8 @@ class HallTicketViewController: UIViewController, UICollectionViewDataSource, UI
         i_semester_id = defaults.integer(forKey: DefaultsKeys.semesterid)
         clgName = defaults.string(forKey: DefaultsKeys.colgName)
         i_student_id = defaults.integer(forKey: DefaultsKeys.memberid)
-        
+        hallticketCv.dataSource = self
+        hallticketCv.delegate = self
         hallticketApi()
         pageController.hidesForSinglePage = true
     }
@@ -353,54 +354,82 @@ class HallTicketViewController: UIViewController, UICollectionViewDataSource, UI
     
     func hallticketApi(){
         
-        let halltick = HallticketModal()
+        var halltick = HallticketModal()
         
         halltick.colgid  = clgId
         halltick.i_course_id = i_course_id
         halltick.i_semester_id = i_semester_id
         halltick.i_student_id = i_student_id
         
-        let hallticketStr = halltick.toJSONString()
-        
-        HalltickectRequest .call_request(param: hallticketStr!){ [self]
+        APiCallManager.shared.callApi(url: APIEndpoints.getHallTicketDetails, httpMethod: .post, queryParam: nil, requestBody: halltick) {[weak self] (result:Result<HallticketResponce, Error>) in
             
-            (res) in
+            guard let self = self else {return}
             
-            
-            let haltticketResp : HallticketResponce =
-            Mapper<HallticketResponce>().map(JSONString: res)!
-            
-            print("order data",haltticketResp)
-            
-            
-            if haltticketResp.Status == 1{
-                
-                pageController.isHidden = true
-                hallticketsDataDetails = haltticketResp.data
-                
-                
-                hallticketCv.dataSource = self
-                hallticketCv.delegate = self
-                hallticketCv.reloadData()
-            }
-            
-            
-            else{
-                
+            switch result {
+            case .success(let success):
+                if success.Status == 1{
+                    
+                    pageController.isHidden = true
+                    hallticketsDataDetails = success.data ?? []
+                    hallticketCv.reloadData()
+                }else{
+                    
+                    pageController.isHidden = true
+                    
+                    let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        self.dismiss(animated: true)
+                    }))
+                    
+                    present(refreshAlert, animated: true, completion: nil)
+                }
+            case .failure(let failure):
                 pageController.isHidden = true
                 
-                let refreshAlert = UIAlertController(title: "", message: haltticketResp.Message, preferredStyle: UIAlertController.Style.alert)
+                let refreshAlert = UIAlertController(title: "", message: failure.localizedDescription, preferredStyle: UIAlertController.Style.alert)
                 
                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                    
+                    self.dismiss(animated: true)
                 }))
                 
                 present(refreshAlert, animated: true, completion: nil)
-                
             }
-            
-            
         }
+        
+        //       let hallticketStr = halltick.toJSONString()
+        
+        //        HalltickectRequest .call_request(param: hallticketStr!){ [self]
+        //
+        //            (res) in
+        //
+        //
+        //            let haltticketResp : HallticketResponce =
+        //            Mapper<HallticketResponce>().map(JSONString: res)!
+        //
+        //            print("order data",haltticketResp)
+        //
+        //
+        //            if haltticketResp.Status == 1{
+        //
+        //                pageController.isHidden = true
+        //                hallticketsDataDetails = haltticketResp.data
+        //                hallticketCv.reloadData()
+        //            }else{
+        //
+        //                pageController.isHidden = true
+        //
+        //                let refreshAlert = UIAlertController(title: "", message: haltticketResp.Message, preferredStyle: UIAlertController.Style.alert)
+        //
+        //                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+        //
+        //                }))
+        //
+        //                present(refreshAlert, animated: true, completion: nil)
+        //            }
+        //
+        //
+        //        }
         
     }
 }
