@@ -60,40 +60,18 @@ class EventsViewController: UIViewController, UITableViewDataSource,UITableViewD
 
 
 @IBOutlet weak var faqView: UIView!
-
-
-
 @IBOutlet weak var refreshView: UIView!
-
-
-
 @IBOutlet weak var helpView: UIView!
-
-
 @IBOutlet weak var termsAndConditionView: UIView!
-
-
 @IBOutlet weak var changePasswordView: UIView!
-
-
-
-
 @IBOutlet weak var searchbar: UISearchBar!
 @IBOutlet weak var bigImg: UIImageView!
 @IBOutlet weak var noDataLabel: UILabel!
 @IBOutlet weak var noDataTextView: UIView!
-
-
 @IBOutlet weak var smallImg: UIImageView!
 @IBOutlet weak var adView: UIView!
-
 @IBOutlet weak var eventSegmentName: UISegmentedControl!
-
-
 @IBOutlet weak var EventTableView: UITableView!
-
-
-
 @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
 
 
@@ -141,17 +119,9 @@ override func viewDidAppear(_ animated: Bool) {
     
     print("kljjjjjjjjj")
     
-    
     PreviousAddId = PreviousAddId+1
-    
-    
-    
     print("jkkkkkkk",PreviousAddId)
-    
 }
-
-
-
 
 
 
@@ -164,6 +134,9 @@ override func viewDidLoad() {
     sideMenuView.isHidden = true
     searchbar.delegate = self
     searchbar.isHidden  = true
+    
+    EventTableView.delegate = self
+    EventTableView.dataSource = self
     
     let defaults = UserDefaults.standard
     
@@ -189,14 +162,7 @@ override func viewDidLoad() {
     overAllRefName()
     
     addApi()
-    
-    
-    
-    
     upcoming()
-    
-    
-    
     
     EventTableView.allowsSelection = true
     
@@ -342,198 +308,63 @@ override func viewDidLoad() {
 
 @IBAction func Searchfield() {
     
-    
     searchbar.isHidden  = false
-    
-    
 }
 
 
-func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    
-    
-    
-    if eventSegmentName.selectedSegmentIndex == 0{
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        let filtered_list : [Eventsdatadetails] = Mapper<Eventsdatadetails>().mapArray(JSONString: cloneList.toJSONString()!)!
+        let text = searchText
         
-        
-        
-        
-        if !searchText.isEmpty{
+        if text.isEmpty {
             
+            if eventSegmentName.selectedSegmentIndex == 0 {
+                upcomming = cloneList
+            }else{
+                eventsRef = cloneList
+            }
+        }else{
             
-            
-            upcomming = filtered_list.filter {
-                
-                
-                
-                $0.event_date.lowercased().contains(searchText.lowercased()) || $0.event_time.lowercased().contains(searchText.lowercased()) || $0.body.lowercased().contains(searchText.lowercased()) ||  $0.topic.lowercased().contains(searchText.lowercased()) || $0.venue.lowercased().contains(searchText.lowercased()) ||  $0.createdby.lowercased().contains(searchText.lowercased())
-                
-                
-                
+            let filtered = cloneList.filter {
+                ($0.event_date ?? "").localizedCaseInsensitiveContains(text) ||
+                ($0.event_time ?? "").localizedCaseInsensitiveContains(text) ||
+                ($0.topic ?? "").localizedCaseInsensitiveContains(text) ||
+                ($0.body ?? "").localizedCaseInsensitiveContains(text) ||
+                ($0.venue ?? "").localizedCaseInsensitiveContains(text) ||
+                ($0.createdby ?? "").localizedCaseInsensitiveContains(text)
             }
             
-            
-            
-            
-        }else{
-            
-            
-            
-            upcomming = filtered_list
-            
-            
-            
-        }
-        
-        
-        
-        
-        
-        
-        
-        if upcomming.count > 0{
-            
-            
-            
-            noDataTextView.isHidden = true
-            noDataLabel.isHidden = true
-            
-            
-        }else{
-            
-            
-            
-            
-            noDataTextView.isHidden = false
-            noDataLabel.isHidden = false
-            noDataLabel.text = "No Records Found"
-            
-        }
-        
-        
-        
-    }
-    
-    
-    
-    
-    
-    else if eventSegmentName.selectedSegmentIndex == 1{
-        
-        
-        
-        
-        let filtered_list : [Eventsdatadetails] = Mapper<Eventsdatadetails>().mapArray(JSONString: cloneList.toJSONString()!)!
-        
-        
-        
-        if !searchText.isEmpty{
-            
-            
-            
-            eventsRef = filtered_list.filter {
-                
-                
-                
-                
-                
-                
-                $0.event_date.lowercased().contains(searchText.lowercased()) || $0.event_time.lowercased().contains(searchText.lowercased()) || $0.body.lowercased().contains(searchText.lowercased()) ||  $0.topic.lowercased().contains(searchText.lowercased()) || $0.venue.lowercased().contains(searchText.lowercased()) ||  $0.createdby.lowercased().contains(searchText.lowercased())
-                
-                
-                
-                
-                
+            if eventSegmentName.selectedSegmentIndex == 0 {
+                upcomming = filtered
+            } else {
+                eventsRef = filtered
             }
-            
-            
-            
-            
-            
-            
-            
-        }else{
-            
-            
-            
-            eventsRef = filtered_list
-            
-            
-            
-            
         }
         
+        let count = eventSegmentName.selectedSegmentIndex == 0
+        ? upcomming.count
+        : eventsRef.count
         
+        let hasData = count > 0
         
-        
-        
-        
-        
-        if eventsRef.count > 0{
-            
-            
-            
-            print ("searchListPendigCount",eventsRef.count)
-            
-            noDataTextView.isHidden = true
-            noDataLabel.isHidden = true
-            
-            
-        }else{
-            
-            
-            
-            
-            noDataTextView.isHidden = false
-            noDataLabel.isHidden = false
-            noDataLabel.text = "No Records Found"
-            
-        }
-        
-        
-        
+        noDataTextView.isHidden = hasData
+        noDataLabel.isHidden = hasData
+        noDataLabel.text = hasData ? "" : "No Records Found"
+        EventTableView.reloadData()
         
     }
-    
-    
-    
-    EventTableView.reloadData()
-    
-    
-    
-    
-    
-    
-    
-}
 
 
 
 func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     
-    
-    
     searchbar.endEditing(true)
-    
-    
-    
+   
 }
-
-
-
-
-
-
 
 func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     
-    
-    
     searchbar.resignFirstResponder()
-    
-    
     
 }
 
@@ -546,21 +377,16 @@ func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     
     searchbar.resignFirstResponder()
     
-    
-    
 }
 
 @objc func dismissKeyboards() {
     
     sideMenuView.isHidden = true
     view.endEditing(true)
-    
 }
 
 
 @IBAction func adLoad(gesture : AddGuster) {
-    
-    
     
     let vc = AddEventsViewController(nibName: nil, bundle: nil)
     vc.addWebUrl = gesture.url
@@ -579,19 +405,12 @@ func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
             EventTableView.isScrollEnabled = false
             upcoming()
             
-        }
-        
-        else if eventSegmentName.selectedSegmentIndex == 1{
+        }else if eventSegmentName.selectedSegmentIndex == 1{
             segementId = "2"
             EventTableView.isScrollEnabled = false
             past()
-            
-            
         }
-        
-    }else{}
-    
-    
+    }
 }
 
 
@@ -656,7 +475,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
             cell.readImageView.isHidden = false
         }
         
-        cell.topicCellLabel.text = event.topic.capitalized
+        cell.topicCellLabel.text = event.topic?.capitalized
         cell.eventDateCellLabel.text = event.event_date
         cell.timeDateCellLabel.text = event.event_time
         cell.createrNameCellLabel.text = event.createdbyname
@@ -667,7 +486,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         vc.body = event.body
         vc.event_date = event.event_date
         vc.event_time = event.event_time
-        vc.newfilepath = event.newfilepath
+        vc.newfilepath = event.newfilepath ?? []
         vc.topic = event.topic
         cell.viewclick.addGestureRecognizer(vc)
         
@@ -691,7 +510,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         }
         
         
-        cell.topicCellLabel.text = event.topic.capitalized
+        cell.topicCellLabel.text = event.topic?.capitalized
         cell.eventDateCellLabel.text = event.event_date
         cell.timeDateCellLabel.text = event.event_time
         cell.createrNameCellLabel.text = event.createdbyname
@@ -702,7 +521,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         vc.body = event.body
         vc.event_date = event.event_date
         vc.event_time = event.event_time
-        vc.newfilepath = event.newfilepath
+        vc.newfilepath = event.newfilepath ?? []
         vc.topic = event.topic
         cell.viewclick.addGestureRecognizer(vc)
         
@@ -721,7 +540,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
     
     if eventSegmentName.selectedSegmentIndex == 0{
         
-        let event : Eventsdatadetails = upcomming[indexPath.row]
+        var event : Eventsdatadetails = upcomming[indexPath.row]
         if let selectedCells = selectedCell, selectedCells == indexPath {
             
             selectedCell = nil
@@ -733,7 +552,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
             
             if event.isappread == "0"{
                 
-                apread(gesture : event.eventdetailsid)
+                apread(gesture : event.eventdetailsid ?? "")
                 
                 event.isappread = "1"
                 cell.readImageView.isHidden = true
@@ -745,7 +564,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
     
     else if eventSegmentName.selectedSegmentIndex == 1 {
         
-        let event : Eventsdatadetails = eventsRef[indexPath.row]
+        var event : Eventsdatadetails = eventsRef[indexPath.row]
         if let selectedCells = selectedCell, selectedCells == indexPath {
             
             selectedCell = nil
@@ -757,7 +576,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
             
             if event.isappread == "0"{
                 
-                apread(gesture : event.eventdetailsid)
+                apread(gesture : event.eventdetailsid ?? "")
                 
                 event.isappread = "1"
                 cell.readImageView.isHidden = true
@@ -775,30 +594,23 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
 
 func apread(gesture : String){
     
-    
-    let readApiStatus  = AppReadStatusModal()
+    var readApiStatus  = AppReadStatusModal()
     
     readApiStatus.msgtype = "event"
     readApiStatus.priority = priority
     readApiStatus.userid = userid
     readApiStatus.detailsid = gesture
-    print("sertt",gesture)
     
-    
-    let commuS = readApiStatus.toJSONString()
-    
-    ApiReadStatusRequest .call_request(param: commuS!){ [self]
+    APiCallManager.shared.callApi(url: APIEndpoints.Appreadstatus, httpMethod: .post, queryParam: nil, requestBody: readApiStatus) {[weak self]  (result:Result<ReadStausApiResponce, Error>) in
         
-        (res) in
+        guard let self = self else {return}
         
-        
-        let com : ReadStausApiResponce =
-        Mapper<ReadStausApiResponce>().map(JSONString: res)!
-        
-        EventTableView.delegate = self
-        EventTableView.dataSource = self
-        EventTableView.reloadData()
-        
+        switch result {
+        case .success(let success):
+            EventTableView.reloadData()
+        case .failure(let failure):
+            print(failure.localizedDescription)
+        }
     }
 }
 
@@ -809,9 +621,6 @@ func apread(gesture : String){
 
 
 @IBAction  func viewclick(gesture : viewcilck){
-    
-    
-    
     
     let vc = EventDetailsViewController(nibName: nil, bundle: nil)
     
@@ -825,202 +634,173 @@ func apread(gesture : String){
     
     vc.modalPresentationStyle = .fullScreen
     present(vc, animated: true, completion: nil)
-    
-    
 }
 
-func past() {
-    
-    let evnt = eventsModal()
-    
-    evnt.userid     =  userid
-    evnt.appid      =  collegeid
-    evnt.priority   =  priority
-    evnt.type       =  "pastevents"
-    
-    
-    
-    let eventStr = evnt.toJSONString()
-    
-    
-    EventsRequest .call_request(param: eventStr!){ [self]
+    func past() {
         
-        (res) in
+        var evnt = eventsModal()
         
+        evnt.userid     =  userid
+        evnt.appid      =  collegeid
+        evnt.priority   =  priority
+        evnt.type       =  "pastevents"
         
-        let eventResp : eventsResponce =
-        Mapper<eventsResponce>().map(JSONString: res)!
-        
-        print("order data",eventResp)
-        
-        if eventResp.Status == 1{
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetEventListByType,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: evnt
+        ) {[weak self] (result:Result<eventsResponce, Error>) in
             
-            eventsRef = eventResp.data
-            cloneList = eventResp.data
+            guard let self = self else { return }
             
-            EventTableView.isScrollEnabled = true
-            noDataLabel.isHidden = true
-            noDataTextView.isHidden = true
-            EventTableView.delegate = self
-            EventTableView.dataSource = self
-            EventTableView.reloadData()
-            
-            
+            switch result {
+            case .success(let success):
+                if success.Status == 1{
+                    eventsRef = success.data ?? []
+                    cloneList = success.data ?? []
+                    EventTableView.isScrollEnabled = true
+                    noDataLabel.isHidden = true
+                    noDataTextView.isHidden = true
+                    EventTableView.reloadData()
+                } else{
+                    
+                    noDataLabel.isHidden = false
+                    noDataTextView.isHidden = false
+                    noDataLabel.text = success.Message
+                    
+                    EventTableView.reloadData()
+                }
+            case .failure(let failure):
+                noDataLabel.isHidden = false
+                noDataTextView.isHidden = false
+                noDataLabel.text = failure.localizedDescription
+               
+                EventTableView.reloadData()
+            }
         }
-        
-        else{
-            
-            
-            noDataLabel.isHidden = false
-            noDataTextView.isHidden = false
-            noDataLabel.text = eventResp.Message
-            EventTableView.delegate = self
-            EventTableView.dataSource = self
-            EventTableView.reloadData()
-            
-            
-        }
-        
-        
     }
-    
-}
 
 
 func upcoming() {
     
-    let evnt = eventsModal()
+    var evnt = eventsModal()
     
     evnt.userid     =  userid
     evnt.appid      =  collegeid
     evnt.priority   =  priority
     evnt.type       =  "upcomingevents"
     
-    
-    
-    let eventStr = evnt.toJSONString()
-    
-    
-    EventsRequest .call_request(param: eventStr!){ [self]
+    APiCallManager.shared.callApi(
+        url: APIEndpoints.GetEventListByType,
+        httpMethod: .post,
+        queryParam: nil,
+        requestBody: evnt
+    ) {[weak self] (result:Result<eventsResponce, Error>) in
         
-        (res) in
+        guard let self = self else { return }
         
-        
-        let eventResp : eventsResponce =
-        Mapper<eventsResponce>().map(JSONString: res)!
-        
-        print("order data",eventResp)
-        
-        
-        
-        if eventResp.Status == 1{
-            
-            
-            upcomming = eventResp.data
-            cloneList  = eventResp.data
-            noDataLabel.isHidden = true
-            noDataTextView.isHidden = true
-            EventTableView.isScrollEnabled = true
-            EventTableView.delegate = self
-            EventTableView.dataSource = self
-            EventTableView.reloadData()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+        switch result {
+        case .success(let success):
+            if success.Status == 1 {
+                upcomming = success.data ?? []
+                cloneList  = success.data ?? []
+                noDataLabel.isHidden = true
+                noDataTextView.isHidden = true
+                EventTableView.isScrollEnabled = true
+               
+                EventTableView.reloadData()
                 
-                loadingCustom.stopAnimating()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                    self.loadingCustom.stopAnimating()
+                    self.loadingCustom.isHidden  = true
+                }
+            }else {
+                noDataLabel.isHidden = false
+                noDataTextView.isHidden = false
+                noDataLabel.text = success.Message
                 
+                EventTableView.reloadData()
                 
-                loadingCustom.isHidden  = true
-                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                    self.loadingCustom.stopAnimating()
+                    self.loadingCustom.isHidden  = true
+                }
             }
-            
-        }
-        
-        else{
-            
+        case .failure(let failure):
             noDataLabel.isHidden = false
             noDataTextView.isHidden = false
-            noDataLabel.text = eventResp.Message
-            EventTableView.delegate = self
-            EventTableView.dataSource = self
+            noDataLabel.text = failure.localizedDescription
+           
             EventTableView.reloadData()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                
-                loadingCustom.stopAnimating()
-                
-                
-                loadingCustom.isHidden  = true
-                
+                self.loadingCustom.stopAnimating()
+                self.loadingCustom.isHidden  = true
             }
-            
-            
-            print("eventResp.Message")
         }
-        
     }
     
 }
 
 
 
-func overAllRefName() {
-    
-    var overall = overAllModal()
-    
-    overall.userid   =  userid
-    overall.menuid       = "9"
-    overall.collegeid    = collegeid
-    overall.departmentid =  deparmentId
-    overall.sectionid    =   sectionId
-    overall.appid        = "2"
-    overall.priority     = priority
-    
-    
-    APiCallManager.shared.callApi(url: APIEndpoints.GetOverallcountByMenuType, httpMethod: .post, queryParam: nil, requestBody: overall) { [weak self] (result:Result<overAllResponce,Error>) in
-        guard let self = self else{return}
-        switch result{
-        case .success(let success):
-            
-            if success.Status == 1 {
+    func overAllRefName() {
+        
+        var overall = overAllModal()
+        
+        overall.userid   =  userid
+        overall.menuid       = "9"
+        overall.collegeid    = collegeid
+        overall.departmentid =  deparmentId
+        overall.sectionid    =   sectionId
+        overall.appid        = "2"
+        overall.priority     = priority
+        
+        
+        APiCallManager.shared.callApi(url: APIEndpoints.GetOverallcountByMenuType, httpMethod: .post, queryParam: nil, requestBody: overall) { [weak self] (result:Result<overAllResponce,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let success):
                 
-                overAllRef = success.data ?? []
-                pastCountLbl.text =  overAllRef.first?.pastevents
-                upcomingcountLabl.text = overAllRef.first?.upcomingevents
-                
-                if (overAllRef.first?.pastevents == "0") && (overAllRef.first?.upcomingevents == "0"){
-                    eventTopCountView.isHidden = true
-                    upcomingCountView.isHidden = true
-                    pastCountView.isHidden = true
-                }else if overAllRef.first?.pastevents == "0"{
+                if success.Status == 1 {
                     
-                    upcomingCountView.isHidden = false
-                    eventTopCountView.isHidden = false
-                    pastCountView.isHidden = true
-                }else if overAllRef.first?.upcomingevents == "0"{
+                    overAllRef = success.data ?? []
+                    pastCountLbl.text =  overAllRef.first?.pastevents
+                    upcomingcountLabl.text = overAllRef.first?.upcomingevents
                     
-                    upcomingCountView.isHidden = true
-                    eventTopCountView.isHidden = false
-                    pastCountView.isHidden = false
-                }else{
-                    upcomingCountView.isHidden = false
-                    eventTopCountView.isHidden = false
-                    pastCountView.isHidden = false
+                    if (overAllRef.first?.pastevents == "0") && (overAllRef.first?.upcomingevents == "0"){
+                        eventTopCountView.isHidden = true
+                        upcomingCountView.isHidden = true
+                        pastCountView.isHidden = true
+                    }else if overAllRef.first?.pastevents == "0"{
+                        
+                        upcomingCountView.isHidden = false
+                        eventTopCountView.isHidden = false
+                        pastCountView.isHidden = true
+                    }else if overAllRef.first?.upcomingevents == "0"{
+                        
+                        upcomingCountView.isHidden = true
+                        eventTopCountView.isHidden = false
+                        pastCountView.isHidden = false
+                    }else{
+                        upcomingCountView.isHidden = false
+                        eventTopCountView.isHidden = false
+                        pastCountView.isHidden = false
+                    }
+                    
+                    let a =  Int(upcomingcountLabl.text!)
+                    let b = Int(pastCountLbl.text!)
+                    let c = a! + b!
+                    
+                    eventTopCountLabl.text = String(c)
+                    
                 }
-                
-                let a =  Int(upcomingcountLabl.text!)
-                let b = Int(pastCountLbl.text!)
-                let c = a! + b!
-                
-                eventTopCountLabl.text = String(c)
-                
+            case .failure(let error):
+                print("Error: \(error)")
             }
-        case .failure(let error):
-            print("Error: \(error)")
         }
-    }
-    
-    
+        
 }
 
 func addApi(){
@@ -1036,7 +816,7 @@ func addApi(){
     add.college_id = collegeid
     add.previous_add_id = PreviousAddId
     
-    APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .get, queryParam: nil, requestBody: nil
+    APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
     ) {[weak self] (result:Result<AddApiResponce,Error>) in
         
         guard let self = self else {return}
@@ -1138,10 +918,6 @@ func addApi(){
     
 }
 
-
-
-
-
 @IBAction func refreshVc() {
     
     print("refreshVcWork")
@@ -1157,7 +933,6 @@ func addApi(){
     }
     
     if segementId == "1"{
-        
         
         upcoming()
     }

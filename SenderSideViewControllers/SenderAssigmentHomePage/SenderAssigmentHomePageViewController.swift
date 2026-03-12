@@ -1808,8 +1808,6 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
         
     }
     
-    
-    
     @IBAction func AtchmentVc(gesture : senderassigments){
         
         
@@ -1828,13 +1826,36 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
         
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true,completion: nil)
-        
-        
-        
-        
-        
-    }
+    assigmentTableView.beginUpdates()
+    assigmentTableView.endUpdates()
+    assigmentTableView.reloadData()
     
+}
+
+
+func apread(gesture : String){
+    
+    var readApiStatus  = AppReadStatusModal()
+    
+    readApiStatus.msgtype = "assignment"
+    readApiStatus.priority = priority
+    readApiStatus.userid = memberId
+    readApiStatus.detailsid = gesture
+    print("sertt",gesture)
+    
+    APiCallManager.shared.callApi(url: APIEndpoints.Appreadstatus, httpMethod: .post, queryParam: nil, requestBody: readApiStatus) {[weak self]  (result:Result<ReadStausApiResponce, Error>) in
+        
+        guard let self = self else {return}
+        
+        switch result {
+        case .success(let success):
+            assigmentTableView.reloadData()
+        case .failure(let failure):
+            print(failure.localizedDescription)
+        }
+    }
+}
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -1920,44 +1941,6 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
     }
     
     
-    func apread(gesture : String){
-        
-        //
-        
-        let readApiStatus  = AppReadStatusModal()
-        
-        readApiStatus.msgtype = "assignment"
-        readApiStatus.priority = priority
-        readApiStatus.userid = memberId
-        readApiStatus.detailsid = gesture
-        print("sertt",gesture)
-        
-        
-        let commuS = readApiStatus.toJSONString()
-        
-        ApiReadStatusRequest .call_request(param: commuS!){ [self]
-            
-            (res) in
-            
-            
-            let com : ReadStausApiResponce =
-            Mapper<ReadStausApiResponce>().map(JSONString: res)!
-            
-            
-            
-            assigmentTableView.delegate = self
-            assigmentTableView.dataSource = self
-            assigmentTableView.reloadData()
-            
-            
-            
-        }
-        
-        //
-        
-        
-    }
-    
     func UpcommingRefName() {
         
         var Upcom = senderUpcommingModal()
@@ -2025,9 +2008,7 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
         
     }
     
-    
     func PastRefName() {
-        
         var past = senderUpcommingModal()
         
         past.userid   = memberId
@@ -2175,7 +2156,7 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
                         
                         smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
                         
-                        let singleTap = adds(target: self, action: #selector(adLoad))
+                        let singleTap = senderassAdd(target: self, action: #selector(adLoad))
                         singleTap.url = i.add_url
                         bigImg.isUserInteractionEnabled = true
                         bigImg.addGestureRecognizer(singleTap)

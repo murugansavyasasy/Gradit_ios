@@ -277,7 +277,7 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
         add.college_id = colgId
         add.previous_add_id = prevoiusAdId
         
-        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .get, queryParam: nil, requestBody: nil
+        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
         ) {[weak self] (result:Result<AddApiResponce,Error>) in
             
             guard let self = self else {return}

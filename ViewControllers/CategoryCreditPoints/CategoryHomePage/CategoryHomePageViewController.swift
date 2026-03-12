@@ -14,7 +14,6 @@ class CategoryHomePageViewController: UIViewController,UITableViewDelegate,UITab
 
 
 @IBOutlet weak var reusee: ReuseView!
-
 @IBOutlet weak var tv: UITableView!
 
 @IBOutlet weak var upArrowImageView: UIImageView!
@@ -74,11 +73,12 @@ override func viewDidLoad() {
     
     sectionid = defaults.string(forKey: DefaultsKeys.sectionid)
     
-    
-    
     courseid = defaults.string(forKey: DefaultsKeys.courseid)
     
     priority = defaults.string(forKey: DefaultsKeys.priority)
+    
+    tv.delegate = self
+    tv.dataSource = self
     
  
     categorys()
@@ -163,233 +163,185 @@ override func viewDidLoad() {
 
 func categorys(){
     
-    let cate = categoryModal()
+    var cate = categoryModal()
     cate.colgid  = colgId
     cate.i_student_id = memberId
     
-    let categorystStr = cate.toJSONString()
-    
-    categoryRequest.call_request(param: categorystStr!){ [self]
-        (res) in
+    APiCallManager.shared.callApi(url: APIEndpoints.getcategorylistforclgeid, httpMethod: .post, queryParam: nil, requestBody: cate) {[weak self] (result:Result<categoryResponce, Error>) in
         
-        let categoryResp : categoryResponce =
-        Mapper<categoryResponce>().map(JSONString: res)!
+        guard let self = self else { return }
         
-        dropDownArr = categoryResp.data
-        
-        var myArray: [String] = [ ]
-        
-        dropDownArr.forEach {(arrType)  in
-            myArray.append((arrType.category_name))
+        switch result {
+        case .success(let success):
             
+            dropDownArr = success.data ?? []
+            // Prepare data source
+            let myArray = dropDownArr.map { $0.category_name ?? ""}
+
+            // Dropdown configuration
+            selectCategoryLabel.text = "--Selected Category--"
+            dropDown.anchorView = selectedCategoryView
+            dropDown.dataSource = myArray
+            dropDown.direction = .bottom
+            DropDown.appearance().backgroundColor = .white
+
+            if let anchorHeight = dropDown.anchorView?.plainView.bounds.height {
+                dropDown.bottomOffset = CGPoint(x: 0, y: anchorHeight)
+            }
+
+            // Selection action
+            dropDown.selectionAction = { [weak self] index, item in
+                guard let self = self else { return }
+
+                print("Selected item: \(item) at index: \(index)")
+                print("myArray", myArray)
+
+                self.credsEc = item
+                self.selectCategoryLabel.text = item
+                self.upArrowImageView.image = UIImage(named: "download")
+
+                switch item {
+                case "ES":
+                    self.credits()
+                case "PC":
+                    self.creditsPc()
+                case "Test":
+                    self.creditsTest()
+                default:
+                    break
+                }
+            }
+        case .failure(let failure):
+            print(failure.localizedDescription)
         }
-        
-        
-        selectCategoryLabel.text = "--Selected Category--"
-        dropDown.anchorView = selectedCategoryView
-        dropDown.dataSource = myArray
-        
-        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-        dropDown.direction = .bottom
-        DropDown.appearance().backgroundColor = UIColor.white
-        
-        
-        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
-            print("myArray",myArray)
-            
-            self.credsEc = item
-            
-            
-            if credsEc == "ES" {
-                
-                credits()
-            }
-            else if credsEc == "PC" {
-                
-                creditsPc()
-            }
-            else  if credsEc == "Test" {
-                
-                
-                creditsTest()
-            }
-            
-            
-            self.selectCategoryLabel.text = item
-            
-            upArrowImageView.image = UIImage(named: "download")
-        }
-        
-        
     }
-    
-    
 }
 
 func credits(){
     
-    let cate = creditModal()
+    var cate = creditModal()
     
     cate.colgid = colgId
     cate.i_course_id = courseid
     cate.i_category_id = "5"
     cate.i_student_id = memberId
     
-    let categorystStr = cate.toJSONString()
-    
-    creditRequest.call_request(param: categorystStr!){ [self]
+    APiCallManager.shared.callApi(url: APIEndpoints.categorywisestudentcreditdetails, httpMethod: .post, queryParam: nil, requestBody: cate) {[weak self]
+        (result:Result<creditResponce, Error>) in
         
-        (res) in
+        guard let self = self else {return}
         
-        let categoryResp : creditResponce =
-        Mapper<creditResponce>().map(JSONString: res)!
-        
-        
-        
-        if categoryResp.Status == 1{
+        switch result {
+        case .success(let success):
             
-            crediEStRef = categoryResp.data
+            if success.Status == 1{
+                
+                crediEStRef = success.data ?? []
+                headingView.isHidden = false
+                noDataLabel.isHidden = true
+                noDataTextView.isHidden = true
+                tv.reloadData()
+            }else {
+                
+                crediEStRef = success.data ?? []
+                headingView.isHidden = true
+                noDataTextView.isHidden = false
+                noDataLabel.isHidden = false
+                noDataLabel.text = success.Message
+                tv.reloadData()
+            }
             
-            headingView.isHidden = false
-            noDataLabel.isHidden = true
-            noDataTextView.isHidden = true
-            tv .delegate = self
-            tv.dataSource = self
-            tv.reloadData()
-            
-        }
-        
-        
-        else {
-            
+        case .failure(let failure):
+            crediEStRef = []
             headingView.isHidden = true
             noDataTextView.isHidden = false
             noDataLabel.isHidden = false
-            
-            noDataLabel.text = categoryResp.Message
-            tv .delegate = self
-            tv.dataSource = self
+            noDataLabel.text = failure.localizedDescription
             tv.reloadData()
-            
-            
         }
-        
     }
-    
-    
 }
 
 
 func creditsPc(){
     
-    let catePc = creditModal()
+    var catePc = creditModal()
     catePc.colgid = colgId
     catePc.i_course_id = courseid
     catePc.i_category_id = "6"
     catePc.i_student_id = memberId
     
-    let creditPcStr = catePc.toJSONString()
+    APiCallManager.shared.callApi(url: APIEndpoints.categorywisestudentcreditdetails, httpMethod: .post, queryParam: nil, requestBody: catePc) {[weak self] (result:Result<creditResponce, Error>) in
     
-    creditRequest.call_request(param: creditPcStr!){ [self]
+        guard let self = self else {return}
         
-        (res) in
-        
-        
-        let creditPcResp : creditResponce =
-        Mapper<creditResponce>().map(JSONString: res)!
-        
-        
-        if creditPcResp.Status == 1{
-            
-            creditPCRef = creditPcResp.data
-            headingView.isHidden = false
-            noDataLabel.isHidden = true
-            noDataTextView.isHidden = true
-            tv .delegate = self
-            tv.dataSource = self
-            tv.reloadData()
-            
-            
-        }
-        
-        
-        else {
-            
+        switch result {
+        case .success(let success):
+            if success.Status == 1{
+                
+                creditPCRef = success.data ?? []
+                headingView.isHidden = false
+                noDataLabel.isHidden = true
+                noDataTextView.isHidden = true
+                tv.reloadData()
+            }else {
+                creditPCRef = success.data ?? []
+                headingView.isHidden = true
+                noDataLabel.isHidden = false
+                noDataTextView.isHidden = false
+                noDataLabel.text = success.Message
+                tv.reloadData()
+            }
+        case .failure(let failure):
+            creditPCRef = []
             headingView.isHidden = true
             noDataLabel.isHidden = false
             noDataTextView.isHidden = false
-            noDataLabel.text = creditPcResp.Message
-            tv .delegate = self
-            tv.dataSource = self
+            noDataLabel.text = failure.localizedDescription
             tv.reloadData()
-            
-            
-            
         }
-        
-        
     }
-    
 }
+    
 func creditsTest(){
     
-    let cateTest = creditModal()
+    var cateTest = creditModal()
     
     cateTest.colgid = colgId
     cateTest.i_course_id = courseid
     cateTest.i_category_id = "19"
     cateTest.i_student_id = memberId
     
-    let creditsTestStr = cateTest.toJSONString()
+    APiCallManager.shared.callApi(url: APIEndpoints.categorywisestudentcreditdetails, httpMethod: .post, queryParam: nil, requestBody: cateTest) {[weak self] (result:Result<creditResponce, Error>) in
     
-    
-    creditRequest.call_request(param: creditsTestStr!){ [self]
+        guard let self = self else {return}
         
-        (res) in
-        
-        
-        let creditsResp : creditResponce =
-        Mapper<creditResponce>().map(JSONString: res)!
-        
-        
-        
-        if creditsResp.Status == 1{
-            
-         
-            creditTestRef = creditsResp.data
-            
-            headingView.isHidden = false
-            
-            noDataLabel.isHidden = true
-            noDataTextView.isHidden = true
-            tv .delegate = self
-            tv.dataSource = self
-            tv.reloadData()
-            
-            
-            
-        }
-        
-        
-        else {
-            
-            
+        switch result {
+        case .success(let success):
+            if success.Status == 1{
+                
+                creditTestRef = success.data ?? []
+                headingView.isHidden = false
+                noDataLabel.isHidden = true
+                noDataTextView.isHidden = true
+                tv.reloadData()
+            }else {
+                creditTestRef = success.data ?? []
+                headingView.isHidden = true
+                noDataLabel.isHidden = false
+                noDataTextView.isHidden = false
+                noDataLabel.text = success.Message
+                tv.reloadData()
+            }
+        case .failure(let failure):
+            creditTestRef = []
             headingView.isHidden = true
-            
             noDataLabel.isHidden = false
             noDataTextView.isHidden = false
-            noDataLabel.text = creditsResp.Message
-            tv .delegate = self
-            tv.dataSource = self
+            noDataLabel.text = failure.localizedDescription
             tv.reloadData()
-        
         }
-        
-        
     }
-    
-    
 }
 
 

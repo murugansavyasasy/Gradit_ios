@@ -313,6 +313,215 @@ struct menuApiDataDetails : Codable{
     var parent_id : Int
 }
 
+//MARK: Student Attendance
+struct attendanceAbsentResponce : Codable{
+    
+    var Status : Int?
+    var Message : String?
+    var data : [attendanceAbesentDataDetails]?
+}
+
+struct attendanceAbesentDataDetails : Codable{
+    
+    var subjectname : String?
+    var staff_name : String?
+    var attended_hour : String?
+    var absent_hour    : String?
+    var subject_id   : Int?
+    var staff_id   : Int?
+    var total_hour : Int?
+    var percentage : String?
+}
+
+//MARK: Student Leave Request
+struct leaveResponce : Codable{
+    var Status : Int?
+    var Message : String?
+    var data : [leaveDataDetails]?
+}
+
+struct leaveDataDetails : Codable{
+    
+    var createdon : String?
+    var applicationid : String?
+    var leaveapplicationtype : String?
+    var leavefromdate : String?
+    var leavetodate : String?
+    var numofdays : String?
+    var leavereason : String?
+    var leavestatus : String?
+    var leavestatusid : String?
+}
+
+//MARK: Get leave type
+struct GetLeaveTypeResponce : Codable{
+    
+    var Status : Int?
+    var Message : String?
+    var data : [GetLeaveDataDetails]?
+}
+
+struct GetLeaveDataDetails : Codable{
+
+    var leavetypeid : String?
+    var leavetypename : String?
+}
+
+//MARK: Manage leave
+struct manageLeaveResponce : Codable{
+    var Status : Int?
+    var Message : String?
+}
+
+
+//MARK: Sender Leave response
+struct getLeaveTypeForSenderResponce : Codable{
+    
+    var Status : Int?
+    var Message : String?
+    var data : [getLeaveApplicationDataDetails]?
+}
+
+struct getLeaveApplicationDataDetails : Codable{
+    
+    var studentid : String?
+    var studentname : String?
+    var coursename : String?
+    var departmentname : String?
+    var yearname : String?
+    var sectionname : String?
+    var semestername : String?
+    var applicationid : String?
+    var leaveapplicationtype : String?
+    var leavefromdate : String?
+    var leavetodate : String?
+    var leavereason : String?
+    var leavestatus : String?
+    var leavestatusid : String?
+    var numofdays : String?
+    var createdon : String?
+}
+
+//MARK: Reciver events
+struct eventsResponce : Codable{
+    
+    var  Status        : Int?
+    var  Message       : String?
+    var  data          :[Eventsdatadetails]?
+}
+
+struct Eventsdatadetails : Codable{
+    
+    var  eventid          : String?
+    var  event_date       : String?
+    var  event_time       : String?
+    var  topic            : String?
+    var  body             : String?
+    var  venue            : String?
+    var  createdbyname    : String?
+    var  createdby        : String?
+    var  filepath         : String?
+    var  eventdetailsid   : String?
+    var  isappread        : String?
+    var  newfilepath      : [String]?
+}
+
+//MARK: Read status Api
+struct ReadStausApiResponce : Codable{
+    var  Status : Int?
+    var Message : String?
+}
+
+//MARK: Receiver exam
+struct examResponce : Codable{
+
+    var  Status : Int?
+    var  Message : String?
+    var  data    :[examDataDetails]?
+}
+
+struct examDataDetails : Codable{
+   
+    var headerid            : String?
+    var createdby           : String?
+    var examname            : String?
+    var subjectname         : String?
+    var examvenue           : String?
+    var session             : String?
+    var syllabus            : String?
+    var date                : String?
+    var createdbyname       : String?
+}
+
+struct examViewResponce : Codable{
+    
+    var Status : Int?
+    var Message : String?
+    var data : [examViewResiverDataDetails]?
+}
+
+struct examViewResiverDataDetails : Codable{
+    
+    var subjectname : String?
+    var marks : String?
+}
+
+//MARK: course details
+struct courseResponce : Codable{
+    
+    var Status                   : Int?
+    var Message                  : String?
+    var data                     : [courseDataDetails]?
+}
+
+struct courseDataDetails : Codable{
+    
+    var  subject_id                    : String?
+    var  subject_name                  : String?
+    var  subject_code                  : String?
+    var  subject_type                  : String?
+    var  subject_credits               : String?
+    var  subject_category              : String?
+    var  subject_requirement           : String?
+}
+
+//MARK: category for credit points
+struct categoryResponce : Codable{
+    
+    var Status    : Int?
+    var Message   : String?
+    var data      : [categoryDataDetails]?
+}
+
+struct categoryDataDetails : Codable{
+    
+    var category_id  : Int?
+    var category_name : String?
+}
+
+//MARK: Credit points per category
+struct creditResponce : Codable{
+    
+    var   Status  : Int?
+    var   Message : String?
+    var   data  : [creditDataDetails]?
+}
+
+struct creditDataDetails : Codable{
+    
+    var category_id : Int?
+    var category_name : String?
+    var semester_name : String?
+    var total_credits : String?
+    var obtained      : String?
+    var to_be_obtained : String?
+}
+
+
+
+
+
+
 
 // MARK: - Placement Event Response
 struct MemberEventsResponse: Codable {

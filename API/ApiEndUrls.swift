@@ -17,6 +17,11 @@ struct APIEndpoints {
     static let DeviceToken = "DeviceToken"
     static let GetTextMessageBytype = "GetTextMessageBytype"
     static let GetAddsForCollege = "GetAddsForCollege"
+    static let GetStudentWiseAttendanceSummary = "GetStudentWiseAttendanceSummary"
+    static let GetLeaveApplicationListForReceiverApp = "GetLeaveApplicationListForReceiverApp"
+    static let GetLeaveApplicationListForSenderApp = "GetLeaveApplicationListForSenderApp"
+    static let GetLeaveType = "GetLeaveType"
+    static let ManageLeaveapplication = "ManageLeaveapplication"
     static let GetOverallcountByMenuType = "GetOverallcountByMenuType"
     static let StudentAskQuestionForApp = "StudentAskQuestionForApp"
     static let GetStudentChatScreenForApp = "GetStudentChatScreenForApp"
@@ -29,8 +34,13 @@ struct APIEndpoints {
     static let GetNoticeListByType = "GetNoticeListByType"
     static let GetCircularListByType = "GetCircularListByType"
     static let GetVideoList = "GetVideoList"
-    
-    
+    static let GetEventListByType = "GetEventListByType"
+    static let Appreadstatus = "Appreadstatus"
+    static let GetExamListByType = "GetExamListByType"
+    static let GetStudentMarkDetailsForApp = "GetStudentMarkDetailsForApp"
+    static let GetSubjectDetailsForSemester = "GetSubjectDetailsForSemester"
+    static let getcategorylistforclgeid = "getcategorylistforclgeid"
+    static let categorywisestudentcreditdetails = "categorywisestudentcreditdetails"
     
     static let placementEvent = "students/student-placement-events"
     static let placementEventHistorical = "students/student-placement-events-historical"

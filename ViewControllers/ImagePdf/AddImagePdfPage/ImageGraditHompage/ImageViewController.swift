@@ -1126,43 +1126,6 @@ class ImageViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     
-    func apread(gesture : String){
-        
-        
-        let readApiStatus  = AppReadStatusModal()
-        
-        readApiStatus.msgtype = "circular"
-        readApiStatus.priority = priority
-        readApiStatus.userid = userid
-        readApiStatus.detailsid = gesture
-        print("sertt",gesture)
-        
-        
-        let commuS = readApiStatus.toJSONString()
-        
-        ApiReadStatusRequest .call_request(param: commuS!){ [self]
-            
-            (res) in
-            
-            
-            let com : ReadStausApiResponce =
-            Mapper<ReadStausApiResponce>().map(JSONString: res)!
-            
-            
-            
-            imageTableView.delegate = self
-            imageTableView.dataSource = self
-            imageTableView.reloadData()
-            
-            
-            
-        }
-        
-        
-        
-    }
-    
-    
     func overAllRefName() {
         
         var overall = overAllModal()
@@ -1230,10 +1193,30 @@ class ImageViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 print("Error: \(error)")
             }
         }
-        
     }
     
     
+    func apread(gesture : String){
+        
+        var readApiStatus  = AppReadStatusModal()
+        
+        readApiStatus.msgtype = "circular"
+        readApiStatus.priority = priority
+        readApiStatus.userid = userid
+        readApiStatus.detailsid = gesture
+        print("sertt",gesture)
+        
+        APiCallManager.shared.callApi(url: APIEndpoints.Appreadstatus, httpMethod: .post, queryParam: nil, requestBody: readApiStatus) {[weak self]  (result:Result<ReadStausApiResponce, Error>) in
+            
+            guard let self = self else {return}
+            switch result {
+            case .success(let success):
+                imageTableView.reloadData()
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
+    }
     
     
     func addApi(){
@@ -1280,14 +1263,11 @@ class ImageViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         }
     }
     
-    
-    
     @IBAction func helpRedirect() {
         
         let vc = HelpViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
-        
         
     }
     

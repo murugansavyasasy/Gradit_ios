@@ -1051,7 +1051,7 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
     
     func apread(gesture : String){
         
-        let readApiStatus  = AppReadStatusModal()
+        var readApiStatus  = AppReadStatusModal()
         
         readApiStatus.msgtype = "assignment"
         readApiStatus.priority = priority
@@ -1059,22 +1059,16 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
         readApiStatus.detailsid = gesture
         print("sertt",gesture)
         
-        
-        let commuS = readApiStatus.toJSONString()
-        
-        ApiReadStatusRequest .call_request(param: commuS!){ [self]
+        APiCallManager.shared.callApi(url: APIEndpoints.Appreadstatus, httpMethod: .post, queryParam: nil, requestBody: readApiStatus) {[weak self]  (result:Result<ReadStausApiResponce, Error>) in
             
-            (res) in
+            guard let self = self else {return}
             
-            
-            let com : ReadStausApiResponce =
-            Mapper<ReadStausApiResponce>().map(JSONString: res)!
-            
-            
-            
-            assigmentTableView.delegate = self
-            assigmentTableView.dataSource = self
-            assigmentTableView.reloadData()
+            switch result {
+            case .success(let success):
+                assigmentTableView.reloadData()
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
         }
     }
     
@@ -1093,7 +1087,7 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
         add.college_id = colgId
         add.previous_add_id = PreviousAddId
         
-        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .get, queryParam: nil, requestBody: nil
+        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
         ) {[weak self] (result:Result<AddApiResponce,Error>) in
             
             guard let self = self else {return}

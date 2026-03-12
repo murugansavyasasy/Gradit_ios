@@ -279,55 +279,14 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     
+
     func chatfortPage(){
         
         print("chat")
         var chatfornt = ChatFrontPageModal()
-        
-        chatfornt.college_id = colgId
-        chatfornt.student_id = memberId
-        
-        APiCallManager.shared.callApi(url: APIEndpoints.GetstaffdetailsForApp, httpMethod: .post, queryParam: nil, requestBody: chatfornt) { [weak self] (result:Result<ChatFrontPageResponce,Error>) in
-            guard let self = self else{return}
-            switch result {
-            case .success(let success):
-                
-                chatFortPageRefName = success.data ?? []
-                if success.Status == 1{
-                    noDataTextView.isHidden = true
-                    noDataTextLabel.isHidden = true
-                    chatCollectionView.dataSource = self
-                    chatCollectionView.delegate = self
-                    chatCollectionView.reloadData()
-                }else{
-                    
-                    noDataTextLabel.text = success.Message
-                    noDataTextView.isHidden = false
-                    noDataTextLabel.isHidden = false
-                    
-                    chatCollectionView.dataSource = self
-                    chatCollectionView.delegate = self
-                    chatCollectionView.reloadData()
-                    
-                    
-                }
-            case .failure(let error):
-                noDataTextLabel.text = error.localizedDescription
-                noDataTextView.isHidden = false
-                noDataTextLabel.isHidden = false
-                
-                chatCollectionView.dataSource = self
-                chatCollectionView.delegate = self
-                chatCollectionView.reloadData()
-            }
-        }
-        
-    }
     
-    
-    
-    
-    
+}
+
     func addApi(){
         
         var add = AddApiModal()

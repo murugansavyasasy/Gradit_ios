@@ -509,8 +509,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
 func apread(gesture : String){
     
-    
-    let readApiStatus  = AppReadStatusModal()
+    var readApiStatus  = AppReadStatusModal()
     
     readApiStatus.msgtype = "video"
     readApiStatus.priority = priority
@@ -518,25 +517,17 @@ func apread(gesture : String){
     readApiStatus.detailsid = gesture
     print("sertt",gesture)
     
-    
-    let commuS = readApiStatus.toJSONString()
-    
-    ApiReadStatusRequest .call_request(param: commuS!){ [self]
+    APiCallManager.shared.callApi(url: APIEndpoints.Appreadstatus, httpMethod: .post, queryParam: nil, requestBody: readApiStatus) {[weak self]  (result:Result<ReadStausApiResponce, Error>) in
         
-        (res) in
+        guard let self = self else {return}
         
-        
-        let com : ReadStausApiResponce =
-        Mapper<ReadStausApiResponce>().map(JSONString: res)!
-        
-        
-        
-        videoTableView.delegate = self
-        videoTableView.dataSource = self
-        videoTableView.reloadData()
-        
+        switch result {
+        case .success(let success):
+            videoTableView.reloadData()
+        case .failure(let failure):
+            print(failure.localizedDescription)
+        }
     }
-    
 }
 
 
@@ -611,7 +602,7 @@ func addApi(){
     add.college_id = colgId
     add.previous_add_id = PreviousAddId
     
-    APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .get, queryParam: nil, requestBody: nil
+    APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
     ) {[weak self] (result:Result<AddApiResponce,Error>) in
         
         guard let self = self else {return}

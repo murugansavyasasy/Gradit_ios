@@ -603,7 +603,7 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         add.college_id = collegeId
         add.previous_add_id = 1
         
-        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .get, queryParam: nil, requestBody: nil
+        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
         ) {[weak self] (result:Result<AddApiResponce,Error>) in
             
             guard let self = self else {return}
@@ -859,9 +859,7 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
     
     func apread(gesture : String){
         
-        
-        
-        let readApiStatus  = AppReadStatusModal()
+        var readApiStatus  = AppReadStatusModal()
         
         readApiStatus.msgtype = type
         readApiStatus.priority = priority
@@ -869,29 +867,17 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         readApiStatus.detailsid = gesture
         print("sertt",type)
         
-        
-        let commuS = readApiStatus.toJSONString()
-        
-        ApiReadStatusRequest .call_request(param: commuS!){ [self]
+        APiCallManager.shared.callApi(url: APIEndpoints.Appreadstatus, httpMethod: .post, queryParam: nil, requestBody: readApiStatus) {[weak self]  (result:Result<ReadStausApiResponce, Error>) in
             
-            (res) in
+            guard let self = self else {return}
             
-            
-            let com : ReadStausApiResponce =
-            Mapper<ReadStausApiResponce>().map(JSONString: res)!
-            
-            
-            
-            communiTableView.delegate = self
-            communiTableView.dataSource = self
-            communiTableView.reloadData()
-            
-            
-            
+            switch result {
+            case .success(let success):
+                communiTableView.reloadData()
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
         }
-        
-        
-        
     }
     
     @IBAction func Voice(gesture : VoiceMessage) {

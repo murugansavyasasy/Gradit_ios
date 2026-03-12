@@ -1174,9 +1174,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
 
 func apread(gesture : String){
     
-    
-    
-    let readApiStatus  = AppReadStatusModal()
+    var readApiStatus  = AppReadStatusModal()
     
     readApiStatus.msgtype = "event"
     readApiStatus.priority = priority
@@ -1184,29 +1182,17 @@ func apread(gesture : String){
     readApiStatus.detailsid = gesture
     print("sertt",gesture)
     
-    
-    let commuS = readApiStatus.toJSONString()
-    
-    ApiReadStatusRequest .call_request(param: commuS!){ [self]
+    APiCallManager.shared.callApi(url: APIEndpoints.Appreadstatus, httpMethod: .post, queryParam: nil, requestBody: readApiStatus) {[weak self]  (result:Result<ReadStausApiResponce, Error>) in
         
-        (res) in
+        guard let self = self else {return}
         
-        
-        let com : ReadStausApiResponce =
-        Mapper<ReadStausApiResponce>().map(JSONString: res)!
-        
-        
-        
-        EventTableView.delegate = self
-        EventTableView.dataSource = self
-        EventTableView.reloadData()
-        
-        
-        
+        switch result {
+        case .success(let success):
+            EventTableView.reloadData()
+        case .failure(let failure):
+            print(failure.localizedDescription)
+        }
     }
-    
-    
-    
 }
 
 func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -1230,7 +1216,7 @@ func addApi(){
     add.previous_add_id = PreviousAddId
     
     
-    APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .get, queryParam: nil, requestBody: nil
+    APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
     ) {[weak self] (result:Result<AddApiResponce,Error>) in
         
         guard let self = self else {return}
