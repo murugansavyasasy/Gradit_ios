@@ -41,6 +41,7 @@ struct APIEndpoints {
     static let GetSubjectDetailsForSemester = "GetSubjectDetailsForSemester"
     static let getcategorylistforclgeid = "getcategorylistforclgeid"
     static let categorywisestudentcreditdetails = "categorywisestudentcreditdetails"
+    static let GetVoiceMessageBytype = "GetVoiceMessageBytype"
     
     static let placementEvent = "students/student-placement-events"
     static let placementEventHistorical = "students/student-placement-events-historical"

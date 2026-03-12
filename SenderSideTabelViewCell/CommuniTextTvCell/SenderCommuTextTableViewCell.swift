@@ -26,7 +26,7 @@ class SenderCommuTextTableViewCell: UITableViewCell,AVAudioPlayerDelegate {
     @IBOutlet weak var durationLAbel: UILabel!
     @IBOutlet weak var playbackSlider: UISlider!
     
-    var audioFileURL: String!
+    var audioFileURL: String?
     var audioRecorder: AVAudioRecorder!
     var audioPlayer : AVAudioPlayer!
     var meterTimer:Timer!
@@ -55,56 +55,56 @@ class SenderCommuTextTableViewCell: UITableViewCell,AVAudioPlayerDelegate {
         
         // Configure the view for the selected state
     }
-    
-    @IBAction func playButtonPressed(_ sender: UIButton) {
-        
-        var urls = URL(string: audioFileURL)
-        
-        playerItem = AVPlayerItem(url: urls!)
-        player = AVPlayer(playerItem: playerItem!)
-        if self.player!.currentItem?.status == .readyToPlay{
+    @IBAction func playBtn(_ sender: UIButton) {
+        guard let url = URL(string: audioFileURL ?? "") else {
+            print("Invalid URL")
+            return
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying(sender:)),
-                                               name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
-                                               object: player!.currentItem)
-        if(btnName.isSelected)
-        {
+
+        
+        if player == nil {
+            playerItem = AVPlayerItem(url: url)
+            player = AVPlayer(playerItem: playerItem)
+
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(playerDidFinishPlaying),
+                name: .AVPlayerItemDidPlayToEndTime,
+                object: playerItem
+            )
+        }
+
+        if btnName.isSelected {
+
             btnName.isSelected = false
-            let seconds1 : Int64 = Int64(playbackSlider.value)
-            let targetTime : CMTime = CMTimeMake(value: seconds1, timescale: 1)
-            
-            player!.seek(to: targetTime)
-            strPlayStatus = "play"
             player?.pause()
-            
             btnName.setImage(UIImage(named: "plays"), for: .normal)
-            
-            
-            print("start")
-        }else{
+
+        } else {
+
             btnName.isSelected = true
-            let seconds1 : Int64 = Int64(playbackSlider.value)
-            let targetTime : CMTime = CMTimeMake(value: seconds1, timescale: 1)
-            player!.seek(to: targetTime)
-            // print("play AudioSlider:\(seconds1)")
-            strPlayStatus = "play"
+
+            let seconds = Int64(playbackSlider.value)
+            let targetTime = CMTime(value: seconds, timescale: 1)
+
+            player?.seek(to: targetTime)
             player?.volume = 1
             player?.play()
+
             btnName.setImage(UIImage(named: "pauses"), for: .normal)
-            createAndDownloadFile(fileNameUrl : audioFileURL)
-            print("enddddd")
+
+            createAndDownloadFile(fileNameUrl: audioFileURL ?? "")
         }
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateSlider), userInfo: nil, repeats: true)
-        
-        
-        
-        
-        do {        let str = try String(contentsOfFile: audioFileURL)
-            print("lllllllll")    }
-        
-        catch {        print("The file could not be loaded : \(error)")    }
-        
-        
+
+        if timer == nil {
+            timer = Timer.scheduledTimer(
+                timeInterval: 1.0,
+                target: self,
+                selector: #selector(updateSlider),
+                userInfo: nil,
+                repeats: true
+            )
+        }
     }
     
     @objc func updateSlider(){

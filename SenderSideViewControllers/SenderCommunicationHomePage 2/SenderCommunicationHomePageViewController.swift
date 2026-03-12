@@ -870,10 +870,6 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
     
     func ReadApi() {
         
-        
-        
-        
-        
         var Commu = SenderCommuniReadModal()
         
         Commu.userid = memberId
@@ -882,7 +878,7 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         Commu.appid = "2"
         
         APiCallManager.shared.callApi(
-            url: APIEndpoints.GetTextMessageBytype,
+            url: APIEndpoints.GetVoiceMessageBytype,
             httpMethod: .post,
             queryParam: nil,
             requestBody: Commu
@@ -934,7 +930,7 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         unreads.appid = "2"
         
         APiCallManager.shared.callApi(
-            url: APIEndpoints.GetTextMessageBytype,
+            url: APIEndpoints.GetVoiceMessageBytype,
             httpMethod: .post,
             queryParam: nil,
             requestBody: unreads

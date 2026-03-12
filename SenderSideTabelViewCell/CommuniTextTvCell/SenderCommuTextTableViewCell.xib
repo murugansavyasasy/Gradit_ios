@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -51,7 +51,7 @@
                                 <rect key="frame" x="30" y="60" width="290" height="46"/>
                                 <subviews>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.5" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="7NW-se-cU8">
-                                        <rect key="frame" x="41" y="7" width="157" height="34"/>
+                                        <rect key="frame" x="43" y="7" width="153" height="34"/>
                                         <color key="tintColor" red="0.40518573359999999" green="0.78039215689999997" blue="0.65355638270000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="153" id="olH-Mu-nBr"/>
@@ -84,7 +84,7 @@
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" image="plays"/>
                                                 <connections>
-                                                    <action selector="playButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Fux-7A-bjR"/>
+                                                    <action selector="playBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="8Sl-uA-ba0"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -264,7 +264,7 @@
                 <outlet property="sendByView" destination="NCa-A0-4A9" id="xaj-fS-7MY"/>
                 <outlet property="voiceView" destination="Vga-av-MAI" id="UMe-aY-bIh"/>
             </connections>
-            <point key="canvasLocation" x="65.648854961832058" y="24.647887323943664"/>
+            <point key="canvasLocation" x="284" y="25"/>
         </tableViewCell>
     </objects>
     <resources>
