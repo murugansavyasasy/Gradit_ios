@@ -74,6 +74,7 @@ final class APiCallManager {
                 return
             }
             print("📥 Status Code:", response.statusCode)
+            print("📥 RequestUrl:", url)
             
             guard let data = data else {
                 self.completionOnMain(.failure(NetworkError.noData),completion: completion)

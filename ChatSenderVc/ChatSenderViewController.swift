@@ -340,56 +340,41 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
     func chatfortPage(){
         
         print("chat")
-        let chatfornt = IntractApiModal()
+        var chatfornt = IntractApiModal()
         
         chatfornt.college_id = colgId
         chatfornt.staff_id = memberId
         
-        let chatForntStr = chatfornt.toJSONString()
-        
-        print("chatForntStr",chatForntStr)
-        chatIntracrtReq .call_request(param: chatForntStr!){ [self]
-            
-            (res) in
-            
-            
-            
-            let chatfo : IntractChatResponces =
-            Mapper<IntractChatResponces>().map(JSONString: res)!
-            
-            chatFortPageRefName = chatfo.data
-            if chatfo.status == 1{
-                
-                
-                noDataTextView.isHidden = true
-                noDataTextLabel.isHidden = true
-                chatCollectionView.dataSource = self
-                chatCollectionView.delegate = self
-                chatCollectionView.reloadData()
-                
-                
-                
-            }
-            
-            else{
-                
-                noDataTextLabel.text = chatfo.message
+        APiCallManager.shared.callApi(url: APIEndpoints.GetStaffClassesforChatForApp, httpMethod: .post, queryParam: nil, requestBody: chatfornt) { [weak self] (result:Result<IntractChatResponces,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let success):
+                chatFortPageRefName = success.data ?? []
+                if success.Status == 1{
+                    noDataTextView.isHidden = true
+                    noDataTextLabel.isHidden = true
+                    chatCollectionView.dataSource = self
+                    chatCollectionView.delegate = self
+                    chatCollectionView.reloadData()
+                }else{
+                    noDataTextLabel.text = success.Message
+                    noDataTextView.isHidden = false
+                    noDataTextLabel.isHidden = false
+                    
+                    chatCollectionView.dataSource = self
+                    chatCollectionView.delegate = self
+                    chatCollectionView.reloadData()
+                }
+            case .failure(let error):
+                noDataTextLabel.text = error.localizedDescription
                 noDataTextView.isHidden = false
                 noDataTextLabel.isHidden = false
                 
                 chatCollectionView.dataSource = self
                 chatCollectionView.delegate = self
                 chatCollectionView.reloadData()
-                
-                
             }
-            
-            
-            
         }
-        
-     
-        
         
     }
     
@@ -485,7 +470,7 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
             cell.subjectNameCellLabel.text = chatForntPages.subjectname
             cell.staffNameCellLabel.text = chatForntPages.coursename
             //
-            cell.yrNamLbl.text = chatForntPages.yearname + " | " + chatForntPages.sectionname + " | " + chatForntPages.semestername
+        cell.yrNamLbl.text = (chatForntPages.yearname ?? "") + " | " + (chatForntPages.sectionname ?? "") + " | " + (chatForntPages.semestername ?? "")
             
             let intract = intractClick(target: self, action: #selector(intractVc))
             

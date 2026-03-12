@@ -124,7 +124,6 @@
 		18E890262A27571900DF9BF2 /* SendercomuniAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E890162A27571900DF9BF2 /* SendercomuniAddViewController.swift */; };
 		18E890272A27571900DF9BF2 /* SendercomuniAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18E890172A27571900DF9BF2 /* SendercomuniAddViewController.xib */; };
 		18E890282A27571900DF9BF2 /* SenderCommuniReadResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E890182A27571900DF9BF2 /* SenderCommuniReadResponce.swift */; };
-		18E890292A27571900DF9BF2 /* SendercommuniReadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E890192A27571900DF9BF2 /* SendercommuniReadRequest.swift */; };
 		18E8902A2A27571900DF9BF2 /* VoiceRecoredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18E8901B2A27571900DF9BF2 /* VoiceRecoredViewController.xib */; };
 		18E8902B2A27571900DF9BF2 /* VoiceRecoredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E8901C2A27571900DF9BF2 /* VoiceRecoredViewController.swift */; };
 		18E8902C2A27571900DF9BF2 /* SenderCommunicationHomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E8901D2A27571900DF9BF2 /* SenderCommunicationHomePageViewController.swift */; };
@@ -159,7 +158,6 @@
 		52259C44292F5051008CE7CC /* ExaminationDetailsViewControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52259C42292F5051008CE7CC /* ExaminationDetailsViewControllerViewController.xib */; };
 		52259C4E292F5589008CE7CC /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52259C48292F5588008CE7CC /* ImageViewController.swift */; };
 		52259C50292F5589008CE7CC /* ImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52259C4A292F5588008CE7CC /* ImageViewController.xib */; };
-		52259C51292F5589008CE7CC /* ImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52259C4B292F5588008CE7CC /* ImageRequest.swift */; };
 		52259C56292F559D008CE7CC /* ImageDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52259C54292F559D008CE7CC /* ImageDownloadViewController.swift */; };
 		52259C57292F559D008CE7CC /* ImageDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52259C55292F559D008CE7CC /* ImageDownloadViewController.xib */; };
 		52259C5C292F55E4008CE7CC /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52259C5A292F55E4008CE7CC /* ImageTableViewCell.swift */; };
@@ -170,13 +168,11 @@
 		523D8106292E45F8005280C2 /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523D8102292E45F8005280C2 /* VideoViewController.xib */; };
 		523D8107292E45F8005280C2 /* VideoResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523D8103292E45F8005280C2 /* VideoResponce.swift */; };
 		523D8108292E45F8005280C2 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523D8104292E45F8005280C2 /* VideoViewController.swift */; };
-		523D8109292E45F8005280C2 /* VideoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523D8105292E45F8005280C2 /* VideoRequest.swift */; };
 		523D810D292E4604005280C2 /* VideoPlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523D810B292E4604005280C2 /* VideoPlayerViewController.xib */; };
 		523D810E292E4604005280C2 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523D810C292E4604005280C2 /* VideoPlayerViewController.swift */; };
 		523D8113292E4628005280C2 /* VideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523D8111292E4628005280C2 /* VideoTableViewCell.swift */; };
 		523D8114292E4628005280C2 /* VideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523D8112292E4628005280C2 /* VideoTableViewCell.xib */; };
 		524045BE2930ABCE006FC70E /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524045BD2930ABCE006FC70E /* CheckBox.swift */; };
-		5245E44C293F4F3800925CBC /* SenderVideoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E448293F4F3700925CBC /* SenderVideoRequest.swift */; };
 		5245E44E293F4F3800925CBC /* SenderVideoResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E44A293F4F3700925CBC /* SenderVideoResponce.swift */; };
 		5245E44F293F4F3800925CBC /* SenderVideoHomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E44B293F4F3700925CBC /* SenderVideoHomePageViewController.swift */; };
 		5245E453293F4F4700925CBC /* SenderPlayingVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E451293F4F4700925CBC /* SenderPlayingVideoViewController.swift */; };
@@ -186,7 +182,6 @@
 		5245E460293F542D00925CBC /* SenderAssigmentUpcomingResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E45B293F542D00925CBC /* SenderAssigmentUpcomingResponce.swift */; };
 		5245E461293F542D00925CBC /* SenderAssigmentPastResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E45C293F542D00925CBC /* SenderAssigmentPastResponce.swift */; };
 		5245E462293F542D00925CBC /* SenderAssigmentHomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E45D293F542D00925CBC /* SenderAssigmentHomePageViewController.swift */; };
-		5245E464293F542D00925CBC /* SenderAssigmentPastRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E45F293F542D00925CBC /* SenderAssigmentPastRequest.swift */; };
 		5245E468293F544700925CBC /* SenderAssigmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5245E466293F544700925CBC /* SenderAssigmentTableViewCell.xib */; };
 		5245E469293F544700925CBC /* SenderAssigmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E467293F544700925CBC /* SenderAssigmentTableViewCell.swift */; };
 		5245E46D293F546900925CBC /* PlusScreenNextPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E46B293F546900925CBC /* PlusScreenNextPageViewController.swift */; };
@@ -207,7 +202,6 @@
 		5245E4B6293F62CE00925CBC /* SenderEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E4B4293F62CE00925CBC /* SenderEventTableViewCell.swift */; };
 		5245E519293F733700925CBC /* SenderNoticeBoardDepartmentResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E514293F733700925CBC /* SenderNoticeBoardDepartmentResponce.swift */; };
 		5245E51B293F733700925CBC /* SenderNoticeBoardCollegeResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E516293F733700925CBC /* SenderNoticeBoardCollegeResponce.swift */; };
-		5245E51C293F733700925CBC /* SenderNoticeBoardDepartmentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E517293F733700925CBC /* SenderNoticeBoardDepartmentRequest.swift */; };
 		5245E51D293F733700925CBC /* SenderGraditNoticeBoardMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E518293F733700925CBC /* SenderGraditNoticeBoardMenuViewController.swift */; };
 		5245E521293F735900925CBC /* SenderNoticeBoardNextPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E51F293F735900925CBC /* SenderNoticeBoardNextPageViewController.swift */; };
 		5245E522293F735900925CBC /* SenderNoticeBoardNextPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5245E520293F735900925CBC /* SenderNoticeBoardNextPageViewController.xib */; };
@@ -217,7 +211,6 @@
 		5247A47829B0CC6F004C1EDD /* VideoPlusPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5247A47629B0CC6F004C1EDD /* VideoPlusPageViewController.xib */; };
 		524C04B229405D5D000A6975 /* SenderImagePdfTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 524C04B029405D5D000A6975 /* SenderImagePdfTableViewCell.xib */; };
 		524C04B329405D5D000A6975 /* SenderImagePdfTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524C04B129405D5D000A6975 /* SenderImagePdfTableViewCell.swift */; };
-		524C04BA29405D77000A6975 /* SenderImagePdfDeparmentRequst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524C04B629405D77000A6975 /* SenderImagePdfDeparmentRequst.swift */; };
 		524C04BB29405D77000A6975 /* SenderImagePdfDeparmentResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524C04B729405D77000A6975 /* SenderImagePdfDeparmentResponce.swift */; };
 		524C04BC29405D77000A6975 /* SenderImagePdfHomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524C04B829405D77000A6975 /* SenderImagePdfHomePageViewController.swift */; };
 		524C04C029405D90000A6975 /* SenderImageDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 524C04BE29405D8F000A6975 /* SenderImageDownloadViewController.xib */; };
@@ -298,11 +291,9 @@
 		52854C4D292F33980097A198 /* Attendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52854C4C292F33980097A198 /* Attendance.swift */; };
 		5286C9702A3064A1006A78FC /* DashBordShwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5286C96E2A3064A1006A78FC /* DashBordShwViewController.swift */; };
 		5286C9712A3064A1006A78FC /* DashBordShwViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5286C96F2A3064A1006A78FC /* DashBordShwViewController.xib */; };
-		52877F892A2DF35A00AE6DAE /* OverAllCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52877F7E2A2DF35A00AE6DAE /* OverAllCountRequest.swift */; };
 		52877F8A2A2DF35A00AE6DAE /* AppReadStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52877F7F2A2DF35A00AE6DAE /* AppReadStatusRequest.swift */; };
 		52877F8B2A2DF35A00AE6DAE /* AppReadStatusResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52877F802A2DF35A00AE6DAE /* AppReadStatusResponce.swift */; };
 		52877F8C2A2DF35A00AE6DAE /* DepartmentResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52877F812A2DF35A00AE6DAE /* DepartmentResponce.swift */; };
-		52877F8D2A2DF35A00AE6DAE /* DepartmentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52877F822A2DF35A00AE6DAE /* DepartmentRequest.swift */; };
 		52877F8E2A2DF35A00AE6DAE /* NoticeBoardHomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52877F832A2DF35A00AE6DAE /* NoticeBoardHomePageViewController.swift */; };
 		52877F8F2A2DF35A00AE6DAE /* OverAllCountResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52877F842A2DF35A00AE6DAE /* OverAllCountResponce.swift */; };
 		52877F902A2DF35A00AE6DAE /* NoticeBoardHomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52877F852A2DF35A00AE6DAE /* NoticeBoardHomePageViewController.xib */; };
@@ -387,13 +378,10 @@
 		52A577052A3C654E0039E1E1 /* ChatAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A576F52A3C654D0039E1E1 /* ChatAddViewController.swift */; };
 		52A577062A3C654E0039E1E1 /* ChatReceiverInteractViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52A576F72A3C654D0039E1E1 /* ChatReceiverInteractViewController.xib */; };
 		52A577072A3C654E0039E1E1 /* MessageSendReceiverSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A576F82A3C654D0039E1E1 /* MessageSendReceiverSide.swift */; };
-		52A577082A3C654E0039E1E1 /* ChatReceiverInteractRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A576F92A3C654D0039E1E1 /* ChatReceiverInteractRequest.swift */; };
 		52A5770A2A3C654E0039E1E1 /* ChatReceiverInteractViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A576FB2A3C654D0039E1E1 /* ChatReceiverInteractViewController.swift */; };
-		52A5770C2A3C654E0039E1E1 /* MessageSendReceiverSideRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A576FD2A3C654D0039E1E1 /* MessageSendReceiverSideRequest.swift */; };
 		52A5770D2A3C654E0039E1E1 /* ChatReceiverInteractModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A576FE2A3C654D0039E1E1 /* ChatReceiverInteractModal.swift */; };
 		52A5770E2A3C654E0039E1E1 /* ChatHomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A577002A3C654D0039E1E1 /* ChatHomePageViewController.swift */; };
 		52A5770F2A3C654E0039E1E1 /* ChatForntPageResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A577012A3C654D0039E1E1 /* ChatForntPageResponce.swift */; };
-		52A577102A3C654E0039E1E1 /* ChatFrontPageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A577022A3C654D0039E1E1 /* ChatFrontPageRequest.swift */; };
 		52A577112A3C654E0039E1E1 /* ChatHomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52A577032A3C654D0039E1E1 /* ChatHomePageViewController.xib */; };
 		52A699D829AC8A240072C0D6 /* SenderAttendanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A699D629AC8A240072C0D6 /* SenderAttendanceTableViewCell.swift */; };
 		52A699D929AC8A240072C0D6 /* SenderAttendanceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52A699D729AC8A240072C0D6 /* SenderAttendanceTableViewCell.xib */; };
@@ -464,15 +452,11 @@
 		52D9144529EA717300D0D8DD /* SendVideoToParticularReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9144429EA717300D0D8DD /* SendVideoToParticularReq.swift */; };
 		52D9144929ED598300D0D8DD /* ChatSenderInteractViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9144729ED598300D0D8DD /* ChatSenderInteractViewController.swift */; };
 		52D9144D29ED59DD00D0D8DD /* chatSenderIntractApiResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9144C29ED59DD00D0D8DD /* chatSenderIntractApiResp.swift */; };
-		52D9144F29ED59F000D0D8DD /* ChatSenderIntracrApiReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9144E29ED59F000D0D8DD /* ChatSenderIntracrApiReq.swift */; };
 		52D9145229ED5B9500D0D8DD /* chatIntracrtResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9145129ED5B9500D0D8DD /* chatIntracrtResp.swift */; };
-		52D9145429ED5BAA00D0D8DD /* chatIntractRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9145329ED5BAA00D0D8DD /* chatIntractRequest.swift */; };
 		52D9145629ED5CD500D0D8DD /* ChatSenderInteractViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52D9145529ED5CD500D0D8DD /* ChatSenderInteractViewController.xib */; };
 		52D9145A29ED5D8000D0D8DD /* ChatSenderSideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9145829ED5D8000D0D8DD /* ChatSenderSideTableViewCell.swift */; };
 		52D9145D29ED5DC800D0D8DD /* ChatSenderSideTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52D9145C29ED5DC800D0D8DD /* ChatSenderSideTableViewCell.xib */; };
 		52D9146029ED5E0500D0D8DD /* chatBlockResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9145F29ED5E0500D0D8DD /* chatBlockResp.swift */; };
-		52D9146229ED5E1200D0D8DD /* chatBlockReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9146129ED5E1200D0D8DD /* chatBlockReq.swift */; };
-		52D9146429ED616D00D0D8DD /* chatRequestApis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9146329ED616D00D0D8DD /* chatRequestApis.swift */; };
 		52D9146629ED62EA00D0D8DD /* chatResponceApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9146529ED62EA00D0D8DD /* chatResponceApi.swift */; };
 		52E3B7A62A0E458700371DF5 /* ShowSelectedImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E3B7A42A0E458700371DF5 /* ShowSelectedImageViewController.swift */; };
 		52E3B7A72A0E458700371DF5 /* ShowSelectedImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E3B7A52A0E458700371DF5 /* ShowSelectedImageViewController.xib */; };
@@ -603,7 +587,6 @@
 		848BA1222BBF10F800FC65BF /* chatResTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848BA1202BBF10F800FC65BF /* chatResTableViewCell.xib */; };
 		848BA1262BBF113700FC65BF /* ChatsendTVTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848BA1242BBF113700FC65BF /* ChatsendTVTableViewCell.swift */; };
 		848BA1272BBF113700FC65BF /* ChatsendTVTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848BA1252BBF113700FC65BF /* ChatsendTVTableViewCell.xib */; };
-		848BB6B52B147B39007FAE81 /* VoiceAndTextShowingReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848BB6B42B147B39007FAE81 /* VoiceAndTextShowingReq.swift */; };
 		848BB6B92B150240007FAE81 /* GroupHeadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848BB6B72B150240007FAE81 /* GroupHeadViewController.swift */; };
 		848BB6BA2B150240007FAE81 /* GroupHeadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848BB6B82B150240007FAE81 /* GroupHeadViewController.xib */; };
 		848EA8C32B2C58F80057D3A9 /* HallTicketCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848EA8C12B2C58F80057D3A9 /* HallTicketCollectionViewCell.swift */; };
@@ -965,7 +948,6 @@
 		18E890162A27571900DF9BF2 /* SendercomuniAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendercomuniAddViewController.swift; sourceTree = "<group>"; };
 		18E890172A27571900DF9BF2 /* SendercomuniAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendercomuniAddViewController.xib; sourceTree = "<group>"; };
 		18E890182A27571900DF9BF2 /* SenderCommuniReadResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderCommuniReadResponce.swift; sourceTree = "<group>"; };
-		18E890192A27571900DF9BF2 /* SendercommuniReadRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendercommuniReadRequest.swift; sourceTree = "<group>"; };
 		18E8901B2A27571900DF9BF2 /* VoiceRecoredViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VoiceRecoredViewController.xib; sourceTree = "<group>"; };
 		18E8901C2A27571900DF9BF2 /* VoiceRecoredViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceRecoredViewController.swift; sourceTree = "<group>"; };
 		18E8901D2A27571900DF9BF2 /* SenderCommunicationHomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderCommunicationHomePageViewController.swift; sourceTree = "<group>"; };
@@ -999,7 +981,6 @@
 		52259C42292F5051008CE7CC /* ExaminationDetailsViewControllerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExaminationDetailsViewControllerViewController.xib; sourceTree = "<group>"; };
 		52259C48292F5588008CE7CC /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		52259C4A292F5588008CE7CC /* ImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageViewController.xib; sourceTree = "<group>"; };
-		52259C4B292F5588008CE7CC /* ImageRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRequest.swift; sourceTree = "<group>"; };
 		52259C54292F559D008CE7CC /* ImageDownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloadViewController.swift; sourceTree = "<group>"; };
 		52259C55292F559D008CE7CC /* ImageDownloadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageDownloadViewController.xib; sourceTree = "<group>"; };
 		52259C5A292F55E4008CE7CC /* ImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
@@ -1010,13 +991,11 @@
 		523D8102292E45F8005280C2 /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
 		523D8103292E45F8005280C2 /* VideoResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoResponce.swift; sourceTree = "<group>"; };
 		523D8104292E45F8005280C2 /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
-		523D8105292E45F8005280C2 /* VideoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoRequest.swift; sourceTree = "<group>"; };
 		523D810B292E4604005280C2 /* VideoPlayerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoPlayerViewController.xib; sourceTree = "<group>"; };
 		523D810C292E4604005280C2 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		523D8111292E4628005280C2 /* VideoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTableViewCell.swift; sourceTree = "<group>"; };
 		523D8112292E4628005280C2 /* VideoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoTableViewCell.xib; sourceTree = "<group>"; };
 		524045BD2930ABCE006FC70E /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
-		5245E448293F4F3700925CBC /* SenderVideoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderVideoRequest.swift; sourceTree = "<group>"; };
 		5245E44A293F4F3700925CBC /* SenderVideoResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderVideoResponce.swift; sourceTree = "<group>"; };
 		5245E44B293F4F3700925CBC /* SenderVideoHomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderVideoHomePageViewController.swift; sourceTree = "<group>"; };
 		5245E451293F4F4700925CBC /* SenderPlayingVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderPlayingVideoViewController.swift; sourceTree = "<group>"; };
@@ -1026,7 +1005,6 @@
 		5245E45B293F542D00925CBC /* SenderAssigmentUpcomingResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderAssigmentUpcomingResponce.swift; sourceTree = "<group>"; };
 		5245E45C293F542D00925CBC /* SenderAssigmentPastResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderAssigmentPastResponce.swift; sourceTree = "<group>"; };
 		5245E45D293F542D00925CBC /* SenderAssigmentHomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderAssigmentHomePageViewController.swift; sourceTree = "<group>"; };
-		5245E45F293F542D00925CBC /* SenderAssigmentPastRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderAssigmentPastRequest.swift; sourceTree = "<group>"; };
 		5245E466293F544700925CBC /* SenderAssigmentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderAssigmentTableViewCell.xib; sourceTree = "<group>"; };
 		5245E467293F544700925CBC /* SenderAssigmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderAssigmentTableViewCell.swift; sourceTree = "<group>"; };
 		5245E46B293F546900925CBC /* PlusScreenNextPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusScreenNextPageViewController.swift; sourceTree = "<group>"; };
@@ -1047,7 +1025,6 @@
 		5245E4B4293F62CE00925CBC /* SenderEventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderEventTableViewCell.swift; sourceTree = "<group>"; };
 		5245E514293F733700925CBC /* SenderNoticeBoardDepartmentResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderNoticeBoardDepartmentResponce.swift; sourceTree = "<group>"; };
 		5245E516293F733700925CBC /* SenderNoticeBoardCollegeResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderNoticeBoardCollegeResponce.swift; sourceTree = "<group>"; };
-		5245E517293F733700925CBC /* SenderNoticeBoardDepartmentRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderNoticeBoardDepartmentRequest.swift; sourceTree = "<group>"; };
 		5245E518293F733700925CBC /* SenderGraditNoticeBoardMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderGraditNoticeBoardMenuViewController.swift; sourceTree = "<group>"; };
 		5245E51F293F735900925CBC /* SenderNoticeBoardNextPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderNoticeBoardNextPageViewController.swift; sourceTree = "<group>"; };
 		5245E520293F735900925CBC /* SenderNoticeBoardNextPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderNoticeBoardNextPageViewController.xib; sourceTree = "<group>"; };
@@ -1057,7 +1034,6 @@
 		5247A47629B0CC6F004C1EDD /* VideoPlusPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPlusPageViewController.xib; sourceTree = "<group>"; };
 		524C04B029405D5D000A6975 /* SenderImagePdfTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderImagePdfTableViewCell.xib; sourceTree = "<group>"; };
 		524C04B129405D5D000A6975 /* SenderImagePdfTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderImagePdfTableViewCell.swift; sourceTree = "<group>"; };
-		524C04B629405D77000A6975 /* SenderImagePdfDeparmentRequst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderImagePdfDeparmentRequst.swift; sourceTree = "<group>"; };
 		524C04B729405D77000A6975 /* SenderImagePdfDeparmentResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderImagePdfDeparmentResponce.swift; sourceTree = "<group>"; };
 		524C04B829405D77000A6975 /* SenderImagePdfHomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderImagePdfHomePageViewController.swift; sourceTree = "<group>"; };
 		524C04BE29405D8F000A6975 /* SenderImageDownloadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderImageDownloadViewController.xib; sourceTree = "<group>"; };
@@ -1138,11 +1114,9 @@
 		52854C4C292F33980097A198 /* Attendance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attendance.swift; sourceTree = "<group>"; };
 		5286C96E2A3064A1006A78FC /* DashBordShwViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBordShwViewController.swift; sourceTree = "<group>"; };
 		5286C96F2A3064A1006A78FC /* DashBordShwViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DashBordShwViewController.xib; sourceTree = "<group>"; };
-		52877F7E2A2DF35A00AE6DAE /* OverAllCountRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverAllCountRequest.swift; sourceTree = "<group>"; };
 		52877F7F2A2DF35A00AE6DAE /* AppReadStatusRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppReadStatusRequest.swift; sourceTree = "<group>"; };
 		52877F802A2DF35A00AE6DAE /* AppReadStatusResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppReadStatusResponce.swift; sourceTree = "<group>"; };
 		52877F812A2DF35A00AE6DAE /* DepartmentResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartmentResponce.swift; sourceTree = "<group>"; };
-		52877F822A2DF35A00AE6DAE /* DepartmentRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartmentRequest.swift; sourceTree = "<group>"; };
 		52877F832A2DF35A00AE6DAE /* NoticeBoardHomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeBoardHomePageViewController.swift; sourceTree = "<group>"; };
 		52877F842A2DF35A00AE6DAE /* OverAllCountResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverAllCountResponce.swift; sourceTree = "<group>"; };
 		52877F852A2DF35A00AE6DAE /* NoticeBoardHomePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoticeBoardHomePageViewController.xib; sourceTree = "<group>"; };
@@ -1231,13 +1205,10 @@
 		52A576F52A3C654D0039E1E1 /* ChatAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatAddViewController.swift; sourceTree = "<group>"; };
 		52A576F72A3C654D0039E1E1 /* ChatReceiverInteractViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatReceiverInteractViewController.xib; sourceTree = "<group>"; };
 		52A576F82A3C654D0039E1E1 /* MessageSendReceiverSide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSendReceiverSide.swift; sourceTree = "<group>"; };
-		52A576F92A3C654D0039E1E1 /* ChatReceiverInteractRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatReceiverInteractRequest.swift; sourceTree = "<group>"; };
 		52A576FB2A3C654D0039E1E1 /* ChatReceiverInteractViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatReceiverInteractViewController.swift; sourceTree = "<group>"; };
-		52A576FD2A3C654D0039E1E1 /* MessageSendReceiverSideRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSendReceiverSideRequest.swift; sourceTree = "<group>"; };
 		52A576FE2A3C654D0039E1E1 /* ChatReceiverInteractModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatReceiverInteractModal.swift; sourceTree = "<group>"; };
 		52A577002A3C654D0039E1E1 /* ChatHomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHomePageViewController.swift; sourceTree = "<group>"; };
 		52A577012A3C654D0039E1E1 /* ChatForntPageResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatForntPageResponce.swift; sourceTree = "<group>"; };
-		52A577022A3C654D0039E1E1 /* ChatFrontPageRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatFrontPageRequest.swift; sourceTree = "<group>"; };
 		52A577032A3C654D0039E1E1 /* ChatHomePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatHomePageViewController.xib; sourceTree = "<group>"; };
 		52A699D629AC8A240072C0D6 /* SenderAttendanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderAttendanceTableViewCell.swift; sourceTree = "<group>"; };
 		52A699D729AC8A240072C0D6 /* SenderAttendanceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderAttendanceTableViewCell.xib; sourceTree = "<group>"; };
@@ -1309,15 +1280,11 @@
 		52D9144429EA717300D0D8DD /* SendVideoToParticularReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendVideoToParticularReq.swift; sourceTree = "<group>"; };
 		52D9144729ED598300D0D8DD /* ChatSenderInteractViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSenderInteractViewController.swift; sourceTree = "<group>"; };
 		52D9144C29ED59DD00D0D8DD /* chatSenderIntractApiResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatSenderIntractApiResp.swift; sourceTree = "<group>"; };
-		52D9144E29ED59F000D0D8DD /* ChatSenderIntracrApiReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSenderIntracrApiReq.swift; sourceTree = "<group>"; };
 		52D9145129ED5B9500D0D8DD /* chatIntracrtResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatIntracrtResp.swift; sourceTree = "<group>"; };
-		52D9145329ED5BAA00D0D8DD /* chatIntractRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatIntractRequest.swift; sourceTree = "<group>"; };
 		52D9145529ED5CD500D0D8DD /* ChatSenderInteractViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatSenderInteractViewController.xib; sourceTree = "<group>"; };
 		52D9145829ED5D8000D0D8DD /* ChatSenderSideTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSenderSideTableViewCell.swift; sourceTree = "<group>"; };
 		52D9145C29ED5DC800D0D8DD /* ChatSenderSideTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatSenderSideTableViewCell.xib; sourceTree = "<group>"; };
 		52D9145F29ED5E0500D0D8DD /* chatBlockResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatBlockResp.swift; sourceTree = "<group>"; };
-		52D9146129ED5E1200D0D8DD /* chatBlockReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatBlockReq.swift; sourceTree = "<group>"; };
-		52D9146329ED616D00D0D8DD /* chatRequestApis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatRequestApis.swift; sourceTree = "<group>"; };
 		52D9146529ED62EA00D0D8DD /* chatResponceApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatResponceApi.swift; sourceTree = "<group>"; };
 		52E3B7A42A0E458700371DF5 /* ShowSelectedImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSelectedImageViewController.swift; sourceTree = "<group>"; };
 		52E3B7A52A0E458700371DF5 /* ShowSelectedImageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowSelectedImageViewController.xib; sourceTree = "<group>"; };
@@ -1452,7 +1419,6 @@
 		848BA1202BBF10F800FC65BF /* chatResTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = chatResTableViewCell.xib; sourceTree = "<group>"; };
 		848BA1242BBF113700FC65BF /* ChatsendTVTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsendTVTableViewCell.swift; sourceTree = "<group>"; };
 		848BA1252BBF113700FC65BF /* ChatsendTVTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatsendTVTableViewCell.xib; sourceTree = "<group>"; };
-		848BB6B42B147B39007FAE81 /* VoiceAndTextShowingReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceAndTextShowingReq.swift; sourceTree = "<group>"; };
 		848BB6B72B150240007FAE81 /* GroupHeadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupHeadViewController.swift; sourceTree = "<group>"; };
 		848BB6B82B150240007FAE81 /* GroupHeadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupHeadViewController.xib; sourceTree = "<group>"; };
 		848EA8C12B2C58F80057D3A9 /* HallTicketCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HallTicketCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2456,13 +2422,11 @@
 				5289B2072A627512002D63CB /* SelectResipientsPage */,
 				18E890152A27571900DF9BF2 /* SendercomuniAddVc */,
 				18E890182A27571900DF9BF2 /* SenderCommuniReadResponce.swift */,
-				18E890192A27571900DF9BF2 /* SendercommuniReadRequest.swift */,
 				18E8901D2A27571900DF9BF2 /* SenderCommunicationHomePageViewController.swift */,
 				18E8901E2A27571900DF9BF2 /* SenderCommuniUnreadResponce.swift */,
 				84E502AE2C12F65C008836C9 /* SenderCommunicationHomePageViewController.xib */,
 				18E8901A2A27571900DF9BF2 /* VoiceRecoredViewController */,
 				18E890222A27571900DF9BF2 /* SenderComunicationPlusNextPage */,
-				848BB6B42B147B39007FAE81 /* VoiceAndTextShowingReq.swift */,
 			);
 			path = "SenderCommunicationHomePage 2";
 			sourceTree = "<group>";
@@ -2617,7 +2581,6 @@
 			children = (
 				52259C48292F5588008CE7CC /* ImageViewController.swift */,
 				52259C4A292F5588008CE7CC /* ImageViewController.xib */,
-				52259C4B292F5588008CE7CC /* ImageRequest.swift */,
 				52259C60292F977A008CE7CC /* DepartmentResponces.swift */,
 			);
 			path = ImageGraditHompage;
@@ -2665,7 +2628,6 @@
 				523D8102292E45F8005280C2 /* VideoViewController.xib */,
 				523D8103292E45F8005280C2 /* VideoResponce.swift */,
 				523D8104292E45F8005280C2 /* VideoViewController.swift */,
-				523D8105292E45F8005280C2 /* VideoRequest.swift */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -2749,7 +2711,6 @@
 			children = (
 				52A2E6AE2A125E8B00DFE33C /* VideoRestionVC */,
 				5247A47429B0CC37004C1EDD /* SenderVideoPlusPageVc */,
-				5245E448293F4F3700925CBC /* SenderVideoRequest.swift */,
 				5245E44A293F4F3700925CBC /* SenderVideoResponce.swift */,
 				84E502B02C12F6EA008836C9 /* SenderVideoHomePageViewController.xib */,
 				5245E44B293F4F3700925CBC /* SenderVideoHomePageViewController.swift */,
@@ -2786,7 +2747,6 @@
 				5245E45B293F542D00925CBC /* SenderAssigmentUpcomingResponce.swift */,
 				5245E45C293F542D00925CBC /* SenderAssigmentPastResponce.swift */,
 				5245E45D293F542D00925CBC /* SenderAssigmentHomePageViewController.swift */,
-				5245E45F293F542D00925CBC /* SenderAssigmentPastRequest.swift */,
 				5245E46A293F546900925CBC /* PlusScreenNextPageViewController */,
 				52AAA798297272780047A696 /* PickVideoViewController */,
 				52AAA79D2972789C0047A696 /* PickImageViewControler */,
@@ -2885,7 +2845,6 @@
 				5245E48B293F607F00925CBC /* SenderUpcomEventRequest.swift */,
 				5245E514293F733700925CBC /* SenderNoticeBoardDepartmentResponce.swift */,
 				5245E516293F733700925CBC /* SenderNoticeBoardCollegeResponce.swift */,
-				5245E517293F733700925CBC /* SenderNoticeBoardDepartmentRequest.swift */,
 				5245E518293F733700925CBC /* SenderGraditNoticeBoardMenuViewController.swift */,
 				5245E51E293F735900925CBC /* SenderNoticeBoardNextPage */,
 			);
@@ -2932,7 +2891,6 @@
 			isa = PBXGroup;
 			children = (
 				52A699EE29ADDEFB0072C0D6 /* SenderImageAddVc */,
-				524C04B629405D77000A6975 /* SenderImagePdfDeparmentRequst.swift */,
 				524C04B729405D77000A6975 /* SenderImagePdfDeparmentResponce.swift */,
 				524C04B829405D77000A6975 /* SenderImagePdfHomePageViewController.swift */,
 				524C04C229405D9E000A6975 /* SenderImagePdfPlusNextPage */,
@@ -3376,11 +3334,9 @@
 		52877F7D2A2DF35A00AE6DAE /* NoticeBoardHomePage */ = {
 			isa = PBXGroup;
 			children = (
-				52877F7E2A2DF35A00AE6DAE /* OverAllCountRequest.swift */,
 				52877F7F2A2DF35A00AE6DAE /* AppReadStatusRequest.swift */,
 				52877F802A2DF35A00AE6DAE /* AppReadStatusResponce.swift */,
 				52877F812A2DF35A00AE6DAE /* DepartmentResponce.swift */,
-				52877F822A2DF35A00AE6DAE /* DepartmentRequest.swift */,
 				52877F832A2DF35A00AE6DAE /* NoticeBoardHomePageViewController.swift */,
 				52877F842A2DF35A00AE6DAE /* OverAllCountResponce.swift */,
 				52877F852A2DF35A00AE6DAE /* NoticeBoardHomePageViewController.xib */,
@@ -3724,9 +3680,7 @@
 			children = (
 				52A576F72A3C654D0039E1E1 /* ChatReceiverInteractViewController.xib */,
 				52A576F82A3C654D0039E1E1 /* MessageSendReceiverSide.swift */,
-				52A576F92A3C654D0039E1E1 /* ChatReceiverInteractRequest.swift */,
 				52A576FB2A3C654D0039E1E1 /* ChatReceiverInteractViewController.swift */,
-				52A576FD2A3C654D0039E1E1 /* MessageSendReceiverSideRequest.swift */,
 				52A576FE2A3C654D0039E1E1 /* ChatReceiverInteractModal.swift */,
 			);
 			path = ChatIntreactReceiver;
@@ -3737,7 +3691,6 @@
 			children = (
 				52A577002A3C654D0039E1E1 /* ChatHomePageViewController.swift */,
 				52A577012A3C654D0039E1E1 /* ChatForntPageResponce.swift */,
-				52A577022A3C654D0039E1E1 /* ChatFrontPageRequest.swift */,
 				52A577032A3C654D0039E1E1 /* ChatHomePageViewController.xib */,
 			);
 			path = ChatHomePageViewController;
@@ -4046,7 +3999,6 @@
 				848BA1142BBEB9BF00FC65BF /* ChatSenderCell */,
 				52D9144729ED598300D0D8DD /* ChatSenderInteractViewController.swift */,
 				52D9145529ED5CD500D0D8DD /* ChatSenderInteractViewController.xib */,
-				52D9146329ED616D00D0D8DD /* chatRequestApis.swift */,
 				52D9146529ED62EA00D0D8DD /* chatResponceApi.swift */,
 			);
 			path = SenderChatIntractVc;
@@ -4056,7 +4008,6 @@
 			isa = PBXGroup;
 			children = (
 				52D9144C29ED59DD00D0D8DD /* chatSenderIntractApiResp.swift */,
-				52D9144E29ED59F000D0D8DD /* ChatSenderIntracrApiReq.swift */,
 			);
 			path = chatSenderAPi;
 			sourceTree = "<group>";
@@ -4065,7 +4016,6 @@
 			isa = PBXGroup;
 			children = (
 				52D9145129ED5B9500D0D8DD /* chatIntracrtResp.swift */,
-				52D9145329ED5BAA00D0D8DD /* chatIntractRequest.swift */,
 			);
 			path = chatIntractApi;
 			sourceTree = "<group>";
@@ -4083,7 +4033,6 @@
 			isa = PBXGroup;
 			children = (
 				52D9145F29ED5E0500D0D8DD /* chatBlockResp.swift */,
-				52D9146129ED5E1200D0D8DD /* chatBlockReq.swift */,
 			);
 			path = chatBlockApi;
 			sourceTree = "<group>";
@@ -5608,7 +5557,6 @@
 			files = (
 				842A7C802F570F540038DA62 /* APiCallManager.swift in Sources */,
 				FA35D4B82E2119C10081E8CF /* SoftSkillCV.swift in Sources */,
-				52877F8D2A2DF35A00AE6DAE /* DepartmentRequest.swift in Sources */,
 				18BAB3E5290F9317009FC2AA /* ProfileDetailsTableViewCell.swift in Sources */,
 				18BAB3CE290F92C9009FC2AA /* ImageScrollCollectionViewCell.swift in Sources */,
 				529A50BF29DE7DA600951E05 /* AttendaceEditResp.swift in Sources */,
@@ -5734,7 +5682,6 @@
 				5261D7FB29A4EBD0007CEA96 /* EventAddDetailsViewController.swift in Sources */,
 				1891461A290A69C100034317 /* PreferencesUtil.swift in Sources */,
 				524C04BB29405D77000A6975 /* SenderImagePdfDeparmentResponce.swift in Sources */,
-				18E890292A27571900DF9BF2 /* SendercommuniReadRequest.swift in Sources */,
 				FA1AC0232DE82FDB0037B996 /* MyprofileTvCell.swift in Sources */,
 				5214AD0D2A67E734008397A3 /* ExaminationEditModalClas.swift in Sources */,
 				5284BDD4292E4DFD00120C74 /* AssigmentHomePageViewController.swift in Sources */,
@@ -5754,7 +5701,6 @@
 				189145E4290A616E00034317 /* ViewController.swift in Sources */,
 				8495DC292C1B0CCE00783AD7 /* FeePaymentViewController.swift in Sources */,
 				18884120291BCD8B00A81C26 /* ReuseTabController.swift in Sources */,
-				52D9146429ED616D00D0D8DD /* chatRequestApis.swift in Sources */,
 				FA9A872B2E16ACC30050B6A5 /* SkillSet_Resp.swift in Sources */,
 				52A576C52A3C24340039E1E1 /* StaffHodFacultyRequest.swift in Sources */,
 				5205E1DB29B73AC200FFA2A1 /* GetGroupRequest.swift in Sources */,
@@ -5803,10 +5749,8 @@
 				1865D8AC2A0903F800CD43F3 /* ReadRequest.swift in Sources */,
 				5284BD81292E4B6100120C74 /* ExaminationHomePageViewController.swift in Sources */,
 				84B25FAF2AB58985006159C6 /* AttendanceAddVcViewController.swift in Sources */,
-				52D9145429ED5BAA00D0D8DD /* chatIntractRequest.swift in Sources */,
 				84A99DD82AC2A4BE00512FEB /* SenderExaminationPlusNextPageViewController.swift in Sources */,
 				52877F962A2DF4E500AE6DAE /* NoticeBoardTableViewCellsTableViewCell.swift in Sources */,
-				52A5770C2A3C654E0039E1E1 /* MessageSendReceiverSideRequest.swift in Sources */,
 				52F1D46729D4103B00CD5E86 /* AssigmentImagePdfResponce.swift in Sources */,
 				52A699E729ADC0200072C0D6 /* SenderAssigAddViewController.swift in Sources */,
 				52C0DAE329D707070051F95F /* MoreImageViewController.swift in Sources */,
@@ -5814,7 +5758,6 @@
 				18BAB3BF290F92B2009FC2AA /* NoticeBoardScrollCollectionViewCell.swift in Sources */,
 				FA0AC3B92DE8C24100315105 /* CustomTextfield.swift in Sources */,
 				18BAB3E3290F9317009FC2AA /* ProfileTableViewCell.swift in Sources */,
-				848BB6B52B147B39007FAE81 /* VoiceAndTextShowingReq.swift in Sources */,
 				523D8108292E45F8005280C2 /* VideoViewController.swift in Sources */,
 				84B05B972B8F1F570003A2D3 /* MoreImageCCCollectionViewCell.swift in Sources */,
 				18E890262A27571900DF9BF2 /* SendercomuniAddViewController.swift in Sources */,
@@ -5862,7 +5805,6 @@
 				52AAA7A529727A480047A696 /* PickPDFViewController.swift in Sources */,
 				84928CE42B3C0106007C18D5 /* SenderCommuTextTableViewCell.swift in Sources */,
 				FA6EA4D62E25372400602DA4 /* ProjectsTv.swift in Sources */,
-				52259C51292F5589008CE7CC /* ImageRequest.swift in Sources */,
 				1891462C290A69F600034317 /* ForgetRequest.swift in Sources */,
 				84B25FA92AB58985006159C6 /* plusPageViewController.swift in Sources */,
 				84B25FE92AB5914D006159C6 /* AttendanceAddViewController.swift in Sources */,
@@ -5871,7 +5813,6 @@
 				52877F922A2DF35A00AE6DAE /* AddNoticeBoardViewController.swift in Sources */,
 				849009812B958FA600FC28DF /* AssigmentNotSubViewController.swift in Sources */,
 				52D9146629ED62EA00D0D8DD /* chatResponceApi.swift in Sources */,
-				52877F892A2DF35A00AE6DAE /* OverAllCountRequest.swift in Sources */,
 				5206FA7C2A25F90100FDD057 /* comunVoiceTouterReq.swift in Sources */,
 				5284BDC5292E4D8400120C74 /* FacultyHomePageViewController.swift in Sources */,
 				52877F8B2A2DF35A00AE6DAE /* AppReadStatusResponce.swift in Sources */,
@@ -5904,8 +5845,6 @@
 				84A99DE62AC2A4BE00512FEB /* SenderExaminationNextPageViewController.swift in Sources */,
 				FA6D75542E17F86800ACBADF /* addAcademicTV.swift in Sources */,
 				5284BDC8292E4D8400120C74 /* FacultyDropDownResponce.swift in Sources */,
-				524C04BA29405D77000A6975 /* SenderImagePdfDeparmentRequst.swift in Sources */,
-				52A577082A3C654E0039E1E1 /* ChatReceiverInteractRequest.swift in Sources */,
 				18BAB40D290F9349009FC2AA /* MenuTermsViewController.swift in Sources */,
 				184D6CAF2A497042007DA4AB /* examSectionsModal.swift in Sources */,
 				840B3D332B1899D20022363F /* SwipeableView.swift in Sources */,
@@ -5913,13 +5852,11 @@
 				52A5770E2A3C654E0039E1E1 /* ChatHomePageViewController.swift in Sources */,
 				529A50B229DE570E00951E05 /* AssignmentSubmmitedReq.swift in Sources */,
 				523D810E292E4604005280C2 /* VideoPlayerViewController.swift in Sources */,
-				52A577102A3C654E0039E1E1 /* ChatFrontPageRequest.swift in Sources */,
 				524D31A729F18B1A004FC229 /* VoiceParticularApiResp.swift in Sources */,
 				520B8D5B29F161CA00C74185 /* voiceUploadResponce.swift in Sources */,
 				84E8904F2BA30E860021379C /* MoreSubCollectionViewCell.swift in Sources */,
 				848BA1212BBF10F800FC65BF /* chatResTableViewCell.swift in Sources */,
 				52E3B7A62A0E458700371DF5 /* ShowSelectedImageViewController.swift in Sources */,
-				52D9146229ED5E1200D0D8DD /* chatBlockReq.swift in Sources */,
 				52D298F729FA3596008DD072 /* HomeScreenLeaveRequestTableViewCell.swift in Sources */,
 				52C0DADE29D6C57E0051F95F /* ExameViewResiverTableViewCell.swift in Sources */,
 				840F009A2B29762E00C017CF /* Shinner.swift in Sources */,
@@ -5951,7 +5888,6 @@
 				52C0DAD529D6A57D0051F95F /* AssigmentForwardRequest.swift in Sources */,
 				52877F8F2A2DF35A00AE6DAE /* OverAllCountResponce.swift in Sources */,
 				52F1D44129D1484E00CD5E86 /* SendVideoToEntierRequest.swift in Sources */,
-				5245E51C293F733700925CBC /* SenderNoticeBoardDepartmentRequest.swift in Sources */,
 				529A50B029DE56F300951E05 /* AssignmetSubmmitedRespen.swift in Sources */,
 				8434F2FD2CBCD599009BA2B0 /* UIImage+Gif.swift in Sources */,
 				FA3717112E5AD02F0089D831 /* PlacementEventTvCell.swift in Sources */,
@@ -5982,13 +5918,11 @@
 				5245E521293F735900925CBC /* SenderNoticeBoardNextPageViewController.swift in Sources */,
 				5288FE1B299E39A1000AB6AA /* AddApiRequest.swift in Sources */,
 				5245E461293F542D00925CBC /* SenderAssigmentPastResponce.swift in Sources */,
-				5245E464293F542D00925CBC /* SenderAssigmentPastRequest.swift in Sources */,
 				5288FE1F299E54C7000AB6AA /* AddImagePdfViewController.swift in Sources */,
 				84F6FC602B31C31A006E768B /* LoginNewViewController.swift in Sources */,
 				52A699D829AC8A240072C0D6 /* SenderAttendanceTableViewCell.swift in Sources */,
 				84B05B9F2B9068EA0003A2D3 /* PutMarkResp.swift in Sources */,
 				5245E458293F4F7A00925CBC /* SenderVideoTableViewCell.swift in Sources */,
-				523D8109292E45F8005280C2 /* VideoRequest.swift in Sources */,
 				5292BB2B29C342D200D6FB94 /* SendSmsToParticularRequest.swift in Sources */,
 				842787F92BD8E0C400DD780D /* SenderEventHomePageViewController.swift in Sources */,
 				52CF616C29C05BA300053BC9 /* SpecifyTutorMntorResponce.swift in Sources */,
@@ -6020,7 +5954,6 @@
 				52A829FC296407B0003449A9 /* CheckBoxTwo.swift in Sources */,
 				5284BDC4292E4D8400120C74 /* FacultyDropDownRequest.swift in Sources */,
 				18E890282A27571900DF9BF2 /* SenderCommuniReadResponce.swift in Sources */,
-				52D9144F29ED59F000D0D8DD /* ChatSenderIntracrApiReq.swift in Sources */,
 				FA1AC02C2DE83A790037B996 /* ResumeHeaderCell.swift in Sources */,
 				52A829F92963DEEB003449A9 /* EnterOtpPageViewController.swift in Sources */,
 				52CF617829C0988900053BC9 /* YearSectionRequest.swift in Sources */,
@@ -6110,7 +6043,6 @@
 				52A576C32A3C24270039E1E1 /* StaffHodFacultyModal.swift in Sources */,
 				8490097E2B958A1400FC28DF /* NotSubmittedRequst.swift in Sources */,
 				524C04C129405D90000A6975 /* SenderImageDownloadViewController.swift in Sources */,
-				5245E44C293F4F3800925CBC /* SenderVideoRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

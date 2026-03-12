@@ -98,33 +98,23 @@ class ChatTvTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
     
     func chatfortPage(){
         
-        let chatfornt = ChatFrontPageModal()
+        var chatfornt = ChatFrontPageModal()
         
         chatfornt.college_id = colgId
         chatfornt.student_id = memberId
         
-        let chatForntStr = chatfornt.toJSONString()
-        
-        ChatForntPageRequest .call_request(param: chatForntStr!){ [self]
-            
-            (res) in
-            
-            
-            let chatfo : ChatFrontPageResponce =
-            Mapper<ChatFrontPageResponce>().map(JSONString: res)!
-            
-            chatFortPageRefName = chatfo.data
-            Cv.dataSource = self
-            Cv.delegate = self
-            Cv.reloadData()
-            
-            
-            
+        APiCallManager.shared.callApi(url: APIEndpoints.GetstaffdetailsForApp, httpMethod: .post, queryParam: nil, requestBody: chatfornt) { [weak self] (result:Result<ChatFrontPageResponce,Error>) in
+            guard let self = self else{return}
+            switch result {
+            case .success(let success):
+                chatFortPageRefName = success.data ?? []
+                Cv.dataSource = self
+                Cv.delegate = self
+                Cv.reloadData()
+            case .failure(let error):
+               print("Error: \(error)")
+            }
         }
-        
-        
-        
-        
         
     }
     

@@ -8,105 +8,41 @@
 import Foundation
 import ObjectMapper
 
-class departmentModal : Mappable{
+struct departmentModal : Codable{
     
     
-    var   userid                            : String!
-    var   appid                             : String!
-    var   priority                          : String!
-    var   type                              : String!
-    
-    init(){}
-    
-    required init?(map: Map) {
-        
-        mapping(map: map)
-        
-    }
-    
-    func mapping(map: Map) {
-        
-        userid                          <- map["userid"]
-        appid                           <- map["appid"]
-        priority                        <- map["priority"]
-        type                            <- map["type"]
-        
-    }
+    var   userid                            : String?
+    var   appid                             : String?
+    var   priority                          : String?
+    var   type                              : String?
 }
 
 
-class departmentResponce : Mappable{
+struct departmentResponce : Codable{
     
-    var   Status    : Int!
-    var   Message   : String!
-    var   data      : [departmentDataDetails]!
-    
-    required init?(map: Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: Map) {
-        
-        Status    <- map["Status"]
-        Message   <- map["Message"]
-        data      <- map["data"]
-        
-        
-    }
+    var   Status    : Int?
+    var   Message   : String?
+    var   data      : [departmentDataDetails]?
 }
 
 
-class departmentDataDetails : Mappable{
+struct departmentDataDetails : Codable{
     
-    var noticeheaderid  : String!
-    var noticedetailsid : String!
-    var topic           : String!
-    var description     : String!
-    var createdondate   : String!
-    var createdontime   : String!
-    var sentbyname      : String!
-    var createdby       : String!
-    var isappread       : String!
-    var filearray        : [NoticeDataDeailss]!
-    
-    init(){}
-    
-    required init?(map: Map) {
-        
-        mapping(map: map)
-        
-    }
-    
-    func mapping(map: Map) {
-        
-        noticeheaderid   <- map["noticeheaderid"]
-        noticedetailsid  <- map["noticedetailsid"]
-        topic            <- map["topic"]
-        description      <- map["description"]
-        createdondate    <- map["createdondate"]
-        createdontime    <- map["createdontime"]
-        sentbyname       <- map["sentbyname"]
-        createdby        <- map["createdby"]
-        isappread        <- map["isappread"]
-        filearray        <- map ["filearray"]
-        
-    }
+    var noticeheaderid  : String?
+    var noticedetailsid : String?
+    var topic           : String?
+    var description     : String?
+    var createdondate   : String?
+    var createdontime   : String?
+    var sentbyname      : String?
+    var createdby       : String?
+    var isappread       : String?
+    var filearray        : [NoticeDataDeailss]?
 }
 
-class NoticeDataDeailss : Mappable{
+struct NoticeDataDeailss : Codable{
     
-    var filepath : String!
-    var filetype : String!
+    var filepath : String?
+    var filetype : String?
     
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        filepath <- map["filepath"]
-        filetype <- map["filetype"]
-    }
 }

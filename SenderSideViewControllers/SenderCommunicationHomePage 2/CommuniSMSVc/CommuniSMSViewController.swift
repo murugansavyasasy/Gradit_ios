@@ -534,7 +534,7 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
         if CommuniSegementName.selectedSegmentIndex == 0{
             
             
-            let filtered_list : [SenderCommuniUnReadDataDetails] = Mapper<SenderCommuniUnReadDataDetails>().mapArray(JSONString: cloneList.toJSONString()!)!
+            let filtered_list : [SenderCommuniUnReadDataDetails] = cloneList
             
             
             
@@ -542,27 +542,17 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
             if !searchText.isEmpty{
                 
                 
-                
+                let search = searchText.lowercased()
+
                 UnReadData = filtered_list.filter {
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    $0.msgcontent.lowercased().contains(searchText.lowercased()) || $0.description.lowercased().contains(searchText.lowercased()) || $0.typename.lowercased().contains(searchText.lowercased()) ||  $0.msgdetailsid.lowercased().contains(searchText.lowercased()) || $0.timing.lowercased().contains(searchText.lowercased()) || $0.headerid.lowercased().contains(searchText.lowercased()) || $0.sentby.lowercased().contains(searchText.lowercased())
-                    
-                    
-                    
+                    ($0.msgcontent ?? "").lowercased().contains(search) ||
+                    ($0.description ?? "").lowercased().contains(search) ||
+                    ($0.typename ?? "").lowercased().contains(search) ||
+                    ($0.msgdetailsid ?? "").lowercased().contains(search) ||
+                    ($0.timing ?? "").lowercased().contains(search) ||
+                    ($0.headerid ?? "").lowercased().contains(search) ||
+                    ($0.sentby ?? "").lowercased().contains(search)
                 }
-                
-                
-                
-                
-                
-                
-                
             }else{
                 
                 
@@ -620,47 +610,23 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
         
         else if CommuniSegementName.selectedSegmentIndex == 1{
             
-            
-            
-            
-            let filtered_list : [SenderCommuniReadDataDetails] = Mapper<SenderCommuniReadDataDetails>().mapArray(JSONString: cloneList.toJSONString()!)!
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            if !searchText.isEmpty{
+            let filtered_list = cloneList as! [SenderCommuniReadDataDetails]
+
+            if !searchText.isEmpty {
                 
+                let search = searchText.lowercased()
                 
-                
-                ReadData = filtered_list.filter {
+                ReadData = filtered_list.filter { item in
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    $0.msgcontent.lowercased().contains(searchText.lowercased()) || $0.description.lowercased().contains(searchText.lowercased()) || $0.typename.lowercased().contains(searchText.lowercased()) ||  $0.msgdetailsid.lowercased().contains(searchText.lowercased()) || $0.timing.lowercased().contains(searchText.lowercased()) || $0.headerid.lowercased().contains(searchText.lowercased()) || $0.sentby.lowercased().contains(searchText.lowercased())
-                    
-                    
+                    (item.msgcontent ?? "").lowercased().contains(search) ||
+                    (item.description ?? "").lowercased().contains(search) ||
+                    (item.typename ?? "").lowercased().contains(search) ||
+                    (item.msgdetailsid ?? "").lowercased().contains(search) ||
+                    (item.timing ?? "").lowercased().contains(search) ||
+                    (item.headerid ?? "").lowercased().contains(search) ||
+                    (item.sentby ?? "").lowercased().contains(search)
                     
                 }
-                
-                
-                
-                
-                
                 
                 
             }else{
@@ -881,7 +847,7 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
             
             
             cell.MsgContentLbl.text = comuCell.msgcontent
-            cell.discreptionsLbl.text =  comuCell.description.capitalized
+            cell.discreptionsLbl.text =  comuCell.description?.capitalized
             cell.SendByLbl.text = comuCell.sentby
             cell.dateLbl.text = comuCell.timing
             
@@ -916,7 +882,7 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
             cell.TextImgView.image = UIImage(named: "dashboard_text")
             
             cell.MsgContentLbl.text = unreadCell.msgcontent
-            cell.discreptionsLbl.text =  unreadCell.description.capitalized
+            cell.discreptionsLbl.text =  unreadCell.description?.capitalized
             cell.SendByLbl.text = unreadCell.sentby
             cell.dateLbl.text = unreadCell.timing
             
@@ -957,7 +923,7 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
         
         
         if CommuniSegementName.selectedSegmentIndex == 0{
-            let comuCell : SenderCommuniUnReadDataDetails = UnReadData[indexPath.row]
+            var comuCell : SenderCommuniUnReadDataDetails = UnReadData[indexPath.row]
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
                 
@@ -973,7 +939,7 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
                 if comuCell.isappread == "0"{
                     
                     
-                    apread(gesture : comuCell.msgdetailsid)
+                    apread(gesture : comuCell.msgdetailsid ?? "")
                     
                     comuCell.isappread = "1"
                     cell.redDotImgView.isHidden = true
@@ -1056,76 +1022,52 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
     
     
     func ReadApi() {
-        
-        
-        
-        
-        
-        let Commu = SenderCommuniReadModal()
+
+        var Commu = SenderCommuniReadModal()
         
         Commu.userid = memberId
         Commu.priority = priority
         Commu.readtype = "1"
         Commu.appid = "2"
         
-        let commuStr = Commu.toJSONString()
-        
-        voiceAndTexRequest .call_request(param: commuStr!){ [self]
-            
-            (res) in
-            
-            
-            let communicationResp : SenderCommuniReadResponce =
-            Mapper<SenderCommuniReadResponce>().map(JSONString: res)!
-            
-            
-            
-            
-            print("order data",communicationResp)
-            
-            if communicationResp.Status == 1{
-                
-                ReadData = communicationResp.data
-                cloneList1 = communicationResp.data
-                tv.isScrollEnabled = true
-                noDataView.isHidden = true
-                noDataTextLabel.isHidden = true
-                tv.delegate = self
-                tv.dataSource = self
-                tv.isHidden = false
-                tv.reloadData()
-                
-                
-                
+        APiCallManager.shared.callApi(url: APIEndpoints.GetTextMessageBytype, httpMethod: .post, queryParam: nil, requestBody: Commu) { [weak self] (result:Result<SenderCommuniReadResponce,Error>)in
+            guard let self = self else{return}
+            switch result{
+            case .success(let communicationResp):
+                if communicationResp.Status == 1{
+                    
+                    ReadData = communicationResp.data ?? []
+                    cloneList1 = communicationResp.data ?? []
+                    tv.isScrollEnabled = true
+                    noDataView.isHidden = true
+                    noDataTextLabel.isHidden = true
+                    tv.delegate = self
+                    tv.dataSource = self
+                    tv.isHidden = false
+                    tv.reloadData()
+                    
+                }else{
+                    
+                    noDataView.isHidden = false
+                    noDataTextLabel.isHidden = false
+                    noDataTextLabel.text = communicationResp.Message
+                    tv.delegate = self
+                    tv.dataSource = self
+                    tv.isHidden = true
+                    tv.reloadData()
+                }
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
             }
-            
-            else{
-                
-                noDataView.isHidden = false
-                noDataTextLabel.isHidden = false
-                noDataTextLabel.text = communicationResp.Message
-                tv.delegate = self
-                tv.dataSource = self
-                tv.isHidden = true
-                tv.reloadData()
-                
-                
-                
-                
-                
-            }
-            
-            
         }
-        
-        
+         
     }
     
     
     func unReadModal() {
         //UnRead
         
-        let unreads = SenderCommuniUnReadModal()
+        var unreads = SenderCommuniUnReadModal()
         
         
         
@@ -1134,59 +1076,35 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
         unreads.readtype = "0"
         unreads.appid = "2"
         
-        let unReadStr = unreads.toJSONString()
         
-        
-        
-        voiceAndTexRequest .call_request(param: unReadStr!){ [self]
-            
-            (res) in
-            
-            
-            let UnReadcommunicationResp : SenderCommuniUnReadResponce =
-            Mapper<SenderCommuniUnReadResponce>().map(JSONString: res)!
-            
-            print("order data",UnReadcommunicationResp)
-            
-            
-            if UnReadcommunicationResp.Status == 1{
-                
-                
-                UnReadData = UnReadcommunicationResp.data
-                cloneList = UnReadcommunicationResp.data
-                tv.isScrollEnabled = true
-                noDataView.isHidden = true
-                noDataTextLabel.isHidden = true
-                
-                tv.delegate = self
-                tv.dataSource = self
-                tv.isHidden = false
-                tv.reloadData()
-                
-                
+        APiCallManager.shared.callApi(url: APIEndpoints.GetTextMessageBytype, httpMethod: .post, queryParam: nil, requestBody: unreads) { [weak self] (result:Result<SenderCommuniUnReadResponce,Error>)in
+            guard let self = self else{return}
+            switch result{
+            case .success(let UnReadcommunicationResp):
+                if UnReadcommunicationResp.Status == 1{
+                    UnReadData = UnReadcommunicationResp.data ?? []
+                    cloneList = UnReadcommunicationResp.data ?? []
+                    tv.isScrollEnabled = true
+                    noDataView.isHidden = true
+                    noDataTextLabel.isHidden = true
+                    tv.delegate = self
+                    tv.dataSource = self
+                    tv.isHidden = false
+                    tv.reloadData()
+                }else{
+                    noDataTextLabel.text = UnReadcommunicationResp.Message
+                    noDataView.isHidden = false
+                    noDataTextLabel.isHidden = false
+                    tv.isScrollEnabled = true
+                    tv.delegate = self
+                    tv.dataSource = self
+                    tv.isHidden = true
+                    tv.reloadData()
+                }
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
             }
-            
-            else{
-                
-                
-                
-                noDataTextLabel.text = UnReadcommunicationResp.Message
-                noDataView.isHidden = false
-                noDataTextLabel.isHidden = false
-                tv.isScrollEnabled = true
-                tv.delegate = self
-                tv.dataSource = self
-                
-                tv.isHidden = true
-                
-                tv.reloadData()
-                
-                
-            }
-            
-            
         }
-        
         
     }
     
@@ -1288,11 +1206,6 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
                         bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
                         
                         smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-//                        let singleTap = adds(target: self, action: #selector(adLoad))
-//                        singleTap.url = i.add_url
-                       // bigImg.isUserInteractionEnabled = true
-                        //bigImg.addGestureRecognizer(singleTap)
                     }
                 }
                 
@@ -1301,19 +1214,6 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
             }
         }
     }
-    
-    
-    // This part full  is swipe bottom view
-    
-    
-    
-    
-    
-    
-    
-    // Tab Bar Nagivation
-    
-    
     
     @IBAction func helpRedirect() {
         

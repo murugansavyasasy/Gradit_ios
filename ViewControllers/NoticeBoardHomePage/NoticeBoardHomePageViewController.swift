@@ -237,14 +237,21 @@ class NoticeBoardHomePageViewController:
         
         if noticeSegments.selectedSegmentIndex == 0{
             
-            let filtered_list : [departmentDataDetails] = Mapper<departmentDataDetails>().mapArray(JSONString: cloneList.toJSONString()!)!
+            let filtered_list : [departmentDataDetails] = cloneList
             
             if !searchText.isEmpty{
-               
+                let search = searchText.lowercased()
+
                 departmentRef = filtered_list.filter {
-                    
-                    $0.topic.lowercased().contains(searchText.lowercased()) || $0.description.lowercased().contains(searchText.lowercased()) || $0.noticedetailsid.lowercased().contains(searchText.lowercased()) ||  $0.createdondate.lowercased().contains(searchText.lowercased()) || $0.sentbyname.lowercased().contains(searchText.lowercased()) || $0.createdontime.lowercased().contains(searchText.lowercased()) || $0.noticeheaderid.lowercased().contains(searchText.lowercased())
-                    
+
+                    ($0.topic?.lowercased().contains(search) ?? false) ||
+                    ($0.description?.lowercased().contains(search) ?? false) ||
+                    ($0.noticedetailsid?.lowercased().contains(search) ?? false) ||
+                    ($0.createdondate?.lowercased().contains(search) ?? false) ||
+                    ($0.sentbyname?.lowercased().contains(search) ?? false) ||
+                    ($0.createdontime?.lowercased().contains(search) ?? false) ||
+                    ($0.noticeheaderid?.lowercased().contains(search) ?? false)
+
                 }
                 
             }else{
@@ -270,14 +277,26 @@ class NoticeBoardHomePageViewController:
         
         else if noticeSegments.selectedSegmentIndex == 1{
             
-            let filtered_list : [departmentDataDetails] = Mapper<departmentDataDetails>().mapArray(JSONString: cloneList.toJSONString()!)!
+            let filtered_list : [departmentDataDetails] =  cloneList
             
             if !searchText.isEmpty{
                 
-                collegeRef = filtered_list.filter {
+                let search = searchText.lowercased()
+
+                collegeRef = filtered_list.filter { item in
                     
-                    $0.topic.lowercased().contains(searchText.lowercased()) || $0.description.lowercased().contains(searchText.lowercased()) || $0.noticedetailsid.lowercased().contains(searchText.lowercased()) ||  $0.createdondate.lowercased().contains(searchText.lowercased()) || $0.sentbyname.lowercased().contains(searchText.lowercased()) || $0.createdontime.lowercased().contains(searchText.lowercased()) || $0.noticeheaderid.lowercased().contains(searchText.lowercased())
+                    let fields = [
+                        item.topic,
+                        item.description,
+                        item.noticedetailsid,
+                        item.createdondate,
+                        item.sentbyname,
+                        item.createdontime,
+                        item.noticeheaderid
+                    ]
                     
+                    return fields.compactMap { $0?.lowercased() }
+                                 .contains { $0.contains(search) }
                 }
                 
             }else{
@@ -386,7 +405,7 @@ class NoticeBoardHomePageViewController:
                 cell.arrowImage.image = UIImage(systemName: "chevron.up")
                 
                 
-                if notice.filearray.count == 0{
+                if notice.filearray?.count == 0{
                     
                     cell.attchmentView.isHidden = true
             
@@ -417,20 +436,20 @@ class NoticeBoardHomePageViewController:
                 
             }
             
-            cell.topicCellLabel.text = notice.topic.capitalized
+            cell.topicCellLabel.text = notice.topic?.capitalized
             cell.dateTimeCellLabel.text = (notice.createdondate!)+" \(notice.createdontime!)"
             cell.descriptionCellLabel.text = notice.description
             cell.sentByCellLabel.text = notice.sentbyname
             
-            if notice.filearray.count == 1  {
+            if notice.filearray?.count == 1  {
                 
                 let  attchmentTap = NoticeImageCounts(target: self, action: #selector(AtchmentVc))
                 
-                for i in 0..<notice.filearray.count{
+                for i in 0..<(notice.filearray?.count ?? 0){
                     
-                    attchmentTap.img_url = notice.filearray[i].filepath
-                    attchmentTap.img_urls.append(notice.filearray[i].filepath)
-                    attchmentTap.imageFileType = notice.filearray[i].filetype
+                    attchmentTap.img_url = notice.filearray?[i].filepath
+                    attchmentTap.img_urls.append(notice.filearray?[i].filepath ?? "")
+                    attchmentTap.imageFileType = notice.filearray?[i].filetype
                 }
                 
                 cell.attchmentView.addGestureRecognizer(attchmentTap)
@@ -439,11 +458,11 @@ class NoticeBoardHomePageViewController:
             else{
                 let  attchmentTap = NoticeImageCounts(target: self, action: #selector(AtchmentVc))
                 
-                for i in 0..<notice.filearray.count{
+                for i in 0..<(notice.filearray?.count ?? 0){
                     
-                    attchmentTap.img_url = notice.filearray[i].filepath
-                    attchmentTap.img_urls.append(notice.filearray[i].filepath)
-                    attchmentTap.imageFileType = notice.filearray[i].filetype
+                    attchmentTap.img_url = notice.filearray?[i].filepath
+                    attchmentTap.img_urls.append(notice.filearray?[i].filepath ?? "")
+                    attchmentTap.imageFileType = notice.filearray?[i].filetype
                 }
                 
                 cell.attchmentView.addGestureRecognizer(attchmentTap)
@@ -459,7 +478,7 @@ class NoticeBoardHomePageViewController:
                 cell.DetailsStack.isHidden = false
                 cell.arrowImage.image = UIImage(systemName: "chevron.up")
                 
-                if notice.filearray.count == 0{
+                if notice.filearray?.count == 0{
                     
                     cell.attchmentView.isHidden = true
                     
@@ -487,24 +506,24 @@ class NoticeBoardHomePageViewController:
                 cell.redDotImageView.isHidden = false
             }
     
-            cell.topicCellLabel.text = notice.topic.capitalized
+            cell.topicCellLabel.text = notice.topic?.capitalized
             cell.dateTimeCellLabel.text = (notice.createdondate!)+" \(notice.createdontime!)"
             cell.descriptionCellLabel.text = notice.description
             cell.sentByCellLabel.text = notice.sentbyname
             
-            if notice.filearray.count == 1  {
+            if notice.filearray?.count == 1  {
                 
                 let  attchmentTap = NoticeImageCounts(target: self, action: #selector(AtchmentVc))
                 
-                for i in 0..<notice.filearray.count{
+                for i in 0..<(notice.filearray?.count ?? 0){
                     
-                    attchmentTap.img_url = notice.filearray[i].filepath
+                    attchmentTap.img_url = notice.filearray?[i].filepath
                     
-                    if notice.filearray[i].filepath != nil{
-                        attchmentTap.img_urls.append(notice.filearray[i].filepath)
+                    if notice.filearray?[i].filepath != nil{
+                        attchmentTap.img_urls.append(notice.filearray?[i].filepath ?? "")
                     }
                   
-                    attchmentTap.imageFileType = notice.filearray[i].filetype
+                    attchmentTap.imageFileType = notice.filearray?[i].filetype
                 }
                 
                 cell.attchmentView.addGestureRecognizer(attchmentTap)
@@ -515,11 +534,10 @@ class NoticeBoardHomePageViewController:
                 
                 let  attchmentTap = NoticeImageCounts(target: self, action: #selector(AtchmentVc))
                 
-                for i in 0..<notice.filearray.count{
-                     
-                    attchmentTap.img_url = notice.filearray[i].filepath
-                    attchmentTap.img_urls.append(notice.filearray[i].filepath)
-                    attchmentTap.imageFileType = notice.filearray[i].filetype
+                for i in 0..<(notice.filearray?.count ?? 0){
+                    attchmentTap.img_url = notice.filearray?[i].filepath
+                    attchmentTap.img_urls.append(notice.filearray?[i].filepath ?? "")
+                    attchmentTap.imageFileType = notice.filearray?[i].filetype
                 }
                 
                 cell.attchmentView.addGestureRecognizer(attchmentTap)
@@ -552,7 +570,7 @@ class NoticeBoardHomePageViewController:
         
         if noticeSegments.selectedSegmentIndex == 0{
             
-            let notice : departmentDataDetails = departmentRef[indexPath.row]
+            var notice : departmentDataDetails = departmentRef[indexPath.row]
             
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
@@ -563,7 +581,7 @@ class NoticeBoardHomePageViewController:
                 selectedCell = indexPath
                 if notice.isappread == "0"{
                     
-                    apread(gesture : notice.noticedetailsid)
+                    apread(gesture : notice.noticedetailsid ?? "")
                     
                     notice.isappread = "1"
                     cell.redDotImageView.isHidden = true
@@ -576,7 +594,7 @@ class NoticeBoardHomePageViewController:
         
         else if noticeSegments.selectedSegmentIndex == 1{
              
-            let notice : departmentDataDetails = collegeRef[indexPath.row]
+            var notice : departmentDataDetails = collegeRef[indexPath.row]
             
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
@@ -588,7 +606,7 @@ class NoticeBoardHomePageViewController:
                 
                 if notice.isappread == "0"{
                     
-                    apread(gesture : notice.noticedetailsid)
+                    apread(gesture : notice.noticedetailsid ?? "")
                     
                     notice.isappread = "1"
                     cell.redDotImageView.isHidden = true
@@ -632,109 +650,95 @@ class NoticeBoardHomePageViewController:
     
     func departRefName() {
         
-        let depart = departmentModal()
+        var depart = departmentModal()
         
         depart.userid   = userid
         depart.appid    = "2"
         depart.priority = priority
         depart.type     = "departmentnotice"
         
-        
-        let departStr = depart.toJSONString()
-        
-        print("departStrdepartStr",depart.toJSON())
-        
-        noticeBoardRequest.call_request(param: departStr!){ [self]
-            
-            (res) in
-        
-            let departResp : departmentResponce =
-            Mapper<departmentResponce>().map(JSONString: res)!
-            
-            
-            if departResp.Status == 1 {
+        APiCallManager.shared.callApi(url: APIEndpoints.GetNoticeListByType, httpMethod: .post, queryParam: nil, requestBody: depart) { [weak self] (result:Result<departmentResponce,Error>) in
+            guard let self = self else {return}
+            switch result{
+            case .success(let success):
                 
-                print("order data",departResp)
-                
-                
-                departmentRef = departResp.data
-                cloneList = departResp.data
-                noDataTextLabel.isHidden = true
-                noDataView.isHidden = true
-                noticesBoardTableView.isScrollEnabled = true
-                noticesBoardTableView.delegate = self
-                noticesBoardTableView.dataSource = self
-                noticesBoardTableView.reloadData()
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                if success.Status == 1 {
                     
-                    loadingCustom.stopAnimating()
-                    loadingCustom.isHidden  = true
+                    departmentRef = success.data ?? []
+                    cloneList = success.data ?? []
+                    noDataTextLabel.isHidden = true
+                    noDataView.isHidden = true
+                    noticesBoardTableView.isScrollEnabled = true
+                    noticesBoardTableView.delegate = self
+                    noticesBoardTableView.dataSource = self
+                    noticesBoardTableView.reloadData()
                     
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                        
+                        self.loadingCustom.stopAnimating()
+                        self.loadingCustom.isHidden  = true
+                        
+                    }
+                    
+                }else{
+                    
+                    noDataView.isHidden = false
+                    noDataTextLabel.isHidden = false
+                    
+                    noDataTextLabel.text = success.Message
+                    noticesBoardTableView.isScrollEnabled = true
+                    noticesBoardTableView.delegate = self
+                    noticesBoardTableView.dataSource = self
+                    noticesBoardTableView.reloadData()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                        
+                        self.loadingCustom.stopAnimating()
+                        self.loadingCustom.isHidden  = true
+                    }
                 }
-                
-            }else{
-                
-                noDataView.isHidden = false
-                noDataTextLabel.isHidden = false
-                
-                noDataTextLabel.text = departResp.Message
-                noticesBoardTableView.isScrollEnabled = true
-                noticesBoardTableView.delegate = self
-                noticesBoardTableView.dataSource = self
-                noticesBoardTableView.reloadData()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                    
-                    loadingCustom.stopAnimating()
-                    loadingCustom.isHidden  = true
-                }
-                print("noRecords")
+            case .failure(let error):
+                    print("Error: \(error)")
             }
         }
+        
     }
     
     
     func collegeRefName() {
         
-        let college = departmentModal()
+        var college = departmentModal()
         
         college.userid   =  userid
         college.appid    = "2"
         college.priority = priority
         college.type     =  "collegenotice"
         
-        let collegeStr = college.toJSONString()
-        
-        print("collegeStrcollegeStr",college.toJSON())
-        noticeBoardRequest .call_request(param: collegeStr!){ [self]
-            
-            (res) in
-            
-            let collegeResp : departmentResponce =
-            Mapper<departmentResponce>().map(JSONString: res)!
-            
-            print("order data",collegeResp)
-            
-            if collegeResp.Status == 1{
+        APiCallManager.shared.callApi(url: APIEndpoints.GetNoticeListByType, httpMethod: .post, queryParam: nil, requestBody: college) { [weak self] (result:Result<departmentResponce,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let success):
+                if success.Status == 1{
+                    
+                    collegeRef = success.data ?? []
+                    cloneList = success.data ?? []
+                    noticesBoardTableView.isScrollEnabled = true
+                    noDataTextLabel.isHidden = true
+                    noDataView.isHidden =  true
+                    noticesBoardTableView.delegate = self
+                    noticesBoardTableView.dataSource = self
+                    noticesBoardTableView.reloadData()
+                }else{
+                    
+                    noDataTextLabel.isHidden = false
+                    noDataView.isHidden = false
+                    noDataTextLabel.text = success.Message
+                    noticesBoardTableView.delegate = self
+                    noticesBoardTableView.dataSource = self
+                    noticesBoardTableView.reloadData()
+                }
                 
-                collegeRef = collegeResp.data
-                cloneList = collegeResp.data
-                noticesBoardTableView.isScrollEnabled = true
-                noDataTextLabel.isHidden = true
-                noDataView.isHidden =  true
-                noticesBoardTableView.delegate = self
-                noticesBoardTableView.dataSource = self
-                noticesBoardTableView.reloadData()
-            }
-            
-            else{
-                
-                noDataTextLabel.isHidden = false
-                noDataView.isHidden = false
-                noDataTextLabel.text = collegeResp.Message
-                noticesBoardTableView.delegate = self
-                noticesBoardTableView.dataSource = self
-                noticesBoardTableView.reloadData()
+            case .failure(let error):
+                print("Error: \(error)")
             }
         }
     }

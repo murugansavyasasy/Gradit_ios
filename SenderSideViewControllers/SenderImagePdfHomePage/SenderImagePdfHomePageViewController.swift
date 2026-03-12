@@ -67,12 +67,12 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
     
     
     
-
+    
     
     @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
     
     
-  
+    
     @IBOutlet weak var plusImageView: UIImageView!
     
     
@@ -224,7 +224,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         }
         
         
-     
+        
         
         
         if priority == "p1"{
@@ -345,21 +345,16 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         
         
         swipeMenuHeight.constant = 150
-                reusee.call_back = { [self]
-                    (val) in
-                  
-                    
-                        self.swipeMenuHeight.constant =  reusee.callid
-                   
-                    print("SenderFacultyViewController",reusee.callid)
-                    
-               
-                }
-     
-        
-        
-        
-        
+        reusee.call_back = { [self]
+            (val) in
+            
+            
+            self.swipeMenuHeight.constant =  reusee.callid
+            
+            print("SenderFacultyViewController",reusee.callid)
+            
+            
+        }
         
         
         let rownib = UINib(nibName: identifers, bundle: nil)
@@ -427,28 +422,11 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
-        
-        
-        
-        
     }
     
-    
-    
-    
     @IBAction func Searchfield() {
-        
-        
         searchbar.isHidden  = false
         searchFullView .isHidden = false
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
     
@@ -460,96 +438,27 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         
         if imageSegmentName.selectedSegmentIndex == 0{
             
-            let filtered_list : [SenderDepartmentImageDataDetails] = Mapper<SenderDepartmentImageDataDetails>().mapArray(JSONString: cloneList.toJSONString()!)!
-            
-            
-            
+            let filtered_list : [SenderDepartmentImageDataDetails] = cloneList
             
             if !searchText.isEmpty{
-                
-                
+                let search = searchText.lowercased()
                 
                 departmentRef = filtered_list.filter {
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    $0.description.lowercased().contains(searchText.lowercased())  || $0.filetype.lowercased().contains(searchText.lowercased()) ||  $0.sentbyname.lowercased().contains(searchText.lowercased()) || $0.title.lowercased().contains(searchText.lowercased()) || $0.createdontime.lowercased().contains(searchText.lowercased()) || $0.createdondate.lowercased().contains(searchText.lowercased())
-                    
-                    
+                    ($0.description?.lowercased().contains(search) ?? false) ||
+                    ($0.filetype?.lowercased().contains(search) ?? false) ||
+                    ($0.sentbyname?.lowercased().contains(search) ?? false) ||
+                    ($0.title?.lowercased().contains(search) ?? false) ||
+                    ($0.createdontime?.lowercased().contains(search) ?? false) ||
+                    ($0.createdondate?.lowercased().contains(search) ?? false)
                     
                 }
-                
-                
-                
-                
-                
-                
-                
             }else{
-                
-                
-                
                 departmentRef = filtered_list
-                
-                
-                
-                print("pendingOrder")
-                
-                
-                
-            }
-            
-            
-            
-            
-            
-            
-            
-            if departmentRef.count > 0{
-                
-                
-                
-                print ("searchListPendigCount",departmentRef.count)
-                
-                
-                
-            }else{
-                
-                
-                
-                
-                
-                
-                
             }
             
         }
-        
-        
-        
-        
-        else if imageSegmentName.selectedSegmentIndex == 1 {
-            
-            
-            
-            
-        }
-        
-        
-        
-        
-        
         imageTableView.reloadData()
-        
-        
-        
-        
-        
-        
         
     }
     
@@ -668,7 +577,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 selectedCell = IndexPath()
                 imageTableView.isScrollEnabled = false
                 departRefName()
-               
+                
             }
             
             else if imageSegmentName.selectedSegmentIndex == 1{
@@ -678,7 +587,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 imageTableView.isScrollEnabled = false
                 collegeRefName()
                 
-            
+                
                 
             }
             
@@ -767,13 +676,13 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 cell.redDotImageView.isHidden = false
             }
             
-         
+            
             cell.imageCellTimeLabel.text = image.createdontime
             cell.imageCellDateLabel.text = image.createdondate
             
             cell.imageCellDescripitionLabel.text = image.description
             cell.sendByCellLabel.text = image.sentbyname
-            cell.imageCellTitelLabel.text = image.title.capitalized
+            cell.imageCellTitelLabel.text = image.title?.capitalized
             
             if image.newfilepath == [""] || image.newfilepath == ["[]"]{
                 
@@ -803,10 +712,10 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
             else {
                 
                 cell.viewTap.isHidden = false
-                let parsed = image.file_path.replacingOccurrences(of: "https://college-app-files.s3.amazonaws.com/", with: "")
+                let parsed = image.file_path?.replacingOccurrences(of: "https://college-app-files.s3.amazonaws.com/", with: "")
                 
                 
-                let s = parsed
+                let s = parsed ?? ""
                 let start = s.endIndex
                 let end = s.index(s.startIndex, offsetBy: 13)
                 let substring = s[end..<start] // www.stackoverflow
@@ -816,19 +725,19 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 
             }
             
-            let  plusoneCount  = image.newfilepath.count-1
+            let  plusoneCount  = image.newfilepath?.count ?? 0-1
             let stringconvert = String(plusoneCount)
             cell.plusoneLabel.text = "+" + stringconvert
             
             
-            if image.newfilepath.count == 1{
+            if image.newfilepath?.count == 1{
                 
                 cell.countImageView.isHidden = true
                 let  play = viewClickGesture(target: self, action: #selector(connected))
                 
-                play.img_urls = image.newfilepath
+                play.img_urls = image.newfilepath ?? []
                 play.imageFileType = image.filetype
-                for i in image.newfilepath {
+                for i in image.newfilepath ?? []{
                     play.img_url =  i
                 }
                 
@@ -856,8 +765,8 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 let  play = SenderImageGesturess(target: self, action: #selector(connected))
                 
                 play.imageFileType = image.filetype
-                play.img_urls = image.newfilepath
-                for i in image.newfilepath {
+                play.img_urls = image.newfilepath ?? []
+                for i in image.newfilepath ?? []{
                     play.img_url =  i
                 }
                 
@@ -868,8 +777,8 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 let  viewCount = SenderImageGesturess(target: self, action: #selector(connected))
                 
                 viewCount.imageFileType = image.filetype
-                viewCount.img_urls = image.newfilepath
-                for i in image.newfilepath {
+                viewCount.img_urls = image.newfilepath ?? []
+                for i in image.newfilepath ?? []{
                     viewCount.img_url =  i
                 }
                 
@@ -922,15 +831,15 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 
                 cell.redDotImageView.isHidden = false
             }
-          
+            
             cell.imageCellTimeLabel.text = images.createdontime
             cell.imageCellDateLabel.text = images.createdondate
             
             cell.imageCellDescripitionLabel.text = images.description
             cell.sendByCellLabel.text = images.sentbyname
-            cell.imageCellTitelLabel.text = images.title.capitalized
+            cell.imageCellTitelLabel.text = images.title?.capitalized
             
-            let  plusoneCount  = images.newfilepath.count-1
+            let  plusoneCount  = images.newfilepath?.count ?? 0-1
             let stringconvert = String(plusoneCount)
             cell.plusoneLabel.text = "+" + stringconvert
             
@@ -951,11 +860,11 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 cell.viewTap.isHidden = false
             }
             
-            let parsed = images.file_path.replacingOccurrences(of: "https://college-app-files.s3.amazonaws.com/", with: "")
+            let parsed = images.file_path?.replacingOccurrences(of: "https://college-app-files.s3.amazonaws.com/", with: "")
             
             
             //
-            let cutss = parsed.suffix(43)
+            let cutss = parsed?.suffix(43) ?? ""
             //
             let strss = String(cutss)
             
@@ -972,22 +881,14 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
             }
             
             
-            if images.newfilepath.count == 1{
-                
-                
-                
-                
+            if images.newfilepath?.count == 1{
                 cell.countImageView.isHidden = true
-                
-                
-                
-                
                 
                 let  play = SenderImageGesturess(target: self, action: #selector(connected))
                 
-                play.img_urls = images.newfilepath
+                play.img_urls = images.newfilepath ?? []
                 play.imageFileType = images.filetype
-                for i in images.newfilepath {
+                for i in images.newfilepath ?? []{
                     play.img_url =  i
                 }
                 
@@ -1011,8 +912,8 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 let  play = SenderImageGesturess(target: self, action: #selector(connected))
                 
                 play.imageFileType = images.filetype
-                play.img_urls = images.newfilepath
-                for i in images.newfilepath {
+                play.img_urls = images.newfilepath ?? []
+                for i in images.newfilepath  ?? []{
                     play.img_url =  i
                 }
                 
@@ -1025,8 +926,8 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 let  countView = SenderImageGesturess(target: self, action: #selector(connected))
                 
                 countView.imageFileType = images.filetype
-                countView.img_urls = images.newfilepath
-                for i in images.newfilepath {
+                countView.img_urls = images.newfilepath ?? []
+                for i in images.newfilepath ?? []{
                     countView.img_url =  i
                 }
                 
@@ -1159,7 +1060,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-            return UITableView.automaticDimension
+        return UITableView.automaticDimension
     }
     
     
@@ -1172,7 +1073,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         
         if imageSegmentName.selectedSegmentIndex == 0{
             
-            let image : SenderDepartmentImageDataDetails = departmentRef[indexPath.row]
+            var image : SenderDepartmentImageDataDetails = departmentRef[indexPath.row]
             if let selectedCells = selectedCell, selectedCells == indexPath{
                 
                 
@@ -1189,7 +1090,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 
                 if image.isappread == "0"{
                     
-                    apread(gesture : image.detailsid)
+                    apread(gesture : image.detailsid ?? "")
                     
                     image.isappread = "1"
                     cell.redDotImageView.isHidden = true
@@ -1204,7 +1105,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         
         else if  imageSegmentName.selectedSegmentIndex == 1{
             
-            let images : SenderDepartmentImageDataDetails = collegeRef[indexPath.row]
+            var images : SenderDepartmentImageDataDetails = collegeRef[indexPath.row]
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
                 selectedCell = nil
@@ -1219,7 +1120,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 
                 if images.isappread == "0"{
                     
-                    apread(gesture : images.detailsid)
+                    apread(gesture : images.detailsid ?? "")
                     
                     images.isappread = "1"
                     cell.redDotImageView.isHidden = true
@@ -1266,80 +1167,64 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
     
     func departRefName() {
         
-        let depart = SenderDeparmentImageModal()
+        var depart = SenderDeparmentImageModal()
         
         depart.userid = memberId
         depart.appid  = "2"
         depart.priority = priority
         depart.type    = "departmentcircular"
         
-        
-        let departStr = depart.toJSONString()
-        
-        
-        SenderimageRequest.call_request(param: departStr!){ [self]
-            
-            (res) in
-            
-            
-            let departResp :
-            SenderDepartmentImageResponce =
-            Mapper<SenderDepartmentImageResponce>().map(JSONString: res)!
-            
-            
-            
-            
-            if departResp.Status == 1 {
-                
-                print("order data",departResp)
-                
-                cloneList = departResp.data
-                departmentRef = departResp.data
-                
-                noDataLabel.isHidden = true
-                noDataTextView.isHidden = true
-                
-                imageTableView.isScrollEnabled = true
-                imageTableView.delegate = self
-                imageTableView.dataSource = self
-                imageTableView.reloadData()
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+        APiCallManager.shared.callApi(url: APIEndpoints.GetCircularListByType, httpMethod: .post, queryParam: nil, requestBody: depart) { [weak self] (result:Result<SenderDepartmentImageResponce,Error>)  in
+            guard let self = self else{return}
+            switch result{
+            case .success(let departResp):
+                if departResp.Status == 1 {
                     
-                    loadingCustom.stopAnimating()
+                    print("order data",departResp)
                     
-                    loadingCustom.isHidden  = true
+                    cloneList = departResp.data ?? []
+                    departmentRef = departResp.data ?? []
                     
+                    noDataLabel.isHidden = true
+                    noDataTextView.isHidden = true
+                    
+                    imageTableView.isScrollEnabled = true
+                    imageTableView.delegate = self
+                    imageTableView.dataSource = self
+                    imageTableView.reloadData()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                        
+                        self.loadingCustom.stopAnimating()
+                        
+                        self.loadingCustom.isHidden  = true
+                        
+                    }
+                    
+                    
+                    
+                }else{
+                    
+                    noDataLabel.isHidden = false
+                    noDataTextView.isHidden = false
+                    noDataLabel.text = departResp.Message
+                    imageTableView.delegate = self
+                    imageTableView.dataSource = self
+                    imageTableView.reloadData()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                        
+                        self.loadingCustom.stopAnimating()
+                        
+                        self.loadingCustom.isHidden  = true
+                        
+                    }
                 }
                 
-                
-                
-            }else{
-                
-                noDataLabel.isHidden = false
-                noDataTextView.isHidden = false
-                noDataLabel.text = departResp.Message
-                imageTableView.delegate = self
-                imageTableView.dataSource = self
-                imageTableView.reloadData()
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                    
-                    loadingCustom.stopAnimating()
-                    
-                    loadingCustom.isHidden  = true
-                    
-                }
-                
-                print("noRecords")
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
             }
-            
-            
-            
         }
-        
-        
-        
         
     }
     
@@ -1348,7 +1233,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         
         
         
-        let college = SenderDeparmentImageModal()
+        var college = SenderDeparmentImageModal()
         
         college.userid   =  memberId
         college.appid    = "2"
@@ -1356,67 +1241,41 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         college.type     =  "collegecircular"
         
         
-        
-        
-        
-        
-        let collegeStr = college.toJSONString()
-        
-        
-        SenderimageRequest .call_request(param: collegeStr!){ [self]
-            
-            (res) in
-            
-            
-            let collegeResp : SenderDepartmentImageResponce =
-            Mapper<SenderDepartmentImageResponce>().map(JSONString: res)!
-            
-            print("order data",collegeResp)
-            
-            
-            collegeRef = collegeResp.data
-            
-            
-            
-            if collegeResp.Status == 1 {
+        APiCallManager.shared.callApi(url: APIEndpoints.GetCircularListByType, httpMethod: .post, queryParam: nil, requestBody: college) { [weak self] (result:Result<SenderDepartmentImageResponce,Error>)  in
+            guard let self = self else{return}
+            switch result{
+            case .success(let collegeResp):
                 
-                print("order data",collegeResp)
+                if collegeResp.Status == 1 {
+                    
+                    print("order data",collegeResp)
+                    
+                    
+                    collegeRef = collegeResp.data ?? []
+                    
+                    noDataLabel.isHidden = true
+                    noDataTextView.isHidden = true
+                    
+                    imageTableView.isScrollEnabled = true
+                    imageTableView.delegate = self
+                    imageTableView.dataSource = self
+                    imageTableView.reloadData()
+                    
+                }else{
+                    
+                    
+                    noDataLabel.isHidden = false
+                    noDataTextView.isHidden = false
+                    noDataLabel.text = collegeResp.Message
+                    imageTableView.delegate = self
+                    imageTableView.dataSource = self
+                    imageTableView.reloadData()
+                }
                 
-                
-                collegeRef = collegeResp.data
-                
-                noDataLabel.isHidden = true
-                noDataTextView.isHidden = true
-                
-                imageTableView.isScrollEnabled = true
-                imageTableView.delegate = self
-                imageTableView.dataSource = self
-                imageTableView.reloadData()
-                
-                
-                
-                
-                
-                
-            }else{
-                
-                
-                noDataLabel.isHidden = false
-                noDataTextView.isHidden = false
-                noDataLabel.text = collegeResp.Message
-                imageTableView.delegate = self
-                imageTableView.dataSource = self
-                imageTableView.reloadData()
-                
-                
-                print("noRecords")
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
             }
-            
-            
-            
         }
-        
-        
         
         
     }
@@ -1524,7 +1383,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                     addapiRef = success.data ?? []
                     
                     for i in addapiRef{
-                      
+                        
                         bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
                         
                         smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
@@ -1564,7 +1423,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
     // This Part  is  swipe view.
     
     
-   
+    
     
     // Tab Bar Nagivation
     
@@ -1574,7 +1433,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         
         let vc = HelpViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-     present(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
         
         
     }
@@ -1621,7 +1480,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         print("faqRedirect")
         let vc = FaqViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-     present(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
         
     }
     
@@ -1629,7 +1488,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         
         let vc = PrivacyPolicyViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-       present(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
         
     }
     
@@ -1670,7 +1529,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         vc.str = str
         vc.strName = strName
         vc.modalPresentationStyle = .fullScreen
-      present(vc, animated: false, completion: nil)
+        present(vc, animated: false, completion: nil)
         
     }
     

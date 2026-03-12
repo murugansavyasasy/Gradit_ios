@@ -273,9 +273,6 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
                     
                
                 }
-      
-        
-     
         
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         tv.refreshControl = refreshControl
@@ -338,11 +335,7 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
     @objc func handleRefresh() {
         
         if StatusId == 1 {
-            
             tv.refreshControl?.endRefreshing()
-            
-            
-            
             print("Beforrrrrrrreeee",tt.count)
             ofsetId += 1
             chatList()
@@ -351,20 +344,7 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
             print("gggdgdgdggdgdjggdfgdjg",tt.count)
            
         }
-        
-        
-        
-        
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
@@ -407,7 +387,7 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
     func chatList() {
         
         
-        let chatReceiver = ChatReceiverInteractModal()
+        var chatReceiver = ChatReceiverInteractModal()
         
         chatReceiver.student_id = userID
         chatReceiver.staff_id = staff_id
@@ -419,63 +399,32 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
         var str = String(ofsetId)
         chatReceiver.offset = str
         
-        print("USerId",userID)
-     
-        let chatReceiverStr = chatReceiver.toJSONString()
-        
-        print("thisss chat",chatReceiverStr)
-        
-        ChatReceiverInteractRequest .call_request(param: chatReceiverStr!){ [self]
+        APiCallManager.shared.callApi(url: APIEndpoints.GetStudentChatScreenForApp, httpMethod: .post, queryParam: nil, requestBody: chatReceiver) { [weak self] (result:Result<ChatReceiverInteractResponse,Error>) in
+            guard let self = self else{return}
             
-            (res) in
-            
-            
-            let chatReceiverResponse : ChatReceiverInteractResponse =
-            Mapper<ChatReceiverInteractResponse>().map(JSONString: res)!
-           
-            print(".Status",chatReceiverResponse.Status)
-            if chatReceiverResponse.Status == 1{
-                
-                
-                StatusId = 1
-                
-                
-                
-                
-                for i in  chatReceiverResponse.data {
-                    chatData = i.List.reversed()
-                    
-                    
+            switch result{
+            case .success(let success):
+                if success.Status == 1{
+                    StatusId = 1
+                    if let data = success.data {
+                        for i in data {
+                            chatData = i.List?.reversed() ?? []
+                        }
+                    }
+                    tt.append(contentsOf: chatData)
+                    if ofsetId == 0 {
+                        scrollToBottom()
+                    }
+                    tv.dataSource = self
+                    tv.delegate = self
+                    tv.reloadData()
+                }else{
+                    StatusId = 0
                 }
-                
-                
-                tt.append(contentsOf: chatData)
-                
-                
-           
-                if ofsetId == 0 {
-                    
-                    scrollToBottom()
-                }
-                
-                else{
-                    
-                    
-                    
-                }
-                
-                tv.dataSource = self
-                tv.delegate = self
-                tv.reloadData()
-            
+            case .failure(let error):
+                print("Error: \(error)")
             }
             
-            
-            else{
-                
-                StatusId = 0
-            
-            }
         
         }
      
@@ -491,14 +440,9 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
             
             return chatData.count
             
-        }
-        
-        
-        else{
+        }else{
             
             print("chatDatachatDatachatData",tt.count)
-            
-            
             return tt.count
             
         }
@@ -526,9 +470,9 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
                 cell.messageContentLbl.text = chat.question
                 
                 
-                let datees = String(chat.createdon.prefix(10))
+                let datees = String(chat.createdon?.prefix(10) ?? "")
                 print("uiiiiii",chat.createdon)
-                let first = String(chat.createdon.prefix(16))
+                let first = String(chat.createdon?.prefix(16) ?? "")
                 let second = String(first.suffix(5))
                 print("selll",second)
                 
@@ -544,7 +488,7 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
                 
               
                 
-                let firsts = String(chat.createdon.prefix(10))
+                let firsts = String(chat.createdon?.prefix(10) ?? "")
                 //
                 let dateFormatterGet = DateFormatter()
                 
@@ -578,9 +522,9 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
                 
                 
                 
-                let datees = String(chat.createdon.prefix(10))
+                let datees = String(chat.createdon?.prefix(10) ?? "")
                 print("uiiiiii",chat.createdon)
-                let first = String(chat.createdon.prefix(16))
+                let first = String(chat.createdon?.prefix(16) ?? "")
                 let second = String(first.suffix(5))
                 print("selll",second)
                 
@@ -595,7 +539,7 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
                 print("12 hour formatted Date:",Date12)
                
                 
-                let firsts = String(chat.createdon.prefix(10))
+                let firsts = String(chat.createdon?.prefix(10) ?? "")
                 //
                 let dateFormatterGet = DateFormatter()
                 
@@ -639,9 +583,9 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
                 cell.messageContentLbl.text = chat.question
                 
                 
-                let datees = String(chat.createdon.prefix(10))
+                let datees = String(chat.createdon?.prefix(10) ?? "")
                 print("uiiiiii",chat.createdon)
-                let first = String(chat.createdon.prefix(16))
+                let first = String(chat.createdon?.prefix(16) ?? "")
                 let second = String(first.suffix(5))
                 print("selll",second)
                 
@@ -657,7 +601,7 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
                 
              
                 
-                let firsts = String(chat.createdon.prefix(10))
+                let firsts = String(chat.createdon?.prefix(10) ?? "")
                 //
                 let dateFormatterGet = DateFormatter()
                 
@@ -693,9 +637,9 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
                 
                 
                 
-                let datees = String(chat.createdon.prefix(10))
+                let datees = String(chat.createdon?.prefix(10) ?? "")
                 print("uiiiiii",chat.createdon)
-                let first = String(chat.createdon.prefix(16))
+                let first = String(chat.createdon?.prefix(16) ?? "")
                 let second = String(first.suffix(5))
                 print("selll",second)
                 
@@ -711,22 +655,13 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
                 
               
                 
-                let firsts = String(chat.createdon.prefix(10))
-                //
+                let firsts = String(chat.createdon?.prefix(10) ?? "")
                 let dateFormatterGet = DateFormatter()
                 
                 dateFormatterGet.dateFormat = "yyy-MM-dd"
-                
-                
-                
                 let dateFormatterPrint = DateFormatter()
-                
                 dateFormatterPrint.dateFormat = " dd MMM,yyyy"
-                
-                
-                
                 let dates: NSDate? = dateFormatterGet.date(from: firsts) as NSDate?
-                
                 cell.timeLbl.text = dateFormatterPrint.string(from: dates! as Date)  +  "  " + Date12
             
                 return cell
@@ -756,25 +691,11 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
             
             let refreshAlert = UIAlertController(title: "", message: "Message should not be empty", preferredStyle: UIAlertController.Style.alert)
             
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                
-                
-                
-            }))
-            
-            
-            
+            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
             present(refreshAlert, animated: true, completion: nil)
+        }else{
             
-            
-            
-            
-            
-        }
-        
-        else{
-            
-            let MessageSendReceiver = MessageSendReceiverSideModal()
+            var MessageSendReceiver = MessageSendReceiverSideModal()
           
             MessageSendReceiver.student_id = userID
             MessageSendReceiver.staff_id = staff_id
@@ -785,47 +706,32 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
             MessageSendReceiver.college_id = "1"
             MessageSendReceiver.question = messageTextfield.text
             
-            let MessageSendStr = MessageSendReceiver.toJSONString()
-            
-            MessageSendReceiverSideRequest .call_request(param: MessageSendStr!){ [self]
+            APiCallManager.shared.callApi(url: APIEndpoints.StudentAskQuestionForApp, httpMethod: .post, queryParam: nil, requestBody: MessageSendReceiver) { [weak self] (result:Result<MessageSendResponse,Error>) in
+                guard let self = self else{return}
                 
-                (res) in
-                
-                messageTextfield.text?.removeAll()
-                let messageSendReceiverResponse : MessageSendResponse =
-                Mapper<MessageSendResponse>().map(JSONString: res)!
-                
-                if messageSendReceiverResponse.Status == 1{
-                
-                    chatList()
-                 
-                    tv.dataSource = self
-                    tv.delegate = self
-                    tv.reloadData()
+                switch result{
                     
-                  
+                case .success(let messageSendReceiverResponse):
+                    if messageSendReceiverResponse.Status == 1{
+                    
+                        chatList()
+                     
+                        tv.dataSource = self
+                        tv.delegate = self
+                        tv.reloadData()
+                        
+                      
+                    }else{
+                        
+                        let refreshAlert = UIAlertController(title: "", message: messageSendReceiverResponse.Message, preferredStyle: UIAlertController.Style.alert)
+                        
+                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
+                        present(refreshAlert, animated: true, completion: nil)
+                        
+                    }
+                case .failure(let error):
+                    print("Error: \(error)")
                 }
-                
-                
-                else{
-                    
-                    
-                    let refreshAlert = UIAlertController(title: "", message: messageSendReceiverResponse.Message, preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    
-                    present(refreshAlert, animated: true, completion: nil)
-                    
-                    
-                    
-                }
-                
             }
         }
     }
@@ -1089,15 +995,5 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
         present(vc, animated: true, completion: nil)
         
     }
-    
-    
-    // this part is  bottom swipe view .
-    
-    
-   
-    
-    
-    
-    
     
 }

@@ -470,12 +470,8 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        
-        
-        
-        
-        let filtered_list : [SenderNoticeBoardDepartmentDataDetails] = Mapper<SenderNoticeBoardDepartmentDataDetails>().mapArray(JSONString: cloneList.toJSONString()!)!
+   
+        let filtered_list:[SenderNoticeBoardDepartmentDataDetails] = cloneList
         
         
         
@@ -483,107 +479,35 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
         if !searchText.isEmpty{
             
             
-            
+            let search = searchText.lowercased()
+
             departmentRef = filtered_list.filter {
-                
-                
-                
-                
-                
-                
-                
-                $0.description.lowercased().contains(searchText.lowercased())  || $0.topic.lowercased().contains(searchText.lowercased()) ||  $0.createdby.lowercased().contains(searchText.lowercased()) || $0.sentbyname.lowercased().contains(searchText.lowercased())
-                
-                
-                
+
+                ($0.description?.lowercased().contains(search) ?? false) ||
+                ($0.topic?.lowercased().contains(search) ?? false) ||
+                ($0.createdby?.lowercased().contains(search) ?? false) ||
+                ($0.sentbyname?.lowercased().contains(search) ?? false)
+
             }
-            
-            
-            
-            
-            
-            
-            
         }else{
-            
-            
-            
             departmentRef = filtered_list
-            
-            
-            
             print("pendingOrder")
             
-            
-            
         }
-        
-        
-        
-        
-        
-        
-        
-        if departmentRef.count > 0{
-            
-            
-            
-            print ("searchListPendigCount",departmentRef.count)
-            
-            
-            
-        }else{
-            
-            
-            
-            
-            
-            
-            
-        }
-        
-        
-        
-        
-        
-        
         
         noticesBoardTableView.reloadData()
-        
-        
-        
-        
-        
-        
-        
     }
     
     
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        
-        
-        
         searchbar.endEditing(true)
-        
-        
-        
     }
     
-    
-    
-    
-    
-    
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        
-        
+
         searchbar.resignFirstResponder()
-        
-        
-        
+
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -745,7 +669,7 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
                     
                 }
                 
-                if notice.filearray.count == 0{
+                if notice.filearray?.count == 0{
                     
                     cell.attchmentView.isHidden = true
                     
@@ -804,7 +728,7 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
             }
             
            
-            cell.topicCellLabel.text = notice.topic.capitalized
+            cell.topicCellLabel.text = notice.topic?.capitalized
             //              
             cell.dateTimeCellLabel.text = (notice.createdondate!)+" \(notice.createdontime!)"
             cell.descriptionCellLabel.text = notice.description
@@ -814,13 +738,7 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
             
             
             
-            if notice.filearray.count == 1  {
-                
-                
-                
-                
-                
-                
+            if notice.filearray?.count == 1  {
                 
                 let  attchmentTap = NoticeImageCounts(target: self, action: #selector(AtchmentVc))
                 
@@ -828,55 +746,28 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
                 attchmentTap.titee = notice.topic
                 
                 
-                for i in 0..<notice.filearray.count{
-                    
-                    
-                    
-                    attchmentTap.img_url = notice.filearray[i].filepath
-                    
-                    
-                    attchmentTap.img_urls.append(notice.filearray[i].filepath)
-                    
-                    attchmentTap.imageFileType = notice.filearray[i].filetype
-                    
-                    
+                for i in 0..<(notice.filearray?.count ?? 0){
+                    attchmentTap.img_url = notice.filearray?[i].filepath ?? ""
+                    attchmentTap.img_urls.append(notice.filearray?[i].filepath ?? "")
+                    attchmentTap.imageFileType = notice.filearray?[i].filetype
                 }
-                
-                
                 
                 cell.attchmentView.addGestureRecognizer(attchmentTap)
                 
-                
-                
-            }
-            
-            
-            
-            
-            
-            else{
-                
-                
-                
+            }else{
                 
                 let  attchmentTap = NoticeImageCounts(target: self, action: #selector(AtchmentVc))
                 
                 attchmentTap.titee = notice.topic
-                for i in 0..<notice.filearray.count{
+                for i in 0..<(notice.filearray?.count ?? 0){
                     
                     
                     
-                    attchmentTap.img_url = notice.filearray[i].filepath
+                    attchmentTap.img_url = notice.filearray?[i].filepath ?? ""
+                    attchmentTap.img_urls.append(notice.filearray?[i].filepath ?? "")
                     
-                    
-                    attchmentTap.img_urls.append(notice.filearray[i].filepath)
-                    
-                    attchmentTap.imageFileType = notice.filearray[i].filetype
-                    
-                    
+                    attchmentTap.imageFileType = notice.filearray?[i].filetype
                 }
-                
-                
                 cell.attchmentView.addGestureRecognizer(attchmentTap)
                 
             }
@@ -906,7 +797,7 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
                     cell.deleteView.isHidden = false
                 }
                 
-                if notice.filearray.count == 0{
+                if notice.filearray?.count == 0{
                     
                     cell.attchmentView.isHidden = true
                     
@@ -956,7 +847,7 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
             }
             
            
-            cell.topicCellLabel.text = notice.topic.capitalized
+            cell.topicCellLabel.text = notice.topic?.capitalized
             
             cell.dateTimeCellLabel.text = (notice.createdondate!)+" \(notice.createdontime!)"
             
@@ -967,20 +858,17 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
             cell.sentByCellLabel.text = notice.sentbyname
             
             
-            if notice.filearray.count == 1  {
+            if notice.filearray?.count == 1  {
                 
                 let  attchmentTap = NoticeImageCounts(target: self, action: #selector(AtchmentVc))
                 
                 attchmentTap.titee = notice.topic
                 
-                for i in 0..<notice.filearray.count{
+                for i in 0..<(notice.filearray?.count ?? 0){
                     
-                    attchmentTap.img_url = notice.filearray[i].filepath
-                    
-                    
-                    attchmentTap.img_urls.append(notice.filearray[i].filepath)
-                    
-                    attchmentTap.imageFileType = notice.filearray[i].filetype
+                    attchmentTap.img_url = notice.filearray?[i].filepath ?? ""
+                    attchmentTap.img_urls.append(notice.filearray?[i].filepath ?? "")
+                    attchmentTap.imageFileType = notice.filearray?[i].filetype ?? ""
                     
                 }
                 
@@ -993,15 +881,12 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
                 let  attchmentTap = NoticeImageCounts(target: self, action: #selector(AtchmentVc))
                 
                 attchmentTap.titee = notice.topic
-                for i in 0..<notice.filearray.count{
+                for i in 0..<(notice.filearray?.count ?? 0){
                     
                     
-                    attchmentTap.img_url = notice.filearray[i].filepath
-                    
-                    attchmentTap.img_urls.append(notice.filearray[i].filepath)
-                    
-                    attchmentTap.imageFileType = notice.filearray[i].filetype
-                     
+                    attchmentTap.img_url = notice.filearray?[i].filepath ?? ""
+                    attchmentTap.img_urls.append(notice.filearray?[i].filepath ?? "")
+                    attchmentTap.imageFileType = notice.filearray?[i].filetype ?? ""
                 }
                 cell.attchmentView.addGestureRecognizer(attchmentTap)
                 
@@ -1327,7 +1212,7 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
         
         if noticeSegments.selectedSegmentIndex == 0{
             
-            let notice : SenderNoticeBoardDepartmentDataDetails = departmentRef[indexPath.row]
+            var notice : SenderNoticeBoardDepartmentDataDetails = departmentRef[indexPath.row]
             
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
@@ -1340,28 +1225,16 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
                 selectedCell = indexPath
                 
                 if notice.isappread == "0"{
-                    print("notice.noticedetailsid",notice.noticedetailsid)
-                    apread(gesture : notice.noticedetailsid)
-                    
+                    apread(gesture : notice.noticedetailsid ?? "")
                     notice.isappread = "1"
                     cell.redImageView.isHidden = true
                     
                 }
                 
             }
-            
-            
-            
-            
-            
-            
-        }
-        
-        else if noticeSegments.selectedSegmentIndex == 1{
-            
-            
-            
-            let notice : SenderNoticeBoardCollegeDataDetails = collegeRef[indexPath.row]
+        }else if noticeSegments.selectedSegmentIndex == 1{
+
+            var notice : SenderNoticeBoardCollegeDataDetails = collegeRef[indexPath.row]
             
             
             if let selectedCells = selectedCell, selectedCells == indexPath {
@@ -1374,12 +1247,9 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
                 
                 selectedCell = indexPath
                 
-                
-                
-                
                 if notice.isappread == "0"{
                     print("notice.noticedetailsid1222",notice.noticedetailsid)
-                    apread(gesture : notice.noticedetailsid)
+                    apread(gesture : notice.noticedetailsid ?? "")
                     
                     notice.isappread = "1"
                     cell.redImageView.isHidden = true
@@ -1433,7 +1303,7 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
     
     func departRefName() {
         
-        let depart = SenderNoticeBoardDepartmentModal()
+        var depart = SenderNoticeBoardDepartmentModal()
         
         depart.userid   = memberId
         depart.appid    = "2"
@@ -1441,76 +1311,60 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
         depart.type     = "departmentnotice"
         
         
-        
-        
-        
-        
-        let departStr = depart.toJSONString()
-        
-        
-        SenderNoticeBoardRequest.call_request(param: departStr!){ [self]
-            
-            (res) in
-            
-            
-            let departResp : SenderNoticeBoardDepartmentResponce =
-            Mapper<SenderNoticeBoardDepartmentResponce>().map(JSONString: res)!
-            
-            
-            if departResp.Status == 1 {
-                
-                print("order data",departResp)
-                
-                
-                departmentRef = departResp.data
-                cloneList = departResp.data
-                noticesBoardTableView.isScrollEnabled = true
-                noticesBoardTableView.delegate = self
-                noticesBoardTableView.dataSource = self
-                noRecordLbl.isHidden = true
-                noRecordView.isHidden = true
-                noticesBoardTableView.reloadData()
-                //              
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+        APiCallManager.shared.callApi(url: APIEndpoints.GetNoticeListByType, httpMethod: .post, queryParam: nil, requestBody: depart) { [weak self] (result:Result<SenderNoticeBoardDepartmentResponce,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let departResp):
+                if departResp.Status == 1 {
                     
-                    loadingCustom.stopAnimating()
+                    print("order data",departResp)
                     
-                    loadingCustom.isHidden  = true
                     
+                    departmentRef = departResp.data ?? []
+                    cloneList = departResp.data ?? []
+                    noticesBoardTableView.isScrollEnabled = true
+                    noticesBoardTableView.delegate = self
+                    noticesBoardTableView.dataSource = self
+                    noRecordLbl.isHidden = true
+                    noRecordView.isHidden = true
+                    noticesBoardTableView.reloadData()
+                    //
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                        
+                        self.loadingCustom.stopAnimating()
+                        
+                        self.loadingCustom.isHidden  = true
+                        
+                    }
+                    
+                    
+                }else{
+                    
+                    
+                    //
+                    noRecordLbl.isHidden = false
+                    noRecordView.isHidden = false
+                    //
+                    noRecordLbl.text = departResp.Message
+                    noticesBoardTableView.delegate = self
+                    noticesBoardTableView.dataSource = self
+                    noticesBoardTableView.reloadData()
+                    
+                    print("noRecords")
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                        
+                        self.loadingCustom.stopAnimating()
+                        
+                        self.loadingCustom.isHidden  = true
+                        
+                    }
                 }
-                
-                
-            }else{
-                
-                
-                //
-                noRecordLbl.isHidden = false
-                noRecordView.isHidden = false
-                //
-                noRecordLbl.text = departResp.Message
-                noticesBoardTableView.delegate = self
-                noticesBoardTableView.dataSource = self
-                noticesBoardTableView.reloadData()
-                
-                print("noRecords")
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                    
-                    loadingCustom.stopAnimating()
-                    
-                    loadingCustom.isHidden  = true
-                    
-                }
-                
-                
+
+            case .failure(let error):
+                print("Error: \(error)")
             }
-            
-            
-            
         }
-        
-        
-        
         
     }
     
@@ -1519,7 +1373,7 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
     
     func collegeRefName() {
         
-        let college = SenderNoticeBoardCollegeModal()
+        var college = SenderNoticeBoardCollegeModal()
         
         college.userid   =  memberId
         college.appid    = "2"
@@ -1528,55 +1382,32 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
         
         
         
-        
-        
-        
-        let collegeStr = college.toJSONString()
-        
-        
-        SenderNoticeBoardRequest .call_request(param: collegeStr!){ [self]
-            
-            (res) in
-            
-            
-            let collegeResp : SenderNoticeBoardCollegeResponce =
-            Mapper<SenderNoticeBoardCollegeResponce>().map(JSONString: res)!
-            
-            print("order data",collegeResp)
-            
-            
-            if collegeResp.Status == 1{
+        APiCallManager.shared.callApi(url: APIEndpoints.GetNoticeListByType, httpMethod: .post, queryParam: nil, requestBody: college) { [weak self] (result:Result<SenderNoticeBoardCollegeResponce,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let collegeResp):
                 
-                
-                collegeRef = collegeResp.data
-                
-                
-                noRecordLbl.isHidden = true
-                noRecordView.isHidden = true
-                noticesBoardTableView.isScrollEnabled = true
-                noticesBoardTableView.delegate = self
-                noticesBoardTableView.dataSource = self
-                
-                noticesBoardTableView.reloadData()
-                
-                
-                
-            }
-            
-            else {
-                
-                
-                noRecordLbl.isHidden = false
-                noRecordView.isHidden = false
-                noRecordLbl.text = collegeResp.Message
-                noticesBoardTableView.delegate = self
-                noticesBoardTableView.dataSource = self
-                noticesBoardTableView.reloadData()
-                
-                
-                
-                
-                
+                if collegeResp.Status == 1{
+                    collegeRef = collegeResp.data ?? []
+                    
+                    noRecordLbl.isHidden = true
+                    noRecordView.isHidden = true
+                    noticesBoardTableView.isScrollEnabled = true
+                    noticesBoardTableView.delegate = self
+                    noticesBoardTableView.dataSource = self
+                    
+                    noticesBoardTableView.reloadData()
+                }else {
+                    noRecordLbl.isHidden = false
+                    noRecordView.isHidden = false
+                    noRecordLbl.text = collegeResp.Message
+                    noticesBoardTableView.delegate = self
+                    noticesBoardTableView.dataSource = self
+                    noticesBoardTableView.reloadData()
+                }
+
+            case .failure(let error):
+                print("Error: \(error)")
             }
         }
         

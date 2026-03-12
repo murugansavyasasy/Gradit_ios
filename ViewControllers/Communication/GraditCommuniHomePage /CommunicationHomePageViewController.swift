@@ -266,14 +266,19 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         
         if CommuniSegementName.selectedSegmentIndex == 0{
             
-            let filtered_list : [ReadCommunicationDetails] = Mapper<ReadCommunicationDetails>().mapArray(JSONString: cloneList.toJSONString()!)!
+            let filtered_list : [ReadCommunicationDetails] = cloneList
             
             if !searchText.isEmpty{
                 
+                let search = searchText.lowercased()
+
                 UnReadData = filtered_list.filter {
-                    
-                    $0.description.lowercased().contains(searchText.lowercased()) || $0.typename.lowercased().contains(searchText.lowercased()) ||  $0.msgdetailsid.lowercased().contains(searchText.lowercased()) || $0.timing.lowercased().contains(searchText.lowercased()) || $0.headerid.lowercased().contains(searchText.lowercased()) || $0.sentby.lowercased().contains(searchText.lowercased())
-                    
+                    ($0.description ?? "").lowercased().contains(search) ||
+                    ($0.typename ?? "").lowercased().contains(search) ||
+                    ($0.msgdetailsid ?? "").lowercased().contains(search) ||
+                    ($0.timing ?? "").lowercased().contains(search) ||
+                    ($0.headerid ?? "").lowercased().contains(search) ||
+                    ($0.sentby ?? "").lowercased().contains(search)
                 }
                 
             }else{
@@ -300,13 +305,20 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         
         else if CommuniSegementName.selectedSegmentIndex == 1{
             
-            let filtered_list : [ReadCommunicationDetails] = Mapper<ReadCommunicationDetails>().mapArray(JSONString: cloneList.toJSONString()!)!
+            let filtered_list : [ReadCommunicationDetails] = cloneList
             
             if !searchText.isEmpty{
                 
+                let search = searchText.lowercased()
+
                 ReadData = filtered_list.filter {
-                    
-                    $0.msgcontent.lowercased().contains(searchText.lowercased()) || $0.description.lowercased().contains(searchText.lowercased()) || $0.typename.lowercased().contains(searchText.lowercased()) ||  $0.msgdetailsid.lowercased().contains(searchText.lowercased()) || $0.timing.lowercased().contains(searchText.lowercased()) || $0.headerid.lowercased().contains(searchText.lowercased()) || $0.sentby.lowercased().contains(searchText.lowercased())
+                    ($0.msgcontent ?? "").lowercased().contains(search) ||
+                    ($0.description ?? "").lowercased().contains(search) ||
+                    ($0.typename ?? "").lowercased().contains(search) ||
+                    ($0.msgdetailsid ?? "").lowercased().contains(search) ||
+                    ($0.timing ?? "").lowercased().contains(search) ||
+                    ($0.headerid ?? "").lowercased().contains(search) ||
+                    ($0.sentby ?? "").lowercased().contains(search)
                 }
                 
             }else{
@@ -390,47 +402,43 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
     
     func ReadApi() {
         
-        let Commu = ReadModal()
+        var Commu = ReadModal()
         
         Commu.userid = memberId
         Commu.priority = priority
         Commu.readtype = "1"
         Commu.appid = "2"
-        
-        let commuStr = Commu.toJSONString()
-        print("commuStr",commuStr)
-        SenderReadRequest .call_request(param: commuStr!){ [self]
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetVoiceMessageBytype,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: Commu
+        ) {[weak self] (result:Result<ReadcommunicationResponce , Error>) in
             
-            (res) in
-            
-            
-            let communicationResp : ReadcommunicationResponce =
-            Mapper<ReadcommunicationResponce>().map(JSONString: res)!
-            
-            print("order data",communicationResp)
-            
-            if communicationResp.Status == 1{
-                
-                ReadData = communicationResp.data
-                cloneList = communicationResp.data
-                noDataView.isHidden = true
-                communiTableView.isScrollEnabled = true
-                noDataTextLabel.isHidden = true
-                communiTableView.delegate = self
-                communiTableView.dataSource = self
-                
-                communiTableView.reloadData()
-            }
-            
-            else{
-                
-                noDataView.isHidden = false
-                noDataTextLabel.isHidden = false
-                
-                noDataTextLabel.text = communicationResp.Message
-                communiTableView.delegate = self
-                communiTableView.dataSource = self
-                communiTableView.reloadData()
+            guard let self = self else {return}
+            switch result {
+            case .success(let communicationResp):
+                if communicationResp.Status == 1{
+                    ReadData = communicationResp.data ?? []
+                    cloneList = communicationResp.data ?? []
+                    noDataView.isHidden = true
+                    communiTableView.isScrollEnabled = true
+                    noDataTextLabel.isHidden = true
+                    communiTableView.delegate = self
+                    communiTableView.dataSource = self
+                    communiTableView.reloadData()
+                }else{
+                    
+                    noDataView.isHidden = false
+                    noDataTextLabel.isHidden = false
+                    
+                    noDataTextLabel.text = communicationResp.Message
+                    communiTableView.delegate = self
+                    communiTableView.dataSource = self
+                    communiTableView.reloadData()
+                }
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
             }
         }
     }
@@ -438,68 +446,61 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
     
     func unReadModal() {
         
-        let unreads = ReadModal()
+        var unreads = ReadModal()
         
         unreads.userid = memberId
         unreads.priority = priority
         unreads.readtype = "0"
         unreads.appid = "2"
-        
-        let unReadStr = unreads.toJSONString()
-        
-        print("unReadStr",unReadStr)
-        SenderReadRequest .call_request(param: unReadStr!){ [self]
-            
-            (res) in
-            
-            
-            let UnReadcommunicationResp : ReadcommunicationResponce =
-            Mapper<ReadcommunicationResponce>().map(JSONString: res)!
-            
-            print("order data",UnReadcommunicationResp)
-            
-            
-            if UnReadcommunicationResp.Status == 1{
-                
-                
-                UnReadData = UnReadcommunicationResp.data
-                cloneList = UnReadcommunicationResp.data
-                KRProgressHUD.dismiss()
-                
-                communiTableView.isScrollEnabled = true
-                noDataView.isHidden = true
-                noDataTextLabel.isHidden = true
-                communiTableView.delegate = self
-                communiTableView.dataSource = self
-                communiTableView.reloadData()
-                
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetVoiceMessageBytype,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: unreads
+        ) {[weak self] (result:Result<ReadcommunicationResponce , Error>) in
+            guard let self = self else {return}
+            switch result {
+            case .success(let UnReadcommunicationResp):
+                if UnReadcommunicationResp.Status == 1{
                     
-                    loadingCustom.stopAnimating()
                     
-                    loadingCustom.isHidden  = true
+                    UnReadData = UnReadcommunicationResp.data ?? []
+                    cloneList = UnReadcommunicationResp.data ?? []
+                    KRProgressHUD.dismiss()
                     
+                    communiTableView.isScrollEnabled = true
+                    noDataView.isHidden = true
+                    noDataTextLabel.isHidden = true
+                    communiTableView.delegate = self
+                    communiTableView.dataSource = self
+                    communiTableView.reloadData()
+                    
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                        
+                        self.loadingCustom.stopAnimating()
+                        self.loadingCustom.isHidden  = true
+                        
+                    }
+                }else{
+                    
+                    noDataView.isHidden = false
+                    noDataTextLabel.isHidden = false
+                    
+                    noDataTextLabel.text = UnReadcommunicationResp.Message
+                    communiTableView.delegate = self
+                    communiTableView.dataSource = self
+                    communiTableView.reloadData()
+                    
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                        
+                        self.loadingCustom.stopAnimating()
+                        self.loadingCustom.isHidden  = true
+                    }
                 }
-            }
-            
-            else{
-                
-                noDataView.isHidden = false
-                noDataTextLabel.isHidden = false
-                
-                noDataTextLabel.text = UnReadcommunicationResp.Message
-                communiTableView.delegate = self
-                communiTableView.dataSource = self
-                communiTableView.reloadData()
-                
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                    
-                    loadingCustom.stopAnimating()
-                    
-                    loadingCustom.isHidden  = true
-                }
+            case .failure(let error):
+                print("Erro: \(error.localizedDescription)")
             }
         }
     }
@@ -713,7 +714,7 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
             type = "voice"
             
             
-            cell.msgContentLabel.text = comuCell.description.capitalized
+            cell.msgContentLabel.text = comuCell.description?.capitalized
             
             cell.sendByLabel.text = comuCell.sentby
             
@@ -723,7 +724,7 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
             cell.dateLabel.text = comuCell.timing
             
             if comuCell.description != nil{
-                cell.durationLAbel.text = "00:0"+comuCell.duration
+                cell.durationLAbel.text = "00:0"+(comuCell.duration ?? "")
             }else{
                 
                 cell.durationLAbel.text = "00:00"
@@ -771,7 +772,7 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
             type = "voice"
             
             
-            cell.msgContentLabel.text = unreadCell.description.capitalized
+            cell.msgContentLabel.text = unreadCell.description?.capitalized
             
             cell.sendByLabel.text = unreadCell.sentby
             
@@ -781,7 +782,7 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
             
             
             if unreadCell.description == nil{
-                cell.durationLAbel.text = "00:0"+unreadCell.duration
+                cell.durationLAbel.text = "00:0"+(unreadCell.duration ?? "")
             }else{
                 
                 cell.durationLAbel.text = "00:00"
@@ -813,7 +814,7 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         SenderCommuTextTableViewCell
         
         if CommuniSegementName.selectedSegmentIndex == 0{
-            let comuCell : ReadCommunicationDetails = UnReadData[indexPath.row]
+            var comuCell : ReadCommunicationDetails = UnReadData[indexPath.row]
             
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
@@ -825,7 +826,7 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
                 
                 if comuCell.isappread == "0"{
                     
-                    apread(gesture : comuCell.msgdetailsid)
+                    apread(gesture : comuCell.msgdetailsid ?? "")
                     comuCell.isappread = "1"
                     cell.redDotImage.isHidden = true
                     

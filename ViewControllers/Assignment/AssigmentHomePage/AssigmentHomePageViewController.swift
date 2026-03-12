@@ -269,17 +269,23 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
         
         if assigmentSegmentName.selectedSegmentIndex == 0{
             
-            let filtered_list : [upcommingdataDetails] = Mapper<upcommingdataDetails>().mapArray(JSONString: cloneList.toJSONString()!)!
+            let filtered_list : [upcommingdataDetails] = cloneList
             
             
             if !searchText.isEmpty{
                 
                 
+                let search = searchText.lowercased()
+
                 UpcommingRef = filtered_list.filter {
-                    
-                    
-                    $0.topic.lowercased().contains(searchText.lowercased()) || $0.description.lowercased().contains(searchText.lowercased()) || $0.assignmenttype.lowercased().contains(searchText.lowercased()) ||  $0.subjectname.lowercased().contains(searchText.lowercased()) || $0.sentbyname.lowercased().contains(searchText.lowercased()) || $0.topic.lowercased().contains(searchText.lowercased()) || $0.createdby.lowercased().contains(searchText.lowercased())
-                    
+
+                    ($0.topic?.lowercased().contains(search) ?? false) ||
+                    ($0.description?.lowercased().contains(search) ?? false) ||
+                    ($0.assignmenttype?.lowercased().contains(search) ?? false) ||
+                    ($0.subjectname?.lowercased().contains(search) ?? false) ||
+                    ($0.sentbyname?.lowercased().contains(search) ?? false) ||
+                    ($0.createdby?.lowercased().contains(search) ?? false)
+
                 }
                 
             }else{
@@ -311,16 +317,20 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
         
         else if assigmentSegmentName.selectedSegmentIndex == 1{
             
-            let filtered_list : [upcommingdataDetails] = Mapper<upcommingdataDetails>().mapArray(JSONString: cloneList.toJSONString()!)!
+            let filtered_list : [upcommingdataDetails] = cloneList
             
             if !searchText.isEmpty{
                 
                 
                 PasrRef = filtered_list.filter {
-                    
-                    
-                    $0.topic.lowercased().contains(searchText.lowercased()) || $0.description.lowercased().contains(searchText.lowercased()) || $0.assignmenttype.lowercased().contains(searchText.lowercased()) ||  $0.subjectname.lowercased().contains(searchText.lowercased()) || $0.sentbyname.lowercased().contains(searchText.lowercased()) || $0.topic.lowercased().contains(searchText.lowercased()) || $0.createdby.lowercased().contains(searchText.lowercased())
-                    
+
+                    ($0.topic?.lowercased().contains(searchText.lowercased()) ?? false) ||
+                    ($0.description?.lowercased().contains(searchText.lowercased()) ?? false) ||
+                    ($0.assignmenttype?.lowercased().contains(searchText.lowercased()) ?? false) ||
+                    ($0.subjectname?.lowercased().contains(searchText.lowercased()) ?? false) ||
+                    ($0.sentbyname?.lowercased().contains(searchText.lowercased()) ?? false) ||
+                    ($0.createdby?.lowercased().contains(searchText.lowercased()) ?? false)
+
                 }
                 
             }else{
@@ -459,9 +469,9 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 cell.creatonLabel.alpha = 1
                 let upcoming : upcommingdataDetails = UpcommingRef[indexPath.row]
                 //
-                cell.topicLabel.text = upcoming.topic.capitalized
+                cell.topicLabel.text = upcoming.topic?.capitalized
                 
-                let date  = upcoming.createdon.replacingOccurrences(of: "-", with: "")
+                let date  = upcoming.createdon?.replacingOccurrences(of: "-", with: "")
                 cell.dateTimeLabel.text = date
                 cell.descriptionLabel.text = upcoming.description
                 cell.creatonLabel.text = upcoming.sentbyname
@@ -475,10 +485,10 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 
                 dateFormatterPrint.dateFormat = " dd MMM,yyyy"
                 
-                let dates: NSDate? = dateFormatterGet.date(from: upcoming.submissiondate) as NSDate?
+                let dates: NSDate? = dateFormatterGet.date(from: upcoming.submissiondate ?? "") as NSDate?
                 
                 cell.submitionDateLabel.text = dateFormatterPrint.string(from: dates as! Date)
-                let  plusoneCount  = upcoming.newfilepath.count-1
+                let  plusoneCount  = upcoming.newfilepath?.count ?? 0-1
                 let stringconvert = String(plusoneCount)
                 cell.plusoneLabel.text = "+" + stringconvert
                 cell.descriptionLabel.isHidden = false
@@ -506,7 +516,7 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                     cell.plusOneView.isHidden = false
                 }
                 
-                if upcoming.newfilepath.count == 0{
+                if upcoming.newfilepath?.count == 0{
                     
                     cell.attchmentView.isHidden = true
                     cell.plusOneView.isHidden = true
@@ -561,18 +571,18 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 cell.submitionView.addGestureRecognizer(submit)
                 
                 
-                if upcoming.newfilepath.count == 1  {
+                if upcoming.newfilepath?.count == 1  {
                     
                     
                     cell.plusOneView.isHidden = true
                     let  attchmentTap = assigmentGesture(target: self, action: #selector(AtchmentVc))
-                    attchmentTap.img_urls = upcoming.newfilepath
+                    attchmentTap.img_urls = upcoming.newfilepath ?? []
                     attchmentTap.imageFileType = upcoming.assignmenttype
                     attchmentTap.titee = upcoming.topic
                     attchmentTap.descrttt = upcoming.description
                     
                     
-                    for i in upcoming.newfilepath{
+                    for i in upcoming.newfilepath ?? []{
                         
                         attchmentTap.img_url = i
                         
@@ -586,13 +596,13 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 else{
                     
                     let  attchmentTap = assigmentGesture(target: self, action: #selector(AtchmentVc))
-                    attchmentTap.img_urls = upcoming.newfilepath
+                    attchmentTap.img_urls = upcoming.newfilepath ?? []
                     attchmentTap.imageFileType = upcoming.assignmenttype
                     attchmentTap.titee = upcoming.topic
                     attchmentTap.descrttt = upcoming.description
                     
                     
-                    for i in upcoming.newfilepath{
+                    for i in upcoming.newfilepath ?? []{
                         
                         attchmentTap.img_url = i
                         
@@ -605,9 +615,9 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 let upcoming : upcommingdataDetails = UpcommingRef[indexPath.row]
                 //
                 cell.dateTimeLabel.isHidden = false
-                cell.topicLabel.text = upcoming.topic.capitalized
+                cell.topicLabel.text = upcoming.topic?.capitalized
                 
-                let date  = upcoming.createdon.replacingOccurrences(of: "-", with: "")
+                let date  = upcoming.createdon?.replacingOccurrences(of: "-", with: "")
                 cell.dateTimeLabel.text = date
                 cell.descriptionLabel.isHidden = true
                 cell.submissiondefaultLbl.isHidden = true
@@ -642,9 +652,9 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 
                 let upcoming : upcommingdataDetails = PasrRef[indexPath.row]
                 
-                cell.topicLabel.text = upcoming.topic.capitalized
+                cell.topicLabel.text = upcoming.topic?.capitalized
                 
-                let date  = upcoming.createdon.replacingOccurrences(of: "-", with: "")
+                let date  = upcoming.createdon?.replacingOccurrences(of: "-", with: "")
                 cell.dateTimeLabel.text = date
                 cell.descriptionLabel.text = upcoming.description
                 cell.creatonLabel.text = upcoming.sentbyname
@@ -662,10 +672,10 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 
                 
                 
-                let dates: NSDate? = dateFormatterGet.date(from: upcoming.submissiondate) as NSDate?
+                let dates: NSDate? = dateFormatterGet.date(from: upcoming.submissiondate ?? "") as NSDate?
                 
                 cell.submitionDateLabel.text = dateFormatterPrint.string(from: dates as! Date)
-                let  plusoneCount  = upcoming.newfilepath.count-1
+                let  plusoneCount  = upcoming.newfilepath?.count ?? 0 - 1
                 let stringconvert = String(plusoneCount)
                 cell.plusoneLabel.text = "+" + stringconvert
                 cell.descriptionLabel.isHidden = false
@@ -693,14 +703,12 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                     cell.plusOneView.isHidden = false
                 }
                 
-                if upcoming.newfilepath.count == 0{
+                if upcoming.newfilepath?.count == 0{
                     
                     cell.attchmentView.isHidden = true
                     cell.plusOneView.isHidden = true
                     
-                }
-                
-                else{
+                }else{
                     
                     cell.attchmentView.isHidden = false
                     cell.plusOneView.isHidden = false
@@ -747,18 +755,18 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 cell.submitionView.addGestureRecognizer(submit)
                 
                 
-                if upcoming.newfilepath.count == 1  {
+                if upcoming.newfilepath?.count == 1  {
                     
                     
                     cell.plusOneView.isHidden = true
                     let  attchmentTap = assigmentGesture(target: self, action: #selector(AtchmentVc))
-                    attchmentTap.img_urls = upcoming.newfilepath
+                    attchmentTap.img_urls = upcoming.newfilepath ?? []
                     attchmentTap.imageFileType = upcoming.assignmenttype
                     attchmentTap.titee = upcoming.topic
                     attchmentTap.descrttt = upcoming.description
                     
                     
-                    for i in upcoming.newfilepath{
+                    for i in upcoming.newfilepath ?? []{
                         
                         attchmentTap.img_url = i
                         
@@ -772,13 +780,13 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 else{
                     
                     let  attchmentTap = assigmentGesture(target: self, action: #selector(AtchmentVc))
-                    attchmentTap.img_urls = upcoming.newfilepath
+                    attchmentTap.img_urls = upcoming.newfilepath ?? []
                     attchmentTap.imageFileType = upcoming.assignmenttype
                     attchmentTap.titee = upcoming.topic
                     attchmentTap.descrttt = upcoming.description
                     
                     
-                    for i in upcoming.newfilepath{
+                    for i in upcoming.newfilepath ?? []{
                         
                         attchmentTap.img_url = i
                         
@@ -792,8 +800,8 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 let upcoming : upcommingdataDetails = PasrRef[indexPath.row]
                 
                 cell.dateTimeLabel.isHidden = false
-                cell.topicLabel.text = upcoming.topic.capitalized
-                let date  = upcoming.createdon.replacingOccurrences(of: "-", with: "")
+                cell.topicLabel.text = upcoming.topic?.capitalized
+                let date  = upcoming.createdon?.replacingOccurrences(of: "-", with: "")
                 cell.dateTimeLabel.text = date
                 cell.descriptionLabel.isHidden = true
                 cell.submissiondefaultLbl.isHidden = true
@@ -862,7 +870,7 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
         
         if assigmentSegmentName.selectedSegmentIndex == 0{
             
-            let upcoming : upcommingdataDetails = UpcommingRef[indexPath.row]
+            var upcoming : upcommingdataDetails = UpcommingRef[indexPath.row]
             
             
             
@@ -891,7 +899,7 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                     cell.plusOneView.isHidden = false
                 }
                 
-                if upcoming.newfilepath.count == 0{
+                if upcoming.newfilepath?.count == 0{
                     
                     cell.attchmentView.isHidden = true
                     cell.plusOneView.isHidden = true
@@ -951,18 +959,18 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 cell.submitionView.addGestureRecognizer(submit)
                 
                 
-                if upcoming.newfilepath.count == 1  {
+                if upcoming.newfilepath?.count == 1  {
                     
                     
                     cell.plusOneView.isHidden = true
                     let  attchmentTap = senderassigments(target: self, action: #selector(AtchmentVc))
-                    attchmentTap.img_urls = upcoming.newfilepath
+                    attchmentTap.img_urls = upcoming.newfilepath ?? []
                     attchmentTap.imageFileType = upcoming.assignmenttype
                     attchmentTap.titee = upcoming.topic
                     attchmentTap.descrttt = upcoming.description
                     
                     
-                    for i in upcoming.newfilepath{
+                    for i in upcoming.newfilepath ?? []{
                         
                         attchmentTap.img_url = i
                         
@@ -976,13 +984,13 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 else{
                     
                     let  attchmentTap = senderassigments(target: self, action: #selector(AtchmentVc))
-                    attchmentTap.img_urls = upcoming.newfilepath
+                    attchmentTap.img_urls = upcoming.newfilepath ?? []
                     attchmentTap.imageFileType = upcoming.assignmenttype
                     attchmentTap.titee = upcoming.topic
                     attchmentTap.descrttt = upcoming.description
                     
                     
-                    for i in upcoming.newfilepath{
+                    for i in upcoming.newfilepath ?? []{
                         
                         attchmentTap.img_url = i
                     }
@@ -997,7 +1005,7 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 
                 if upcoming.isappread == "0"{
                     
-                    apread(gesture : upcoming.assignmentdetailid)
+                    apread(gesture : upcoming.assignmentdetailid ?? "")
                     
                     upcoming.isappread = "1"
                     cell.ReadDotImageView.isHidden = true
@@ -1009,7 +1017,7 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
         else if assigmentSegmentName.selectedSegmentIndex == 1{
             
             
-            let past : upcommingdataDetails = PasrRef[indexPath.row]
+            var past : upcommingdataDetails = PasrRef[indexPath.row]
             
             
             
@@ -1025,7 +1033,7 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 
                 if past.isappread == "0"{
                     
-                    apread(gesture : past.assignmentdetailid)
+                    apread(gesture : past.assignmentdetailid ?? "")
                     
                     past.isappread = "1"
                     cell.ReadDotImageView.isHidden = true
@@ -1158,7 +1166,7 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
     
     func UpcommingRefName() {
         
-        let Upcom = senderUpcommingModal()
+        var Upcom = senderUpcommingModal()
         
         Upcom.userid   = memberId
         Upcom.collegeid    = colgId
@@ -1169,71 +1177,64 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
         Upcom.type = "upcomingassignments"
         
         
-        
-        let upcommingStr = Upcom.toJSONString()
-        
-        
-        senderPastRequest.call_request(param: upcommingStr!){ [self]
-            
-            (res) in
-            
-            
-            let upcommingResp : senderUpcommingResponces =
-            Mapper<senderUpcommingResponces>().map(JSONString: res)!
-            
-            
-            if upcommingResp.Status == 1 {
-                
-                print("order data",upcommingResp)
-                
-                
-                UpcommingRef = upcommingResp.data
-                cloneList = upcommingResp.data
-                
-                assigmentTableView.isScrollEnabled = true
-                
-                noDataView.isHidden = true
-                noDataTextLabel.isHidden = true
-                assigmentTableView.delegate = self
-                assigmentTableView.dataSource = self
-                assigmentTableView.reloadData()
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+        APiCallManager.shared.callApi(url: APIEndpoints.GetAssignmentListByType, httpMethod: .post, queryParam: nil, requestBody: Upcom) { [weak self] (result:Result<senderUpcommingResponces,Error>) in
+            guard let self = self else {return}
+            switch result{
+            case .success(let success):
+                if success.Status == 1 {
                     
-                    loadingCustom.stopAnimating()
+                    print("order data",success)
                     
                     
-                    loadingCustom.isHidden  = true
+                    UpcommingRef = success.data ?? []
+                    cloneList = success.data ?? []
                     
+                    assigmentTableView.isScrollEnabled = true
+                    
+                    noDataView.isHidden = true
+                    noDataTextLabel.isHidden = true
+                    assigmentTableView.delegate = self
+                    assigmentTableView.dataSource = self
+                    assigmentTableView.reloadData()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                        
+                        self.loadingCustom.stopAnimating()
+                        
+                        
+                        self.loadingCustom.isHidden  = true
+                        
+                    }
+                    
+                    
+                }else{
+                    
+                    noDataView.isHidden = false
+                    noDataTextLabel.isHidden = false
+                    noDataTextLabel.text = success.Message
+                    assigmentTableView.delegate = self
+                    assigmentTableView.dataSource = self
+                    assigmentTableView.reloadData()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                        
+                        self.loadingCustom.stopAnimating()
+                        
+                        
+                        self.loadingCustom.isHidden  = true
+                        
+                    }
                 }
-                
-                
-            }else{
-                
-                noDataView.isHidden = false
-                noDataTextLabel.isHidden = false
-                noDataTextLabel.text = upcommingResp.Message
-                assigmentTableView.delegate = self
-                assigmentTableView.dataSource = self
-                assigmentTableView.reloadData()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                    
-                    loadingCustom.stopAnimating()
-                    
-                    
-                    loadingCustom.isHidden  = true
-                    
-                }
-                
-                print("noRecords")
+            case .failure(let error):
+                print()
             }
         }
+        
     }
     
     
     func PastRefName() {
         
-        let past = senderUpcommingModal()
+        var past = senderUpcommingModal()
         
         past.userid   = memberId
         
@@ -1247,46 +1248,34 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
         
         past.type = "pastassignments"
         
-        
-        let pastStr = past.toJSONString()
-        
-        
-        senderPastRequest .call_request(param: pastStr!){ [self]
-            
-            (res) in
-            
-            
-            let pastResp : senderUpcommingResponces =
-            Mapper<senderUpcommingResponces>().map(JSONString: res)!
-            
-            print("order data",pastResp)
-            
-            
-            if pastResp.Status == 1{
+        APiCallManager.shared.callApi(url: APIEndpoints.GetAssignmentListByType, httpMethod: .post, queryParam: nil, requestBody: past) { [weak self] (result:Result<senderUpcommingResponces,Error>) in
+            guard let self = self else {return}
+            switch result{
+            case .success(let success):
+                if success.Status == 1{
+                    
+                    PasrRef = success.data ?? []
+                    cloneList = success.data ?? []
+                    
+                    noDataView.isHidden = true
+                    noDataTextLabel.isHidden = true
+                    assigmentTableView.isScrollEnabled = true
+                    assigmentTableView.delegate = self
+                    assigmentTableView.dataSource = self
+                    assigmentTableView.reloadData()
+                    
+                }else {
+                    noDataView.isHidden = false
+                    noDataTextLabel.isHidden = false
+                    noDataTextLabel.text = success.Message
+                    assigmentTableView.delegate = self
+                    assigmentTableView.dataSource = self
+                    assigmentTableView.reloadData()
+                    
+                }
                 
-                
-                PasrRef = pastResp.data
-                
-                cloneList = pastResp.data
-                
-                noDataView.isHidden = true
-                noDataTextLabel.isHidden = true
-                assigmentTableView.isScrollEnabled = true
-                assigmentTableView.delegate = self
-                assigmentTableView.dataSource = self
-                assigmentTableView.reloadData()
-                
-            }
-            
-            else {
-                
-                noDataView.isHidden = false
-                noDataTextLabel.isHidden = false
-                noDataTextLabel.text = pastResp.Message
-                assigmentTableView.delegate = self
-                assigmentTableView.dataSource = self
-                assigmentTableView.reloadData()
-                
+            case .failure(let error):
+                print("Error: \(error)")
             }
         }
     }
