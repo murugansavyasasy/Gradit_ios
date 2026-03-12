@@ -617,10 +617,6 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
                 noDataTextLabel.isHidden = false
                 noDataTextLabel.text = "No Records Found"
                 
-                
-                
-                
-                
             }
             
             

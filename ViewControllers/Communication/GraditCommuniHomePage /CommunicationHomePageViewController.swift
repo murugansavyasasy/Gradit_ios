@@ -49,7 +49,6 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
     @IBOutlet weak var noDataTextLabel: UILabel!
     @IBOutlet weak var unreadCountLabel: UILabel!
     @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
-    @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
     
     
@@ -413,7 +412,7 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
             httpMethod: .post,
             queryParam: nil,
             requestBody: Commu
-        ) {[weak self] (result:Result<ReadcommunicationResponce , Error>) in
+        ) {[weak self] (result:Result<ReadcommunicationResponce, Error>) in
             
             guard let self = self else {return}
             switch result {
@@ -617,8 +616,6 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
                     for i in addapiRef{
                       
                         bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
                         
                         let singleTap = adds(target: self, action: #selector(adLoad))
                         singleTap.url = i.add_url

@@ -168,3 +168,11 @@ struct HallticketModal : Codable{
     var i_semester_id : Int?
     var i_student_id : Int?
 }
+
+//MARK: Voice and text history
+struct HistorySmsVoiceModal : Codable{
+   
+    var userid : String?
+    var priority : String?
+    var appid  : String?
+}

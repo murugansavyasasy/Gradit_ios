@@ -11,7 +11,7 @@ import Foundation
 struct VersionCheckResponse : Codable{
     var Status: Int?
     var Message: String?
-    var versionData : [VersionCheckData]?
+    var data : [VersionCheckData]?
 }
 
 struct VersionCheckData : Codable{
@@ -611,7 +611,23 @@ struct HallticketDataDetails : Codable{
     var college_logo  : String
 }
 
+//MARK: Voice history
+struct HistorySmsVoiceResponce : Codable{
+    
+    var Status : Int?
+    var Message : String?
+    var data    : [HistorySmsVoiceDataDetail]?
+}
 
+struct HistorySmsVoiceDataDetail : Codable{
+    
+    var headerid : String?
+    var timing   : String?
+    var msgcontent : String?
+    var description : String?
+    var duration : String?
+    var voicefile : String?
+}
 
 
 // MARK: - Placement Event Response

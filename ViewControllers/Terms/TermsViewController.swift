@@ -68,7 +68,7 @@ class TermsViewController: UIViewController {
             switch result {
             case .success(let success):
                 
-                versionCheck = success.versionData ?? []
+                versionCheck = success.data ?? []
                 
                 let defaults = UserDefaults.standard
                 

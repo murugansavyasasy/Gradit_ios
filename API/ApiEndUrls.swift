@@ -46,10 +46,9 @@ struct APIEndpoints {
     static let semesterwisestudentcreditdetails = "semesterwisestudentcreditdetails"
     static let getExamApplicationDetails = "getExamApplicationDetails"
     static let getHallTicketDetails = "getHallTicketDetails"
-    
-    
-    
     static let GetVoiceMessageBytype = "GetVoiceMessageBytype"
+    static let GetVoiceMessageHistory = "GetVoiceMessageHistory"
+    static let GetTextMessageHistory = "GetTextMessageHistory"
     
     static let placementEvent = "students/student-placement-events"
     static let placementEventHistorical = "students/student-placement-events-historical"

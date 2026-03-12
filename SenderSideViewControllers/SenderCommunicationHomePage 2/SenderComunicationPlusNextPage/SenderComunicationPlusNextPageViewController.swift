@@ -140,7 +140,8 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
         
         smallImg.sd_setImage(with: URL(string: smallImageUrl), placeholderImage: UIImage(named: "ic_white"))
         
-        
+        tv.delegate = self
+        tv.dataSource = self
         tv.isHidden = true
         nodataLbl.isHidden = true
         
@@ -461,46 +462,29 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
     
     func HistoryApi(){
         
-        let History = HistorySmsVoiceModal()
-        
+        var History = HistorySmsVoiceModal()
         
         History.priority = priority
         History.userid = memberId
         History.appid = "1"
         
+        APiCallManager.shared.callApi(url: APIEndpoints.GetTextMessageHistory, httpMethod: .post, queryParam: nil, requestBody: History) {[weak self] (result:Result<HistorySmsVoiceResponce, Error>) in
         
-        let Historytr = History.toJSONString()
-        
-       
-        HistorySmsReq.call_request(param: Historytr!){ [self]
+            guard let self = self else {return}
             
-            (res) in
-            
-            
-            
-            let HistoryResp : HistorySmsVoiceResponce = Mapper<HistorySmsVoiceResponce>().map(JSONString: res)!
-            
-           
-            
-            if HistoryResp.Status == 1{
-                historyDataDetails =  HistoryResp.data
-                nodataLbl.isHidden = true
-                tv.delegate = self
-                tv.dataSource = self
+            switch result {
+            case .success(let success):
+                historyDataDetails =  success.data ?? []
+                nodataLbl.isHidden = !historyDataDetails.isEmpty
+                nodataLbl.text = success.Message
                 tv.reloadData()
-            }
-            else{
-                
-                nodataLbl.text = HistoryResp.Message
+            case .failure(let failure):
+                historyDataDetails =  []
                 nodataLbl.isHidden = false
-                tv.delegate = self
-                tv.dataSource = self
+                nodataLbl.text = failure.localizedDescription
                 tv.reloadData()
-                
             }
-            
         }
-        
     }
     
     

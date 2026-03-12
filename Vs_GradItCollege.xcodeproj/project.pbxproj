@@ -659,8 +659,6 @@
 		84BCC6162B67859F0071320B /* NextPageTVTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCC6142B67859F0071320B /* NextPageTVTableViewCell.swift */; };
 		84BCC6172B67859F0071320B /* NextPageTVTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BCC6152B67859F0071320B /* NextPageTVTableViewCell.xib */; };
 		84BCC6192B678E290071320B /* HistorySmsRequst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCC6182B678E290071320B /* HistorySmsRequst.swift */; };
-		84BCC61B2B678E440071320B /* HistorySmsVoiceResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCC61A2B678E440071320B /* HistorySmsVoiceResp.swift */; };
-		84BCC61D2B67BFB20071320B /* HistoryVoiceReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCC61C2B67BFB20071320B /* HistoryVoiceReq.swift */; };
 		84BCC6212B67C2390071320B /* NextVoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCC61F2B67C2390071320B /* NextVoiceTableViewCell.swift */; };
 		84BCC6222B67C2390071320B /* NextVoiceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BCC6202B67C2390071320B /* NextVoiceTableViewCell.xib */; };
 		84C0D0E82B70C4EB006BE966 /* VoiceHstryResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0D0E72B70C4EA006BE966 /* VoiceHstryResp.swift */; };
@@ -1491,8 +1489,6 @@
 		84BCC6142B67859F0071320B /* NextPageTVTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPageTVTableViewCell.swift; sourceTree = "<group>"; };
 		84BCC6152B67859F0071320B /* NextPageTVTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NextPageTVTableViewCell.xib; sourceTree = "<group>"; };
 		84BCC6182B678E290071320B /* HistorySmsRequst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySmsRequst.swift; sourceTree = "<group>"; };
-		84BCC61A2B678E440071320B /* HistorySmsVoiceResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySmsVoiceResp.swift; sourceTree = "<group>"; };
-		84BCC61C2B67BFB20071320B /* HistoryVoiceReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVoiceReq.swift; sourceTree = "<group>"; };
 		84BCC61F2B67C2390071320B /* NextVoiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextVoiceTableViewCell.swift; sourceTree = "<group>"; };
 		84BCC6202B67C2390071320B /* NextVoiceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NextVoiceTableViewCell.xib; sourceTree = "<group>"; };
 		84C0D0E72B70C4EA006BE966 /* VoiceHstryResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceHstryResp.swift; sourceTree = "<group>"; };
@@ -2456,8 +2452,6 @@
 				18E890232A27571900DF9BF2 /* SenderComunicationPlusNextPageViewController.xib */,
 				18E890242A27571900DF9BF2 /* SenderComunicationPlusNextPageViewController.swift */,
 				84BCC6182B678E290071320B /* HistorySmsRequst.swift */,
-				84BCC61A2B678E440071320B /* HistorySmsVoiceResp.swift */,
-				84BCC61C2B67BFB20071320B /* HistoryVoiceReq.swift */,
 			);
 			path = SenderComunicationPlusNextPage;
 			sourceTree = "<group>";
@@ -5677,7 +5671,6 @@
 				842F978A2B2B2E3E00691827 /* HallTicketViewController.swift in Sources */,
 				84A99DEC2AC2A55900512FEB /* ChatCollectionViewCell.swift in Sources */,
 				FADD3C9F2EFD65BD00F37E85 /* AttachmentPreviewVC.swift in Sources */,
-				84BCC61D2B67BFB20071320B /* HistoryVoiceReq.swift in Sources */,
 				FA85C7372DE70B7800B57E47 /* ResumeVC.swift in Sources */,
 				5261D7FB29A4EBD0007CEA96 /* EventAddDetailsViewController.swift in Sources */,
 				1891461A290A69C100034317 /* PreferencesUtil.swift in Sources */,
@@ -5744,7 +5737,6 @@
 				52D9144529EA717300D0D8DD /* SendVideoToParticularReq.swift in Sources */,
 				52721DC929DAE4D200351A54 /* SaveDataInTvCell.swift in Sources */,
 				5292BB3829C6249300D6FB94 /* EventParticularResponce.swift in Sources */,
-				84BCC61B2B678E440071320B /* HistorySmsVoiceResp.swift in Sources */,
 				5288FE19299E397E000AB6AA /* AddApiResponce.swift in Sources */,
 				1865D8AC2A0903F800CD43F3 /* ReadRequest.swift in Sources */,
 				5284BD81292E4B6100120C74 /* ExaminationHomePageViewController.swift in Sources */,
