@@ -252,7 +252,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate {
     
     func AddLocation(){
         
-                    let addLocationModal = AddloactionModal()
+        var addLocationModal = AddloactionModal()
         
         addLocationModal.CollegeId = collegeId
         addLocationModal.latitude = latitude
@@ -261,49 +261,37 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate {
         addLocationModal.userId = memberId
         
         addLocationModal.distance = Int(distanceTextfiled.text!)
-        
-                    var  addLocationModalStr = addLocationModal.toJSONString()
-                    print("punchModalStr",addLocationModal.toJSON())
-        
-        
-        LocationRequest.call_request(param: addLocationModalStr!) {
-        
-                        [self] (res) in
-        
-                        let addLocationResp : [punchResponce] = Mapper<punchResponce>().mapArray(JSONString: res)!
-        
-                        if addLocationResp[0].status == 1 {
-        
-                            let refreshAlert = UIAlertController(title: "", message: addLocationResp[0].message, preferredStyle: UIAlertController.Style.alert)
-        
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-        
-                              dismiss(animated: true)
-                                
-                                
-                            }))
-                        present(refreshAlert, animated: true, completion: nil)
-                        }else{
-        
-                            
-                            
-                            
-                            let refreshAlert = UIAlertController(title: "", message: addLocationResp[0].message, preferredStyle: UIAlertController.Style.alert)
-        
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-        
-                              dismiss(animated: true)
-                                
-                                
-                            }))
-                        present(refreshAlert, animated: true, completion: nil)
-                        }
-        
-        
-        
-                    }
-        
-        
+        APiCallManager.shared.callApi(url: APIEndpoints.SetBiometricLocation, httpMethod: .post, queryParam: nil, requestBody: addLocationModal) { [weak self] (result:Result<punchResponce,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case . success(let addLocationResp):
+                if addLocationResp.status == 1 {
+
+                    let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
+
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+
+                        self.dismiss(animated: true)
+                        
+                        
+                    }))
+                present(refreshAlert, animated: true, completion: nil)
+                }else{
+                    
+                    let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
+
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+
+                        self.dismiss(animated: true)
+                        
+                        
+                    }))
+                present(refreshAlert, animated: true, completion: nil)
+                }
+            case . failure(let error):
+                print("Error: \(error.localizedDescription)")
+            }
+        }
     }
    
   

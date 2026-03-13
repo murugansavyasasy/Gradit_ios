@@ -12,78 +12,26 @@ import ObjectMapper
 
 
 
-class staffListModalReq : Mappable{
-    
- 
-    var CollegeId : Int!
- 
-    
-    
-    init(){}
-    
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        CollegeId <- map["CollegeId"]
-     
-        
-    }
-    
-    
-    
+struct staffListModalReq : Codable{
+
+    var CollegeId : Int?
+
 }
 
 
 
-class staffListModal : Mappable{
+struct staffListModal : Codable{
     
     
-    var status : Int!
-    var message : String!
-    var data : [ModaldataDetails]!
-    
-    
-    
-    
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        message <- map["message"]
-        status <- map["status"]
-        data <- map["data"]
-        
-    }
-    
-    
-    
+    var status : Int?
+    var message : String?
+    var data : [ModaldataDetails]?
+  
 }
-class ModaldataDetails : Mappable{
+struct ModaldataDetails : Codable{
     
     
-    var staffId : Int!
-    var staffName : String!
-    
-   
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-        
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        
-        staffId <- map["staff_id"]
-        staffName <- map["staff_name"]
-        
-    }
- 
+    var staffId : Int?
+    var staffName : String?
+
 }

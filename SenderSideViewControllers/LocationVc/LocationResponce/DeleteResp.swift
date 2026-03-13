@@ -7,43 +7,17 @@
 //
 
 import Foundation
-import ObjectMapper
 
-class deleteModal : Mappable{
+struct deleteModal : Codable{
    
     
-    var CollegeId : Int!
-    var locationId : Int!
-    var userId : Int!
-    init(){}
-    
-
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        CollegeId <- map["CollegeId"]
-        locationId <- map["locationId"]
-        userId <- map["userId"]
-    }
-    
-    
+    var CollegeId : Int?
+    var locationId : Int?
+    var userId : Int?
+ 
 }
-class deletResponce : Mappable {
-   
-    
-    
-    var  status : Int!
-    var message : String!
+struct deletResponce : Codable {
 
-    
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        status <- map ["status"]
-        message <- map ["message"]
-    }
+    var  status : Int?
+    var message : String?
 }

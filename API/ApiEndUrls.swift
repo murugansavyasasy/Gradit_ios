@@ -54,5 +54,12 @@ struct APIEndpoints {
     static let placementEventHistorical = "students/student-placement-events-historical"
     static let trainingEvent = "students/student-career"
     static let trainingEventHistorical = "students/student-career-historical"
+    static let GetStaffLocationDetails = "GetStaffLocationDetails"
+    static let SetBiometricLocation = "SetBiometricLocation"
+    static let BiometricEntryusingApp = "BiometricEntryusingApp"
+    static let GetBiometricPrincipalAttendance = "GetBiometricPrincipalAttendance"
+    static let RemoveBiometricLocation = "RemoveBiometricLocation"
+    static let GetBiometricLocationHistory = "GetBiometricLocationHistory"
+    static let GetStaffListforBiometric = "GetStaffListforBiometric"
 
 }
