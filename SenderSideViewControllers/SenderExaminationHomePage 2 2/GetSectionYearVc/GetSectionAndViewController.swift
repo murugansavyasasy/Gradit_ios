@@ -455,7 +455,7 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
                 cell.sectionCheckBox.isChecked = true
                 
                 
-                cell.SectionIdRefrence = section.sectionid
+                cell.SectionIdRefrence = section.sectionid ?? ""
                 
                 
                 
@@ -476,7 +476,7 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
             cell.sectionLbl.text = section.sectionname
             
             
-            cell.GetSectionNmeRef = section.subjectdetails
+            cell.GetSectionNmeRef = section.subjectdetails ?? []
             
             
             cell.closedidSeleId  = closedidSeleId
@@ -612,7 +612,7 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
                 cell.sectionCheckBox.isChecked = true
                 
                 
-                cell.SectionIdRefrence = section.sectionid
+                cell.SectionIdRefrence = section.sectionid ?? ""
                 
                 
                 
@@ -635,7 +635,7 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
             
             
             
-            cell.GetSectionNmeRef = section.subjectdetails
+            cell.GetSectionNmeRef = section.subjectdetails ?? []
             
             
             //
@@ -808,7 +808,7 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
                 
                 
                 cell.sectionCheckBox.isChecked = true
-                cell.SectionIdRefrence = section.sectionid
+                cell.SectionIdRefrence = section.sectionid ?? ""
                 
                 let vc = SectiondetailRef()
                 
@@ -890,75 +890,62 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
     }
     
     func GetSectionAndYear(){
+        
         var GetSe : [getSectionDatasDetails] = []
-        let section = getSubjectWiseSectionModal()
+        
+        var section = getSubjectWiseSectionModal()
         
         section.userid = userId
         section.appid = "2"
         section.semesterid = semsterID
         
+        print("section request", section)
         
-        let sectionStr = section.toJSONString()
-        
-        
-        
-        getSectionWiseRequest.call_request(param: sectionStr!) {
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.getsectionwisesubjectlist,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: section
+        ) { [weak self] (result: Result<getSubjectWiseResponce, Error>) in
             
-            [self]  (res) in
+            guard let self = self else { return }
             
-            
-            
-            
-            
-            let particular : getSubjectWiseResponce = Mapper<getSubjectWiseResponce>().map(JSONString: res)!
-            
-            
-            
-            getSection = particular.data
-            
-            
-            
-            
-            if particular.Status == 1 {
-                //                
+            switch result {
                 
-                //                
-                for i in particular.data{
+            case .success(let particular):
+                
+                self.getSection = particular.data ?? []
+                
+                if particular.Status == 1 {
+                              
+                    for i in particular.data ?? []{
+                        
+                        self.GetSectionNmeRef = i.subjectdetails ?? []
+                        
+                    }
                     
-                    GetSectionNmeRef = i.subjectdetails
+                    self.nodataView.isHidden = true
+                    self.noDataLabel.isHidden = true
+                    
+                    self.Tv.dataSource = self
+                    self.Tv.delegate = self
+                    self.Tv.reloadData()
+                    
+                    
+                }else{
+                    self.nodataView.isHidden = false
+                    self.noDataLabel.isHidden = false
+                    self.noDataLabel.text = particular.Message
+                    self.Tv.dataSource = self
+                    self.Tv.delegate = self
+                    self.Tv.reloadData()
                     
                 }
                 
-                
-                
-                
-                nodataView.isHidden = true
-                noDataLabel.isHidden = true
-                
-                Tv.dataSource = self
-                Tv.delegate = self
-                Tv.reloadData()
-                
-                
-            }else{
-                nodataView.isHidden = false
-                noDataLabel.isHidden = false
-                noDataLabel.text = particular.Message
-                Tv.dataSource = self
-                Tv.delegate = self
-                Tv.reloadData()
-                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-            
-            
-            
         }
-        
-        
-        
-        
-        
-        
     }
     
     
@@ -970,15 +957,10 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
                 
                 
                 
-                let createExam = ExameEditModal()
+                var createExam = ExameEditModal()
                 
                 
                 for z in 0..<examEditresp1.count{
-                    
-                    
-                    
-                    
-                    
                     
                     createExam.examid = examEditresp1[z].examid
                     createExam.userid = examEditresp1[z].staffid
@@ -998,10 +980,7 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
                     
                     for ik in 0..<(DefaultsKeys.saveEdit.count)
                     {
-                        
-                        
-                        
-                        let subjectdetails  =  ExamDetailsDataDetails()
+                        var subjectdetails  =  ExamDetailsDataDetails()
                         
                         if (DefaultsKeys.saveEdit[ik].examsyllabus.contains(sectionIdForEdit) ) && (DefaultsKeys.saveEdit[ik].examvenue.contains(sectionIdForEdit) ) && (DefaultsKeys.saveEdit[ik].examdate.contains(sectionIdForEdit) ) && (DefaultsKeys.saveEdit[ik].examsubjectid.contains(sectionIdForEdit) ) {
                             
@@ -1014,324 +993,84 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
                             
                             
                             let date = DefaultsKeys.saveEdit[ik].examdate;
-                            let resultdate = date!.split(separator: "/ ")
+                            let resultdate = date?.split(separator: "/")
                             print("result",resultdate)
-                            print(resultdate[0]) // Hello
-                            print(resultdate[1])
+                            print(resultdate?[0]) // Hello
+                            print(resultdate?[1])
                             
                             
-                            subjectdetails.examdate =  String(resultdate[1])
+                            subjectdetails.examdate =  String(resultdate?[1] ?? "")
                             
                             
                             let venu = DefaultsKeys.saveEdit[ik].examvenue;
-                            let resultvenu = venu!.split(separator: "/ ")
+                            let resultvenu = venu?.split(separator: "/ ")
                             print("result",resultvenu)
-                            print(resultvenu[0]) // Hello
-                            print(resultvenu[1])
+                            print(resultvenu?[0]) // Hello
+                            print(resultvenu?[1])
                             
                             
-                            subjectdetails.examvenue = String(resultvenu[1])
+                            subjectdetails.examvenue = String(resultvenu?[1] ?? "")
                             
                             
                             
                             subjectdetails.examsession = "An"
                             
                             let sylubas = DefaultsKeys.saveEdit[ik].examsyllabus;
-                            let resultsylubs = sylubas!.split(separator: "/ ")
+                            let resultsylubs = sylubas?.split(separator: "/ ")
                             print("result",resultsylubs)
-                            print(resultsylubs[0]) // Hello
-                            print(resultsylubs[1])
+                            print(resultsylubs?[0]) // Hello
+                            print(resultsylubs?[1])
                             
                             
-                            subjectdetails.examsyllabus = String(resultsylubs[1])
-                            
-                            
-                            
-                            
-                            
+                            subjectdetails.examsyllabus = String(resultsylubs?[1] ?? "")
                             
                             
                             
                             let sayHello = DefaultsKeys.saveEdit[ik].examsubjectid;
-                            let result = sayHello!.split(separator: "/ ")
+                            let result = sayHello?.split(separator: "/ ")
                             print("result",result)
-                            print(result[0]) // Hello
-                            print(result[1])
+                            print(result?[0]) // Hello
+                            print(result?[1])
                             
                             
-                            
-                            
-                            subjectdetails.clgsubjectid = String(result[1])
-                            
-                            
-                            
-                            
+                            subjectdetails.clgsubjectid = String(result?[1] ?? "")
                             
                             subjectDataEdit.append(subjectdetails)
                             
                         }
-                        
-                        
-                        
                         
                     }
                     
                     
                     createExam.subjectdetails = subjectDataEdit
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                 }
                 
-                let createExamStr = createExam.toJSONString()
-                
-                
-                ExameEditREquest.call_request(param: createExamStr!) {
-                    //
-                    [self]  (res) in
+                APiCallManager.shared.callApi(
+                    url: APIEndpoints.EditSectionWiseExamForApp,
+                    httpMethod: .post,
+                    queryParam: nil,
+                    requestBody: createExam
+                ) { [weak self] (result: Result<ExaminationAddResponce, Error>) in
                     
+                    guard let self = self else { return }
                     
-                    let exams : ExaminationAddResponce = Mapper<ExaminationAddResponce>().map(JSONString: res)!
-                    
-                    
-                    //                examSubRef = exams.data
-                    
-                    if exams.status == 1 {
+                    switch result {
                         
+                    case .success(let exams):
                         
-                        
-                        
-                        let refreshAlert = UIAlertController(title: "", message:  exams.message, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+                        if exams.Status == 1 {
                             
                             
-                            if priority == "p2" || priority == "p3" {
-                                
-                                let vc = SenderExmainationHomePageViewController(nibName: nil, bundle: nil)
-                                
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                                vc.examSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.examSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.str = str
-                                vc.strName = strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
-                                
-                            }
+                            let refreshAlert = UIAlertController(title: "", message: exams.Message, preferredStyle: UIAlertController.Style.alert)
                             
-                            
-                            else{
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
                                 
-                                let vc = SenderExmainationHomePageViewController(nibName: nil, bundle: nil)
-                                
-                                vc.view.backgroundColor = UIColor(named: "Principal" )
-                                vc.examSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.examSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.str = str
-                                vc.strName = strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
-                                
-                            }
-                            
-                        }))
-                        
-                        
-                        
-                        present(refreshAlert, animated: true, completion: nil)
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    }
-                    
-                    else{
-                        
-                        
-                        let refreshAlert = UIAlertController(title: "", message: exams.message, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                            
-                            
-                            
-                            
-                            
-                        }))
-                        
-                        
-                        
-                        
-                        present(refreshAlert, animated: true, completion: nil)
-                        
-                        
-                        
-                        
-                        
-                    }
-                    
-                    
-                }
-            }else{
-                
-                
-                
-                
-                
-                if DefaultsKeys.saveEdit.count == 0 {
-                    
-                    let refreshAlert = UIAlertController(title: "", message: "Enter Subject Details" , preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    
-                    
-                    present(refreshAlert, animated: true, completion: nil)
-                    
-                    
-                    
-                    
-                }
-                
-                
-                
-                
-                
-                
-                else{
-                    
-                    let createExam = ExameEditModal()
-                    
-                    
-                    for z in 0..<examEditresp1.count{
-                        
-                        
-                        
-                        createExam.examid = examEditresp1[z].examid
-                        createExam.userid = examEditresp1[z].staffid
-                        createExam.colgid = examEditresp1[z].collegeid
-                        createExam.sectionid = sectionIdForEdit
-                        
-                        createExam.processtype = "edit"
-                        
-                        var subjectDataEdit : [ExamDetailsDataDetails] = []
-                        for ik in 0..<(examEditsModalApi1.count)
-                        {
-                            
-                            
-                            let subjectdetails  =  ExamDetailsDataDetails()
-                            
-                            if (DefaultsKeys.saveEdit[ik].examsyllabus.contains(sectionIdForEdit) ) && (DefaultsKeys.saveEdit[ik].examvenue.contains(sectionIdForEdit) ) && (DefaultsKeys.saveEdit[ik].examdate.contains(sectionIdForEdit) ) && (DefaultsKeys.saveEdit[ik].examsubjectid.contains(sectionIdForEdit) ) {
-                                
-                                let date = examEditsModalApi1[ik].examdate;
-                                let resultdate = date!.split(separator: "/ ")
-                                print("result",resultdate)
-                                print(resultdate[0]) // Hello
-                                print(resultdate[1])
-                                
-                                
-                                subjectdetails.examdate = String(resultdate[1])
-                                
-                                //
-                                let venu = examEditsModalApi1[ik].examvenue;
-                                let resultvenu = venu!.split(separator: "/ ")
-                                print("result",resultvenu)
-                                print(resultvenu[0]) // Hello
-                                print(resultvenu[1])
-                                
-                                subjectdetails.examvenue = String(resultvenu[1])
-                                
-                                
-                                
-                                subjectdetails.examsession = "An"
-                                //
-                                let sylubas = examEditsModalApi1[ik].examsyllabus;
-                                let resultsylubs = sylubas!.split(separator: "/ ")
-                                print("result",resultsylubs)
-                                print(resultsylubs[0]) // Hello
-                                print(resultsylubs[1])
-                                
-                                
-                                subjectdetails.examsyllabus = String(resultsylubs[1])
-                                
-                                
-                                let sayHello = examEditsModalApi1[ik].examsubjectid;
-                                let result = sayHello!.split(separator: "/ ")
-                                print("result",result)
-                                print(result[0]) // Hello
-                                print(result[1])
-                                
-                                
-                                
-                                
-                                subjectdetails.clgsubjectid = String(result[1])
-                                
-                                
-                                
-                                subjectDataEdit.append(subjectdetails)
-                                
-                                
-                                
-                            }
-                            
-                            
-                        }
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        createExam.subjectdetails = subjectDataEdit
-                        
-                        
-                        
-                        
-                        
-                    }
-                    
-                    let createExamStr = createExam.toJSONString()
-                    
-                    
-                    print("createExamStr",createExamStr)
-                    ExameEditREquest.call_request(param: createExamStr!) {
-                        //
-                        [self]  (res) in
-                        
-                        
-                        let exams : ExaminationAddResponce = Mapper<ExaminationAddResponce>().map(JSONString: res)!
-                        
-                        
-                        if exams.status == 1 {
-                            
-                            
-                            
-                            
-                            
-                            let refreshAlert = UIAlertController(title: "", message: exams.message, preferredStyle: UIAlertController.Style.alert)
-                            
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                                
-                                
+                                guard let self = self else { return }
                                 
                                 if priority == "p2" || priority == "p3" {
                                     
-                                    let vc = SenderExmainationHomePageViewController (nibName: nil, bundle: nil)
+                                    let vc = SenderExmainationHomePageViewController(nibName: nil, bundle: nil)
                                     
                                     vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
                                     vc.examSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
@@ -1358,52 +1097,203 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
                                     
                                 }
                                 
-                                
                             }))
                             
                             
-                            
-                            
-                            present(refreshAlert, animated: true, completion: nil)
-                            
-                            
-                            
-                            
-                            
-                            
-                            
+                            self.present(refreshAlert, animated: true, completion: nil)
                             
                         }
                         
                         else{
                             
                             
-                            
-                            
-                            let refreshAlert = UIAlertController(title: "", message: exams.message, preferredStyle: UIAlertController.Style.alert)
+                            let refreshAlert = UIAlertController(title: "", message: exams.Message, preferredStyle: UIAlertController.Style.alert)
                             
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                                
-                                
-                                
-                                
-                                
+                               
                             }))
                             
                             
+                            self.present(refreshAlert, animated: true, completion: nil)
                             
+                           
+                        }
+                        
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            }else{
+                
+                
+                if DefaultsKeys.saveEdit.count == 0 {
+                    
+                    let refreshAlert = UIAlertController(title: "", message: "Enter Subject Details" , preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                    }))
+                    
+                    present(refreshAlert, animated: true, completion: nil)
+                    
+                }
+                
+                else{
+                    
+                    var createExam = ExameEditModal()
+                    
+                    
+                    for z in 0..<examEditresp1.count{
+                        
+                        createExam.examid = examEditresp1[z].examid
+                        createExam.userid = examEditresp1[z].staffid
+                        createExam.colgid = examEditresp1[z].collegeid
+                        createExam.sectionid = sectionIdForEdit
+                        
+                        createExam.processtype = "edit"
+                        
+                        var subjectDataEdit : [ExamDetailsDataDetails] = []
+                        for ik in 0..<(examEditsModalApi1.count)
+                        {
                             
-                            present(refreshAlert, animated: true, completion: nil)
+                            var subjectdetails  =  ExamDetailsDataDetails()
                             
+                            if (DefaultsKeys.saveEdit[ik].examsyllabus.contains(sectionIdForEdit) ) && (DefaultsKeys.saveEdit[ik].examvenue.contains(sectionIdForEdit) ) && (DefaultsKeys.saveEdit[ik].examdate.contains(sectionIdForEdit) ) && (DefaultsKeys.saveEdit[ik].examsubjectid.contains(sectionIdForEdit) ) {
+                                
+                                let date = examEditsModalApi1[ik].examdate;
+                                let resultdate = date?.split(separator: "/ ")
+                                print("result",resultdate)
+                                print(resultdate?[0]) // Hello
+                                print(resultdate?[1])
+                                
+                                
+                                subjectdetails.examdate = String(resultdate?[1] ?? "")
+                                
+                                //
+                                let venu = examEditsModalApi1[ik].examvenue;
+                                let resultvenu = venu?.split(separator: "/ ")
+                                print("result",resultvenu)
+                                print(resultvenu?[0]) // Hello
+                                print(resultvenu?[1])
+                                
+                                subjectdetails.examvenue = String(resultvenu?[1] ?? "")
+                                
+                                
+                                
+                                subjectdetails.examsession = "An"
+                                //
+                                let sylubas = examEditsModalApi1[ik].examsyllabus;
+                                let resultsylubs = sylubas?.split(separator: "/ ")
+                                print("result",resultsylubs)
+                                print(resultsylubs?[0]) // Hello
+                                print(resultsylubs?[1])
+                                
+                                
+                                subjectdetails.examsyllabus = String(resultsylubs?[1] ?? "")
+                                
+                                
+                                let sayHello = examEditsModalApi1[ik].examsubjectid;
+                                let result = sayHello?.split(separator: "/ ")
+                                print("result",result)
+                                print(result?[0]) // Hello
+                                print(result?[1])
+                                
+                                
+                                subjectdetails.clgsubjectid = String(result?[1] ?? "")
+                                
+                                
+                                subjectDataEdit.append(subjectdetails)
+                                
+                            }
                             
                         }
                         
-                        
+                        createExam.subjectdetails = subjectDataEdit
                         
                         
                     }
                     
-                    
+                    APiCallManager.shared.callApi(
+                        url: APIEndpoints.EditSectionWiseExamForApp,
+                        httpMethod: .post,
+                        queryParam: nil,
+                        requestBody: createExam
+                    ) { [weak self] (result: Result<ExaminationAddResponce, Error>) in
+                        
+                        guard let self = self else { return }
+                        
+                        switch result {
+                            
+                        case .success(let exams):
+                            
+                            if exams.Status == 1 {
+                                
+                                
+                                let refreshAlert = UIAlertController(title: "", message: exams.Message, preferredStyle: UIAlertController.Style.alert)
+                                
+                                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
+                                    
+                                    guard let self = self else { return }
+                                    
+                                    
+                                    if priority == "p2" || priority == "p3" {
+                                        
+                                        let vc = SenderExmainationHomePageViewController (nibName: nil, bundle: nil)
+                                        
+                                        vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+                                        vc.examSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                        vc.examSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                        vc.str = str
+                                        vc.strName = strName
+                                        vc.modalPresentationStyle = .fullScreen
+                                        self.present(vc, animated: true , completion: nil)
+                                        
+                                    }
+                                    
+                                    
+                                    else{
+                                        
+                                        let vc = SenderExmainationHomePageViewController(nibName: nil, bundle: nil)
+                                        
+                                        vc.view.backgroundColor = UIColor(named: "Principal" )
+                                        vc.examSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                        vc.examSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                        vc.str = str
+                                        vc.strName = strName
+                                        vc.modalPresentationStyle = .fullScreen
+                                        self.present(vc, animated: true , completion: nil)
+                                        
+                                    }
+                                    
+                                    
+                                }))
+                                
+                                
+                                self.present(refreshAlert, animated: true, completion: nil)
+                                
+                                
+                            }
+                            
+                            else{
+                                
+                                
+                                let refreshAlert = UIAlertController(title: "", message: exams.Message, preferredStyle: UIAlertController.Style.alert)
+                                
+                                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                                    
+                                }))
+                                
+                                
+                                self.present(refreshAlert, animated: true, completion: nil)
+                                
+                                
+                            }
+                            
+                            
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                    }
                     
                     //
                 }
@@ -1447,7 +1337,7 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
                 
                 
                 
-                let createExam = Main()
+                var createExam = Main()
                 
                 
                 for z in 0..<examCre.count{
@@ -1465,7 +1355,7 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
                         
                         print("clgsection.count-1",clgsection.count)
                         print("iewrrr",i)
-                        let sectionDetails  =  Sectiondetails()
+                        var sectionDetails  =  Sectiondetails()
                         
                         
                         
@@ -1484,59 +1374,53 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
                             
                             //
                             
-                            let subjectdetails  =  Subjectdetails()
+                            var subjectdetails  =  Subjectdetails()
                             
                             if (  DefaultsKeys.saves[ik].examsyllabus.contains(clgsection[i].clgsectionid) ) && (  DefaultsKeys.saves[ik].examvenue.contains(clgsection[i].clgsectionid) ) && (  DefaultsKeys.saves[ik].examdate.contains(clgsection[i].clgsectionid) ) && (  DefaultsKeys.saves[ik].examsubjectid.contains(clgsection[i].clgsectionid) ) {
-                                
-                                
                                 
                                 print("iops",  DefaultsKeys.saves.count)
                                 
                                 
-                                
-                                
-                                
                                 let date =   DefaultsKeys.saves[ik].examdate;
-                                let resultdate = date!.split(separator: "/ ")
+                                let resultdate = date?.split(separator: "/ ")
                                 print("result",resultdate)
-                                print(resultdate[0]) // Hello
-                                print(resultdate[1])
+                                print(resultdate?[0]) // Hello
+                                print(resultdate?[1])
                                 
                                 
-                                subjectdetails.examdate =  String(resultdate[1])
+                                subjectdetails.examdate =  String(resultdate?[1] ?? "")
                                 
                                 
                                 let venu =   DefaultsKeys.saves[ik].examvenue;
-                                let resultvenu = venu!.split(separator: "/ ")
+                                let resultvenu = venu?.split(separator: "/ ")
                                 print("result",resultvenu)
-                                print(resultvenu[0]) // Hello
-                                print(resultvenu[1])
+                                print(resultvenu?[0]) // Hello
+                                print(resultvenu?[1])
                                 
                                 
-                                subjectdetails.examvenue = String(resultvenu[1])
-                                
-                                
+                                subjectdetails.examvenue = String(resultvenu?[1] ?? "")
                                 
                                 subjectdetails.examsession = "An"
                                 
                                 let sylubas =   DefaultsKeys.saves[ik].examsyllabus;
-                                let resultsylubs = sylubas!.split(separator: "/ ")
+                                let resultsylubs = sylubas?.split(separator: "/")
                                 print("result",resultsylubs)
-                                print(resultsylubs[0]) // Hello
-                                print(resultsylubs[1])
+                                print(resultsylubs?[0]) // Hello
+                                print(resultsylubs?[1])
                                 
                                 
-                                subjectdetails.examsyllabus = String(resultsylubs[1])
+                                subjectdetails.examsyllabus = String(resultsylubs?[1] ?? "")
                                 
                                 
                                 let sayHello = DefaultsKeys.saves[ik].examsubjectid;
-                                let result = sayHello!.split(separator: "/ ")
-                                print("result",result)
-                                print(result[0]) // Hello
-                                print(result[1])
+                                let result = sayHello?.split(separator: "/")
+                                
+                                print("result",result ?? "")
+                                print(result?[0] ?? "") // Hello
+                                print(result?[1])
                                 
                                 
-                                subjectdetails.examsubjectid = String(result[1])
+                                subjectdetails.examsubjectid = String(result?[1] ?? "")
                                 
                                 sujectData.append(subjectdetails)
                                 
@@ -1545,7 +1429,7 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
                         }
                         
                         
-                        sectionDetails.subjectdetails = sujectData
+                        sectionDetails.Subjectdetails = sujectData
                         
                         
                         
@@ -1556,101 +1440,86 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
                     
                 }
                 
-                let createExamStr = createExam.toJSONString()
-                
-                
-                print("createExamStr",createExamStr)
-                examAddSubRequest.call_request(param: createExamStr!) {
-                    //
-                    [self]  (res) in
+                APiCallManager.shared.callApi(
+                    url: APIEndpoints.ExamCreation,
+                    httpMethod: .post,
+                    queryParam: nil,
+                    requestBody: createExam
+                ) { [weak self] (result: Result<ExaminationAddResponce, Error>) in
                     
+                    guard let self = self else { return }
                     
-                    let exams : ExaminationAddResponce = Mapper<ExaminationAddResponce>().map(JSONString: res)!
-                    
-                    
-                    examSubRef = exams.data
-                    
-                    if exams.status == 1 {
+                    switch result {
                         
+                    case .success(let exams):
                         
-                        let refreshAlert = UIAlertController(title: "", message: exams.message, preferredStyle: UIAlertController.Style.alert)
+                        self.examSubRef = exams.data ?? []
                         
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+                        if exams.Status == 1 {
                             
                             
-                            if priority == "p2" || priority == "p3" {
+                            let refreshAlert = UIAlertController(title: "", message: exams.Message, preferredStyle: UIAlertController.Style.alert)
+                            
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
                                 
-                                let vc = SenderExmainationHomePageViewController(nibName: nil, bundle: nil)
+                                guard let self = self else { return }
                                 
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                                vc.examSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.examSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.str = str
-                                vc.strName = strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
                                 
-                            }
+                                if priority == "p2" || priority == "p3" {
+                                    
+                                    let vc = SenderExmainationHomePageViewController(nibName: nil, bundle: nil)
+                                    
+                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+                                    vc.examSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                    vc.examSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                    vc.str = str
+                                    vc.strName = strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true , completion: nil)
+                                    
+                                }
+                                
+                                
+                                else{
+                                    
+                                    let vc = SenderExmainationHomePageViewController(nibName: nil, bundle: nil)
+                                    
+                                    vc.view.backgroundColor = UIColor(named: "Principal" )
+                                    vc.examSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                    vc.examSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                    vc.str = str
+                                    vc.strName = strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true , completion: nil)
+                                    
+                                }
+                                
+                            }))
                             
                             
-                            else{
-                                
-                                let vc = SenderExmainationHomePageViewController(nibName: nil, bundle: nil)
-                                
-                                vc.view.backgroundColor = UIColor(named: "Principal" )
-                                vc.examSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.examSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.str = str
-                                vc.strName = strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
-                                
-                            }
+                            self.present(refreshAlert, animated: true, completion: nil)
                             
-                        }))
+                            
+                        }
                         
+                        else{
+                            
+                            
+                            let refreshAlert = UIAlertController(title: "", message: exams.Message, preferredStyle: UIAlertController.Style.alert)
+                            
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                                
+                            }))
+                            
+                            
+                            self.present(refreshAlert, animated: true, completion: nil)
+                            
+                        }
                         
-                        
-                        
-                        present(refreshAlert, animated: true, completion: nil)
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+                    case .failure(let error):
+                        print(error.localizedDescription)
                     }
-                    
-                    else{
-                        
-                        
-                        
-                        let refreshAlert = UIAlertController(title: "", message: exams.message, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                            
-                            
-                            
-                            
-                            
-                        }))
-                        
-                        
-                        
-                        
-                        present(refreshAlert, animated: true, completion: nil)
-                        
-                        
-                        
-                        
-                    }
-                    
                 }
-                
-                
             }
         }
     }

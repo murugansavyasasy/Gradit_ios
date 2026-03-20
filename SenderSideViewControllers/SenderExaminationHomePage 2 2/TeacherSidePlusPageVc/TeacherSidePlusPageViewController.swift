@@ -698,58 +698,50 @@ class TeacherSidePlusPageViewController: UIViewController,UITableViewDelegate,UI
     func subject(){
         
         
-        let subj = ParticularStaffModal()
+        var subj = ParticularStaffModal()
         
         subj.collegeid = clgId
         subj.staffid = memberId
         
-        let subjectstr = subj.toJSONString()
-        SubjectRequests.call_request(param: subjectstr!){ [self]
-            
-            (res) in
-            //
-            //
-            //
-            let subje : particularStaffResponce  = Mapper<particularStaffResponce>().map(JSONString: res)!
-            
-            if subje.Status == 1{
-                
-                ParticalStaffRef = subje.data
-                
-                
-                
-                
-                tv.delegate = self
-                tv.dataSource = self
-                tv.reloadData()
-                
-            }
-            
-            
-            else{
-                
-                let refreshAlert = UIAlertController(title: "", message: subje.Message, preferredStyle: UIAlertController.Style.alert)
-                
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+        APiCallManager.shared.callApi(
+                url: APIEndpoints.GetSubjectListforparticularstaff,
+                httpMethod: .post,
+                queryParam: nil,
+                requestBody: subj
+            ) {[weak self] (result:Result<particularStaffResponce, Error>) in
                     
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let success):
                     
+                    if success.Status == 1{
+                        
+                        ParticalStaffRef = success.data ?? []
+                        
+                        tv.delegate = self
+                        tv.dataSource = self
+                        tv.reloadData()
+                    }else{
+                        
+                        let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
+                        
+                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                             
+                        }))
+                        
+                        present(refreshAlert, animated: true, completion: nil)
+                        
+                        tv.delegate = self
+                        tv.dataSource = self
+                        tv.reloadData()
+                    }
                     
-                }))
+                case .failure(let failure):
+                     print("Error:",failure.localizedDescription)
+                }
                 
-                
-                
-                present(refreshAlert, animated: true, completion: nil)
-                
-                
-                
-                
-                
-                tv.delegate = self
-                tv.dataSource = self
-                tv.reloadData()
-            }
-            
-        }
+                }
         
     }
     

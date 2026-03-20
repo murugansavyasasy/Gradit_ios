@@ -233,34 +233,6 @@ class CourseHomePageViewController: UIViewController,UITableViewDelegate,UITable
             }
             courseTabelView.reloadData()
         }
-        
-      //  let courseStr = Cour.toJSONString()
-        
-        
-//        courseRequest .call_request(param: courseStr!){ [self]
-//            
-//            (res) in
-//            
-//            
-//            let courseResp : courseResponce =
-//            Mapper<courseResponce>().map(JSONString: res)!
-//            
-//            print("order data",courseResp)
-//            
-//            if courseResp.Status == 1 {
-//                
-//                courseRefName = courseResp.data
-//                noDataView.isHidden = true
-//                noDataTextLabel.isHidden = true
-//                courseTabelView.reloadData()
-//            }else{
-//                
-//                noDataView.isHidden = false
-//                noDataTextLabel.isHidden = false
-//                noDataTextLabel.text = courseResp.Message
-//                courseTabelView.reloadData()
-//            }
-//        }
     }
     
     

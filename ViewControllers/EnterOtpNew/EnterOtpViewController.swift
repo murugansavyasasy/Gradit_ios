@@ -202,21 +202,102 @@ class EnterOtpViewController: UIViewController,UITextFieldDelegate {
     
     @IBAction func reSendVc(){
         
+        var forgets = forgetModal()
+        forgets.mobilenumber = ShowPhnumber
         
+        print("forget request", forgets)
         
-        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.forgetpassword,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: forgets
+        ) { [weak self] (result: Result<forgetResponce, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let forgetResponse):
+                
+                print(forgetResponse.Message ?? "")
+//                let refreshAlert = UIAlertController(title: "", message: forgetResponse.Message, preferredStyle: UIAlertController.Style.alert)
+//                
+//                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+//                    
+//                }))
+//                
+//                self.present(refreshAlert, animated: true, completion: nil)
+                
+            case .failure(let error):
+//                let refreshAlert = UIAlertController(title: "", message: error.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+//                
+//                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+//                    
+//                }))
+//                
+//                self.present(refreshAlert, animated: true, completion: nil)
+                print(error.localizedDescription)
+            }
+        }
     }
     
     
     
     @IBAction func nextVC(){
         
+        let opt = (tf1.text ?? "") + (tf2.text ?? "") + (tf3.text ?? "") + (tf4.text ?? "")
         
-        let vc = VerifyOtpViewController(nibName: nil, bundle: nil)
-        vc.mobileNumber = ShowPhnumber
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true,completion: nil)
+        var verify = recentOTPModal()
         
+        verify.mobilenumber = ShowPhnumber
+        verify.otp = opt
+        
+        print("verify request", verify)
+        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.VerifyOTP,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: verify
+        ) { [weak self] (result: Result<recentOTPResponce, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let forgetResponse):
+                
+                if forgetResponse.Status == 1 {
+                    
+                    let vc = VerifyOtpViewController(nibName: nil, bundle: nil)
+                    vc.mobileNumber = ShowPhnumber
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true,completion: nil)
+                    
+                }
+                else {
+                    
+                    let refreshAlert = UIAlertController(title: "", message: forgetResponse.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                    }))
+                    
+                    self.present(refreshAlert, animated: true, completion: nil)
+                }
+                
+            case .failure(let error):
+                let refreshAlert = UIAlertController(title: "", message: error.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                
+                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                    
+                }))
+                
+                self.present(refreshAlert, animated: true, completion: nil)
+                print(error.localizedDescription)
+            }
+        }
         
     }
     

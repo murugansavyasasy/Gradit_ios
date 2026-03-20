@@ -189,34 +189,6 @@ class ExamDetailsHomePageViewController: UIViewController,UITableViewDelegate,UI
                 examDetailsTabelView.reloadData()
             }
         }
-        
-        //       let examStr = examDetail.toJSONString()
-        
-        //        examDetailsRequest .call_request(param: examStr!){ [self]
-        //
-        //            (res) in
-        //
-        //
-        //            let courseResp : examDetailsResponce =
-        //            Mapper<examDetailsResponce>().map(JSONString: res)!
-        //
-        //
-        //
-        //            examRef = courseResp.data
-        //
-        //            if courseResp.Status == 1 {
-        //
-        //                noDataView.isHidden = true
-        //                noDataTextLabel.isHidden = true
-        //                examDetailsTabelView.reloadData()
-        //            }else{
-        //
-        //                noDataTextLabel.text = courseResp.Message
-        //                noDataView.isHidden = false
-        //                noDataTextLabel.isHidden = false
-        //                examDetailsTabelView.reloadData()
-        //            }
-        //        }
     }
     
     // this part  bottom swipe  view.

@@ -396,7 +396,7 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
         chatReceiver.subject_id = subject_id
         chatReceiver.limit = "10"
         
-        var str = String(ofsetId)
+        let str = String(ofsetId)
         chatReceiver.offset = str
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetStudentChatScreenForApp, httpMethod: .post, queryParam: nil, requestBody: chatReceiver) { [weak self] (result:Result<ChatReceiverInteractResponse,Error>) in
@@ -708,9 +708,9 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
             
             APiCallManager.shared.callApi(url: APIEndpoints.StudentAskQuestionForApp, httpMethod: .post, queryParam: nil, requestBody: MessageSendReceiver) { [weak self] (result:Result<MessageSendResponse,Error>) in
                 guard let self = self else{return}
-                
+                messageTextfield.text?.removeAll()
                 switch result{
-                    
+                   
                 case .success(let messageSendReceiverResponse):
                     if messageSendReceiverResponse.Status == 1{
                     

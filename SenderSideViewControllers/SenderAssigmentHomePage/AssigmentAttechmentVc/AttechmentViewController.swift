@@ -286,7 +286,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         cell.FileNameLabel.isHidden = false
         
         
-        let cardtrim = assiment.file_name.trimmingCharacters(in: CharacterSet(charactersIn: "https://s3.ap-south-1.amazonaws.com/gradit-india-live/26-09-2023/")) //value: 1000001
+        let cardtrim = assiment.file_name?.trimmingCharacters(in: CharacterSet(charactersIn: "https://s3.ap-south-1.amazonaws.com/gradit-india-live/26-09-2023/")) //value: 1000001
         print("cardtrim",cardtrim)
         
         cell.DateLabel.text = assiment.submittedtime
@@ -616,64 +616,59 @@ func addApi(){
     }
 }
 
-func assigmentCount(){
-    
-    let assigmentCount = AssigmentSummitedModal()
-    
-    
-    assigmentCount.assignmentid = assigmentId
-    assigmentCount.processby = memberId
-    assigmentCount.filetype = fileType
-    
-    
-    let assigmentCountStrs = assigmentCount.toJSONString()
-    
-    print("yearAndSectionModalStr",assigmentCountStrs)
-    
-    assigmentSubmmitedRequest.call_request(param: assigmentCountStrs!) {
+    func assigmentCount(){
         
-        [self]  (res) in
+        var assigmentCount = AssigmentSummitedModal()
         
+        assigmentCount.assignmentid = assigmentId
+        assigmentCount.processby = memberId
+        assigmentCount.filetype = fileType
         
+        print("yearAndSectionModalStr", assigmentCount)
         
-        let AssigmentResp : AssigmentSubmitResponce =
-        Mapper<AssigmentSubmitResponce>().map(JSONString: res)!
-        
-        
-        
-        if AssigmentResp.status == 1 {
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.ViewAssignmentContent,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: assigmentCount
+        ) { [weak self] (result: Result<AssigmentSubmitResponce, Error>) in
             
+            guard let self = self else { return }
             
-            assigmentSubmiited = AssigmentResp.data
-            nodataLabel.isHidden = true
-            nodataView.isHidden = true
-            Tv.isHidden = false
-            Tv.delegate = self
-            Tv.dataSource = self
-            Tv.reloadData()
-            
-            
-            
-        }
-        
-        
-        else{
-            
-            
-            nodataLabel.isHidden = false
-            nodataView.isHidden = false
-            nodataLabel.text = AssigmentResp.message
-            Tv.isHidden = true
-            Tv.delegate = self
-            Tv.dataSource = self
-            Tv.reloadData()
+            switch result {
+                
+            case .success(let AssigmentResp):
+                
+                if AssigmentResp.Status == 1 {
+                    
+                    self.assigmentSubmiited = AssigmentResp.data ?? []
+                    self.nodataLabel.isHidden = true
+                    self.nodataView.isHidden = true
+                    self.Tv.isHidden = false
+                    self.Tv.delegate = self
+                    self.Tv.dataSource = self
+                    self.Tv.reloadData()
+                    
+                }else{
+                    
+                    self.nodataLabel.isHidden = false
+                    self.nodataView.isHidden = false
+                    self.nodataLabel.text = AssigmentResp.Message
+                    self.Tv.isHidden = true
+                    self.Tv.delegate = self
+                    self.Tv.dataSource = self
+                    self.Tv.reloadData()
+                    
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
             
         }
-        
     }
     
-}
-
+    
 
 @IBAction func backBtn(_ sender: Any) {
     

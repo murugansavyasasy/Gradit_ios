@@ -319,7 +319,7 @@ class ProfileEditVc: UIViewController, UINavigationControllerDelegate, UIImagePi
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
 
-            let editRequest = Edit_Profile_Req()
+            var editRequest = Edit_Profile_Req()
             editRequest.idMember = Int(self.memberId ?? "")
             editRequest.memberName = self.NameTextfield.text
             editRequest.primaryMobileNo = self.PhoneTextfield.text
@@ -330,31 +330,53 @@ class ProfileEditVc: UIViewController, UINavigationControllerDelegate, UIImagePi
             editRequest.dob = self.dateOfBirthLbl.text
             editRequest.residentialAddressLine1 = self.AddressTextfield.text
 
-            let requestStr = editRequest.toJSONString() ?? ""
-
-            Edit_Profile_Request.call_request(param: requestStr) { [weak self] res in
+            APiCallManager.shared.callApi(
+                url: APIEndpoints.profile_add_edit_profile,
+                httpMethod: .post,
+                isBaseUrl: false,
+                queryParam: nil,
+                requestBody: editRequest
+            ) { [weak self] (result: Result<Edit_Profile_Response, Error>) in
+                
                 guard let self = self else { return }
 
-                guard let response: Edit_Profile_Response =
-                        Mapper<Edit_Profile_Response>().map(JSONString: res) else { return }
-
                 DispatchQueue.main.async {
-                    if response.status == true {
-                        let alert = UIAlertController(
-                            title: "Success",
-                            message: "Profile Updated Successfully",
-                            preferredStyle: .alert
-                        )
+                    
+                    switch result {
+                        
+                    case .success(let response):
+                        
+                        if response.status == true {
+                            
+                            let alert = UIAlertController(
+                                title: "Success",
+                                message: "Profile Updated Successfully",
+                                preferredStyle: .alert
+                            )
 
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
-                            self.dismiss(animated: true)
-                        })
+                            alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
+                                self.dismiss(animated: true)
+                            })
 
-                        self.present(alert, animated: true)
-                    } else {
+                            self.present(alert, animated: true)
+                            
+                        } else {
+                            
+                            let alert = UIAlertController(
+                                title: "Failed",
+                                message: "Something went wrong",
+                                preferredStyle: .alert
+                            )
+
+                            alert.addAction(UIAlertAction(title: "Ok", style: .default))
+                            self.present(alert, animated: true)
+                        }
+                        
+                    case .failure:
+                        
                         let alert = UIAlertController(
-                            title: "Failed",
-                            message: "Something went wrong",
+                            title: "Error",
+                            message: "Request failed",
                             preferredStyle: .alert
                         )
 

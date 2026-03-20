@@ -459,65 +459,56 @@ func addApi(){
     }
 }
 
-func assigmentCount(){
-    
-    let assigmentCount = assigmentMemberCountModal()
-    
-    
-    assigmentCount.assignmentid = assigmentId
-    assigmentCount.processby = memberId
-    assigmentCount.submissiontype = "submitted"
-    
-    
-    let assigmentCountStrs = assigmentCount.toJSONString()
-    
-    print("yearAndSectionModalStr",assigmentCountStrs)
-    
-    AssigmentMeberCountRequest.call_request(param: assigmentCountStrs!) {
+
+    func assigmentCount(){
         
-        [self]  (res) in
+        var assigmentCount = assigmentMemberCountModal()
         
+        assigmentCount.assignmentid = assigmentId
+        assigmentCount.processby = memberId
+        assigmentCount.submissiontype = "submitted"
         
+        print("yearAndSectionModalStr", assigmentCount)
         
-        let AssigmentResp : assigmentMemberCountResponce =
-        Mapper<assigmentMemberCountResponce>().map(JSONString: res)!
-        
-        
-        
-        if AssigmentResp.Status == 1 {
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetAssignmentSubmissions,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: assigmentCount
+        ) { [weak self] (result: Result<assigmentMemberCountResponce, Error>) in
             
+            guard let self = self else { return }
             
-            
-            assigmentMemberCount = AssigmentResp.data
-            
-            if updateSecTime == "1" {
+            switch result {
                 
-            }else{
-                ImageShowCv.delegate = self
-                ImageShowCv.dataSource = self
-                ImageShowCv.reloadData()
+            case .success(let AssigmentResp):
+                
+                if AssigmentResp.Status == 1 {
+                    
+                    self.assigmentMemberCount = AssigmentResp.data ?? []
+                    
+                    if updateSecTime == "1" {
+                        
+                    }else{
+                        self.ImageShowCv.delegate = self
+                        self.ImageShowCv.dataSource = self
+                        self.ImageShowCv.reloadData()
+                    }
+                }
+                
+                else{
+                    
+                    self.ImageShowCv.delegate = self
+                    self.ImageShowCv.dataSource = self
+                    self.ImageShowCv.reloadData()
+                    
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-            
-            
         }
-        
-        
-        else{
-            
-            
-            
-            ImageShowCv.delegate = self
-            ImageShowCv.dataSource = self
-            ImageShowCv.reloadData()
-            
-        }
-        
     }
-    
-}
-
-
-
 
 
 @IBAction func backBtn(_ sender: Any) {
@@ -1004,9 +995,6 @@ func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection s
 func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     
-    
-    
-    
     if collectionView == ImageShowCv{
         
         
@@ -1017,7 +1005,7 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
         
         
         
-        let assiment : AssigmentmebCountData = assigmentMemberCount[indexPath.row]
+        var assiment : AssigmentmebCountData = assigmentMemberCount[indexPath.row]
         
         assiment.ImageShow  = false
         //
@@ -1027,9 +1015,9 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
         cell.NameLabel.text = assiment.studentname
         cell.registerNo.text =  assiment.register_number
         
-        let firstFourFiles = Array(assiment.filearray.prefix(6))
+        let firstFourFiles = Array((assiment.filearray ?? []).prefix(6))
         cell.Filepath = firstFourFiles
-        cell.Filepath2 = assiment.filearray
+        cell.Filepath2 = assiment.filearray ?? []
         cell.main = self
         
         
@@ -1049,7 +1037,7 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
             }
             else {
                 cell.MarkTextField.isHidden = true
-                cell.studentLabel.text = " Your mark : " + "  " + assiment.obtainedmark
+                cell.studentLabel.text = " Your mark : " + "  " + (assiment.obtainedmark ?? "")
                 
             }
         }else{
@@ -1187,81 +1175,62 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
     
 }
 
-
-
-
-
-func PutMark(studentid : String!,assignmentdetailsid : String!,marks : UITextField!,SucessImage : UIImageView!){
     
-    
-    
-    
-    let markSub =  PutMarkResp()
-    
-    markSub.assignmentdetailsid = assignmentdetailsid
-    markSub.assignmentid = assigmentId
-    markSub.marks = marks.text
-    markSub.studentid = studentid
-    markSub.processby = memberId
-    
-    
-    let markSubStrs = markSub.toJSONString()
-    print("yearAndSectionModalStr",markSub.toJSON())
-    PutMArkRequest.call_request(param: markSubStrs!) {
+    func PutMark(studentid : String!, assignmentdetailsid : String!, marks : UITextField!, SucessImage : UIImageView!){
         
-        [self]  (res) in
+        var markSub = PutMarkResp()
         
+        markSub.assignmentdetailsid = assignmentdetailsid
+        markSub.assignmentid = assigmentId
+        markSub.marks = marks.text
+        markSub.studentid = studentid
+        markSub.processby = memberId
         
+        print("yearAndSectionModalStr", markSub)
         
-        let PutMarkResponseResp : PutMarkResponse =
-        Mapper<PutMarkResponse>().map(JSONString: res)!
-        
-        
-        if PutMarkResponseResp.Status == 1 {
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.AddMarksForAssignment,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: markSub
+        ) { [weak self] (result: Result<PutMarkResponse, Error>) in
             
-            SucessShow = true
+            guard let self = self else { return }
             
-            
-            
-            
-            
-            if SucessShow == true{
-                SucessImage.image = UIImage(named: "tick")
+            switch result {
                 
+            case .success(let PutMarkResponseResp):
                 
+                if PutMarkResponseResp.Status == 1 {
+                    
+                    self.SucessShow = true
+                    
+                    if self.SucessShow == true{
+                        SucessImage.image = UIImage(named: "tick")
+                    }else{
+                        SucessImage.image = UIImage(named: "sendRocket")
+                    }
+                    
+                    self.updateSecTime = "1"
+                    self.assigmentCount()
+                    
+                } else{
+                    
+                    let refreshAlert = UIAlertController(title: "", message: PutMarkResponseResp.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                    }))
+                    
+                    self.present(refreshAlert, animated: true, completion: nil)
+                    
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-            
-            else{
-                
-                
-                
-                SucessImage.image = UIImage(named: "sendRocket")
-            }
-            
-            updateSecTime = "1"
-            assigmentCount()
-            
-            
         }
-        
-        else{
-            
-            let refreshAlert = UIAlertController(title: "", message: PutMarkResponseResp.Message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { [self] (action: UIAlertAction!) in
-                
-                
-            }))
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-        }
-        
-        
-        
     }
-    
-}
 
 func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
@@ -1272,25 +1241,25 @@ func collectionView(_ collectionView: UICollectionView, layout collectionViewLay
         
         let assiment : AssigmentmebCountData = assigmentMemberCount[indexPath.row]
         
-        if assiment.filearray.count == 1{
+        if assiment.filearray?.count == 1{
             
             return CGSize(width: collectionView / 1 - 2, height: collectionView / 1 - 2)
             //
-        }else if assiment.filearray.count == 2{
+        }else if assiment.filearray?.count == 2{
             return CGSize(width: collectionView / 1 - 2, height: collectionView / 1 - 2)
             //
             
-        }else if assiment.filearray.count == 3{
+        }else if assiment.filearray?.count == 3{
             return CGSize(width: collectionView / 1 - 2, height: collectionView / 1 - 2)
             //
             
-        }else if assiment.filearray.count == 4{
+        }else if assiment.filearray?.count == 4{
             
             return CGSize(width: collectionView / 1 - 2, height: 450)
-        }else if assiment.filearray.count == 5{
+        }else if assiment.filearray?.count == 5{
             
             return CGSize(width: collectionView / 1 - 2, height: 450)
-        }else if assiment.filearray.count == 6{
+        }else if assiment.filearray?.count == 6{
             return CGSize(width: collectionView / 1 - 2, height: 450)
             
         }

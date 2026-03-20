@@ -13,14 +13,8 @@ class changePasswordRequest{
     static func call_request(param : String, completion_handler : @escaping(String)->()) {
 
         KRProgressHUD.show()
-
         
-
-        
-
         BaseRequest.raw_post(url: get_url(), param: param).success {
-
-          
 
             (res) in
 
@@ -30,18 +24,9 @@ class changePasswordRequest{
 
     }
 
-    
-
-    
-
     private static func get_url() -> String{
 
-        
-
         return String(format: "%@/changepassword", Constant.baseUrl)
-
-//
-        
 
     }
 

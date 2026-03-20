@@ -118,7 +118,7 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
     var menuSlug = ""
     var messageAndVoiceArray : [menuApiDataDetails] = []
     var heigts : Int!
-    var   CallEnabel : String!
+    var CallEnabel : String!
     
     
     override func viewDidLoad() {
@@ -127,8 +127,6 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         overrideUserInterfaceStyle = .light
         print("is_write_enabled",is_write_enabled)
         print("strNamestrNamestrNamestrName",strName)
-        
-        
         
         sideMenuView.isHidden = true
         searchbar.delegate = self
@@ -1337,30 +1335,23 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
                 
                 print("expandddd" , cell.msgContentLabel.isHidden)
                 cell.voiceView.isHidden = true
-                if comuCell.isappread == "0"{
+                if UnReadData[indexPath.row].isappread == "0"{
                     
                     
-                    apread(gesture : comuCell.msgdetailsid ?? "")
+                    apread(gesture : UnReadData[indexPath.row].msgdetailsid ?? "")
                     
-                    comuCell.isappread = "1"
+                    UnReadData[indexPath.row].isappread = "1"
                     cell.redDotImage.isHidden = true
                     
                 }
             }
-            
-            
-            
-            
             
         }
         
         else if CommuniSegementName.selectedSegmentIndex == 1 {
             
             
-            
-            let unreadCell : SenderCommuniReadDataDetails = ReadData[indexPath.row]
             if let selectedCells = selectedCell, selectedCells == indexPath {
-                
                 
                 indexPathsections = indexPath.section
                 selectedCell = nil
@@ -1369,23 +1360,15 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
                 
                 print("titlerrererere" , cell.msgContentLabel.isHidden)
                 
-                
-                
             } else {
                 print("expandddd" , cell.msgContentLabel.isHidden)
                 selectedCell = indexPath
                 indexPathss = indexPath.row
                 
-                audioFile = unreadCell.msgcontent
+                audioFile = ReadData[indexPath.row].msgcontent
                 cell.voiceView.isHidden = true
                 
-                
             }
-            
-            
-            
-            
-            
         }
         
         

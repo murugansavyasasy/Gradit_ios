@@ -536,8 +536,6 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     @IBAction func adLoad(gesture : addGesture) {
         
-        
-        
         let vc =  AddVideoViewController(nibName: nil, bundle: nil)
         
         vc.AddImageUrl = gesture.urls
@@ -553,40 +551,28 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let cell = tableView.dequeueReusableCell(withIdentifier: identifers, for: indexPath) as!
         VideoTableViewCell
         
-        
-        var Shopres : videoDataDetails = videoRef[indexPath.row]
-        
-        
-        
-        
         if let selectedCells = selectedCell, selectedCells == indexPath {
             
             selectedCell = nil
             
-        }
-        
-        else{
+        } else{
             
             selectedCell = indexPath
             
-            if Shopres.isappviewed == "0"{
+            if videoRef[indexPath.row].isappviewed == "0"{
                 
-                apread(gesture : Shopres.detailid ?? "")
+                apread(gesture : videoRef[indexPath.row].detailid ?? "")
                 
-                Shopres.isappviewed = "1"
+                videoRef[indexPath.row].isappviewed = "1"
                 cell.redDotImageView.isHidden = true
                 
             }
-            
-            
-            
+             
         }
-        
         
         videoTableView.beginUpdates()
         videoTableView.endUpdates()
         videoTableView.reloadData()
-        
     }
     
     

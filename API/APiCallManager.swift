@@ -25,6 +25,7 @@ final class APiCallManager {
         requestBody: Encodable?,
         completion: @escaping (Result<T,Error>) -> Void
     ){
+        var logOutput = "\n================ API CALL START ================\n"
         
         let baseUrl = (isBaseUrl ?? false) ? Constant.baseUrl : Constant.Resume_baseUrl
         
@@ -46,6 +47,10 @@ final class APiCallManager {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
+        logOutput += "🌍 URL: \(url.absoluteString)\n"
+        logOutput += "📡 Method: \(httpMethod.rawValue)\n"
+        logOutput += "📦 Headers: \(request.allHTTPHeaderFields ?? [:])\n"
+        
         if let body = requestBody {
             do {
                 request.httpBody = try JSONEncoder().encode(body)
@@ -54,37 +59,50 @@ final class APiCallManager {
             }
         }
         
-        print("🌍 URL:", url.absoluteString)
-        print("📡 Method:", httpMethod.rawValue)
-        print("📦 Headers:", request.allHTTPHeaderFields ?? [:])
         if let body = request.httpBody,
            let json = String(data: body, encoding: .utf8) {
-            print("📤 Request Body:", json)
+            logOutput += "📤 Request Body: \(json)\n"
         }
 
         URLSession.shared.dataTask(with: request){ data, response, error in
             
             if let error = error {
+                logOutput += "❌ Error: \(error.localizedDescription)\n"
+                logOutput += "================ API CALL END ================\n"
+                print(logOutput)
+                
                 self.completionOnMain(.failure(error), completion: completion)
                 return
             }
             
             guard let response = response as? HTTPURLResponse else {
+                logOutput += "❌ Invalid Response\n"
+                logOutput += "================ API CALL END ================\n"
+                print(logOutput)
+                
                 self.completionOnMain(.failure(NetworkError.invalidResponse), completion: completion)
                 return
             }
-            print("📥 Status Code:", response.statusCode)
-            print("📥 RequestUrl:", url)
+            
+            logOutput += "📥 Status Code: \(response.statusCode)\n"
             
             guard let data = data else {
+                logOutput += "❌ No Data Received\n"
+                logOutput += "================ API CALL END ================\n"
+                print(logOutput)
+                
                 self.completionOnMain(.failure(NetworkError.noData),completion: completion)
                
                 return
             }
             
             if let responseString = String(data: data, encoding: .utf8){
-                print("📩 Response:", responseString)
+                logOutput += "📩 Response: \(responseString)\n"
             }
+            
+            logOutput += "================ API CALL END ================\n"
+            
+            print(logOutput)
             
             do {
                 let decoded = try JSONDecoder().decode(T.self, from: data)
@@ -244,3 +262,109 @@ extension NetworkError: LocalizedError {
 //
 //
 //
+
+final class MultipartManager {
+    
+    static let shared = MultipartManager()
+    private init() {}
+    
+    func uploadVoice(
+        url: String,
+        fileURL: URL,
+        infoJSONString: String,
+        completion: @escaping (Result<[String: Any], Error>) -> Void
+    ) {
+        
+        guard let requestURL = URL(string: url) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        
+        let boundary = UUID().uuidString
+        
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "POST"
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        var body = Data()
+        
+        do {
+            // ✅ FILE DATA
+            let fileData = try Data(contentsOf: fileURL)
+            print("📦 File size:", fileData.count)
+            
+            // ---------------------------
+            // ✅ INFO PART (IMPORTANT)
+            // ---------------------------
+            body.append("--\(boundary)\r\n")
+            body.append("Content-Disposition: form-data; name=\"Info\"\r\n")
+            body.append("Content-Transfer-Encoding: binary\r\n")
+            body.append("Content-Type: multipart/form-data; charset=utf-8\r\n\r\n")
+            body.append(infoJSONString)
+            body.append("\r\n")
+            
+            // ---------------------------
+            // ✅ FILE PART (IMPORTANT)
+            // ---------------------------
+            body.append("--\(boundary)\r\n")
+            body.append("Content-Disposition: form-data; name=\"voice\"; filename=\"voice.mp3\"\r\n")
+            body.append("Content-Type: multipart/form-data\r\n\r\n")
+            body.append(fileData)
+            body.append("\r\n")
+            
+            // ---------------------------
+            // ✅ CLOSE BOUNDARY
+            // ---------------------------
+            body.append("--\(boundary)--\r\n")
+            
+        } catch {
+            completion(.failure(error))
+            return
+        }
+        
+        request.httpBody = body
+        
+        print("🌍 URL:", url)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            if let error = error {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+                return
+            }
+            
+            guard let data = data else {
+                DispatchQueue.main.async {
+                    completion(.failure(NetworkError.noData))
+                }
+                return
+            }
+            
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("📩 Response:", responseString)
+            }
+            
+            do {
+                let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+                DispatchQueue.main.async {
+                    completion(.success(json ?? [:]))
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+            
+        }.resume()
+    }
+}
+
+extension Data {
+    mutating func append(_ string: String) {
+        if let data = string.data(using: .utf8) {
+            append(data)
+        }
+    }
+}

@@ -562,7 +562,6 @@ func LeavedropDrop(){
         var mangeLeave = manageLeaveModal()
         
         mangeLeave.leavetypeid = nameString
-        mangeLeave.applicationid = "0"
         mangeLeave.clgsectionid = section
         mangeLeave.colgid = collegeId
         mangeLeave.leavefromdate = fromDateLabel.text
@@ -573,8 +572,10 @@ func LeavedropDrop(){
         
         if types == "1" {
             mangeLeave.processtype = "add"
+            mangeLeave.applicationid = "0"
         }else {
             mangeLeave.processtype = "edit"
+            mangeLeave.applicationid = headerId
         }
         
         APiCallManager.shared.callApi(

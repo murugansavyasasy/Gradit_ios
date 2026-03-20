@@ -540,300 +540,380 @@ class SenderExaminationPlusNextPageViewController: UIViewController, UITextField
     
     func DropDowns(){
         
-        let devisions = getDivisionModal()
+        var devisions = getDivisionModal()
         
         devisions.college_id = colgId
         devisions.user_id =  memberID
         
-        let devisionstr = devisions.toJSONString()
-        
-        
-        DivisionRequest.call_request(param: devisionstr!){ [self]
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetDivisions,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: devisions
+        ) {[weak self] (result:Result<GetDivisionResponce, Error>) in
             
-            (res) in
+            guard let self = self else { return }
             
-            
-            
-            let devisin : GetDivisionResponce  = Mapper<GetDivisionResponce>().map(JSONString: res)!
-            
-            devisionRefName = devisin.data
-            
-            var myArray: [String] = []
-            var myArrayId: [String] = [ ]
-            
-            devisionRefName.forEach {(arrType)  in
-                myArray.append((arrType.division_name))
-                myArrayId.append((arrType.division_id))
+            switch result {
+            case .success(let success):
+                devisionRefName = success.data ?? []
                 
-            }
-            print("frdfd",myArray)
-            
-            dropDown.dataSource = myArray//4
-         
-            dropDown.anchorView = selectDivisionDropDown //5
-            
-            dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-            
-            dropDown.direction = .bottom
-            DropDown.appearance().backgroundColor = UIColor.white
-            dropDown.show() //7
-            //
-            dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-                print("Selected item: \(item) at index: \(index)")
+                var myArray: [String] = []
+                var myArrayId: [String] = [ ]
                 
-                
-                self.divisionSelectedLabel.text = item
-                
-                var idArray : [String] = []
                 devisionRefName.forEach {(arrType)  in
-                    idArray.append((arrType.division_id))
+                    myArray.append((arrType.division_name ?? ""))
+                    myArrayId.append((arrType.division_id ?? ""))
                     
                 }
+                print("frdfd",myArray)
                 
-                print("dropDownTextLabel.text\(item)")
-                let deparment = DepartmentModal()
+                dropDown.dataSource = myArray//4
                 
-                deparment.user_id = memberID
+                dropDown.anchorView = selectDivisionDropDown //5
                 
-                deparment.college_id = colgId
+                dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
                 
-                deparment.div_id =  idArray[index]
-                
-                courseTypeId = idArray[index]
-                
-                print("idArray[index]\(idArray[index])")
-                
-                
-                
-                let deparmentstr = deparment.toJSONString()
-                RepienceDeparmentRequest.call_request(param: deparmentstr!){ [self]
-                    
-                    (res) in
+                dropDown.direction = .bottom
+                DropDown.appearance().backgroundColor = UIColor.white
+                dropDown.show() //7
+                //
+                dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
+                    print("Selected item: \(item) at index: \(index)")
                     
                     
+                    self.divisionSelectedLabel.text = item
                     
-                    let depart : RepienceDeparmentResponce  = Mapper<RepienceDeparmentResponce>().map(JSONString: res)!
-                    
-                    deparmentRefName = depart.data
-                    
-                    var departs : [String] = []
-                    var departmenIds : [String] = []
-                    deparmentRefName.forEach {(arrType)  in
-                        departs.append((arrType.department_name))
-                        departmenIds.append((arrType.department_id))
+                    var idArray : [String] = []
+                    self.devisionRefName.forEach {(arrType)  in
+                        idArray.append((arrType.division_id ?? ""))
                         
                     }
-                    print("frdfd",departs)
                     
-                    dropDown.dataSource = departs//4
-                   
-                    dropDown.anchorView = selectDepartDropDown //5
+                    print("dropDownTextLabel.text\(item)")
+                    var deparment = DepartmentModal()
                     
-                    dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
+                    deparment.user_id =  self.memberID
                     
-                    dropDown.direction = .bottom
-                    DropDown.appearance().backgroundColor = UIColor.white
-                    dropDown.show() //7
-                    //
-                    dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-                        print("Selected item: \(item) at index: \(index)")
-                        
-                        //
-                        self.departmentLabel.text = item
-                        
-                        
-                        var courseName : [String] = []
-                        
-                        
-                        let course =  getCourseModal()
-                        
-                        course.user_id = memberID
-                        course.college_id = colgId
-                        course.dept_id = departmenIds[index]
-                        
-                        print("fhfytghfg",departmenIds[index])
-                        
-                        departsss = departmenIds[index]
-                        
-                        let coursestr = course.toJSONString()
-                        GetCourseRequest.call_request(param: coursestr!){ [self]
+                    deparment.college_id =  self.colgId
+                    
+                    deparment.div_id =  idArray[index]
+                    
+                    self.courseTypeId = idArray[index]
+                    
+                    print("idArray[index]\(idArray[index])")
+                    
+                    
+                    APiCallManager.shared.callApi(
+                            url: APIEndpoints.GetDepartmentsbyDivision,
+                            httpMethod: .post,
+                            queryParam: nil,
+                            requestBody: deparment
+                        ) {[weak self] (result:Result<RepienceDeparmentResponce, Error>) in
+                                
+                            guard let self = self else { return }
                             
-                            (res) in
-                            //
-                            //
-                            //
-                            let cour : getCourseResponce  = Mapper<getCourseResponce>().map(JSONString: res)!
-                            
-                            courseRefName = cour.data
-                            var CourseIds : [String] = []
-                            courseRefName.forEach {(arrType)  in
-                                courseName.append((arrType.course_name))
-                                CourseIds.append(arrType.course_id)
-                            }
-                            dropDown.dataSource = courseName//4
-                          
-                            dropDown.anchorView = selectCourseDropDown //5
-                            
-                            dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-                            
-                            dropDown.direction = .bottom
-                            DropDown.appearance().backgroundColor = UIColor.white
-                            dropDown.show() //7
-                            //
-                            dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-                                print("Selected item: \(item) at index: \(index)")
+                            switch result {
+                            case .success(let success):
+                                self.deparmentRefName = success.data ?? []
                                 
-                                self.courseNameLabel.text = item
-                                
-                                
-                                
-                                
-                                
-                                let years = getYearListModal()
-                                
-                                years.idcollege = colgId
-                                years.clgprocessby = memberID
-                                years.idcourse = CourseIds[index]
-                                years.iddept = departsss
-                                
-                                print("depaertt",departsss)
-                                
-                                let yearstr = years.toJSONString()
-                                getYearListRequest.call_request(param: yearstr!){ [self]
+                                var departs : [String] = []
+                                var departmenIds : [String] = []
+                                self.deparmentRefName.forEach {(arrType)  in
+                                    departs.append((arrType.department_name ?? ""))
+                                    departmenIds.append((arrType.department_id ?? ""))
                                     
-                                    (res) in
+                                }
+                                print("frdfd",departs)
+                                
+                                self.dropDown.dataSource = departs//4
+                                
+                                self.dropDown.anchorView =  self.selectDepartDropDown //5
+                                
+                                self.dropDown.bottomOffset = CGPoint(x: 0, y:( self.dropDown.anchorView?.plainView.bounds.height)!)
+                                
+                                self.dropDown.direction = .bottom
+                                DropDown.appearance().backgroundColor = UIColor.white
+                                self.dropDown.show() //7
+                                //
+                                self.dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
+                                    print("Selected item: \(item) at index: \(index)")
+                                    
                                     //
-                                    //
-                                    //
-                                    let cour : getYearListResponce  = Mapper<getYearListResponce>().map(JSONString: res)!
+                                    self.departmentLabel.text = item
                                     
-                                    yearRef = cour.data
                                     
-                                    var yearName : [String] = []
-                                    var yearIdss : [Int] = []
-                                    yearRef.forEach {(arrType)  in
-                                        yearName.append((arrType.yearname))
-                                        yearIdss.append(arrType.yearid)
-                                    }
+                                    var courseName : [String] = []
                                     
-                                    let stringArray = yearIdss.map { String($0) }
-                                    let string = stringArray.joined(separator: ", ")
                                     
-                                    print("thoiedasefcdsx",string)
-                                    //
+                                    var course =  getCourseModal()
                                     
-                                    dropDown.dataSource = yearName//4
+                                    course.user_id =  self.memberID
+                                    course.college_id =  self.colgId
+                                    course.dept_id = departmenIds[index]
                                     
-                                    dropDown.anchorView = selectYearDropDown //5
+                                    print("fhfytghfg",departmenIds[index])
                                     
-                                    dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
+                                    self.departsss = departmenIds[index]
                                     
-                                    dropDown.direction = .bottom
-                                    DropDown.appearance().backgroundColor = UIColor.white
-                                    dropDown.show() //7
-                                    //
-                                    dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-                                        print("Selected item: \(item) at index: \(index)")
-                                        
-                                        self.yearLabel.text = item
-                                        
-                                        
-                                        
-                                        let faculDrops = dropDownModal()
-                                        
-                                        faculDrops.yearid = yearIdss[index]
-                                        
-                                        let faculStr = faculDrops.toJSONString()
-                                        
-                                        facultyDropDownRequest.call_request(param: faculStr!){ [self]
-                                            (res) in
-                                            
-                                            let facultyResp : dropDownResponce =
-                                            Mapper<dropDownResponce>().map(JSONString: res)!
-                                            
-                                            facultyDropDownRef = facultyResp.data
-                                            
-                                            var semesterNam : [String] = []
-                                            
-                                            
-                                            facultyDropDownRef.forEach {(arrType)  in
-                                                semesterNam.append((arrType.semestername))
+                                    APiCallManager.shared.callApi(
+                                            url: APIEndpoints.GetCoursesByDepartment,
+                                            httpMethod: .post,
+                                            queryParam: nil,
+                                            requestBody: course
+                                        ) {[weak self] (result:Result<getCourseResponce, Error>) in
                                                 
-                                            }
+                                            guard let self = self else { return }
                                             
-                                            
-                                            dropDown.dataSource = semesterNam//4
-                                            
-                                            dropDown.anchorView = selectSemesterDropDown //5
-                                            
-                                            dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-                                            
-                                            dropDown.direction = .bottom
-                                            DropDown.appearance().backgroundColor = UIColor.white
-                                            dropDown.show() //7
-                                            //
-                                            dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-                                                print("Selected item: \(item) at index: \(index)")
+                                            switch result {
+                                            case .success(let cour):
+                                                self.courseRefName = cour.data ?? []
+                                                var CourseIds : [String] = []
+                                                self.courseRefName.forEach {(arrType)  in
+                                                    courseName.append((arrType.course_name ?? ""))
+                                                    CourseIds.append(arrType.course_id ?? "")
+                                                }
+                                                self.dropDown.dataSource = courseName//4
                                                 
-                                                self.semesterLabel.text = item
+                                                self.dropDown.anchorView =  self.selectCourseDropDown //5
                                                 
-                                                for i in facultyResp.data{
+                                                self.dropDown.bottomOffset = CGPoint(x: 0, y:( self.dropDown.anchorView?.plainView.bounds.height)!)
+                                                
+                                                self.dropDown.direction = .bottom
+                                                DropDown.appearance().backgroundColor = UIColor.white
+                                                self.dropDown.show() //7
+                                                //
+                                                self.dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
+                                                    print("Selected item: \(item) at index: \(index)")
+                                                    
+                                                    self.courseNameLabel.text = item
                                                     
                                                     
-                                                    semid = i.clgsemesterid
-                                                    for isa in i.sectiondetails{
+                                                    var years = getYearListModal()
+                                                    
+                                                    years.idcollege =  self.colgId
+                                                    years.clgprocessby =  self.memberID
+                                                    years.idcourse = CourseIds[index]
+                                                    years.iddept =  self.departsss
+                                                    
+                                                    print("depaertt", self.departsss)
+                                                    
+//                                                    let yearstr = years.toJSONString()
+//                                                    getYearListRequest.call_request(param: yearstr!){ [self]
+//                                                        
+//                                                        (res) in
+//                                                       
+//                                                        //
+//                                                        let cour : getYearListResponce  = Mapper<getYearListResponce>().map(JSONString: res)!
+//                                                        
+//                                                        self.yearRef = cour.data
+//                                                        
+//                                                        var yearName : [String] = []
+//                                                        var yearIdss : [Int] = []
+//                                                        self.yearRef.forEach {(arrType)  in
+//                                                            yearName.append((arrType.yearname))
+//                                                            yearIdss.append(arrType.yearid)
+//                                                        }
+//                                                        
+//                                                        let stringArray = yearIdss.map { String($0) }
+//                                                        let string = stringArray.joined(separator: ", ")
+//                                                        
+//                                                        print("thoiedasefcdsx",string)
+//                                                        //
+//                                                        
+//                                                        self.dropDown.dataSource = yearName//4
+//                                                        
+//                                                        self.dropDown.anchorView =  self.selectYearDropDown //5
+//                                                        
+//                                                        self.dropDown.bottomOffset = CGPoint(x: 0, y:( self.dropDown.anchorView?.plainView.bounds.height)!)
+//                                                        
+//                                                        self.dropDown.direction = .bottom
+//                                                        DropDown.appearance().backgroundColor = UIColor.white
+//                                                        self.dropDown.show() //7
+//                                                        //
+//                                                        self.dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
+//                                                            print("Selected item: \(item) at index: \(index)")
+//                                                            
+//                                                            self.yearLabel.text = item
+//                                                            
+//                                                            
+//                                                            
+//                                                            let faculDrops = dropDownModal()
+//                                                            
+//                                                            faculDrops.yearid = yearIdss[index]
+//                                                            
+//                                                            let faculStr = faculDrops.toJSONString()
+//                                                            
+//                                                            facultyDropDownRequest.call_request(param: faculStr!){ [self]
+//                                                                (res) in
+//                                                                
+//                                                                let facultyResp : dropDownResponce =
+//                                                                Mapper<dropDownResponce>().map(JSONString: res)!
+//                                                                
+//                                                                self.facultyDropDownRef = facultyResp.data
+//                                                                
+//                                                                var semesterNam : [String] = []
+//                                                                
+//                                                                
+//                                                                self.facultyDropDownRef.forEach {(arrType)  in
+//                                                                    semesterNam.append((arrType.semestername))
+//                                                                    
+//                                                                }
+//                                                                
+//                                                                
+//                                                                self.dropDown.dataSource = semesterNam//4
+//                                                                
+//                                                                self.dropDown.anchorView =  self.selectSemesterDropDown //5
+//                                                                
+//                                                                self.dropDown.bottomOffset = CGPoint(x: 0, y:( self.dropDown.anchorView?.plainView.bounds.height)!)
+//                                                                
+//                                                                self.dropDown.direction = .bottom
+//                                                                DropDown.appearance().backgroundColor = UIColor.white
+//                                                                self.dropDown.show() //7
+//                                                                //
+//                                                                self.dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
+//                                                                    print("Selected item: \(item) at index: \(index)")
+//                                                                    
+//                                                                    self.semesterLabel.text = item
+//                                                                    
+//                                                                    for i in facultyResp.data{
+//                                                                        
+//                                                                        
+//                                                                        self.semid = i.clgsemesterid
+//                                                                        for isa in i.sectiondetails{
+//                                                                            
+//                                                                            self.sectionID = isa.sectionid
+//                                                                            
+//                                                                        }
+//                                                                    }
+//                                                                }
+//                                                            }
+//                                                        }
+//                                                    }
+                                                    
+                                                    APiCallManager.shared.callApi(
+                                                        url: APIEndpoints.GetYearListforApp,
+                                                        httpMethod: .post,
+                                                        queryParam: nil,
+                                                        requestBody: years
+                                                    ) { [weak self] (result: Result<getYearListResponce, Error>) in
                                                         
-                                                        sectionID = isa.sectionid
+                                                        guard let self = self else { return }
                                                         
+                                                        switch result {
+                                                            
+                                                        case .success(let cour):
+                                                            
+                                                            self.yearRef = cour.data ?? []
+                                                            
+                                                            var yearName : [String] = []
+                                                            var yearIdss : [Int] = []
+                                                            
+                                                            self.yearRef.forEach {(arrType)  in
+                                                                yearName.append((arrType.yearname ?? ""))
+                                                                yearIdss.append(arrType.yearid ?? 0)
+                                                            }
+                                                            
+                                                            let stringArray = yearIdss.map { String($0) }
+                                                            let string = stringArray.joined(separator: ", ")
+                                                            
+                                                            print("thoiedasefcdsx",string)
+                                                            
+                                                            self.dropDown.dataSource = yearName
+                                                            
+                                                            self.dropDown.anchorView = self.selectYearDropDown
+                                                            
+                                                            self.dropDown.bottomOffset = CGPoint(x: 0, y:(self.dropDown.anchorView?.plainView.bounds.height)!)
+                                                            
+                                                            self.dropDown.direction = .bottom
+                                                            DropDown.appearance().backgroundColor = UIColor.white
+                                                            self.dropDown.show()
+                                                            
+                                                            self.dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
+                                                                print("Selected item: \(item) at index: \(index)")
+                                                                
+                                                                self.yearLabel.text = item
+                                                                
+                                                                var faculDrops = dropDownModal()
+                                                                
+                                                                faculDrops.yearid = yearIdss[index]
+                                                                
+                                                                APiCallManager.shared.callApi(
+                                                                    url: APIEndpoints.semesterandsectionListforApp,
+                                                                    httpMethod: .post,
+                                                                    queryParam: nil,
+                                                                    requestBody: faculDrops
+                                                                ) { [weak self] (result: Result<dropDownResponce, Error>) in
+                                                                    
+                                                                    guard let self = self else { return }
+                                                                    
+                                                                    switch result {
+                                                                        
+                                                                    case .success(let facultyResp):
+                                                                        
+                                                                        self.facultyDropDownRef = facultyResp.data ?? []
+                                                                        
+                                                                        var semesterNam : [String] = []
+                                                                        
+                                                                        self.facultyDropDownRef.forEach {(arrType)  in
+                                                                            semesterNam.append((arrType.semestername ?? ""))
+                                                                        }
+                                                                        
+                                                                        self.dropDown.dataSource = semesterNam
+                                                                        
+                                                                        self.dropDown.anchorView = self.selectSemesterDropDown
+                                                                        
+                                                                        self.dropDown.bottomOffset = CGPoint(x: 0, y:(self.dropDown.anchorView?.plainView.bounds.height)!)
+                                                                        
+                                                                        self.dropDown.direction = .bottom
+                                                                        DropDown.appearance().backgroundColor = UIColor.white
+                                                                        self.dropDown.show()
+                                                                        
+                                                                        self.dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
+                                                                            print("Selected item: \(item) at index: \(index)")
+                                                                            
+                                                                            self.semesterLabel.text = item
+                                                                            
+                                                                            for i in facultyResp.data ?? []{
+                                                                                
+                                                                                self.semid = i.clgsemesterid
+                                                                                
+                                                                                for isa in i.sectiondetails ?? []{
+                                                                                    self.sectionID = isa.sectionid
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        
+                                                                    case .failure(let error):
+                                                                        print(error.localizedDescription)
+                                                                    }
+                                                                }
+                                                            }
+                                                            
+                                                        case .failure(let error):
+                                                            print(error.localizedDescription)
+                                                        }
                                                     }
-                                                    
-                                                    
                                                 }
                                                 
                                                 
-                                                
+                                            case .failure(let failure):
+                                                 print("Error:",failure.localizedDescription)
                                             }
-                                        }
-                                        
-                                        
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                    
+                                            
+                                            }
                                 }
-                                
-                                
+                            case .failure(let failure):
+                                 print("Error:",failure.localizedDescription)
                             }
                             
-                            
-                            
-                        }
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    }
-                    
+                            }
                 }
-                
+            case .failure(let failure):
+                print("Error:",failure.localizedDescription)
             }
             
-            
-            
-            
-            
-            
-            
-            
         }
-        
-        
-        
     }
     
     
@@ -842,86 +922,84 @@ class SenderExaminationPlusNextPageViewController: UIViewController, UITextField
     @IBAction func dropDownVc(){
         
         
-        let deparment = DepartmentModal()
-        
+        var deparment = DepartmentModal()
         deparment.user_id = memberID
-        
         deparment.college_id = colgId
-        
         deparment.div_id =  courseTypeId
         
-        
-        let deparmentstr = deparment.toJSONString()
-        print("deparmentstr",deparmentstr)
-        RepienceDeparmentRequest.call_request(param: deparmentstr!){ [self]
-            
-            (res) in
-            
-            let depart : RepienceDeparmentResponce  = Mapper<RepienceDeparmentResponce>().map(JSONString: res)!
-            
-            var addAryy: [String] = [ ]
-            var itemAryy: [String] = [ ]
-            
-            
-            depart.data .forEach {(arrType)  in
-                addAryy.append((arrType.department_name))
-                
-            }
-            
-            
-            dropDown.dataSource = addAryy//4
-            dropDown.anchorView = selectCourseDropDown //5
-            
-            dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-            //
-            dropDown.direction = .bottom
-            DropDown.appearance().backgroundColor = UIColor.white
-            dropDown.show() //7
-            
-            var idArray : [String] = []
-            deparmentRefName.forEach {(arrType)  in
-                idArray.append((arrType.department_id))
-                
-            }
-            //
-            dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-                print("Selected item: \(item) at index: \(index)")
-                
-                
-                
-                let course =  getCourseModal()
-                
-                course.user_id = memberID
-                course.college_id = colgId
-                course.dept_id = idArray[index]
-                
-                print("fhfytghfg",idArray[index])
-                
-                
-                let coursestr = course.toJSONString()
-                GetCourseRequest.call_request(param: coursestr!){ [self]
+        APiCallManager.shared.callApi(
+                url: APIEndpoints.GetDepartmentsbyDivision,
+                httpMethod: .post,
+                queryParam: nil,
+                requestBody: deparment
+            ) {[weak self] (result:Result<RepienceDeparmentResponce, Error>) in
                     
-                    (res) in
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let success):
+                    var addAryy: [String] = [ ]
+                    var itemAryy: [String] = [ ]
+                    
+                    
+                    success.data?.forEach {(arrType)  in
+                        addAryy.append((arrType.department_name ?? ""))
+                        
+                    }
+                    
+                    
+                    dropDown.dataSource = addAryy//4
+                    dropDown.anchorView = selectCourseDropDown //5
+                    
+                    dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
                     //
+                    dropDown.direction = .bottom
+                    DropDown.appearance().backgroundColor = UIColor.white
+                    dropDown.show() //7
+                    
+                    var idArray : [String] = []
+                    deparmentRefName.forEach {(arrType)  in
+                        idArray.append((arrType.department_id ?? ""))
+                        
+                    }
                     //
-                    //
-                    let cour : getCourseResponce  = Mapper<getCourseResponce>().map(JSONString: res)!
+                    dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
+                        print("Selected item: \(item) at index: \(index)")
+                        
+                        
+                        
+                        var course =  getCourseModal()
+                        
+                        course.user_id = self.memberID
+                        course.college_id = self.colgId
+                        course.dept_id = idArray[index]
+                        
+                        print("fhfytghfg",idArray[index])
+                        
+                        APiCallManager.shared.callApi(
+                                url: APIEndpoints.GetCoursesByDepartment,
+                                httpMethod: .post,
+                                queryParam: nil,
+                                requestBody: course
+                            ) {[weak self] (result:Result<getCourseResponce, Error>) in
+                                    
+                                guard let self = self else { return }
+                                
+                                switch result {
+                                case .success(let success):
+                                    self.courseRefName = success.data ?? []
+                                case .failure(let failure):
+                                     print("Error:",failure.localizedDescription)
+                                }
+                                
+                                }
+                    }
                     
-                    courseRefName = cour.data
-                    
-                    
+                case .failure(let failure):
+                     print("Error:",failure.localizedDescription)
                 }
                 
-                
-            }
-            
-            
-            
-            
-            
-        }
-        
-        
+                }
     }
     
     

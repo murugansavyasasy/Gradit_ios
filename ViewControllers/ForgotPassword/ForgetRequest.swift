@@ -6,19 +6,11 @@ import  KRProgressHUD
 
 class forgetRequest{
 
-    
-
     static func call_request(param : String, completion_handler : @escaping(String)->()) {
 
         KRProgressHUD.show()
 
-        
-
-        
-
         BaseRequest.raw_post(url: get_url(), param: param).success {
-
-          
 
             (res) in
 
@@ -28,22 +20,11 @@ class forgetRequest{
 
     }
 
-    
-
-    
-
     private static func get_url() -> String{
-
-        
 
         return String(format: "%@/forgetpassword", Constant.baseUrl)
 
-//
-        
-
     }
-
-    
 
 }
 

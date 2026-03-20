@@ -109,7 +109,7 @@ var deparmentRefName : [RepienceDeparmentDataDetails] = []
 var entierRefName : [EntiercollegeDataDetails] = []
 var groupRefName : [getGroupDataDetails] = []
 var courseRefName : [getCourseDataDetails] = []
-var particularSms : [NoticePArticularResponce] = []
+var particularSms : NoticePArticularResponce?
 let dropDown = DropDown()
 var titlesTextField : String!
 var discreptionss : String!
@@ -456,261 +456,150 @@ override func viewDidLoad() {
 
 func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     
-    
-    
     if devisionView.backgroundColor == UIColor(named: "selectColor"){
         
-        
-        
-        filtered_listDevision = Mapper<getDivisonDataDetails>().mapArray(JSONString: clone_listDevision.toJSONString()!)!
-        
-        
-        
-        
-        
-        
-        if !searchText.isEmpty{
-            isFilter = true
-            devisionRefName = filtered_listDevision.filter {
-                
-                
-                
-                $0.division_name.lowercased().contains(searchText.lowercased()) || $0.division_id.lowercased().contains(searchText.lowercased()) ||
-                $0.division_code.lowercased().contains(searchText.lowercased())
-                //
-            }
-            
-            
-            
-        }else{
-            
+        if searchText.isEmpty{
             isFilter = false
-            devisionRefName = filtered_listDevision
-            
-            print("pendingOrder")
-            
+            devisionRefName = clone_listDevision
+        }else {
+            isFilter = true
+            devisionRefName = clone_listDevision.filter {
+                ($0.division_name ?? "")
+                    .localizedCaseInsensitiveContains(searchText) ||
+                ($0.division_id ?? "")
+                    .localizedCaseInsensitiveContains(searchText) ||
+                ($0.division_code ?? "")
+                    .localizedCaseInsensitiveContains(searchText)
+            }
         }
         
-        
-        
-        if devisionRefName.count > 0{
-            
-            print ("searchListPendigCount",devisionRefName.count)
-            
-            
-            
-            tv.alpha = 1
-            
-        }else{
-            
-            
-            tv.alpha = 0
-            
-        }
-        
-        
+        tv.alpha = devisionRefName.isEmpty ? 0 : 1
         
         tv.reloadData()
-        
-        
-        
-    }
-    
-    else if departmentView.backgroundColor == UIColor(named: "selectColor"){
+          
+    } else if departmentView.backgroundColor == UIColor(named: "selectColor") {
         
         if NameId == "2" {
             
-            filtered_listDepartment1  = Mapper<RepienceDeparmentDataDetails>().mapArray(JSONString: clone_listDepartment1.toJSONString()!)!
+            filtered_listDepartment1 = clone_listDepartment1
             
-            
-            
-            
-            
-            
-            if !searchText.isEmpty{
+            if !searchText.isEmpty {
                 isFilter = true
                 departmentCondentArry = filtered_listDepartment1.filter {
                     
-                    
-                    
-                    $0.department_code.lowercased().contains(searchText.lowercased()) || $0.department_name.lowercased().contains(searchText.lowercased()) ||
-                    $0.department_id.lowercased().contains(searchText.lowercased())
-                    //
+                    ($0.department_code ?? "").lowercased().contains(searchText.lowercased()) ||
+                    ($0.department_name ?? "").lowercased().contains(searchText.lowercased()) ||
+                    ($0.department_id ?? "").lowercased().contains(searchText.lowercased())
                 }
                 
-                
-                
-            }else{
+            } else {
                 
                 isFilter = false
                 departmentCondentArry = filtered_listDepartment1
                 
                 print("pendingOrder")
-                
             }
             
-            
-            
-            if departmentCondentArry.count > 0{
+            if departmentCondentArry.count > 0 {
                 
-                print ("searchListPendigCount",departmentCondentArry.count)
+                print("searchListPendigCount", departmentCondentArry.count)
                 
                 allview.isHidden = false
-                
                 tv.alpha = 1
                 
-            }else{
+            } else {
                 
                 allview.isHidden = true
                 tv.alpha = 0
-                
             }
-            
-            
             
             tv.reloadData()
             
+        } else {
             
+            filtered_listDepartment = clone_listDepartment
             
-        }
-        else{
-            filtered_listDepartment  = Mapper<RepienceDeparmentDataDetails>().mapArray(JSONString: clone_listDepartment.toJSONString()!)!
-            
-            
-            
-            
-            
-            
-            if !searchText.isEmpty{
+            if !searchText.isEmpty {
+                
                 isFilter = true
+                
                 deparmentRefName = filtered_listDepartment.filter {
                     
-                    
-                    
-                    $0.department_code.lowercased().contains(searchText.lowercased()) || $0.department_name.lowercased().contains(searchText.lowercased()) ||
-                    $0.department_id.lowercased().contains(searchText.lowercased())
-                    //
+                    ($0.department_code ?? "").lowercased().contains(searchText.lowercased()) ||
+                    ($0.department_name ?? "").lowercased().contains(searchText.lowercased()) ||
+                    ($0.department_id ?? "").lowercased().contains(searchText.lowercased())
                 }
                 
-                
-                
-            }else{
+            } else {
                 
                 isFilter = false
                 deparmentRefName = filtered_listDepartment
                 
                 print("pendingOrder")
-                
             }
             
-            
-            
-            if deparmentRefName.count > 0{
+            if deparmentRefName.count > 0 {
                 
-                print ("searchListPendigCount",deparmentRefName.count)
-                
+                print("searchListPendigCount", deparmentRefName.count)
                 
                 allview.isHidden = false
                 tv.alpha = 1
                 
-            }else{
+            } else {
                 
                 allview.isHidden = true
                 tv.alpha = 0
-                
             }
             
-            
-            
             tv.reloadData()
-            
-            
         }
         
+    } else if groupView.backgroundColor == UIColor(named: "selectColor") {
         
-    }
-    
-    else if groupView.backgroundColor == UIColor(named: "selectColor"){
+        filtered_listgroup = clone_listgroup
         
-        
-        filtered_listgroup  = Mapper<getGroupDataDetails>().mapArray(JSONString: clone_listgroup.toJSONString()!)!
-        
-        
-        
-        
-        
-        
-        if !searchText.isEmpty{
+        if !searchText.isEmpty {
             isFilter = true
             groupRefName = filtered_listgroup.filter {
                 
-                
-                
-                $0.groupname.lowercased().contains(searchText.lowercased()) ||
-                $0.grouptype.lowercased().contains(searchText.lowercased())
-                //
+                ($0.groupname ?? "").lowercased().contains(searchText.lowercased()) ||
+                ($0.grouptype ?? "").lowercased().contains(searchText.lowercased())
             }
             
-            
-            
-        }else{
+        } else {
             
             isFilter = false
             groupRefName = filtered_listgroup
             
             print("pendingOrder")
-            
         }
         
-        
-        
-        if groupRefName.count > 0{
+        if groupRefName.count > 0 {
             
-            print ("searchListPendigCount",groupRefName.count)
-            
-            
+            print("searchListPendigCount", groupRefName.count)
             
             tv.alpha = 1
             
-        }else{
-            
+        } else {
             
             tv.alpha = 0
-            
         }
         
-        
-        
         tv.reloadData()
-        
-        
-        
-        
-    }
-    
-    else if courseView.backgroundColor == UIColor(named: "selectColor"){
+    } else if courseView.backgroundColor == UIColor(named: "selectColor"){
         
         if NameIdCourse == "2"{
             
-            filtered_listcourse1  = Mapper<getCourseDataDetails>().mapArray(JSONString: clone_listcourse1.toJSONString()!)!
-            
-            
-            
-            
-            
+            filtered_listcourse1 = clone_listcourse1
             
             if !searchText.isEmpty{
                 isFilter = true
                 courseCondentArry = filtered_listcourse1.filter {
                     
-                    
-                    
-                    $0.course_name.lowercased().contains(searchText.lowercased()) || $0.course_id.lowercased().contains(searchText.lowercased()) ||
-                    $0.course_code.lowercased().contains(searchText.lowercased())
-                    //
+                    ($0.course_name ?? "").lowercased().contains(searchText.lowercased()) ||
+                    ($0.course_id ?? "").lowercased().contains(searchText.lowercased()) ||
+                    ($0.course_code ?? "").lowercased().contains(searchText.lowercased())
                 }
-                
-                
                 
             }else{
                 
@@ -718,59 +607,34 @@ func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
                 courseCondentArry = filtered_listcourse1
                 
                 print("pendingOrder")
-                
             }
-            
-            
             
             if courseRefName.count > 0{
                 
                 print ("searchListPendigCount",courseRefName.count)
                 
-                
-                
                 tv.alpha = 1
                 
             }else{
                 
-                
                 tv.alpha = 0
-                
             }
             
-            
-            
             tv.reloadData()
-            
-            
-            
-            
-            
-            
-            
         }
         
         else{
             
-            filtered_listcourse  = Mapper<getCourseDataDetails>().mapArray(JSONString: clone_listcourse.toJSONString()!)!
-            
-            
-            
-            
-            
+            filtered_listcourse = clone_listcourse
             
             if !searchText.isEmpty{
                 isFilter = true
                 courseRefName = filtered_listcourse.filter {
                     
-                    
-                    
-                    $0.course_name.lowercased().contains(searchText.lowercased()) || $0.course_id.lowercased().contains(searchText.lowercased()) ||
-                    $0.course_code.lowercased().contains(searchText.lowercased())
-                    //
+                    ($0.course_name ?? "").lowercased().contains(searchText.lowercased()) ||
+                    ($0.course_id ?? "").lowercased().contains(searchText.lowercased()) ||
+                    ($0.course_code ?? "").lowercased().contains(searchText.lowercased())
                 }
-                
-                
                 
             }else{
                 
@@ -778,39 +642,23 @@ func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
                 courseRefName = filtered_listcourse
                 
                 print("pendingOrder")
-                
             }
-            
-            
             
             if courseRefName.count > 0{
                 
                 print ("searchListPendigCount",courseRefName.count)
                 
-                
-                
                 tv.alpha = 1
                 
             }else{
                 
-                
                 tv.alpha = 0
-                
             }
-            
-            
             
             tv.reloadData()
             
-            
-            
-            
         }
-        
     }
-    
-    
-    
     
     
 }
@@ -909,248 +757,222 @@ func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 
 
 
-@IBAction func CoursedropDowVC(){
-    
-    DefaultsKeys.resiverId.removeAll()
-    tv.isHidden = true
-    allview.isHidden = true
-    let deparment = DepartmentModal()
-    
-    deparment.user_id = memberId
-    
-    deparment.college_id = collegeId
-    
-    deparment.div_id =  courseTypeId
-    
-    
-    
-    let deparmentstr = deparment.toJSONString()
-    print("qwqqqqqqqqqqqqqqqqq",deparmentstr)
-    RepienceDeparmentRequest.call_request(param: deparmentstr!){ [self]
+    @IBAction func CoursedropDowVC(){
         
-        (res) in
-        
-        let depart : RepienceDeparmentResponce  = Mapper<RepienceDeparmentResponce>().map(JSONString: res)!
-        
-        deparmentRefName = depart.data
-        clone_listDepartment = depart.data
+        DefaultsKeys.resiverId.removeAll()
         tv.isHidden = true
+        allview.isHidden = true
         
+        var deparment = DepartmentModal()
         
-        var addAryy: [String] = [ ]
-        var itemAryy: [String] = [ ]
+        deparment.user_id = memberId
+        deparment.college_id = collegeId
+        deparment.div_id =  courseTypeId
         
-        
-        depart.data .forEach {(arrType)  in
-            addAryy.append((arrType.department_name))
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetDepartmentsbyDivision,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: deparment
+        ) {[weak self] (result:Result<RepienceDeparmentResponce, Error>) in
             
-        }
-        
-        dropDown.dataSource = addAryy//4
-        dropDown.anchorView = courseDropDownView //5
-        
-        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-        //
-        dropDown.direction = .bottom
-        DropDown.appearance().backgroundColor = UIColor.white
-        dropDown.show() //7
-        
-        var idArray : [String] = []
-        deparmentRefName.forEach {(arrType)  in
-            idArray.append((arrType.department_id))
+            guard let self = self else { return }
             
-        }
-        //
-        dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
-            
-            if(DefaultsKeys.resiverId.count>0){
-                DefaultsKeys.resiverId.removeAll()
+            switch result {
+            case .success(let success):
+                deparmentRefName = success.data ?? []
+                clone_listDepartment = success.data ?? []
+                tv.isHidden = true
+                
+                var addAryy: [String] = [ ]
+                var itemAryy: [String] = [ ]
+                
+                
+                success.data?.forEach {(arrType)  in
+                    addAryy.append((arrType.department_name ?? ""))
+                }
+                
+                dropDown.dataSource = addAryy//4
+                dropDown.anchorView = courseDropDownView //5
+                
+                dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
+                //
+                dropDown.direction = .bottom
+                DropDown.appearance().backgroundColor = UIColor.white
+                dropDown.show() //7
+                
+                var idArray : [String] = []
+                deparmentRefName.forEach {(arrType)  in
+                    idArray.append((arrType.department_id ?? ""))
+                }
+                //
+                dropDown.selectionAction = { [weak self] (index:Int, item: String) in
+                    print("Selected item: \(item) at index: \(index)")
+                    
+                    if(DefaultsKeys.resiverId.count>0){
+                        DefaultsKeys.resiverId.removeAll()
+                    }
+                    
+                    self?.allview.isHidden = false
+                    var course =  getCourseModal()
+                    
+                    course.user_id = self?.memberId
+                    course.college_id = self?.collegeId
+                    course.dept_id = idArray[index]
+                    
+                    print("fhfytghfg",idArray[index])
+                    
+                    APiCallManager.shared.callApi(
+                            url: APIEndpoints.GetCoursesByDepartment,
+                            httpMethod: .post,
+                            queryParam: nil,
+                            requestBody: course
+                        ) {[weak self] (result:Result<getCourseResponce, Error>) in
+                                
+                            guard let self = self else { return }
+                            
+                            switch result {
+                            case .success(let success):
+                                self.courseRefName = success.data ?? []
+                                self.tv.isHidden = false
+                                self.tv.delegate = self
+                                self.tv.dataSource = self
+                                self.tv.reloadData()
+                                self.coursedropTxtLabel.text = item
+                            case .failure(let failure):
+                                 print("Error:",failure.localizedDescription)
+                            }
+                            
+                            }
+                }
+            case .failure(let failure):
+                print("Error:",failure.localizedDescription)
             }
             
-            
-            allview.isHidden = false
-            let course =  getCourseModal()
-            
-            course.user_id = memberId
-            course.college_id = collegeId
-            course.dept_id = idArray[index]
-            
-            print("fhfytghfg",idArray[index])
-            
-            
-            let coursestr = course.toJSONString()
-            GetCourseRequest.call_request(param: coursestr!){ [self]
-                
-                (res) in
-                //
-                //
-                //
-                let cour : getCourseResponce  = Mapper<getCourseResponce>().map(JSONString: res)!
-                
-                courseRefName = cour.data
-                tv.isHidden = false
-                
-                tv.delegate = self
-                tv.dataSource = self
-                tv.reloadData()
-                
-                self.coursedropTxtLabel.text = item
-                
-                
-            }
-            
-            
         }
-        
-        
-        
-        
         
     }
-    
-}
 
 
 func courseApi(){
     
-    let course =  getCourseModal()
+    var course =  getCourseModal()
     
     course.user_id = memberId
     course.college_id = collegeId
     course.dept_id = "0"
     
-    
-    
-    let coursestr = course.toJSONString()
-    GetCourseRequest.call_request(param: coursestr!){ [self]
-        
-        (res) in
-        
-        let cour : getCourseResponce  = Mapper<getCourseResponce>().map(JSONString: res)!
-        
-        courseRefName = cour.data
-        clone_listcourse = cour.data
-        
-        
-        var str : String!
-        
-        for i in cour.data{
+    APiCallManager.shared.callApi(
+            url: APIEndpoints.GetCoursesByDepartment,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: course
+        ) {[weak self] (result:Result<getCourseResponce, Error>) in
+                
+            guard let self = self else { return }
             
-            str = i.division_name
+            switch result {
+            case .success(let cour):
+                courseRefName = cour.data ?? []
+                clone_listcourse = cour.data ?? []
+                
+                var str : String
+                
+                for i in cour.data ?? []{
+                    
+                    str = i.division_name ?? ""
+                    
+                    if i.division_name == str{
+                        
+                        courseFirstDropdownArry.append(i.division_name ?? "")
+                    }
+                }
+                
+                var newArray: [String] = []
+                newArray = ["--All Division--"]
+                for element in courseFirstDropdownArry {
+                    // Check if the element is not already in the new array
+                    if !newArray.contains(element) {
+                        // Add the unique element to the new array
+                        newArray.append(element)
+                    }
+                }
+                
+                courseFirstDropdownArry = newArray
             
-            if i.division_name == str{
-                
-                courseFirstDropdownArry.append(i.division_name)
-                
-                
+                tv.isHidden = false
+                tv.delegate = self
+                tv.dataSource = self
+                tv.reloadData()
+            case .failure(let failure):
+                 print("Error:",failure.localizedDescription)
             }
             
-            
-            
-            
-        }
-        
-        var newArray: [String] = []
-        newArray = ["--All Division--"]
-        for element in courseFirstDropdownArry {
-            // Check if the element is not already in the new array
-            if !newArray.contains(element) {
-                // Add the unique element to the new array
-                newArray.append(element)
             }
-        }
-        
-        
-        courseFirstDropdownArry = newArray
-        
-        
-        tv.isHidden = false
-        
-        tv.delegate = self
-        tv.dataSource = self
-        tv.reloadData()
-        
-    }
 }
 
 func departMents(){
     
-    let deparment = DepartmentModal()
+    var deparment = DepartmentModal()
     
     deparment.user_id = memberId
-    
     deparment.college_id = collegeId
-    
     deparment.div_id = "0"
-    //                    idArray[index]
     
-    
-    let deparmentstr = deparment.toJSONString()
-    print("deparmentstr",deparmentstr)
-    RepienceDeparmentRequest.call_request(param: deparmentstr!){ [self]
-        
-        (res) in
-        
-        
-        
-        let depart : RepienceDeparmentResponce  = Mapper<RepienceDeparmentResponce>().map(JSONString: res)!
-        
-        if depart.Status == 1{
-            deparmentRefName = depart.data
-            clone_listDepartment = depart.data
-            var str : String!
+    APiCallManager.shared.callApi(
+            url: APIEndpoints.GetDepartmentsbyDivision,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: deparment
+        ) {[weak self] (result:Result<RepienceDeparmentResponce, Error>) in
+                
+            guard let self = self else { return }
             
-            for i in depart.data{
-                
-                str = i.division_name
-                
-                if i.division_name == str{
+            switch result {
+            case .success(let depart):
+                if depart.Status == 1{
+                    deparmentRefName = depart.data ?? []
+                    clone_listDepartment = depart.data ?? []
+                    var str : String!
                     
-                    departNameArry.append(i.division_name)
+                    for i in depart.data ?? []{
+                        
+                        str = i.division_name
+                        
+                        if i.division_name == str{
+                            
+                            departNameArry.append(i.division_name ?? "")
+                        }
+                    }
                     
-                    //                        departmentCondentArry.append(i.department_name)
+                    var newArray: [String] = []
+                    newArray = ["--All Division--"]
+                    for element in departNameArry {
+                        // Check if the element is not already in the new array
+                        if !newArray.contains(element) {
+                            // Add the unique element to the new array
+                            newArray.append(element)
+                        }
+                    }
+                    
+                    departmentDropdownArry = newArray
+                    tv.isHidden = false
+                    allview.isHidden = false
+                    allBtn.isHidden = false
+                    tv.dataSource = self
+                    tv.delegate = self
+                    tv.reloadData()
+                }else{
+                    
+                    tv.dataSource = self
+                    tv.delegate = self
+                    tv.reloadData()
                 }
-                
-                
-                
-                
-                
+            case .failure(let failure):
+                 print("Error:",failure.localizedDescription)
             }
             
-            var newArray: [String] = []
-            newArray = ["--All Division--"]
-            for element in departNameArry {
-                // Check if the element is not already in the new array
-                if !newArray.contains(element) {
-                    // Add the unique element to the new array
-                    newArray.append(element)
-                }
             }
-            
-            
-            departmentDropdownArry = newArray
-            tv.isHidden = false
-            allview.isHidden = false
-            allBtn.isHidden = false
-            tv.dataSource = self
-            tv.delegate = self
-            tv.reloadData()
-        }
-        
-        
-        else{
-            
-            
-            tv.dataSource = self
-            tv.delegate = self
-            tv.reloadData()
-            
-            
-        }
-        
-    }
-    
 }
 
 
@@ -1286,7 +1108,7 @@ func departMents(){
                     
                     
                     
-                    courseSecondtDropdownArry.append(i.department_name)
+                    courseSecondtDropdownArry.append(i.department_name ?? "")
                     print("treeeeeeeeeee",departmentCondentArry)
                     courseCondentArry.append(i)
                     
@@ -1328,7 +1150,7 @@ func departMents(){
                     if i.division_name == item{
                         
                         
-                        courseSecondtDropdownArry.append(i.department_name)
+                        courseSecondtDropdownArry.append(i.department_name ?? "")
                         print("treeeeeeeeeee",departmentCondentArry)
                         courseCondentArry.append(i)
                         
@@ -1493,61 +1315,53 @@ func devision(){
     allview.isHidden = true
     tv.isHidden = true
     
-    
-    
-    
-    let devisions = getDivisionModal()
+    var devisions = getDivisionModal()
     
     devisions.college_id = collegeId
     devisions.user_id =  memberId
     
-    let devisionstr = devisions.toJSONString()
-    
-    
-    DivisionRequest.call_request(param: devisionstr!){ [self]
-        
-        (res) in
-        
-        
-        
-        let devisin : GetDivisionResponce  = Mapper<GetDivisionResponce>().map(JSONString: res)!
-        
-        devisionRefName = devisin.data
-        
-        clone_listDevision = devisin.data
-        if devisin.Status == 1 {
+    APiCallManager.shared.callApi(
+        url: APIEndpoints.GetDivisions,
+        httpMethod: .post,
+        queryParam: nil,
+        requestBody: devisions
+    ) {[weak self] (result:Result<GetDivisionResponce, Error>) in
             
-            for i in devisin.data{
+        guard let self = self else { return }
+        
+        switch result {
+        case .success(let success):
+            
+            devisionRefName = success.data ?? []
+            clone_listDevision = success.data ?? []
+            
+            if success.Status == 1 {
                 
+                for i in success.data ?? []{
+                    strs.append(i.division_name ?? "")
+                }
                 
-                strs.append(i.division_name)
-                //
+                allViewTop.constant = -130
+                allview.isHidden = false
+                allBtn.isHidden = false
+                tv.isHidden  = false
+                tv.delegate = self
+                tv.dataSource = self
+                tv.reloadData()
                 
+            }else{
                 
+                tv.delegate = self
+                tv.dataSource = self
+                tv.reloadData()
                 
             }
             
-            allViewTop.constant = -130
-            allview.isHidden = false
-            allBtn.isHidden = false
-            tv.isHidden  = false
-            tv.delegate = self
-            tv.dataSource = self
-            tv.reloadData()
-            
+        case .failure(let failure):
+            print("Error:",failure.localizedDescription)
         }
         
-        
-        else{
-            
-            tv.delegate = self
-            tv.dataSource = self
-            tv.reloadData()
-            
         }
-    }
-    
-    
 }
 
 
@@ -1557,53 +1371,45 @@ func devision(){
 
 func Group(){
     
-    
-    
-    let groups = GetGroupModal()
+    var groups = GetGroupModal()
     
     groups.idcollege = collegeId
-    let groupstr = groups.toJSONString()
-    GetGroupRequest.call_request(param: groupstr!){ [self]
-        
-        (res) in
-        
-        
-        
-        print("groupstr",groupstr)
-        let groupe : GetGroupResponce  = Mapper<GetGroupResponce>().map(JSONString: res)!
-        
-        
-        
-        if groupe.Status == 1 {
-            groupRefName = groupe.data
-            clone_listgroup = groupe.data
-            allViewTop.constant = -130
-            allview.isHidden = false
-            allBtn.isHidden = false
-            tv.isHidden = false
-            tv.delegate = self
-            tv.dataSource = self
-            tv.reloadData()
-        }
-        
-        
-        else {
-            
-            
-            tv.isHidden = false
-            tv.delegate = self
-            tv.dataSource = self
-            tv.reloadData()
-            
-        }
-        
-        
-        
-        
-        
-    }
     
-    
+    APiCallManager.shared.callApi(
+            url: APIEndpoints.GetGrouplist,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: groups
+        ) {[weak self] (result:Result<GetGroupResponce, Error>) in
+                
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let success):
+                
+                if success.Status == 1 {
+                    groupRefName = success.data ?? []
+                    clone_listgroup = success.data ?? []
+                    allViewTop.constant = -130
+                    allview.isHidden = false
+                    allBtn.isHidden = false
+                    tv.isHidden = false
+                    tv.delegate = self
+                    tv.dataSource = self
+                    tv.reloadData()
+                } else {
+                    
+                    tv.isHidden = false
+                    tv.delegate = self
+                    tv.dataSource = self
+                    tv.reloadData()
+                }
+                
+            case .failure(let failure):
+                 print("Error:",failure.localizedDescription)
+            }
+            
+            }
 }
 
 
@@ -1878,7 +1684,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                 }
                 
                 
-                if  DefaultsKeys.resiverId.contains(depart.department_id){
+                if  DefaultsKeys.resiverId.contains(depart.department_id ?? ""){
                     
                     
                     cell.checkboxess.setImage(UIImage.init(named: "done"), for: .normal)
@@ -1926,7 +1732,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                 }
                 
                 
-                if  DefaultsKeys.resiverId.contains(depart.department_id){
+                if  DefaultsKeys.resiverId.contains(depart.department_id ?? ""){
                     
                     
                     cell.checkboxess.setImage(UIImage.init(named: "done"), for: .normal)
@@ -1959,7 +1765,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         cell.checkboxess.isChecked = false
         
         
-        let defaults = String(group.groupid)
+        let defaults = String(group.groupid ?? 0)
         
         if group.isSelected == true
         {
@@ -2032,7 +1838,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                 }
                 
                 
-                if  DefaultsKeys.resiverId.contains(coursee.course_id){
+                if  DefaultsKeys.resiverId.contains(coursee.course_id ?? ""){
                     
                     
                     cell.checkboxess.setImage(UIImage.init(named: "done"), for: .normal)
@@ -2071,7 +1877,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                 }
                 
                 
-                if  DefaultsKeys.resiverId.contains(coursee.course_id){
+                if  DefaultsKeys.resiverId.contains(coursee.course_id ?? ""){
                     
                     
                     cell.checkboxess.setImage(UIImage.init(named: "done"), for: .normal)
@@ -2110,7 +1916,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                     cell.checkboxess.isChecked = false
                 }
                 
-                if  DefaultsKeys.resiverId.contains(coursee.course_id){
+                if  DefaultsKeys.resiverId.contains(coursee.course_id ?? ""){
                     
                     
                     cell.checkboxess.setImage(UIImage.init(named: "done"), for: .normal)
@@ -2154,7 +1960,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                 }
                 
                 
-                if  DefaultsKeys.resiverId.contains(coursee.course_id){
+                if  DefaultsKeys.resiverId.contains(coursee.course_id ?? ""){
                     
                     
                     cell.checkboxess.setImage(UIImage.init(named: "done"), for: .normal)
@@ -2193,7 +1999,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                 }
                 
                 
-                if  DefaultsKeys.resiverId.contains(coursee.course_id){
+                if  DefaultsKeys.resiverId.contains(coursee.course_id ?? ""){
                     
                     
                     cell.checkboxess.setImage(UIImage.init(named: "done"), for: .normal)
@@ -2234,7 +2040,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                 }
                 
                 
-                if  DefaultsKeys.resiverId.contains(coursee.course_id){
+                if  DefaultsKeys.resiverId.contains(coursee.course_id ?? ""){
                     
                     
                     cell.checkboxess.setImage(UIImage.init(named: "done"), for: .normal)
@@ -2316,30 +2122,11 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
 
 @IBAction func sendVc(){
     
-    
-    
-    
     nameString = DefaultsKeys.resiverId.joined(separator: "~")
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     if entireClgView.backgroundColor == UIColor(named: "selectColor"){
         
-        
-        
         if (staffCheckBoxView.isChecked == true) || (parentsCheckBoxView.isChecked == true) || (studentCheckBoxView.isChecked == true) {
-            
-            
-            
             
             let refreshAlert = UIAlertController(title: "Hold on!", message: "Are you sure you want to submit?", preferredStyle: UIAlertController.Style.alert)
             
@@ -2421,28 +2208,17 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
                     
                     else{
                         
-                        
-                        
-                        
                         getImageURL(images: photoArray)
-                        
-                        
                         
                         DispatchQueue.main.asyncAfter(deadline: .now()+4.3) { [self] in
                             
                             KRProgressHUD.dismiss()
-                            
-                            
-                            
-                            
                             
                             ImagePdfEntier(ImageFile: awsArry)
                             
                         }
                         
                     }
-                    
-                    
                 }
                 
                 else if self.resivre == "11"{
@@ -3131,18 +2907,10 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
             
             
             present(refreshAlert, animated: true, completion: nil)
-            
-            
-            
+             
         }
-        
-        
-        
-        
+         
         else{
-            
-            
-            
             
             if courseView.isUserInteractionEnabled == true {
                 //
@@ -3173,30 +2941,20 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
                     allview.isHidden = true
                     
                 }
-                
-                
-                
                 else{
                     
                     allview.isHidden = false
-                    
                 }
                 allViewTop.constant = -40
                 
             }else {
                 
                 courseView.isUserInteractionEnabled = false
-                
-                
-                
+                  
             }
-            
-            
         }
         
     }else{
-        
-        
         
         if courseView.isUserInteractionEnabled == true {
             //
@@ -3302,9 +3060,6 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
                 vc.VoiceHstryId = VoiceHstryId
                 vc.voiceHstryHeaderId = voiceHstryHeaderId
                 
-            }else{
-                
-                
             }
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
@@ -3318,6 +3073,7 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
             vc.awsurl = awsurl
             vc.videoURL = videoVimeoUrl
             vc.videoIframe = videoIframe
+            print("Passing voiceUrl:", voiceUrl)
             vc.voiceUrl = voiceUrl
             vc.EventTime = EventTime
             vc.voiceDuration = voiceDuration
@@ -3544,20 +3300,13 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
         }else{
             
             
-            if   studentCheckBoxView.isChecked == true  && parentsCheckBoxView.isChecked == true && staffCheckBoxView.isChecked == true{
+            if studentCheckBoxView.isChecked == true  && parentsCheckBoxView.isChecked == true && staffCheckBoxView.isChecked == true{
                 
                 allCheckbox.isChecked = true
                 
             }
-            
         }
-        
     }
-    
-    
-    
-    
-    
 }
 
 @IBAction func allCheckboxvc(){
@@ -3773,2656 +3522,2112 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
     
 }
 
-
-
-
 func CommunicationEntierSms(){
     
-    
-    
-    
-    let entier = EntierCollegeModal()
+    var entier = EntierCollegeModal()
     
     entier.collegeid = collegeId
     entier.staffid = memberId
     entier.filetype = "1"
     entier.callertype = priority
-    
     if parentTargetEnagbel == "0"{
-        
-        
         entier.isparent = false
     }
-    
-    
     else{
-        
-        
         entier.isparent = parentsCheckBoxView.isChecked
     }
     entier.isstaff = staffCheckBoxView.isChecked
     entier.isstudent = studentCheckBoxView.isChecked
-    
     entier.messagecontent = titlesTextField
-    
     entier.description = discreptionss
     
     
-    let entierstr = entier.toJSONString()
-    EntierCollegeRequest.call_request(param: entierstr!){ [self]
-        
-        (res) in
-        
-        
-        
-        
-        print("kakkad",entierstr)
-        
-        let depart : EntierCollegeResponce  = Mapper<EntierCollegeResponce>().map(JSONString: res)!
-        
-        entierRefName = depart.data
-        
-        
-        if depart.Status == 1{
-            
-            
-            
-            
-            
-            let refreshAlert = UIAlertController(title: "", message: depart.Message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+    APiCallManager.shared.callApi(
+            url: APIEndpoints.SendSMSToEntireCollege,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: entier
+        ) {[weak self] (result:Result<EntierCollegeResponce, Error>) in
                 
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let success):
                 
+                entierRefName = success.data ?? []
                 
-                
-                
-                if priority == "p2" || priority == "p3" {
+                if success.Status == 1{
                     
-                    let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+                    let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
                     
-                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                    vc.strName = self.strName
-                    vc.str = self.str
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
+                        
+                        if self?.priority == "p2" || self?.priority == "p3" {
+                            
+                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
+                            vc.is_read_enabled = self?.is_read_enabled ?? ""
+                            vc.is_write_enabled = self?.is_write_enabled ?? ""
+                            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+                            
+                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                            vc.strName = self?.strName ?? []
+                            vc.str = self?.str ?? []
+                            
+                            vc.modalPresentationStyle = .fullScreen
+                            self?.present(vc, animated: true , completion: nil)
+                            
+                        } else{
+                            
+                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
+                            vc.is_read_enabled = self?.is_read_enabled ?? ""
+                            vc.is_write_enabled = self?.is_write_enabled ?? ""
+                            vc.view.backgroundColor = UIColor(named: "Principal" )
+                            
+                            vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
+                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+                            
+                            vc.strName = self?.strName ?? []
+                            vc.str = self?.str ?? []
+                            
+                            vc.modalPresentationStyle = .fullScreen
+                            self?.present(vc, animated: true , completion: nil)
+                            
+                        }
+                        
+                    }))
                     
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
+                    present(refreshAlert, animated: true, completion: nil)
+                }else {
                     
+                    let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                    }))
+                    
+                    present(refreshAlert, animated: true, completion: nil)
                 }
                 
-                
-                else{
-                    
-                    let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Principal" )
-                    
-                    vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                    
-                    vc.strName = self.strName
-                    vc.str = self.str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-                
-                
-            }))
-            
-            
-            
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-            
-            
-            
-            //                tv.dataSource = self
-            //                tv.delegate = self
-            //                tv.reloadData()
-        }
-        
-        
-        else{
-            
-            //                
-            //                tv.dataSource = self
-            //                tv.delegate = self
-            //                tv.reloadData()
-            //                
-            
-        }
-        
-        
-        
-        
-    }
-    
-    
-    
-}
-
-
-
-
-func NoticeSendSmsEntier(ImageFile: [String]) {
-    
-    
-    
-    KRProgressHUD.show()
-    
-    
-    var imageAryy : [FiletypeDataDetails] = []
-    
-    
-    
-    for i in ImageFile{
-        let imageAws = FiletypeDataDetails()
-        imageAws.filepath = i
-        imageAws.filetype = fileType
-        
-        imageAryy.append(imageAws)
-    }
-    
-    
-    
-    
-    
-    
-    let particularNotice = NoticeBoardPartiModal()
-    
-    
-    particularNotice.noticeboardid = "0"
-    
-    print("")
-    
-    particularNotice.description = discreptionss
-    
-    particularNotice.receivertype = "1"
-    
-    particularNotice.isstaff =  staffCheckBoxView.isChecked
-    
-    particularNotice.isstudent = studentCheckBoxView.isChecked
-    
-    if parentTargetEnagbel == "0"{
-        
-        
-        particularNotice.isparent = false
-    }
-    
-    
-    else{
-        
-        
-        particularNotice.isparent = parentsCheckBoxView.isChecked
-    }
-    
-    
-    particularNotice.processtype = "add"
-    particularNotice.receiveridlist = collegeId
-    
-    particularNotice.topic = titlesTextField
-    
-    particularNotice.colgid = collegeId
-    
-    particularNotice.staffid = memberId
-    
-    particularNotice.callertype = priority
-    
-    particularNotice.files = imageAryy
-    
-    
-    
-    
-    
-    
-    let particularStrs = particularNotice.toJSONString()
-    
-    print("noriceEnier",particularNotice.toJSON())
-    NoticeParticularRequest.call_request(param: particularStrs!) {
-        
-        [self]  (res) in
-        
-        
-        let particularss : [NoticePArticularResponce] = Mapper<NoticePArticularResponce>().mapArray(JSONString: res)!
-        
-        
-        for i in particularss{
-            
-            if i.Status == 1 {
-                KRProgressHUD.dismiss()
-                
-                
-                particularSms = particularss
-                
-                
-                
-                let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-                
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    if priority == "p2" || priority == "p3" {
-                        
-                        let vc = SenderGraditNoticeBoardMenuViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                        vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                    
-                    else{
-                        
-                        let vc = SenderGraditNoticeBoardMenuViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Principal" )
-                        vc.noticeSegments.backgroundColor = UIColor(named: "UnSelector")
-                        vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "Selector")
-                        
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                }))
-                
-                
-                
-                present(refreshAlert, animated: true, completion: nil)
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                tv.dataSource = self
-                tv.delegate = self
-                tv.reloadData()
-                
-                
-            }else{
-                
-                
-                KRProgressHUD.dismiss()
-                let refreshAlert = UIAlertController(title: "", message: i.Message , preferredStyle: UIAlertController.Style.alert)
+            case .failure(let failure):
+                 print("Error:",failure.localizedDescription)
+                let refreshAlert = UIAlertController(title: "", message: failure.localizedDescription, preferredStyle: UIAlertController.Style.alert)
                 
                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                     
-                    
-                    
-                    
-                    
-                    
-                    
                 }))
                 
-                
                 present(refreshAlert, animated: true, completion: nil)
-                
-                tv.dataSource = self
-                tv.delegate = self
-                tv.reloadData()
             }
             
-            
-            
-        }
-        
-        
-        
-    }
-}
-
-
-func videoUpload(){
-    
-    
-    let uploadvideo = EntierVideoUpload()
-    
-    
-    uploadvideo.callertype = priority
-    uploadvideo.url = videoVimeoUrl
-    uploadvideo.collegeid = collegeId
-    uploadvideo.description = discreptionss
-    uploadvideo.iframe = videoIframe
-    if parentTargetEnagbel == "0"{
-        
-        
-        uploadvideo.isparent = false
-    }
-    
-    
-    else{
-        
-        
-        uploadvideo.isparent = parentsCheckBoxView.isChecked
-    }
-    
-    uploadvideo.isstaff = staffCheckBoxView.isChecked
-    uploadvideo.isstudent = studentCheckBoxView.isChecked
-    uploadvideo.staffid = memberId
-    uploadvideo.title = titlesTextField
-    uploadvideo.FileName = "video"
-    
-    
-    let uploadvideoStr = uploadvideo.toJSONString()
-    
-    
-    print("yearAndSectionModalStr",uploadvideoStr)
-    
-    VimeoSendRequest.call_request(param: uploadvideoStr!) {
-        
-        [self]  (res) in
-        
-        
-        
-        
-        
-        let particular : EntierVideoUploadResponce = Mapper<EntierVideoUploadResponce>().map(JSONString: res)!
-        
-        
-        videoUploadEntier = particular.data
-        
-        if particular.status == 1 {
-            
-            
-            
-            
-            let refreshAlert = UIAlertController(title: "", message: particular.message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                
-                
-                
-                
-                if priority == "p2" || priority == "p3" {
-                    
-                    let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                    vc.strName = strName
-                    vc.str = str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-                
-                else{
-                    
-                    let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Principal" )
-                    vc.strName = strName
-                    vc.str = str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-                
-                
-            }))
-            
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-            
-            
-            
-            
-            tv.dataSource = self
-            tv.delegate = self
-            tv.reloadData()
-            
-            
-        }
-        
-        else{
-            
-            
-            
-            
-            
-            
-            let refreshAlert = UIAlertController(title: "", message: particular.message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                
-                
-                
-                
-            }))
-            
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-            tv.dataSource = self
-            tv.delegate = self
-            tv.reloadData()
-            
-            
-        }
-        
-    }
-    
-}
-
-func EventEntier(){
-    
-    
-    let particular = EventParticualrModal()
-    
-    particular.eventid = "0"
-    
-    particular.eventbody = titlesTextField
-    
-    
-    particular.eventdate = DateLabels
-    particular.eventvenue = VenuTestField
-    particular.eventtime = EventTime
-    particular.eventtopic = discreptionss
-    
-    
-    if resivre == "13"{
-        particular.processtype = "edit"
-    }
-    
-    else{
-        
-        particular.processtype = "add"
-    }
-    
-    particular.collegeid = collegeId
-    
-    particular.staffid = memberId
-    
-    
-    particular.Callertype = priority
-    
-    particular.receivertype = "1"
-    
-    if parentTargetEnagbel == "0"{
-        
-        
-        particular.isparent = false
-    }
-    
-    
-    else{
-        
-        
-        particular.isparent = parentsCheckBoxView.isChecked
-    }
-    
-    
-    particular.isstaff = staffCheckBoxView.isChecked
-    particular.isstudent = staffCheckBoxView.isChecked
-    particular.receiveridlist = collegeId
-    
-    let particularStr = particular.toJSONString()
-    
-    
-    print("yearAndSectionModalStr",particularStr)
-    
-    EventParticularRequest.call_request(param: particularStr!) {
-        
-        [self]  (res) in
-        
-        
-        
-        
-        
-        let particular : [EventParticularResponce] = Mapper<EventParticularResponce>().mapArray(JSONString: res)!
-        
-        
-        for i in particular{
-            
-            if i.Status == 1 {
-                
-                
-                
-                let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-                
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                    
-                    
-                    
-                    if priority == "p2" || priority == "p3" {
-                        
-                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                    
-                    else{
-                        
-                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Principal" )
-                        vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                    
-                    
-                    
-                }))
-                
-                
-                
-                
-                present(refreshAlert, animated: true, completion: nil)
-                
-                
-                
-                
-                
-                tv.dataSource = self
-                tv.delegate = self
-                tv.reloadData()
-                
-                
-            }else{
-                
-                let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-                
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                    
-                    
-                    
-                    if priority == "p2" || priority == "p3" {
-                        
-                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                    
-                    else{
-                        
-                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Principal" )
-                        vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                    
-                    
-                    
-                }))
-                
-                
-                
-                present(refreshAlert, animated: true, completion: nil)
-                
-                
-                
-                tv.dataSource = self
-                tv.delegate = self
-                tv.reloadData()
             }
-            
-            
-            
-        }
-        
-        
-        
-        
-        
-    }
-    
-    
-    
 }
 
-
-func multypartAudio() {
     
-    print("voiceReplyTypevoiceReplyType",discreptionss)
-    
-    
-    var vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToEntireCollege"
-    
-    let voiceUpload = voiceUploadEntierModal()
-    //        discreptionss
-    
-    voiceUpload.staffid = memberId
-    voiceUpload.description = discreptionss
-    voiceUpload.callertype = priority
-    voiceUpload.collegeid = collegeId
-    voiceUpload.fileduration = voiceDuration
-    voiceUpload.filetype = "1"
-    
-    if parentTargetEnagbel == "0"{
-        
-        
-        voiceUpload.isparent = false
-    }
-    
-    
-    else{
-        
-        
-        voiceUpload.isparent = parentsCheckBoxView.isChecked
-    }
-    voiceUpload.isemergencyvoice = voiceReplyType
-    
-    voiceUpload.isstaff = staffCheckBoxView.isChecked
-    voiceUpload.isstudent = studentCheckBoxView.isChecked
-    
-    let voiceUploadStr = voiceUpload.toJSONString()
-    
-    print("chatSenderStr",voiceUpload)
-    
-    
-    AF.upload(multipartFormData: { [self] (multipartFormData) in
+    func NoticeSendSmsEntier(ImageFile: [String]) {
         
         KRProgressHUD.show()
         
+        var imageAryy: [FiletypeDataDetails] = []
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        for i in ImageFile {
+            var imageAws = FiletypeDataDetails()
+            imageAws.filepath = i
+            imageAws.filetype = fileType
+            imageAryy.append(imageAws)
+        }
+        
+        var particularNotice = NoticeBoardPartiModal()
+        
+        particularNotice.noticeboardid = "0"
+        particularNotice.description = discreptionss
+        particularNotice.receivertype = "1"
+        particularNotice.isstaff = staffCheckBoxView.isChecked
+        particularNotice.isstudent = studentCheckBoxView.isChecked
+        
+        if parentTargetEnagbel == "0" {
+            particularNotice.isparent = false
+        } else {
+            particularNotice.isparent = parentsCheckBoxView.isChecked
+        }
+        
+        particularNotice.processtype = "add"
+        particularNotice.receiveridlist = collegeId
+        particularNotice.topic = titlesTextField
+        particularNotice.colgid = collegeId
+        particularNotice.staffid = memberId
+        particularNotice.callertype = priority
+        particularNotice.files = imageAryy
+        
+        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.ManageNoticeBoard,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: particularNotice
+        ) { [weak self] (result: Result<NoticePArticularResponce, Error>) in
             
-            
+            guard let self = self else { return }
             
             KRProgressHUD.dismiss()
             
+            switch result {
+                
+            case .success(let response):
+                    
+                    if response.Status == 1 {
+                        
+                        self.particularSms = response
+                        
+                        let refreshAlert = UIAlertController(
+                            title: "",
+                            message: response.Message,
+                            preferredStyle: .alert
+                        )
+                        
+                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                            
+                            let vc = SenderGraditNoticeBoardMenuViewController()
+                            vc.is_read_enabled = self.is_read_enabled
+                            vc.is_write_enabled = self.is_write_enabled
+                            vc.strName = self.strName
+                            vc.str = self.str
+                            
+                            if self.priority == "p2" || self.priority == "p3" {
+                                
+                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
+                                vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                
+                            } else {
+                                
+                                vc.view.backgroundColor = UIColor(named: "Principal")
+                                vc.noticeSegments.backgroundColor = UIColor(named: "UnSelector")
+                                vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "Selector")
+                            }
+                            
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                        })
+                        
+                        self.present(refreshAlert, animated: true)
+                        
+                    } else {
+                        
+                        let refreshAlert = UIAlertController(
+                            title: "",
+                            message: response.Message,
+                            preferredStyle: .alert
+                        )
+                        
+                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
+                        
+                        self.present(refreshAlert, animated: true)
+                    }
+                
+                
+                self.tv.dataSource = self
+                self.tv.delegate = self
+                self.tv.reloadData()
+                
+                
+            case .failure(let error):
+                
+                print("API Error:", error.localizedDescription)
+            }
+        }
+    }
+    
+    func videoUpload(){
+        
+        var uploadvideo = EntierVideoUpload()
+        
+        uploadvideo.callertype = priority
+        uploadvideo.url = videoVimeoUrl
+        uploadvideo.collegeid = collegeId
+        uploadvideo.description = discreptionss
+        uploadvideo.iframe = videoIframe
+        
+        if parentTargetEnagbel == "0"{
+            uploadvideo.isparent = false
+        }
+        else{
+            uploadvideo.isparent = parentsCheckBoxView.isChecked
         }
         
+        uploadvideo.isstaff = staffCheckBoxView.isChecked
+        uploadvideo.isstudent = studentCheckBoxView.isChecked
+        uploadvideo.staffid = memberId
+        uploadvideo.title = titlesTextField
+        uploadvideo.FileName = "video"
+        
+        print("yearAndSectionModalStr", uploadvideo)
+        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.SendVideoToEntireCollege,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: uploadvideo
+        ) { [weak self] (result: Result<EntierVideoUploadResponce, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let particular):
+                
+                self.videoUploadEntier = particular.data ?? []
+                
+                if particular.Status == 1 {
+                    
+                    let refreshAlert = UIAlertController(
+                        title: "",
+                        message: particular.Message,
+                        preferredStyle: .alert
+                    )
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                        
+                        if self.priority == "p2" || self.priority == "p3" {
+                            
+                            let vc = SenderVideoHomePageViewController()
+                            vc.is_read_enabled = self.is_read_enabled
+                            vc.is_write_enabled = self.is_write_enabled
+                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                            vc.strName = self.strName
+                            vc.str = self.str
+                            vc.modalPresentationStyle = .fullScreen
+                            
+                            self.present(vc, animated: true)
+                            
+                        } else {
+                            
+                            let vc = SenderVideoHomePageViewController()
+                            vc.is_read_enabled = self.is_read_enabled
+                            vc.is_write_enabled = self.is_write_enabled
+                            vc.view.backgroundColor = UIColor(named: "Principal")
+                            vc.strName = self.strName
+                            vc.str = self.str
+                            vc.modalPresentationStyle = .fullScreen
+                            
+                            self.present(vc, animated: true)
+                        }
+                    }))
+                    
+                    self.present(refreshAlert, animated: true)
+                    
+                    self.tv.dataSource = self
+                    self.tv.delegate = self
+                    self.tv.reloadData()
+                    
+                } else {
+                    
+                    let refreshAlert = UIAlertController(
+                        title: "",
+                        message: particular.Message,
+                        preferredStyle: .alert
+                    )
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
+                    
+                    self.present(refreshAlert, animated: true)
+                    
+                    self.tv.dataSource = self
+                    self.tv.delegate = self
+                    self.tv.reloadData()
+                }
+                
+            case .failure(let error):
+                print("API Error:", error.localizedDescription)
+            }
+        }
+    }
+    
+    func EventEntier(){
+        
+        var particular = EventParticualrModal()
+        
+        particular.eventid = "0"
+        particular.eventbody = titlesTextField
+        particular.eventdate = DateLabels
+        particular.eventvenue = VenuTestField
+        particular.eventtime = EventTime
+        particular.eventtopic = discreptionss
+        
+        if resivre == "13"{
+            particular.processtype = "edit"
+        }else{
+            particular.processtype = "add"
+        }
+        
+        particular.collegeid = collegeId
+        particular.staffid = memberId
+        particular.Callertype = priority
+        particular.receivertype = "1"
+        
+        if parentTargetEnagbel == "0"{
+            particular.isparent = false
+        } else{
+            particular.isparent = parentsCheckBoxView.isChecked
+        }
+        
+        particular.isstaff = staffCheckBoxView.isChecked
+        particular.isstudent = staffCheckBoxView.isChecked
+        particular.receiveridlist = collegeId
+        
+        print("yearAndSectionModalStr", particular)
         
         
-        let pathURL = voiceUrl
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.ManageEvents,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: particular
+        ) { [weak self] (result: Result<[EventParticularResponce], Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let response):
+                
+                for i in response{
+                    
+                    if i.Status == 1 {
+                        
+                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                        
+                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                            
+                            if self.priority == "p2" || self.priority == "p3" {
+                                
+                                let vc = SenderEventHomePageViewController()
+                                vc.is_read_enabled = self.is_read_enabled
+                                vc.is_write_enabled = self.is_write_enabled
+                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                vc.strName = self.strName
+                                vc.str = self.str
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                                
+                            } else {
+                                
+                                let vc = SenderEventHomePageViewController()
+                                vc.is_read_enabled = self.is_read_enabled
+                                vc.is_write_enabled = self.is_write_enabled
+                                vc.view.backgroundColor = UIColor(named: "Principal")
+                                vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                vc.strName = self.strName
+                                vc.str = self.str
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                            }
+                        })
+                        
+                        self.present(refreshAlert, animated: true)
+                        
+                        self.tv.dataSource = self
+                        self.tv.delegate = self
+                        self.tv.reloadData()
+                        
+                    } else {
+                        
+                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                        
+                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                            
+                            if self.priority == "p2" || self.priority == "p3" {
+                                
+                                let vc = SenderEventHomePageViewController()
+                                vc.is_read_enabled = self.is_read_enabled
+                                vc.is_write_enabled = self.is_write_enabled
+                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                vc.strName = self.strName
+                                vc.str = self.str
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                                
+                            } else {
+                                
+                                let vc = SenderEventHomePageViewController()
+                                vc.is_read_enabled = self.is_read_enabled
+                                vc.is_write_enabled = self.is_write_enabled
+                                vc.view.backgroundColor = UIColor(named: "Principal")
+                                vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                vc.strName = self.strName
+                                vc.str = self.str
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                            }
+                        })
+                        
+                        self.present(refreshAlert, animated: true)
+                        
+                        self.tv.dataSource = self
+                        self.tv.delegate = self
+                        self.tv.reloadData()
+                    }
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+
+//func multypartAudio() {
+//    
+//    print("voiceReplyTypevoiceReplyType",discreptionss)
+//    
+//    
+//    let vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToEntireCollege"
+//    
+//    var voiceUpload = voiceUploadEntierModal()
+//    //        discreptionss
+//    
+//    voiceUpload.staffid = memberId
+//    voiceUpload.description = discreptionss
+//    voiceUpload.callertype = priority
+//    voiceUpload.collegeid = collegeId
+//    voiceUpload.fileduration = voiceDuration
+//    voiceUpload.filetype = "1"
+//    
+//    if parentTargetEnagbel == "0"{
+//        
+//        
+//        voiceUpload.isparent = false
+//    }
+//    
+//    else{
+//        
+//        
+//        voiceUpload.isparent = parentsCheckBoxView.isChecked
+//    }
+//    voiceUpload.isemergencyvoice = voiceReplyType
+//    
+//    voiceUpload.isstaff = staffCheckBoxView.isChecked
+//    voiceUpload.isstudent = studentCheckBoxView.isChecked
+//    
+//    let voiceUploadStr = voiceUpload.toJSONString()
+//    
+//    print("chatSenderStr",voiceUpload)
+//    
+//    
+//    AF.upload(multipartFormData: { [self] (multipartFormData) in
+//        
+//        KRProgressHUD.show()
+//        
+//        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//            
+//            
+//            
+//            KRProgressHUD.dismiss()
+//            
+//        }
+//        
+//        
+//        
+//        let pathURL = voiceUrl
+//        
+//        let pathString = pathURL!.path
+//        
+//        multipartFormData.append(URL(fileURLWithPath: pathString), withName: "file")
+//        
+//        multipartFormData.append(Data(voiceUploadStr!.description.utf8), withName: "info")
+//        
+//        
+//        
+//        print("parameters.description.utf8",voiceUploadStr!.description.utf8)
+//        
+//        
+//    },to: vimeoVideoEndpoint).responseJSON{
+//        //
+//        
+//        
+//        
+//        //
+//        res in
+//        
+//        
+//        
+//        
+//        let json_str = String(data: res.data!, encoding: .utf8)
+//        
+//        print("json \(json_str!)")
+//        
+//        
+//        
+//        do {
+//            if let json = try JSONSerialization.jsonObject(with: res.data!, options: []) as? [String: Any] {
+//                if let status = json["Status"] as? Int {
+//                    print("Status: \(status)")
+//                    
+//                    if status == 1 {
+//                        
+//                        
+//                        let a = json["Message"]
+//                        
+//                        
+//                        
+//                        
+//                        
+//                        
+//                        let refreshAlert = UIAlertController(title: "", message:  a as! String, preferredStyle: UIAlertController.Style.alert)
+//                        
+//                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//                            
+//                            if priority == "p2" || priority == "p3" {
+//                                
+//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+//                                vc.is_read_enabled = "1"
+//                                vc.is_write_enabled = "1"
+//                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+//                                
+//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+//                                vc.strName = self.strName
+//                                vc.str = self.str
+//                                
+//                                vc.modalPresentationStyle = .fullScreen
+//                                self.present(vc, animated: true , completion: nil)
+//                                
+//                            }
+//                            
+//                            
+//                            else{
+//                                
+//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+//                                vc.is_read_enabled = "1"
+//                                vc.is_write_enabled = "1"
+//                                vc.view.backgroundColor = UIColor(named: "Principal" )
+//                                
+//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
+//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+//                                
+//                                vc.strName = self.strName
+//                                vc.str = self.str
+//                                
+//                                vc.modalPresentationStyle = .fullScreen
+//                                self.present(vc, animated: true , completion: nil)
+//                                
+//                            }
+//                            
+//                            
+//                            
+//                            
+//                            
+//                        }))
+//                        
+//                        
+//                        
+//                        self.present(refreshAlert, animated: true, completion: nil)
+//                        
+//                        
+//                        
+//                        
+//                    }
+//                    else {
+//                        
+//                        
+//                        
+//                        let a = json["Message"]
+//                        
+//                        
+//                        let refreshAlert = UIAlertController(title: "", message:  a as! String, preferredStyle: UIAlertController.Style.alert)
+//                        
+//                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//                            
+//                            if priority == "p2" || priority == "p3" {
+//                                
+//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+//                                vc.is_read_enabled = "1"
+//                                vc.is_write_enabled = "1"
+//                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+//                                
+//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+//                                vc.strName = self.strName
+//                                vc.str = self.str
+//                                
+//                                vc.modalPresentationStyle = .fullScreen
+//                                self.present(vc, animated: true , completion: nil)
+//                                
+//                            }
+//                            
+//                            
+//                            else{
+//                                
+//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+//                                vc.is_read_enabled = "1"
+//                                vc.is_write_enabled = "1"
+//                                vc.view.backgroundColor = UIColor(named: "Principal" )
+//                                
+//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
+//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+//                                
+//                                vc.strName = self.strName
+//                                vc.str = self.str
+//                                
+//                                vc.modalPresentationStyle = .fullScreen
+//                                self.present(vc, animated: true , completion: nil)
+//                                
+//                            }
+//                            
+//                            
+//                            
+//                            
+//                            
+//                        }))
+//                        
+//                        
+//                        
+//                        self.present(refreshAlert, animated: true, completion: nil)
+//                        
+//                        
+//                        
+//                        
+//                    }
+//                    
+//                }
+//            }
+//        } catch {
+//            print("Error parsing JSON: \(error)")
+//        }
+//        
+//    }
+//   
+//}
+
+
+    func multypartAudio() {
         
-        let pathString = pathURL!.path
+        print("voiceReplyTypevoiceReplyType", discreptionss)
         
-        multipartFormData.append(URL(fileURLWithPath: pathString), withName: "file")
+        let vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToEntireCollege"
         
-        multipartFormData.append(Data(voiceUploadStr!.description.utf8), withName: "info")
+        var voiceUpload = voiceUploadEntierModal()
         
+        voiceUpload.staffid = memberId
+        voiceUpload.description = discreptionss
+        voiceUpload.callertype = priority
+        voiceUpload.collegeid = collegeId
+        voiceUpload.fileduration = voiceDuration
+        voiceUpload.filetype = "1"
         
+        if parentTargetEnagbel == "0"{
+            voiceUpload.isparent = false
+        } else {
+            voiceUpload.isparent = parentsCheckBoxView.isChecked
+        }
         
-        print("parameters.description.utf8",voiceUploadStr!.description.utf8)
+        voiceUpload.isemergencyvoice = voiceReplyType
+        voiceUpload.isstaff = staffCheckBoxView.isChecked
+        voiceUpload.isstudent = studentCheckBoxView.isChecked
         
-        
-    },to: vimeoVideoEndpoint).responseJSON{
-        //
-        
-        
-        
-        //
-        res in
-        
-        
-        
-        
-        let json_str = String(data: res.data!, encoding: .utf8)
-        
-        print("json \(json_str!)")
-        
-        
-        
+        // ✅ Convert to JSON string (instead of toJSONString)
+        let voiceUploadStr: String
         do {
-            if let json = try JSONSerialization.jsonObject(with: res.data!, options: []) as? [String: Any] {
+            let jsonData = try JSONEncoder().encode(voiceUpload)
+            voiceUploadStr = String(data: jsonData, encoding: .utf8) ?? ""
+        } catch {
+            print(error)
+            return
+        }
+        
+        print("chatSenderStr", voiceUpload)
+        
+        KRProgressHUD.show()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            KRProgressHUD.dismiss()
+        }
+        
+        MultipartManager.shared.uploadVoice(
+            url: vimeoVideoEndpoint,
+            fileURL: voiceUrl!,
+            infoJSONString: voiceUploadStr
+        ) { [weak self] result in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let json):
+                
+                print("json", json)
+                
                 if let status = json["Status"] as? Int {
                     print("Status: \(status)")
                     
-                    if status == 1 {
-                        
-                        
-                        let a = json["Message"]
-                        
-                        
-                        
-                        
-                        
-                        
-                        let refreshAlert = UIAlertController(title: "", message:  a as! String, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                            
-                            if priority == "p2" || priority == "p3" {
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = "1"
-                                vc.is_write_enabled = "1"
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                                
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
-                                
-                            }
-                            
-                            
-                            else{
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = "1"
-                                vc.is_write_enabled = "1"
-                                vc.view.backgroundColor = UIColor(named: "Principal" )
-                                
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
-                                
-                            }
-                            
-                            
-                            
-                            
-                            
-                        }))
-                        
-                        
-                        
-                        self.present(refreshAlert, animated: true, completion: nil)
-                        
-                        
-                        
-                        
-                    }
-                    else {
-                        
-                        
-                        
-                        let a = json["Message"]
-                        
-                        
-                        let refreshAlert = UIAlertController(title: "", message:  a as! String, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                            
-                            if priority == "p2" || priority == "p3" {
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = "1"
-                                vc.is_write_enabled = "1"
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                                
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
-                                
-                            }
-                            
-                            
-                            else{
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = "1"
-                                vc.is_write_enabled = "1"
-                                vc.view.backgroundColor = UIColor(named: "Principal" )
-                                
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
-                                
-                            }
-                            
-                            
-                            
-                            
-                            
-                        }))
-                        
-                        
-                        
-                        self.present(refreshAlert, animated: true, completion: nil)
-                        
-                        
-                        
-                        
-                    }
+                    let message = json["Message"] as! String
                     
+                    let refreshAlert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+                        
+                        guard let self = self else { return }
+                        
+                        if priority == "p2" || priority == "p3" {
+                            
+                            let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                            vc.is_read_enabled = "1"
+                            vc.is_write_enabled = "1"
+                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                            vc.strName = self.strName
+                            vc.str = self.str
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                            
+                        } else {
+                            
+                            let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                            vc.is_read_enabled = "1"
+                            vc.is_write_enabled = "1"
+                            vc.view.backgroundColor = UIColor(named: "Principal")
+                            vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
+                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+                            vc.strName = self.strName
+                            vc.str = self.str
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                        }
+                    }))
+                    
+                    self.present(refreshAlert, animated: true)
                 }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-        } catch {
-            print("Error parsing JSON: \(error)")
         }
-        
-        
-        
-        //
-        
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-}
-
-
-
 
 func HistoryVoiceSend() {
     
-    
-    //        call_request
-    
-    
-    
-    let voiceUpload = VoiceHstryModal()
-    
+    var voiceUpload = VoiceHstryModal()
     
     voiceUpload.staffid = memberId
     voiceUpload.description = discreptionss
     voiceUpload.callertype = priority
     voiceUpload.collegeid = collegeId
-    
     voiceUpload.forwarding_voice_id = voiceHstryHeaderId
     
     if parentTargetEnagbel == "0"{
-        
-        
         voiceUpload.isparent = false
-    }
-    
-    
-    else{
-        
-        
+    }else{
         voiceUpload.isparent = parentsCheckBoxView.isChecked
     }
     voiceUpload.isemergencyvoice = voiceReplyType
-    
     voiceUpload.isstaff = staffCheckBoxView.isChecked
     voiceUpload.isstudent = studentCheckBoxView.isChecked
     
-    let voiceUploadStr = voiceUpload.toJSONString()
-    
-    
-    
-    
-    VoiceHstryReqs.call_request(param: voiceUploadStr!) {
-        
-        [self]  (res) in
-        
-        let enierImagePdf : voiceHstryResponce  = Mapper<voiceHstryResponce>().map(JSONString: res)!
-        
-        
-        if enierImagePdf.Status == 1 {
-            
-            let refreshAlert = UIAlertController(title: "", message: enierImagePdf.Message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+    APiCallManager.shared.callApi(
+            url: APIEndpoints.SendVoiceToEntireCollegeFromHistory,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: voiceUpload
+        ) {[weak self] (result:Result<voiceHstryResponce, Error>) in
                 
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let success):
                 
-            }))
-            
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-        }
-        
-        
-        else{
-            
-            let refreshAlert = UIAlertController(title: "", message: enierImagePdf.Message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                if success.Status == 1 {
+                    
+                    let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                    }))
+                    
+                    present(refreshAlert, animated: true, completion: nil)
+                }else{
+                    
+                    let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                    }))
+                    
+                    present(refreshAlert, animated: true, completion: nil)
+                }
                 
-                
-            }))
+            case .failure(let failure):
+                 print("Error:",failure.localizedDescription)
+            }
             
-            
-            present(refreshAlert, animated: true, completion: nil)
-        }
-    }
-    
-    
+            }
 }
 
 
 
 func HistoryVoiceSendParticular() {
     
-    
-    //        call_request
-    
-    
-    
-    let voiceUpload = VoiceHstryModal()
-    
+    var voiceUpload = VoiceHstryModal()
     
     voiceUpload.staffid = memberId
     voiceUpload.description = discreptionss
     voiceUpload.callertype = priority
     voiceUpload.collegeid = collegeId
-    
     voiceUpload.forwarding_voice_id = voiceHstryHeaderId
     voiceUpload.receiverid =  nameString
     voiceUpload.receivertype = resiverType
+    
     if parentTargetEnagbel == "0"{
         
-        
         voiceUpload.isparent = false
-    }
-    
-    
-    else{
-        
+    }else{
         
         voiceUpload.isparent = parentsCheckBoxView.isChecked
     }
-    voiceUpload.isemergencyvoice = voiceReplyType
     
+    voiceUpload.isemergencyvoice = voiceReplyType
     voiceUpload.isstaff = staffCheckBoxView.isChecked
     voiceUpload.isstudent = studentCheckBoxView.isChecked
     
-    let voiceUploadStr = voiceUpload.toJSONString()
-    
-    
-    
-    
-    VoiceHstryParticularReqs.call_request(param: voiceUploadStr!) {
-        
-        [self]  (res) in
-        
-        let enierImagePdf : voiceHstryResponce  = Mapper<voiceHstryResponce>().map(JSONString: res)!
-        
-        
-        if enierImagePdf.Status == 1 {
-            
-            let refreshAlert = UIAlertController(title: "", message: enierImagePdf.Message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+    APiCallManager.shared.callApi(
+            url: APIEndpoints.SendVoiceToParticularTypeFromHistory,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: voiceUpload
+        ) {[weak self] (result:Result<voiceHstryResponce, Error>) in
                 
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let success):
                 
-            }))
-            
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-        }
-        
-        
-        else{
-            
-            let refreshAlert = UIAlertController(title: "", message: enierImagePdf.Message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                if success.Status == 1 {
+                    
+                    let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                    }))
+                    
+                    present(refreshAlert, animated: true, completion: nil)
+                    
+                }else{
+                    
+                    let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                    }))
+                    
+                    present(refreshAlert, animated: true, completion: nil)
+                }
                 
-                
-            }))
+            case .failure(let failure):
+                 print("Error:",failure.localizedDescription)
+            }
             
-            
-            present(refreshAlert, animated: true, completion: nil)
-        }
-    }
-    
-    
+            }
 }
 
 
-func ImagePdfEntier(ImageFile: [String]){
-    
-    print("fdfddsx")
-    
-    
-    
-    
-    //
-    
-    
-    var imageAryy : [FileNameImage] = []
-    
-    
-    
-    for i in ImageFile{
-        let imageAws = FileNameImage()
-        imageAws.FileName = i
+    func ImagePdfEntier(ImageFile: [String]) {
         
-        imageAryy.append(imageAws)
-    }
-    
-    
-    
-    
-    //        }
-    
-    
-    
-    
-    
-    let sendImagePdfEntier = SendImagePdfModal()
-    
-    
-    
-    sendImagePdfEntier.Staffid = memberId
-    print("senderscszsz",memberId)
-    sendImagePdfEntier.collegeid = collegeId
-    sendImagePdfEntier.callertype = priority
-    
-    
-    
-    
-    
-    
-    
-    if parentTargetEnagbel == "0"{
+        print("fdfddsx")
         
+        var imageAryy: [FileNameImage] = []
         
-        sendImagePdfEntier.isparent = false
-    }
-    
-    
-    else{
-        
-        
-        sendImagePdfEntier.isparent = parentsCheckBoxView.isChecked
-    }
-    sendImagePdfEntier.isstaff = staffCheckBoxView.isChecked
-    sendImagePdfEntier.isstudent = studentCheckBoxView.isChecked
-    
-    sendImagePdfEntier.fileduration = "0"
-    sendImagePdfEntier.Description = discreptionss
-    sendImagePdfEntier.title  = titlesTextField
-    sendImagePdfEntier.filetype = fileType
-    
-    sendImagePdfEntier.FileNameArray = imageAryy
-    
-    
-    
-    
-    
-    let imagePdfStr = sendImagePdfEntier.toJSONString()
-    
-    
-    
-    print("yearAndSectionModalStr",imagePdfStr)
-    
-    EntierImagePdfRequest.call_request(param: imagePdfStr!) {
-        
-        [self]  (res) in
-        
-        let enierImagePdf : SendImagePdfResponce  = Mapper<SendImagePdfResponce>().map(JSONString: res)!
-        
-        imagePdfEniter = enierImagePdf.data
-        if enierImagePdf.Status == 1{
-            
-            
-            let refreshAlert = UIAlertController(title: "", message: enierImagePdf.Message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                
-                
-                if priority == "p2" || priority == "p3" {
-                    
-                    let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                    
-                    vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                    vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                    vc.strName = strName
-                    vc.str = str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-                
-                else{
-                    
-                    let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Principal" )
-                    vc.imageSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                    vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                    vc.strName = strName
-                    vc.str = str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-                
-                
-                
-                
-            }))
-            
-            
-            
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-            
-            
-            
-            
-            
-            
-            tv.dataSource = self
-            tv.delegate = self
-            tv.reloadData()
-            
-            
+        for i in ImageFile {
+            var imageAws = FileNameImage()
+            imageAws.FileName = i
+            imageAryy.append(imageAws)
         }
         
+        var sendImagePdfEntier = SendImagePdfModal()
         
-        else{
-            
-            
-            
-            
-            
-            
-            let refreshAlert = UIAlertController(title: "", message: enierImagePdf.Message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                
-                
-            }))
-            
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-            
-            tv.dataSource = self
-            tv.delegate = self
-            tv.reloadData()
-            
-            
+        sendImagePdfEntier.Staffid = memberId
+        print("senderscszsz", memberId)
+        
+        sendImagePdfEntier.collegeid = collegeId
+        sendImagePdfEntier.callertype = priority
+        
+        if parentTargetEnagbel == "0" {
+            sendImagePdfEntier.isparent = false
+        } else {
+            sendImagePdfEntier.isparent = parentsCheckBoxView.isChecked
         }
         
+        sendImagePdfEntier.isstaff = staffCheckBoxView.isChecked
+        sendImagePdfEntier.isstudent = studentCheckBoxView.isChecked
+        sendImagePdfEntier.fileduration = "0"
+        sendImagePdfEntier.Description = discreptionss
+        sendImagePdfEntier.title = titlesTextField
+        sendImagePdfEntier.filetype = fileType
+        sendImagePdfEntier.FileNameArray = imageAryy
+        
+        print("yearAndSectionModalStr", sendImagePdfEntier)
         
         
-        
-        
-        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.SendImageOrPDFToEntireCollegeWithCloudURL,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: sendImagePdfEntier
+        ) { [weak self] (result: Result<SendImagePdfResponce, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let enierImagePdf):
+                
+                self.imagePdfEniter = enierImagePdf.data ?? []
+                
+                if enierImagePdf.Status == 1 {
+                    
+                    let refreshAlert = UIAlertController(
+                        title: "",
+                        message: enierImagePdf.Message,
+                        preferredStyle: .alert
+                    )
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                        
+                        if self.priority == "p2" || self.priority == "p3" {
+                            
+                            let vc = SenderImagePdfHomePageViewController()
+                            vc.is_read_enabled = self.is_read_enabled
+                            vc.is_write_enabled = self.is_write_enabled
+                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                            
+                            vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                            vc.strName = self.strName
+                            vc.str = self.str
+                            vc.modalPresentationStyle = .fullScreen
+                            
+                            self.present(vc, animated: true)
+                            
+                        } else {
+                            
+                            let vc = SenderImagePdfHomePageViewController()
+                            vc.is_read_enabled = self.is_read_enabled
+                            vc.is_write_enabled = self.is_write_enabled
+                            vc.view.backgroundColor = UIColor(named: "Principal")
+                            vc.imageSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                            vc.strName = self.strName
+                            vc.str = self.str
+                            vc.modalPresentationStyle = .fullScreen
+                            
+                            self.present(vc, animated: true)
+                        }
+                    })
+                    
+                    self.present(refreshAlert, animated: true)
+                    
+                } else {
+                    
+                    let refreshAlert = UIAlertController(
+                        title: "",
+                        message: enierImagePdf.Message,
+                        preferredStyle: .alert
+                    )
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
+                    
+                    self.present(refreshAlert, animated: true)
+                }
+                
+                self.tv.dataSource = self
+                self.tv.delegate = self
+                self.tv.reloadData()
+                
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
-    
-    
-    
-    
-    
-    
-}
 
 
 
-
-
-
-
-
-
-
-
-
-
-func multypartAudioParticular() {
+//func multypartAudioParticular() {
+//    
+//    
+//    var vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToParticularType"
+//    
+//    var voiceUpload = particularVoiceUploadMoad()
+//    
+//    voiceUpload.staffid = memberId
+//    voiceUpload.description = discreptionss
+//    voiceUpload.callertype = priority
+//    voiceUpload.collegeid = collegeId
+//    voiceUpload.fileduration = voiceDuration
+//    voiceUpload.filetype = "1"
+//    voiceUpload.isemergencyvoice = voiceReplyType
+//    
+//    if IDforStaffCheck == "1"{
+//        
+//        voiceUpload.isstaff = false
+//        
+//    }else{
+//        
+//        voiceUpload.isstaff = staffCheckBoxView.isChecked
+//    }
+//    
+//    if parentTargetEnagbel == "0"{
+//
+//        voiceUpload.isparent = false
+//    }else{
+//        
+//        voiceUpload.isparent = parentsCheckBoxView.isChecked
+//    }
+//    
+//    
+//    voiceUpload.isstudent = studentCheckBoxView.isChecked
+//    voiceUpload.receiverid = nameString
+//    voiceUpload.receivertype = resiverType
+//    
+//    
+//    let voiceUploadStr = voiceUpload.toJSONString()
+//    
+//    print("chatSenderStr",voiceUpload)
+//    
+//    AF.upload(multipartFormData: { [self] (multipartFormData) in
+//        
+//        KRProgressHUD.show()
+//        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//            
+//            KRProgressHUD.dismiss()
+//            
+//        }
+//        
+//        let pathURL = voiceUrl
+//        
+//        let pathString = pathURL!.path
+//        
+//        multipartFormData.append(URL(fileURLWithPath: pathString), withName: "file")
+//        
+//        multipartFormData.append(Data(voiceUploadStr!.description.utf8), withName: "info")
+//        
+//        print("parameters.description.utf8",voiceUploadStr!.description.utf8)
+//        
+//        
+//    },to: vimeoVideoEndpoint).responseJSON{
+//        
+//        res in
+//        
+//        let json_str = String(data: res.data!, encoding: .utf8)
+//        
+//        print("json \(json_str!)")
+//        
+//        do {
+//            if let json = try JSONSerialization.jsonObject(with: res.data!, options: []) as? [String: Any] {
+//                if let status = json["Status"] as? Int {
+//                    print("Status: \(status)")
+//                    
+//                    if status == 1 {
+//                        
+//                        let a = json["Message"]
+//                        
+//                        let refreshAlert = UIAlertController(title: "", message:  a as! String, preferredStyle: UIAlertController.Style.alert)
+//                        
+//                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//                            
+//                            if priority == "p2" || priority == "p3" {
+//                                
+//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+//                                vc.is_read_enabled = "1"
+//                                vc.is_write_enabled = "1"
+//                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+//                                
+//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+//                                vc.strName = self.strName
+//                                vc.str = self.str
+//                                
+//                                vc.modalPresentationStyle = .fullScreen
+//                                self.present(vc, animated: true , completion: nil)
+//                                
+//                            } else if priority == "p7" {
+//                                
+//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+//                                vc.is_read_enabled = "1"
+//                                vc.is_write_enabled = "1"
+//                                vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
+//                                
+//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+//                                vc.strName = self.strName
+//                                vc.str = self.str
+//                                
+//                                vc.modalPresentationStyle = .fullScreen
+//                                self.present(vc, animated: true , completion: nil)
+//                                
+//                            }else{
+//                                
+//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+//                                vc.is_read_enabled = "1"
+//                                vc.is_write_enabled = "1"
+//                                vc.view.backgroundColor = UIColor(named: "Principal" )
+//                                
+//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
+//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+//                                
+//                                vc.strName = self.strName
+//                                vc.str = self.str
+//                                vc.modalPresentationStyle = .fullScreen
+//                                self.present(vc, animated: true , completion: nil)
+//                                
+//                            }
+//                            
+//                        }))
+//                        
+//                        self.present(refreshAlert, animated: true, completion: nil)
+//                        
+//                    }
+//                    else {
+//                        
+//                        let a = json["Message"]
+//                        
+//                        
+//                        let refreshAlert = UIAlertController(title: "", message:  a as! String, preferredStyle: UIAlertController.Style.alert)
+//                        
+//                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//                            
+//                            if priority == "p2" || priority == "p3" {
+//                                
+//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+//                                vc.is_read_enabled = "1"
+//                                vc.is_write_enabled = "1"
+//                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+//                                
+//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+//                                vc.strName = self.strName
+//                                vc.str = self.str
+//                                
+//                                vc.modalPresentationStyle = .fullScreen
+//                                self.present(vc, animated: true , completion: nil)
+//                                
+//                            }
+//                            
+//                            else if priority == "p7" {
+//                                
+//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+//                                vc.is_read_enabled = "1"
+//                                vc.is_write_enabled = "1"
+//                                vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
+//                                
+//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+//                                vc.strName = self.strName
+//                                vc.str = self.str
+//                                
+//                                vc.modalPresentationStyle = .fullScreen
+//                                self.present(vc, animated: true , completion: nil)
+//                                
+//                            }
+//                            
+//                            else{
+//                                
+//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+//                                vc.is_read_enabled = "1"
+//                                vc.is_write_enabled = "1"
+//                                vc.view.backgroundColor = UIColor(named: "Principal" )
+//                                
+//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
+//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+//                                
+//                                vc.strName = self.strName
+//                                vc.str = self.str
+//                                vc.modalPresentationStyle = .fullScreen
+//                                self.present(vc, animated: true , completion: nil)
+//                                
+//                            }
+//                            
+//                        }))
+//                        
+//                        self.present(refreshAlert, animated: true, completion: nil)
+//                        
+//                    }
+//                    
+//                }
+//            }
+//        } catch {
+//            print("Error parsing JSON: \(error)")
+//        }
+//    }
+//}
     
-    
-    
-    
-    
-    var vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToParticularType"
-    
-    let voiceUpload = particularVoiceUploadMoad()
-    
-    
-    voiceUpload.staffid = memberId
-    voiceUpload.description = discreptionss
-    voiceUpload.callertype = priority
-    voiceUpload.collegeid = collegeId
-    voiceUpload.fileduration = voiceDuration
-    voiceUpload.filetype = "1"
-    voiceUpload.isemergencyvoice = voiceReplyType
-    
-    if IDforStaffCheck == "1"{
+    func multypartAudioParticular() {
         
+        let vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToParticularType"
         
-        voiceUpload.isstaff = false
+        var voiceUpload = particularVoiceUploadMoad()
         
-    }
-    
-    else{
+        voiceUpload.staffid = memberId
+        voiceUpload.description = discreptionss
+        voiceUpload.callertype = priority
+        voiceUpload.collegeid = collegeId
+        voiceUpload.fileduration = voiceDuration
+        voiceUpload.filetype = "1"
+        voiceUpload.isemergencyvoice = voiceReplyType
         
+        if IDforStaffCheck == "1"{
+            voiceUpload.isstaff = false
+        }else{
+            voiceUpload.isstaff = staffCheckBoxView.isChecked
+        }
         
-        voiceUpload.isstaff = staffCheckBoxView.isChecked
-    }
-    
-    
-    if parentTargetEnagbel == "0"{
+        if parentTargetEnagbel == "0"{
+            voiceUpload.isparent = false
+        }else{
+            voiceUpload.isparent = parentsCheckBoxView.isChecked
+        }
         
+        voiceUpload.isstudent = studentCheckBoxView.isChecked
+        voiceUpload.receiverid = nameString
+        voiceUpload.receivertype = resiverType
         
-        voiceUpload.isparent = false
-    }
-    
-    
-    else{
+        // ✅ Codable instead of toJSONString()
+        let voiceUploadStr: String
+        do {
+            let jsonData = try JSONEncoder().encode(voiceUpload)
+            voiceUploadStr = String(data: jsonData, encoding: .utf8) ?? ""
+        } catch {
+            print("Encoding error:", error)
+            return
+        }
         
-        
-        voiceUpload.isparent = parentsCheckBoxView.isChecked
-    }
-    
-    
-    voiceUpload.isstudent = studentCheckBoxView.isChecked
-    voiceUpload.receiverid = nameString
-    voiceUpload.receivertype = resiverType
-    
-    
-    let voiceUploadStr = voiceUpload.toJSONString()
-    
-    print("chatSenderStr",voiceUpload)
-    //
-    
-    
-    
-    
-    
-    
-    AF.upload(multipartFormData: { [self] (multipartFormData) in
+        print("chatSenderStr", voiceUpload)
         
         KRProgressHUD.show()
         
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            
-            
-            
             KRProgressHUD.dismiss()
-            
         }
         
-        
-        let pathURL = voiceUrl
-        
-        let pathString = pathURL!.path
-        
-        multipartFormData.append(URL(fileURLWithPath: pathString), withName: "file")
-        
-        multipartFormData.append(Data(voiceUploadStr!.description.utf8), withName: "info")
-        
-        
-        
-        print("parameters.description.utf8",voiceUploadStr!.description.utf8)
-        
-        
-    },to: vimeoVideoEndpoint).responseJSON{
-        //
-        
-        res in
-        
-        let json_str = String(data: res.data!, encoding: .utf8)
-        
-        print("json \(json_str!)")
-        
-        
-        
-        do {
-            if let json = try JSONSerialization.jsonObject(with: res.data!, options: []) as? [String: Any] {
+        MultipartManager.shared.uploadVoice(
+            url: vimeoVideoEndpoint,
+            fileURL: voiceUrl!,
+            infoJSONString: voiceUploadStr,
+           
+        ) { [weak self] result in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let json):
+                
+                print("json \(json)")
+                
                 if let status = json["Status"] as? Int {
                     print("Status: \(status)")
                     
-                    if status == 1 {
+                    DispatchQueue.main.async {
                         
-                        
-                        let a = json["Message"]
-                        
-                        
-                        
-                        
-                        
-                        
-                        let refreshAlert = UIAlertController(title: "", message:  a as! String, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+                        if status == 1 {
                             
-                            if priority == "p2" || priority == "p3" {
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = "1"
-                                vc.is_write_enabled = "1"
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                                
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
-                                
-                            }
+                            let a = json["Message"]
                             
+                            let refreshAlert = UIAlertController(title: "", message: a as! String, preferredStyle: .alert)
                             
-                            else if priority == "p7" {
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
                                 
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = "1"
-                                vc.is_write_enabled = "1"
-                                vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
+                                guard let self = self else { return }
                                 
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
+                                if priority == "p2" || priority == "p3" {
+                                    
+                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                                    vc.is_read_enabled = "1"
+                                    vc.is_write_enabled = "1"
+                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                    vc.strName = self.strName
+                                    vc.str = self.str
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                    
+                                } else if priority == "p7" {
+                                    
+                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                                    vc.is_read_enabled = "1"
+                                    vc.is_write_enabled = "1"
+                                    vc.view.backgroundColor = UIColor(named: "univercityColorCod")
+                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                    vc.strName = self.strName
+                                    vc.str = self.str
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                    
+                                } else {
+                                    
+                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                                    vc.is_read_enabled = "1"
+                                    vc.is_write_enabled = "1"
+                                    vc.view.backgroundColor = UIColor(named: "Principal")
+                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
+                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                    vc.strName = self.strName
+                                    vc.str = self.str
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                }
                                 
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
-                                
-                            }
+                            }))
                             
+                            self.present(refreshAlert, animated: true)
                             
-                            else{
+                        }
+                        else {
+                            
+                            let a = json["Message"]
+                            
+                            let refreshAlert = UIAlertController(title: "", message: a as! String, preferredStyle: .alert)
+                            
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
                                 
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = "1"
-                                vc.is_write_enabled = "1"
-                                vc.view.backgroundColor = UIColor(named: "Principal" )
+                                guard let self = self else { return }
                                 
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                if priority == "p2" || priority == "p3" {
+                                    
+                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                                    vc.is_read_enabled = "1"
+                                    vc.is_write_enabled = "1"
+                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                    vc.strName = self.strName
+                                    vc.str = self.str
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                    
+                                } else if priority == "p7" {
+                                    
+                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                                    vc.is_read_enabled = "1"
+                                    vc.is_write_enabled = "1"
+                                    vc.view.backgroundColor = UIColor(named: "univercityColorCod")
+                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                    vc.strName = self.strName
+                                    vc.str = self.str
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                    
+                                } else {
+                                    
+                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                                    vc.is_read_enabled = "1"
+                                    vc.is_write_enabled = "1"
+                                    vc.view.backgroundColor = UIColor(named: "Principal")
+                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
+                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                    vc.strName = self.strName
+                                    vc.str = self.str
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                }
                                 
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
-                                
-                            }
+                            }))
                             
-                            
-                            
-                            
-                            
-                        }))
-                        
-                        
-                        
-                        self.present(refreshAlert, animated: true, completion: nil)
-                        
-                        
-                        
-                        
+                            self.present(refreshAlert, animated: true)
+                        }
                     }
-                    else {
-                        
-                        
-                        
-                        let a = json["Message"]
-                        
-                        
-                        let refreshAlert = UIAlertController(title: "", message:  a as! String, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                            
-                            if priority == "p2" || priority == "p3" {
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = "1"
-                                vc.is_write_enabled = "1"
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                                
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
-                                
-                            }
-                            
-                            else if priority == "p7" {
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = "1"
-                                vc.is_write_enabled = "1"
-                                vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                                
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
-                                
-                            }
-                            
-                            else{
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = "1"
-                                vc.is_write_enabled = "1"
-                                vc.view.backgroundColor = UIColor(named: "Principal" )
-                                
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
-                                
-                            }
-                            
-                            
-                            
-                            
-                            
-                        }))
-                        
-                        
-                        
-                        self.present(refreshAlert, animated: true, completion: nil)
-                        
-                        
-                        
-                        
-                    }
-                    
                 }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-        } catch {
-            print("Error parsing JSON: \(error)")
         }
-        
-        
-        
-        
-        
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-}
 
-
-func SendVideoToParticular() {
-    
-    
-    
-    
-    
-    let uploadvideo = ParticularVideoUploadModal()
-    
-    
-    uploadvideo.callertype = priority
-    uploadvideo.url = videoVimeoUrl
-    uploadvideo.collegeid = collegeId
-    uploadvideo.description = discreptionss
-    uploadvideo.iframe = videoIframe
-    
-    if IDforStaffCheck == "1"{
+    func SendVideoToParticular() {
         
+        var uploadvideo = ParticularVideoUploadModal()
         
-        uploadvideo.isstaff = false
+        uploadvideo.callertype = priority
+        uploadvideo.url = videoVimeoUrl
+        uploadvideo.collegeid = collegeId
+        uploadvideo.description = discreptionss
+        uploadvideo.iframe = videoIframe
         
-    }
-    
-    else{
-        
-        
-        uploadvideo.isstaff = staffCheckBoxView.isChecked
-    }
-    
-    
-    if parentTargetEnagbel == "0"{
-        
-        
-        uploadvideo.isparent = false
-    }
-    
-    
-    else{
-        
-        
-        uploadvideo.isparent = parentsCheckBoxView.isChecked
-    }
-    
-    uploadvideo.isstudent = studentCheckBoxView.isChecked
-    uploadvideo.staffid = memberId
-    uploadvideo.title = titlesTextField
-    uploadvideo.receiverid = nameString
-    
-    uploadvideo.receivertype = resiverType
-    
-    
-    let uploadvideoStr = uploadvideo.toJSONString()
-    
-    
-    print("SendVideoToParticular",uploadvideo.toJSON())
-    
-    particularVideoReq.call_request(param: uploadvideoStr!) {
-        
-        [self]  (res) in
-        
-        
-        
-        
-        
-        let particular : ParticularVideoUploadResp = Mapper<ParticularVideoUploadResp>().map(JSONString: res)!
-        
-        
-        sendVideoPart = particular.data
-        
-        if particular.status == 1 {
-            
-            
-            
-            
-            let refreshAlert = UIAlertController(title: "", message: particular.message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                
-                if priority == "p2" || priority == "p3" {
-                    
-                    let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                    vc.strName = strName
-                    vc.str = str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-                
-                else if priority == "p7" {
-                    
-                    let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                    vc.strName = strName
-                    vc.str = str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-                
-                
-                else{
-                    
-                    let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Principal" )
-                    vc.strName = strName
-                    vc.str = str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-            }))
-            
-            
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            tv.dataSource = self
-            tv.delegate = self
-            tv.reloadData()
-            
-            
+        if IDforStaffCheck == "1"{
+            uploadvideo.isstaff = false
+        } else {
+            uploadvideo.isstaff = staffCheckBoxView.isChecked
         }
         
-        else{
-            
-            
-            
-            let refreshAlert = UIAlertController(title: "", message: particular.message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                
-                
-            }))
-            
-            
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-            tv.dataSource = self
-            tv.delegate = self
-            tv.reloadData()
-            
-            
+        if parentTargetEnagbel == "0"{
+            uploadvideo.isparent = false
+        } else {
+            uploadvideo.isparent = parentsCheckBoxView.isChecked
         }
         
+        uploadvideo.isstudent = studentCheckBoxView.isChecked
+        uploadvideo.staffid = memberId
+        uploadvideo.title = titlesTextField
+        uploadvideo.receiverid = nameString
+        uploadvideo.receivertype = resiverType
+        
+        print("SendVideoToParticular", uploadvideo)
+        
+        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.SendVideoToParticularType,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: uploadvideo
+        ) { [weak self] (result: Result<ParticularVideoUploadResp, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let particular):
+                
+                self.sendVideoPart = particular.data ?? []
+                
+                if particular.Status == 1 {
+                    
+                    let refreshAlert = UIAlertController(
+                        title: "",
+                        message: particular.Message,
+                        preferredStyle: .alert
+                    )
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                        
+                        if self.priority == "p2" || self.priority == "p3" {
+                            
+                            let vc = SenderVideoHomePageViewController()
+                            vc.is_read_enabled = self.is_read_enabled
+                            vc.is_write_enabled = self.is_write_enabled
+                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                            vc.strName = self.strName
+                            vc.str = self.str
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                            
+                        } else if self.priority == "p7" {
+                            
+                            let vc = SenderVideoHomePageViewController()
+                            vc.is_read_enabled = self.is_read_enabled
+                            vc.is_write_enabled = self.is_write_enabled
+                            vc.view.backgroundColor = UIColor(named: "univercityColorCod")
+                            vc.strName = self.strName
+                            vc.str = self.str
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                            
+                        } else {
+                            
+                            let vc = SenderVideoHomePageViewController()
+                            vc.is_read_enabled = self.is_read_enabled
+                            vc.is_write_enabled = self.is_write_enabled
+                            vc.view.backgroundColor = UIColor(named: "Principal")
+                            vc.strName = self.strName
+                            vc.str = self.str
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                        }
+                    })
+                    
+                    self.present(refreshAlert, animated: true)
+                    
+                    self.tv.dataSource = self
+                    self.tv.delegate = self
+                    self.tv.reloadData()
+                    
+                } else {
+                    
+                    let refreshAlert = UIAlertController(
+                        title: "",
+                        message: particular.Message,
+                        preferredStyle: .alert
+                    )
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
+                    
+                    self.present(refreshAlert, animated: true)
+                    
+                    self.tv.dataSource = self
+                    self.tv.delegate = self
+                    self.tv.reloadData()
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
-    
-    
-    
-    
-}
 
 func SendSmsToParticular() {
     
-    
-    
-    let particular = SendSmsToParticularModal()
+    var particular = SendSmsToParticularModal()
     
     particular.collegeid = collegeId
-    
     particular.staffid = memberId
-    
     particular.description = discreptionss
-    
     particular.callertype = priority
-    
     particular.receivertype = resiverType
     
     
     if IDforStaffCheck == "1"{
         
-        
         particular.isstaff = false
-        
-    }
-    
-    else{
-        
+    }else{
         
         particular.isstaff = staffCheckBoxView.isChecked
     }
     
-    
     if parentTargetEnagbel == "0"{
         
-        
         particular.isparent = false
-    }
-    
-    
-    else{
-        
+    }else{
         
         particular.isparent = parentsCheckBoxView.isChecked
     }
     
     particular.isstudent = studentCheckBoxView.isChecked
     particular.receiverid = nameString
-    
     particular.messagecontent = titlesTextField
-    
     particular.filetype = "1"
     
-    
-    
-    
-    let particularStr = particular.toJSONString()
-    
-    
-    
-    print("yearAndSectionModalStr15",particularStr)
-    
-    sendSmsParticularRequest.call_request(param: particularStr!) {
-        
-        [self]  (res) in
-        
-        
-        
-        
-        
-        let particular : senderParticularResponce = Mapper<senderParticularResponce>().map(JSONString: res)!
-        
-        
-        
-        
-        
-        
-        
-        if particular.Status == 1 {
+    APiCallManager.shared.callApi(
+            url: APIEndpoints.SendSMSToParticularType,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: particular
+        ) {[weak self] (result:Result<senderParticularResponce, Error>) in
+                
+            guard let self = self else { return }
             
-            particularSmsComunication  = particular.data
-            
-            
-            
-            let refreshAlert = UIAlertController(title: "", message: particular.Message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                if priority == "p2" || priority == "p3" {
+            switch result {
+            case .success(let success):
+                
+                if success.Status == 1 {
                     
-                    let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+                    particularSmsComunication  = success.data ?? []
                     
-                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                    let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
                     
-                    vc.strName = strName
-                    vc.str = str
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
+                        if self?.priority == "p2" || self?.priority == "p3" {
+                            
+                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
+                            vc.is_read_enabled = self?.is_read_enabled ?? ""
+                            vc.is_write_enabled = self?.is_write_enabled ?? ""
+                            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+                            
+                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                            
+                            vc.strName = self?.strName ?? []
+                            vc.str = self?.str ?? []
+                            vc.modalPresentationStyle = .fullScreen
+                            self?.present(vc, animated: true , completion: nil)
+                            
+                        }else if self?.priority == "p7" {
+                            
+                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
+                            vc.is_read_enabled = self?.is_read_enabled ?? ""
+                            vc.is_write_enabled = self?.is_write_enabled ?? ""
+                            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
+                            
+                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                            
+                            vc.strName = self?.strName ?? []
+                            vc.str = self?.str ?? []
+                            vc.modalPresentationStyle = .fullScreen
+                            self?.present(vc, animated: true , completion: nil)
+                            
+                        } else{
+                            
+                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
+                            vc.is_read_enabled = self?.is_read_enabled ?? ""
+                            vc.is_write_enabled = self?.is_write_enabled ?? ""
+                            vc.view.backgroundColor = UIColor(named: "Principal" )
+                            
+                            vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
+                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+                            
+                            vc.strName = self?.strName ?? []
+                            vc.str = self?.str ?? []
+                            vc.modalPresentationStyle = .fullScreen
+                            self?.present(vc, animated: true , completion: nil)
+                        }
+                    }))
                     
+                    present(refreshAlert, animated: true, completion: nil)
+                      
+                }else{
+                    
+                    let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
+                        if self?.priority == "p2" || self?.priority == "p3" {
+                            
+                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
+                            vc.is_read_enabled = self?.is_read_enabled ?? ""
+                            vc.is_write_enabled = self?.is_write_enabled ?? ""
+                            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+                            
+                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                            
+                            vc.strName = self?.strName ?? []
+                            vc.str = self?.str ?? []
+                            
+                            vc.modalPresentationStyle = .fullScreen
+                            self?.present(vc, animated: true , completion: nil)
+                        }
+                        
+                        
+                        else if self?.priority == "p7" {
+                            
+                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
+                            vc.is_read_enabled = self?.is_read_enabled ?? ""
+                            vc.is_write_enabled = self?.is_write_enabled ?? ""
+                            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
+                            
+                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                            
+                            vc.strName = self?.strName ?? []
+                            vc.str = self?.str ?? []
+                            
+                            vc.modalPresentationStyle = .fullScreen
+                            self?.present(vc, animated: true , completion: nil)
+                            
+                        }else{
+                            
+                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
+                            vc.is_read_enabled = self?.is_read_enabled ?? ""
+                            vc.is_write_enabled = self?.is_write_enabled ?? ""
+                            vc.view.backgroundColor = UIColor(named: "Principal" )
+                            
+                            vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
+                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+                            
+                            vc.strName = self?.strName ?? []
+                            vc.str = self?.str ?? []
+                            vc.modalPresentationStyle = .fullScreen
+                            self?.present(vc, animated: true , completion: nil)
+                            
+                        }
+                        
+                    }))
+                    
+                    present(refreshAlert, animated: true, completion: nil)
+                     
                 }
                 
+            case .failure(let failure):
+                 print("Error:",failure.localizedDescription)
                 
-                else if priority == "p7" {
-                    
-                    let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                    
-                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                    
-                    vc.strName = strName
-                    vc.str = str
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
+                let refreshAlert = UIAlertController(title: "", message: failure.localizedDescription, preferredStyle: UIAlertController.Style.alert)
                 
-                
-                else{
-                    
-                    let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Principal" )
-                    
-                    vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                    
-                    vc.strName = strName
-                    vc.str = str
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-                
-            }))
-            
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-            
-            
-            
-            
-        }else{
-            
-            let refreshAlert = UIAlertController(title: "", message: particular.Message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                if priority == "p2" || priority == "p3" {
-                    
-                    let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                    
-                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                    
-                    vc.strName = strName
-                    vc.str = str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-                
-                else if priority == "p7" {
-                    
-                    let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                    
-                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                    
-                    vc.strName = strName
-                    vc.str = str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-                
-                
-                else{
-                    
-                    let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Principal" )
-                    
-                    vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                    
-                    vc.strName = strName
-                    vc.str = str
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-                
-            }))
-            
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-            
-            
-            
-        }
-        
-        
-        
-    }
-    
-    
-    
-    
-    
-}
-
-
-
-func NoticeSendSmsToParticular(ImageFile: [String]) {
-    
-    
-    var imageAryy : [FiletypeDataDetails] = []
-    
-    
-    
-    for i in ImageFile{
-        let imageAws = FiletypeDataDetails()
-        imageAws.filepath = i
-        imageAws.filetype = fileType
-        
-        imageAryy.append(imageAws)
-    }
-    
-    
-    
-    
-    
-    
-    
-    let particularNotice = NoticeBoardPartiModal()
-    
-    
-    particularNotice.noticeboardid = "0"
-    
-    particularNotice.description = discreptionss
-    
-    particularNotice.receivertype = resiverType
-    
-    if IDforStaffCheck == "1"{
-        
-        
-        particularNotice.isstaff = false
-        
-    }
-    
-    else{
-        
-        
-        particularNotice.isstaff = staffCheckBoxView.isChecked
-    }
-    
-    
-    if parentTargetEnagbel == "0"{
-        
-        
-        particularNotice.isparent = false
-    }
-    
-    
-    else{
-        
-        
-        particularNotice.isparent = parentsCheckBoxView.isChecked
-    }
-    
-    particularNotice.isstudent = studentCheckBoxView.isChecked
-    
-    particularNotice.processtype = "add"
-    particularNotice.receiveridlist = nameString
-    
-    particularNotice.topic = titlesTextField
-    
-    particularNotice.colgid = collegeId
-    
-    particularNotice.staffid = memberId
-    
-    particularNotice.callertype = priority
-    
-    particularNotice.files = imageAryy
-    
-    let particularStrs = particularNotice.toJSONString()
-    
-    print("rrrrrrtttrtrtrtrt",particularStrs)
-    NoticeParticularRequest.call_request(param: particularStrs!) {
-        
-        [self]  (res) in
-        
-        
-        let particularss : [NoticePArticularResponce] = Mapper<NoticePArticularResponce>().mapArray(JSONString: res)!
-        
-        
-        
-        
-        for i in particularss{
-            
-            particularSms = particularss
-            
-            if i.Status == 1 {
-                
-                
-                
-                let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-                
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                    
-                    
-                    if priority == "p2" || priority == "p3" {
-                        
-                        let vc = SenderGraditNoticeBoardMenuViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                        vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                    else if priority == "p7" {
-                        
-                        let vc = SenderGraditNoticeBoardMenuViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                        vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                    
-                    else{
-                        
-                        let vc = SenderGraditNoticeBoardMenuViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Principal" )
-                        vc.noticeSegments.backgroundColor = UIColor(named: "UnSelector")
-                        vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "Selector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
+                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 }))
-                
-                
-                
                 present(refreshAlert, animated: true, completion: nil)
-                
-                
-                
-                //                        tv.dataSource = self
-                //                        tv.delegate = self
-                //                        tv.reloadData()
-                
-                
-            }else{
-                
-                
-                let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-                
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                    
-                    
-                    if priority == "p2" || priority == "p3" {
-                        
-                        let vc = SenderGraditNoticeBoardMenuViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                        vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                    
-                    else if priority == "p7" {
-                        
-                        let vc = SenderGraditNoticeBoardMenuViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                        vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                    else{
-                        
-                        let vc = SenderGraditNoticeBoardMenuViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Principal" )
-                        vc.noticeSegments.backgroundColor = UIColor(named: "UnSelector")
-                        vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "Selector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                }))
-                
-                
-                
-                present(refreshAlert, animated: true, completion: nil)
-                
-                
-                
             }
             
-            
-            
-            
-            
-            
-        }
-    }
-}
-
-
-
-func EventParticular(){
-    
-    
-    let particular = EventParticualrModal()
-    
-    particular.eventid = "0"
-    //
-    particular.eventbody = discreptionss
-    
-    particular.eventdate = DateLabels
-    
-    particular.eventvenue = VenuTestField
-    
-    
-    particular.eventtime = EventTime
-    particular.eventtopic = titlesTextField
-    
-    
-    
-    particular.processtype = "add"
-    particular.collegeid = collegeId
-    //
-    particular.staffid = memberId
-    //
-    
-    
-    particular.Callertype = priority
-    //
-    particular.receivertype = resiverType
-    
-    if IDforStaffCheck == "1"{
-        
-        
-        particular.isstaff = false
-        
-    }
-    
-    else{
-        
-        
-        particular.isstaff = staffCheckBoxView.isChecked
-    }
-    
-    
-    if parentTargetEnagbel == "0"{
-        
-        
-        particular.isparent = false
-    }
-    
-    
-    else{
-        
-        
-        particular.isparent = parentsCheckBoxView.isChecked
-    }
-    
-    particular.isstudent = studentCheckBoxView.isChecked
-    particular.receiveridlist = nameString
-    
-    
-    
-    let particularStr = particular.toJSONString()
-    
-    
-    //
-    print("yearAndSectionModalStr",particularStr)
-    
-    EventParticularRequest.call_request(param: particularStr!) {
-        
-        [self]  (res) in
-        
-        
-        
-        
-        
-        let particular : [EventParticularResponce] = Mapper<EventParticularResponce>().mapArray(JSONString: res)!
-        
-        
-        for i in particular{
-            
-            if i.Status == 1 {
-                
-                
-                
-                let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-                
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                    
-                    
-                    if priority == "p2" || priority == "p3" {
-                        
-                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                    
-                    else if priority == "p7" {
-                        
-                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                    else{
-                        
-                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Principal" )
-                        vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                    
-                }))
-                
-                
-                present(refreshAlert, animated: true, completion: nil)
-                
-                
-                
-                
-            }else{
-                
-                let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-                
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                    
-                    
-                    if priority == "p2" || priority == "p3" {
-                        
-                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                    else if priority == "p7" {
-                        
-                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    else{
-                        
-                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Principal" )
-                        vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                        vc.strName = strName
-                        vc.str = str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
-                    
-                    
-                }))
-                
-                
-                present(refreshAlert, animated: true, completion: nil)
-                
-                
             }
-            
-            
-            
-            
-            
-            
-        }
-        
-        
-    }
-    
-    
     
 }
 
-
-
-func  ImagePdfParticular(ImageFile: [String]){
-    
-    
-    var imageAryy : [FileNameImages] = []
-    
-    
-    
-    for i in ImageFile{
-        let imageAws = FileNameImages()
-        imageAws.FileName = i
+    func NoticeSendSmsToParticular(ImageFile: [String]) {
         
-        imageAryy.append(imageAws)
-    }
-    
-    
-    
-    let sendImagePdfEntier = ImagePdfPartResponce()
-    
-    
-    sendImagePdfEntier.title = titlesTextField
-    sendImagePdfEntier.receiverid = nameString
-    sendImagePdfEntier.receivertype = resiverType
-    sendImagePdfEntier.callertype = priority
-    sendImagePdfEntier.collegeid = collegeId
-    sendImagePdfEntier.Description = discreptionss
-    sendImagePdfEntier.Staffid = memberId
-    sendImagePdfEntier.fileduration = "0"
-    sendImagePdfEntier.filetype = fileType
-    if IDforStaffCheck == "1"{
+        var imageAryy: [FiletypeDataDetails] = []
         
-        
-        sendImagePdfEntier.isstaff = false
-        
-    }
-    
-    else{
-        
-        
-        sendImagePdfEntier.isstaff = staffCheckBoxView.isChecked
-    }
-    
-    
-    if parentTargetEnagbel == "0"{
-        
-        
-        sendImagePdfEntier.isparent = false
-    }
-    
-    
-    else{
-        
-        
-        sendImagePdfEntier.isparent = parentsCheckBoxView.isChecked
-    }
-    
-    
-    sendImagePdfEntier.isstudent = studentCheckBoxView.isChecked
-    
-    sendImagePdfEntier.FileNameArray = imageAryy
-    let imagePdfStr = sendImagePdfEntier.toJSONString()
-    
-    print("yearAndSectionModalStr",imagePdfStr)
-    
-    ImagePdfParticularsee.call_request(param: imagePdfStr!) {
-        
-        [self]  (res) in
-        
-        let enierImagePdf : SendImagePdfPartiResponce  = Mapper<SendImagePdfPartiResponce>().map(JSONString: res)!
-        
-        imagePdfEniterParticular = enierImagePdf.data
-        if enierImagePdf.Status == 1{
-            
-            
-            let refreshAlert = UIAlertController(title: "", message: enierImagePdf.Message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                
-                if priority == "p2" || priority == "p3" {
-                    
-                    let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                    
-                    vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                    vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                    vc.strName = strName
-                    vc.str = str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-                
-                else if priority == "p7" {
-                    
-                    let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                    
-                    vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                    vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                    vc.strName = strName
-                    vc.str = str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-                
-                else{
-                    
-                    let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Principal" )
-                    vc.imageSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                    vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                    vc.strName = strName
-                    vc.str = str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-            }))
-            
-            
-            
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-            
+        for i in ImageFile {
+            var imageAws = FiletypeDataDetails()
+            imageAws.filepath = i
+            imageAws.filetype = fileType
+            imageAryy.append(imageAws)
         }
         
+        var particularNotice = NoticeBoardPartiModal()
         
+        particularNotice.noticeboardid = "0"
+        particularNotice.description = discreptionss
+        particularNotice.receivertype = resiverType
+        
+        if IDforStaffCheck == "1" {
+            particularNotice.isstaff = false
+        } else {
+            particularNotice.isstaff = staffCheckBoxView.isChecked
+        }
+        
+        if parentTargetEnagbel == "0" {
+            particularNotice.isparent = false
+        } else {
+            particularNotice.isparent = parentsCheckBoxView.isChecked
+        }
+        
+        particularNotice.isstudent = studentCheckBoxView.isChecked
+        particularNotice.processtype = "add"
+        particularNotice.receiveridlist = nameString
+        particularNotice.topic = titlesTextField
+        particularNotice.colgid = collegeId
+        particularNotice.staffid = memberId
+        particularNotice.callertype = priority
+        particularNotice.files = imageAryy
+        
+        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.ManageNoticeBoard,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: particularNotice
+        ) { [weak self] (result: Result<NoticePArticularResponce, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let response):
+                    
+                    self.particularSms = response
+                    
+                    let refreshAlert = UIAlertController(
+                        title: "",
+                        message: response.Message,
+                        preferredStyle: .alert
+                    )
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                        
+                        let vc = SenderGraditNoticeBoardMenuViewController()
+                        
+                        vc.is_read_enabled = self.is_read_enabled
+                        vc.is_write_enabled = self.is_write_enabled
+                        vc.strName = self.strName
+                        vc.str = self.str
+                        
+                        if self.priority == "p2" || self.priority == "p3" {
+                            
+                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                            vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
+                            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                            
+                        } else if self.priority == "p7" {
+                            
+                            vc.view.backgroundColor = UIColor(named: "univercityColorCod")
+                            vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
+                            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                            
+                        } else {
+                            
+                            vc.view.backgroundColor = UIColor(named: "Principal")
+                            vc.noticeSegments.backgroundColor = UIColor(named: "UnSelector")
+                            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "Selector")
+                        }
+                        
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                    })
+                    
+                    self.present(refreshAlert, animated: true)
+                
+                
+            case .failure(let error):
+                
+                print("API Error:", error.localizedDescription)
+            }
+        }
+    }
+
+    func EventParticular(){
+        
+        var particular = EventParticualrModal()
+        
+        particular.eventid = "0"
+        particular.eventbody = discreptionss
+        particular.eventdate = DateLabels
+        particular.eventvenue = VenuTestField
+        particular.eventtime = EventTime
+        particular.eventtopic = titlesTextField
+        
+        particular.processtype = "add"
+        particular.collegeid = collegeId
+        particular.staffid = memberId
+        particular.Callertype = priority
+        particular.receivertype = resiverType
+        
+        if IDforStaffCheck == "1"{
+            particular.isstaff = false
+        } else{
+            particular.isstaff = staffCheckBoxView.isChecked
+        }
+        
+        if parentTargetEnagbel == "0"{
+            particular.isparent = false
+        } else{
+            particular.isparent = parentsCheckBoxView.isChecked
+        }
+        
+        particular.isstudent = studentCheckBoxView.isChecked
+        particular.receiveridlist = nameString
+        
+        print("yearAndSectionModalStr", particular)
+        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.ManageEvents,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: particular
+        ) { [weak self] (result: Result<[EventParticularResponce], Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let response):
+                
+                for i in response {
+                    
+                    if i.Status == 1 {
+                        
+                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                        
+                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                            
+                            if self.priority == "p2" || self.priority == "p3" {
+                                
+                                let vc = SenderEventHomePageViewController()
+                                vc.is_read_enabled = self.is_read_enabled
+                                vc.is_write_enabled = self.is_write_enabled
+                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                vc.strName = self.strName
+                                vc.str = self.str
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                                
+                            } else if self.priority == "p7" {
+                                
+                                let vc = SenderEventHomePageViewController()
+                                vc.is_read_enabled = self.is_read_enabled
+                                vc.is_write_enabled = self.is_write_enabled
+                                vc.view.backgroundColor = UIColor(named: "univercityColorCod")
+                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                vc.strName = self.strName
+                                vc.str = self.str
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                                
+                            } else {
+                                
+                                let vc = SenderEventHomePageViewController()
+                                vc.is_read_enabled = self.is_read_enabled
+                                vc.is_write_enabled = self.is_write_enabled
+                                vc.view.backgroundColor = UIColor(named: "Principal")
+                                vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                vc.strName = self.strName
+                                vc.str = self.str
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                            }
+                        })
+                        
+                        self.present(refreshAlert, animated: true)
+                        
+                    } else {
+                        
+                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                        
+                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                            
+                            if self.priority == "p2" || self.priority == "p3" {
+                                
+                                let vc = SenderEventHomePageViewController()
+                                vc.is_read_enabled = self.is_read_enabled
+                                vc.is_write_enabled = self.is_write_enabled
+                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                vc.strName = self.strName
+                                vc.str = self.str
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                                
+                            } else if self.priority == "p7" {
+                                
+                                let vc = SenderEventHomePageViewController()
+                                vc.is_read_enabled = self.is_read_enabled
+                                vc.is_write_enabled = self.is_write_enabled
+                                vc.view.backgroundColor = UIColor(named: "univercityColorCod")
+                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                vc.strName = self.strName
+                                vc.str = self.str
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                                
+                            } else {
+                                
+                                let vc = SenderEventHomePageViewController()
+                                vc.is_read_enabled = self.is_read_enabled
+                                vc.is_write_enabled = self.is_write_enabled
+                                vc.view.backgroundColor = UIColor(named: "Principal")
+                                vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                vc.strName = self.strName
+                                vc.str = self.str
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                            }
+                        })
+                        
+                        self.present(refreshAlert, animated: true)
+                    }
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+
+    func ImagePdfParticular(ImageFile: [String]) {
+
+        var imageAryy : [FileNameImages] = []
+        
+        for i in ImageFile{
+            var imageAws = FileNameImages()
+            imageAws.FileName = i
+            imageAryy.append(imageAws)
+        }
+        
+        var sendImagePdfEntier = ImagePdfPartResponce()
+        
+        sendImagePdfEntier.title = titlesTextField
+        sendImagePdfEntier.receiverid = nameString
+        sendImagePdfEntier.receivertype = resiverType
+        sendImagePdfEntier.callertype = priority
+        sendImagePdfEntier.collegeid = collegeId
+        sendImagePdfEntier.Description = discreptionss
+        sendImagePdfEntier.Staffid = memberId
+        sendImagePdfEntier.fileduration = "0"
+        sendImagePdfEntier.filetype = fileType
+        
+        if IDforStaffCheck == "1"{
+            sendImagePdfEntier.isstaff = false
+        }
         else{
-            
-            
-            let refreshAlert = UIAlertController(title: "", message: enierImagePdf.Message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                
-                if priority == "p2" || priority == "p3" {
-                    
-                    let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                    
-                    vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                    vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                    vc.strName = strName
-                    vc.str = str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                else if priority == "p7" {
-                    
-                    let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                    
-                    vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                    vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                    vc.strName = strName
-                    vc.str = str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-                else{
-                    
-                    let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.view.backgroundColor = UIColor(named: "Principal" )
-                    vc.imageSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                    vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                    vc.strName = strName
-                    vc.str = str
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true , completion: nil)
-                    
-                }
-                
-            }))
-            
-            
-            
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-            
+            sendImagePdfEntier.isstaff = staffCheckBoxView.isChecked
         }
         
+        if parentTargetEnagbel == "0"{
+            sendImagePdfEntier.isparent = false
+        }
+        else{
+            sendImagePdfEntier.isparent = parentsCheckBoxView.isChecked
+        }
+        
+        sendImagePdfEntier.isstudent = studentCheckBoxView.isChecked
+        sendImagePdfEntier.FileNameArray = imageAryy
+        
+        print("yearAndSectionModalStr", sendImagePdfEntier)
+        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.SendImageOrPDFToParticularTypeWithCloudURL,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: sendImagePdfEntier
+        ) { [weak self] (result: Result<SendImagePdfPartiResponce, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let enierImagePdf):
+                
+                self.imagePdfEniterParticular = enierImagePdf.data ?? []
+                
+                let refreshAlert = UIAlertController(
+                    title: "",
+                    message: enierImagePdf.Message,
+                    preferredStyle: .alert
+                )
+                
+                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                    
+                    if self.priority == "p2" || self.priority == "p3" {
+                        
+                        let vc = SenderImagePdfHomePageViewController()
+                        vc.is_read_enabled = self.is_read_enabled
+                        vc.is_write_enabled = self.is_write_enabled
+                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                        
+                        vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                        vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                        vc.strName = self.strName
+                        vc.str = self.str
+                        
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                        
+                    }
+                    else if self.priority == "p7" {
+                        
+                        let vc = SenderImagePdfHomePageViewController()
+                        vc.is_read_enabled = self.is_read_enabled
+                        vc.is_write_enabled = self.is_write_enabled
+                        vc.view.backgroundColor = UIColor(named: "univercityColorCod")
+                        
+                        vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                        vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                        vc.strName = self.strName
+                        vc.str = self.str
+                        
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                        
+                    }
+                    else{
+                        
+                        let vc = SenderImagePdfHomePageViewController()
+                        vc.is_read_enabled = self.is_read_enabled
+                        vc.is_write_enabled = self.is_write_enabled
+                        vc.view.backgroundColor = UIColor(named: "Principal")
+                        vc.imageSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                        vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                        vc.strName = self.strName
+                        vc.str = self.str
+                        
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                    }
+                }))
+                
+                self.present(refreshAlert, animated: true)
+                
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
-    
-    
-    
-}
-
-
-
 
 @IBAction func changeSelection(gesture : CheckBoxEntier ){
     
@@ -6772,10 +5977,10 @@ func  ImagePdfParticular(ImageFile: [String]){
             
             
             if sender.isSelected {
-                for i in  clgListDataList{
-                    i.isSelected = false
+                for index in  clgListDataList.indices{
+                    clgListDataList[index].isSelected = false
                     sender.isSelected = false
-                    print("forPrint",i.college_id)
+                    print("forPrint",clgListDataList[index].college_id)
                     
                     if(DefaultsKeys.resiverId.count > 0){
                         DefaultsKeys.resiverId.removeAll()
@@ -6785,13 +5990,13 @@ func  ImagePdfParticular(ImageFile: [String]){
                 }
             }else{
                 
-                for i in  clgListDataList{
-                    i.isSelected = true
+                for index in  clgListDataList.indices{
+                    clgListDataList[index].isSelected = true
                     sender.isSelected = true
-                    print("forPrint1",i.college_id)
+                    print("forPrint1",clgListDataList[index].college_id)
                     
-                    if(!DefaultsKeys.resiverId.contains(String(i.college_id))){
-                        DefaultsKeys.resiverId.append(String(i.college_id))
+                    if(!DefaultsKeys.resiverId.contains(String(clgListDataList[index].college_id ?? 0))){
+                        DefaultsKeys.resiverId.append(String(clgListDataList[index].college_id ?? 0))
                     }
                     
                     sender.setImage(UIImage.init(named: "done"), for: .normal)
@@ -6803,26 +6008,25 @@ func  ImagePdfParticular(ImageFile: [String]){
         else if devisionView.backgroundColor == UIColor(named: "selectColor"){
             
             if sender.isSelected {
-                for i in  devisionRefName{
-                    i.isSelected = false
+                for index in devisionRefName.indices{
+                   devisionRefName[index].isSelected = false
                     sender.isSelected = false
-                    print("forPrint",i.division_id)
+                    print("forPrint",devisionRefName[index].division_id ?? "")
                     
                     if(DefaultsKeys.resiverId.count > 0){
                         DefaultsKeys.resiverId.removeAll()
                     }
-                    
                     sender.setImage(UIImage.init(named: "checkboxs"), for: .normal)
                 }
             }else{
                 
-                for i in  devisionRefName{
-                    i.isSelected = true
+                for index in  devisionRefName.indices{
+                    devisionRefName[index].isSelected = true
                     sender.isSelected = true
-                    print("forPrint1",i.division_id)
+                    print("forPrint1",devisionRefName[index].division_id)
                     
-                    if(!DefaultsKeys.resiverId.contains(i.division_id)){
-                        DefaultsKeys.resiverId.append(i.division_id)
+                    if(!DefaultsKeys.resiverId.contains(devisionRefName[index].division_id ?? "")){
+                        DefaultsKeys.resiverId.append(devisionRefName[index].division_id ?? "")
                     }
                     
                     sender.setImage(UIImage.init(named: "done"), for: .normal)
@@ -6837,11 +6041,10 @@ func  ImagePdfParticular(ImageFile: [String]){
             
             
             if sender.isSelected {
-                for i in  deparmentRefName{
-                    i.isSelected = false
+                for index in  deparmentRefName.indices{
+                    deparmentRefName[index].isSelected = false
                     sender.isSelected = false
-                    print("forPrint",i.department_id)
-                    
+                    print("forPrint",deparmentRefName[index].department_id ?? "")
                     
                     if(DefaultsKeys.resiverId.count > 0){
                         DefaultsKeys.resiverId.removeAll()
@@ -6851,13 +6054,13 @@ func  ImagePdfParticular(ImageFile: [String]){
                 }
             }else{
                 
-                for i in  deparmentRefName{
-                    i.isSelected = true
+                for index in deparmentRefName.indices{
+                    deparmentRefName[index].isSelected = true
                     sender.isSelected = true
-                    print("forPrint1",i.department_id)
+                    print("forPrint1",deparmentRefName[index].department_id ?? "")
                     
-                    if(!DefaultsKeys.resiverId.contains(i.department_id)){
-                        DefaultsKeys.resiverId.append(i.department_id)
+                    if(!DefaultsKeys.resiverId.contains(deparmentRefName[index].department_id ?? "")){
+                        DefaultsKeys.resiverId.append(deparmentRefName[index].department_id ?? "")
                     }
                     sender.setImage(UIImage.init(named: "done"), for: .normal)
                 }
@@ -6871,14 +6074,11 @@ func  ImagePdfParticular(ImageFile: [String]){
         else if groupView.backgroundColor == UIColor(named: "selectColor"){
             
             
-            
-            
-            
             if sender.isSelected {
-                for i in  groupRefName{
-                    i.isSelected = false
+                
+                for i in  groupRefName.indices{
+                    groupRefName[i].isSelected = false
                     sender.isSelected = false
-                    
                     
                     if(DefaultsKeys.resiverId.count > 0){
                         DefaultsKeys.resiverId.removeAll()
@@ -6886,17 +6086,15 @@ func  ImagePdfParticular(ImageFile: [String]){
                     sender.setImage(UIImage.init(named: "checkboxs"), for: .normal)
                 }
                 
-                
-                
                 print("resiverId",DefaultsKeys.resiverId)
             }else{
                 
-                for i in  groupRefName{
-                    i.isSelected = true
+                for index in groupRefName.indices{
+                    groupRefName[index].isSelected = true
                     sender.isSelected = true
-                    print("forPrint1",i.groupid)
+                    print("forPrint1",groupRefName[index].groupid)
                     
-                    var str = String(i.groupid)
+                    var str = String(groupRefName[index].groupid ?? 0)
                     
                     
                     if(!DefaultsKeys.resiverId.contains(str)){
@@ -6917,14 +6115,11 @@ func  ImagePdfParticular(ImageFile: [String]){
         
         else if courseView.backgroundColor == UIColor(named: "selectColor"){
             
-            
-            
-            
             if sender.isSelected {
-                for i in  courseRefName{
-                    i.isSelected = false
+                for index in courseRefName.indices{
+                    courseRefName[index].isSelected = false
                     sender.isSelected = false
-                    print("forPrint",i.course_id)
+                    print("forPrint",courseRefName[index].course_id)
                     sender.setImage(UIImage.init(named: "checkboxs"), for: .normal)
                 }
                 
@@ -6936,13 +6131,13 @@ func  ImagePdfParticular(ImageFile: [String]){
                 print("resiverId",DefaultsKeys.resiverId)
             }else{
                 
-                for i in  courseRefName{
-                    i.isSelected = true
+                for index in  courseRefName.indices{
+                    courseRefName[index].isSelected = true
                     sender.isSelected = true
-                    print("forPrint1",i.course_id)
+                    print("forPrint1",courseRefName[index].course_id)
                     
-                    if(!DefaultsKeys.resiverId.contains(i.course_id)){
-                        DefaultsKeys.resiverId.append(i.course_id)
+                    if(!DefaultsKeys.resiverId.contains(courseRefName[index].course_id ?? "")){
+                        DefaultsKeys.resiverId.append(courseRefName[index].course_id ?? "")
                     }
                     
                     sender.setImage(UIImage.init(named: "done"), for: .normal)
@@ -6969,10 +6164,10 @@ func  ImagePdfParticular(ImageFile: [String]){
         if devisionView.backgroundColor == UIColor(named: "selectColor"){
             
             if sender.isSelected {
-                for i in  devisionRefName{
-                    i.isSelected = false
+                for index in  devisionRefName.indices{
+                    devisionRefName[index].isSelected = false
                     sender.isSelected = false
-                    print("forPrint",i.division_id)
+                    print("forPrint",devisionRefName[index].division_id ?? "")
                     
                     if(DefaultsKeys.resiverId.count > 0){
                         DefaultsKeys.resiverId.removeAll()
@@ -6982,13 +6177,13 @@ func  ImagePdfParticular(ImageFile: [String]){
                 }
             }else{
                 
-                for i in  devisionRefName{
-                    i.isSelected = true
+                for index in devisionRefName.indices{
+                    devisionRefName[index].isSelected = true
                     sender.isSelected = true
-                    print("forPrint1",i.division_id)
+                    print("forPrint1",devisionRefName[index].division_id ?? "")
                     
-                    if(!DefaultsKeys.resiverId.contains(i.division_id)){
-                        DefaultsKeys.resiverId.append(i.division_id)
+                    if(!DefaultsKeys.resiverId.contains(devisionRefName[index].division_id ?? "")){
+                        DefaultsKeys.resiverId.append(devisionRefName[index].division_id ?? "")
                     }
                     
                     sender.setImage(UIImage.init(named: "done"), for: .normal)
@@ -7000,10 +6195,10 @@ func  ImagePdfParticular(ImageFile: [String]){
         else if departmentView.backgroundColor == UIColor(named: "selectColor"){
             
             if sender.isSelected {
-                for i in  deparmentRefName{
-                    i.isSelected = false
+                for index in deparmentRefName.indices{
+                    deparmentRefName[index].isSelected = false
                     sender.isSelected = false
-                    print("forPrint",i.department_id)
+                    print("forPrint",deparmentRefName[index].department_id)
                     
                     
                     if(DefaultsKeys.resiverId.count > 0){
@@ -7014,13 +6209,13 @@ func  ImagePdfParticular(ImageFile: [String]){
                 }
             }else{
                 
-                for i in  deparmentRefName{
-                    i.isSelected = true
+                for index in deparmentRefName.indices{
+                    deparmentRefName[index].isSelected = true
                     sender.isSelected = true
-                    print("forPrint1",i.department_id)
+                    print("forPrint1",deparmentRefName[index].department_id ?? "")
                     
-                    if(!DefaultsKeys.resiverId.contains(i.department_id)){
-                        DefaultsKeys.resiverId.append(i.department_id)
+                    if(!DefaultsKeys.resiverId.contains(deparmentRefName[index].department_id ?? "")){
+                        DefaultsKeys.resiverId.append(deparmentRefName[index].department_id ?? "")
                     }
                     sender.setImage(UIImage.init(named: "done"), for: .normal)
                 }
@@ -7038,8 +6233,8 @@ func  ImagePdfParticular(ImageFile: [String]){
             
             
             if sender.isSelected {
-                for i in  groupRefName{
-                    i.isSelected = false
+                for i in  groupRefName.indices{
+                    groupRefName[i].isSelected = false
                     sender.isSelected = false
                     
                     
@@ -7054,12 +6249,12 @@ func  ImagePdfParticular(ImageFile: [String]){
                 print("resiverId",DefaultsKeys.resiverId)
             }else{
                 
-                for i in  groupRefName{
-                    i.isSelected = true
+                for index in groupRefName.indices{
+                    groupRefName[index].isSelected = true
                     sender.isSelected = true
-                    print("forPrint1",i.groupid)
+                    print("forPrint1",groupRefName[index].groupid)
                     
-                    var str = String(i.groupid)
+                    var str = String(groupRefName[index].groupid ?? 0)
                     
                     
                     if(!DefaultsKeys.resiverId.contains(str)){
@@ -7084,10 +6279,10 @@ func  ImagePdfParticular(ImageFile: [String]){
             
             
             if sender.isSelected {
-                for i in  courseRefName{
-                    i.isSelected = false
+                for index in  courseRefName.indices{
+                    courseRefName[index].isSelected = false
                     sender.isSelected = false
-                    print("forPrint",i.course_id)
+                    print("forPrint",courseRefName[index].course_id)
                     sender.setImage(UIImage.init(named: "checkboxs"), for: .normal)
                 }
                 
@@ -7099,36 +6294,25 @@ func  ImagePdfParticular(ImageFile: [String]){
                 print("resiverId",DefaultsKeys.resiverId)
             }else{
                 
-                for i in  courseRefName{
-                    i.isSelected = true
+                for index in  courseRefName.indices{
+                    courseRefName[index].isSelected = true
                     sender.isSelected = true
-                    print("forPrint1",i.course_id)
+                    print("forPrint1",courseRefName[index].course_id)
                     
-                    if(!DefaultsKeys.resiverId.contains(i.course_id)){
-                        DefaultsKeys.resiverId.append(i.course_id)
+                    if(!DefaultsKeys.resiverId.contains(courseRefName[index].course_id ?? "")){
+                        DefaultsKeys.resiverId.append(courseRefName[index].course_id ?? "")
                     }
                     
                     sender.setImage(UIImage.init(named: "done"), for: .normal)
                 }
                 
-                
                 print("CourseSelectALLL",DefaultsKeys.resiverId)
-                
-                
-                
             }
-            
-            
         }
         
         print("TutorTutorTutor")
-        
-        
-        
     }
     tv.reloadData()
-    
-    
 }
 
 
@@ -7245,10 +6429,6 @@ func  ImagePdfParticular(ImageFile: [String]){
         print(imageURL)
        
       
-        
-      
-                       
-        
         AWSPreSignedURL.shared.fetchPresignedURL(
             bucket: DefaultsKeys.S3BucketName,
             fileName: imageURL,
@@ -7272,8 +6452,6 @@ func  ImagePdfParticular(ImageFile: [String]){
                         print("Failed to upload image: \(error.localizedDescription)")
                     }
         
-                   
-                    
                    
                     
                     awsArry.append(UploadPDf!)
@@ -7318,9 +6496,6 @@ func  ImagePdfParticular(ImageFile: [String]){
                         
                     }
                     
-               
-                             
-                   
                           }
            
             case .failure(let error):
@@ -7331,72 +6506,50 @@ func  ImagePdfParticular(ImageFile: [String]){
     }
     
 
-
-
-
-// upload pdf file in aws
-
-
-
-
-
-
-
 func colgList(){
-    
     
     let defaults = UserDefaults.standard
     
     var clgId = defaults.integer(forKey: DefaultsKeys.collegeid)
-    let colglist = clgListModals()
-    
+    var colglist = clgListModals()
     colglist.college_id = clgId
     colglist.priority = priority
-    
     colglist.user_id = memberId
     
-    let colgliststr = colglist.toJSONString()
-    ClglistRequest.call_request(param: colgliststr!){ [self]
-        
-        (res) in
-        
-        
-        
-        let colglistResp : clgListResponce  = Mapper<clgListResponce>().map(JSONString: res)!
-        
-        
-        if colglistResp.Status == 1 {
-            clgListDataList = colglistResp.data
-            allViewTop.constant = -130
-            tv.dataSource = self
-            tv.delegate = self
-            tv.reloadData()
-        }
-        
-        
-        else{
-            
-            
-            
-            
-            let refreshAlert = UIAlertController(title: "", message: colglistResp.Message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+    APiCallManager.shared.callApi(
+            url: APIEndpoints.GetBranchCollegeList,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: colglist
+        ) {[weak self] (result:Result<clgListResponce, Error>) in
                 
-                
-                
-                
-            }))
+            guard let self = self else { return }
             
-            present(refreshAlert, animated: true, completion: nil)
-        }
-    }
-    
-    
+            switch result {
+            case .success(let colglistResp):
+                
+                if colglistResp.Status == 1 {
+                    clgListDataList = colglistResp.data ?? []
+                    allViewTop.constant = -130
+                    tv.dataSource = self
+                    tv.delegate = self
+                    tv.reloadData()
+                }else{
+                    
+                    let refreshAlert = UIAlertController(title: "", message: colglistResp.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                    }))
+                    
+                    present(refreshAlert, animated: true, completion: nil)
+                }
+            case .failure(let failure):
+                 print("Error:",failure.localizedDescription)
+            }
+            
+            }
 }
-
-
-
 
 }
 

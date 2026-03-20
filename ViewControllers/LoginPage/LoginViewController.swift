@@ -264,56 +264,51 @@
 
 
     @IBAction func fogetbtn(_ sender: Any) {
-
     forget()
     }
 
-
-    func forget(){
-
-
-    let forgets =  forgetModal  ()
-    forgets.mobilenumber = mobile_num
-
-
-
-    let forgetStr = forgets.toJSONString()
-
-    forgetRequest.call_request(param: forgetStr!){ [self]
-
-    (res) in
-
-
-    let forgetResponse : forgetResponce =
-    Mapper<forgetResponce>().map(JSONString: res)!
-
-    if forgetResponse.Status == 1 {
-
-
-    forArr = forgetResponse.data
-
-    for i in forArr {
-
-
-
-
-    let vc = EnterOtpViewController(nibName: nil, bundle: nil)
-    vc.phnNumber = forgetResponse.Message
-    vc.resiveMsg = i.ivrnumbers
-    vc.ShowPhnumber = mobile_num
-    vc.modalPresentationStyle = .fullScreen
-    present(vc, animated: true,completion: nil)
-
-    }
-
-
-    }
-
-
-
-
-    }
-    }
+        
+        func forget(){
+            
+            var forgets = forgetModal()
+            forgets.mobilenumber = mobile_num
+            
+            print("forget request", forgets)
+            
+            APiCallManager.shared.callApi(
+                url: APIEndpoints.forgetpassword,
+                httpMethod: .post,
+                queryParam: nil,
+                requestBody: forgets
+            ) { [weak self] (result: Result<forgetResponce, Error>) in
+                
+                guard let self = self else { return }
+                
+                switch result {
+                    
+                case .success(let forgetResponse):
+                    
+                    if forgetResponse.Status == 1 {
+                        
+                        self.forArr = forgetResponse.data ?? []
+                        
+                        for i in self.forArr {
+                            
+                            let vc = EnterOtpViewController(nibName: nil, bundle: nil)
+                            vc.phnNumber = forgetResponse.Message
+                            vc.resiveMsg = i.ivrnumbers ?? []
+                            vc.ShowPhnumber = mobile_num
+                            vc.modalPresentationStyle = .fullScreen
+                            
+                            self.present(vc, animated: true, completion: nil)
+                        }
+                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
 
 

@@ -101,7 +101,7 @@ class EditSkillsVc: UIViewController, SkillSelectionDelegate {
             
             InternshipList = internship.map { intern in
                 
-                let NewIntern = Internship_Request()
+                var NewIntern = Internship_Request()
                 NewIntern.companyName = intern.companyName
                 NewIntern.designation = intern.designation
                 NewIntern.from = intern.from
@@ -114,7 +114,7 @@ class EditSkillsVc: UIViewController, SkillSelectionDelegate {
             
             Certificates_List = certificates.map { certificate in
                 
-                let cert =   Certification_Request()
+                var cert =   Certification_Request()
                 cert.courseName = certificate.courseName
                 cert.institute = certificate.institute
                 cert.duration = certificate.duration
@@ -126,7 +126,7 @@ class EditSkillsVc: UIViewController, SkillSelectionDelegate {
             
             AssesmentList = assessments.map { assesment in
                 
-                let assess = Assessment_Request()
+                var assess = Assessment_Request()
                 assess.assessment = assesment.assessment
                 assess.score = assesment.score
                 return assess
@@ -137,7 +137,7 @@ class EditSkillsVc: UIViewController, SkillSelectionDelegate {
             
             ProjectList = projects.map { project in
                 
-                let ProjectReq = Project_Request()
+                var ProjectReq = Project_Request()
                 ProjectReq.title = project.title
                 return ProjectReq
             }
@@ -146,17 +146,28 @@ class EditSkillsVc: UIViewController, SkillSelectionDelegate {
     
     func Get_SoftSkills(){
         
-        Get_softSkills_Request.call_request(param: [:]) {[weak self] (res) in
-            
-            if let SkillResponse : SoftSkillsResponse = Mapper<SoftSkillsResponse>().map(JSONString: res) {
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.skillset_get_softskill,
+            httpMethod: .get,
+            isBaseUrl: false,
+            queryParam: [:],
+            requestBody: nil
+        ) {[weak self] (result:Result<SoftSkillsResponse, Error>) in
                 
-                if SkillResponse.status == true {
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let success):
+                if success.status == true {
                     
-                    self?.SoftSkills = SkillResponse.data?.first?.softSkills ?? []
+                    self.SoftSkills = success.data?.first?.softSkills ?? []
                     
                 }
+            case .failure(let failure):
+                print(failure.localizedDescription)
             }
-        }
+            
+            }
     }
 
     func SetFontStyle() {
@@ -214,64 +225,6 @@ class EditSkillsVc: UIViewController, SkillSelectionDelegate {
         dismiss(animated: true)
     }
     
-   /* @IBAction func SaveAct(_ sender: Any) {
-        
-        AlertHelper.showOKCancelAlert(on: self, title: "Confirm", message: "Are you sure you want to Update Skillset?",okTitle: "Yes",cancelTitle: "Cancel",okAction: {
-            
-            
-            let NewSkill =  Edit_Skill_Req()
-             
-             NewSkill.idMember = 31145
-            NewSkill.languages = self.Languanges
-            NewSkill.areaInterest = self.Interests
-            NewSkill.assessmentDetails = self.AssesmentList
-            NewSkill.certifications = self.Certificates_List
-            NewSkill.internship = self.InternshipList
-            NewSkill.programmingLanguage = self.Skills
-            NewSkill.projects = self.ProjectList
-            NewSkill.softSkill = self.SelectedSkills
-            NewSkill.toolsPlatform = self.Tools
-             
-             let Skillstr = NewSkill.toJSONString() ?? ""
-            print("Intern",self.InternshipList.toJSONString() ?? "")
-             
-             Edit_Skill_Request.call_request(param: Skillstr){ [weak self] (res) in
-                 
-                 guard let response: Edit_Skill_Response = Mapper<Edit_Skill_Response>().map(JSONString: res) else {return}
-                 
-                 DispatchQueue.main.async {
-                     
-                     if response.status == true {
-                         
-                         let alert = UIAlertController(title: "Success", message: "Skillset Updated Successfully", preferredStyle: .alert)
-                         
-                         let ok = UIAlertAction(title: "Ok", style: .default, handler: {_ in
-                             self?.dismiss(animated: true)
-                         })
-                         
-                         alert.addAction(ok)
-                         
-                         self?.present(alert,animated: true)
-                     }else{
-                         
-                         let alert = UIAlertController(title: "Failed", message: "Something went wrong", preferredStyle: .alert)
-                         let ok = UIAlertAction(title: "Ok", style: .default, handler: {_ in
-                         })
-                         
-                         alert.addAction(ok)
-                             self?.present(alert,animated: true)
-                     }
-                 }
-             }
-             
-        },
-         cancelAction:{
-            
-        }
-        )
-        
-    }*/
-    
     @IBAction func SaveAct(_ sender: Any) {
         
         var emptyFields: [String] = []
@@ -325,39 +278,67 @@ class EditSkillsVc: UIViewController, SkillSelectionDelegate {
             okTitle: "Yes",
             cancelTitle: "Cancel",
             okAction: {
-                let newSkill = Edit_Skill_Req()
-                newSkill.idMember = Int(self.memberId ?? "")
-                newSkill.languages = self.Languanges
-                newSkill.areaInterest = self.Interests
-                newSkill.assessmentDetails = self.AssesmentList
-                newSkill.certifications = self.Certificates_List
-                newSkill.internship = self.InternshipList
-                newSkill.programmingLanguage = self.Skills
-                newSkill.projects = self.ProjectList
-                newSkill.softSkill = self.SelectedSkills
-                newSkill.toolsPlatform = self.Tools
 
-                let skillStr = newSkill.toJSONString() ?? ""
-                print("Internships:", self.InternshipList.toJSONString() ?? "")
+                    var newSkill = Edit_Skill_Req()
+                    newSkill.idMember = Int(self.memberId ?? "0") ?? 0
+                    newSkill.languages = self.Languanges
+                    newSkill.areaInterest = self.Interests
+                    newSkill.assessmentDetails = self.AssesmentList
+                    newSkill.certifications = self.Certificates_List
+                    newSkill.internship = self.InternshipList
+                    newSkill.programmingLanguage = self.Skills
+                    newSkill.projects = self.ProjectList
+                    newSkill.softSkill = self.SelectedSkills
+                    newSkill.toolsPlatform = self.Tools
 
-                Edit_Skill_Request.call_request(param: skillStr) { [weak self] res in
-                    guard let response: Edit_Skill_Response = Mapper<Edit_Skill_Response>().map(JSONString: res) else { return }
+                    // Debug log (optional)
+                    print("Internships:", self.InternshipList)
 
-                    DispatchQueue.main.async {
-                        if response.status == true {
-                            let alert = UIAlertController(title: "Success", message: "Skillset Updated Successfully", preferredStyle: .alert)
-                            let ok = UIAlertAction(title: "Ok", style: .default) { _ in
-                                self?.dismiss(animated: true)
+                    APiCallManager.shared.callApi(
+                        url: APIEndpoints.skillset_add_edit_skillset,
+                        httpMethod: .post,
+                        isBaseUrl: false,
+                        queryParam: nil,
+                        requestBody: newSkill
+                    ) { [weak self] (result: Result<Edit_Skill_Response, Error>) in
+
+                        guard let self = self else { return }
+
+                        DispatchQueue.main.async {
+
+                            switch result {
+
+                            case .success(let response):
+
+                                if response.status == true {
+                                    let alert = UIAlertController(
+                                        title: "Success",
+                                        message: "Skillset Updated Successfully",
+                                        preferredStyle: .alert
+                                    )
+
+                                    let ok = UIAlertAction(title: "Ok", style: .default) { _ in
+                                        self.dismiss(animated: true)
+                                    }
+
+                                    alert.addAction(ok)
+                                    self.present(alert, animated: true)
+
+                                } else {
+                                    let alert = UIAlertController(title: "Failed", message: "Something went wrong", preferredStyle: .alert)
+                                    alert.addAction(UIAlertAction(title: "Ok", style: .default))
+                                    self.present(alert, animated: true)
+                                }
+
+                            case .failure(let error):
+                                print("❌ Error:", error.localizedDescription)
+                                let alert = UIAlertController(title: "Failed", message: "Something went wrong", preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "Ok", style: .default))
+                                self.present(alert, animated: true)
                             }
-                            alert.addAction(ok)
-                            self?.present(alert, animated: true)
-                        } else {
-                            let alert = UIAlertController(title: "Failed", message: "Something went wrong", preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: "Ok", style: .default))
-                            self?.present(alert, animated: true)
                         }
                     }
-                }
+                
             },
             cancelAction: {}
         )
@@ -630,7 +611,7 @@ extension EditSkillsVc: UITableViewDelegate, UITableViewDataSource {
                
             })
         } else {
-            let intern = Internship_Request()
+            var intern = Internship_Request()
             intern.companyName = ""
             intern.designation = ""
             intern.from = ""
@@ -651,7 +632,7 @@ extension EditSkillsVc: UITableViewDelegate, UITableViewDataSource {
             })
             return
         } else {
-            let project = Project_Request()
+            var project = Project_Request()
             project.title = ""
             ProjectList.append(project)
             tv.reloadData()
@@ -671,7 +652,7 @@ extension EditSkillsVc: UITableViewDelegate, UITableViewDataSource {
             })
             return
         } else {
-            let certificate = Certification_Request()
+            var certificate = Certification_Request()
             certificate.courseName = ""
             certificate.institute = ""
             certificate.duration = ""
@@ -693,7 +674,7 @@ extension EditSkillsVc: UITableViewDelegate, UITableViewDataSource {
                 // Optional action
             })
         } else {
-            let assessment = Assessment_Request()
+            var assessment = Assessment_Request()
             assessment.assessment = ""
             assessment.score = ""
             AssesmentList.append(assessment)

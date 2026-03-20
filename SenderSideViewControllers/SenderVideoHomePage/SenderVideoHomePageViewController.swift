@@ -478,8 +478,6 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let cell = tableView.dequeueReusableCell(withIdentifier: identifers, for: indexPath) as!
     SenderVideoTableViewCell
     
-    var Shopres : SendervideoDataDetails = videoRef[indexPath.row]
-    
     if let selectedCells = selectedCell, selectedCells == indexPath {
         
         
@@ -489,11 +487,11 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         selectedCell = indexPath
         
-        if Shopres.isappviewed == "0"{
+        if videoRef[indexPath.row].isappviewed == "0"{
             
-            apread(gesture : Shopres.detailid ?? "")
+            apread(gesture : videoRef[indexPath.row].detailid ?? "")
             
-            Shopres.isappviewed = "1"
+            videoRef[indexPath.row].isappviewed = "1"
             cell.redDotImageView.isHidden = true
             
         }

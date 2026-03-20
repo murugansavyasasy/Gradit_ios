@@ -401,11 +401,11 @@ class SenderExaminationNextPageViewController: UIViewController, UITableViewDele
         cell.yearNameLabel.text = examdeatils.yearname
         exameName = examdeatils.examnm
         
-        ExameSection = examdeatils.subjectdetails
+        ExameSection = examdeatils.subjectdetails ?? []
         //        examdeatils.subjectdetails
         
         let getSubjectVc  = examdetails(target: self, action: #selector(getSubjectVcc))
-        getSubjectVc.exameName =  examdeatils.subjectdetails
+        getSubjectVc.exameName =  examdeatils.subjectdetails ?? []
         cell.getSubjectView.addGestureRecognizer(getSubjectVc)
         
         //
@@ -429,7 +429,7 @@ class SenderExaminationNextPageViewController: UIViewController, UITableViewDele
         //
         Edit.exameName = examViewRefName
         Edit.EditId  = EditId
-        Edit.exameNameEdit = examdeatils.subjectdetails
+        Edit.exameNameEdit = examdeatils.subjectdetails ?? []
         Edit.ExameNameEdit = examdeatils.examnm
         Edit.semId = examdeatils.semesterid
         
@@ -464,15 +464,15 @@ class SenderExaminationNextPageViewController: UIViewController, UITableViewDele
             
             
             let edits = EditSubjectDetailsRef()
-            for i in (0..<examdeatils.subjectdetails.count){
+            for i in (0..<(examdeatils.subjectdetails?.count ?? 0)){
                 
                 
-                edits.examdate =  examdeatils.clgsectionid + "/ " + examdeatils.subjectdetails[i].examdate
-                edits.examsession =   examdeatils.clgsectionid + "/ " + examdeatils.subjectdetails[i].examsession
-                edits.examsubjectid =  examdeatils.clgsectionid + "/ " + examdeatils.subjectdetails[i].examsubjectid
+                edits.examdate =  (examdeatils.clgsectionid ?? "") + "/ " + (examdeatils.subjectdetails?[i].examdate ?? "")
+                edits.examsession =   (examdeatils.clgsectionid ?? "") + "/ " + (examdeatils.subjectdetails?[i].examsession ?? "")
+                edits.examsubjectid =  (examdeatils.clgsectionid ?? "") + "/ " + (examdeatils.subjectdetails?[i].examsubjectid ?? "")
                 
-                edits.examvenue =   examdeatils.clgsectionid + "/ " + examdeatils.subjectdetails[i].examvenue
-                edits.examsyllabus =    examdeatils.clgsectionid + "/ " + examdeatils.subjectdetails[i].examsyllabus
+                edits.examvenue =   (examdeatils.clgsectionid ?? "") + "/ " + (examdeatils.subjectdetails?[i].examvenue ?? "")
+                edits.examsyllabus =    (examdeatils.clgsectionid ?? "") + "/ " + (examdeatils.subjectdetails?[i].examsyllabus ?? "")
                 
                 print("edits.examdate",  edits.examdate,  edits.examsession,edits.examsubjectid, edits.examvenue,edits.examsyllabus)
                 
@@ -616,14 +616,12 @@ class SenderExaminationNextPageViewController: UIViewController, UITableViewDele
     
     @IBAction func DeleteExame(ges : DeleteExam ){
         
-        
-        
-        let refreshAlert = UIAlertController(title: "Delete Exam", message:  "Once done Can't be changed", preferredStyle: UIAlertController.Style.alert)
+        let refreshAlert = UIAlertController(title: "Delete Exam", message: "Once done Can't be changed", preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
             
             
-            let examDelete = examDeleteModal()
+            var examDelete = examDeleteModal()
             
             examDelete.examid = ges.ExamId
             examDelete.sectionid = ges.sectionId
@@ -633,87 +631,73 @@ class SenderExaminationNextPageViewController: UIViewController, UITableViewDele
             examDelete.userid = memberId
             examDelete.subjectdetails = []
             
+            print("examViewsStr", examDelete)
             
-            let examViewsStr = examDelete.toJSONString()
-            
-            
-            print("examViewsStr",examViewsStr)
-            ExamDeleteReqU.call_request(param: examViewsStr!){ [self]
+            APiCallManager.shared.callApi(
+                url: APIEndpoints.EditSectionWiseExamForApp,
+                httpMethod: .post,
+                queryParam: nil,
+                requestBody: examDelete
+            ) { [weak self] (result: Result<deleteResp, Error>) in
                 
-                (res) in
+                guard let self = self else { return }
                 
-                
-                let departResp : deleteResp =
-                Mapper<deleteResp>().map(JSONString: res)!
-                
-                if departResp.Status == 1{
+                switch result {
                     
-                    let refreshAlert = UIAlertController(title: "", message:  departResp.Message, preferredStyle: UIAlertController.Style.alert)
+                case .success(let departResp):
                     
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+                    if departResp.Status == 1{
+                        
+                        let refreshAlert = UIAlertController(title: "", message: departResp.Message, preferredStyle: UIAlertController.Style.alert)
+                        
+                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                            
+                        }))
                         
                         
+                        self.present(refreshAlert, animated: true, completion: nil)
                         
-                    }))
+                        
+                        self.tv.dataSource = self
+                        self.tv.delegate = self
+                        self.tv.reloadData()
+                        
+                        self.examViewPage()
+                        
+                    }
                     
+                    else{
+                        
+                        
+                        let refreshAlert = UIAlertController(title: "", message: departResp.Message, preferredStyle: UIAlertController.Style.alert)
+                        
+                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                            
+                        }))
+                        
+                        self.present(refreshAlert, animated: true, completion: nil)
+                        
+                        self.tv.delegate = self
+                        self.tv.dataSource = self
+                        
+                        self.tv.reloadData()
+                    }
                     
+                    print("order data", departResp)
                     
-                    present(refreshAlert, animated: true, completion: nil)
-                    
-                    
-                    
-                    
-                    tv.dataSource = self
-                    tv.delegate = self
-                    tv.reloadData()
-                    
-                    examViewPage()
-                    
-                    
-                    
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
-                
-                else{
-                    
-                    
-                    let refreshAlert = UIAlertController(title: "", message:  departResp.Message, preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    
-                    present(refreshAlert, animated: true, completion: nil)
-                    
-                    
-                    tv.delegate = self
-                    tv.dataSource = self
-                    
-                    tv.reloadData()
-                    
-                }
-                
-                
-                print("order data",departResp)
             }
-            
             
         }))
         
         
         refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .default, handler: { [self] (action: UIAlertAction!) in
         }))
+        
         present(refreshAlert, animated: true, completion: nil)
-        
-        
-        
-        
-        
     }
-    
     
     @IBAction func getSubjectVcc(ges : examdetails ){
         
@@ -735,72 +719,68 @@ class SenderExaminationNextPageViewController: UIViewController, UITableViewDele
     
     func examViewPage() {
         
-        let examViews = examViewPageModal()
+        var examViews = examViewPageModal()
         
         examViews.staffid = memberId
         examViews.examid = examId
         examViews.collegeid = colgId
         
+        print("examViews request", examViews)
         
-        
-        let examViewsStr = examViews.toJSONString()
-        
-        
-        examViewPageRequest.call_request(param: examViewsStr!){ [self]
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetDetailsForExamEdit,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: examViews
+        ) { [weak self] (result: Result<exameViewPageResponce, Error>) in
             
-            (res) in
+            guard let self = self else { return }
             
-            
-            let departResp : exameViewPageResponce =
-            Mapper<exameViewPageResponce>().map(JSONString: res)!
-            
-            
-            print("order data",departResp)
-            
-            
-            
-            if departResp.Status == 1{
+            switch result {
                 
-                examViewRefName = departResp.data
+            case .success(let departResp):
                 
+                print("order data", departResp)
                 
-                for i in departResp.data{
+                if departResp.Status == 1{
                     
-                    ExameSection.append(contentsOf: i.subjectdetails)
+                    self.examViewRefName = departResp.data ?? []
+                    
+                    for i in departResp.data ?? []{
+                        
+                        self.ExameSection.append(contentsOf: i.subjectdetails ?? [])
+                        
+                    }
+                    
+                    let count = String(self.examViewRefName.count)
+                    self.countLabel.text = count
+                    
+                    self.nodataView.isHidden = true
+                    self.noDataLabel.isHidden = true
+                    self.countView.isHidden = false
+                    self.tv.delegate = self
+                    self.tv.dataSource = self
+                    self.tv.reloadData()
                     
                 }
                 
-                let count = String(examViewRefName.count)
-                countLabel.text = count
+                else{
+                    
+                    self.nodataView.isHidden = false
+                    self.noDataLabel.isHidden = false
+                    self.countView.isHidden = true
+                    self.noDataLabel.text = departResp.Message
+                    self.tv.isHidden = true
+                    self.tv.delegate = self
+                    self.tv.dataSource = self
+                    self.tv.reloadData()
+                    
+                }
                 
-                nodataView.isHidden = true
-                noDataLabel.isHidden = true
-                countView.isHidden = false
-                tv.delegate = self
-                tv.dataSource = self
-                tv.reloadData()
-                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-            
-            else{
-                
-                nodataView.isHidden = false
-                noDataLabel.isHidden = false
-                countView.isHidden = true
-                noDataLabel.text = departResp.Message
-                tv.isHidden = true
-                tv.delegate = self
-                tv.dataSource = self
-                tv.reloadData()
-                
-            }
-            
-            
         }
-        
-        
-        
-        
     }
     
     func addApi(){

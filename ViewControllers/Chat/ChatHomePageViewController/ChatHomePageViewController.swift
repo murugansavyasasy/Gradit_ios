@@ -130,14 +130,7 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
             
             chatfortPage()
         }
-        
-        else{
-            
-            
-        }
-        
-        
-        
+    
         let rowNib = UINib(nibName: Indentifiers, bundle: nil)
         chatCollectionView.register(rowNib, forCellWithReuseIdentifier: Indentifiers)
         
@@ -284,8 +277,48 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
         
         print("chat")
         var chatfornt = ChatFrontPageModal()
-    
-}
+        chatfornt.college_id = colgId
+        chatfornt.student_id = memberId
+        
+        APiCallManager.shared.callApi(url: APIEndpoints.GetstaffdetailsForApp, httpMethod: .post, queryParam: nil, requestBody: chatfornt) {[weak self] (result:Result<ChatFrontPageResponce,  Error>) in
+            
+            guard let self = self else {return}
+            
+            switch result {
+            case .success(let success):
+                
+                chatFortPageRefName = success.data ?? []
+                if success.Status == 1{
+                    
+                    noDataTextView.isHidden = true
+                    noDataTextLabel.isHidden = true
+                    chatCollectionView.dataSource = self
+                    chatCollectionView.delegate = self
+                    chatCollectionView.reloadData()
+                    
+                }else{
+                    
+                    noDataTextLabel.text = success.Message
+                    noDataTextView.isHidden = false
+                    noDataTextLabel.isHidden = false
+                    chatCollectionView.dataSource = self
+                    chatCollectionView.delegate = self
+                    chatCollectionView.reloadData()
+                    
+                }
+                
+            case .failure(let failure):
+                
+                chatFortPageRefName = []
+                noDataTextLabel.text = failure.localizedDescription
+                noDataTextView.isHidden = false
+                noDataTextLabel.isHidden = false
+                chatCollectionView.dataSource = self
+                chatCollectionView.delegate = self
+                chatCollectionView.reloadData()
+            }
+        }
+    }
 
     func addApi(){
         
@@ -301,7 +334,7 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
         add.college_id = colgId
         add.previous_add_id = 2
         
-        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .get, queryParam: nil, requestBody: nil
+        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
         ) {[weak self] (result:Result<AddApiResponce,Error>) in
             
             guard let self = self else {return}

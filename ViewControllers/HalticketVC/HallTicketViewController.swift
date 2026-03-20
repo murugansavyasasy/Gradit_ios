@@ -397,39 +397,5 @@ class HallTicketViewController: UIViewController, UICollectionViewDataSource, UI
             }
         }
         
-        //       let hallticketStr = halltick.toJSONString()
-        
-        //        HalltickectRequest .call_request(param: hallticketStr!){ [self]
-        //
-        //            (res) in
-        //
-        //
-        //            let haltticketResp : HallticketResponce =
-        //            Mapper<HallticketResponce>().map(JSONString: res)!
-        //
-        //            print("order data",haltticketResp)
-        //
-        //
-        //            if haltticketResp.Status == 1{
-        //
-        //                pageController.isHidden = true
-        //                hallticketsDataDetails = haltticketResp.data
-        //                hallticketCv.reloadData()
-        //            }else{
-        //
-        //                pageController.isHidden = true
-        //
-        //                let refreshAlert = UIAlertController(title: "", message: haltticketResp.Message, preferredStyle: UIAlertController.Style.alert)
-        //
-        //                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-        //
-        //                }))
-        //
-        //                present(refreshAlert, animated: true, completion: nil)
-        //            }
-        //
-        //
-        //        }
-        
     }
 }

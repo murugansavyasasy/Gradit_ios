@@ -450,132 +450,42 @@ override func viewDidLoad() {
     searchbar.isHidden  = false
     searchFullView .isHidden = false
     
-    
-    
-    
-    
-    
-    
-    
 }
-
-
-
+    
 
 func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    
-    
-    
-    
-    
-    let filtered_list : [SenderPastEventsdatadetails] = Mapper<SenderPastEventsdatadetails>().mapArray(JSONString: cloneList.toJSONString()!)!
-    
-    
-    
-    
-    
-    if !searchText.isEmpty{
         
+        let filtered_list : [SenderPastEventsdatadetails] = cloneList
         
-        
-        upcomming = filtered_list.filter {
+        if !searchText.isEmpty{
             
+            upcomming = filtered_list.filter {
+                
+                ($0.venue ?? "").lowercased().contains(searchText.lowercased())  || ($0.topic ?? "").lowercased().contains(searchText.lowercased()) ||  ($0.event_date ?? "").lowercased().contains(searchText.lowercased()) || ($0.body ?? "").lowercased().contains(searchText.lowercased())
+                
+            }
             
+        }else{
             
-            
-            
-            
-            
-            $0.venue.lowercased().contains(searchText.lowercased())  || $0.topic.lowercased().contains(searchText.lowercased()) ||  $0.event_date.lowercased().contains(searchText.lowercased()) || $0.body.lowercased().contains(searchText.lowercased())
-            
-            
-            
+            upcomming = filtered_list
         }
         
-        
-        
-        
-        
-        
-        
-    }else{
-        
-        
-        
-        upcomming = filtered_list
-        
-        
-        
-        
-        
+        EventTableView.reloadData()
         
     }
-    
-    
-    
-    
-    
-    
-    
-    if upcomming.count > 0{
-        
-        
-        
-        print ("searchListPendigCount",upcomming.count)
-        
-        
-        
-    }else{
-        
-        
-        
-        
-        
-        
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-    EventTableView.reloadData()
-    
-    
-    
-    
-    
-    
-    
-}
 
 
 
 func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     
-    
-    
     searchbar.endEditing(true)
-    
-    
     
 }
 
 
-
-
-
-
-
 func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     
-    
-    
     searchbar.resignFirstResponder()
-    
-    
     
 }
 
@@ -585,8 +495,6 @@ func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     searchFullView .isHidden = true
     
     searchbar.resignFirstResponder()
-    
-    
     
 }
 
@@ -731,141 +639,133 @@ func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         }
     }else{}
 }
-
-
-func past() {
     
-    let pastEvent = senderPastEventModal()
-    
-    pastEvent.userid     = memberId
-    pastEvent.appid      = "2"
-    pastEvent.priority   = priority
-    pastEvent.type       =  "pastevents"
-    
-    
-    
-    let pastEventStr = pastEvent.toJSONString()
-    
-    
-    SenderEventsRequest.call_request(param: pastEventStr!){ [self]
+    func past() {
         
-        (res) in
+        var pastEvent = senderPastEventModal()
         
+        pastEvent.userid     = memberId
+        pastEvent.appid      = "2"
+        pastEvent.priority   = priority
+        pastEvent.type       = "pastevents"
         
-        let PastEventResp : senderPastEventResponce =
-        Mapper<senderPastEventResponce>().map(JSONString: res)!
+        print("pastEvent request", pastEvent)
         
-        print("order data",PastEventResp)
-        
-        if PastEventResp.Status == 1{
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetEventListByType,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: pastEvent
+        ) { [weak self] (result: Result<senderPastEventResponce, Error>) in
             
-            pastRef = PastEventResp.data
-            noDataLabel.isHidden = true
-            noDataTextView.isHidden = true
-            EventTableView.isScrollEnabled = true
-            EventTableView.delegate = self
-            EventTableView.dataSource = self
-            EventTableView.reloadData()
+            guard let self = self else { return }
             
-            
-            
-        }
-        
-        else{
-            
-            
-            
-            
-            noDataLabel.isHidden = false
-            noDataTextView.isHidden = false
-            noDataLabel.text = PastEventResp.Message
-            EventTableView.delegate = self
-            EventTableView.dataSource = self
-            EventTableView.reloadData()
-            
-        }
-        
-        
-    }
-    
-}
-
-
-func upcoming() {
-    
-    let UpcommingEvent = senderPastEventModal()
-    
-    UpcommingEvent.userid     =  memberId
-    UpcommingEvent.appid      =  "2"
-    UpcommingEvent.priority   = priority
-    UpcommingEvent.type       =  "upcomingevents"
-    
-    
-    
-    let upcommingeventStr = UpcommingEvent.toJSONString()
-    
-    
-    SenderEventsRequest .call_request(param: upcommingeventStr!){ [self]
-        
-        (res) in
-        
-        
-        let upcommingeventResp : senderPastEventResponce =
-        Mapper<senderPastEventResponce>().map(JSONString: res)!
-        
-        print("order data",upcommingeventResp)
-        
-        
-        
-        if upcommingeventResp.Status == 1{
-            
-            noDataLabel.isHidden = true
-            noDataTextView.isHidden = true
-            upcomming = upcommingeventResp.data
-            cloneList = upcommingeventResp.data
-            EventTableView.isScrollEnabled = true
-            EventTableView.delegate = self
-            EventTableView.dataSource = self
-            EventTableView.reloadData()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+            switch result {
                 
-                loadingCustom.stopAnimating()
+            case .success(let PastEventResp):
                 
-                loadingCustom.isHidden  = true
+                print("order data", PastEventResp)
                 
+                if PastEventResp.Status == 1{
+                    
+                    self.pastRef = PastEventResp.data ?? []
+                    self.noDataLabel.isHidden = true
+                    self.noDataTextView.isHidden = true
+                    self.EventTableView.isScrollEnabled = true
+                    self.EventTableView.delegate = self
+                    self.EventTableView.dataSource = self
+                    self.EventTableView.reloadData()
+                    
+                } else{
+                    
+                    self.noDataLabel.isHidden = false
+                    self.noDataTextView.isHidden = false
+                    self.noDataLabel.text = PastEventResp.Message
+                    self.EventTableView.delegate = self
+                    self.EventTableView.dataSource = self
+                    self.EventTableView.reloadData()
+                    
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
-        
-        else{
-            
-            
-            
-            
-            noDataLabel.isHidden = false
-            noDataTextView.isHidden = false
-            noDataLabel.text = upcommingeventResp.Message
-            EventTableView.delegate = self
-            EventTableView.dataSource = self
-            EventTableView.reloadData()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                
-                loadingCustom.stopAnimating()
-                
-                loadingCustom.isHidden  = true
-                
-            }
-            
-            print("eventResp.Message")
-            
-            
-        }
-        
     }
-    
-}
 
-
+    func upcoming() {
+        
+        var UpcommingEvent = senderPastEventModal()
+        
+        UpcommingEvent.userid     =  memberId
+        UpcommingEvent.appid      =  "2"
+        UpcommingEvent.priority   = priority
+        UpcommingEvent.type       =  "upcomingevents"
+        
+        print("upcoming request", UpcommingEvent)
+        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetEventListByType,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: UpcommingEvent
+        ) { [weak self] (result: Result<senderPastEventResponce, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let upcommingeventResp):
+                
+                print("order data", upcommingeventResp)
+                
+                if upcommingeventResp.Status == 1{
+                    
+                    self.noDataLabel.isHidden = true
+                    self.noDataTextView.isHidden = true
+                    self.upcomming = upcommingeventResp.data ?? []
+                    self.cloneList = upcommingeventResp.data ?? []
+                    self.EventTableView.isScrollEnabled = true
+                    self.EventTableView.delegate = self
+                    self.EventTableView.dataSource = self
+                    self.EventTableView.reloadData()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [weak self] in
+                        
+                        guard let self = self else { return }
+                        
+                        self.loadingCustom.stopAnimating()
+                        self.loadingCustom.isHidden = true
+                        
+                    }
+                }
+                
+                else{
+                    
+                    self.noDataLabel.isHidden = false
+                    self.noDataTextView.isHidden = false
+                    self.noDataLabel.text = upcommingeventResp.Message
+                    self.EventTableView.delegate = self
+                    self.EventTableView.dataSource = self
+                    self.EventTableView.reloadData()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [weak self] in
+                        
+                        guard let self = self else { return }
+                        
+                        self.loadingCustom.stopAnimating()
+                        self.loadingCustom.isHidden = true
+                        
+                    }
+                    
+                    print("eventResp.Message")
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 
 
 func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -937,7 +837,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
             //
         }
         
-        cell.topicCellLabel.text = Upcommimgsevent.topic.capitalized
+        cell.topicCellLabel.text = Upcommimgsevent.topic?.capitalized
         cell.eventDateCellLabel.text = Upcommimgsevent.event_date
         cell.timeDateCellLabel.text = Upcommimgsevent.event_time
         cell.createrNameCellLabel.text = Upcommimgsevent.createdbyname
@@ -949,7 +849,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         vc.body = Upcommimgsevent.body
         vc.event_date = Upcommimgsevent.event_date
         vc.event_time = Upcommimgsevent.event_time
-        vc.newfilepath = Upcommimgsevent.newfilepath
+        vc.newfilepath = Upcommimgsevent.newfilepath ?? []
         vc.headerId = Upcommimgsevent.eventid
         vc.eventCreatedId = Upcommimgsevent.createdby
         
@@ -975,7 +875,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
             
         }
         
-        cell.topicCellLabel.text = Pastsevent.topic.capitalized
+        cell.topicCellLabel.text = Pastsevent.topic?.capitalized
         cell.eventDateCellLabel.text = Pastsevent.event_date
         cell.timeDateCellLabel.text = Pastsevent.event_time
         cell.createrNameCellLabel.text = Pastsevent.createdbyname
@@ -987,7 +887,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         vc.topic = Pastsevent.topic
         vc.event_date = Pastsevent.event_date
         vc.event_time = Pastsevent.event_time
-        vc.newfilepath = Pastsevent.newfilepath
+        vc.newfilepath = Pastsevent.newfilepath ?? []
         vc.headerId = Pastsevent.eventid
         
         cell.viewclick.addGestureRecognizer(vc)
@@ -1101,7 +1001,6 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
     
     if eventSegmentName.selectedSegmentIndex == 0{
         
-        let Upcommimgsevent : SenderPastEventsdatadetails = upcomming[indexPath.row]
         if let selectedCells = selectedCell, selectedCells == indexPath {
             
             selectedCell = nil
@@ -1113,11 +1012,11 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
             selectedCell = indexPath
             
             
-            if Upcommimgsevent.isappread == "0"{
+            if upcomming[indexPath.row].isappread == "0"{
                 
-                apread(gesture : Upcommimgsevent.eventdetailsid)
+                apread(gesture : upcomming[indexPath.row].eventdetailsid ?? "")
                 
-                Upcommimgsevent.isappread = "1"
+                upcomming[indexPath.row].isappread = "1"
                 cell.ReadDotImageView.isHidden = true
                 
             }
@@ -1131,8 +1030,6 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
     
     
     else if eventSegmentName.selectedSegmentIndex == 1 {
-        
-        let Pastsevent : SenderPastEventsdatadetails = pastRef[indexPath.row]
         if let selectedCells = selectedCell, selectedCells == indexPath {
             
             selectedCell = nil
@@ -1146,11 +1043,11 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
             
             
             
-            if Pastsevent.isappread == "0"{
+            if pastRef[indexPath.row].isappread == "0"{
                 
-                apread(gesture : Pastsevent.eventdetailsid)
+                apread(gesture : pastRef[indexPath.row].eventdetailsid ?? "")
                 
-                Pastsevent.isappread = "1"
+                pastRef[indexPath.row].isappread = "1"
                 cell.ReadDotImageView.isHidden = true
                 
             }

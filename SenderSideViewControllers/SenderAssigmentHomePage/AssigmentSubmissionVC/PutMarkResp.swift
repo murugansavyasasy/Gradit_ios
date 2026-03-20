@@ -6,60 +6,21 @@
 //
 
 import Foundation
-import ObjectMapper
 
+struct PutMarkResp: Codable {
 
-class  PutMarkResp : Mappable{
-    
-    var assignmentid : String!
-    var processby : String!
-    var studentid  : String!
-    var assignmentdetailsid : String!
-    var marks   : String!
-    var ImageChage : Bool!
-    
-    init(){}
+    var assignmentid: String?
+    var processby: String?
+    var studentid: String?
+    var assignmentdetailsid: String?
+    var marks: String?
+    var ImageChage: Bool?
 
-    
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        assignmentid <- map["assignmentid"]
-        processby <- map["processby"]
-        studentid <- map["studentid"]
-        assignmentdetailsid <- map["assignmentdetailsid"]
-        marks <- map["marks"]
-    }
-    
-    
-    
-    
-    
-    
-    
 }
 
+struct PutMarkResponse: Codable {
 
-class  PutMarkResponse : Mappable{
-    
-    var Status : Int!
-    var Message : String!
-   
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        Status <- map["Status"]
-        Message <- map["Message"]
-    }
-    
-    
-    
-    
-    
+    var Status: Int?
+    var Message: String?
+
 }

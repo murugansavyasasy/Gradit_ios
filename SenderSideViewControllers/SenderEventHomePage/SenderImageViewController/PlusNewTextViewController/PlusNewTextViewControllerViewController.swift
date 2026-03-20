@@ -560,180 +560,142 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                 
                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    let particular = EventParticualrModal()
-                    
+                    var particular = EventParticualrModal()
+
                     particular.eventid = eventHeaderId
-                    
-                    
                     particular.eventbody = descripitionTextField.text
-                    
                     particular.eventdate = DateLabel.text
-                    
                     particular.eventvenue = venuTextField.text
-                    
                     particular.eventtime = timeLabel.text
                     particular.eventtopic = titleTextField.text
-                    
-                    
-                    
+
                     particular.processtype = "edit"
                     particular.collegeid = colgId
-                    
                     particular.staffid = UserId
-                    
                     particular.Callertype = priority
-                    
                     particular.receivertype = ""
-                    
-                    particular.isparent =  false
-                    
+
+                    particular.isparent = false
                     particular.isstaff = false
                     particular.isstudent = false
                     particular.receiveridlist = ""
-                    
-                    let particularStr = particular.toJSONString()
-                    
-                    
-                    print("yearAndSectionModalStr",particularStr)
-                    
-                    EventParticularRequest.call_request(param: particularStr!) {
+
+                    print("yearAndSectionModalStr", particular)
+
+                    APiCallManager.shared.callApi(
+                        url: APIEndpoints.ManageEvents,
+                        httpMethod: .post,
+                        queryParam: nil,
+                        requestBody: particular
+                    ) { [weak self] (result: Result<[EventParticularResponce], Error>) in
                         
-                        [self]  (res) in
+                        guard let self = self else { return }
                         
-                        
-                        
-                        
-                        
-                        let particular : [EventParticularResponce] = Mapper<EventParticularResponce>().mapArray(JSONString: res)!
-                        
-                        
-                        for i in particular{
+                        switch result {
                             
-                            if i.Status == 1 {
+                        case .success(let response):
+                            
+                            for i in response {
                                 
-                                
-                                let refreshAlert = UIAlertController(title: "", message:  i.Message, preferredStyle: UIAlertController.Style.alert)
-                                
-                                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+                                if i.Status == 1 {
                                     
-                                    if priority == "p2" || priority == "p3" {
-                                        
-                                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                                        vc.is_read_enabled = is_read_enabled
-                                        vc.is_write_enabled = is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                        vc.str = str
-                                        vc.strName = strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true , completion: nil)
-                                        
-                                    }
+                                    let refreshAlert = UIAlertController(
+                                        title: "",
+                                        message: i.Message,
+                                        preferredStyle: .alert
+                                    )
                                     
+                                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                                        
+                                        if self.priority == "p2" || self.priority == "p3" {
+                                            
+                                            let vc = SenderEventHomePageViewController()
+                                            vc.is_read_enabled = self.is_read_enabled
+                                            vc.is_write_enabled = self.is_write_enabled
+                                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                            vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                            vc.str = self.str
+                                            vc.strName = self.strName
+                                            vc.modalPresentationStyle = .fullScreen
+                                            self.present(vc, animated: true)
+                                            
+                                        } else {
+                                            
+                                            let vc = SenderEventHomePageViewController()
+                                            vc.is_read_enabled = self.is_read_enabled
+                                            vc.is_write_enabled = self.is_write_enabled
+                                            vc.view.backgroundColor = UIColor(named: "Principal")
+                                            vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                            vc.str = self.str
+                                            vc.strName = self.strName
+                                            vc.modalPresentationStyle = .fullScreen
+                                            self.present(vc, animated: true)
+                                        }
+                                    })
                                     
-                                    else{
-                                        
-                                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                                        vc.is_read_enabled = is_read_enabled
-                                        vc.is_write_enabled = is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Principal" )
-                                        vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                        vc.str = str
-                                        vc.strName = strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true , completion: nil)
-                                        
-                                    }
-                                }))
-                                
-                                
-                                
-                                
-                                self.present(refreshAlert, animated: true, completion: nil)
-                                
-                                
-                                
-                                
-                                
-                                
-                            }else{
-                                
-                                let refreshAlert = UIAlertController(title: "", message:  i.Message, preferredStyle: UIAlertController.Style.alert)
-                                
-                                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+                                    self.present(refreshAlert, animated: true)
                                     
-                                    if priority == "p2" || priority == "p3" {
-                                        
-                                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                                        vc.is_read_enabled = is_read_enabled
-                                        vc.is_write_enabled = is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                        vc.str = str
-                                        vc.strName = strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true , completion: nil)
-                                        
-                                    }
+                                } else {
                                     
-                                    if priority == "p7" {
-                                        
-                                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                                        vc.is_read_enabled = is_read_enabled
-                                        vc.is_write_enabled = is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                        vc.str = str
-                                        vc.strName = strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true , completion: nil)
-                                        
-                                    }
+                                    let refreshAlert = UIAlertController(
+                                        title: "",
+                                        message: i.Message,
+                                        preferredStyle: .alert
+                                    )
                                     
-                                    else{
+                                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                                         
-                                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                                        vc.is_read_enabled = is_read_enabled
-                                        vc.is_write_enabled = is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Principal" )
-                                        vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                        vc.str = str
-                                        vc.strName = strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true , completion: nil)
+                                        if self.priority == "p2" || self.priority == "p3" {
+                                            
+                                            let vc = SenderEventHomePageViewController()
+                                            vc.is_read_enabled = self.is_read_enabled
+                                            vc.is_write_enabled = self.is_write_enabled
+                                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                            vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                            vc.str = self.str
+                                            vc.strName = self.strName
+                                            vc.modalPresentationStyle = .fullScreen
+                                            self.present(vc, animated: true)
+                                        }
                                         
-                                    }
-                                }))
-                                
-                                
-                                
-                                
-                                self.present(refreshAlert, animated: true, completion: nil)
-                                
-                                
-                                
-                                
+                                        if self.priority == "p7" {
+                                            
+                                            let vc = SenderEventHomePageViewController()
+                                            vc.is_read_enabled = self.is_read_enabled
+                                            vc.is_write_enabled = self.is_write_enabled
+                                            vc.view.backgroundColor = UIColor(named: "univercityColorCod")
+                                            vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                            vc.str = self.str
+                                            vc.strName = self.strName
+                                            vc.modalPresentationStyle = .fullScreen
+                                            self.present(vc, animated: true)
+                                            
+                                        } else {
+                                            
+                                            let vc = SenderEventHomePageViewController()
+                                            vc.is_read_enabled = self.is_read_enabled
+                                            vc.is_write_enabled = self.is_write_enabled
+                                            vc.view.backgroundColor = UIColor(named: "Principal")
+                                            vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                            vc.str = self.str
+                                            vc.strName = self.strName
+                                            vc.modalPresentationStyle = .fullScreen
+                                            self.present(vc, animated: true)
+                                        }
+                                    })
+                                    
+                                    self.present(refreshAlert, animated: true)
+                                }
                             }
                             
-                            
-                            
+                        case .failure(let error):
+                            print(error.localizedDescription)
                         }
-                        
-                        
                     }
                     
                 }))

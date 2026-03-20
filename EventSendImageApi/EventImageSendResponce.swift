@@ -6,120 +6,32 @@
 //
 
 import Foundation
-import ObjectMapper
 
-class EventImageModal : Mappable{
-    
-    var collegeid : String!
-    var eventheaderid : String!
-    var Userid : String!
-    var FileNameArray : [FileNames]!
-    
-    init(){}
-    
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        collegeid <- map["collegeid"]
-        eventheaderid <- map["eventheaderid"]
-        Userid <- map ["Userid"]
-        FileNameArray <- map["FileNameArray"]
-        
-        
-        
-    }
-    
-    
-    
-    
-    
-    
-    
+struct EventImageModal: Codable {
+
+    var collegeid: String?
+    var eventheaderid: String?
+    var Userid: String?
+    var FileNameArray: [FileNames]?
+
 }
 
+struct FileNames: Codable {
 
-class FileNames : Mappable{
-    
-    
-    var FileName : String!
-    
-    init(){}
-    
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        FileName <- map["FileName"]
-    }
-    
-    
-    
-    
-    
-    
-    
+    var FileName: String?
+
 }
 
-class EventImageSendResponce : Mappable{
-    
-    var Status : Int!
-    var Message : String!
-    var data : [sendImageEventDataDetails]!
-    
-    
-    
-   
-    
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        Status <- map ["Status"]
-        Message <- map["Message"]
-        data <- map ["data"]
-        
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+struct EventImageSendResponce: Codable {
+
+    var Status: Int?
+    var Message: String?
+    var data: [sendImageEventDataDetails]?
+
 }
 
+struct sendImageEventDataDetails: Codable {
 
-class sendImageEventDataDetails : Mappable{
-    
-    
-    var ivrheader : String!
-    
-    
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        ivrheader <- map["ivrheader"]
-        
-    }
-    
-    
-    
-    
+    var ivrheader: String?
+
 }

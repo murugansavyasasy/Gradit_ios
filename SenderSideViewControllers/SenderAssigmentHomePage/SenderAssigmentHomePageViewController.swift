@@ -621,10 +621,7 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
                 present(vc, animated: true , completion: nil)
                 
                 
-            }
-            
-            
-            else if priority == "p7"{
+            }else if priority == "p7"{
                 
                 let vc = PlusScreenNextPageViewController(nibName: nil, bundle: nil)
                 
@@ -644,10 +641,7 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
                 present(vc, animated: true , completion: nil)
                 
                 
-            }
-            
-            
-            else{
+            }else{
                 
                 
                 let vc = PlusScreenNextPageViewController(nibName: nil, bundle: nil)
@@ -665,9 +659,7 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
                 vc.view.backgroundColor = UIColor(named: "Principal" )
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true , completion: nil)
-                
-                
-                
+                 
             }
         }
         
@@ -1547,7 +1539,7 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
             vc.fileType = gesture.fileType
             vc.titleText = gesture.titleText
             vc.dateText = gesture.dateText
-            vc.addImageBackGroundurl = addImageBackGroundurl
+            vc.addImageBackGroundurl = addapiRef.first?.background_image
             vc.smallImageUrl = smallImageUrl
             vc.imageWebUrl = addurls
             vc.forwadDiscreption = gesture.discreptionForwad
@@ -1589,24 +1581,17 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
             
             
         }
-        
-        
     }
-    
     
     @IBAction func PastDeleteVc(gesture : AssigmentDeletes){
         
+        var imagePdfFileArry = FileNameArray()
+        imagePdfFileArry.FileName = ""
         
-        let imagePdfFileArry = FileNameArray()
-        
-        imagePdfFileArry.fileName = ""
-        
-        let imagePdf = assigmentImagePdfModal()
+        var imagePdf = assigmentImagePdfModal()
         
         imagePdf.collegeid = ""
-        
         imagePdf.sectionid = ""
-        
         imagePdf.processtype = "delete"
         imagePdf.staffid = ""
         imagePdf.assignmentdescription = ""
@@ -1615,110 +1600,67 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
         imagePdf.assignmenttype = ""
         imagePdf.callertype = ""
         imagePdf.courseid = ""
-        
         imagePdf.receiverid = ""
         imagePdf.receivertype = ""
-        
         imagePdf.subjectid = ""
         imagePdf.yearid = ""
         imagePdf.submissiondate = ""
         imagePdf.fileNameArray = [imagePdfFileArry]
         
-        let imagePdfStrs = imagePdf.toJSONString()
+        print("SenderAssigmentDelete", imagePdf)
         
-        print("SenderAssigmentDelete",imagePdfStrs)
         
-        assigmentDeleteRequest.call_request(param: imagePdfStrs!) {
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.AssignmentDelete,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: imagePdf
+        ) { [weak self] (result: Result<[assigmentImagePdfResponce], Error>) in
             
-            [self]  (res) in
+            guard let self = self else { return }
             
-            
-            let particularss : [assigmentImagePdfResponce] = Mapper<assigmentImagePdfResponce>().mapArray(JSONString: res)!
-            
-            
-            
-            
-            for i in particularss{
+            switch result {
                 
-                assigmentImagPdf = particularss
+            case .success(let particularss):
                 
-                if i.Status == 1 {
+                for i in particularss{
                     
+                    self.assigmentImagPdf = particularss
                     
+                    let refreshAlert = UIAlertController(
+                        title: "",
+                        message: i.Message,
+                        preferredStyle: .alert
+                    )
                     
-                    let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
                     
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
-                        
-                    }))
+                    self.present(refreshAlert, animated: true)
                     
+                    self.assigmentTableView.dataSource = self
+                    self.assigmentTableView.delegate = self
+                    self.assigmentTableView.reloadData()
                     
-                    
-                    present(refreshAlert, animated: true, completion: nil)
-                    
-                    
-                    
-                    assigmentTableView.dataSource = self
-                    assigmentTableView.delegate = self
-                    assigmentTableView.reloadData()
-                    
-                    
-                    PastRefName()
-                }else{
-                    
-                    
-                    let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    
-                    present(refreshAlert, animated: true, completion: nil)
-                    
-                    
-                    assigmentTableView.dataSource = self
-                    assigmentTableView.delegate = self
-                    assigmentTableView.reloadData()
+                    if i.Status == 1 {
+                        self.PastRefName()
+                    }
                 }
                 
-                
-                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-            
-            
-            
         }
-        
     }
-    
     
     @IBAction func UpcomingDeleteVc(gesture : AssigmentDeletes){
         
+        var imagePdfFileArry = FileNameArray()
+        imagePdfFileArry.FileName = ""
         
-        
-        
-        
-        
-        let imagePdfFileArry = FileNameArray()
-        
-        imagePdfFileArry.fileName = ""
-        
-        let imagePdf = assigmentImagePdfModal()
+        var imagePdf = assigmentImagePdfModal()
         
         imagePdf.collegeid = ""
-        
         imagePdf.sectionid = ""
-        
         imagePdf.processtype = "delete"
         imagePdf.staffid = ""
         imagePdf.assignmentdescription = ""
@@ -1727,85 +1669,56 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
         imagePdf.assignmenttype = ""
         imagePdf.callertype = ""
         imagePdf.courseid = ""
-        
         imagePdf.receiverid = ""
         imagePdf.receivertype = ""
-        
         imagePdf.subjectid = ""
         imagePdf.yearid = ""
         imagePdf.submissiondate = ""
         imagePdf.fileNameArray = [imagePdfFileArry]
         
-        let imagePdfStrs = imagePdf.toJSONString()
+        print("yearAndSectionModalStr", imagePdf)
         
-        print("yearAndSectionModalStr",imagePdfStrs)
         
-        assigmentDeleteRequest.call_request(param: imagePdfStrs!) {
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.AssignmentDelete,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: imagePdf
+        ) { [weak self] (result: Result<[assigmentImagePdfResponce], Error>) in
             
-            [self]  (res) in
+            guard let self = self else { return }
             
-            
-            let particularss : [assigmentImagePdfResponce] = Mapper<assigmentImagePdfResponce>().mapArray(JSONString: res)!
-            
-            
-            
-            
-            for i in particularss{
+            switch result {
                 
-                assigmentImagPdf = particularss
+            case .success(let particularss):
                 
-                if i.Status == 1 {
+                for i in particularss{
                     
+                    self.assigmentImagPdf = particularss
                     
+                    let refreshAlert = UIAlertController(
+                        title: "",
+                        message: i.Message,
+                        preferredStyle: .alert
+                    )
                     
-                    let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
                     
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                    }))
+                    self.present(refreshAlert, animated: true)
                     
+                    self.assigmentTableView.dataSource = self
+                    self.assigmentTableView.delegate = self
+                    self.assigmentTableView.reloadData()
                     
-                    
-                    present(refreshAlert, animated: true, completion: nil)
-                    assigmentTableView.dataSource = self
-                    assigmentTableView.delegate = self
-                    assigmentTableView.reloadData()
-                    
-                    
-                    UpcommingRefName()
-                }else{
-                    
-                    
-                    let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                    }))
-                    
-                    present(refreshAlert, animated: true, completion: nil)
-                    
-                    
-                    assigmentTableView.dataSource = self
-                    assigmentTableView.delegate = self
-                    assigmentTableView.reloadData()
+                    if i.Status == 1 {
+                        self.UpcommingRefName()
+                    }
                 }
                 
-                
-                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-            
-            
-            
         }
-        
-        
-        
-        
-        
-        
-        
     }
     
     @IBAction func AtchmentVc(gesture : senderassigments){
@@ -1885,14 +1798,13 @@ func apread(gesture : String){
                 
                 
                 selectedCell = indexPath
-                var upcoming : upcommingdataDetails = UpcommingRef[indexPath.row]
                 let readApiStatus  = AppReadStatusModal()
                 
-                if upcoming.isappread == "0"{
+                if UpcommingRef[indexPath.row].isappread == "0"{
                     
-                    apread(gesture : upcoming.assignmentdetailid ?? "")
+                    apread(gesture : UpcommingRef[indexPath.row].assignmentdetailid ?? "")
                     
-                    upcoming.isappread = "1"
+                    UpcommingRef[indexPath.row].isappread = "1"
                     cell.readDotImageView.isHidden = true
                     
                 }
@@ -1914,18 +1826,15 @@ func apread(gesture : String){
                 
             } else {
                 
-                
                 selectedCell = indexPath
-                var past : upcommingdataDetails = PasrRef[indexPath.row]
                 
-                if past.isappread == "0"{
+                if PasrRef[indexPath.row].isappread == "0"{
                     
-                    apread(gesture : past.assignmentdetailid ?? "")
-                    past.isappread = "1"
+                    apread(gesture : PasrRef[indexPath.row].assignmentdetailid ?? "")
+                    PasrRef[indexPath.row].isappread = "1"
                     cell.readDotImageView.isHidden = true
                     
                 }
-                
             }
             
             
@@ -2140,7 +2049,7 @@ func apread(gesture : String){
         add.college_id = colgId
         add.previous_add_id = PreviousAddId
         
-        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .get, queryParam: nil, requestBody: nil
+        APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
         ) {[weak self] (result:Result<AddApiResponce,Error>) in
             
             guard let self = self else {return}
@@ -2155,6 +2064,10 @@ func apread(gesture : String){
                         bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
                         
                         smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
+                        
+                        smallImageUrl = i.add_image
+                        addImageBackGroundurl = i.background_image
+                        addurls  = i.add_url
                         
                         let singleTap = senderassAdd(target: self, action: #selector(adLoad))
                         singleTap.url = i.add_url

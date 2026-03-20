@@ -8,81 +8,23 @@
 import Foundation
 import ObjectMapper
 
-class GetGroupModal : Mappable{
-    
-    
-    var idcollege : String!
-    
-    init(){}
-    
-
-    
-    
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-    idcollege <- map["idcollege"]
-    }
-    
-    
-
-    
+struct GetGroupModal : Codable{
+    var idcollege : String?
 }
 
-class GetGroupResponce : Mappable{
+struct GetGroupResponce : Codable{
     
-    
-    var Status : Int!
-    var Message : String!
-    var data : [getGroupDataDetails]!
-    
-   
-    
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        Status <- map ["Status"]
-        Message <- map ["Message"]
-        data <- map ["data"]
-        
-        
-    }
-    
-
-    
+    var Status : Int?
+    var Message : String?
+    var data : [getGroupDataDetails]?
 }
 
-class getGroupDataDetails : Mappable{
+struct getGroupDataDetails : Codable{
     
-    
-    var groupid : Int!
-    var groupname : String!
-    var grouptype : String!
-    var isSelected : Bool!
-    
-   
-    
-    
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        groupid <- map ["groupid"]
-        groupname <- map ["groupname"]
-        grouptype <- map ["grouptype"]
-        
-        
-    }
-    
-
-    
+    var groupid : Int?
+    var groupname : String?
+    var grouptype : String?
+    var isSelected : Bool?
 }
 
 

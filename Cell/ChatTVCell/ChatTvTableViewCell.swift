@@ -87,11 +87,7 @@ class ChatTvTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         
-        
-        
-        
         return CGSize(width: collectionView.frame.size.width / 2, height:180)
-        
         
     }
     

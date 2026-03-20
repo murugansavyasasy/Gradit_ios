@@ -103,121 +103,87 @@ present(vc, animated: true,completion: nil)
 
 }
 
-
-
-
-
-
-func forget(){
-
-
-let forgets =  forgetModal  ()
-forgets.mobilenumber = forgetMobileNumberTextFiled.text
-
-
-
-let forgetStr = forgets.toJSONString()
-
-forgetRequest.call_request(param: forgetStr!){ [self]
-
-(res) in
-
-
-let forgetResponse : forgetResponce =
-Mapper<forgetResponce>().map(JSONString: res)!
-
-if forgetResponse.Status == 1 {
-    
-    if forgetMobileNumberTextFiled.text! .isEmpty {
-        forArr = forgetResponse.data
+    func forget(){
         
+        var forgets = forgetModal()
+        forgets.mobilenumber = forgetMobileNumberTextFiled.text
         
-        let refreshAlert = UIAlertController(title: "", message: forgetResponse.Message, preferredStyle: UIAlertController.Style.alert)
+        print("forget request", forgets)
         
-        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.forgetpassword,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: forgets
+        ) { [weak self] (result: Result<forgetResponce, Error>) in
             
+            guard let self = self else { return }
             
-        }))
-        
-        
-        present(refreshAlert, animated: true, completion: nil)
-        
-        
-        
-    }
-    
-    else if (forgetMobileNumberTextFiled.text?.count) != 10 {
-        //
-        
-        let refreshAlert = UIAlertController(title: "", message: forgetResponse.Message, preferredStyle: UIAlertController.Style.alert)
-        
-        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-            
-            
-        }))
-        
-        
-        present(refreshAlert, animated: true, completion: nil)
-        
-        //
-    }
-    
-    
-    
-    
-    else{
-        
-        let vc = GetOtpViewController(nibName: nil, bundle: nil)
-        
-        vc.messageId = forgetResponse.Message
-        vc.MobileNumber = forgetMobileNumberTextFiled.text
-        
-        
-        for i in forgetResponse.data{
-            ivrn = i.ivrnumbers
-            
-            vc.ivrNumberId = ivrn
-            
+            switch result {
+                
+            case .success(let forgetResponse):
+                
+                if forgetResponse.Status == 1 {
+                    
+                    if self.forgetMobileNumberTextFiled.text!.isEmpty {
+                        
+                        self.forArr = forgetResponse.data ?? []
+                        
+                        let refreshAlert = UIAlertController(title: "", message: forgetResponse.Message, preferredStyle: UIAlertController.Style.alert)
+                        
+                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                            
+                        }))
+                        
+                        self.present(refreshAlert, animated: true, completion: nil)
+                        
+                    }
+                    
+                    else if (self.forgetMobileNumberTextFiled.text?.count) != 10 {
+                        
+                        let refreshAlert = UIAlertController(title: "", message: forgetResponse.Message, preferredStyle: UIAlertController.Style.alert)
+                        
+                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                            
+                        }))
+                        
+                        self.present(refreshAlert, animated: true, completion: nil)
+                        
+                    }
+                    
+                    else{
+                        
+                        let vc = GetOtpViewController(nibName: nil, bundle: nil)
+                        
+                        vc.messageId = forgetResponse.Message
+                        vc.MobileNumber = self.forgetMobileNumberTextFiled.text
+                        
+                        for i in forgetResponse.data ?? []{
+                            self.ivrn = i.ivrnumbers ?? []
+                            vc.ivrNumberId = self.ivrn
+                        }
+                        
+                        vc.modalPresentationStyle = .formSheet
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                }
+                
+                else {
+                    
+                    let refreshAlert = UIAlertController(title: "", message: forgetResponse.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                    }))
+                    
+                    self.present(refreshAlert, animated: true, completion: nil)
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
-        
-        vc.modalPresentationStyle = .formSheet
-        present(vc, animated: true,completion: nil)
-        
-        
-        
-        
-        
-        
-        
     }
-    
-    
-    
-}
-
-else {
-    
-    
-    
-    
-    
-    let refreshAlert = UIAlertController(title: "", message: forgetResponse.Message, preferredStyle: UIAlertController.Style.alert)
-    
-    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-        
-        
-    }))
-    
-    
-    present(refreshAlert, animated: true, completion: nil)
-    
-    
-    
-    
-}
-
-}
-}
 
 @IBAction  func getOtpVc() {
 

@@ -48,6 +48,7 @@ class AWSUploadManager {
             if let error = error {
                 print("Error:", error.localizedDescription)
                 completion(.failure(error))
+                return
             }
         }
 
@@ -89,47 +90,59 @@ class AWSUploadManager {
     }
 }
 
-
-
-import ObjectMapper
-
 class AWSPreSignedURL {
+
     static let shared = AWSPreSignedURL()
 
-    private init() {} // Prevent external initialization
+    private init() {}
 
-    func fetchPresignedURL(bucket: String, fileName: URL, bucketPath: String, fileType: String, completion: @escaping (Result<AwsResps, Error>) -> Void) {
-        
+    func fetchPresignedURL(
+        bucket: String,
+        fileName: URL,
+        bucketPath: String,
+        fileType: String,
+        completion: @escaping (Result<AwsResps, Error>) -> Void
+    ) {
+
         let fname = fileName.lastPathComponent
         print("fname \(fname)")
-        
+
         let datePath = getCurrentDateString()
         let fullBucketPath = "\(bucketPath)/\(datePath)"
-        let UniqueFileName = UUID().uuidString + "_" + fname
-        
-        let currentDate = getCurrentDateString()
+
+        let uniqueFileName = UUID().uuidString + "_" + fname
+
         let param: [String: Any] = [
             "bucket": bucket,
-            "fileName": UniqueFileName,
+            "fileName": uniqueFileName,
             "bucketPath": fullBucketPath,
             "fileType": fileType
         ]
 
-        AwsReq.call_request(param: param) { res in
-            if let awsImage = Mapper<AwsResps>().map(JSONString: res) {
+        AwsReq.call_request(param: param) { result in
+
+            switch result {
+
+            case .success(let awsImage):
+
                 if awsImage.status == 1 {
                     completion(.success(awsImage))
                 } else {
-                    let error = NSError(domain: "AWSFetchError", code: 0, userInfo: [NSLocalizedDescriptionKey: awsImage.message ?? "Unknown error"])
+
+                    let error = NSError(
+                        domain: "AWSFetchError",
+                        code: 0,
+                        userInfo: [NSLocalizedDescriptionKey: awsImage.message ?? "Unknown error"]
+                    )
+
                     completion(.failure(error))
                 }
-            } else {
-                let error = NSError(domain: "AWSFetchError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to parse response"])
+
+            case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
-    
     
     func getCurrentDateString(format: String = "yyyy-MM-dd") -> String {
         let dateFormatter = DateFormatter()

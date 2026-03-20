@@ -7,67 +7,16 @@
 
 import Foundation
 
-import ObjectMapper
+struct recentOTPModal: Codable {
 
+    var mobilenumber: String?
+    var otp: String?
 
-class recentOTPModal : Mappable{
-    
-    
-    var  mobilenumber : String!
-       var otp : String!
-
-    init(){}
-    
-    
-    
-    
-    required init?(map: Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: Map) {
-        
-        
-        mobilenumber <- map["mobilenumber"]
-        otp      <- map["otp"]
-        
-        
-    }
-    
-    
-    
-    
-    
-    
-    
 }
 
+struct recentOTPResponce: Codable {
 
- 
-class recentOTPResponce : Mappable{
-    
-    var Status : Int!
-    
-    var Message : String!
-    
-    
+    var Status: Int?
+    var Message: String?
 
-    required init?(map: Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: Map) {
-        
-        Status <- map["Status"]
-        Message <- map["Message"]
-        
-    }
-    
-    
-    
-    
-    
-    
-    
 }

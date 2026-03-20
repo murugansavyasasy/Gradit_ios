@@ -56,25 +56,35 @@ class ResumetemplatesVC: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     
-   func Get_Templates_Api(){
+    func Get_Templates_Api(){
         
-       Get_Template_Request.call_request(param: [:]) {[weak self] (res) in
-           
-           if let Response : TemplateResponse = Mapper<TemplateResponse>().map(JSONString: res) {
-               
-               if Response.status == true {
-                   
-                   self?.Templates = Response.data?.first?.template
-                   self?.Colours = Response.data?[1].themecolor
-                   self?.TV.reloadData()
-               }
-           }
-       }
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.get_resumetemplatethemecolor,
+            httpMethod: .get,
+            isBaseUrl: false,
+            queryParam: nil,
+            requestBody: nil
+        ){ [weak self] (result:Result<TemplateResponse, Error>) in
+            
+            guard let self = self else {return}
+            
+            switch result {
+            case .success(let success):
+                if success.status == true {
+                    
+                    self.Templates = success.data?.first?.template
+                    self.Colours = success.data?[1].themecolor
+                    self.TV.reloadData()
+                }
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
     }
     
     func Generate_Resume_Api(){
         
-        let request = ResumeRequest()
+        var request = ResumeRequest()
         request.context = context
         request.templateNumber = templatenumber
         request.themeColor = themecolour
@@ -82,24 +92,32 @@ class ResumetemplatesVC: UIViewController, UITableViewDelegate, UITableViewDataS
         request.bucket = "gradit-communication"
         request.bucketPath = "2025-02-12/7033"
         
-        let resumeStr = request.toJSONString() ?? ""
-        print("Request", resumeStr)
-        
-        Generate_Resume_Request.call_request(param: resumeStr) {[weak self] (res) in
-            guard let self = self else { return }
-            guard let response: ResumeUploadResponse = Mapper<ResumeUploadResponse>().map(JSONString: res) else{return}
+        APiCallManager.shared.callApi(
+         url: APIEndpoints.resume_post_resume,
+         httpMethod: .post,
+         isBaseUrl: false,
+         queryParam: nil,
+         requestBody: request
+        ){ [weak self] (result:Result<ResumeUploadResponse, Error>) in
             
-            if response.status == true {
+            guard let self = self else {return}
+            
+            switch result {
+            case .success(let success):
                 
-//                AlertHelper.showOKAlert(on: self, title: "Success", message: "Resume generated successfully",okTitle: "Ok",okAction: {
+                if success.status == true {
+                        
+                        self.resume_Url = success.data?.first?.file_url ?? ""
+                        View_resumeVC()
+                  
+                }else {
                     
-                    self.resume_Url = response.data?.first?.fileUrl ?? ""
-                    self.View_resumeVC()
-                //})
-            }else {
+                    AlertHelper.showOKAlert(on: self, title: "Failed", message: "Resume genaration is failed",okTitle: "Ok",okAction: {
+                    })
+                }
                 
-                AlertHelper.showOKAlert(on: self, title: "Failed", message: "Resume genaration is failed",okTitle: "Ok",okAction: {
-                })
+            case .failure(let failure):
+                print(failure.localizedDescription)
             }
             
         }

@@ -1117,184 +1117,126 @@ func uploadAWS(image : UIImage){
         self.present(alert, animated: true, completion: nil)
     }
     
-    
-    
-    
-    
 }
+    
+    func eventSendImage(){
 
+        let refreshAlert = UIAlertController(title: "", message: "Are Your Sure Want to Submit ? ", preferredStyle: UIAlertController.Style.alert)
 
-
-
-
-
-func eventSendImage(){
-    
-    
-    
-    
-    
-    
-    
-    let refreshAlert = UIAlertController(title: "", message:  "Are Your Sure Want to Submit ? ", preferredStyle: UIAlertController.Style.alert)
-    
-    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-        
-        
-        let evenimageName = FileNames()
-        
-        evenimageName.FileName = TotalAws
-        
-        print("printttt",evenimageName.FileName )
-        let eventImagess = EventImageModal()
-        
-        eventImagess.collegeid = coldId
-        eventImagess.Userid = userId
-        eventImagess.eventheaderid = headerId
-        eventImagess.FileNameArray = [evenimageName]
-        
-        
-        
-        let eventImagessStrs = eventImagess.toJSONString()
-        
-        print("noriceEnier",eventImagessStrs)
-        eventSendImageRequest.call_request(param: eventImagessStrs!) {
+        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
             
-            [self]  (res) in
+            var evenimageName = FileNames()
+            evenimageName.FileName = TotalAws
             
+            print("printttt", evenimageName.FileName)
             
-            let particularss : EventImageSendResponce  = Mapper<EventImageSendResponce>().map(JSONString: res)!
+            var eventImagess = EventImageModal()
+            eventImagess.collegeid = coldId
+            eventImagess.Userid = userId
+            eventImagess.eventheaderid = headerId
+            eventImagess.FileNameArray = [evenimageName]
             
-            if particularss.Status == 1{
+            print("noriceEnier", eventImagess)
+            
+            APiCallManager.shared.callApi(
+                url: APIEndpoints.AddeventphotosWithCloudURL,
+                httpMethod: .post,
+                queryParam: nil,
+                requestBody: eventImagess
+            ) { [weak self] (result: Result<EventImageSendResponce, Error>) in
                 
-                sendImageEvent = particularss.data
+                guard let self = self else { return }
                 
-                
-                
-                let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: UIAlertController.Style.alert)
-                
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+                switch result {
                     
+                case .success(let particularss):
                     
-                    
-                    if priority == "p2" || priority == "p3" {
+                    if particularss.Status == 1{
                         
-                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.str  = str
+                        self.sendImageEvent = particularss.data ?? []
                         
-                        vc.strName = strName
+                        let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: UIAlertController.Style.alert)
                         
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
+                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
+                            
+                            guard let self = self else { return }
+                            
+                            if priority == "p2" || priority == "p3" {
+                                
+                                let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
+                                vc.is_read_enabled = is_read_enabled
+                                vc.is_write_enabled = is_write_enabled
+                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                vc.str  = str
+                                vc.strName = strName
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true , completion: nil)
+                            } else if priority == "p7" {
+                                
+                                let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
+                                vc.view.backgroundColor = UIColor(named: "univercityColorCod")
+                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                vc.str  = str
+                                vc.strName = strName
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true , completion: nil)
+                            }
+                            else{
+                                
+                                let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
+                                vc.is_read_enabled = is_read_enabled
+                                vc.is_write_enabled = is_write_enabled
+                                vc.view.backgroundColor = UIColor(named: "Principal")
+                                vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                vc.str  = str
+                                vc.strName = strName
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true , completion: nil)
+                            }
+                            
+                        }))
                         
+                        self.present(refreshAlert, animated: true, completion: nil)
+                        
+                        self.imageCollectionView.delegate = self
+                        self.imageCollectionView.dataSource = self
+                        self.imageCollectionView.reloadData()
                     }
                     
-                    
-                    if priority == "p7" {
-                        
-                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                        
-                        vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.str  = str
-                        
-                        vc.strName = strName
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
-                        
-                    }
                     else{
                         
-                        let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = is_read_enabled
-                        vc.is_write_enabled = is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Principal" )
-                        vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                        vc.str  = str
+                        let refreshAlert = UIAlertController(title: "", message: particularss.Message , preferredStyle: UIAlertController.Style.alert)
                         
-                        vc.strName = strName
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true , completion: nil)
+                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                            
+                            UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
+                            
+                        }))
                         
+                        self.present(refreshAlert, animated: true, completion: nil)
+                        
+                        self.imageCollectionView.delegate = self
+                        self.imageCollectionView.dataSource = self
+                        self.imageCollectionView.reloadData()
                     }
                     
-                    
-                    
-                    
-                }))
-                
-                
-                
-                present(refreshAlert, animated: true, completion: nil)
-                imageCollectionView.delegate = self
-                imageCollectionView.dataSource = self
-                imageCollectionView.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             }
             
-            else{
-                
-                
-                let refreshAlert = UIAlertController(title: "", message: particularss.Message , preferredStyle: UIAlertController.Style.alert)
-                
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                    
-                    
-                    UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
-                    
-                    
-                    
-                    
-                }))
-                
-                
-                
-                present(refreshAlert, animated: true, completion: nil)
-                
-                
-                imageCollectionView.delegate = self
-                imageCollectionView.dataSource = self
-                imageCollectionView.reloadData()
-                
-                
-                
-            }
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .default, handler: { [self] (action: UIAlertAction!) in
             
-            
-        }
+        }))
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    }))
-    
-    
-    
-    
-    
-    refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .default, handler: { [self] (action: UIAlertAction!) in
-        
-    }))
-    
-    
-    self.present(refreshAlert, animated: true, completion: nil)
-}
+        self.present(refreshAlert, animated: true, completion: nil)
+    }
 
 }
 

@@ -8,81 +8,32 @@
 import Foundation
 
 import ObjectMapper
-class VoiceHstryModal : Mappable{
+
+struct VoiceHstryModal : Codable{
     
-    var collegeid : String!
-    var staffid  : String!
-    var callertype : String!
-    var description : String!
-    var isemergencyvoice : String!
-    var isstudent : Bool!
-    var isparent : Bool!
-    var isstaff : Bool!
-    var forwarding_voice_id : String!
-    var receiverid  : String!
-    var receivertype : String!
-    var subjectid : String!
-    
-    init(){}
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        collegeid <- map["collegeid"]
-        staffid <- map["staffid"]
-        callertype <- map["callertype"]
-        description <- map["description"]
-        isemergencyvoice <- map["isemergencyvoice"]
-        isstudent <- map["isstudent"]
-        isparent <- map["isparent"]
-        isstaff <- map["isstaff"]
-        forwarding_voice_id <- map["forwarding_voice_id"]
-        receiverid <- map["receiverid"]
-        receivertype <- map["receivertype"]
-        subjectid <- map["subjectid"]
-    }
-    
-    
+    var collegeid : String?
+    var staffid  : String?
+    var callertype : String?
+    var description : String?
+    var isemergencyvoice : String?
+    var isstudent : Bool?
+    var isparent : Bool?
+    var isstaff : Bool?
+    var forwarding_voice_id : String?
+    var receiverid  : String?
+    var receivertype : String?
+    var subjectid : String?
 }
 
-class voiceHstryResponce : Mappable{
+struct voiceHstryResponce : Codable{
     
-    
-    var Status : Int!
-    var Message : String!
-    var data : [voiceHstryDataDetails]!
-    
-    
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        
-        Status <- map["Status"]
-        Message <- map["Message"]
-        data <- map["data"]
-    }
-    
-    
-    
+    var Status : Int?
+    var Message : String?
+    var data : [voiceHstryDataDetails]?
 }
-class voiceHstryDataDetails : Mappable{
+
+struct voiceHstryDataDetails : Codable{
     
-    var ivrheader : String!
-    
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        
-        ivrheader <- map["ivrheader"]
-    }
+    var ivrheader : String?
     
 }

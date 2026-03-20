@@ -79,33 +79,32 @@ class VideoRestionViewController: UIViewController,UITableViewDelegate,UITableVi
     
     func restion() {
         
-        
-        
-        RestrionRequests.call_request(param: ""){ [self]
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetVideoContentRestriction,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: nil
+        ) { [weak self] (result: Result<restionResponce, Error>) in
             
-            (res) in
+            guard let self = self else { return }
             
-            
-            let menuResp : restionResponce =
-            Mapper<restionResponce>().map(JSONString: res)!
-            
-            print("order data",menuResp)
-            
-            restionData = menuResp.data
-            
-            
-            
-            tv.delegate = self
-            tv.dataSource = self
-            tv.reloadData()
-            
+            switch result {
+                
+            case .success(let menuResp):
+                
+                print("order data", menuResp)
+                
+                self.restionData = menuResp.data ?? []
+                
+                self.tv.delegate = self
+                self.tv.dataSource = self
+                self.tv.reloadData()
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
-        
-        
-        
-        
     }
-    
     
     
     

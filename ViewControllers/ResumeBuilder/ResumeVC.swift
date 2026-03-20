@@ -295,106 +295,179 @@ class ResumeVC: UIViewController, PopupVcDelegate {
     
     //MARK: Api CAll Function
     func fetchAllData() {
+        
         let group = DispatchGroup()
-
+        
+        // ---------------- PROFILE ----------------
         group.enter()
-        Get_Profile_Request.call_request(memberId: memberId ?? "", param: [:]) { [weak self] res in
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.profile_get_profile + (memberId ?? ""),
+            httpMethod: .get,
+            isBaseUrl: false,
+            queryParam: nil,
+            requestBody: nil
+        ) { [weak self] (result: Result<Profile_Response, Error>) in
+            
             defer { group.leave() }
-
-            print("request:",self?.param ?? [])
-            guard let profileResponse = Mapper<Profile_Response>().map(JSONString: res),
-                  profileResponse.status == true,
-                  let profile = profileResponse.data?.first else {
+            
+            switch result {
+            case .success(let profileResponse):
+                
+                print("request:", self?.param ?? [])
+                
+                guard profileResponse.status == true,
+                      let profile = profileResponse.data?.first else {
+                    print("Failed: Profile")
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self?.Profile_Details = profile
+                    self?.Set_profile_Data(Details: profile)
+                }
+                
+            case .failure:
                 print("Failed: Profile")
-                return
-            }
-
-            DispatchQueue.main.async {
-                self?.Profile_Details = profile
-                self?.Set_profile_Data(Details: profile)
             }
         }
         
+        
+        // ---------------- RESUME ----------------
         group.enter()
-        Get_Resume_Request.call_request(param: ["idMember":memberId ?? ""]) { [weak self] res in
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.get_profileresume,
+            httpMethod: .get,
+            isBaseUrl: false,
+            queryParam: ["idMember": memberId ?? ""],
+            requestBody: nil
+        ) { [weak self] (result: Result<ResumeTitleResponse, Error>) in
             
-            defer{ group.leave() }
+            defer { group.leave() }
             
-            guard let resumeResponse: ResumeTitleResponse = Mapper<ResumeTitleResponse>().map(JSONString: res) else{return}
-            
-            print("ResumeList",resumeResponse)
+            switch result {
+            case .success(let resumeResponse):
                 
-            if resumeResponse.status == true {
-                DispatchQueue.main.async {
-                    self?.My_resumes = resumeResponse.data
-                    
-                    if (self?.My_resumes?.resumeTitle?.isEmpty ?? true){
-                        self?.MyresumesView.isHidden = true
-                        self?.BuildMyresumeStack.isHidden = false
-                    }else{
-                        self?.MyresumesView.isHidden = false
-                        self?.BuildMyresumeStack.isHidden = true
+                print("ResumeList", resumeResponse)
+                
+                if resumeResponse.status == true {
+                    DispatchQueue.main.async {
+                        self?.My_resumes = resumeResponse.data
+                        
+                        if (self?.My_resumes?.resumeTitle?.isEmpty ?? true){
+                            self?.MyresumesView.isHidden = true
+                            self?.BuildMyresumeStack.isHidden = false
+                        }else{
+                            self?.MyresumesView.isHidden = false
+                            self?.BuildMyresumeStack.isHidden = true
+                        }
                     }
+                } else {
+                    self?.MyresumesView.isHidden = true
+                    self?.BuildMyresumeStack.isHidden = false
                 }
-            }else{
+                
+                print("response", resumeResponse.message ?? "")
+                
+            case .failure:
                 self?.MyresumesView.isHidden = true
                 self?.BuildMyresumeStack.isHidden = false
             }
+        }
+        
+        
+        // ---------------- ACADEMIC ----------------
+        group.enter()
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.academicrecord_get_academic,
+            httpMethod: .get,
+            isBaseUrl: false ,
+            queryParam: ["idMember": memberId ?? ""],
+            requestBody: nil
+        ) { [weak self] (result: Result<EducationResponse, Error>) in
             
-            print("response",resumeResponse.message ?? "")
-        }
-
-        group.enter()
-        Get_academicRecords_Request.call_request(param: ["idMember": memberId ?? ""]) { [weak self] res in
             defer { group.leave() }
-
-            guard let academicResponse = Mapper<EducationResponse>().map(JSONString: res),
-                  academicResponse.status == true,
-                  let academic = academicResponse.data?.first else {
+            
+            switch result {
+            case .success(let academicResponse):
+                
+                guard academicResponse.status == true,
+                      let academic = academicResponse.data?.first else {
+                    print("Failed: Academic")
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self?.Academic_Details = academic
+                    self?.Set_Academic_Data(Details: academic)
+                }
+                
+            case .failure:
                 print("Failed: Academic")
-                return
-            }
-
-            DispatchQueue.main.async {
-                self?.Academic_Details = academic
-                self?.Set_Academic_Data(Details: academic)
-            }
-        }
-
-        group.enter()
-        Get_Skillset_Request.call_request(param: ["idMember": memberId ?? ""]) { [weak self] res in
-            defer { group.leave() }
-
-            guard let skillResponse = Mapper<SkillProfileResponse>().map(JSONString: res),
-                  skillResponse.status == true,
-                  let skill = skillResponse.data?.first else {
-                print("Failed: Skillset")
-                self?.SkillSetEditBtn.setTitle("Add", for: .normal)
-                return
-            }
-
-            DispatchQueue.main.async {
-                self?.Skill_data = skill
-                self?.Set_Skill_Data(Details: skill)
             }
         }
         
+        
+        // ---------------- SKILLSET ----------------
         group.enter()
-       
-            Get_softSkills_Request.call_request(param: [:]) {[weak self] (res) in
-                defer { group.leave() }
-
-                if let SkillResponse : SoftSkillsResponse = Mapper<SoftSkillsResponse>().map(JSONString: res) {
-                    
-                    if SkillResponse.status == true {
-                        
-                        self?.SoftSkills = SkillResponse.data?.first?.softSkills ?? []
-                    }
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.skillset_get_skillset,
+            httpMethod: .get,
+            isBaseUrl: false,
+            queryParam: ["idMember": memberId ?? ""],
+            requestBody: nil
+        ) { [weak self] (result: Result<SkillProfileResponse, Error>) in
+            
+            defer { group.leave() }
+            
+            switch result {
+            case .success(let skillResponse):
+                
+                guard skillResponse.status == true,
+                      let skill = skillResponse.data?.first else {
+                    print("Failed: Skillset")
+                    self?.SkillSetEditBtn.setTitle("Add", for: .normal)
+                    return
                 }
+                
+                DispatchQueue.main.async {
+                    self?.Skill_data = skill
+                    self?.Set_Skill_Data(Details: skill)
+                }
+                
+            case .failure:
+                print("Failed: Skillset")
+                self?.SkillSetEditBtn.setTitle("Add", for: .normal)
             }
-
+        }
+        
+        
+        // ---------------- SOFT SKILLS ----------------
+        group.enter()
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.skillset_get_softskill,
+            httpMethod: .get,
+            isBaseUrl: false,
+            queryParam: nil,
+            requestBody: nil
+        ) { [weak self] (result: Result<SoftSkillsResponse, Error>) in
+            
+            defer { group.leave() }
+            
+            switch result {
+            case .success(let skillResponse):
+                
+                if skillResponse.status == true {
+                    self?.SoftSkills = skillResponse.data?.first?.softSkills ?? []
+                }
+                
+            case .failure:
+                break
+            }
+        }
+        
+        
+        // ---------------- FINAL ----------------
         group.notify(queue: .main) {
-            // You don't need to do anything here unless you want to show/hide a loader or trigger an animation
             print("All data loaded and UI updated.")
         }
     }
@@ -501,12 +574,7 @@ class ResumeVC: UIViewController, PopupVcDelegate {
             consentedBtn.tintColor = .systemRed
             consentedBtn.setTitle("Student opted-out for jobs", for: .normal)
         }
-//        consentedBtn.setImage(
-//            Details.memberNotificationStatus == true
-//            ? UIImage(systemName: "checkmark.circle.fill")?.withTintColor(.systemGreen, renderingMode: .alwaysOriginal)
-//            : UIImage(systemName: "x.circle.fill")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal),
-//            for: .normal
-//        )
+        
         RollNoLbl.text = Details.memberAdmissionNo ?? "-"
         RegNoLbl.text = Details.memberRegno
         CourseLbl.text = Details.courseName

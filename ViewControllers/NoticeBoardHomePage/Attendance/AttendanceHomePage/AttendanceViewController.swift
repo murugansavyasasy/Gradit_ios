@@ -17,99 +17,34 @@ class AttendanceViewController: UIViewController,FSCalendarDataSource, FSCalenda
 
 
 @IBOutlet weak var reusee: ReuseView!
-
-
-
-@IBOutlet weak var calendarHeight: NSLayoutConstraint!
 @IBOutlet weak var topNameview: UIView!
-
 @IBOutlet weak var tapBarView: UIViewX!
-
 @IBOutlet weak var attendaneLblCount: UILabel!
-
 @IBOutlet weak var redirectLoginView: UIViewX!
-
-@IBOutlet weak var attendanceTv: UITableView!
-
-@IBOutlet weak var noDataLabel: UILabel!
-
-
-
-@IBOutlet weak var noDataView: UIView!
-
-@IBOutlet weak var fullView: UIView!
-
-@IBOutlet weak var clanderView: FSCalendar!
-
 @IBOutlet weak var Tv: UITableView!
-
 @IBOutlet weak var logoutView: UIView!
-
 @IBOutlet weak var changeRolesView: UIView!
-
-
 @IBOutlet weak var profileView: UIView!
 @IBOutlet weak var topLabels: UILabel!
 @IBOutlet weak var clgLogoImg: UIImageView!
-
-
 @IBOutlet weak var notificationView: UIView!
-
 @IBOutlet weak var privacyPolicyView: UIView!
-
-
-
 @IBOutlet weak var topMemberLabel: UILabel!
-
-
 @IBOutlet weak var faqView: UIView!
-
-
 @IBOutlet weak var refreshView: UIView!
-
 @IBOutlet weak var viewTap: UIView!
-
-
-
 @IBOutlet weak var sideMenuView: UIView!
-
-
-
-
 @IBOutlet weak var helpView: UIView!
-
-
-
 @IBOutlet weak var termsAndConditionView: UIView!
-
-
 @IBOutlet weak var changePasswordView: UIView!
-
 @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
-
-
-
-
-
-
 @IBOutlet weak var pluPageView: UIView!
-
 @IBOutlet weak var bigImg: UIImageView!
-@IBOutlet weak var adView: UIView!
 @IBOutlet weak var segmentName: UISegmentedControl!
-
 @IBOutlet weak var smallImg: UIImageView!
-
-
-
-
-
-
-
 @IBOutlet weak var tvTop: NSLayoutConstraint!
-
-
-
+    @IBOutlet weak var noDataLabel: UILabel!
+    
 var indentifer2 = "AttendancesTVTableViewCell"
 var  identifers  = "AttendanceMenuTableViewCell"
 let menuIdentifier = "MenuCollectionViewCell"
@@ -171,13 +106,6 @@ var strName : [String] = []
 
 var backGroundAddImageView : String!
 var smallImageAddImageView : String!
-override func viewDidAppear(_ animated: Bool) {
-    
-   
-    
-    leaveApi()
-    
-}
 
 
     override func viewDidLoad() {
@@ -254,7 +182,6 @@ override func viewDidAppear(_ animated: Bool) {
         
         Attendance()
         
-        
         // tap Bar UiTapGuster.
         let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         redirectLoginView.addGestureRecognizer(loginRediectGesture)
@@ -298,6 +225,11 @@ override func viewDidAppear(_ animated: Bool) {
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        leaveApi()
+    }
 
 
 @objc func dismissKeyboards() {
@@ -308,14 +240,6 @@ override func viewDidAppear(_ animated: Bool) {
 }
 
 
-override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated) // No need for semicolon
-    
-    
-    
-    print("viewWillAppear")
-    
-}
 
 func leaveApi(){
     
@@ -330,22 +254,30 @@ func leaveApi(){
         
         switch result {
         case .success(let success):
-            if success.Status == 1{
-                LeaveRefName = success.data ?? []
-                attendaneLblCount.text = String(LeaveRefName.count)
-                Tv.isHidden = false
-                Tv.isScrollEnabled = true
+           
+            LeaveRefName = success.data ?? []
+            noDataLabel.text = success.Message
+            if segmentName.selectedSegmentIndex == 1{
+                noDataLabel.isHidden = !LeaveRefName.isEmpty
             }
+            attendaneLblCount.text = String(LeaveRefName.count)
+            Tv.isHidden = false
+            Tv.isScrollEnabled = true
+            
         case .failure(let Error):
+            LeaveRefName =  []
+            noDataLabel.text = Error.localizedDescription
+            if segmentName.selectedSegmentIndex == 1{
+                noDataLabel.isHidden = false
+            }
+            attendaneLblCount.text = String(LeaveRefName.count)
+            Tv.isHidden = false
+            Tv.isScrollEnabled = true
             print(Error.localizedDescription)
         }
         Tv.reloadData()
     }
 }
-
-
-
-
 
 
 @IBAction func PlusPageVc(){
@@ -419,15 +351,25 @@ func Attendance() {
         
         switch result {
         case .success(let success):
-            if success.Status == 1 {
-                adttendanceRef = success.data ?? []
-            
-                Tv.isHidden = false
-                Tv.isScrollEnabled = true
-                Tv.reloadData()
+            adttendanceRef = success.data ?? []
+            noDataLabel.text = success.Message
+            if segmentName.selectedSegmentIndex == 0 {
+                noDataLabel.isHidden = !adttendanceRef.isEmpty
             }
+            Tv.isHidden = false
+            Tv.isScrollEnabled = true
+            Tv.reloadData()
+           
         case .failure(let failure):
             print(failure.localizedDescription)
+            adttendanceRef = []
+            noDataLabel.text = failure.localizedDescription
+            if segmentName.selectedSegmentIndex == 0 {
+                noDataLabel.isHidden = false
+            }
+            Tv.isHidden = false
+            Tv.isScrollEnabled = true
+            Tv.reloadData()
         }
     }
 }
@@ -481,16 +423,12 @@ func addApi(){
 
 @IBAction func adLoad(gesture : addvertisement) {
     
-    
     let vc = ShowExaminationAddViewController(nibName: nil, bundle: nil)
-    
     
     vc.addString = gesture.url
     print("adssdedd",gesture.url)
     vc.modalPresentationStyle = .fullScreen
-    
     present(vc, animated: true,completion: nil)
-    
 }
 
 
@@ -592,14 +530,11 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                
                 cell.EditView.isHidden = false
                 cell.deleteView.isHidden = false
-                
-                
             }
            
             print("on")
             
         }
-        
         
         
         cell.dateLabel.text = leaveApi.createdon
@@ -740,11 +675,9 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
 
 @IBAction func EditVc( gesture : deleteClick){
     
-    types = "2"
-    
     let vc = plusPageViewController(nibName: nil, bundle: nil)
     vc.PreviousAddId = PreviousAddId
-    vc.types = types
+    vc.types = "2"
     vc.fromDateString = gesture.fromdate
     vc.toDateString = gesture.todate
     vc.headerId = gesture.headerId
@@ -775,64 +708,46 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
         mangeLeave.numofdays = gesture.numberofDays
         mangeLeave.processtype = "delete"
         
-        
-//        let mangeLeaveStr = mangeLeave.toJSONString()
-//        
-//        
-//        
-//        print("yearAndSectionModalStr",mangeLeaveStr)
-        
-//        ManageLeaveRequest.call_request(param: mangeLeaveStr!) {
-//            
-//            [self]  (res) in
-//         
-//            let particular : [manageLeaveResponce] = Mapper<manageLeaveResponce>().mapArray(JSONString: res)!
-//            
-//            
-//            for i in particular{
-//                
-//                if i.Status == 1 {
-//                    
-//                    
-//                    let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-//                    
-//                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-//                   
-//                        Tv.delegate = self
-//                        Tv.dataSource = self
-//                        Tv.reloadData()
-//                     
-//                        leaveApi()
-//                        
-//                        
-//                    }))
-//                  
-//                    present(refreshAlert, animated: true, completion: nil)
-//                    
-//               
-//                }else{
-//                   
-//                    let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-//                    
-//                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-//                        
-//                  
-//                        
-//                    }))
-//                  
-//                    present(refreshAlert, animated: true, completion: nil)
-//                    
-//                    
-//                    
-//                    
-//                }
-//                
-//                
-//                
-//            }
-//            
-//            
-//        }
+        APiCallManager.shared.callApi(
+                url: APIEndpoints.ManageLeaveapplication,
+                httpMethod: .post,
+                queryParam: nil,
+                requestBody: mangeLeave
+            ) {[weak self] (result:Result<manageLeaveResponce, Error>) in
+                    
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let success):
+                    
+                    let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+                   
+                        self.Tv.delegate = self
+                        self.Tv.dataSource = self
+                        self.Tv.reloadData()
+                     
+                        self.leaveApi()
+                        
+                        
+                    }))
+                  
+                    present(refreshAlert, animated: true, completion: nil)
+                    
+                    
+                case .failure(let failure):
+                     print("Error:",failure.localizedDescription)
+                    let refreshAlert = UIAlertController(title: "", message: failure.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                    }))
+                  
+                    present(refreshAlert, animated: true, completion: nil)
+                }
+                
+                }
         
     }))
     
@@ -842,11 +757,6 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
     }))
     
     present(refreshAlert, animated: true, completion: nil)
-    
-    
-    
-    
-    
     
 }
 

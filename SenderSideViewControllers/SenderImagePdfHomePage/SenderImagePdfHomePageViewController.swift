@@ -520,9 +520,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true , completion: nil)
                 
-            }
-            
-            else if priority == "p7" {
+            } else if priority == "p7" {
                 let vc = SenderImagePdfPlusNextPageViewController(nibName: nil, bundle: nil)
                 vc.backGroungImageUrl = i.background_image
                 vc.SmallImageUrl = i.add_image
@@ -537,10 +535,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true , completion: nil)
                 
-            }
-            
-            
-            else{
+            }else{
                 
                 let vc = SenderImagePdfPlusNextPageViewController(nibName: nil, bundle: nil)
                 vc.backGroungImageUrl = i.background_image
@@ -1073,9 +1068,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         
         if imageSegmentName.selectedSegmentIndex == 0{
             
-            var image : SenderDepartmentImageDataDetails = departmentRef[indexPath.row]
             if let selectedCells = selectedCell, selectedCells == indexPath{
-                
                 
                 selectedCell = nil
                 
@@ -1083,16 +1076,13 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
             
             else{
                 
-                
-                
                 selectedCell = indexPath
                 
-                
-                if image.isappread == "0"{
+                if departmentRef[indexPath.row].isappread == "0"{
                     
-                    apread(gesture : image.detailsid ?? "")
+                    apread(gesture : departmentRef[indexPath.row].detailsid ?? "")
                     
-                    image.isappread = "1"
+                    departmentRef[indexPath.row].isappread = "1"
                     cell.redDotImageView.isHidden = true
                     
                 }
@@ -1104,8 +1094,6 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         
         
         else if  imageSegmentName.selectedSegmentIndex == 1{
-            
-            var images : SenderDepartmentImageDataDetails = collegeRef[indexPath.row]
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
                 selectedCell = nil
@@ -1116,20 +1104,15 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 
                 selectedCell = indexPath
                 
-                
-                
-                if images.isappread == "0"{
+                if collegeRef[indexPath.row].isappread == "0"{
                     
-                    apread(gesture : images.detailsid ?? "")
+                    apread(gesture : collegeRef[indexPath.row].detailsid ?? "")
                     
-                    images.isappread = "1"
+                    collegeRef[indexPath.row].isappread = "1"
                     cell.redDotImageView.isHidden = true
                     
                 }
             }
-            
-            
-            
         }
         
         

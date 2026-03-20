@@ -115,58 +115,49 @@ class AssigmentNotSubViewController: UIViewController,UITableViewDelegate,UITabl
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
     func assigmentCount(){
         
-        let assigmentCount = assigmentMemberCountModal()
-        
+        var assigmentCount = assigmentMemberCountModal()
         
         assigmentCount.assignmentid = assigmentId
         assigmentCount.processby = memberId
         assigmentCount.submissiontype = "notsubmitted"
         
+        print("yearAndSectionModalStr", assigmentCount)
         
-        let assigmentCountStrs = assigmentCount.toJSONString()
-        
-        print("yearAndSectionModalStr",assigmentCountStrs)
-        
-        AssigmentMeberCountRequest.call_request(param: assigmentCountStrs!) {
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetAssignmentSubmissions,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: assigmentCount
+        ) { [weak self] (result: Result<assigmentMemberCountResponce, Error>) in
             
-            [self]  (res) in
+            guard let self = self else { return }
             
-            
-            
-            let AssigmentResp : assigmentMemberCountResponce =
-            Mapper<assigmentMemberCountResponce>().map(JSONString: res)!
-            
-            
-            
-            if AssigmentResp.Status == 1 {
+            switch result {
                 
-                assigmentMemberCount = AssigmentResp.data
+            case .success(let AssigmentResp):
                 
+                if AssigmentResp.Status == 1 {
+                    
+                    self.assigmentMemberCount = AssigmentResp.data ?? []
+                    
+                    self.tv.delegate = self
+                    self.tv.dataSource = self
+                    self.tv.reloadData()
+                    
+                }
+                else{
+                    self.tv.delegate = self
+                    self.tv.dataSource = self
+                    self.tv.reloadData()
+                }
                 
-                tv.delegate = self
-                tv.dataSource = self
-                tv.reloadData()
-                
-                
-                
-            }
-            
-            
-            else{
-                
-                
-                
-                tv.delegate = self
-                tv.dataSource = self
-                tv.reloadData()
-                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
             
         }
-        
     }
-    
-    
 }

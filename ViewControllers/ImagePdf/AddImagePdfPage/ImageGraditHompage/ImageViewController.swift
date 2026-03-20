@@ -931,41 +931,29 @@ class ImageViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         imageTableView.deselectRow(at: indexPath, animated: true)
         
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: identifers, for: indexPath) as!
         
         ImageTableViewCell
         
-        
-        
-        
-        
         if imageSegmentName.selectedSegmentIndex == 0 {
-            
-            var image : departmentImageDataDetails = departmentRef[indexPath.row]
-            
             
             
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
                 selectedCell = nil
                 
-            }
-            
-            else{
+            }else{
                 
                 selectedCell = indexPath
                 
-                if image.isappread == "0"{
-                    apread(gesture : image.detailsid ?? "")
-                    image.isappread = "1"
+                if departmentRef[indexPath.row].isappread == "0"{
+                    apread(gesture : departmentRef[indexPath.row].detailsid ?? "")
+                    departmentRef[indexPath.row].isappread = "1"
                     cell.redDotImageView.isHidden = true
                     
                 }
             }
         }else if imageSegmentName.selectedSegmentIndex == 1 {
-            
-            var images : departmentImageDataDetails = collegeRef[indexPath.row]
             
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
@@ -976,11 +964,11 @@ class ImageViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 selectedCell = indexPath
                 
                 
-                if images.isappread == "0"{
+                if collegeRef[indexPath.row].isappread == "0"{
                     
-                    apread(gesture : images.detailsid ?? "")
+                    apread(gesture : collegeRef[indexPath.row].detailsid ?? "")
                     
-                    images.isappread = "1"
+                    collegeRef[indexPath.row].isappread = "1"
                     cell.redDotImageView.isHidden = true
                     
                 }
@@ -1072,9 +1060,6 @@ class ImageViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         college.priority = priority
         college.type     =  "collegecircular"
         
-        
-        
-        
         APiCallManager.shared.callApi(url: APIEndpoints.GetCircularListByType, httpMethod: .post, queryParam: nil, requestBody: college) { [weak self] (result:Result<departmentImageResponce,Error>)  in
             guard let self = self else{return}
             switch result{
@@ -1090,7 +1075,6 @@ class ImageViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     
                     for i in collegeRef {
                         
-                        
                         filePathStr = i.newfilepath ?? []
                         
                         print("collegeUrl",i.newfilepath)
@@ -1101,9 +1085,7 @@ class ImageViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     noDataTextView.isHidden  = true
                     imageTableView.delegate = self
                     imageTableView.dataSource = self
-                    
                     imageTableView.reloadData()
-                    
                     
                 }else{
                     

@@ -540,7 +540,6 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
     
     if eventSegmentName.selectedSegmentIndex == 0{
         
-        var event : Eventsdatadetails = upcomming[indexPath.row]
         if let selectedCells = selectedCell, selectedCells == indexPath {
             
             selectedCell = nil
@@ -550,11 +549,11 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
             
             selectedCell = indexPath
             
-            if event.isappread == "0"{
+            if upcomming[indexPath.row].isappread == "0"{
                 
-                apread(gesture : event.eventdetailsid ?? "")
+                apread(gesture : upcomming[indexPath.row].eventdetailsid ?? "")
                 
-                event.isappread = "1"
+                upcomming[indexPath.row].isappread = "1"
                 cell.readImageView.isHidden = true
                 
             }
@@ -564,7 +563,6 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
     
     else if eventSegmentName.selectedSegmentIndex == 1 {
         
-        var event : Eventsdatadetails = eventsRef[indexPath.row]
         if let selectedCells = selectedCell, selectedCells == indexPath {
             
             selectedCell = nil
@@ -574,11 +572,11 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
             
             selectedCell = indexPath
             
-            if event.isappread == "0"{
+            if eventsRef[indexPath.row].isappread == "0"{
                 
-                apread(gesture : event.eventdetailsid ?? "")
+                apread(gesture : eventsRef[indexPath.row].eventdetailsid ?? "")
                 
-                event.isappread = "1"
+                eventsRef[indexPath.row].isappread = "1"
                 cell.readImageView.isHidden = true
                 
             }

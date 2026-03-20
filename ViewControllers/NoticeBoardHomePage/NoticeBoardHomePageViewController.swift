@@ -570,8 +570,6 @@ class NoticeBoardHomePageViewController:
         
         if noticeSegments.selectedSegmentIndex == 0{
             
-            var notice : departmentDataDetails = departmentRef[indexPath.row]
-            
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
                 selectedCell = nil
@@ -579,22 +577,18 @@ class NoticeBoardHomePageViewController:
             } else {
                 
                 selectedCell = indexPath
-                if notice.isappread == "0"{
+                if departmentRef[indexPath.row].isappread == "0"{
                     
-                    apread(gesture : notice.noticedetailsid ?? "")
+                    apread(gesture : departmentRef[indexPath.row].noticedetailsid ?? "")
                     
-                    notice.isappread = "1"
+                    departmentRef[indexPath.row].isappread = "1"
                     cell.redDotImageView.isHidden = true
                     
                 }
-                
             }
-            
         }
         
         else if noticeSegments.selectedSegmentIndex == 1{
-             
-            var notice : departmentDataDetails = collegeRef[indexPath.row]
             
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
@@ -604,11 +598,11 @@ class NoticeBoardHomePageViewController:
                 
                 selectedCell = indexPath
                 
-                if notice.isappread == "0"{
+                if collegeRef[indexPath.row].isappread == "0"{
                     
-                    apread(gesture : notice.noticedetailsid ?? "")
+                    apread(gesture : collegeRef[indexPath.row].noticedetailsid ?? "")
                     
-                    notice.isappread = "1"
+                    collegeRef[indexPath.row].isappread = "1"
                     cell.redDotImageView.isHidden = true
                 }
             }

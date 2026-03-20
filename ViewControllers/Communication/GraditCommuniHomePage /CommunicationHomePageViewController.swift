@@ -811,7 +811,6 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         SenderCommuTextTableViewCell
         
         if CommuniSegementName.selectedSegmentIndex == 0{
-            var comuCell : ReadCommunicationDetails = UnReadData[indexPath.row]
             
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
@@ -821,10 +820,10 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
                 
                 selectedCell = indexPath
                 
-                if comuCell.isappread == "0"{
+                if UnReadData[indexPath.row].isappread == "0"{
                     
-                    apread(gesture : comuCell.msgdetailsid ?? "")
-                    comuCell.isappread = "1"
+                    apread(gesture : UnReadData[indexPath.row].msgdetailsid ?? "")
+                    UnReadData[indexPath.row].isappread = "1"
                     cell.redDotImage.isHidden = true
                     
                 }

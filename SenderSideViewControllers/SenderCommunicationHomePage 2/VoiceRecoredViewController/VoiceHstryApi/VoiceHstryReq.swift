@@ -16,10 +16,6 @@ class VoiceHstryReqs{
 
         KRProgressHUD.show()
 
-        
-
-        
-
         BaseRequest.raw_post(url: get_url(), param: param).success {
 
           

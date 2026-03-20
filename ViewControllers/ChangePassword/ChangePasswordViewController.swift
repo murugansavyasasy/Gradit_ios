@@ -188,20 +188,14 @@ class ChangePasswordViewController: UIViewController,UITextFieldDelegate {
         
         else if (newPasswordTextField.text!) != (confirmPassWordTextField.text!) {
             
-            
- 
-            
             let refreshAlert = UIAlertController(title: "", message: "Your Password Dosen't Match " , preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
-                    
                     }))
                     
-                    
                     present(refreshAlert, animated: true, completion: nil)
-                    
-            
+              
         }
         
         
@@ -209,43 +203,38 @@ class ChangePasswordViewController: UIViewController,UITextFieldDelegate {
             
             let defaults = UserDefaults.standard
             var getmobil = defaults.string(forKey: DefaultsKeys.mobileNumber)
-           let changepass = chageModal()
-            
+            var changepass = chageModal()
             
             changepass.mobilenumber = getmobil
             changepass.oldpassword = oldPasswordTextField.text
             changepass.newpassword = newPasswordTextField.text
-           
-            let changePassStr = changepass.toJSONString()
-            
-            changePasswordRequest.call_request(param: changePassStr!){ [self]
-                
-                (res) in
-            
-                let changePassRess : chageResponce =
-                Mapper<chageResponce>().map(JSONString: res)!
-            
-//               
-                
-                
-                let refreshAlert = UIAlertController(title: "", message: changePassRess.Message , preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                            
-                        
-                        }))
-                        
-                        
-                        present(refreshAlert, animated: true, completion: nil)
-                        
 
+            APiCallManager.shared.callApi(
+                url: APIEndpoints.changepassword,
+                httpMethod: .post,
+                queryParam: nil,
+                requestBody: changepass
+            ) { [weak self] (result: Result<chageResponce, Error>) in
                 
-        }
-
-        
+                guard let self = self else { return }
+                
+                switch result {
+                    
+                case .success(let changePassRess):
+                    
+                    let refreshAlert = UIAlertController(title: "", message: changePassRess.Message , preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                    }))
+                    
+                    self.present(refreshAlert, animated: true, completion: nil)
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
     }
-
-
     
 }
 

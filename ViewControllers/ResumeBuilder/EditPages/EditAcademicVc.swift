@@ -116,70 +116,14 @@ class EditAcademicVc: UIViewController {
         dismiss(animated: true)
     }
     
-    
-//    @IBAction func SaveAct(_ sender: Any) {
-//        
-//        self.view.endEditing(true) // Dismiss keyboard if active
-//        
-//        if !validateEducationList() || Backlogs.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || NoOfArrears.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty{
-//            
-//            let alert = UIAlertController(title: "Missing Information", message: "Please fill all details", preferredStyle: .alert)
-//            let ok = UIAlertAction(title: "Ok", style: .default)
-//            alert.addAction(ok)
-//            present(alert, animated: true)
-//            return
-//        }
-//        
-//        // All data is valid — proceed with confirmation
-//        let confirmAlert = UIAlertController(title: "Confirm", message: "Are you sure you want to update Academic records", preferredStyle: .alert)
-//        
-//        let yes = UIAlertAction(title: "Yes", style: .default) { [weak self] _ in
-//            guard let self = self else { return }
-//            
-//            let request = Edit_Academic_req()
-//            request.idMember = Int(memberId ?? "")
-//            request.backlogs = self.Backlogs
-//            request.numberOfArrears = self.NoOfArrears
-//            request.educationalDetails = self.EducationDetail
-//            
-//            let academicStr = request.toJSONString() ?? ""
-//            print(academicStr)
-//            
-//            Edit_Academic_Request.call_request(param: academicStr) { [weak self] res in
-//                guard let response: Edit_Academic_Response = Mapper<Edit_Academic_Response>().map(JSONString: res) else { return }
-//                
-//                DispatchQueue.main.async {
-//                    if response.status == true {
-//                        let alert = UIAlertController(title: "Success", message: "Academic records Updated Successfully", preferredStyle: .alert)
-//                        let ok = UIAlertAction(title: "Ok", style: .default) { _ in
-//                            self?.dismiss(animated: true)
-//                        }
-//                        alert.addAction(ok)
-//                        self?.present(alert, animated: true)
-//                    } else {
-//                        let alert = UIAlertController(title: "Failed", message: "Something went wrong", preferredStyle: .alert)
-//                        let ok = UIAlertAction(title: "Ok", style: .default)
-//                        alert.addAction(ok)
-//                        self?.present(alert, animated: true)
-//                    }
-//                }
-//            }
-//        }
-//        
-//        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-//        confirmAlert.addAction(yes)
-//        confirmAlert.addAction(cancel)
-//        
-//        present(confirmAlert, animated: true)
-//    }
-    
     @IBAction func SaveAct(_ sender: Any) {
 
         self.view.endEditing(true)
 
-        if !validateEducationList()
-            || Backlogs.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-            || NoOfArrears.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+        // ✅ Validation
+        guard validateEducationList(),
+              !Backlogs.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              !NoOfArrears.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
 
             let alert = UIAlertController(
                 title: "Missing Information",
@@ -191,6 +135,7 @@ class EditAcademicVc: UIViewController {
             return
         }
 
+        // ✅ Confirmation Alert
         let confirmAlert = UIAlertController(
             title: "Confirm",
             message: "Are you sure you want to update Academic records",
@@ -200,54 +145,70 @@ class EditAcademicVc: UIViewController {
         let yes = UIAlertAction(title: "Yes", style: .default) { [weak self] _ in
             guard let self = self else { return }
 
-            // 🔹 OPTIONAL: Show loader here
             self.view.isUserInteractionEnabled = false
 
-            // 🔹 STEP 1: Upload attachments first
-            uploadEducationAttachments(
+            // ✅ STEP 1: Upload attachments
+            self.uploadEducationAttachments(
                 educationDetails: self.EducationDetail,
                 collegeId: self.collegeId ?? ""
             ) { updatedEducationDetails in
 
                 DispatchQueue.main.async {
 
-                    // 🔹 STEP 2: Replace local model with uploaded URLs
+                    // ✅ STEP 2: Update model
                     self.EducationDetail = updatedEducationDetails
 
-                    // 🔹 STEP 3: Build request model
-                    let request = Edit_Academic_req()
-                    request.idMember = Int(self.memberId ?? "")
+                    // ✅ STEP 3: Prepare request
+                    var request = Edit_Academic_req()
+                    request.idMember = Int(self.memberId ?? "0") ?? 0
                     request.backlogs = self.Backlogs
                     request.numberOfArrears = self.NoOfArrears
                     request.educationalDetails = self.EducationDetail
 
-                    let academicStr = request.toJSONString() ?? ""
-                    print("Final Request JSON:", academicStr)
+                    // ✅ STEP 4: API Call (POST)
+                    APiCallManager.shared.callApi(
+                        url: APIEndpoints.academicrecord_add_edit_academic,
+                        httpMethod: .post,
+                        isBaseUrl: false,
+                        queryParam: nil,
+                        requestBody: request
+                    ) { [weak self] (result: Result<Edit_Academic_Response, Error>) in
 
-                    // 🔹 STEP 4: Call API
-                    Edit_Academic_Request.call_request(param: academicStr) { [weak self] res in
-                        guard
-                            let self = self,
-                            let response = Mapper<Edit_Academic_Response>().map(JSONString: res)
-                        else { return }
+                        guard let self = self else { return }
 
                         DispatchQueue.main.async {
                             self.view.isUserInteractionEnabled = true
 
-                            if response.status == true {
-                                let alert = UIAlertController(
-                                    title: "Success",
-                                    message: "Academic records Updated Successfully",
-                                    preferredStyle: .alert
-                                )
-                                alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
-                                    self.dismiss(animated: true)
-                                })
-                                self.present(alert, animated: true)
-                            } else {
+                            switch result {
+
+                            case .success(let response):
+
+                                if response.status == true {
+                                    let alert = UIAlertController(
+                                        title: "Success",
+                                        message: "Academic records Updated Successfully",
+                                        preferredStyle: .alert
+                                    )
+                                    alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
+                                        self.dismiss(animated: true)
+                                    })
+                                    self.present(alert, animated: true)
+
+                                } else {
+                                    let alert = UIAlertController(
+                                        title: "Failed",
+                                        message: "Something went wrong",
+                                        preferredStyle: .alert
+                                    )
+                                    alert.addAction(UIAlertAction(title: "Ok", style: .default))
+                                    self.present(alert, animated: true)
+                                }
+
+                            case .failure(let error):
+                                print("❌ Error:", error.localizedDescription)
                                 let alert = UIAlertController(
                                     title: "Failed",
-                                    message: "Something went wrong",
+                                    message: error.localizedDescription,
                                     preferredStyle: .alert
                                 )
                                 alert.addAction(UIAlertAction(title: "Ok", style: .default))
@@ -339,7 +300,7 @@ class EditAcademicVc: UIViewController {
         collegeId: String,
         completion: @escaping ([EducationalDetail]) -> Void
     ) {
-        let updatedEducationDetails = educationDetails
+        var updatedEducationDetails = educationDetails
         let dispatchGroup = DispatchGroup()
 
         for eduIndex in updatedEducationDetails.indices {

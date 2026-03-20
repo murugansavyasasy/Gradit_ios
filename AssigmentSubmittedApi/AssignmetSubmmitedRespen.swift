@@ -6,82 +6,28 @@
 //
 
 import Foundation
-import ObjectMapper
 
-class AssigmentSummitedModal : Mappable{
-    
-    var assignmentid : String!
-    var processby : String!
-    var filetype : String!
-    
-    
-    init(){}
-    
-    
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        
-        assignmentid <- map["assignmentid"]
-        processby <- map["processby"]
-        filetype <- map["filetype"]
-        
-    }
-    
-    
-    
-    
-    
+struct AssigmentSummitedModal: Codable {
+
+    var assignmentid: String?
+    var processby: String?
+    var filetype: String?
+
 }
 
-class AssigmentSubmitResponce : Mappable{
-    
-    
-    var status: Int!
-        var message: String!
-        var data: [AssignmentSubDataDetail]!
+struct AssigmentSubmitResponce: Codable {
 
-    
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
+    var Status: Int?
+    var Message: String?
+    var data: [AssignmentSubDataDetail]?
 
-func mapping(map: ObjectMapper.Map) {
-            status <- map["Status"]
-            message <- map["Message"]
-            data <- map["data"]
-        }
-    
-    
-    
-    
 }
 
+struct AssignmentSubDataDetail: Codable {
 
-class AssignmentSubDataDetail : Mappable{
-    
-    var content: String!
-    var description: String!
-        var submittedtime: String!
-        var file_name: String!
+    var content: String?
+    var description: String?
+    var submittedtime: String?
+    var file_name: String?
 
-    
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
-    func mapping(map: ObjectMapper.Map) {
-            content <- map["content"]
-            description <- map["description"]
-            submittedtime <- map["submittedtime"]
-        file_name <- map["file_name"]
-        }
-    
-    
-    
 }

@@ -6,66 +6,19 @@
 //
 
 import Foundation
-import ObjectMapper
 
+struct ProfileResponse: Codable {
 
-
-
-
-class ProfileResponse : Mappable  {
-    
-   
-    var Status                      : Int!
-    var Message                     : String!
-    var data                    : [ProfileData]!
-    
-   
-
-    required init?(map: Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: Map) {
-        
-        
-    Status                          <- map ["Status"]
-    Message                         <- map ["Message"]
-    data                        <- map ["data"]
-    }
-    
-    
-
+    var Status: String?
+    var Message: String?
+    var data: [ProfileData]?
 
 }
 
+struct ProfileData: Codable {
 
-
-
-class ProfileData : Mappable  {
-    
-   
-   
-    
-    var key                      : String!
-    var value                     : String!
-    var type                    : String!
-    
-   
-
-    required init?(map: Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: Map) {
-        
-        
-        key                          <- map ["key"]
-        value                         <- map ["value"]
-        type                        <- map ["type"]
-    }
-    
-    
-
+    var key: String?
+    var value: String?
+    var type: String?
 
 }
-

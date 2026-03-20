@@ -6,65 +6,39 @@
 //
 
 import Foundation
-import ObjectMapper
 
-class projects: Mappable {
-    
+struct projects: Codable {
+
     var title: String?
-    
-    init(){}
-    
-    required init?(map: Map) {}
-    
-    func mapping(map: Map) {
-        
-        title  <- map["title"]
-    }
+
 }
 
-class Internship: Mappable {
+struct Internship: Codable {
+
     var to: String?
     var from: String?
     var companyName: String?
     var designation: String?
 
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        to          <- map["to"]
-        from        <- map["from"]
-        companyName <- map["companyName"]
-        designation <- map["designation"]
-    }
 }
 
-class Certification: Mappable {
+struct Certification: Codable {
+
     var duration: String?
     var institute: String?
     var courseName: String?
 
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        duration    <- map["duration"]
-        institute   <- map["institute"]
-        courseName  <- map["courseName"]
-    }
 }
 
-class Assessment: Mappable {
+struct Assessment: Codable {
+
     var score: String?
     var assessment: String?
 
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        score       <- map["score"]
-        assessment  <- map["assessment"]
-    }
 }
 
-class SkillProfile: Mappable {
+struct SkillProfile: Codable {
+
     var id: Int?
     var idMember: Int?
     var languages: String?
@@ -76,74 +50,36 @@ class SkillProfile: Mappable {
     var certifications: [Certification]?
     var assessmentDetails: [Assessment]?
     var projects: [projects]?
-    var createdOn: Any?
-    var modifiedOn: Any?
-    var isDelete: Int?
+    var isDelete: String?
 
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        id                  <- map["id"]
-        idMember            <- map["idMember"]
-        languages           <- map["languages"]
-        softSkill           <- map["softSkill"]
-        areaInterest        <- map["areaInterest"]
-        internship          <- map["internship"]
-        programmingLanguage <- map["programmingLanguage"]
-        toolsPlatform       <- map["toolsPlatform"]
-        certifications      <- map["certifications"]
-        assessmentDetails   <- map["assessmentDetails"]
-        projects            <- map["projects"]
-        createdOn           <- map["createdOn"]
-        modifiedOn          <- map["modifiedOn"]
-        isDelete            <- map["isDelete"]
-    }
 }
 
-class SkillProfileResponse: Mappable {
+struct SkillProfileResponse: Codable {
+
     var status: Bool?
     var message: String?
     var data: [SkillProfile]?
 
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        status  <- map["status"]
-        message <- map["message"]
-        data    <- map["data"]
-    }
 }
 
-class SoftSkillsResponse: Mappable {
+struct SoftSkillsResponse: Codable {
+
     var status: Bool?
     var message: String?
     var data: [SoftSkillData]?
 
-    init(){}
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        status  <- map["status"]
-        message <- map["message"]
-        data    <- map["data"]
-    }
 }
 
-class SoftSkillData: Mappable {
+struct SoftSkillData: Codable {
+
     var softSkills: [String]?
-    
-    init(){}
-    required init?(map: Map) {}
 
-    func mapping(map: Map) {
-        softSkills <- map["softSkills"]
-    }
 }
 
-import Foundation
-import ObjectMapper
+// MARK: - Request Models
 
-class Edit_Skill_Req: Mappable {
+struct Edit_Skill_Req: Codable {
+
     var idMember: Int?
     var languages: String?
     var softSkill: [String]?
@@ -155,75 +91,38 @@ class Edit_Skill_Req: Mappable {
     var assessmentDetails: [Assessment_Request]?
     var projects: [Project_Request]?
 
-    init(){}
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        idMember            <- map["idMember"]
-        languages           <- map["languages"]
-        softSkill           <- map["softSkill"]
-        areaInterest        <- map["areaInterest"]
-        internship          <- map["internship"]
-        programmingLanguage <- map["programmingLanguage"]
-        toolsPlatform       <- map["toolsPlatform"]
-        certifications      <- map["certifications"]
-        assessmentDetails   <- map["assessmentDetails"]
-        projects            <- map["projects"]
-    }
 }
 
-class Internship_Request: Mappable {
+struct Internship_Request: Codable {
+
     var companyName: String?
     var designation: String?
     var from: String?
     var to: String?
-    var hasError: Bool = false
-    init(){}
-    required init?(map: Map) {}
+    var hasError: Bool?
 
-    func mapping(map: Map) {
-        companyName <- map["companyName"]
-        designation <- map["designation"]
-        from        <- map["from"]
-        to          <- map["to"]
-    }
 }
 
-class Certification_Request: Mappable {
+struct Certification_Request: Codable {
+
     var courseName: String?
     var institute: String?
     var duration: String?
-    var hasError: Bool = false
-    init(){}
-    required init?(map: Map) {}
+    var hasError: Bool?
 
-    func mapping(map: Map) {
-        courseName <- map["courseName"]
-        institute  <- map["institute"]
-        duration   <- map["duration"]
-    }
 }
 
-class Assessment_Request: Mappable {
+struct Assessment_Request: Codable {
+
     var assessment: String?
     var score: String?
-    var hasError: Bool = false
-    init(){}
-    required init?(map: Map) {}
+    var hasError: Bool?
 
-    func mapping(map: Map) {
-        assessment <- map["assessment"]
-        score      <- map["score"]
-    }
 }
 
-class Project_Request: Mappable {
-    var title: String?
-    var hasError: Bool = false
-    init(){}
-    required init?(map: Map) {}
+struct Project_Request: Codable {
 
-    func mapping(map: Map) {
-        title <- map["title"]
-    }
+    var title: String?
+    var hasError: Bool?
+
 }

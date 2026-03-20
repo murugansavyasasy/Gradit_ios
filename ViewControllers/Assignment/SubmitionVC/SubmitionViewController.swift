@@ -23,56 +23,31 @@ import AWSS3
 class SubmitionViewController: UIViewController,UIImagePickerControllerDelegate & UINavigationControllerDelegate ,UIDocumentMenuDelegate,UIDocumentPickerDelegate,UITextViewDelegate{
 
 @IBOutlet weak var topNameview: UIView!
-
 @IBOutlet weak var tapBarView: UIViewX!
 @IBOutlet weak var uploadFileLabel: UILabel!
 @IBOutlet weak var cancelView: UIViewX!
-
 @IBOutlet weak var sendView: UIViewX!
 @IBOutlet weak var selectTypeLabel: UILabel!
-
-
 @IBOutlet weak var assigmentDropDownView: UIViewX!
 @IBOutlet weak var descriptionTextView: UITextView!
-
 @IBOutlet weak var uploadView: RectangularDashedView!
-@IBOutlet weak var titleTextField: UITextField!
-
 @IBOutlet weak var lblCount: UILabel!
-
-
 @IBOutlet weak var loginView: UIView!
 @IBOutlet weak var topLabels: UILabel!
-
-
 @IBOutlet weak var profileView: UIView!
-
 @IBOutlet weak var viewTap: UIView!
-
 @IBOutlet weak var clgLogoImg: UIImageView!
 @IBOutlet weak var topMessageLabel: UILabel!
-
-
 @IBOutlet weak var redirectLoginView: UIViewX!
-
 @IBOutlet weak var smallImg: UIImageView!
 @IBOutlet weak var bigImg: UIImageView!
-@IBOutlet weak var adView: UIView!
-
 @IBOutlet weak var changeRolesView: UIView!
-
 @IBOutlet weak var notificationView: UIView!
 @IBOutlet weak var refreshView: UIView!
-
 @IBOutlet weak var sideMenuView: UIView!
-
-
 @IBOutlet weak var termsAndConditionView: UIView!
 @IBOutlet weak var faqView: UIView!
-
 @IBOutlet weak var privacyPolicyView: UIView!
-
-
 @IBOutlet weak var changePasswordView: UIView!
 @IBOutlet weak var helpView: UIView!
 
@@ -136,10 +111,7 @@ override func viewDidAppear(_ animated: Bool) {
     
     print("kljjjjjjjjj")
     
-    
     PreviousAddId = PreviousAddId+1
-    
-    
     
     print("jkkkkkkk",PreviousAddId)
     
@@ -175,67 +147,40 @@ override func viewDidLoad() {
     
     print("tgidfgdfghjkjhgh",Progressid)
     
-    
-    
     descriptionTextView.text = "Enter the Description"
     descriptionTextView.textColor = UIColor.lightGray
     
     descriptionTextView.returnKeyType = .done
     descriptionTextView.delegate = self
     
-    
-    
-    
     if priority == "p1"{
         
         view.backgroundColor = UIColor(named: "Principal" )
-        
-        
         topLabels.text = "Principal"
-        
-    }
-    
-    else if priority == "p4"{
+    } else if priority == "p4"{
         tapBarView.backgroundColor = UIColor(named: "StudentParent" )
         topLabels.text = "Student"
         
-    }
-    
-    else if priority == "p2" {
+    }else if priority == "p2" {
         
         view.backgroundColor = UIColor(named: "Teaching Staff" )
         topLabels.text = "Hod"
         
-    }
-    
-    else if priority == "p5"{
+    }else if priority == "p5"{
         view.backgroundColor = UIColor(named: "FatherColor" )
         tapBarView.backgroundColor = UIColor(named: "FatherColor" )
         topLabels.text = "Father"
         
-        
-        
-    }
-    
-    else if priority == "p3"{
+    }else if priority == "p3"{
         view.backgroundColor = UIColor(named: "Teaching Staff" )
         topLabels.text = "Teacher"
         
-    }
-    
-    
-    
-    else if priority == "p6"{
-        
+    }else if priority == "p6"{
         
         topLabels.text = "Non Teaching"
-        
-        
     }
     
-    
     addApi()
-    
     
     let selectDropDown =   UITapGestureRecognizer(target: self, action: #selector(selectedDropVc))
     
@@ -245,15 +190,9 @@ override func viewDidLoad() {
     
     uploadView.addGestureRecognizer(tapToUpload)
     
-    
-    
     let send =   UITapGestureRecognizer(target: self, action: #selector(sendVc))
     
     sendView.addGestureRecognizer(send)
-    
-    
-    // tap Bar UiTapGuster.
-    
     
     let profileGesture = UITapGestureRecognizer(target: self, action: #selector(profileRedirect))
     profileView.addGestureRecognizer(profileGesture)
@@ -273,10 +212,6 @@ override func viewDidLoad() {
     let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
     redirectLoginView.addGestureRecognizer(loginRediectGesture)
     
-    
-    
-    
-    
     let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
     viewTap.addGestureRecognizer(menuGestureHide)
     
@@ -293,7 +228,6 @@ override func viewDidLoad() {
     
     let helpGesture = UITapGestureRecognizer(target: self, action: #selector(helpRedirect))
     helpView.addGestureRecognizer(helpGesture)
-    //
     
     let privacyPolicyGesture = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyRedirect))
     privacyPolicyView.addGestureRecognizer(privacyPolicyGesture)
@@ -301,17 +235,12 @@ override func viewDidLoad() {
     let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
     termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
     
-    
-    
     let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
     changePasswordView.addGestureRecognizer(chagePassword)
     
-    
     let cancel = UITapGestureRecognizer(target: self, action: #selector(CancelVc))
     cancelView.addGestureRecognizer(cancel)
-    
-    
-    
+      
 }
 
 
@@ -356,8 +285,6 @@ func textViewDidEndEditing(_ textView: UITextView) {
 
 @IBAction func selectedDropVc(){
     
-    
-    
     let  myArray = ["PDF","Image"]
     
     dropDown.dataSource = myArray//4
@@ -375,40 +302,21 @@ func textViewDidEndEditing(_ textView: UITextView) {
         
         drop = item
         
-        
-        
-        
-        
         if item == "PDF"{
-            print("PDF")
             uploadView.isHidden = false
             
+        }else if item == "Image"{
             
-        }
-        
-        
-        else if item == "Image"{
-            
-            print("Image")
             uploadView.isHidden = false
-            //
-            
+           
         }
-        
-        
-        
-        //            }
-        
     }
-    
-    
 }
 
 
 
 
 func addApi(){
-    
     
     var add = AddApiModal()
     
@@ -471,43 +379,22 @@ func addApi(){
     
     if  ((selectTypeLabel.text! == "selectType")){
         
-        
-        
-        
         let refreshAlert = UIAlertController(title: "", message: "Kindly Select Type", preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
             
-            
-            
         }))
         present(refreshAlert, animated: true, completion: nil)
         
-    }
-    
-    
-    
-    else if  (descriptionTextView.text! == "Enter the Description"){
-        
-        
-        
+    }else if  (descriptionTextView.text! == "Enter the Description"){
         
         let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Description", preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
             
-            
-            
         }))
         present(refreshAlert, animated: true, completion: nil)
-        
-    }
-    
-    
-    else if  (descriptionTextView.text! == ""){
-        
-        
-        
+    }else if  (descriptionTextView.text! == ""){
         
         
         let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Description", preferredStyle: UIAlertController.Style.alert)
@@ -524,15 +411,9 @@ func addApi(){
     else if uploadFileLabel.text ==  "Upload Files" {
         
         
-        
-        
-        
-        
         let refreshAlert = UIAlertController(title: "", message: "Kindly Pick Image Or Pdf", preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-            
-            
             
         }))
         present(refreshAlert, animated: true, completion: nil)
@@ -542,36 +423,20 @@ func addApi(){
     else{
         
         
-        
-        
         let refreshAlert = UIAlertController(title: "Hold on!!", message: "Are you Sure You Want To Submit ?", preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [self] (action: UIAlertAction!) in
             
             
-            
-            
-            
-            
             if drop == "PDF"{
                 
-                
-                
                 uploadPDFFileToAWS(pdfData : pdfData!)
-                
                 
             }
             
             else if drop == "Image"{
                 
-                
-                
-                
-                
-                
                 getImageURL(images: photoArray)
-                
-                
                 
                 DispatchQueue.main.asyncAfter(deadline: .now()+4.3) { [self] in
                     KRProgressHUD.dismiss()
@@ -580,10 +445,7 @@ func addApi(){
                     assigmentImagePdf(ImageArry: awsArry)
                 }
                 
-                
-                
             }
-            
             
         }))
         
@@ -594,13 +456,7 @@ func addApi(){
         
         present(refreshAlert, animated: true, completion: nil)
         
-        
-        
-        
-        
-        
     }
-    
     
 }
 
@@ -611,28 +467,17 @@ func addApi(){
     print("kklllllclllf",photoArray.count)
     arrSelectedFilePath.removeAll()
     
-    
-    
-    
     uploadFileLabel.text = "Upload Files"
     
     
     if drop == "PDF"{
         
-        
         clickFunction()
         
-        
-        
-    }
-    
-    else if drop == "Image"{
+    }else if drop == "Image"{
         
         print("uploafdImage")
-        
-        
-        
-        var image =  "image"
+        let image =  "image"
         
         fileType = image
         let alert = UIAlertController(title: "Add Photo", message: "", preferredStyle: .actionSheet)
@@ -640,31 +485,16 @@ func addApi(){
         for i in ["Gallery", "Take a Photo"] {
             
             alert.addAction(UIAlertAction(title: i, style: .default, handler: choose_image_handler))
-            
-            
         }
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
         
-        
-        
         self.present(alert, animated: true, completion: nil)
-    }
-    
-    
-    
-    else if drop == "Text"{
-        
-        
-        
     }
 }
 
 
-
 func choose_image_handler(action: UIAlertAction){
-    
-    
     
     print(action.title!)
     
@@ -684,21 +514,16 @@ func choose_image_handler(action: UIAlertAction){
     
     else {
         
-        
-        
         let optionMenu = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
         
         self.present(optionMenu, animated: true, completion: nil)
         
     }
-    
-    
-    
+     
 }
 
 
 func open_camera(){
-    
     
     photoArray.removeAll()
     arrSelectedFilePath.removeAll()
@@ -721,16 +546,11 @@ func open_camera(){
             
         }
         
-        
-        
         present(camera_controller, animated: true, completion: nil)
           }       else {
             noCamera()
             
         }
-    
-    
-    
 }
 
 
@@ -743,10 +563,7 @@ func noCamera(){
 }
 
 
-
-
 func open_gallery(){
-    
     
     photoArray.removeAll()
     arrSelectedFilePath.removeAll()
@@ -754,20 +571,13 @@ func open_gallery(){
     
     let imagePicker = ImagePickerController()
     
-    
-    
     imagePicker.settings.selection.max = 3
     
     imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
     
-    
-    
     presentImagePicker(imagePicker, animated: true, select:{ (asset: PHAsset) -> Void in
         
-        
-        
     }, deselect: { (assets : PHAsset) -> Void in
-        
         
     }, cancel: {(assets: [PHAsset]) -> Void in
         
@@ -776,13 +586,7 @@ func open_gallery(){
         
         self.image_choose = true
         
-        
-        
-        for i in 0..<assets.count
-                
-                
-                
-        {
+        for i in 0..<assets.count {
             
             let resource = PHAssetResource.assetResources(for: assets[i]).first
             
@@ -811,9 +615,6 @@ func open_gallery(){
         self.convertAssetToImages()
         
     })
-    
-    
-    
 }
 
 
@@ -824,15 +625,9 @@ func convertAssetToImages() -> Void {
     
     if SelectedAssets.count != 0 {
         
-        
-        
         for i in 0..<SelectedAssets.count {
             
-            
-            
             let manager = PHImageManager.default()
-            
-            
             
             let option = PHImageRequestOptions()
             
@@ -848,15 +643,9 @@ func convertAssetToImages() -> Void {
             
             manager.requestImage(for: SelectedAssets[i],targetSize: CGSize( width : 200,height : 200), contentMode: .aspectFill, options: option, resultHandler: {(result, info) ->  Void in
                 
-                
-                
                 thumbnail = result!
                 
-                
-                
             })
-            
-            
             
             let data  = thumbnail.jpegData(compressionQuality: 0.7)
             
@@ -909,162 +698,123 @@ func convertAssetToImages() -> Void {
 }
 
 
-
-func assigmentImagePdf(ImageArry : [String]){
-    
-    
-    
-    print("ffggfdsfcdsad",ImageArry.count)
-    var imageAryy : [filenamesss] = []
-    
-    
-    
-    for i in ImageArry{
-        let imageAws = filenamesss()
-        imageAws.FileName = i
+    func assigmentImagePdf(ImageArry : [String]){
         
-        imageAryy.append(imageAws)
-    }
-    
-    
-    
-    
-    let imagePdf = sendAssigmentModal()
-    
-    imagePdf.assignmentid = assigmentId
-    imagePdf.filetype = fileType
-    imagePdf.colgid = colgId
-    imagePdf.description = descriptionTextView.text
-    imagePdf.processby = memberId
-    
-    
-    
-    imagePdf.FileNameArray = imageAryy
-    
-    let imagePdfStrs = imagePdf.toJSONString()
-    
-    print("yearAndSectionModalStr",imagePdfStrs)
-    
-    sendAssigemntRequest.call_request(param: imagePdfStrs!) {
+        print("ffggfdsfcdsad", ImageArry.count)
         
-        [self]  (res) in
+        var imageAryy : [filenamesss] = []
         
-        
-        let particularss : sndAssigmentResponce = Mapper<sndAssigmentResponce>().map(JSONString: res)!
-        
-        
-        if particularss.Status == 1 {
+        for i in ImageArry{
+            var imageAws = filenamesss()
+            imageAws.FileName = i
             
-            
-            
-            print("uiiuiiooo")
-            
-            let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                
-                if priority == "p4"{
-                    
-                    print("ytytyytyty")
-                    let vc = AssigmentHomePageViewController(nibName: nil, bundle: nil)
-                    vc.str  = str
-                    
-                    vc.strName = strName
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    
-                    present(vc, animated: true)
-                    
-                }
-                
-                else if priority == "p5"{
-                    
-                    let vc = AssigmentHomePageViewController(nibName: nil, bundle: nil)
-                    vc.view.backgroundColor = UIColor(named: "FatherColor")
-                    vc.assigmentSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
-                    vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
-                    vc.str  = str
-                    
-                    vc.strName = strName
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    
-                    present(vc, animated: true)
-                    
-                    
-                }
-                
-            }))
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-            reloadInputViews()
-            
-        }
-        else{
-            
-            
-            
-            
-            
-            let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                
-                if priority == "p4"{
-                    let vc = AssigmentHomePageViewController(nibName: nil, bundle: nil)
-                    vc.str  = str
-                    
-                    vc.strName = strName
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    
-                    self.present(vc, animated: true)
-                    
-                }
-                
-                else if priority == "p5"{
-                    
-                    let vc = AssigmentHomePageViewController(nibName: nil, bundle: nil)
-                    vc.view.backgroundColor = UIColor(named: "FatherColor")
-                    vc.assigmentSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
-                    vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
-                    vc.str  = str
-                    
-                    vc.strName = strName
-                    
-                    vc.modalPresentationStyle = .fullScreen
-                    
-                    self.present(vc, animated: true)
-                    
-                    
-                }
-                
-            }))
-            
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
+            imageAryy.append(imageAws)
         }
         
+        var imagePdf = sendAssigmentModal()
         
+        imagePdf.assignmentid = assigmentId
+        imagePdf.filetype = fileType
+        imagePdf.colgid = colgId
+        imagePdf.description = descriptionTextView.text
+        imagePdf.processby = memberId
+        imagePdf.FileNameArray = imageAryy
         
-        reloadInputViews()
+        print("yearAndSectionModalStr", imagePdf)
         
-        
-        
-        
-        
-        
-        
-        
-        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.SubmitAssignmentFromAppWithCloudURL,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: imagePdf
+        ) { [weak self] (result: Result<sndAssigmentResponce, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let particularss):
+                
+                if particularss.Status == 1 {
+                    
+                    print("uiiuiiooo")
+                    
+                    let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
+                        
+                        guard let self = self else { return }
+                        
+                        if priority == "p4"{
+                            
+                            print("ytytyytyty")
+                            let vc = AssigmentHomePageViewController(nibName: nil, bundle: nil)
+                            vc.str  = str
+                            vc.strName = strName
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                            
+                        }
+                        
+                        else if priority == "p5"{
+                            
+                            let vc = AssigmentHomePageViewController(nibName: nil, bundle: nil)
+                            vc.view.backgroundColor = UIColor(named: "FatherColor")
+                            vc.assigmentSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
+                            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
+                            vc.str  = str
+                            vc.strName = strName
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                        }
+                        
+                    }))
+                    
+                    self.present(refreshAlert, animated: true, completion: nil)
+                    
+                    self.reloadInputViews()
+                    
+                }
+                else{
+                    
+                    let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
+                        
+                        guard let self = self else { return }
+                        
+                        if priority == "p4"{
+                            let vc = AssigmentHomePageViewController(nibName: nil, bundle: nil)
+                            vc.str  = str
+                            vc.strName = strName
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                        }
+                        
+                        else if priority == "p5"{
+                            
+                            let vc = AssigmentHomePageViewController(nibName: nil, bundle: nil)
+                            vc.view.backgroundColor = UIColor(named: "FatherColor")
+                            vc.assigmentSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
+                            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
+                            vc.str  = str
+                            vc.strName = strName
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                        }
+                        
+                    }))
+                    
+                    self.present(refreshAlert, animated: true, completion: nil)
+                }
+                
+                self.reloadInputViews()
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
-}
-
-
-
-
 
 
 
@@ -1078,9 +828,6 @@ func getImageURL(images : [UIImage]){
         print("uploadAWS",self.uploadAWS)
     }
 }
-
-
-
 
 
 func uploadAWS(image : UIImage){
@@ -1108,10 +855,6 @@ func uploadAWS(image : UIImage){
     dateFormatter.dateFormat = "dd-MM-yyyy"
     
     let  currentDate =   dateFormatter.string(from: Date())
-    
-    
-    
-    
     
     
     let ext = imageName as String
@@ -1167,13 +910,8 @@ func uploadAWS(image : UIImage){
                     }
                 }else{
                     self.convertedImagesUrlArray = self.imageUrlArray
-                    
-                    
                 }
-                
             }
-            
-            
             
         }
         else {
@@ -1182,16 +920,7 @@ func uploadAWS(image : UIImage){
         }
         return nil
     }
-    
-    
-    
 }
-
-
-
-
-
-
 
 
 // AWS PDF Upload Part
@@ -1202,7 +931,6 @@ func uploadPDFFileToAWS(pdfData : NSData){
     var colgId : String!
     let defaults = UserDefaults.standard
     colgId = defaults.string(forKey: DefaultsKeys.collegeid)
-    
     
     let S3BucketName =  DefaultsKeys.S3BucketName
     let CognitoPoolID =  DefaultsKeys.CognitoPoolID
@@ -1218,16 +946,12 @@ func uploadPDFFileToAWS(pdfData : NSData){
     let imageNameWithoutExtension = NSString.init(format: "vc_%@",currentTimeStamp)
     let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".pdf")
     
-    
-    
     let ext = imageName as String
-    
     
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd-MM-yyyy"
     
     let  currentDate =   dateFormatter.string(from: Date())
-    
     
     let fileName = imageNameWithoutExtension
     let fileType = ".pdf"
@@ -1254,9 +978,7 @@ func uploadPDFFileToAWS(pdfData : NSData){
         
         if let error = task.error {
             print("Upload failed : (\(error))")
-            
             KRProgressHUD.dismiss()
-            
         }
         
         if task.result != nil {
@@ -1271,13 +993,11 @@ func uploadPDFFileToAWS(pdfData : NSData){
                 self.imageUrlArray.add(imageDict)
                 self.convertedImagesUrlArray = self.imageUrlArray
                 
-                
                 assigmentImagePdf(ImageArry: [absoluteString])
                 
             }
         }
         else {
-            
             
             KRProgressHUD.dismiss()
             print("Unexpected empty result.")
@@ -1286,26 +1006,7 @@ func uploadPDFFileToAWS(pdfData : NSData){
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // upload Pdf in aws Part
-
 
 public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
     

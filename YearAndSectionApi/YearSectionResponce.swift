@@ -8,238 +8,34 @@
 import Foundation
 import ObjectMapper
 
+struct YearAndSectionListforAppModal: Codable {
 
-
-class YearAndSectionListforAppModal : Mappable{
-
-    
-
-    var idcollege : String!
-
-    var idcourse : String!
-
-    var clgprocessby : String!
-    
-    
-
-   
-
-    
-
-    
-
-    init(){}
-
-    
-
-    required init?(map: ObjectMapper.Map) {
-
-        mapping(map: map)
-
-    }
-
-    
-
-    func mapping(map: ObjectMapper.Map) {
-
-        
-
-       
-
-        idcollege <- map["idcollege"]
-
-        idcourse <- map["idcourse"]
-
-        clgprocessby <- map["clgprocessby"]
-        
-        
-
-        
-
-        
-
-    }
-
-    
-
-    
-
-    
-
-    
+    var idcollege: String?
+    var idcourse: String?
+    var clgprocessby: String?
 
 }
 
+struct YearAndSectionListforAppResponse: Codable {
 
-
-class YearAndSectionListforAppResponse : Mappable{
-
-    
-
-               
-
-    
-
-    
-
-    var Status : Int!
-
-    var Message : String!
-
-    var data : [YearAndSectionListData]!
-
-    
-
-    
-
-    
-
-    required init?(map: ObjectMapper.Map) {
-
-        mapping(map: map)
-
-    }
-
-    
-
-    func mapping(map: ObjectMapper.Map) {
-
-        
-
-        Status <- map ["Status"]
-
-        Message <- map ["Message"]
-
-        data <- map ["data"]
-
-        
-
-        
-
-    }
-
-    
-
-    
-
-    
+    var Status: Int?
+    var Message: String?
+    var data: [YearAndSectionListData]?
 
 }
 
+struct YearAndSectionListData: Codable {
 
-
-class YearAndSectionListData : Mappable{
-
-   
-
-         
-
-   
-
-    var yearid : Int!
-
-    var yearname : String!
-
-    var sectiondetails : [sectionDetailsData]!
-
-   
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    required init?(map: ObjectMapper.Map) {
-
-        mapping(map: map)
-
-    }
-
-    
-
-    func mapping(map: ObjectMapper.Map) {
-
-        yearid <- map ["yearid"]
-
-        yearname <- map ["yearname"]
-
-        sectiondetails <- map ["sectiondetails"]
-
-       
-
-    }
-
-    
-
-    
-
-    
+    var yearid: Int?
+    var yearname: String?
+    var sectiondetails: [sectionDetailsData]?
 
 }
 
+struct sectionDetailsData: Codable {
 
-
-
-
-
-
-
-
-class sectionDetailsData : Mappable{
-
-   
-
-          
-
-   
-    var isSelected : Bool!
-    var sectionid : Int!
-
-    var sectionname : String!
-
-   
-
-   
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    required init?(map: ObjectMapper.Map) {
-
-        mapping(map: map)
-
-    }
-
-    
-
-    func mapping(map: ObjectMapper.Map) {
-
-        sectionid <- map ["sectionid"]
-
-        sectionname <- map ["sectionname"]
-
-       
-
-       
-
-    }
-
-    
-
-    
-
-    
+    var sectionid: Int?
+    var sectionname: String?
+    var isSelected: Bool?
 
 }

@@ -80,8 +80,8 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     
     cell.SNNumberLbl.text = String(indexPath.row+1)
     cell.DateLbl.text = attend.attended_date
-    cell.attendanceHoursLbl.text = String(attend.attended_hour_no)
-    cell.attendanceabstHorslbl.text = String(attend.absent_hour_no)
+    cell.attendanceHoursLbl.text = String(attend.attended_hour_no ?? 0)
+    cell.attendanceabstHorslbl.text = String(attend.absent_hour_no ?? 0)
     
     return cell
 }
@@ -89,49 +89,46 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 50
 }
-func AttendanceDetails(){
     
-    
-    let AttendaceDetails = attenanceDetailsModal()
-    
-    AttendaceDetails.appid = 2
-    AttendaceDetails.priority = priority
-    AttendaceDetails.staffid = String(StaffId)
-    AttendaceDetails.subjectid = subjectId
-    AttendaceDetails.userid = Int(userId)
-    
-    
-    
-    let attendancestr = AttendaceDetails.toJSONString()
-    print("attendancestr \(attendancestr)")
-    
-    attendanceDetalReq.call_request(param: attendancestr!){ [self]
-        
-        (res) in
-        
-        
-        
-        let attendances : attendanceDetailResponce = Mapper<attendanceDetailResponce>().map(JSONString: res)!
-        
-        
-        if attendances.Status == 1 {
-            
-            
-            adttendaceDetailData = attendances.data
-            
-            tv.dataSource = self
-            tv.delegate = self
-            tv.reloadData()
-        }
-        
-        else{
-            
-            
-            
-        }
-        
-    }
-}
 
+    func AttendanceDetails(){
+        
+        var AttendaceDetails = attenanceDetailsModal()
+        
+        AttendaceDetails.appid = 2
+        AttendaceDetails.priority = priority
+        AttendaceDetails.staffid = String(StaffId)
+        AttendaceDetails.subjectid = subjectId
+        AttendaceDetails.userid = Int(userId)
+        
+        print("attendancestr \(AttendaceDetails)")
+        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetStudentWiseAttendanceDetails,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: AttendaceDetails
+        ) { [weak self] (result: Result<attendanceDetailResponce, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let attendances):
+                
+                if attendances.Status == 1 {
+                    
+                    self.adttendaceDetailData = attendances.data ?? []
+                    
+                    self.tv.dataSource = self
+                    self.tv.delegate = self
+                    self.tv.reloadData()
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 
 }

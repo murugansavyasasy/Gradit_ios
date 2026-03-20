@@ -6,82 +6,29 @@
 //
 
 import Foundation
-import ObjectMapper
 
+struct attenanceDetailsModal: Codable {
 
-class attenanceDetailsModal : Mappable{
-
-
-
-var userid : Int!
-var priority : String!
-var appid     : Int!
-var subjectid : Int!
-var staffid   : String!
-
-init(){}
-
-
-required init?(map: ObjectMapper.Map) {
-    mapping(map: map)
-}
-
-func mapping(map: ObjectMapper.Map) {
-    
-    userid <- map["userid"]
-    priority <- map["priority"]
-    appid <- map["appid"]
-    subjectid <- map["subjectid"]
-    staffid <- map["staffid"]
-    
-    
-}
+    var userid: Int?
+    var priority: String?
+    var appid: Int?
+    var subjectid: Int?
+    var staffid: String?
 
 }
 
+struct attendanceDetailResponce: Codable {
 
-class attendanceDetailResponce : Mappable{
-
-
-var Status : Int!
-var Message : String!
-var data : [attendanceDataDetails]!
-
-init(){}
-
-
-required init?(map: ObjectMapper.Map) {
-    mapping(map: map)
-}
-
-func mapping(map: ObjectMapper.Map) {
-    
-    
-    Status <- map["Status"]
-    
-    Message <- map["Message"]
-    data    <- map["data"]
-}
+    var Status: Int?
+    var Message: String?
+    var data: [attendanceDataDetails]?
 
 }
 
+struct attendanceDataDetails: Codable {
 
-class attendanceDataDetails : Mappable{
-
-var attended_hour_no : Int!
-var absent_hour_no  : Int!
-var attended_date   : String!
-
-
-required init?(map: ObjectMapper.Map) {
-    mapping(map: map)
-}
-
-func mapping(map: ObjectMapper.Map) {
-    
-    attended_hour_no <- map["attended_hour_no"]
-    absent_hour_no  <- map["absent_hour_no"]
-    attended_date   <- map["attended_date"]
-}
+    var attended_hour_no: Int?
+    var absent_hour_no: Int?
+    var attended_date: String?
 
 }

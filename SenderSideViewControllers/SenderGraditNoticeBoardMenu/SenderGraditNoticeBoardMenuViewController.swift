@@ -937,283 +937,200 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
         
     }
     
-    @IBAction func DepartdeleteVc(gesture : departmentNoticeDelete){
+    
+    @IBAction func DepartdeleteVc(gesture: departmentNoticeDelete) {
         
+        let refreshAlert = UIAlertController(
+            title: "Delete Notice",
+            message: "Once done can't be changed",
+            preferredStyle: .alert
+        )
         
-        
-        let refreshAlert = UIAlertController(title: "Delete Notice", message: "Once done can't be changed", preferredStyle: UIAlertController.Style.alert)
-        
-        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] _ in
             
-            
-            
-            let particularNotice = NoticeBoardPartiModal()
-            
+            var particularNotice = NoticeBoardPartiModal()
             
             particularNotice.noticeboardid = gesture.noticeBoardId
-            
-            
-            
             particularNotice.description = ""
-            
             particularNotice.receivertype = ""
-          
-            particularNotice.isstaff =  false
-            
+            particularNotice.isstaff = false
             particularNotice.isstudent = false
-            
             particularNotice.isparent = false
-            
             particularNotice.processtype = "delete"
             particularNotice.receiveridlist = ""
-            
             particularNotice.topic = ""
-            
             particularNotice.colgid = collegeId
-            
             particularNotice.staffid = memberId
-            
             particularNotice.callertype = ""
             
+            print("notweeeeeee", particularNotice)
             
-            
-            print("notweeeeeee",particularNotice)
-            
-            let particularStrs = particularNotice.toJSONString()
-            
-            print("noriceEnier",particularStrs)
-            NoticeParticularRequest.call_request(param: particularStrs!) {
+            APiCallManager.shared.callApi(
+                url: APIEndpoints.ManageNoticeBoard,
+                httpMethod: .post,
+                queryParam: nil,
+                requestBody: particularNotice
+            ) { [weak self] (result: Result<NoticePArticularResponce, Error>) in
                 
-                [self]  (res) in
+                guard let self = self else { return }
                 
-                
-                let particularss : [NoticePArticularResponce] = Mapper<NoticePArticularResponce>().mapArray(JSONString: res)!
-                
-                
-                for i in particularss{
+                switch result {
                     
-                    if i.Status == 1 {
+                case .success(let response):
                         
-                      
-                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        if response.Status == 1 {
                             
+                            let refreshAlert = UIAlertController(
+                                title: "",
+                                message: response.Message,
+                                preferredStyle: .alert
+                            )
                             
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                                
+                            })
                             
-                        }))
-                        
-                        
-                        
-                        
-                        present(refreshAlert, animated: true, completion: nil)
-                        
-                        
-                        
-                        
-                        departRefName()
-                        
-                        
-                    }else{
-                        
-                        
-                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                            self.present(refreshAlert, animated: true)
                             
+                            self.departRefName()
                             
+                        } else {
                             
-                        }))
-                        
-                        
-                        
-                        
-                        present(refreshAlert, animated: true, completion: nil)
-                        
-                        noticesBoardTableView.dataSource = self
-                        noticesBoardTableView.delegate = self
-                        noticesBoardTableView.reloadData()
-                    }
+                            let refreshAlert = UIAlertController(
+                                title: "",
+                                message: response.Message,
+                                preferredStyle: .alert
+                            )
+                            
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                                
+                            })
+                            
+                            self.present(refreshAlert, animated: true)
+                            
+                            self.noticesBoardTableView.dataSource = self
+                            self.noticesBoardTableView.delegate = self
+                            self.noticesBoardTableView.reloadData()
+                        }
                     
                     
+                case .failure(let error):
                     
+                    print("API Error:", error.localizedDescription)
                 }
-                
-                
-                
             }
-            
-            
         }))
         
-        refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { (action: UIAlertAction!) in
+        
+        refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { _ in
             print("Handle Cancel Logic here")
         }))
         
-        present(refreshAlert, animated: true, completion: nil)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        present(refreshAlert, animated: true)
     }
     
-    
-    
-    
-    @IBAction func ColleagedeleteVc(gesture : CollegeNoticeDelete){
+    @IBAction func ColleagedeleteVc(gesture: CollegeNoticeDelete) {
         
-        
-        //            particular.eventid.i
         print("notice")
-        //            particular.noticeboardid = "0"
         
+        let refreshAlert = UIAlertController(
+            title: "Delete Notice",
+            message: "Once done can't be changed",
+            preferredStyle: .alert
+        )
         
-        
-        
-        
-        
-        
-        let refreshAlert = UIAlertController(title: "Delete Notice", message: "Once done can't be changed", preferredStyle: UIAlertController.Style.alert)
-        
-        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] _ in
             
-            let particularNotice = NoticeBoardPartiModal()
-            
+            var particularNotice = NoticeBoardPartiModal()
             
             particularNotice.noticeboardid = gesture.noticeBoardId
-            
-            print("")
-            
             particularNotice.description = ""
-            
             particularNotice.receivertype = ""
-           
-            particularNotice.isstaff =  false
-            
+            particularNotice.isstaff = false
             particularNotice.isstudent = false
-            
             particularNotice.isparent = false
-            
             particularNotice.processtype = "delete"
             particularNotice.receiveridlist = ""
-            
             particularNotice.topic = ""
-            
             particularNotice.colgid = collegeId
-            
             particularNotice.staffid = memberId
-            
             particularNotice.callertype = ""
             
+            print("notweeeeeee", particularNotice)
             
-            
-            print("notweeeeeee",particularNotice)
-            
-            let particularStrs = particularNotice.toJSONString()
-            
-            print("noriceEnier",particularStrs)
-            NoticeParticularRequest.call_request(param: particularStrs!) {
+            APiCallManager.shared.callApi(
+                url: APIEndpoints.ManageNoticeBoard,
+                httpMethod: .post,
+                queryParam: nil,
+                requestBody: particularNotice
+            ) { [weak self] (result: Result<NoticePArticularResponce, Error>) in
                 
-                [self]  (res) in
+                guard let self = self else { return }
                 
-                
-                let particularss : [NoticePArticularResponce] = Mapper<NoticePArticularResponce>().mapArray(JSONString: res)!
-                
-                
-                for i in particularss{
+                switch result {
                     
-                    if i.Status == 1 {
+                case .success(let response):
                         
-                        
-                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        if response.Status == 1 {
                             
+                            let refreshAlert = UIAlertController(
+                                title: "",
+                                message: response.Message,
+                                preferredStyle: .alert
+                            )
                             
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                                
+                            })
                             
-                        }))
-                        
-                        
-                        
-                        
-                        present(refreshAlert, animated: true, completion: nil)
-                        
-                        
-                        
-                 
-                        collegeRefName()
-                        
-                    }else{
-                        
-                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                            self.present(refreshAlert, animated: true)
                             
+                            self.collegeRefName()
                             
+                        } else {
                             
-                        }))
-                        
-                        
-                        
-                        
-                        present(refreshAlert, animated: true, completion: nil)
-                        
-                        
-                        
-                        
-                        noticesBoardTableView.dataSource = self
-                        noticesBoardTableView.delegate = self
-                        noticesBoardTableView.reloadData()
-                    }
+                            let refreshAlert = UIAlertController(
+                                title: "",
+                                message: response.Message,
+                                preferredStyle: .alert
+                            )
+                            
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                                
+                            })
+                            
+                            self.present(refreshAlert, animated: true)
+                            
+                            self.noticesBoardTableView.dataSource = self
+                            self.noticesBoardTableView.delegate = self
+                            self.noticesBoardTableView.reloadData()
+                        }
                     
                     
+                case .failure(let error):
                     
+                    print("API Error:", error.localizedDescription)
                 }
-                
-                
-                
             }
-            
         }))
         
-        
-        refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { (action: UIAlertAction!) in
+        refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { _ in
             print("Handle Cancel Logic here")
         }))
         
-        present(refreshAlert, animated: true, completion: nil)
-        
-        
-        
-        
-        
-        
-        
-        
+        present(refreshAlert, animated: true)
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: Indentifiers, for: indexPath) as!
         
         SenderNoticeBoardTableViewCell
         
-        
         print("lmklkl")
         
         if noticeSegments.selectedSegmentIndex == 0{
-            
-            var notice : SenderNoticeBoardDepartmentDataDetails = departmentRef[indexPath.row]
-            
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
                 selectedCell = nil
@@ -1224,18 +1141,15 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
                 
                 selectedCell = indexPath
                 
-                if notice.isappread == "0"{
-                    apread(gesture : notice.noticedetailsid ?? "")
-                    notice.isappread = "1"
+                if departmentRef[indexPath.row].isappread == "0"{
+                    apread(gesture : departmentRef[indexPath.row].noticedetailsid ?? "")
+                    departmentRef[indexPath.row].isappread = "1"
                     cell.redImageView.isHidden = true
                     
                 }
                 
             }
         }else if noticeSegments.selectedSegmentIndex == 1{
-
-            var notice : SenderNoticeBoardCollegeDataDetails = collegeRef[indexPath.row]
-            
             
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
@@ -1247,23 +1161,20 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
                 
                 selectedCell = indexPath
                 
-                if notice.isappread == "0"{
-                    print("notice.noticedetailsid1222",notice.noticedetailsid)
-                    apread(gesture : notice.noticedetailsid ?? "")
+                if collegeRef[indexPath.row].isappread == "0"{
+                    print("notice.noticedetailsid1222",collegeRef[indexPath.row].noticedetailsid)
+                    apread(gesture : collegeRef[indexPath.row].noticedetailsid ?? "")
                     
-                    notice.isappread = "1"
+                    collegeRef[indexPath.row].isappread = "1"
                     cell.redImageView.isHidden = true
                     
                 }
             }
-            
         }
         
         noticesBoardTableView.beginUpdates()
         noticesBoardTableView.endUpdates()
         noticesBoardTableView.reloadData()
-        
-        
         
     }
     
@@ -1379,8 +1290,6 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
         college.appid    = "2"
         college.priority = priority
         college.type     =  "collegenotice"
-        
-        
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetNoticeListByType, httpMethod: .post, queryParam: nil, requestBody: college) { [weak self] (result:Result<SenderNoticeBoardCollegeResponce,Error>) in
             guard let self = self else{return}

@@ -242,50 +242,49 @@ override func viewDidLoad() {
     
 }
 
-func dashBoardList() {
     
-    let notification = NotificationModal()
-    notification.college_id = colgId
-    notification.member_id = memberId
-    
-    
-    let notificationStr = notification.toJSONString()
-    
-    NotificationRequest.call_request(param: notificationStr!) {
-        [self]
-        (res) in
+    func dashBoardList() {
         
+        var notification = NotificationModal()
+        notification.college_id = colgId
+        notification.member_id = memberId
         
+        print("notification request", notification)
         
-        
-        let notificationResponse : NotificationResponse = Mapper<NotificationResponse>().map(JSONString: res)!
-        
-        if notificationResponse.Status == 1{
-            noRecordLbl.isHidden = true
-            notificationDataList =  notificationResponse.data
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetNotificationForCollege,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: notification
+        ) { [weak self] (result: Result<NotificationResponse, Error>) in
             
-            tv.dataSource = self
-            tv.delegate = self
-            tv.reloadData()
+            guard let self = self else { return }
             
+            switch result {
+                
+            case .success(let notificationResponse):
+                
+                if notificationResponse.Status == 1{
+                    
+                    self.noRecordLbl.isHidden = true
+                    self.notificationDataList = notificationResponse.data ?? []
+                    
+                    self.tv.dataSource = self
+                    self.tv.delegate = self
+                    self.tv.reloadData()
+                }
+                
+                else{
+                    
+                    self.noRecordLbl.isHidden = false
+                    self.noRecordLbl.text = notificationResponse.Message
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
-        
-        else{
-            
-            noRecordLbl.isHidden = false
-            noRecordLbl.text = notificationResponse.Message
-            
-            
-            
-        }
-        
-        
-        
-        
     }
-    
-    
-}
 
 
 func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -301,9 +300,9 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     cell.contentLbl.text = notify.notification_content
     cell.titleLbl.text = notify.title
     
-    let datees = String(notify.sent_on.prefix(10))
-    print("uiiiiii",notify.sent_on)
-    let first = String(notify.sent_on.prefix(16))
+    let datees = String((notify.sent_on ?? "").prefix(10))
+    print("uiiiiii",notify.sent_on ?? "")
+    let first = String((notify.sent_on ?? "").prefix(16))
     let second = String(first.suffix(5))
     print("selll",second)
     

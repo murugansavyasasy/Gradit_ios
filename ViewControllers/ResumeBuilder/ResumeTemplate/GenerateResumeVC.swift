@@ -19,7 +19,7 @@ class GenerateResumeVC: UIViewController {
     var EducationDetail : [EducationalDetail]?
     var ProfileDetails: Profile?
     var SkillData: SkillProfile?
-    let context = ResumeContext()
+    var context = ResumeContext()
     
     var selectedLanguages: [String] = []
     var selectedSoftSkills: [String] = []
@@ -78,11 +78,11 @@ class GenerateResumeVC: UIViewController {
     @IBAction func NextAct(_ sender: Any) {
         print("selctedLanguage",selectedLanguages)
         print("softskill",selectedSoftSkills)
-        print("education",selectedEducation.toJSONString() ?? "")
-        print("internship",selectedInternships.toJSONString() ?? "")
+        print("education",selectedEducation)
+        print("internship",selectedInternships)
         print("skill",selectedSkills)
         print("areaofInterest",selectedAreaInterest)
-        print("Project",selectedProjects.toJSONString() ?? "")
+        print("Project",selectedProjects)
         GetContext()
         let vc = ResumetemplatesVC(nibName: nil, bundle: nil)
         vc.context = context

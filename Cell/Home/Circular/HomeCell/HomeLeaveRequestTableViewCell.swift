@@ -350,175 +350,135 @@
 
     }
 
+        
+        @IBAction func RejectVc(gesture: approveHome) {
 
+            print("RejectVcRejectVcRejectVcRejectVc")
 
-    @IBAction func RejectVc(gesture : approveHome){
+            let refreshAlert = UIAlertController(
+                title: "Reject Leave",
+                message: "Once Done can't be changed",
+                preferredStyle: .alert
+            )
 
-    print("RejectVcRejectVcRejectVcRejectVc")
+            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] _ in
 
-    let refreshAlert = UIAlertController(title: "Reject Leave", message: "Once Done can't be changed", preferredStyle: UIAlertController.Style.alert)
+                var leaveAprovel = mangaeLeaveModal()
 
-    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+                leaveAprovel.leaveid = String(gesture.Leaveid)
+                print("thidddsdsdcscx", gesture.Leaveid)
 
+                leaveAprovel.userid = userid
+                leaveAprovel.processtype = "2"
 
-    let leaveAprovel = mangaeLeaveModal()
+                print("leaveApprovestr", leaveAprovel)
 
-    leaveAprovel.leaveid = String(gesture.Leaveid)
+                APiCallManager.shared.callApi(
+                    url: APIEndpoints.ManageLeaveRequest,
+                    httpMethod: .post,
+                    queryParam: nil,
+                    requestBody: leaveAprovel
+                ) { (result: Result<manageLeaveResponces, Error>) in
 
-    print("thidddsdsdcscx",gesture.Leaveid)
-    leaveAprovel.userid = userid
-    leaveAprovel.processtype = "2"
+                    switch result {
 
+                    case .success(let addApis):
 
+                        let refreshAlert = UIAlertController(
+                            title: "",
+                            message: addApis.Message,
+                            preferredStyle: .alert
+                        )
 
-    let leaveApprovestr = leaveAprovel.toJSONString()
+                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
 
-    print("leaveApprovestr",leaveApprovestr)
-    manageLeaveRequests.call_request(param: leaveApprovestr!){ [self]
+                        self.mainPresent!.present(refreshAlert, animated: true)
 
-    (res) in
+                    case .failure(let error):
+                        print("API Error:", error.localizedDescription)
+                    }
+                }
 
+            }))
 
+            refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { _ in
+                print("Handle Cancel Logic here")
+            }))
 
-    let addApis : manageLeaveResponces = Mapper<manageLeaveResponces>().map(JSONString: res)!
+            mainPresent!.present(refreshAlert, animated: true)
+        }
 
 
-    if addApis.Status == 1{
 
+        @IBAction func approveVc(gesture: approveHome) {
 
-    let refreshAlert = UIAlertController(title: "", message: addApis.Message, preferredStyle: UIAlertController.Style.alert)
+            let refreshAlert = UIAlertController(
+                title: "Approved Leave",
+                message: "Once Done can't be changed",
+                preferredStyle: .alert
+            )
 
-    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-    //                                        
-    //                                    
-    //                                        
-    }))
-    //                                    
-    //                                   
-    mainPresent!.present(refreshAlert, animated: true, completion: nil)
+            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] _ in
 
-    }
+                var leaveAprovel = mangaeLeaveModal()
 
-    else{
+                leaveAprovel.leaveid = String(gesture.Leaveid)
+                print("thidddsdsdcscx", gesture.Leaveid)
 
+                leaveAprovel.userid = userid
+                leaveAprovel.processtype = "1"
 
+                print("leaveApprovestr", leaveAprovel)
 
-    let refreshAlert = UIAlertController(title: "", message: addApis.Message, preferredStyle: UIAlertController.Style.alert)
+                APiCallManager.shared.callApi(
+                    url: APIEndpoints.ManageLeaveRequest,
+                    httpMethod: .post,
+                    queryParam: nil,
+                    requestBody: leaveAprovel
+                ) { (result: Result<manageLeaveResponces, Error>) in
 
-    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                    switch result {
 
+                    case .success(let addApis):
 
+                        if addApis.Status == 1 {
 
-    }))
+                            let refreshAlert = UIAlertController(
+                                title: "",
+                                message: addApis.Message,
+                                preferredStyle: .alert
+                            )
 
-    //                                   
-    mainPresent!.present(refreshAlert, animated: true, completion: nil)
-    }
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
 
+                            mainPresent!.present(refreshAlert, animated: true)
 
-    }
+                        } else {
 
-    }))
+                            let refreshAlert = UIAlertController(
+                                title: "",
+                                message: addApis.Message,
+                                preferredStyle: .alert
+                            )
 
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
 
-    refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { (action: UIAlertAction!) in
-    print("Handle Cancel Logic here")
-    }))
+                            mainPresent!.present(refreshAlert, animated: true)
+                        }
 
-    mainPresent!.present(refreshAlert, animated: true, completion: nil)
+                    case .failure(let error):
+                        print("API Error:", error.localizedDescription)
+                    }
+                }
 
+            }))
 
+            refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { _ in
+                print("Handle Cancel Logic here")
+            }))
 
-    }
-
-
-
-    @IBAction func approveVc(gesture : approveHome){
-
-
-    let refreshAlert = UIAlertController(title: "Approved Leave", message: "Once Done can't be changed", preferredStyle: UIAlertController.Style.alert)
-
-    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-
-
-    let leaveAprovel = mangaeLeaveModal()
-
-    leaveAprovel.leaveid = String(gesture.Leaveid)
-
-    print("thidddsdsdcscx",gesture.Leaveid)
-    leaveAprovel.userid = userid
-    leaveAprovel.processtype = "1"
-
-
-
-    let leaveApprovestr = leaveAprovel.toJSONString()
-
-    print("leaveApprovestr",leaveApprovestr)
-    manageLeaveRequests.call_request(param: leaveApprovestr!){ [self]
-
-    (res) in
-
-
-
-    let addApis : manageLeaveResponces = Mapper<manageLeaveResponces>().map(JSONString: res)!
-
-
-    if addApis.Status == 1{
-
-
-
-    let refreshAlert = UIAlertController(title: "", message: addApis.Message, preferredStyle: UIAlertController.Style.alert)
-
-    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-
-
-
-    }))
-
-
-    mainPresent!.present(refreshAlert, animated: true, completion: nil)
-
-
-
-    }
-
-    else{
-
-
-    let refreshAlert = UIAlertController(title: "", message: addApis.Message, preferredStyle: UIAlertController.Style.alert)
-
-    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-
-
-
-    }))
-
-
-
-    }
-
-
-    }
-
-
-    }))
-
-
-    refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { (action: UIAlertAction!) in
-    print("Handle Cancel Logic here")
-    }))
-
-    mainPresent!.present(refreshAlert, animated: true, completion: nil)
-
-
-
-
-
-
-    }
-
-
-
+            mainPresent!.present(refreshAlert, animated: true)
+        }
     }
 
 

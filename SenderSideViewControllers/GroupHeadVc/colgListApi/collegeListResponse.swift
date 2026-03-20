@@ -9,79 +9,23 @@ import Foundation
 
 import ObjectMapper
 
-
-
-class clgListModals : Mappable{
+struct clgListModals : Codable{
     
-    var college_id : Int!
-    var user_id : String!
-    var priority : String!
-    
-    
-    init(){}
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        college_id <- map["college_id"]
-        user_id <- map["user_id"]
-        priority <- map["priority"]
-        
-    }
-    
-    
-    
-    
-    
+    var college_id : Int?
+    var user_id : String?
+    var priority : String?
 }
 
-
-class clgListResponce : Mappable {
+struct clgListResponce : Codable {
     
-    var Status : Int!
-    var Message : String!
-    var data : [clgListDataDetails]!
-    
-  
-   
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        Status <- map["Status"]
-        Message <- map["Message"]
-        data <- map["data"]
-    }
-    
-    
-    
-    
-    
+    var Status : Int?
+    var Message : String?
+    var data : [clgListDataDetails]?
 }
 
-
-class clgListDataDetails : Mappable{
+struct clgListDataDetails : Codable{
     
-    var college_id : Int!
-    var college_name : String!
-    var isSelected : Bool!
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        college_id <- map["college_id"]
-        college_name <- map["college_name"]
-    }
-    
-    
-    
-    
-    
-    
+    var college_id : Int?
+    var college_name : String?
+    var isSelected : Bool?
 }

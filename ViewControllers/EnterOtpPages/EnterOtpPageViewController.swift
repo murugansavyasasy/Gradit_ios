@@ -154,107 +154,93 @@ return false
 
 
 }
-func verifyOtp (){
-
-
-
-let verify = recentOTPModal()
-
-verify.mobilenumber = mobileNumber
-verify.otp = enterOtpTextField.text
-
-
-
-let verifyStr = verify.toJSONString()
-
-verifyOTPRequest.call_request(param: verifyStr!){ [self]
-
-(res) in
-
-
-let forgetResponse : recentOTPResponce =
-Mapper<recentOTPResponce>().map(JSONString: res)!
-
-if forgetResponse.Status == 1 {
-
-
-let vc = VerifyOtpViewController(nibName: nil, bundle: nil)
-vc.mobileNumber = mobileNumber
-vc.modalPresentationStyle = .fullScreen
-present(vc, animated: true,completion: nil)
-
-}
-
-
-else {
-
-
-let refreshAlert = UIAlertController(title: "", message: forgetResponse.Message, preferredStyle: UIAlertController.Style.alert)
-
-refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
     
+    func verifyOtp (){
+        
+        var verify = recentOTPModal()
+        
+        verify.mobilenumber = mobileNumber
+        verify.otp = enterOtpTextField.text
+        
+        print("verify request", verify)
+        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.VerifyOTP,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: verify
+        ) { [weak self] (result: Result<recentOTPResponce, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let forgetResponse):
+                
+                if forgetResponse.Status == 1 {
+                    
+                    let vc = VerifyOtpViewController(nibName: nil, bundle: nil)
+                    vc.mobileNumber = mobileNumber
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true, completion: nil)
+                    
+                }
+                else {
+                    
+                    let refreshAlert = UIAlertController(title: "", message: forgetResponse.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                    }))
+                    
+                    self.present(refreshAlert, animated: true, completion: nil)
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
     
-}))
-
-
-present(refreshAlert, animated: true, completion: nil)
-
-
-
-
-}
-}
-
-
-}
-
-func forget(){
-
-
-let forgets =  forgetModal  ()
-forgets.mobilenumber = mobileNumber
-
-
-
-let forgetStr = forgets.toJSONString()
-
-forgetRequest.call_request(param: forgetStr!){ [self]
-
-(res) in
-
-
-let forgetResponse : forgetResponce =
-Mapper<forgetResponce>().map(JSONString: res)!
-
-if forgetResponse.Status == 1 {
-
-
-forArr = forgetResponse.data
-
-
-}
-
-else {
-
-
-let refreshAlert = UIAlertController(title: "", message: forgetResponse.Message, preferredStyle: UIAlertController.Style.alert)
-
-refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-    
-    
-}))
-
-
-present(refreshAlert, animated: true, completion: nil)
-
-
-}
-
-}
-
-
-
-
-}
-
+    func forget(){
+        
+        var forgets = forgetModal()
+        forgets.mobilenumber = mobileNumber
+        
+        print("forget request", forgets)
+        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.forgetpassword,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: forgets
+        ) { [weak self] (result: Result<forgetResponce, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let forgetResponse):
+                
+                if forgetResponse.Status == 1 {
+                    
+                    self.forArr = forgetResponse.data ?? []
+                }
+                
+                else {
+                    
+                    let refreshAlert = UIAlertController(title: "", message: forgetResponse.Message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                    }))
+                    
+                    self.present(refreshAlert, animated: true, completion: nil)
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 }

@@ -306,149 +306,147 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
         }
     }
     
-    
     @IBAction func open_url(){
         
-        let faculDrops = dropDownModal()
+        var faculDrops = dropDownModal()
         
         faculDrops.yearid = yearid
         
-        let faculStr = faculDrops.toJSONString()
-        
-        facultyDropDownRequest.call_request(param: faculStr!){ [self]
-            (res) in
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.semesterandsectionListforApp,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: faculDrops
+        ) { [weak self] (result: Result<dropDownResponce, Error>) in
             
-            let facultyResp : dropDownResponce =
-            Mapper<dropDownResponce>().map(JSONString: res)!
+            guard let self = self else { return }
             
-            
-            if facultyResp.Status == 1{
+            switch result {
                 
-                facultyDropDownRef = facultyResp.data
+            case .success(let facultyResp):
                 
-                for i in  facultyResp.data{
+                if facultyResp.Status == 1{
                     
+                    self.facultyDropDownRef = facultyResp.data ?? []
                     
-                    
-                    facultyssss = i.sectiondetails
-                }
-                
-                var myArray: [String] = [ ]
-                var idArry : [String] = []
-                var semId : [String] = []
-                var sectionids : [String] = []
-                
-                facultyDropDownRef.forEach {(arrType)  in
-                    myArray.append((arrType.semestername))
-                    //
-                    //
-                }
-                
-                
-                
-                facultyLabel.text = "--Selected Category--"
-                dropDown.anchorView = facultyDropDownView
-                dropDown.dataSource = myArray
-                
-                dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-                dropDown.direction = .top
-                DropDown.appearance().backgroundColor = UIColor.white
-                dropDown.show()
-                
-                
-                
-                dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-                    print("Selected item: \(item) at index: \(index)")
-                    print("myArray",myArray)
-                    
-                    
-                    self.facultyLabel.text = item
-                    
-                    
-                    
-                    facultyResp.data.forEach {(arrType)  in
+                    for i in facultyResp.data ?? []{
                         
-                        
-                        for i in arrType.sectiondetails{
-                            
-                            
-                            if item  ==  arrType.semestername{
-                                semId.append(arrType.clgsemesterid)
-                                idArry.append(i.sectionname)
-                                sectionids.append(i.sectionid)
-                            }
-                        }
+                        self.facultyssss = i.sectiondetails ?? []
                     }
                     
-                    print("idArry",idArry.count)
+                    var myArray: [String] = [ ]
+                    var idArry : [String] = []
+                    var semId : [String] = []
+                    var sectionids : [String] = []
+                    
+                    self.facultyDropDownRef.forEach {(arrType)  in
+                        myArray.append((arrType.semestername ?? ""))
+                    }
                     
                     
-                    sectionDropDownLabel.text = "--Selected Category--"
-                    dropDown.anchorView = sectionNameDropDown
-                    dropDown.dataSource = idArry
+                    self.facultyLabel.text = "--Selected Category--"
+                    self.dropDown.anchorView = self.facultyDropDownView
+                    self.dropDown.dataSource = myArray
                     
-                    dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-                    dropDown.direction = .top
+                    self.dropDown.bottomOffset = CGPoint(x: 0, y:(self.dropDown.anchorView?.plainView.bounds.height)!)
+                    self.dropDown.direction = .top
                     DropDown.appearance().backgroundColor = UIColor.white
+                    self.dropDown.show()
                     
-                    dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+                    
+                    self.dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
                         print("Selected item: \(item) at index: \(index)")
                         print("myArray",myArray)
                         
+                        self.facultyLabel.text = item
                         
-                        
-                        self.sectionDropDownLabel.text = item
-                        
-                        let faculty = facultyModal()
-                        
-                        faculty.userid = memberId
-                        faculty.Appid = "2"
-                        faculty.priority = priority
-                        
-                        
-                        faculty.sectionid = sectionids[index]
-                        
-                        faculty.semesterid = semId[index]
-                        
-                        
-                        
-                        let faculStr = faculty.toJSONString()
-                        
-                        print("jjj",faculStr)
-                        
-                        facultyRequest.call_request(param: faculStr!){ [self]
-                            (res) in
+                        facultyResp.data?.forEach {(arrType)  in
                             
-                            let facultyResp : facultyResponce =
-                            Mapper<facultyResponce>().map(JSONString: res)!
+                            for i in arrType.sectiondetails ?? []{
+                                
+                                if item  ==  arrType.semestername{
+                                    semId.append(arrType.clgsemesterid ?? "")
+                                    idArry.append(i.sectionname ?? "")
+                                    sectionids.append(i.sectionid ?? "")
+                                }
+                            }
+                        }
+                        
+                        print("idArry",idArry.count)
+                        
+                        
+                        self.sectionDropDownLabel.text = "--Selected Category--"
+                        self.dropDown.anchorView = self.sectionNameDropDown
+                        self.dropDown.dataSource = idArry
+                        
+                        self.dropDown.bottomOffset = CGPoint(x: 0, y:(self.dropDown.anchorView?.plainView.bounds.height)!)
+                        self.dropDown.direction = .top
+                        DropDown.appearance().backgroundColor = UIColor.white
+                        
+                        self.dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+                            print("Selected item: \(item) at index: \(index)")
+                            print("myArray",myArray)
                             
-                            if facultyResp.Status == 1{
+                            self.sectionDropDownLabel.text = item
+                            
+                            var faculty = facultyModal()
+                            
+                            faculty.userid = self.memberId
+                            faculty.Appid = "2"
+                            faculty.priority = self.priority
+                            
+                            faculty.sectionid = sectionids[index]
+                            
+                            faculty.semesterid = semId[index]
+                            
+                            print("jjj",faculty)
+                            
+                            APiCallManager.shared.callApi(
+                                url: APIEndpoints.FacultyList,
+                                httpMethod: .post,
+                                queryParam: nil,
+                                requestBody: faculty
+                            ) { [weak self] (result: Result<facultyResponce, Error>) in
                                 
-                                facultyRef = facultyResp.data
+                                guard let self = self else { return }
                                 
-                                noDataLabel.isHidden = true
-                                noDataTextView.isHidden = true
-                                facultyTabelViews.isHidden = false
-                                facultyTabelViews .delegate = self
-                                facultyTabelViews.dataSource = self
-                                facultyTabelViews.reloadData()
-                                
-                            } else{
-                                
-                                
-                                noDataLabel.isHidden = false
-                                noDataTextView.isHidden = false
-                                facultyTabelViews.isHidden = true
-                                noDataLabel.text = facultyResp.Message
-                                
-                                facultyTabelViews .delegate = self
-                                facultyTabelViews.dataSource = self
-                                facultyTabelViews.reloadData()
-                                
+                                switch result {
+                                    
+                                case .success(let facultyResp):
+                                    
+                                    if facultyResp.Status == 1{
+                                        
+                                        self.facultyRef = facultyResp.data ?? []
+                                        
+                                        self.noDataLabel.isHidden = true
+                                        self.noDataTextView.isHidden = true
+                                        self.facultyTabelViews.isHidden = false
+                                        self.facultyTabelViews.delegate = self
+                                        self.facultyTabelViews.dataSource = self
+                                        self.facultyTabelViews.reloadData()
+                                        
+                                    } else{
+                                        
+                                        self.noDataLabel.isHidden = false
+                                        self.noDataTextView.isHidden = false
+                                        self.facultyTabelViews.isHidden = true
+                                        self.noDataLabel.text = facultyResp.Message
+                                        
+                                        self.facultyTabelViews.delegate = self
+                                        self.facultyTabelViews.dataSource = self
+                                        self.facultyTabelViews.reloadData()
+                                    }
+                                    
+                                case .failure(let error):
+                                    print(error.localizedDescription)
+                                }
                             }
                         }
                     }
                 }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
     }
@@ -526,7 +524,7 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
             
             
             
-            cell.imageProfileView.sd_setImage(with: URL(string:  faculty.facultyphoto), placeholderImage: UIImage(named: "person.fill"))
+            cell.imageProfileView.sd_setImage(with: URL(string:  faculty.facultyphoto ?? ""), placeholderImage: UIImage(named: "person.fill"))
             
         }
         

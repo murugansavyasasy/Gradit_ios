@@ -395,158 +395,160 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
     
     @IBAction func DropDwonVc() {
         
-        
-        
-        let devisions = getDivisionModal()
+        var devisions = getDivisionModal()
         
         devisions.college_id = colgId
         devisions.user_id =  memberId
         
-        let devisionstr = devisions.toJSONString()
-        
-        
-        DivisionRequest.call_request(param: devisionstr!){ [self]
+        APiCallManager.shared.callApi(
+                url: APIEndpoints.GetDivisions,
+                httpMethod: .post,
+                queryParam: nil,
+                requestBody: devisions
+        ) {[weak self] (result:Result<GetDivisionResponce, Error>) in
             
-            (res) in
+            guard let self = self else { return }
             
-            
-            
-            let devisin : GetDivisionResponce  = Mapper<GetDivisionResponce>().map(JSONString: res)!
-            
-            devisionRefName = devisin.data
-            
-            var myArray: [String] = []
-            var myArrayId: [String] = [ ]
-            
-            devisionRefName.forEach {(arrType)  in
-                myArray.append((arrType.division_name))
-                myArrayId.append((arrType.division_id))
+            switch result {
+            case .success(let success):
                 
-            }
-            print("frdfd",myArray)
-            
-            dropDown.dataSource = myArray//4
-            
-            dropDown.anchorView = selectDivisionDropDown //5
-            
-            dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-            
-            dropDown.direction = .bottom
-            DropDown.appearance().backgroundColor = UIColor.white
-            dropDown.show() //7
-            
-            var idArray : [String] = []
-            devisionRefName.forEach {(arrType)  in
-                idArray.append((arrType.division_id))
+                devisionRefName = success.data ?? []
                 
-            }
-            
-            dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-                print("Selected item: \(item) at index: \(index)")
+                var myArray: [String] = []
+                var myArrayId: [String] = [ ]
                 
-                self.divisionDropDownLabel.text = item
-                
-                print("dropDownTextLabel.text\(item)")
-                let deparment = DepartmentModal()
-                
-                deparment.user_id = memberId
-                
-                deparment.college_id = colgId
-                
-                deparment.div_id =  idArray[index]
-                
-                courseTypeId = idArray[index]
-                
-                print("idArray[index]\(idArray[index])")
-                
-                
-                
-                let deparmentstr = deparment.toJSONString()
-                RepienceDeparmentRequest.call_request(param: deparmentstr!){ [self]
-                    
-                    (res) in
-                    
-                    
-                    
-                    let depart : RepienceDeparmentResponce  = Mapper<RepienceDeparmentResponce>().map(JSONString: res)!
-                    
-                    deparmentRefName = depart.data
-                    
-                    var isArray : [String] = []
-                    var deparment : [String] = []
-                    deparmentRefName.forEach {(arrType)  in
-                        isArray.append((arrType.department_name))
-                        deparment.append((arrType.department_id))
-                    }
-                    dropDown.dataSource = isArray
-                    dropDown.anchorView = selectCourseDropDown //5
-                    
-                    dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-                    
-                    dropDown.direction = .bottom
-                    DropDown.appearance().backgroundColor = UIColor.white
-                    dropDown.show()
-                    
-                    
-                    dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-                        print("Selected item: \(item) at index: \(index)")
-                        
-                        print("fevdwsxfcdxs",item)
-                        self.courseDropDownLabel.text = item
-                        
-                        let faculty = FacultyListSenderApp()
-                        
-                        faculty.userid = memberId
-                        faculty.appid = "2"
-                        faculty.priority = priority
-                        faculty.deptid =   deparment[index]
-                        faculty.courseid =  idArray[index]
-                        
-                        
-                        let faculStr = faculty.toJSONString()
-                        
-                        facultySenderRequest.call_request(param: faculStr!){ [self]
-                            (res) in
-                            
-                            let facultyResp : FacultyResponce =
-                            Mapper<FacultyResponce>().map(JSONString: res)!
-                            
-                            if facultyResp.Status == 1{
-                                
-                                facultyForSenderRef = facultyResp.data
-                                
-                                noDataTextView.alpha = 0
-                                noDataLabel.alpha = 0
-                                
-                                tv .delegate = self
-                                tv.dataSource = self
-                                tv.reloadData()
-                            } else{
-                                noDataTextView.alpha = 1
-                                noDataLabel.alpha = 1
-                                noDataTextView.isHidden = false
-                                
-                                
-                                
-                            }
-                            
-                            
-                        }
-                        
-                        
-                        
-                        
-                    }
+                devisionRefName.forEach {(arrType)  in
+                    myArray.append((arrType.division_name ?? ""))
+                    myArrayId.append((arrType.division_id ?? ""))
                     
                 }
-               
+                print("frdfd",myArray)
+                
+                dropDown.dataSource = myArray//4
+                
+                dropDown.anchorView = selectDivisionDropDown //5
+                
+                dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
+                
+                dropDown.direction = .bottom
+                DropDown.appearance().backgroundColor = UIColor.white
+                dropDown.show() //7
+                
+                var idArray : [String] = []
+                devisionRefName.forEach {(arrType)  in
+                    idArray.append((arrType.division_id ?? ""))
+                    
+                }
+                
+                dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
+                    print("Selected item: \(item) at index: \(index)")
+                    
+                    self.divisionDropDownLabel.text = item
+                    
+                    print("dropDownTextLabel.text\(item)")
+                    var deparment = DepartmentModal()
+                    
+                    deparment.user_id = self.memberId
+                    deparment.college_id = self.colgId
+                    deparment.div_id =  idArray[index]
+                    self.courseTypeId = idArray[index]
+                    
+                    print("idArray[index]\(idArray[index])")
+                    
+                    APiCallManager.shared.callApi(
+                            url: APIEndpoints.GetDepartmentsbyDivision,
+                            httpMethod: .post,
+                            queryParam: nil,
+                            requestBody: deparment
+                        ) {[weak self] (result:Result<RepienceDeparmentResponce, Error>) in
+                                
+                            guard let self = self else { return }
+                            
+                            switch result {
+                            case .success(let success):
+                                
+                                self.deparmentRefName = success.data ?? []
+                                
+                                var isArray : [String] = []
+                                var deparment : [String] = []
+                                self.deparmentRefName.forEach {(arrType)  in
+                                    isArray.append((arrType.department_name ?? ""))
+                                    deparment.append((arrType.department_id ?? ""))
+                                }
+                                self.dropDown.dataSource = isArray
+                                self.dropDown.anchorView = self.selectCourseDropDown //5
+                                
+                                self.dropDown.bottomOffset = CGPoint(x: 0, y:(self.dropDown.anchorView?.plainView.bounds.height)!)
+                                
+                                self.dropDown.direction = .bottom
+                                DropDown.appearance().backgroundColor = UIColor.white
+                                self.dropDown.show()
+                                
+                                
+                                self.dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
+                                    print("Selected item: \(item) at index: \(index)")
+                                    
+                                    print("fevdwsxfcdxs",item)
+                                    self.courseDropDownLabel.text = item
+                                    
+                                    var faculty = FacultyListSenderApp()
+                                    
+                                    faculty.userid = self.memberId
+                                    faculty.appid = "2"
+                                    faculty.priority = self.priority
+                                    faculty.deptid =   deparment[index]
+                                    faculty.courseid =  idArray[index]
+                                    
+                                    
+                                    APiCallManager.shared.callApi(
+                                        url: APIEndpoints.FacultyListforPrincipalLoginSenderApp,
+                                        httpMethod: .post,
+                                        queryParam: nil,
+                                        requestBody: faculty
+                                    ) { [weak self] (result: Result<FacultyResponce, Error>) in
+                                        
+                                        guard let self = self else { return }
+                                        
+                                        switch result {
+                                            
+                                        case .success(let facultyResp):
+                                            
+                                            if facultyResp.Status == 1{
+                                                
+                                                self.facultyForSenderRef = facultyResp.data ?? []
+                                                
+                                                self.noDataTextView.alpha = 0
+                                                self.noDataLabel.alpha = 0
+                                                
+                                                self.tv.delegate = self
+                                                self.tv.dataSource = self
+                                                self.tv.reloadData()
+                                                
+                                            } else{
+                                                
+                                                self.noDataTextView.alpha = 1
+                                                self.noDataLabel.alpha = 1
+                                                self.noDataTextView.isHidden = false
+                                                
+                                            }
+                                            
+                                        case .failure(let error):
+                                            print(error.localizedDescription)
+                                        }
+                                    }
+                                }
+                            case .failure(let failure):
+                                 print("Error:",failure.localizedDescription)
+                            }
+                            
+                            }
+                }
+                
+            case .failure(let failure):
+                print("Error:",failure.localizedDescription)
             }
-          
-            
             
         }
-        
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -605,7 +607,7 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
                 
                 
                 
-                cell.imageProfileView.sd_setImage(with: URL(string:  faculty.facultyphoto), placeholderImage: UIImage(named: "person.fill"))
+                cell.imageProfileView.sd_setImage(with: URL(string:  faculty.facultyphoto ?? ""), placeholderImage: UIImage(named: "person.fill"))
                 
                 
                 
@@ -642,7 +644,7 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
             else{
                 
           
-                cell.imageProfileView.sd_setImage(with: URL(string:  hodAndStaff.facultyphoto), placeholderImage: UIImage(named: "person.fill"))
+                cell.imageProfileView.sd_setImage(with: URL(string:  hodAndStaff.facultyphoto ?? ""), placeholderImage: UIImage(named: "person.fill"))
                 
                 
                 
@@ -686,9 +688,7 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
             
             else{
                 
-                
-                
-                cell.imageProfileView.sd_setImage(with: URL(string:  hodAndStaff.facultyphoto), placeholderImage: UIImage(named: "person.fill"))
+                cell.imageProfileView.sd_setImage(with: URL(string:  hodAndStaff.facultyphoto ?? ""), placeholderImage: UIImage(named: "person.fill"))
                 
                 
                 
@@ -718,55 +718,57 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
         present(vc, animated: true,completion: nil)
     }
     
-    
     func getStaffHodList() {
-   
-        let staffHod = StaffHodFacultyModal()
+
+        var staffHod = StaffHodFacultyModal()
         
         staffHod.userid = Int(memberId)
-        
         staffHod.appid = 2
-        
         staffHod.priority = priority
-        
         staffHod.deptid = departmentId
         
+        print("staffHodRequest", staffHod)
         
-        let staffHodStr = staffHod.toJSONString()
- 
-        StaffHodFacultyRequest.call_request(param: staffHodStr!) { [self]
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.FacultyListForSenderApp ,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: staffHod
+        ) { [weak self] (result: Result<StaffHodFacultyResponse, Error>) in
             
-            (res) in
-      
-            let staffHodRess : StaffHodFacultyResponse = Mapper<StaffHodFacultyResponse>().map(JSONString: res)!
+            guard let self = self else { return }
             
-            hodAndTeachingRef = staffHodRess.data
-            
-            if staffHodRess.Status == 1 {
+            switch result {
                 
+            case .success(let staffHodRess):
                 
-                noDataTextView.isHidden = true
+                self.hodAndTeachingRef = staffHodRess.data ?? []
                 
-                tv.delegate = self
-                tv.dataSource = self
-                tv.reloadData()
+                if staffHodRess.Status == 1 {
+                    
+                    self.noDataTextView.isHidden = true
+                    
+                    self.tv.delegate = self
+                    self.tv.dataSource = self
+                    self.tv.reloadData()
+                    
+                    print("staffHodRess", staffHodRess)
+                    
+                } else {
+                    
+                    self.noDataTextView.isHidden = false
+                    self.noDataLabel.text = staffHodRess.Message
+                    
+                    self.tv.delegate = self
+                    self.tv.dataSource = self
+                    self.tv.reloadData()
+                }
                 
-                
-                print("staffHodRess",res)
-                
-            }
-            
-            else {
-                
-                noDataTextView.isHidden = false
-                noDataLabel.text = staffHodRess.Message
-                tv.delegate = self
-                tv.dataSource = self
-                tv.reloadData()
+            case .failure(let error):
+                print("API Error:", error.localizedDescription)
             }
         }
     }
-    
     
     func addApi(){
         

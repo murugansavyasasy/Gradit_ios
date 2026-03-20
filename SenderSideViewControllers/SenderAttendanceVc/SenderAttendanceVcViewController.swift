@@ -449,19 +449,18 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
             case .success(let success):
                 
                 LeaveRefName = success.data ?? []
-                if success.Status == 1 {
-                    attendaneLblCount.text = String(LeaveRefName.count)
-                    noDataLabel.isHidden = true
-                }else{
-                    noDataLabel.isHidden = false
-                    noDataLabel.text = success.Message
+                attendaneLblCount.text = String(LeaveRefName.count)
+                if segmentName.selectedSegmentIndex == 1 {
+                    noDataLabel.isHidden = !LeaveRefName.isEmpty
                 }
-                
+                noDataLabel.text = success.Message
                 Tv.reloadData()
                 
             case .failure(let failure):
                 LeaveRefName = []
-                noDataLabel.isHidden = false
+                if segmentName.selectedSegmentIndex == 1 {
+                    noDataLabel.isHidden = false
+                }
                 noDataLabel.text = failure.localizedDescription
                 Tv.reloadData()
             }
@@ -521,90 +520,72 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
     
     func subject(){
         
-        print(" attendanceTV.isHidden",attendanceTV.isHidden)
+        print("attendanceTV.isHidden",attendanceTV.isHidden)
         
         
-        let subj = ParticularStaffModal()
+        var subj = ParticularStaffModal()
         
         subj.collegeid = collegeid
         subj.staffid = userid
         subj.date = datessString
-        let subjectstr = subj.toJSONString()
-        ParticularStaffRequest.call_request(param: subjectstr!){ [self]
-            
-            (res) in
-            
-            let subje : particularStaffResponce  = Mapper<particularStaffResponce>().map(JSONString: res)!
-            
-            
-            
-            
-            //
-            
-            if subje.Status == 1 {
-                
-                
-                ParticalStaffRef = subje.data
-                
-                
-                var counts = String(subje.data.count)
-                
-                
-                
-                attendaceCountLbl.text = counts
-                
-                
-                calendarImgView.isHidden = true
-                
-                
-                
-                if self.calendarHeight.constant == 350 {
-                    self.calendarHeight.constant = 127
-                    
-                    calendarImgView.isHidden = true
-                    self.clanderView.scope = .week
-                    
-                    
-                }
-                
-                
-                
-                attendanceTV.isHidden = false
-                attendanceTV.reloadData()
-                
-                
-                
-            }
-            
-            
-            else{
-                print("12calendarHeight.constant")
-                attendanceTV.isHidden = true
-                attendaceCountLbl.text = "0"
-                if calendarHeight.constant == 127.08333333333334 {
-                    
-                    calendarImgView.isHidden = false
-                    self.clanderView.scope = .week
-                    
-                }
-                
-                calendarImgView.isHidden = false
-                
-                if self.calendarHeight.constant == 350 {
-                    self.calendarHeight.constant = 127
-                    
-                    calendarImgView.isHidden = false
-                    self.clanderView.scope = .week
-                    
-                    
-                }
-                
-            }
-            
-            
-            
-        }
         
+        APiCallManager.shared.callApi(
+                url: APIEndpoints.GetAttendanceClassListForStaff,
+                httpMethod: .post,
+                queryParam: nil,
+                requestBody: subj
+            ) {[weak self] (result:Result<particularStaffResponce, Error>) in
+                    
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let success):
+                    
+                    if success.Status == 1 {
+                        
+                        ParticalStaffRef = success.data ?? []
+                        
+                        var counts = String(success.data?.count ?? 0)
+                        
+                        attendaceCountLbl.text = counts
+                        
+                        calendarImgView.isHidden = true
+                        
+                        if self.calendarHeight.constant == 350 {
+                            self.calendarHeight.constant = 127
+                            
+                            calendarImgView.isHidden = true
+                            self.clanderView.scope = .week
+                            
+                        }
+                        
+                        attendanceTV.isHidden = false
+                        attendanceTV.reloadData()
+                    }else{
+                        print("12calendarHeight.constant")
+                        attendanceTV.isHidden = true
+                        attendaceCountLbl.text = "0"
+                        if calendarHeight.constant == 127.08333333333334 {
+                            
+                            calendarImgView.isHidden = false
+                            self.clanderView.scope = .week
+                        }
+                        
+                        calendarImgView.isHidden = false
+                        
+                        if self.calendarHeight.constant == 350 {
+                            self.calendarHeight.constant = 127
+                            
+                            calendarImgView.isHidden = false
+                            self.clanderView.scope = .week
+                            
+                        }
+                    }
+                case .failure(let failure):
+                     print("Error:",failure.localizedDescription)
+                }
+                
+                }
     }
     
     
@@ -632,8 +613,6 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
             
             
             else if segmentName.selectedSegmentIndex == 1 {
-                
-                
                 
                 
                 leaveApi(id : "0")
@@ -808,11 +787,11 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
             takeAttwndance.editId = subject.isedit
             
             
-            for i in subject.add_hours{
-                
-                takeAttwndance.attendasEdit.append(i.hour)
+            for i in subject.add_hours ?? []{
+                if let hour = i.hour {
+                    takeAttwndance.attendasEdit.append(hour)
+                }
             }
-            
             
             cell.takeAttendanceView.addGestureRecognizer(takeAttwndance)
             
@@ -832,11 +811,13 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
             editAttndace.departmentName = subject.coursename
             editAttndace.YearName = subject.yearname
             editAttndace.editId = subject.isedit
-            editAttndace.edit_hours = subject.edit_hours
+            editAttndace.edit_hours = subject.edit_hours ?? []
             
-            for i in subject.edit_hours{
+            for i in subject.edit_hours ?? []{
                 
-                editAttndace.attendasEdit.append(i.hour)
+                if let hour = i.hour{
+                    editAttndace.attendasEdit.append(hour)
+                }
             }
             
            
@@ -1036,14 +1017,6 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
     
     @IBAction func TakeAttendanceVc( gesture : TakeAttendance){
         
-        
-        
-        
-        
-        
-        
-        
-        
         let vc = SpecificStudentViewController(nibName: nil, bundle: nil)
         print("countttttttt",gesture.attendasEdit)
         let numbers = gesture.attendasEdit
@@ -1078,197 +1051,136 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         
     }
     
-    @IBAction func approveVc(gesture : approve){
-        
-        
-        let refreshAlert = UIAlertController(title: "Approved Leave", message: "Once Done can't be changed", preferredStyle: UIAlertController.Style.alert)
-        
-        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-            
-            
-            let leaveAprovel = mangaeLeaveModal()
-            
+    @IBAction func approveVc(gesture: approve) {
+
+        let refreshAlert = UIAlertController(
+            title: "Approved Leave",
+            message: "Once Done can't be changed",
+            preferredStyle: .alert
+        )
+
+        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] _ in
+
+            var leaveAprovel = mangaeLeaveModal()
+
             leaveAprovel.leaveid = gesture.Leaveid
-            
-            print("thidddsdsdcscx",gesture.Leaveid)
+            print("thidddsdsdcscx", gesture.Leaveid)
+
             leaveAprovel.userid = userid
             leaveAprovel.processtype = "1"
-            
-            
-            
-            let leaveApprovestr = leaveAprovel.toJSONString()
-            
-            
-            manageLeaveRequests.call_request(param: leaveApprovestr!){ [self]
-                
-                (res) in
-                
-                
-                
-                let addApis : manageLeaveResponces = Mapper<manageLeaveResponces>().map(JSONString: res)!
-                
-                
-                if addApis.Status == 1{
-                    
-                    
-                    
-                    let refreshAlert = UIAlertController(title: "", message: addApis.Message, preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    present(refreshAlert, animated: true, completion: nil)
-                    
-                    Tv.reloadData()
-                    
-                    leaveApi(id : "0")
-                    
+
+            APiCallManager.shared.callApi(
+                url: APIEndpoints.ManageLeaveRequest,
+                httpMethod: .post,
+                queryParam: nil,
+                requestBody: leaveAprovel
+            ) { [weak self] (result: Result<manageLeaveResponces, Error>) in
+
+                guard let self = self else { return }
+
+                switch result {
+
+                case .success(let addApis):
+
+                    let refreshAlert = UIAlertController(
+                        title: "",
+                        message: addApis.Message,
+                        preferredStyle: .alert
+                    )
+
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
+
+                    self.present(refreshAlert, animated: true)
+
+                    if addApis.Status == 1 {
+
+                        self.Tv.reloadData()
+                        self.leaveApi(id: "0")
+
+                    } else {
+
+                        self.Tv.reloadData()
+                    }
+
+                case .failure(let error):
+                    print("API Error:", error.localizedDescription)
                 }
-                
-                else{
-                    
-                    
-                    let refreshAlert = UIAlertController(title: "", message: addApis.Message, preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    present(refreshAlert, animated: true, completion: nil)
-                    
-                    Tv.reloadData()
-                    
-                    
-                    
-                    
-                }
-                
-                
             }
-            
-            
+
         }))
-        
-        
-        refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { (action: UIAlertAction!) in
+
+        refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { _ in
             print("Handle Cancel Logic here")
         }))
-        
-        present(refreshAlert, animated: true, completion: nil)
-        
-        
-        
-        
-        
-        
+
+        present(refreshAlert, animated: true)
     }
     
     
-    
-    
-    @IBAction func RejectVc(gesture : approve){
-        
-        
-        
-        let refreshAlert = UIAlertController(title: "Reject Leave", message: "Once Done can't be changed", preferredStyle: UIAlertController.Style.alert)
-        
-        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-            
-            
-            let leaveAprovel = mangaeLeaveModal()
-            
+    @IBAction func RejectVc(gesture: approve) {
+
+        let refreshAlert = UIAlertController(
+            title: "Reject Leave",
+            message: "Once Done can't be changed",
+            preferredStyle: .alert
+        )
+
+        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] _ in
+
+            var leaveAprovel = mangaeLeaveModal()
+
             leaveAprovel.leaveid = gesture.Leaveid
-            
-            print("thidddsdsdcscx",gesture.Leaveid)
+            print("thidddsdsdcscx", gesture.Leaveid)
+
             leaveAprovel.userid = userid
             leaveAprovel.processtype = "2"
-            
-            
-            
-            let leaveApprovestr = leaveAprovel.toJSONString()
-            
-            
-            manageLeaveRequests.call_request(param: leaveApprovestr!){ [self]
-                
-                (res) in
-                
-                
-                
-                let addApis : manageLeaveResponces = Mapper<manageLeaveResponces>().map(JSONString: res)!
-                
-                
-                if addApis.Status == 1{
-                    
-                    
-                    let refreshAlert = UIAlertController(title: "", message: addApis.Message, preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    present(refreshAlert, animated: true, completion: nil)
-                    
-                    Tv.reloadData()
-                    
-                    leaveApi(id : "0")
-                    
+
+            APiCallManager.shared.callApi(
+                url: APIEndpoints.ManageLeaveRequest,
+                httpMethod: .post,
+                queryParam: nil,
+                requestBody: leaveAprovel
+            ) { [weak self] (result: Result<manageLeaveResponces, Error>) in
+
+                guard let self = self else { return }
+
+                switch result {
+
+                case .success(let addApis):
+
+                    let refreshAlert = UIAlertController(
+                        title: "",
+                        message: addApis.Message,
+                        preferredStyle: .alert
+                    )
+
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
+
+                    self.present(refreshAlert, animated: true)
+
+                    if addApis.Status == 1 {
+
+                        self.Tv.reloadData()
+                        self.leaveApi(id: "0")
+
+                    } else {
+
+                        self.Tv.reloadData()
+                    }
+
+                case .failure(let error):
+                    print("API Error:", error.localizedDescription)
                 }
-                
-                else{
-                    
-                    
-                    
-                    let refreshAlert = UIAlertController(title: "", message: addApis.Message, preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    present(refreshAlert, animated: true, completion: nil)
-                    Tv.reloadData()
-                    
-                    
-                    
-                    
-                }
-                
-                
             }
-            
+
         }))
-        
-        
-        refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { (action: UIAlertAction!) in
+
+        refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { _ in
             print("Handle Cancel Logic here")
         }))
-        
-        present(refreshAlert, animated: true, completion: nil)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+        present(refreshAlert, animated: true)
     }
-    
-    
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -1501,8 +1413,6 @@ class TakeAttendance : UITapGestureRecognizer{
     var editId : String!
     var attendasEdit : [Int] = []
     var edit_hours : [editHoursdataDEtaild] = []
-    
-    
 }
 
 

@@ -105,7 +105,7 @@ class AssigmentMoreCollectionViewCell: UICollectionViewCell,UICollectionViewDele
         
         
         
-        cell.CellmageView.sd_setImage(with: URL(string: image.fileurl), placeholderImage: UIImage(named: "ic_white"))
+        cell.CellmageView.sd_setImage(with: URL(string: image.fileurl ?? ""), placeholderImage: UIImage(named: "ic_white"))
         
         let imagee = AssigmentMoreImageShow(target: self, action: #selector(ImageShowVc))
         imagee.fileType = image.filetype
@@ -137,7 +137,7 @@ class AssigmentMoreCollectionViewCell: UICollectionViewCell,UICollectionViewDele
         
         for i in Filepath2{
             
-            stringss.append(i.fileurl)
+            stringss.append(i.fileurl ?? "")
         }
         
         

@@ -8,67 +8,17 @@
 import Foundation
 import ObjectMapper
 
-
-
-class mangaeLeaveModal:Mappable{
+struct mangaeLeaveModal:Codable{
     
-    
-    
-    var leaveid : String!
-    var userid : String!
-    var processtype : String!
-    
-    init(){}
-
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        leaveid <- map["leaveid"]
-        userid <- map["userid"]
-        processtype <- map["processtype"]
-        
-        
-        
-    }
-    
-    
-    
-    
-    
-    
+    var leaveid : String?
+    var userid : String?
+    var processtype : String?
     
 }
 
-
-class manageLeaveResponces :Mappable{
+struct manageLeaveResponces :Codable{
     
-    
-    var Status : Int!
-    var Message : String!
-    
-    
-    
-    
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        Status <- map["Status"]
-        Message <- map["Message"]
-    }
-    
-    
-    
-    
-    
-    
-    
-    
+    var Status : Int?
+    var Message : String?
     
 }

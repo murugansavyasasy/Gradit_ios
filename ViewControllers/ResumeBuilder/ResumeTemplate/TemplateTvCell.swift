@@ -76,9 +76,9 @@ class TemplateTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         if isTemplate == true {
             let cell = CV.dequeueReusableCell(withReuseIdentifier: "templateCvCell", for: indexPath) as! templateCvCell
             
-            let image_Url = URL(string: template[indexPath.item].resumeTemplateImage ?? "")
+            let image_Url = URL(string: template[indexPath.item].resume_template_image ?? "")
             cell.TemplateImage.sd_setImage(with: image_Url)
-            cell.TitleLbl.text = template[indexPath.item].resumeTemplateName
+            cell.TitleLbl.text = template[indexPath.item].resume_template_name
             //ProfileImg.sd_setImage(with: image_Url, placeholderImage: UIImage(systemName: "person.circle"))
             
             if indexPath.item == selectedTemplate {

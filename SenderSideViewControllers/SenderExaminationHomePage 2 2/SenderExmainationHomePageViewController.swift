@@ -443,58 +443,40 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
         
         
         
-        let filtered_list : [SenderUpcommingExamDataDetails] = Mapper<SenderUpcommingExamDataDetails>().mapArray(JSONString: cloneList.toJSONString()!)!
+        let filtered_list : [SenderUpcommingExamDataDetails] = cloneList
         
         
         if !searchText.isEmpty{
-            
-            
             
             upcomings = filtered_list.filter {
                 
           
                 
-                $0.examname.lowercased().contains(searchText.lowercased()) || $0.createdbyname.lowercased().contains(searchText.lowercased()) || $0.startdate.lowercased().contains(searchText.lowercased())  || $0.startdate.lowercased().contains(searchText.lowercased()) || $0.headerid.lowercased().contains(searchText.lowercased()) || $0.createdon.lowercased().contains(searchText.lowercased())
-                
-                
+                ($0.examname ?? "").lowercased().contains(searchText.lowercased()) || ($0.createdbyname ?? "").lowercased().contains(searchText.lowercased()) || ($0.startdate ?? "").lowercased().contains(searchText.lowercased())  || ($0.enddate ?? "").lowercased().contains(searchText.lowercased()) || ($0.headerid ?? "").lowercased().contains(searchText.lowercased()) || ($0.createdon ?? "").lowercased().contains(searchText.lowercased())
                 
             }
      
             
         }else{
             
-            
-            
             upcomings = filtered_list
             
-            
-            
             print("pendingOrder")
-            
-            
             
         }
     
         
         if upcomings.count > 0{
             
-            
-            
             print ("searchListPendigCount",upcomings.count)
-            
             
             
         }else{
             
-    
-            
         }
         
     
-        
         examTableView.reloadData()
-        
-   
         
     }
     
@@ -781,12 +763,12 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
             
             let upcom : SenderUpcommingExamDataDetails = upcomings[indexPath.row]
             
-            let a = upcom.createdbyname.count*2
+            let a = (upcom.createdbyname?.count ?? 0)*2
             let b = a+150
             cell.sendbyViewWidth.constant = CGFloat(b)
             cell.cellExamDate.text = upcom.createdon
             cell.cellSendByLabel.text = upcom.createdbyname
-            cell.cellExamName.text = upcom.examname.capitalized
+            cell.cellExamName.text = upcom.examname?.capitalized
             cell.startDate.text = upcom.startdate
             
             cell.endDate.text = upcom.enddate
@@ -851,13 +833,13 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
                 
             }
             
-            let a = past.createdbyname.count*2
+            let a = (past.createdbyname?.count ?? 0)*2
             let b = a+150
             cell.sendbyViewWidth.constant = CGFloat(b)
             //            
             cell.cellExamDate.text = past.createdon
             cell.cellSendByLabel.text = past.createdbyname
-            cell.cellExamName.text = past.examname.capitalized
+            cell.cellExamName.text = past.examname?.capitalized
             cell.startDate.text = past.startdate
             
             cell.endDate.text = past.enddate
@@ -903,10 +885,7 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
             if examSegmentName.selectedSegmentIndex == 0{
                 
                 
-                
-                
-                
-                let editDeltes = editDeleteModal()
+                var editDeltes = editDeleteModal()
                 
                 editDeltes.collegeid = colgId
                 editDeltes.startdate = gesture.startDate
@@ -917,88 +896,65 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
                 editDeltes.processtype = "delete"
                 editDeltes.sectiondetails = []
                 
-                
-                
-                let editDeltesStr = editDeltes.toJSONString()
-                
-                
-                print("gtrrrrr",editDeltesStr)
-                
-                EditAndDeleteRequest.call_request(param: editDeltesStr!){ [self]
+                APiCallManager.shared.callApi(
+                    url: APIEndpoints.ExamCreation,
+                    httpMethod: .post,
+                    queryParam: nil,
+                    requestBody: editDeltes
+                ) { [weak self] (result: Result<EditAndDeletResponce, Error>) in
                     
-                    (res) in
+                    guard let self = self else { return }
                     
-                    
-                    let editDeltesResp : EditAndDeletResponce =
-                    Mapper<EditAndDeletResponce>().map(JSONString: res)!
-                    
-                    editAndDeletRef = editDeltesResp.data
-                    
-                    if editDeltesResp.Status == 1{
+                    switch result {
                         
+                    case .success(let editDeltesResp):
                         
+                        self.editAndDeletRef = editDeltesResp.data ?? []
                         
+                        if editDeltesResp.Status == 1{
+                            
+                            let refreshAlert = UIAlertController(title: "", message: editDeltesResp.Message, preferredStyle: UIAlertController.Style.alert)
+                            
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                                
+                            }))
+                            
+                            self.present(refreshAlert, animated: true, completion: nil)
+                            
+                            self.examTableView.delegate = self
+                            self.examTableView.dataSource = self
+                            
+                            self.examTableView.reloadData()
+                            
+                            self.upcommingRefName()
+                            
+                        }
                         
-                        
-                        let refreshAlert = UIAlertController(title: "", message: editDeltesResp.Message, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        else{
                             
                             
+                            let refreshAlert = UIAlertController(title: "", message: editDeltesResp.Message, preferredStyle: UIAlertController.Style.alert)
                             
-                        }))
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                                
+                            }))
+                            
+                            self.present(refreshAlert, animated: true, completion: nil)
+                            
+                            self.examTableView.delegate = self
+                            self.examTableView.dataSource = self
+                            self.examTableView.reloadData()
+                            
+                        }
                         
-                        
-                        
-                        present(refreshAlert, animated: true, completion: nil)
-                        
-                        
-                        examTableView.delegate = self
-                        examTableView.dataSource = self
-                        
-                        examTableView.reloadData()
-                        
-                        
-                        upcommingRefName()
-                        
+                    case .failure(let error):
+                        print(error.localizedDescription)
                     }
-                    
-                    else{
-                        
-                        
-                        let refreshAlert = UIAlertController(title: "", message: editDeltesResp.Message, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                            
-                            
-                            
-                        }))
-                        
-                        
-                        
-                        present(refreshAlert, animated: true, completion: nil)
-                        
-                        examTableView.delegate = self
-                        examTableView.dataSource = self
-                        examTableView.reloadData()
-                        
-                        
-                    }
-                    
-                    
-                    
-                    
                 }
+            } else if examSegmentName.selectedSegmentIndex == 1{
                 
                 
-                
-            }
-            
-            
-            else if examSegmentName.selectedSegmentIndex == 1{
-                
-                
-                let editDeltes = editDeleteModal()
+                var editDeltes = editDeleteModal()
                 
                 editDeltes.collegeid = colgId
                 editDeltes.startdate = gesture.startDate
@@ -1009,81 +965,61 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
                 editDeltes.processtype = "delete"
                 editDeltes.sectiondetails = []
                 
-                
-                
-                let editDeltesStr = editDeltes.toJSONString()
-                
-                print("gtrrrrr",editDeltesStr)
-                EditAndDeleteRequest.call_request(param: editDeltesStr!){ [self]
+                APiCallManager.shared.callApi(
+                    url: APIEndpoints.ExamCreation,
+                    httpMethod: .post,
+                    queryParam: nil,
+                    requestBody: editDeltes
+                ) { [weak self] (result: Result<EditAndDeletResponce, Error>) in
                     
-                    (res) in
+                    guard let self = self else { return }
                     
-                    
-                    let editDeltesResp : EditAndDeletResponce =
-                    Mapper<EditAndDeletResponce>().map(JSONString: res)!
-                    
-                    editAndDeletRef = editDeltesResp.data
-                    
-                    if editDeltesResp.Status == 1{
+                    switch result {
                         
+                    case .success(let editDeltesResp):
                         
+                        self.editAndDeletRef = editDeltesResp.data ?? []
                         
+                        if editDeltesResp.Status == 1{
+                            
+                            let refreshAlert = UIAlertController(title: "", message: editDeltesResp.Message, preferredStyle: UIAlertController.Style.alert)
+                            
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                                
+                            }))
+                            
+                            self.present(refreshAlert, animated: true, completion: nil)
+                            
+                            self.examTableView.delegate = self
+                            self.examTableView.dataSource = self
+                            
+                            self.examTableView.reloadData()
+                            
+                            self.pastRefName()
+                            
+                        }
                         
-                        
-                        let refreshAlert = UIAlertController(title: "", message: editDeltesResp.Message, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        else{
                             
                             
+                            let refreshAlert = UIAlertController(title: "", message: editDeltesResp.Message, preferredStyle: UIAlertController.Style.alert)
                             
-                        }))
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                                
+                            }))
+                            
+                            self.present(refreshAlert, animated: true, completion: nil)
+                            
+                            self.examTableView.delegate = self
+                            self.examTableView.dataSource = self
+                            self.examTableView.reloadData()
+                            
+                        }
                         
-                        
-                        
-                        present(refreshAlert, animated: true, completion: nil)
-                        //
-                        examTableView.delegate = self
-                        examTableView.dataSource = self
-                        
-                        examTableView.reloadData()
-                        //
-                        
-                        
-                        
-                        pastRefName()
-                        
+                    case .failure(let error):
+                        print(error.localizedDescription)
                     }
-                    
-                    else{
-                        
-                        
-                        let refreshAlert = UIAlertController(title: "", message: editDeltesResp.Message, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                            
-                            
-                            
-                        }))
-                        
-                        
-                        
-                        present(refreshAlert, animated: true, completion: nil)
-                        
-                        examTableView.delegate = self
-                        examTableView.dataSource = self
-                        examTableView.reloadData()
-                        
-                        
-                    }
-                    
-                    
-                    
-                    
                 }
-                
-                
-                
-                
             }
             
         }))
@@ -1264,11 +1200,9 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
     }
     
     
-   
-    
     func upcommingRefName() {
         
-        let upcoming = SenderUpcommingExamModal()
+        var upcoming = SenderUpcommingExamModal()
         
         upcoming.userid   = memberId
         upcoming.collegeid = colgId
@@ -1278,59 +1212,57 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
         upcoming.type     = "upcomingexams"
         
         
+        print("upcoming request", upcoming)
         
         
-        
-        let upcomingStr = upcoming.toJSONString()
-        
-        
-        SenderExamRequest.call_request(param: upcomingStr!){ [self]
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetExamListByTypeforsenderapp,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: upcoming
+        ) { [weak self] (result: Result<SenderUpcommingExamResponce, Error>) in
             
-            (res) in
+            guard let self = self else { return }
             
-            
-            let departResp : SenderUpcommingExamResponce =
-            Mapper<SenderUpcommingExamResponce>().map(JSONString: res)!
-            
-            
-            print("order data",departResp)
-            
-            
-            
-            if departResp.Status == 1{
+            switch result {
                 
-                upcomings = departResp.data
-                cloneList = departResp.data
-                noDataTextView.alpha = 0
-                examTableView.delegate = self
-                examTableView.dataSource = self
-                examTableView.reloadData()
-               
-            }
-            
-            else{
-                noDataTextView.alpha = 1
+            case .success(let departResp):
                 
-                noDataTextView.isHidden = false
-                noDataLabel.text = departResp.Message
-                examTableView.delegate = self
-                examTableView.dataSource = self
-                examTableView.reloadData()
-               
+                print("order data", departResp)
+                
+                
+                if departResp.Status == 1{
+                    
+                    self.upcomings = departResp.data ?? []
+                    self.cloneList = departResp.data ?? []
+                    self.noDataTextView.alpha = 0
+                    self.examTableView.delegate = self
+                    self.examTableView.dataSource = self
+                    self.examTableView.reloadData()
+                   
+                }
+                
+                else{
+                    self.noDataTextView.alpha = 1
+                    
+                    self.noDataTextView.isHidden = false
+                    self.noDataLabel.text = departResp.Message
+                    self.examTableView.delegate = self
+                    self.examTableView.dataSource = self
+                    self.examTableView.reloadData()
+                   
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-            
             
         }
-        
-        
-        
-        
     }
-    
     
     func pastRefName() {
         
-        let past = SenderPastExamModal()
+        var past = SenderPastExamModal()
         
         past.userid   = memberId
         past.collegeid = colgId
@@ -1339,56 +1271,48 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
         past.priority = priority
         past.type     = "pastexams"
         
+        print("past request", past)
         
-        
-        let pastStr = past.toJSONString()
-        
-        
-        SenderExamRequest .call_request(param: pastStr!){ [self]
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetExamListByTypeforsenderapp,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: past
+        ) { [weak self] (result: Result<SenderPAstExamResponce, Error>) in
             
-            (res) in
+            guard let self = self else { return }
             
-            
-            let pastResp : SenderPAstExamResponce =
-            Mapper<SenderPAstExamResponce>().map(JSONString: res)!
-            
-            print("order data",pastResp)
-            
-            
-            
-            
-            print("order data",pastResp)
-            
-            
-            if pastResp.Status == 1{
+            switch result {
                 
-                pasts = pastResp.data
+            case .success(let pastResp):
                 
-                examTableView.delegate = self
-                examTableView.dataSource = self
+                print("order data", pastResp)
+                print("order data", pastResp)
                 
-                noDataTextView.alpha = 0
+                if pastResp.Status == 1{
+                    
+                    self.pasts = pastResp.data ?? []
+                    
+                    self.examTableView.delegate = self
+                    self.examTableView.dataSource = self
+                    
+                    self.noDataTextView.alpha = 0
+                    
+                    self.examTableView.reloadData()
+                    
+                }
                 
-                examTableView.reloadData()
+                else{
+                    
+                    self.noDataTextView.isHidden = false
+                    self.noDataLabel.text = pastResp.Message
+                    
+                }
                 
-                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-            
-            else{
-                
-                
-                noDataTextView.isHidden = false
-                noDataLabel.text = pastResp.Message
-                
-                
-            }
-            
-            
         }
-        
-        
-        
-        
     }
     
     func addApi(){

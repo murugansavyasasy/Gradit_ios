@@ -158,12 +158,7 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
             var profile : ProfileData = profileData[indexPath.row]
             if  profile.key == "College Logo"{
                 
-                
-                cell.profileImg.sd_setImage(with: URL(string: profile.value), placeholderImage: UIImage(named: "person.fill"))
-                
-
-//                    cell.profileImg.setImageWith(profile.value)
-                
+                cell.profileImg.sd_setImage(with: URL(string: profile.value ?? ""), placeholderImage: UIImage(named: "person.fill"))
                 
             }
         
@@ -188,35 +183,35 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
     
     func profile() {
         
+        let param : [String : Any] =
+        [
+            "id" : memberId ?? 0
+        ]
         
-      
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetProfileDetails,
+            httpMethod: .get,
+            queryParam: param,
+            requestBody: nil
+        ) { [weak self] (result: Result<ProfileResponse, Error>) in
             
-            let param : [String : Int] =
-            [
-                "id" : memberId
-            ]
+            guard let self = self else { return }
             
-        GetProfileDetailsRequest.call_request(param: param){ [self]
-                (res) in
+            switch result {
                 
-                let profile_response : ProfileResponse = Mapper<ProfileResponse>().map(JSONString: res)!
+            case .success(let profile_response):
                 
-                self.profileData = profile_response.data
+                self.profileData = profile_response.data ?? []
                 
+                self.tv.dataSource = self
+                self.tv.delegate = self
+                self.tv.reloadData()
                 
-                tv.dataSource = self
-                tv.delegate = self
-                tv.reloadData()
-                
-
-            
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
-        
-        
     }
-    
-    
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -226,20 +221,4 @@ class ProfileViewController: UIViewController,UITableViewDataSource,UITableViewD
             return 80
         }
     }
-    
-    
-    
-    // This part for bottom  swipe view .
-      
-   
-    
-    
-    
-    
-    
-  
-    
-    
-    
-      
 }

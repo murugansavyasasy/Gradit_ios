@@ -176,7 +176,8 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
         
         searchFullView .isHidden = true
         
-        
+        tv.delegate = self
+        tv.dataSource = self
         
         if sectionId == ""{
             
@@ -923,25 +924,20 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
         
         
         if CommuniSegementName.selectedSegmentIndex == 0{
-            var comuCell : SenderCommuniUnReadDataDetails = UnReadData[indexPath.row]
+            
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
-                
                 selectedCell = nil
-                
-                
                 
             } else {
                 
                 selectedCell = indexPath
                 
-                
-                if comuCell.isappread == "0"{
+                if UnReadData[indexPath.row].isappread == "0"{
                     
+                    apread(gesture : UnReadData[indexPath.row].msgdetailsid ?? "")
                     
-                    apread(gesture : comuCell.msgdetailsid ?? "")
-                    
-                    comuCell.isappread = "1"
+                    UnReadData[indexPath.row].isappread = "1"
                     cell.redDotImgView.isHidden = true
                     
                 }
@@ -950,38 +946,22 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
         
         else if CommuniSegementName.selectedSegmentIndex == 1 {
             
-            
-            
-            let unreadCell : SenderCommuniReadDataDetails = ReadData[indexPath.row]
             if let selectedCells = selectedCell, selectedCells == indexPath {
-                
-                
                 indexPathsections = indexPath.section
                 selectedCell = nil
-                
                 
             } else {
                 
                 selectedCell = indexPath
                 indexPathss = indexPath.row
-                
-                
             }
-            
-            
-            
-            
-            
         }
         
-        
         tv.beginUpdates()
-        
         
         tv.endUpdates()
         
         tv .reloadData()
-        
         
     }
     
@@ -1041,8 +1021,6 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
                     tv.isScrollEnabled = true
                     noDataView.isHidden = true
                     noDataTextLabel.isHidden = true
-                    tv.delegate = self
-                    tv.dataSource = self
                     tv.isHidden = false
                     tv.reloadData()
                     
@@ -1051,8 +1029,6 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
                     noDataView.isHidden = false
                     noDataTextLabel.isHidden = false
                     noDataTextLabel.text = communicationResp.Message
-                    tv.delegate = self
-                    tv.dataSource = self
                     tv.isHidden = true
                     tv.reloadData()
                 }
@@ -1087,8 +1063,6 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
                     tv.isScrollEnabled = true
                     noDataView.isHidden = true
                     noDataTextLabel.isHidden = true
-                    tv.delegate = self
-                    tv.dataSource = self
                     tv.isHidden = false
                     tv.reloadData()
                 }else{
@@ -1096,8 +1070,6 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
                     noDataView.isHidden = false
                     noDataTextLabel.isHidden = false
                     tv.isScrollEnabled = true
-                    tv.delegate = self
-                    tv.dataSource = self
                     tv.isHidden = true
                     tv.reloadData()
                 }

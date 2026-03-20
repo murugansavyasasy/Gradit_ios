@@ -10,70 +10,43 @@ import Foundation
 import Foundation
 import ObjectMapper
 
-class TemplateResponse: Mappable {
+struct TemplateResponse: Codable {
+    
     var status: Bool?
     var message: String?
     var data: [TemplateData]?
-
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        status  <- map["status"]
-        message <- map["message"]
-        data    <- map["data"]
-    }
+    
 }
 
-class TemplateData: Mappable {
+struct TemplateData: Codable {
+    
     var template: [ResumeTemplate]?
     var themecolor: [String]?
 
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        template    <- map["template"]
-        themecolor  <- map["themecolor"]
-    }
 }
 
-class ResumeTemplate: Mappable {
-    var resumeTemplateName: String?
-    var resumeTemplateImage: String?
-
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        resumeTemplateName  <- map["resume_template_name"]
-        resumeTemplateImage <- map["resume_template_image"]
-    }
+struct ResumeTemplate: Codable {
+    
+    var resume_template_name: String?
+    var resume_template_image: String?
 }
 
 
 import Foundation
 import ObjectMapper
 
-class ResumeRequest: Mappable {
+struct ResumeRequest: Codable {
+    
     var context: ResumeContext?
     var templateNumber: Int?
     var themeColor: String?
     var bucket: String?
     var bucketPath: String?
     var idMember: Int?
-
-    init(){}
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        context        <- map["context"]
-        templateNumber <- map["templateNumber"]
-        themeColor     <- map["themeColor"]
-        bucket         <- map["bucket"]
-        bucketPath     <- map["bucketPath"]
-        idMember       <- map["idMember"]
-    }
 }
 
-class ResumeContext: Mappable {
+struct ResumeContext: Codable {
+    
     var name: String?
     var email: String?
     var phone: String?
@@ -87,205 +60,101 @@ class ResumeContext: Mappable {
     var languages: [String]?
     var projects: [projects]?
 
-    init(){}
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        name          <- map["name"]
-        email         <- map["email"]
-        phone         <- map["phone"]
-        address       <- map["address"]
-        skills        <- map["skills"]
-        education     <- map["education"]
-        internship    <- map["internship"]
-        areainterest  <- map["areainterest"]
-        softSkill     <- map["softSkill"]
-        certifications <- map["certifications"]
-        languages     <- map["languages"]
-        projects      <- map["projects"]
-    }
 }
 
-class Education: Mappable {
+struct Education: Codable {
+    
     var `class`: String?
     var degree: String?
     var percentage: String?
     var institution: String?
 
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        `class`     <- map["class"]
-        degree      <- map["degree"]
-        percentage  <- map["percentage"]
-        institution <- map["institution"]
-    }
 }
 
-class Experience: Mappable {
+struct Experience: Codable {
+    
     var designation: String?
     var company: String?
     var duration: String?
 
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        designation <- map["designation"]
-        company     <- map["company"]
-        duration    <- map["duration"]
-    }
 }
 
-class CertificationReq: Mappable {
+struct CertificationReq: Codable {
     var course: String?
     var institute: String?
     var duration: String?
 
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        course     <- map["course"]
-        institute  <- map["institute"]
-        duration   <- map["duration"]
-    }
 }
 
-class Project: Mappable {
+struct Project: Codable {
     var title: String?
-
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        title <- map["title"]
-    }
 }
 
 
 import Foundation
 import ObjectMapper
 
-class ResumeUploadResponse: Mappable {
+struct ResumeUploadResponse: Codable {
     var status: Bool?
     var message: String?
     var data: [ResumeUploadData]?
 
-    init(){}
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        status  <- map["status"]
-        message <- map["message"]
-        data    <- map["data"]
-    }
 }
 
-class ResumeUploadData: Mappable {
+struct ResumeUploadData: Codable {
     var status: Int?
     var message: String?
-    var fileUrl: String?
-
-    init(){}
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        status   <- map["status"]
-        message  <- map["message"]
-        fileUrl  <- map["file_url"]
-    }
+    var file_url: String?
 }
 
 
 import Foundation
-import ObjectMapper
 
-class ResumeTitleRequest: Mappable {
+struct ResumeTitleRequest: Codable {
     var idMember: Int?
     var resumeTitle: [ResumeTitle]?
 
-    init(){}
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        idMember     <- map["idMember"]
-        resumeTitle  <- map["resumeTitle"]
-    }
 }
 
-class ResumeTitle: Mappable {
+struct ResumeTitle: Codable {
     var title: String?
     var url: String?
     var placementOfficer: Bool?
 
-    init(){}
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        title            <- map["title"]
-        url              <- map["url"]
-        placementOfficer <- map["placementOfficer"]
-    }
 }
 
 
-class common_Response: Mappable {
+struct common_Response: Codable {
     var status: Bool?
     var message: String?
     var data: [String]?
 
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        status  <- map["status"]
-        message <- map["message"]
-        data    <- map["data"]
-    }
 }
 
+struct uploadResumeResponse: Codable {
+    var status: Bool?
+    var message: String?
+}
 
-import Foundation
-import ObjectMapper
-
-class ResumeTitleResponse: Mappable {
+struct ResumeTitleResponse: Codable {
     var status: Bool?
     var message: String?
     var data: ResumeTitleData?
 
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        status  <- map["status"]
-        message <- map["message"]
-        data    <- map["data"]
-    }
 }
 
-class ResumeTitleData: Mappable {
+struct ResumeTitleData: Codable {
     var resumeTitle: [ResumeTitle]?
 
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        resumeTitle <- map["resumeTitle"]
-    }
 }
 
-
-import Foundation
-import ObjectMapper
-
-class ResumeUploadRequest: Mappable {
+struct ResumeUploadRequest: Codable {
     var idMember: Int?
     var bucket: String?
     var bucketPath: String?
-    var file: String? // This assumes the filename or file URL is passed as a string
+    var file: String? 
+}
 
-    init(){}
-    required init?(map: Map) {}
-
-    func mapping(map: Map) {
-        idMember   <- map["idMember"]
-        bucket     <- map["bucket"]
-        bucketPath <- map["bucketPath"]
-        file       <- map["file"]
-    }
+struct ResumeDeleteReq: Codable {
+    let resumeUrl: String?
 }

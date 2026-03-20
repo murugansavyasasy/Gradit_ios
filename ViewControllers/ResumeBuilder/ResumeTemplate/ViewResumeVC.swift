@@ -127,35 +127,54 @@ class ViewResumeVC: UIViewController, WKNavigationDelegate {
     }
     
     @IBAction func DeleteAct(_ sender: Any) {
-        
-//        let paramDict = ["resumeUrl": File_url]
-//        let jsonData = try? JSONSerialization.data(withJSONObject: paramDict, options: [])
-//        let param = String(data: jsonData ?? Data(), encoding: .utf8) ?? ""
-//        print("requestStr",param)
 
-        let deleteUrl = Constant.Resume_baseUrl+"delete/studentresume/"+(memberId ?? "")
+        let deleteUrl = "delete/studentresume/" + (memberId ?? "")
+        
         let body: [String: Any] = [
             "resumeUrl": File_url
         ]
+        
+        let request = ResumeDeleteReq(resumeUrl: File_url)
 
-        Delete_Method_Commom_Api.delete(
+        APiCallManager.shared.callApi(
             url: deleteUrl,
-            body: body,
-            responseType: common_Response.self
-        ) { result in
-            switch result {
-            case .success(let response):
-                if response.status == true {
+            httpMethod: .delete,
+            isBaseUrl: false,
+            queryParam: nil,
+            requestBody: request
+        ) { [weak self] (result: Result<uploadResumeResponse, Error>) in
+            
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                
+                switch result {
                     
-                    AlertHelper.showOKAlert(on: self, title: "Success", message: "Resume Deleted Successfully",okTitle: "Ok",okAction: {
-                        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-                    })
-                    print("✅ Resume deleted: \(response.message ?? "")")
-                } else {
-                    print("⚠️ Failed: \(response.message ?? "No message")")
+                case .success(let response):
+                    
+                    if response.status == true {
+                        
+                        AlertHelper.showOKAlert(
+                            on: self,
+                            title: "Success",
+                            message: "Resume Deleted Successfully",
+                            okTitle: "Ok",
+                            okAction: {
+                                self.presentingViewController?
+                                    .presentingViewController?
+                                    .dismiss(animated: true, completion: nil)
+                            }
+                        )
+                        
+                        print("✅ Resume deleted: \(response.message ?? "")")
+                        
+                    } else {
+                        print("⚠️ Failed: \(response.message ?? "No message")")
+                    }
+                    
+                case .failure(let error):
+                    print("❌ Error: \(error.localizedDescription)")
                 }
-            case .failure(let error):
-                print("❌ Error: \(error.localizedDescription)")
             }
         }
     }
@@ -223,60 +242,93 @@ class ViewResumeVC: UIViewController, WKNavigationDelegate {
         }
     }
     
-    
     func ResumeUplaosApi(){
         
-        let request = ResumeUploadRequest()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateString = dateFormatter.string(from: Date())
+        
+        var request = ResumeUploadRequest()
         request.idMember = Int(memberId ?? "")
         request.bucket = "gradit-communication"
-        request.bucketPath = "2025-06-27"
+        request.bucketPath = dateString
         request.file = selectedPDFURL?.absoluteString
-        
-        let requestStr = request.toJSONString() ?? ""
-        
-        Upload_Resume_Request.call_request(param: requestStr) {[weak self] res in
+
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.get_uploadresume,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: request
+        ) { [weak self] (result: Result<common_Response, Error>) in
             
-            guard let response: common_Response = Mapper<common_Response>().map(JSONString: res) else {return}
+            guard let self = self else { return }
             
-            if response.status == true {
-                self?.File_url = response.data?.first ?? ""
-                self?.Save_resume_Api()
+            switch result {
+                
+            case .success(let response):
+                
+                if response.status == true {
+                    
+                    self.File_url = response.data?.first ?? ""
+                    self.Save_resume_Api()
+                }
+                
+            case .failure(let error):
+                print("❌ Error:", error.localizedDescription)
             }
         }
     }
     
     func Save_resume_Api() {
-        DispatchQueue.main.async {
-            let resume_title = ResumeTitle()
-            resume_title.title = self.nameField.text
-            resume_title.url = self.File_url
-            resume_title.placementOfficer = self.Switch.isOn
+        
+        var resume_title = ResumeTitle()
+        resume_title.title = self.nameField.text
+        resume_title.url = self.File_url
+        resume_title.placementOfficer = self.Switch.isOn
 
-            let request = ResumeTitleRequest()
-            request.idMember = Int(self.memberId ?? "")
-            request.resumeTitle = [resume_title]
+        var request = ResumeTitleRequest()
+        request.idMember = Int(self.memberId ?? "")
+        request.resumeTitle = [resume_title]
 
-            let requestStr = request.toJSONString() ?? ""
-            print("requestStr", requestStr)
-
-            Save_Resume_Request.call_request(param: requestStr) { [weak self] (res) in
-                guard let self = self else { return }
-                guard let response: common_Response = Mapper<common_Response>().map(JSONString: res) else { return }
-
-                DispatchQueue.main.async {
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.resume_saveTitleResume,
+            httpMethod: .post,
+            isBaseUrl: false,
+            queryParam: nil,
+            requestBody: request
+        ) { [weak self] (result: Result<uploadResumeResponse, Error>) in
+            
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                switch result {
+                    
+                case .success(let response):
+                    
                     if response.status == true {
-                        AlertHelper.showOKAlert(on: self, title: "Success", message: "Resume saved Successfully", okTitle: "Ok", okAction: {
-                            
+                        AlertHelper.showOKAlert(
+                            on: self,
+                            title: "Success",
+                            message: "Resume saved Successfully",
+                            okTitle: "Ok"
+                        ) {
                             self.downloadBtn.isHidden = false
                             self.shareBtn.isHidden = false
                             self.saveBtn.isHidden = true
-                            //self.hidePopup()
-                        })
+                        }
                     } else {
-                        AlertHelper.showOKAlert(on: self, title: "Failed", message: "Failed to save resume. Try again later", okTitle: "Ok", okAction: {
+                        AlertHelper.showOKAlert(
+                            on: self,
+                            title: "Failed",
+                            message: "Failed to save resume. Try again later",
+                            okTitle: "Ok"
+                        ) {
                             self.hidePopup()
-                        })
+                        }
                     }
+                    
+                case .failure(let error):
+                    print("❌ Error:", error.localizedDescription)
                 }
             }
         }
@@ -595,43 +647,4 @@ class ViewResumeVC: UIViewController, WKNavigationDelegate {
     }
 
     
-}
-
-
-
-import Alamofire
-import ObjectMapper
-class Delete_Method_Commom_Api{
-   
-    static func delete<T: Mappable>(
-            url: String,
-            body: [String: Any],
-            responseType: T.Type,
-            completion: @escaping (Result<T, Error>) -> Void
-        ) {
-            AF.request(
-                url,
-                method: .delete,
-                parameters: body,
-                encoding: JSONEncoding.default,
-                headers: ["Content-Type": "application/json"]
-            )
-            .validate()
-            .responseJSON { response in
-                switch response.result {
-                case .success(let value):
-                    if let json = value as? [String: Any],
-                       let mapped = Mapper<T>().map(JSON: json) {
-                        completion(.success(mapped))
-                    } else {
-                        let mappingError = NSError(domain: "MappingError", code: -1, userInfo: [
-                            NSLocalizedDescriptionKey: "Failed to map response"
-                        ])
-                        completion(.failure(mappingError))
-                    }
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        }
 }

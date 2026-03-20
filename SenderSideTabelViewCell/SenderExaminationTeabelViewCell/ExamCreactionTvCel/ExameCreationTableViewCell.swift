@@ -376,7 +376,7 @@ class ExameCreationTableViewCell: UITableViewCell,UITableViewDelegate,UITableVie
                                 var ids = DefaultsKeys.saveEdit[i].examsubjectid
                                 
                                 
-                                if ids == SectionIdRefrence + "/ " + sujectName.subjectid{
+                                if ids == SectionIdRefrence + "/ " + (sujectName.subjectid ?? ""){
                                     
                                     cell.checkSubjectImageView.image = UIImage(named: "verified")
                                     
@@ -490,7 +490,7 @@ class ExameCreationTableViewCell: UITableViewCell,UITableViewDelegate,UITableVie
                     var ids = DefaultsKeys.saves[i].examsubjectid
                     
                     
-                    if ids == SectionIdRefrence + "/ " + sujectName.subjectid{
+                    if ids == SectionIdRefrence + "/ " + (sujectName.subjectid ?? ""){
                         
                         cell.checkSubjectImageView.image = UIImage(named: "verified")
                         

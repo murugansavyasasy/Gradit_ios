@@ -11,83 +11,105 @@ import ObjectMapper
 
 
 
-class voiceUploadEntierModal : Mappable{
-    
-    
-    
-    
-    var collegeid : String!
-    var staffid  : String!
-    var callertype : String!
-    var fileduration : String!
-    var isparent : Bool!
-    var filetype : String!
-    var isstudent : Bool!
-    var isstaff : Bool!
-    var description : String!
-    
-    var isemergencyvoice : String!
-    
-    
-    
-    init(){}
-    
-    
-    required init?(map: Map){
-        
-        mapping(map: map)
-    }
+//class voiceUploadEntierModal : Mappable{
+//    
+//    var collegeid : String!
+//    var staffid  : String!
+//    var callertype : String!
+//    var fileduration : String!
+//    var isparent : Bool!
+//    var filetype : String!
+//    var isstudent : Bool!
+//    var isstaff : Bool!
+//    var description : String!
+//    var isemergencyvoice : String!
+//    
+//    init(){}
+//    
+//    
+//    required init?(map: Map){
+//        
+//        mapping(map: map)
+//    }
+//
+//    
+//    func mapping(map: ObjectMapper.Map) {
+//        
+//        collegeid <- map["collegeid"]
+//        staffid <- map["staffid"]
+//        callertype <- map["callertype"]
+//        fileduration <- map["fileduration"]
+//        isparent <- map["isparent"]
+//        filetype <- map["filetype"]
+//        isstudent <- map["isstudent"]
+//        isstaff <- map["isstaff"]
+//        description <- map["description"]
+//        isemergencyvoice <- map["isemergencyvoice"]
+//        
+//    }
+//    
+//  
+//    
+//}
+//
+//
+//class VoiceEntierResponces: Mappable {
+//
+//    var status: Int!
+//    var message: String!
+//    var data: [VoiceEntierDataDetails]!
+//
+//    required init?(map: Map){
+//        
+//        mapping(map: map)
+//    }
+//
+//    func mapping(map: ObjectMapper.Map) {
+//        status <- map["Status"]
+//        message <- map["Message"]
+//        data <- map["data"]
+//    }
+//}
+//
+//class VoiceEntierDataDetails: Mappable {
+//
+//    var ivrheader: String!
+//
+//    required init?(map: Map){
+//        
+//        mapping(map: map)
+//    }
+//
+//    func mapping(map: ObjectMapper.Map) {
+//        ivrheader <- map["ivrheader"]
+//    }
+//}
+//
+struct voiceUploadEntierModal: Codable {
 
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        collegeid <- map["collegeid"]
-        staffid <- map["staffid"]
-        callertype <- map["callertype"]
-        fileduration <- map["fileduration"]
-        isparent <- map["isparent"]
-        filetype <- map["filetype"]
-        isstudent <- map["isstudent"]
-        isstaff <- map["isstaff"]
-        description <- map["description"]
-        isemergencyvoice <- map["isemergencyvoice"]
-        
-    }
-    
-  
-    
+    var collegeid: String?
+    var staffid: String?
+    var callertype: String?
+    var fileduration: String?
+    var isparent: Bool?
+    var filetype: String?
+    var isstudent: Bool?
+    var isstaff: Bool?
+    var description: String?
+    var isemergencyvoice: String?
+
 }
 
+struct VoiceEntierResponces: Codable {
 
-class VoiceEntierResponces: Mappable {
+    var Status: Int?
+    var Message: String?
+    var data: [VoiceEntierDataDetails]?
 
-    var status: Int!
-    var message: String!
-    var data: [VoiceEntierDataDetails]!
-
-    required init?(map: Map){
-        
-        mapping(map: map)
-    }
-
-    func mapping(map: ObjectMapper.Map) {
-        status <- map["Status"]
-        message <- map["Message"]
-        data <- map["data"]
-    }
 }
 
-class VoiceEntierDataDetails: Mappable {
+struct VoiceEntierDataDetails: Codable {
 
-    var ivrheader: String!
+    var ivrheader: String?
 
-    required init?(map: Map){
-        
-        mapping(map: map)
-    }
-
-    func mapping(map: ObjectMapper.Map) {
-        ivrheader <- map["ivrheader"]
-    }
 }
-

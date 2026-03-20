@@ -39,9 +39,6 @@ class PlusScreenNextPageViewController: UIViewController,UITextViewDelegate,UIIm
 
 @IBOutlet weak var changeRolesView: UIView!
 
-
-@IBOutlet weak var profileView: UIView!
-
 @IBOutlet weak var topLabels: UILabel!
 @IBOutlet weak var refreshView: UIView!
 @IBOutlet weak var privacyPolicyView: UIView!
@@ -92,9 +89,9 @@ var assImagePdf : [assigmentImagePdfResponce] = []
 
 let dropDown = DropDown()
 
-var addImageBackGroundurl : String!
+var addImageBackGroundurl : String?
 var imageWebUrl : String!
-var smallImageUrl  : String!
+var smallImageUrl  : String?
 
 var image_choose: Bool = false
 
@@ -189,8 +186,8 @@ override func viewDidLoad() {
     overrideUserInterfaceStyle = .light
     
     
-    bigImg.sd_setImage(with: URL(string: addImageBackGroundurl), placeholderImage: UIImage(named: "ic_white"))
-    smallImg.sd_setImage(with: URL(string: smallImageUrl ), placeholderImage: UIImage(named: "ic_white"))
+    bigImg.sd_setImage(with: URL(string: addImageBackGroundurl ?? ""), placeholderImage: UIImage(named: "ic_white"))
+    smallImg.sd_setImage(with: URL(string: smallImageUrl ?? "" ), placeholderImage: UIImage(named: "ic_white"))
     
     
     

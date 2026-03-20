@@ -10,90 +10,18 @@ import Foundation
 
 import ObjectMapper
 
-
-//class AwsResps: Mappable {
-//    
-//    
-//    var status : Int!
-//    var message : String!
-//    var data : AwsData!
-//    required init?(map: ObjectMapper.Map) {
-//        mapping(map: map)
-//    }
-//    
-//    func mapping(map: ObjectMapper.Map) {
-//        
-//        status <- map["status"]
-//        message <- map["message"]
-//        data <- map["data"]
-//    }
-//    
-//    
-//    
-//}
-//
-//class AwsData : Mappable {
-//    
-//    var presignedUrl : String!
-//    var fileUrl : String!
-//    required init?(map: ObjectMapper.Map) {
-//        
-//        mapping(map: map)
-//    }
-//    
-//    func mapping(map: ObjectMapper.Map) {
-//        
-//        presignedUrl <- map["presignedUrl"]
-//        fileUrl <- map["fileUrl"]
-//    }
-//    
-//    
-//    
-//    
-//    
-//}
-
-
-class AwsResps: Mappable {
+struct AwsResps: Codable {
     
-    
-    var status : Int!
-    var message : String!
-    var data : AwsData!
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        status <- map["status"]
-        message <- map["message"]
-        data <- map["data"]
-    }
-    
-    
-    
+    var status : Int
+    var message : String?
+    var data : AwsData?
 }
 
-class AwsData : Mappable {
+struct AwsData : Codable {
     
-    var presignedUrl : String!
-    var fileUrl : String!
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        presignedUrl <- map["presignedUrl"]
-        fileUrl <- map["fileUrl"]
-    }
-    
-    
-    
-    
-    
+    var presignedUrl : String?
+    var fileUrl : String?
+
 }
 
 

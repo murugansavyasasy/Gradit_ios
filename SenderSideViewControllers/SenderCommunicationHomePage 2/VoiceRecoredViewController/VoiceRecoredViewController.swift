@@ -317,10 +317,6 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
         selectRespinceView.addGestureRecognizer(SelectRespience)
         replySwitch.addTarget(self, action: #selector(switchIsChanged), for: UIControl.Event.valueChanged)
         
-        
-        
-        
-        
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
         
@@ -1146,15 +1142,7 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
         
         btnName.setImage(UIImage(named: "plays"), for: .normal)
         
-        
-        
-        
-        
-        
         if piroty == "p1" {
-            
-            
-            
             
             if selectRespinceView.backgroundColor == .lightGray {
                 
@@ -1168,117 +1156,50 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
                 
                 print("Teacherrrrrr.")
                 
-                
-                
-                
-                
                 if  durationLable.text == "00:00" + " / " + "00:00"{
                     
-                    
-                    
-                    
                 }
-                
-                
-                
-                
-                
+               
                 else if voiceDisprectionLabl.text == ""{
                     
                     
                     let refreshAlert = UIAlertController(title: "", message: "Please enter title", preferredStyle: UIAlertController.Style.alert)
                     
                     
-                    
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
                         
                     }))
                     
-                    
-                    
-                    
-                    
-                    
-                    
                     present(refreshAlert, animated: true, completion: nil)
                     
-                    
-                    
-                }
-                
-                
-                
-                
-                
-                
-                else if (url != nil)  {
-                    
-                    
-                    
-                    
+                } else if (url != nil)  {
                     
                     selectRespinceView.backgroundColor = UIColor(named: "ConfirmColor")
                     
-                    
-                    
                     selectRespinceView.isUserInteractionEnabled = true
-                    
-                    
-                    
-                    
                     
                     let vc = SelectResipientsViewController(nibName: nil, bundle: nil)
                     
-                    
-                    
                     vc.resivre = Types
-                    
                     vc.str = str
-                    
                     vc.strName = strName
-                    
                     vc.voiceUrl = url
-                    
                     vc.discreptionss = voiceDisprectionLabl.text
-                    
-                    
                     vc.is_read_enabled = is_read_enabled
                     vc.is_write_enabled = is_write_enabled
                     vc.voiceDuration = audioSeconds
-                    
                     vc.voiceReplyType = replyType
-                    
-                    
                     vc.VoiceHstryId = VoiceHstryID
                     vc.voiceHstryHeaderId = VoiceHstryHeaderId
                     
                     vc.modalPresentationStyle = .fullScreen
                     
-                    
-                    
                     present(vc, animated: true,completion: nil)
                     
                     
-                    
-                    
                 }
-                
-                
-                
-                
             }
-            
-            
-        }
-        
-        
-        
-        
-        
-        
-        else if piroty == "p2"   {
+        }else if piroty == "p2"   {
             
             
             if selectRespinceView.backgroundColor == .lightGray {
@@ -1293,75 +1214,27 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
                 
                 print("selectRespinceView.")
                 
-                
-                
-                
-                
                 if  durationLable.text == "00:00" + " / " + "00:00"{
                     
                     
-                }
-                
-                
-                
-                
-                else if voiceDisprectionLabl.text == ""{
-                    
-                    
-                    
-                    
-                    
-                    
+                } else if voiceDisprectionLabl.text == ""{
                     
                     let refreshAlert = UIAlertController(title: "", message: "Please enter title", preferredStyle: UIAlertController.Style.alert)
                     
-                    
-                    
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
                         
                     }))
                     
-                    
-                    
-                    
-                    
-                    
-                    
                     present(refreshAlert, animated: true, completion: nil)
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                }
-                
-                
-                else if (url != nil) {
-                    
-                    
-                    
-                    
+                     
+                } else if (url != nil) {
                     
                     selectRespinceView.backgroundColor = UIColor(named: "ConfirmColor")
                     
-                    
-                    
                     selectRespinceView.isUserInteractionEnabled = true
-                    
-                    
-                    
-                    
                     
                     let vc = HodSelectResipenceViewController(nibName: nil, bundle: nil)
                     
-                    
-                    
                     vc.resivre = Types
                     
                     vc.str = str
@@ -1383,105 +1256,42 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
                     vc.voiceHstryHeaderId = VoiceHstryHeaderId
                     
                     vc.modalPresentationStyle = .fullScreen
-                    
-                    
-                    
                     present(vc, animated: true,completion: nil)
                     
-                    
-                    
                 }
-                
             }
-            
-            
-        }
-        
-        
-        else if piroty == "p7"   {
+        } else if piroty == "p7"   {
             
             
             if selectRespinceView.backgroundColor == .lightGray {
                 
                 selectRespinceView.isUserInteractionEnabled = false
                 
-                
-                
             }else{
                 
                 selectRespinceView.isUserInteractionEnabled = true
                 
-                
-                
-                
-                
-                
-                
                 if  durationLable.text == "00:00" + " / " + "00:00"{
                     
                     
-                }
-                
-                
-                
-                
-                else if voiceDisprectionLabl.text == ""{
-                    
-                    
-                    
-                    
-                    
-                    
+                }else if voiceDisprectionLabl.text == ""{
                     
                     let refreshAlert = UIAlertController(title: "", message: "Please enter title", preferredStyle: UIAlertController.Style.alert)
                     
-                    
-                    
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
                         
                     }))
                     
-                    
-                    
-                    
-                    
-                    
-                    
                     present(refreshAlert, animated: true, completion: nil)
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                }
-                
-                
-                else if (url != nil) {
-                    
-                    
-                    
-                    
+                } else if (url != nil) {
                     
                     selectRespinceView.backgroundColor = UIColor(named: "ConfirmColor")
                     
-                    
-                    
                     selectRespinceView.isUserInteractionEnabled = true
-                    
-                    
-                    
-                    
                     
                     let vc = GroupHeadViewController(nibName: nil, bundle: nil)
-                    
-                    
-                    //                    
+                                     
                     vc.resivre = Types
                     
                     vc.str = str
@@ -1505,28 +1315,11 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
                     vc.voiceHstryHeaderId = VoiceHstryHeaderId
                     vc.modalPresentationStyle = .fullScreen
                     
-                    
-                    
                     present(vc, animated: true,completion: nil)
-                    
-                    
-                    
+                     
                 }
-                
             }
-            
-            
-        }
-        
-        
-        
-        
-        
-        
-        else if piroty == "p3" {
-            
-            
-            
+        } else if piroty == "p3" {
             
             if selectRespinceView.backgroundColor == .lightGray {
                 
@@ -1537,75 +1330,28 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
                 
                 selectRespinceView.isUserInteractionEnabled = true
                 
-                
-                
-                
-                
-                
-                
                 if  durationLable.text == "00:00" + " / " + "00:00"{
                     
                     
-                }
-                
-                
-                
-                
-                
-                else if voiceDisprectionLabl.text == ""{
-                    
-                    
-                    
-                    
-                    
-                    
+                }else if voiceDisprectionLabl.text == ""{
+                   
                     let refreshAlert = UIAlertController(title: "", message: "Please enter title", preferredStyle: UIAlertController.Style.alert)
-                    
                     
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
-                        
-                        
                     }))
-                    
-                    
-                    
-                    
-                    
-                    
                     
                     present(refreshAlert, animated: true, completion: nil)
                     
-                    
-                    
-                }
-                
-                
-                
-                
-                
-                
-                else if (url != nil)  {
-                    
-                    
-                    
-                    
+                } else if (url != nil)  {
                     
                     selectRespinceView.backgroundColor = UIColor(named: "ConfirmColor")
                     
-                    
-                    
                     selectRespinceView.isUserInteractionEnabled = true
-                    
-                    
-                    
-                    
                     
                     let vc = HodRespienViewController(nibName: nil, bundle: nil)
                     
-                    
-                    
                     vc.resivre = Types
                     
                     vc.str = str
@@ -1615,8 +1361,6 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
                     vc.voiceUrl = url
                     
                     vc.discreptionss = voiceDisprectionLabl.text
-                    
-                    
                     
                     vc.voiceDuration = audioSeconds
                     
@@ -1629,25 +1373,11 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
                     
                     vc.modalPresentationStyle = .fullScreen
                     
-                    
-                    
                     present(vc, animated: true,completion: nil)
                     
-                    
-                    
-                    
                 }
-                
-                
-                
-                
             }
-            
-            
         }
-        
-        
-        
     }
     
     
@@ -1755,8 +1485,7 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
     @IBAction func recodeVc(){
         
         clickHereLabel.text = "Click here,Stop Recording"
-        if(isRecording)
-        {
+        if(isRecording){
             finishAudioRecording(success: true)
             
             RecodingImageView.image = UIImage(named: "voiceRecodeMic")
@@ -1764,24 +1493,13 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
             isRecording = false
             if  durationLable.text == "00:00" + " / " + "00:00"{
                 
-                
                 selectRespinceView.backgroundColor = UIColor(named: "lineView")
-                
                 
                 selectRespinceView.isUserInteractionEnabled = false
                 
-                
-                
             }
             
-            
-        }
-        else
-        {
-            
-            
-            
-            
+        } else {
             if isAudioRecordingGranted == false{
                 //                check_record_permission()
                 let alert = UIAlertController(title: "Error", message: "Please allow microphone usage from settings", preferredStyle: .alert)
@@ -1793,7 +1511,6 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
                 
             }else{
                 
-                
                 setup_recorder()
                 
                 audioRecorder.record()
@@ -1802,12 +1519,7 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
                 RecodingImageView.image = UIImage(named: "recodStopMic")
                 isRecording = true
             }
-            
-            
-            
-            
         }
-        
     }
     
     func getDocumentsDirectory() -> URL
@@ -1815,12 +1527,7 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
         
-        
-        
         print("asds",paths)
-        
-        
-        
         return documentsDirectory
     }
     
@@ -1836,23 +1543,15 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
         
         var urlString: String = myurl.absoluteString
         
-        
         url = filePath
-        
         
         durationLable.text = ""
         
-        
-        
         AudioPlayUrl = filePath.absoluteString
-        
-        
         
         let VoicePalyRecord = UITapGestureRecognizer(target: self, action: #selector(OrderplayAudio))
         
         PlayAudioView.addGestureRecognizer(VoicePalyRecord)
-        
-        
         
         return filePath
     }
@@ -1892,11 +1591,6 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
     }
     
     
-    
-  
-    
-      
-    
     func display_alert(msg_title : String , msg_desc : String ,action_title : String)
     {
         let ac = UIAlertController(title: msg_title, message: msg_desc, preferredStyle: .alert)
@@ -1909,29 +1603,19 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
     }
     
     
-    func finishAudioRecording(success: Bool)
-    {
-        if success
-            
-        {
+    func finishAudioRecording(success: Bool){
+        
+        if success {
             
             audioRecorder.stop()
-            
             audioRecorder = nil
-            
             meterTimer.invalidate()
-            
-            
             
             RecodingImageView.image = UIImage(named: "voiceRecodeMic")
             
-            
             tickMarkView.isHidden = true
             
-            
-            
             if  durationLable.text == "00:00" + " / " + "00:00"{
-                
                 
                 let refreshAlert = UIAlertController(title: "", message: "Voice file is Empty ", preferredStyle: UIAlertController.Style.alert)
                 
@@ -1939,65 +1623,36 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
                     
                 }))
                 
-                
-                
                 present(refreshAlert, animated: true, completion: nil)
-                
-                
-                
-                
                 
                 selectRespinceView.backgroundColor = UIColor(named: "lineView")
                 
-                
                 selectRespinceView.isUserInteractionEnabled = false
-            }
-            
-            
-            else{
+            } else{
                 voiceSilderFullView.isHidden = false
                 textViewss.isHidden = false
                 lineView.isHidden = false
                 
                 durationLable.isHidden = false
                 
-                
                 if timeLabelForPlayVoice == ""  || timeLabelForPlayVoice == nil {
                     
                     durationLable.text = "00:00" + " / " +  "00:00"
                     
-                }
-                
-                //
-                else{
-                    
+                }else{
                     
                     durationLable.text = "00:00" + " / " + timeLabelForPlayVoice
                     
                     selectRespinceView.backgroundColor = UIColor(named: "ConfirmColor")
                     
-                    
                     selectRespinceView.isUserInteractionEnabled = true
                 }
-                
-                
             }
             
-            
-            
-            
-            
             clearAudio.isHidden = false
-            
-            
-        }
-        
-        else
-        
-        {
+        } else{
             
             display_alert(msg_title: "Error", msg_desc: "Recording failed.", action_title: "OK")
-            
         }
     }
     
@@ -2033,8 +1688,6 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
             recodSecondsLabel.text = totalTimeString + " / " + "03:00"
             
             audioRecorder.updateMeters()
-            
-            
             
         }
     }
