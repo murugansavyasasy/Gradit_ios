@@ -13,75 +13,29 @@ import ObjectMapper
 
 
 
-class getLatModelReq : Mappable{
-   
+struct getLatModelReq : Codable{
     
-    
-    var CollegeId : Int!
-  
-    init(){}
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-        
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        CollegeId <- map["CollegeId"]
-      
-    }
-    
+    var CollegeId : Int?
         
 }
 
 
-class getLatModel : Mappable{
-   
+struct getLatModel : Codable{
+
+    var status : Int?
+    var message : String?
+    var data : [GetLatModaldataDetails]?
     
-    
-    var status : Int!
-    var message : String!
-    var data : [GetLatModaldataDetails]!
-    
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-        
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        status <- map["status"]
-        message <- map["message"]
-        data <- map["data"]
-    }
-    
-        
 }
 
 
-class GetLatModaldataDetails : Mappable{
+struct GetLatModaldataDetails : Codable{
     
-    var id : Int!
-    var latitude : String!
-    var longitude : String!
-    var location : String!
-    var distance : String!
-   
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        id <- map["id"]
-        latitude <- map["latitude"]
-        longitude <- map["longitude"]
-        location <- map["location"]
-        distance <- map["distance"]
-    }
-    
- 
+    var id : Int?
+    var latitude : String?
+    var longitude : String?
+    var location : String?
+    var distance : String?
 }
 
 

@@ -933,7 +933,7 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let myOtherVariable = appDelegate.DeviceToken
         
-        let punchModal = punchModal()
+        var punchModal = punchModal()
         
         punchModal.CollegeId = Int(collegeId)
         punchModal.UserId = Int(memberId)
@@ -941,46 +941,37 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
         punchModal.punch_type = punch_type
         punchModal.deviceId = myOtherVariable
         punchModal.device_model = device
-        
-        var  punchModalStr = punchModal.toJSONString()
-        print("punchModalStr",punchModal.toJSON())
-        
-        
-        PunchRequest.call_request(param: punchModalStr!) {
-            
-            [self] (res) in
-            
-            let PunchRes : [punchResponce] = Mapper<punchResponce>().mapArray(JSONString:res)!
-            
-            
-            if PunchRes[0].status == 1 {
-                
-                let refreshAlert = UIAlertController(title: "", message: PunchRes[0].message, preferredStyle: UIAlertController.Style.alert)
-                
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+        APiCallManager.shared.callApi(url: APIEndpoints.BiometricEntryusingApp, httpMethod: .post, queryParam: nil, requestBody: punchModal) { [weak self] (result :Result<punchResponce,Error>) in
+            guard let self = self else{return}
+            switch result {
+            case .success(let PunchRes):
+                if PunchRes.status == 1 {
                     
+                    let refreshAlert = UIAlertController(title: "", message: PunchRes.message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+                        
 
+                        
+                    }))
+                    present(refreshAlert, animated: true, completion: nil)
+                }else{
                     
-                }))
-                present(refreshAlert, animated: true, completion: nil)
-            }else{
-                
-                
-                let refreshAlert = UIAlertController(title: "", message: PunchRes[0].message, preferredStyle: UIAlertController.Style.alert)
-                
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
                     
+                    let refreshAlert = UIAlertController(title: "", message: PunchRes.message, preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+                        
 
+                        
+                    }))
+                    present(refreshAlert, animated: true, completion: nil)
                     
-                }))
-                present(refreshAlert, animated: true, completion: nil)
-                
+                }
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
             }
-            
-            
-            
         }
-        
         
     }
     
@@ -1010,43 +1001,38 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
         
       
-        let history = GethistoryModalReq()
+        var history = GethistoryModalReq()
 
         history.CollegeId = Int(collegeId)
        
         history.userId = Int(memberId)
         history.attendance_month = YearLbl
         history.attendance_dt = ""
-      
-        var  historyStr = history.toJSONString()
-        print("HistoryMidal",history.toJSON())
-        
-        GetAttendanceHistroyReq.call_request(param: historyStr!) {
-        
-                        [self] (res) in
-            
-            print("resres",res)
-            let getattendace : GethistoryModal = Mapper<GethistoryModal>().map(JSONString: res)!
-            
-            
-            if getattendace.status == 1  {
-                tv.isHidden  = false
-                
-                getHistorydata = getattendace.data
-                noRecordLbl.isHidden = true
-                tv.dataSource = self
-                tv.delegate = self
-                tv.reloadData()
-                
-            }else{
-                tv.isHidden  = true
-                noRecordLbl.isHidden = false
-                ErrorLablelView.isHidden = true
-                noRecordLbl.text = getattendace.message
-                
+
+        APiCallManager.shared.callApi(url: APIEndpoints.GetBiometricPrincipalAttendance, httpMethod: .post, queryParam: nil, requestBody: history) { [weak self] (result:Result<GethistoryModal,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let getattendace):
+                if getattendace.status == 1  {
+                    tv.isHidden  = false
+                    
+                    getHistorydata = getattendace.data ?? []
+                    noRecordLbl.isHidden = true
+                    tv.dataSource = self
+                    tv.delegate = self
+                    tv.reloadData()
+                    
+                }else{
+                    tv.isHidden  = true
+                    noRecordLbl.isHidden = false
+                    ErrorLablelView.isHidden = true
+                    noRecordLbl.text = getattendace.message
+                    
+                }
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
             }
         }
-        
         
     }
     
@@ -1072,61 +1058,55 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
       
-        let fechLocation = fechRequ()
+        var fechLocation = fechRequ()
 
         fechLocation.CollegeId = Int(collegeId)
        
         fechLocation.userId = Int(memberId)
 
 
-
-        var  fechLocationStr = fechLocation.toJSONString()
-        print("punchModalStr",fechLocation.toJSON())
-
-
-        fechLocationReq.call_request(param: fechLocationStr!) {
-        
-                        [self] (res) in
-        
-                        let getattendace : fechModal = Mapper<fechModal>().map(JSONString: res)!
-         
-            
-            if getattendace.status == 1  {
-                noRecordLbl.isHidden = true
-                for i in getattendace.data{
-                    var distanceInt = Int(i.distance)
-                    let distance = haversineDistance(lat1: Double(i.latitude)!, lon1: Double(i.longitude)!, lat2: Double(currentLatitute)!, lon2: Double(curentLogittude)!)
-                    currentDistanceForPuchCheck = distance
-                    apiDistanceForPuchCheck = distanceInt
-                    // Check if the distance is smaller
-                    if distance <= Double(distanceInt!) {
-                        print("The existing are within 5 meters of the current location.")
-                        punchFullView.isHidden = false
-                        errorLabel.isHidden = true
-                        ErrorLablelView.isHidden = true
+        APiCallManager.shared.callApi(url: APIEndpoints.GetStaffLocationDetails, httpMethod: .post, queryParam: nil, requestBody: fechLocation) { [weak self] (result:Result<fechModal,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let getattendace):
+                
+                if getattendace.status == 1  {
+                    noRecordLbl.isHidden = true
+                    for i in getattendace.data ?? []{
+                        var distanceInt = Int(i.distance ?? "")
+                        let distance = haversineDistance(lat1: Double(i.latitude ?? "")!, lon1: Double(i.longitude ?? "")!, lat2: Double(currentLatitute)!, lon2: Double(curentLogittude)!)
+                        currentDistanceForPuchCheck = distance
+                        apiDistanceForPuchCheck = distanceInt
+                        // Check if the distance is smaller
+                        if distance <= Double(distanceInt!) {
+                            print("The existing are within 5 meters of the current location.")
+                            punchFullView.isHidden = false
+                            errorLabel.isHidden = true
+                            ErrorLablelView.isHidden = true
+                            
+                            break
+                            
+                        } else {
+                            print("The existing are more than 5 meters away.")
+                            
+                            errorLabel.isHidden = false
+                            punchFullView.isHidden = true
+                            ErrorLablelView.isHidden = false
+                        }
                         
-                        break
-                        
-                    } else {
-                        print("The existing are more than 5 meters away.")
-                        
-                        errorLabel.isHidden = false
-                        punchFullView.isHidden = true
-                        ErrorLablelView.isHidden = false
                     }
                     
+                }else{
+                    
+                    ErrorLablelView.isHidden = true
+                    noRecordLbl.text = getattendace.message
+                    noRecordLbl.isHidden = false
+                    
                 }
-                
-            }else{
-                
-                ErrorLablelView.isHidden = true
-                noRecordLbl.text = getattendace.message
-                noRecordLbl.isHidden = false
-                
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
             }
         }
-        
-        
     }
     
     

@@ -7,72 +7,24 @@
 //
 
 import Foundation
-import ObjectMapper
 
 
-class fechRequ : Mappable{
-    
-   var  userId: Int!
-   var  CollegeId : Int!
-     
-    init(){}
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        userId <- map["userId"]
-        CollegeId <- map["CollegeId"]
-       
-        
-    }
- 
-    
+struct fechRequ : Codable{
+   var  userId: Int?
+   var  CollegeId : Int?
 }
 
  
-class fechModal : Mappable{
-    
-    var status : Int!
-    var message : String!
-    var data : [FechdataDetails]!
-    
-     
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        status <- map["status"]
-        message <- map["message"]
-        data <- map["data"]
-        
-    }
- 
-    
+struct fechModal : Codable{
+    var status : Int?
+    var message : String?
+    var data : [FechdataDetails]?
+  
 }
-class FechdataDetails : Mappable{
+struct FechdataDetails : Codable{
     
-    var latitude : String!
-    var longitude : String!
-    var location : String!
-    var distance : String!
-    
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        latitude <- map["latitude"]
-        longitude <- map["longitude"]
-        location <- map["location"]
-        distance <- map["distance"]
-    }
- 
-    
+    var latitude : String?
+    var longitude : String?
+    var location : String?
+    var distance : String?
 }

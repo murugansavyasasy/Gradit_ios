@@ -355,8 +355,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         
         stafflistdata.forEach {(arrType)  in
-            StaffId.append((arrType.staffId))
-            staffName.append(arrType.staffName)
+            StaffId.append((arrType.staffId ?? 0))
+            staffName.append(arrType.staffName ?? "")
             
         }
 //        let myArray = stafflistdata[1].staffName
@@ -559,7 +559,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         
        
-        let history = GethistoryModalReq()
+        var history = GethistoryModalReq()
 
         history.CollegeId = Int(collegeId)
        
@@ -576,32 +576,16 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             history.attendance_month = YearLbl
         }
       
-        
-        
-       
-        
-        let historystr = history.toJSONString()
-        print("prici",history.toJSON())
-    
- 
-        
-        
-       
-            
-         
-            
-            GetAttendanceHistroyReq.call_request(param: historystr!){ [self]
-                (res) in
-                
-                print("resres",res)
-                let getattendace : GethistoryModal = Mapper<GethistoryModal>().map(JSONString: res)!
-                
+        APiCallManager.shared.callApi(url: APIEndpoints.GetBiometricPrincipalAttendance, httpMethod: .post, queryParam: nil, requestBody: history) { [weak self] (result:Result<GethistoryModal,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let getattendace):
                 
                 if getattendace.status == 1  {
                     tv.isHidden = false
                     
-                    getHistorydata = getattendace.data
-                    searchtodayHistiry = getattendace.data
+                    getHistorydata = getattendace.data ?? []
+                    searchtodayHistiry = getattendace.data ?? []
                     noRecordLbl.isHidden = true
                     tv.dataSource = self
                     tv.delegate = self
@@ -619,9 +603,10 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 }
             
             
-            
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+            }
         }
-        
         
     }
     
@@ -631,32 +616,27 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
       
         
-        let staffListReq = staffListModalReq()
+        var staffListReq = staffListModalReq()
         
         staffListReq.CollegeId = Int(collegeId!)
         
-
-        let staffListReqstr = staffListReq.toJSONString()
-        
-        print("staffListReq",staffListReq.toJSON())
-        staffListRequests.call_request(param: staffListReqstr!){ [self]
-            (res) in
-
-            print("resres",res)
-            let getattendace : staffListModal = Mapper<staffListModal>().map(JSONString: res)!
-
-
-            if getattendace.status == 1  {
-                stafflistdata = getattendace.data
-                stafNameLbl.text = stafflistdata[0].staffName
-                memberId = (stafflistdata[0].staffId)
-                
-            }else{
+        APiCallManager.shared.callApi(url: APIEndpoints.GetStaffListforBiometric, httpMethod: .post, queryParam: nil, requestBody: staffListReq) { [weak self] (result:Result<staffListModal,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case . success(let getattendace):
+                if getattendace.status == 1  {
+                    stafflistdata = getattendace.data ?? []
+                    stafNameLbl.text = stafflistdata[0].staffName
+                    memberId = (stafflistdata[0].staffId)
+                    
+                }else{
 
 
+                }
+            case . failure(let error):
+                print("Error: \(error.localizedDescription)")
             }
         }
-        
         
     }
     
@@ -670,7 +650,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
             
             
-            filtered_list = Mapper<GetHirstorydatadetails>().mapArray(JSONString: searchtodayHistiry.toJSONString()!)!
+            filtered_list = searchtodayHistiry
             
             
             
@@ -678,17 +658,10 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             
             
             if !searchText.isEmpty{
-                
+                let search = searchText.lowercased()
                 getHistorydata = filtered_list.filter {
-                    
-                    
-                    
-                    $0.staffName.lowercased().contains(searchText.lowercased())
-                    //
+                    ($0.staffName ?? "").lowercased().contains(search)
                 }
-                
-                
-                
             }else{
                 
                

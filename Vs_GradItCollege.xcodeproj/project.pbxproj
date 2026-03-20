@@ -527,13 +527,9 @@
 		8434F2DE2CBCD538009BA2B0 /* deleteVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8434F2CA2CBCD538009BA2B0 /* deleteVc.xib */; };
 		8434F2DF2CBCD538009BA2B0 /* PunchHistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8434F2B32CBCD538009BA2B0 /* PunchHistTableViewCell.xib */; };
 		8434F2E02CBCD538009BA2B0 /* deleteTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8434F2B02CBCD538009BA2B0 /* deleteTV.xib */; };
-		8434F2E12CBCD538009BA2B0 /* GetLocationReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2BB2CBCD538009BA2B0 /* GetLocationReq.swift */; };
 		8434F2E22CBCD538009BA2B0 /* DeleteResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2C52CBCD538009BA2B0 /* DeleteResp.swift */; };
-		8434F2E32CBCD538009BA2B0 /* fechLocationResq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2B72CBCD538009BA2B0 /* fechLocationResq.swift */; };
 		8434F2E42CBCD538009BA2B0 /* LocationHistoryVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2CC2CBCD538009BA2B0 /* LocationHistoryVc.swift */; };
 		8434F2E52CBCD538009BA2B0 /* PunchHistryReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2BC2CBCD538009BA2B0 /* PunchHistryReq.swift */; };
-		8434F2E62CBCD538009BA2B0 /* DeleteReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2B92CBCD538009BA2B0 /* DeleteReq.swift */; };
-		8434F2E72CBCD538009BA2B0 /* StaffListReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2BA2CBCD538009BA2B0 /* StaffListReq.swift */; };
 		8434F2E82CBCD538009BA2B0 /* CreateLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2CF2CBCD538009BA2B0 /* CreateLocationViewController.swift */; };
 		8434F2E92CBCD538009BA2B0 /* EditLocResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2C72CBCD538009BA2B0 /* EditLocResp.swift */; };
 		8434F2EA2CBCD538009BA2B0 /* GetLocationResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2C42CBCD538009BA2B0 /* GetLocationResp.swift */; };
@@ -544,8 +540,6 @@
 		8434F2EF2CBCD538009BA2B0 /* deleteVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2C92CBCD538009BA2B0 /* deleteVc.swift */; };
 		8434F2F02CBCD538009BA2B0 /* HistoryResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2C22CBCD538009BA2B0 /* HistoryResp.swift */; };
 		8434F2F12CBCD538009BA2B0 /* PunchHistryResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2C62CBCD538009BA2B0 /* PunchHistryResp.swift */; };
-		8434F2F22CBCD538009BA2B0 /* locationReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2B62CBCD538009BA2B0 /* locationReq.swift */; };
-		8434F2F32CBCD538009BA2B0 /* PunchReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2B52CBCD538009BA2B0 /* PunchReq.swift */; };
 		8434F2F42CBCD538009BA2B0 /* fechLocationResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2C32CBCD538009BA2B0 /* fechLocationResp.swift */; };
 		8434F2F52CBCD538009BA2B0 /* PunchHistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2B22CBCD538009BA2B0 /* PunchHistTableViewCell.swift */; };
 		8434F2F62CBCD538009BA2B0 /* deleteTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2B12CBCD538009BA2B0 /* deleteTV.swift */; };
@@ -553,7 +547,6 @@
 		8434F2F82CBCD538009BA2B0 /* punchResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2BF2CBCD538009BA2B0 /* punchResp.swift */; };
 		8434F2F92CBCD538009BA2B0 /* StaffListResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2C12CBCD538009BA2B0 /* StaffListResp.swift */; };
 		8434F2FA2CBCD538009BA2B0 /* EditLocReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2BD2CBCD538009BA2B0 /* EditLocReq.swift */; };
-		8434F2FB2CBCD538009BA2B0 /* HistoryReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2B82CBCD538009BA2B0 /* HistoryReq.swift */; };
 		8434F2FD2CBCD599009BA2B0 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2FC2CBCD599009BA2B0 /* UIImage+Gif.swift */; };
 		843DA5AF2F5BF0A20080102D /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DA5AE2F5BF09A0080102D /* RequestModel.swift */; };
 		8444FE992D1D2C8E00FC936C /* CommonAwsUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8444FE982D1D2C6800FC936C /* CommonAwsUpload.swift */; };
@@ -1355,13 +1348,6 @@
 		8434F2B12CBCD538009BA2B0 /* deleteTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deleteTV.swift; sourceTree = "<group>"; };
 		8434F2B22CBCD538009BA2B0 /* PunchHistTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistTableViewCell.swift; sourceTree = "<group>"; };
 		8434F2B32CBCD538009BA2B0 /* PunchHistTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PunchHistTableViewCell.xib; sourceTree = "<group>"; };
-		8434F2B52CBCD538009BA2B0 /* PunchReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchReq.swift; sourceTree = "<group>"; };
-		8434F2B62CBCD538009BA2B0 /* locationReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = locationReq.swift; sourceTree = "<group>"; };
-		8434F2B72CBCD538009BA2B0 /* fechLocationResq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fechLocationResq.swift; sourceTree = "<group>"; };
-		8434F2B82CBCD538009BA2B0 /* HistoryReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryReq.swift; sourceTree = "<group>"; };
-		8434F2B92CBCD538009BA2B0 /* DeleteReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteReq.swift; sourceTree = "<group>"; };
-		8434F2BA2CBCD538009BA2B0 /* StaffListReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffListReq.swift; sourceTree = "<group>"; };
-		8434F2BB2CBCD538009BA2B0 /* GetLocationReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLocationReq.swift; sourceTree = "<group>"; };
 		8434F2BC2CBCD538009BA2B0 /* PunchHistryReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistryReq.swift; sourceTree = "<group>"; };
 		8434F2BD2CBCD538009BA2B0 /* EditLocReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocReq.swift; sourceTree = "<group>"; };
 		8434F2BF2CBCD538009BA2B0 /* punchResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = punchResp.swift; sourceTree = "<group>"; };
@@ -4316,13 +4302,6 @@
 		8434F2BE2CBCD538009BA2B0 /* LocationRequest */ = {
 			isa = PBXGroup;
 			children = (
-				8434F2B52CBCD538009BA2B0 /* PunchReq.swift */,
-				8434F2B62CBCD538009BA2B0 /* locationReq.swift */,
-				8434F2B72CBCD538009BA2B0 /* fechLocationResq.swift */,
-				8434F2B82CBCD538009BA2B0 /* HistoryReq.swift */,
-				8434F2B92CBCD538009BA2B0 /* DeleteReq.swift */,
-				8434F2BA2CBCD538009BA2B0 /* StaffListReq.swift */,
-				8434F2BB2CBCD538009BA2B0 /* GetLocationReq.swift */,
 				8434F2BC2CBCD538009BA2B0 /* PunchHistryReq.swift */,
 				8434F2BD2CBCD538009BA2B0 /* EditLocReq.swift */,
 			);
@@ -5593,13 +5572,9 @@
 				849009852B9594C600FC28DF /* NotSubmitTableViewCell.swift in Sources */,
 				FA1B2BED2EFE74E0005A3658 /* FilePickerHelper.swift in Sources */,
 				84999CF42B60183A00D7C256 /* CommuniSMSViewController.swift in Sources */,
-				8434F2E12CBCD538009BA2B0 /* GetLocationReq.swift in Sources */,
 				8434F2E22CBCD538009BA2B0 /* DeleteResp.swift in Sources */,
-				8434F2E32CBCD538009BA2B0 /* fechLocationResq.swift in Sources */,
 				8434F2E42CBCD538009BA2B0 /* LocationHistoryVc.swift in Sources */,
 				8434F2E52CBCD538009BA2B0 /* PunchHistryReq.swift in Sources */,
-				8434F2E62CBCD538009BA2B0 /* DeleteReq.swift in Sources */,
-				8434F2E72CBCD538009BA2B0 /* StaffListReq.swift in Sources */,
 				8434F2E82CBCD538009BA2B0 /* CreateLocationViewController.swift in Sources */,
 				8434F2E92CBCD538009BA2B0 /* EditLocResp.swift in Sources */,
 				8434F2EA2CBCD538009BA2B0 /* GetLocationResp.swift in Sources */,
@@ -5610,8 +5585,6 @@
 				8434F2EF2CBCD538009BA2B0 /* deleteVc.swift in Sources */,
 				8434F2F02CBCD538009BA2B0 /* HistoryResp.swift in Sources */,
 				8434F2F12CBCD538009BA2B0 /* PunchHistryResp.swift in Sources */,
-				8434F2F22CBCD538009BA2B0 /* locationReq.swift in Sources */,
-				8434F2F32CBCD538009BA2B0 /* PunchReq.swift in Sources */,
 				8434F2F42CBCD538009BA2B0 /* fechLocationResp.swift in Sources */,
 				8434F2F52CBCD538009BA2B0 /* PunchHistTableViewCell.swift in Sources */,
 				8434F2F62CBCD538009BA2B0 /* deleteTV.swift in Sources */,
@@ -5620,7 +5593,6 @@
 				8434F2F82CBCD538009BA2B0 /* punchResp.swift in Sources */,
 				8434F2F92CBCD538009BA2B0 /* StaffListResp.swift in Sources */,
 				8434F2FA2CBCD538009BA2B0 /* EditLocReq.swift in Sources */,
-				8434F2FB2CBCD538009BA2B0 /* HistoryReq.swift in Sources */,
 				FAC773AE2E2790CF00DE2E11 /* ResumeGenerate_Resp.swift in Sources */,
 				FA9A86DC2E16547F0050B6A5 /* Resume_Api_Req.swift in Sources */,
 				84C38AA92B44EA95004CC3D5 /* ChatsCollectionViewCell.swift in Sources */,

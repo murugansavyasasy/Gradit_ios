@@ -7,55 +7,22 @@
 //
 
 import Foundation
-import ObjectMapper
 
-
-class AddloactionModal : Mappable{
+struct AddloactionModal : Codable{
     
-    var CollegeId : Int!
-    var userId : Int!
-    var location : String!
-    var longitude : String!
-    var latitude : String!
-    var distance : Int!
-   
-    init(){}
-    required init?(map: ObjectMapper.Map) {
-        
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        CollegeId <- map["CollegeId"]
-        userId <- map["userId"]
-        location <- map["location"]
-        longitude <- map["longitude"]
-        latitude <- map["latitude"]
-        distance <- map["distance"]
-        
-        
-    }
-    
+    var CollegeId : Int?
+    var userId : Int?
+    var location : String?
+    var longitude : String?
+    var latitude : String?
+    var distance : Int?
  
 }
 
 
-class addlocationResps : Mappable{
+struct addlocationResps : Codable{
     
-    var status : Int!
-    var message : String!
-    
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        
-        status <- map["status"]
-        message <- map["message"]
-    }
-    
-    
-    
-    
+    var status : Int?
+    var message : String?
+  
 }

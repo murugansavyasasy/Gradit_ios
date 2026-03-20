@@ -61,9 +61,9 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
         let data : GetLatModaldataDetails = getdata[indexPath.row]
         
        
-        cell.logidudeLbl.text = data.longitude + " - " + data.latitude
+        cell.logidudeLbl.text = (data.longitude ?? "") + " - " + (data.latitude ?? "")
         cell.locationLbl.text = data.location
-        cell.distanceLbl.text =  "Distance" +  " - " +  data.distance + "Meters"
+        cell.distanceLbl.text =  "Distance" +  " - " +  (data.distance ?? "") + "Meters"
 
         let deleteImage = Deleteclick(target: self, action: #selector(deletClick))
         deleteImage.deleteID = data.id
@@ -76,12 +76,6 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
         cell.editImageView.addGestureRecognizer(editImages)
      
         return cell
-        
-        
-        
-      
-        
-      
         
     }
     
@@ -171,50 +165,40 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func standerAndSec(){
         
        
-        let standerSec = deleteModal()
+        var standerSec = deleteModal()
         
         standerSec.CollegeId = InstitudeId
-    
         
-        var standerSecstr = standerSec.toJSONString()
-        
-       
-
-     
-
-        GetLocationReq.call_request(param: standerSecstr!){ [self]
-            (res) in
-
-            print("resres",res)
-            let getLocationResponse : getLatModel = Mapper<getLatModel>().map(JSONString: res)!
-
-
-            if getLocationResponse.status == 1  {
-              
-                getdata = getLocationResponse.data
-                
-                if getdata.count == 0{
+        APiCallManager.shared.callApi(url: APIEndpoints.GetBiometricLocationHistory, httpMethod: .post, queryParam: nil, requestBody: standerSec) { [weak self] (result:Result<getLatModel,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let getLocationResponse):
+                if getLocationResponse.status == 1  {
+                  
+                    getdata = getLocationResponse.data ?? []
                     
-                   
-                    noRecLbl.isHidden = false
-                    noRecLbl.text = "No record found."
+                    if getdata.count == 0{
+                        noRecLbl.isHidden = false
+                        noRecLbl.text = "No record found."
+                    }else{
+                        
+                        noRecLbl.isHidden = true
+                        
+                    }
+                    tv.isHidden  = false
+                    tv.dataSource = self
+                    tv.delegate = self
+                    tv.reloadData()
+
                 }else{
-                    
-                    noRecLbl.isHidden = true
-                    
+                    tv.isHidden  = true
+                    noRecLbl.isHidden = false
+                    noRecLbl.text = getLocationResponse.message
                 }
-                tv.isHidden  = false
-                tv.dataSource = self
-                tv.delegate = self
-                tv.reloadData()
-
-            }else{
-                tv.isHidden  = true
-                noRecLbl.isHidden = false
-                noRecLbl.text = getLocationResponse.message
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
             }
         }
-        
         
     }
     
@@ -222,52 +206,42 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         
         
-        let delet = deleteModal()
+        var delet = deleteModal()
         
         delet.CollegeId = InstitudeId
         delet.locationId = LocationId
-        
-        var deletstr = delet.toJSONString()
-        
-        
-        DeleteRequest.call_request(param: deletstr!) {
-        
-                        [self] (res) in
-        
-                        let addLocationResp : [punchResponce] = Mapper<punchResponce>().mapArray(JSONString: res)!
-        
-                        if addLocationResp[0].status == 1 {
-        
-                            noRecLbl.isHidden = true
-                            
-                            let refreshAlert = UIAlertController(title: "", message: addLocationResp[0].message, preferredStyle: UIAlertController.Style.alert)
-        
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                                standerAndSec()
-                            
-                                
-                                
-                            }))
-                        present(refreshAlert, animated: true, completion: nil)
-                        }else{
-        
-                            
-                            noRecLbl.isHidden = true
-                            
-                            let refreshAlert = UIAlertController(title: "", message: addLocationResp[0].message, preferredStyle: UIAlertController.Style.alert)
-        
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-        
-                          
-                                
-                                
-                            }))
-                        present(refreshAlert, animated: true, completion: nil)
-                        }
-        
-        
-        
-                    }
+
+        APiCallManager.shared.callApi(url: APIEndpoints.RemoveBiometricLocation, httpMethod: .post, queryParam: nil, requestBody: delet) { [weak self] (result:Result<punchResponce,Error>) in
+            guard let self = self else{return}
+            switch result{
+            case .success(let addLocationResp):
+                if addLocationResp.status == 1 {
+
+                    noRecLbl.isHidden = true
+                    
+                    let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
+
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+                        self.standerAndSec()
+                    }))
+                present(refreshAlert, animated: true, completion: nil)
+                }else{
+                    noRecLbl.isHidden = true
+                    
+                    let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
+
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+
+                  
+                        
+                        
+                    }))
+                present(refreshAlert, animated: true, completion: nil)
+                }
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+            }
+        }
     }
     
     

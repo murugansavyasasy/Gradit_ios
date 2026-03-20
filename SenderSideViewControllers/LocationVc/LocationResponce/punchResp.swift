@@ -9,48 +9,18 @@
 import Foundation
 import ObjectMapper
 
-class punchModal : Mappable{
+struct punchModal : Codable{
     
-    var UserId : Int!
-    var staff_or_student : String!
-    var CollegeId : Int!
+    var UserId : Int?
+    var staff_or_student : String?
+    var CollegeId : Int?
    
-    var  deviceId : String!
-    var punch_type : Int!
-    var device_model : String!
-
-
-    init(){}
-   
-    
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        UserId <- map["UserId"]
-        staff_or_student <- map["staff_or_student"]
-        CollegeId <- map["CollegeId"]
-        device_model <- map["device_model"]
-        punch_type <- map["punch_type"]
-        deviceId <- map["deviceId"]
-    }
-
+    var  deviceId : String?
+    var punch_type : Int?
+    var device_model : String?
 }
-class punchResponce : Mappable{
+struct punchResponce : Codable{
     
-    var status : Int!
-    var message : String!
-    
-    
-    required init?(map: ObjectMapper.Map) {
-        mapping(map: map)
-    }
-    
-    func mapping(map: ObjectMapper.Map) {
-        status <- map["status"]
-        message <- map["message"]
-    }
-    
-    
+    var status : Int?
+    var message : String?
 }
