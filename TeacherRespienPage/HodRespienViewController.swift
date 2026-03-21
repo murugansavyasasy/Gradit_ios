@@ -51,7 +51,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
     var eventParticulae : [EventParticularResponce] = []
     
     var sentEntierImagePdf : [sendImagePdfDataDetails] = []
-    var assigmentImagPdf : [assigmentImagePdfResponce] = []
+    var assigmentImagPdf : assigmentImagePdfResponce?
     var imagePdfEniter : [sendImagePdfPartiDataDetails] = []
     var sendVideoPart : [ParticularVideoUploadRespData] = []
     var voiceParticular : [VoiceParticalrDataDetails] = []
@@ -3215,7 +3215,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                 httpMethod: .post,
                 queryParam: nil,
                 requestBody: particular
-            ) { [weak self] (result: Result<[EventParticularResponce], Error>) in
+            ) { [weak self] (result: Result<EventParticularResponce, Error>) in
                 
                 guard let self = self else { return }
                 
@@ -3223,12 +3223,12 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                     
                 case .success(let response):
                     
-                    for i in response {
+                   
                         
-                        if i.Status == 1 {
+                        if response.Status == 1 {
                             KRProgressHUD.dismiss()
                             
-                            let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                            let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
                             
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                                 
@@ -3283,7 +3283,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             
                             KRProgressHUD.dismiss()
                             
-                            let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                            let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
                             
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                                 
@@ -3334,7 +3334,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             self.tv.delegate = self
                             self.tv.reloadData()
                         }
-                    }
+                    
                     
                 case .failure(let error):
                     KRProgressHUD.dismiss()
@@ -3349,20 +3349,18 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                 httpMethod: .post,
                 queryParam: nil,
                 requestBody: particular
-            ) { [weak self] (result: Result<[EventParticularResponce], Error>) in
+            ) { [weak self] (result: Result<EventParticularResponce, Error>) in
                 
                 guard let self = self else { return }
                 
                 switch result {
                     
                 case .success(let response):
-                    
-                    for i in response {
                         
-                        if i.Status == 1 {
+                        if response.Status == 1 {
                             KRProgressHUD.dismiss()
                             
-                            let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                            let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
                             
                             self.present(refreshAlert, animated: true)
@@ -3375,7 +3373,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             
                             KRProgressHUD.dismiss()
                             
-                            let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                            let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
                             
                             self.present(refreshAlert, animated: true)
@@ -3384,7 +3382,6 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             self.tv.delegate = self
                             self.tv.reloadData()
                         }
-                    }
                     
                 case .failure(let error):
                     KRProgressHUD.dismiss()
@@ -3434,21 +3431,19 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                 httpMethod: .post,
                 queryParam: nil,
                 requestBody: imagePdf
-            ) { [weak self] (result: Result<[assigmentImagePdfResponce], Error>) in
+            ) { [weak self] (result: Result<assigmentImagePdfResponce, Error>) in
                 
                 guard let self = self else { return }
                 
                 switch result {
                     
                 case .success(let particularss):
-                    
-                    for i in particularss{
                         
                         self.assigmentImagPdf = particularss
                         
-                        if i.Status == 1 {
+                        if particularss.Status == 1 {
                             
-                            _ = SweetAlert().showAlert("", subTitle: i.Message, style: .none, buttonTitle: "Ok", buttonColor: .gray) { [self] okclick in
+                            _ = SweetAlert().showAlert("", subTitle: particularss.Message, style: .none, buttonTitle: "Ok", buttonColor: .gray) { [self] okclick in
                                 
                                 if okclick {
                                     
@@ -3500,7 +3495,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             
                         } else {
                             
-                            _ = SweetAlert().showAlert("", subTitle: i.Message, style: .none, buttonTitle: "Ok", buttonColor: .gray) { [self] okclick in
+                            _ = SweetAlert().showAlert("", subTitle: particularss.Message, style: .none, buttonTitle: "Ok", buttonColor: .gray) { [self] okclick in
                                 
                                 if okclick {
                                     
@@ -3550,7 +3545,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             tv.delegate = self
                             tv.reloadData()
                         }
-                    }
+                    
                     
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -3597,19 +3592,18 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                 httpMethod: .post,
                 queryParam: nil,
                 requestBody: imagePdf
-            ) { [weak self] (result: Result<[assigmentImagePdfResponce], Error>) in
+            ) { [weak self] (result: Result<assigmentImagePdfResponce, Error>) in
                 
                 guard let self = self else { return }
                 
                 switch result {
                     
                 case .success(let particularss):
-                    
-                    for i in particularss{
+                   
                         
                         self.assigmentImagPdf = particularss
                         
-                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                        let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: .alert)
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
@@ -3659,7 +3653,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                         self.tv.dataSource = self
                         self.tv.delegate = self
                         self.tv.reloadData()
-                    }
+                    
                     
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -3710,7 +3704,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                 httpMethod: .post,
                 queryParam: nil,
                 requestBody: imagePdf
-            ) { [weak self] (result: Result<[assigmentImagePdfResponce], Error>) in
+            ) { [weak self] (result: Result<assigmentImagePdfResponce, Error>) in
                 
                 guard let self = self else { return }
                 
@@ -3718,13 +3712,13 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                     
                 case .success(let particularss):
                     
-                    for i in particularss{
+                   
                         
                         self.assigmentImagPdf = particularss
                         
-                        if i.Status == 1 {
+                        if particularss.Status == 1 {
                             
-                            _ = SweetAlert().showAlert("", subTitle: i.Message, style: .none, buttonTitle: "Ok", buttonColor: .gray) { [self] okclick in
+                            _ = SweetAlert().showAlert("", subTitle: particularss.Message, style: .none, buttonTitle: "Ok", buttonColor: .gray) { [self] okclick in
                                 
                                 if okclick {
                                     
@@ -3776,7 +3770,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             
                         } else {
                             
-                            _ = SweetAlert().showAlert("", subTitle: i.Message, style: .none, buttonTitle: "Ok", buttonColor: .gray) { [self] okclick in
+                            _ = SweetAlert().showAlert("", subTitle: particularss.Message, style: .none, buttonTitle: "Ok", buttonColor: .gray) { [self] okclick in
                                 
                                 if okclick {
                                     
@@ -3826,7 +3820,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             tv.delegate = self
                             tv.reloadData()
                         }
-                    }
+                    
                     
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -3872,19 +3866,17 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                 httpMethod: .post,
                 queryParam: nil,
                 requestBody: imagePdf
-            ) { [weak self] (result: Result<[assigmentImagePdfResponce], Error>) in
+            ) { [weak self] (result: Result<assigmentImagePdfResponce, Error>) in
                 
                 guard let self = self else { return }
                 
                 switch result {
                     
                 case .success(let particularss):
-                    
-                    for i in particularss{
                         
                         self.assigmentImagPdf = particularss
                         
-                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                        let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: .alert)
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
@@ -3934,7 +3926,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                         self.tv.dataSource = self
                         self.tv.delegate = self
                         self.tv.reloadData()
-                    }
+                    
                     
                 case .failure(let error):
                     print(error.localizedDescription)

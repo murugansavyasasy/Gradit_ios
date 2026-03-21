@@ -114,6 +114,8 @@ struct APIEndpoints {
     static let resume_saveTitleResume = "resume/saveTitleResume"
     static let get_profileresume = "get/profileresume"
     static let get_uploadresume = "get/uploadresume"
+    static let UpdateBiometricLocation = "UpdateBiometricLocation"
+    static let GetBiometricPunchHistory = "GetBiometricPunchHistory"
     
     
     

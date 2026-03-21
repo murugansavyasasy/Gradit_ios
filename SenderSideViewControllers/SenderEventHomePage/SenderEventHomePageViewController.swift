@@ -918,6 +918,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         //                vc.previousAdId = PreviousAddId
         vc.backGroundImageUrl = backGroundImg
         vc.smallImageUrl = SmallImgAdd
+        vc.addWebUrl = addapiRef.first?.add_url
         vc.headerId = gesture.headerId
         vc.str = str
         vc.strName = strName
@@ -1125,6 +1126,8 @@ func addApi(){
                 
                 for i in addapiRef{
                   
+                    backGroundImg = i.background_image ?? ""
+                    SmallImgAdd = i.add_image ?? ""
                     bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
                     
                     smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))

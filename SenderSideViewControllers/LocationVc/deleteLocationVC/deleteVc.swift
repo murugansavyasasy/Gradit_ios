@@ -21,14 +21,14 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     var  collegeId : Int!
     var  memberId : Int!
- 
+    
     @IBOutlet weak var backView: UIView!
     var getdata : [GetLatModaldataDetails] = []
     
     @IBOutlet weak var tv: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         noRecLbl.isHidden = true
         let rowNib = UINib(nibName: identifier, bundle: nil)
@@ -40,14 +40,14 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
         backView.addGestureRecognizer(back)
         standerAndSec()
     }
-
+    
     
     @IBAction func backViewss(){
         
         dismiss(animated: true)
         
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return getdata.count
@@ -60,21 +60,21 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
         cell.selectionStyle = .none
         let data : GetLatModaldataDetails = getdata[indexPath.row]
         
-       
+        
         cell.logidudeLbl.text = (data.longitude ?? "") + " - " + (data.latitude ?? "")
         cell.locationLbl.text = data.location
         cell.distanceLbl.text =  "Distance" +  " - " +  (data.distance ?? "") + "Meters"
-
+        
         let deleteImage = Deleteclick(target: self, action: #selector(deletClick))
         deleteImage.deleteID = data.id
         cell.deleteImageView.addGestureRecognizer(deleteImage)
         let editImages = Deleteclick(target: self, action: #selector(Edit))
-      
+        
         editImages.deleteID = data.id
         editImages.distance = data.distance
         editImages.location = data.location
         cell.editImageView.addGestureRecognizer(editImages)
-     
+        
         return cell
         
     }
@@ -85,74 +85,74 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         
         let alertController = UIAlertController(title: "Update", message: "Please enter your details", preferredStyle: .alert)
-                
-                // Add the first text field
-                alertController.addTextField { (textField) in
-                    textField.placeholder = "Enter your location name"
-                    textField.text = ges.location
-                }
-                
-                // Add the second text field
-                alertController.addTextField { (textField) in
-                    textField.placeholder = "Enter your distance"
-                    textField.text = ges.distance
-                }
-                
-                // Create the actions (OK and Cancel)
-        let confirmAction = UIAlertAction(title: "Update", style: .default) { [self] (_) in
-                    // Retrieve the text from the two text fields
-                    if let location = alertController.textFields?[0].text, let distance = alertController.textFields?[1].text {
-                        print("location Name: \(location)")
-                        print("distance Name: \(distance)")
-                        
-                        
-                        if distance != "" && location != ""{
-                            
-                            
-                            edit(Id: ges.deleteID, Distance: distance, Location: location)
-                        }else{
-                            
-                            let refreshAlert = UIAlertController(title: "", message: "Location or distance field is empty", preferredStyle: UIAlertController.Style.alert)
         
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                           
-                            }))
-                        present(refreshAlert, animated: true, completion: nil)
-                            
-                        }
-                  
-                    }
+        // Add the first text field
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Enter your location name"
+            textField.text = ges.location
+        }
+        
+        // Add the second text field
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Enter your distance"
+            textField.text = ges.distance
+        }
+        
+        // Create the actions (OK and Cancel)
+        let confirmAction = UIAlertAction(title: "Update", style: .default) { [self] (_) in
+            // Retrieve the text from the two text fields
+            if let location = alertController.textFields?[0].text, let distance = alertController.textFields?[1].text {
+                print("location Name: \(location)")
+                print("distance Name: \(distance)")
+                
+                
+                if distance != "" && location != ""{
+                    
+                    
+                    edit(Id: ges.deleteID, Distance: distance, Location: location)
+                }else{
+                    
+                    let refreshAlert = UIAlertController(title: "", message: "Location or distance field is empty", preferredStyle: UIAlertController.Style.alert)
+                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+                        
+                    }))
+                    present(refreshAlert, animated: true, completion: nil)
+                    
                 }
                 
-                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                
-                // Add the actions to the alert
-                alertController.addAction(confirmAction)
-                alertController.addAction(cancelAction)
-                
-                // Present the alert
-                self.present(alertController, animated: true, completion: nil)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        // Add the actions to the alert
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        
+        // Present the alert
+        self.present(alertController, animated: true, completion: nil)
     }
     @IBAction func deletClick(ges : Deleteclick){
         
         
         let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to delete this Loacation", preferredStyle: UIAlertController.Style.alert)
-
+        
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-
-
-      
+            
+            
+            
             deletApi(LocationId : ges.deleteID)
-      
+            
         }))
-
-
+        
+        
         refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-        print("Handle Cancel Logic here")
+            print("Handle Cancel Logic here")
         }))
-
+        
         present(refreshAlert, animated: true, completion: nil)
-
+        
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -164,7 +164,7 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     func standerAndSec(){
         
-       
+        
         var standerSec = deleteModal()
         
         standerSec.CollegeId = InstitudeId
@@ -174,7 +174,7 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
             switch result{
             case .success(let getLocationResponse):
                 if getLocationResponse.status == 1  {
-                  
+                    
                     getdata = getLocationResponse.data ?? []
                     
                     if getdata.count == 0{
@@ -189,7 +189,7 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
                     tv.dataSource = self
                     tv.delegate = self
                     tv.reloadData()
-
+                    
                 }else{
                     tv.isHidden  = true
                     noRecLbl.isHidden = false
@@ -210,33 +210,33 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         delet.CollegeId = InstitudeId
         delet.locationId = LocationId
-
-        APiCallManager.shared.callApi(url: APIEndpoints.RemoveBiometricLocation, httpMethod: .post, queryParam: nil, requestBody: delet) { [weak self] (result:Result<punchResponce,Error>) in
+        
+        APiCallManager.shared.callApi(url: APIEndpoints.RemoveBiometricLocation, httpMethod: .post, queryParam: nil, requestBody: delet) { [weak self] (result:Result<[punchResponce],Error>) in
             guard let self = self else{return}
             switch result{
             case .success(let addLocationResp):
-                if addLocationResp.status == 1 {
-
+                if addLocationResp.first?.status == 1 {
+                    
                     noRecLbl.isHidden = true
                     
-                    let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
-
+                    let refreshAlert = UIAlertController(title: "", message: addLocationResp.first?.message, preferredStyle: UIAlertController.Style.alert)
+                    
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
                         self.standerAndSec()
                     }))
-                present(refreshAlert, animated: true, completion: nil)
+                    present(refreshAlert, animated: true, completion: nil)
                 }else{
                     noRecLbl.isHidden = true
                     
-                    let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
-
+                    let refreshAlert = UIAlertController(title: "", message: addLocationResp.first?.message, preferredStyle: UIAlertController.Style.alert)
+                    
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-
-                  
+                        
+                        
                         
                         
                     }))
-                present(refreshAlert, animated: true, completion: nil)
+                    present(refreshAlert, animated: true, completion: nil)
                 }
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
@@ -247,62 +247,50 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     func  edit(Id : Int,Distance : String,Location : String){
         
-        
-        
-        let edit = EditLocModal()
-        
+        var edit = EditLocModal()
         
         edit.biometric_location_id = Id
         edit.distance = Distance
         edit.location = Location
         edit.UserId = userId
         
-    
-        
-        var editstr = edit.toJSONString()
-        
-        print(" edit.toJSONString()", edit.toJSON())
-        EditLocrequest.call_request(param: editstr!) {
-        
-                        [self] (res) in
-        
-                        let addLocationResp : [EditLocResponce] = Mapper<EditLocResponce>().mapArray(JSONString: res)!
-        
-                        if addLocationResp[0].status == 1 {
-        
-                            noRecLbl.isHidden = true
-                            
-                            let refreshAlert = UIAlertController(title: "", message:  addLocationResp[0].message, preferredStyle: UIAlertController.Style.alert)
-        
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                                standerAndSec()
-                            
-                                
-                                
-                            }))
-                        present(refreshAlert, animated: true, completion: nil)
-                        }else{
-        
-                            
-                            noRecLbl.isHidden = true
-                            
-                            let refreshAlert = UIAlertController(title: "", message:  addLocationResp[0].message, preferredStyle: UIAlertController.Style.alert)
-        
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-        
-                          
-                                
-                                
-                            }))
-                        present(refreshAlert, animated: true, completion: nil)
-                        }
-        
-        
-        
+        APiCallManager.shared.callApi(
+                url: APIEndpoints.UpdateBiometricLocation,
+                httpMethod: .post,
+                queryParam: nil,
+                requestBody: edit
+        ) {[weak self] (result:Result<EditLocResponce, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let success):
+                
+                noRecLbl.isHidden = success.status == 1 ? true : false
+                
+                let refreshAlert = UIAlertController(title: "", message: success.message, preferredStyle: UIAlertController.Style.alert)
+                
+                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
+                    
+                    if success.status == 1 {
+                        self?.standerAndSec()
                     }
+                    
+                }))
+                present(refreshAlert, animated: true, completion: nil)
+                
+            case .failure(let failure):
+                print("Error:",failure.localizedDescription)
+                let refreshAlert = UIAlertController(title: "", message: failure.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                
+                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                    
+                }))
+                present(refreshAlert, animated: true, completion: nil)
+            }
+            
+        }
     }
-    
-    
     
 }
 

@@ -328,8 +328,7 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 
-                
-                UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
+
                 
             }))
             

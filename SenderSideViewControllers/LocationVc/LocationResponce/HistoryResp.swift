@@ -32,13 +32,13 @@ struct GethistoryModal : Codable{
 
 struct GetHirstorydatadetails : Codable{
      
-    var staffName : String?
-    var date : String?
+    var staff_name : String?
+    var attendance_dt : String?
     var leave_type : String?
     var attendance_type : String?
     var in_time : String?
     var out_time : String?
-    var working_hours : String?
-    var staffId : Int?
+    var working_hours : Int?
+    var staff_id : Int?
   
 }

@@ -16,17 +16,10 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
     
     @IBOutlet weak var exameTopicDefaultLbl: UILabel!
     @IBOutlet weak var redirectLoginView: UIViewX!
-    @IBOutlet weak var datePickerSet: UIDatePicker!
     
     @IBOutlet weak var Tv: UITableView!
     
-    @IBOutlet weak var datePickerView: UIView!
-    
     @IBOutlet weak var confirmView: UIView!
-    
-    
-    
-    @IBOutlet weak var TopTv: UITableView!
     @IBOutlet weak var nodataView: UIView!
     
     @IBOutlet weak var noDataLabel: UILabel!
@@ -34,20 +27,11 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
     
     @IBOutlet weak var loginView: UIView!
     @IBOutlet weak var topLabels: UILabel!
-    
-    
-    @IBOutlet weak var profileView: UIView!
-    
     @IBOutlet weak var viewTap: UIView!
-    
     @IBOutlet weak var clgLogoImg: UIImageView!
     @IBOutlet weak var topMessageLabel: UILabel!
-    
-    
-    
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
-    @IBOutlet weak var adView: UIView!
     
     @IBOutlet weak var changeRolesView: UIView!
     
@@ -225,16 +209,7 @@ class GetSectionAndViewController: UIViewController,UITableViewDelegate,UITableV
         }
         
         
-        
-        
-        
-        
-        
         print("nklnkl;hjkln",examEditsModalApi1.count)
-        
-        
-        
-        
         
         
         bigImg.sd_setImage(with: URL(string: addImageBackGroundurl), placeholderImage: UIImage(named: "ic_white"))

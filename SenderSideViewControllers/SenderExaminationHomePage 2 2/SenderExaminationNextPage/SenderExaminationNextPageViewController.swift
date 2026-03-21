@@ -808,6 +808,9 @@ class SenderExaminationNextPageViewController: UIViewController, UITableViewDele
                     addapiRef = success.data ?? []
                     
                     for i in addapiRef{
+                        
+                        addImageBackGroundurl = i.background_image ?? ""
+                        smallimagUrl = i.add_image ?? ""
                       
                         bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
                         

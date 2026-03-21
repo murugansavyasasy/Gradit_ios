@@ -8,6 +8,7 @@
 import UIKit
 import ObjectMapper
 
+@available(iOS 16.0, *)
 class ChangePasswordViewController: UIViewController,UITextFieldDelegate {
     
     
@@ -101,9 +102,6 @@ class ChangePasswordViewController: UIViewController,UITextFieldDelegate {
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
                         
-                        UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
-                        
-                        
                         
                         
                     }))
@@ -128,7 +126,6 @@ class ChangePasswordViewController: UIViewController,UITextFieldDelegate {
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
                         
-                        UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
                         
                         
                         
@@ -151,8 +148,7 @@ class ChangePasswordViewController: UIViewController,UITextFieldDelegate {
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
-                        
-                        UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
+
                         
                         
                         
@@ -173,8 +169,6 @@ class ChangePasswordViewController: UIViewController,UITextFieldDelegate {
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
-                        
-                        UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
                         
                         
                         
@@ -202,7 +196,7 @@ class ChangePasswordViewController: UIViewController,UITextFieldDelegate {
         else{
             
             let defaults = UserDefaults.standard
-            var getmobil = defaults.string(forKey: DefaultsKeys.mobileNumber)
+            let getmobil = defaults.string(forKey: DefaultsKeys.mobileNumber)
             var changepass = chageModal()
             
             changepass.mobilenumber = getmobil
@@ -225,6 +219,13 @@ class ChangePasswordViewController: UIViewController,UITextFieldDelegate {
                     let refreshAlert = UIAlertController(title: "", message: changePassRess.Message , preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                       let vc =  LoginViewController()
+                        vc.mobile_num = defaults.string(forKey: DefaultsKeys.mobileNumber)
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                        
+                        
                         
                     }))
                     

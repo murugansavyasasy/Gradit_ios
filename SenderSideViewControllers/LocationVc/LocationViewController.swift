@@ -831,16 +831,16 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
         cell.toDateLbl.isHidden = false
         let data : GetHirstorydatadetails = getHistorydata[indexPath.row]
         
-        cell.namelbl.text = data.staffName
+        cell.namelbl.text = data.staff_name
         
-        cell.workingHrsLbl.text = "Working Hours - \(data.working_hours ?? "0")"
+        cell.workingHrsLbl.text = "Working Hours - \(data.working_hours ?? 0)"
         
        
         
         cell.StatusLbl.layer.cornerRadius = 5
         cell.StatusLbl.layer.masksToBounds = true
         
-        let eventDate = data.date
+        let eventDate = data.attendance_dt
         let dateFormatter = DateFormatter()
         // Input format
         dateFormatter.dateFormat = "dd/MM/yyyy"
@@ -877,7 +877,7 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             
         }else{
-            cell.namelbl.text = data.staffName
+            cell.namelbl.text = data.staff_name
             
             cell.StatusLbl.backgroundColor  = UIColor(named: "presentGreen")
             cell.attendanceTypeLbl.text = data.attendance_type
@@ -891,8 +891,8 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
             cell.firstInLbl.isHidden = true
         }
         
-        cell.namelbl.text = data.staffName
-        if data.working_hours ?? "" == "" {
+        cell.namelbl.text = data.staff_name
+        if data.working_hours ?? 0 == 0 {
             cell.workingHrsLbl.isHidden = true
         }
         cell.toDateLbl.text = "Last out - \(data.out_time ?? "0")"
@@ -901,12 +901,12 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
         cell.attendanceTypeLbl.text = data.attendance_type
         cell.namelbl.text =
-            data.staffName
+            data.staff_name
     
         
         let click = imageClick(target: self, action: #selector(click))
-        click.date = data.date
-        click.staffId = data.staffId
+        click.date = data.attendance_dt
+        click.staffId = data.staff_id
        
         cell.fullView.addGestureRecognizer(click)
         return cell
@@ -941,13 +941,13 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
         punchModal.punch_type = punch_type
         punchModal.deviceId = myOtherVariable
         punchModal.device_model = device
-        APiCallManager.shared.callApi(url: APIEndpoints.BiometricEntryusingApp, httpMethod: .post, queryParam: nil, requestBody: punchModal) { [weak self] (result :Result<punchResponce,Error>) in
+        APiCallManager.shared.callApi(url: APIEndpoints.BiometricEntryusingApp, httpMethod: .post, queryParam: nil, requestBody: punchModal) { [weak self] (result :Result<[punchResponce],Error>) in
             guard let self = self else{return}
             switch result {
             case .success(let PunchRes):
-                if PunchRes.status == 1 {
+                if PunchRes.first?.status == 1 {
                     
-                    let refreshAlert = UIAlertController(title: "", message: PunchRes.message, preferredStyle: UIAlertController.Style.alert)
+                    let refreshAlert = UIAlertController(title: "", message: PunchRes.first?.message, preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
                         
@@ -958,7 +958,7 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 }else{
                     
                     
-                    let refreshAlert = UIAlertController(title: "", message: PunchRes.message, preferredStyle: UIAlertController.Style.alert)
+                    let refreshAlert = UIAlertController(title: "", message: PunchRes.first?.message, preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
                         

@@ -261,13 +261,13 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate {
         addLocationModal.userId = memberId
         
         addLocationModal.distance = Int(distanceTextfiled.text!)
-        APiCallManager.shared.callApi(url: APIEndpoints.SetBiometricLocation, httpMethod: .post, queryParam: nil, requestBody: addLocationModal) { [weak self] (result:Result<punchResponce,Error>) in
+        APiCallManager.shared.callApi(url: APIEndpoints.SetBiometricLocation, httpMethod: .post, queryParam: nil, requestBody: addLocationModal) { [weak self] (result:Result<[punchResponce],Error>) in
             guard let self = self else{return}
             switch result{
             case . success(let addLocationResp):
-                if addLocationResp.status == 1 {
+                if addLocationResp.first?.status == 1 {
 
-                    let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
+                    let refreshAlert = UIAlertController(title: "", message: addLocationResp.first?.message, preferredStyle: UIAlertController.Style.alert)
 
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
 
@@ -278,7 +278,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate {
                 present(refreshAlert, animated: true, completion: nil)
                 }else{
                     
-                    let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
+                    let refreshAlert = UIAlertController(title: "", message: addLocationResp.first?.message, preferredStyle: UIAlertController.Style.alert)
 
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
 

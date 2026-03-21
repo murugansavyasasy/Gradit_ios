@@ -31,7 +31,7 @@ class HodSelectResipenceViewController: UIViewController {
     var entierRefName : [EntiercollegeDataDetails] = []
     var particularSms : NoticePArticularResponce?
     var imagePdfEniter : [sendImagePdfDataDetails] = []
-    var assigmentImagPdf : [assigmentImagePdfResponce] = []
+    var assigmentImagPdf : assigmentImagePdfResponce?
     var titlesTextField : String!
     var discreptionss : String!
     var resivre : String!
@@ -895,7 +895,7 @@ class HodSelectResipenceViewController: UIViewController {
             httpMethod: .post,
             queryParam: nil,
             requestBody: particular
-        ) { [weak self] (result: Result<[EventParticularResponce], Error>) in
+        ) { [weak self] (result: Result<EventParticularResponce, Error>) in
             
             guard let self = self else { return }
             
@@ -903,13 +903,12 @@ class HodSelectResipenceViewController: UIViewController {
                 
             case .success(let particularResponse):
                 
-                for i in particularResponse {
                     
-                    if i.Status == 1 {
+                    if particularResponse.Status == 1 {
                         
                         let refreshAlert = UIAlertController(
                             title: "",
-                            message: i.Message,
+                            message: particularResponse.Message,
                             preferredStyle: .alert
                         )
                         
@@ -938,7 +937,7 @@ class HodSelectResipenceViewController: UIViewController {
                         
                         let refreshAlert = UIAlertController(
                             title: "",
-                            message: i.Message,
+                            message: particularResponse.Message,
                             preferredStyle: .alert
                         )
                         
@@ -963,7 +962,6 @@ class HodSelectResipenceViewController: UIViewController {
                         
                         self.reloadInputViews()
                     }
-                }
                 
             case .failure(let error):
                 print(error.localizedDescription)
@@ -1085,7 +1083,7 @@ class HodSelectResipenceViewController: UIViewController {
             httpMethod: .post,
             queryParam: nil,
             requestBody: imagePdf
-        ) { [weak self] (result: Result<[assigmentImagePdfResponce], Error>) in
+        ) { [weak self] (result: Result<assigmentImagePdfResponce, Error>) in
             
             guard let self = self else { return }
             
@@ -1093,13 +1091,12 @@ class HodSelectResipenceViewController: UIViewController {
                 
             case .success(let particularss):
                 
-                for i in particularss{
                     
                     self.assigmentImagPdf = particularss
                     
                     let refreshAlert = UIAlertController(
                         title: "",
-                        message: i.Message,
+                        message: particularss.Message,
                         preferredStyle: .alert
                     )
                     
@@ -1124,7 +1121,7 @@ class HodSelectResipenceViewController: UIViewController {
                     self.present(refreshAlert, animated: true)
                     
                     self.reloadInputViews()
-                }
+                
                 
             case .failure(let error):
                 print(error.localizedDescription)

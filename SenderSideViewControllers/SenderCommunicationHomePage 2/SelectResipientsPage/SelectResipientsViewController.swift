@@ -3883,19 +3883,17 @@ func CommunicationEntierSms(){
             httpMethod: .post,
             queryParam: nil,
             requestBody: particular
-        ) { [weak self] (result: Result<[EventParticularResponce], Error>) in
+        ) { [weak self] (result: Result<EventParticularResponce, Error>) in
             
             guard let self = self else { return }
             
             switch result {
                 
             case .success(let response):
-                
-                for i in response{
                     
-                    if i.Status == 1 {
+                    if response.Status == 1 {
                         
-                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                        let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
@@ -3935,7 +3933,7 @@ func CommunicationEntierSms(){
                         
                     } else {
                         
-                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                        let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
@@ -3973,7 +3971,6 @@ func CommunicationEntierSms(){
                         self.tv.delegate = self
                         self.tv.reloadData()
                     }
-                }
                 
             case .failure(let error):
                 print(error.localizedDescription)
@@ -5391,7 +5388,7 @@ func SendSmsToParticular() {
             httpMethod: .post,
             queryParam: nil,
             requestBody: particular
-        ) { [weak self] (result: Result<[EventParticularResponce], Error>) in
+        ) { [weak self] (result: Result<EventParticularResponce, Error>) in
             
             guard let self = self else { return }
             
@@ -5399,11 +5396,11 @@ func SendSmsToParticular() {
                 
             case .success(let response):
                 
-                for i in response {
+               
                     
-                    if i.Status == 1 {
+                    if response.Status == 1 {
                         
-                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                        let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
@@ -5452,7 +5449,7 @@ func SendSmsToParticular() {
                         
                     } else {
                         
-                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                        let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
@@ -5499,7 +5496,6 @@ func SendSmsToParticular() {
                         
                         self.present(refreshAlert, animated: true)
                     }
-                }
                 
             case .failure(let error):
                 print(error.localizedDescription)

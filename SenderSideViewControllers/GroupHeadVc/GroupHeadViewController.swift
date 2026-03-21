@@ -4136,21 +4136,19 @@ class GroupHeadViewController: UIViewController,UITableViewDelegate,UITableViewD
             httpMethod: .post,
             queryParam: nil,
             requestBody: particular
-        ) { [weak self] (result: Result<[EventParticularResponce], Error>) in
+        ) { [weak self] (result: Result<EventParticularResponce, Error>) in
             
             guard let self = self else { return }
             
             switch result {
                 
             case .success(let response):
-                
-                for i in response {
                     
-                    if i.Status == 1 {
+                    if response.Status == 1 {
                         
                         let refreshAlert = UIAlertController(
                             title: "",
-                            message: i.Message,
+                            message: response.Message,
                             preferredStyle: .alert
                         )
                         
@@ -4203,7 +4201,7 @@ class GroupHeadViewController: UIViewController,UITableViewDelegate,UITableViewD
                         
                         let refreshAlert = UIAlertController(
                             title: "",
-                            message: i.Message,
+                            message: response.Message,
                             preferredStyle: .alert
                         )
                         
@@ -4252,7 +4250,6 @@ class GroupHeadViewController: UIViewController,UITableViewDelegate,UITableViewD
                         
                         self.present(refreshAlert, animated: true)
                     }
-                }
                 
             case .failure(let error):
                 print(error.localizedDescription)

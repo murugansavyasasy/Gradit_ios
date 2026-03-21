@@ -76,7 +76,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     var particularSms : NoticePArticularResponce?
     var eventParticulae : [EventParticularResponce] = []
     var particularComuniSms : [SmsdataDetails] = []
-    var assigmentImagPdf : [assigmentImagePdfResponce] = []
+    var assigmentImagPdf : assigmentImagePdfResponce?
     var imagePdfEniter : [sendImagePdfPartiDataDetails] = []
     var attendanceEditsss : [AttendanceEditDataDEtails] = []
     var sendVideoPart : [ParticularVideoUploadRespData] = []
@@ -3659,7 +3659,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                 httpMethod: .post,
                 queryParam: nil,
                 requestBody: particular
-            ) { [weak self] (result: Result<[EventParticularResponce], Error>) in
+            ) { [weak self] (result: Result<EventParticularResponce, Error>) in
                 
                 guard let self = self else { return }
                 
@@ -3667,11 +3667,10 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                     
                 case .success(let response):
                     
-                    for i in response{
                         
-                        if i.Status == 1 {
+                        if response.Status == 1 {
                             
-                            let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                            let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
                             
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default){ _ in
                                 
@@ -3711,7 +3710,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                             
                         } else {
                             
-                            let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                            let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
                             
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default){ _ in
                                 
@@ -3745,7 +3744,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                             
                             self.present(refreshAlert, animated: true)
                         }
-                    }
+                    
                     
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -3761,7 +3760,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                 httpMethod: .post,
                 queryParam: nil,
                 requestBody: particular
-            ) { [weak self] (result: Result<[EventParticularResponce], Error>) in
+            ) { [weak self] (result: Result<EventParticularResponce, Error>) in
                 
                 guard let self = self else { return }
                 
@@ -3769,21 +3768,21 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                     
                 case .success(let response):
                     
-                    for i in response{
+                    
                         
-                        if i.Status == 1 {
+                        if response.Status == 1 {
                             
-                            let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                            let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
                             self.present(refreshAlert, animated: true)
                             
                         } else {
                             
-                            let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                            let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
                             self.present(refreshAlert, animated: true)
                         }
-                    }
+                    
                     
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -4211,7 +4210,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                 httpMethod: .post,
                 queryParam: nil,
                 requestBody: imagePdf
-            ) { [weak self] (result: Result<[assigmentImagePdfResponce], Error>) in
+            ) { [weak self] (result: Result<assigmentImagePdfResponce, Error>) in
                 
                 guard let self = self else { return }
                 
@@ -4219,11 +4218,10 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                     
                 case .success(let particularss):
                     
-                    for i in particularss{
                         
                         self.assigmentImagPdf = particularss
                         
-                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                        let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: .alert)
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
@@ -4256,7 +4254,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         })
                         
                         self.present(refreshAlert, animated: true)
-                    }
+                    
                     
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -4301,7 +4299,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                 httpMethod: .post,
                 queryParam: nil,
                 requestBody: imagePdf
-            ) { [weak self] (result: Result<[assigmentImagePdfResponce], Error>) in
+            ) { [weak self] (result: Result<assigmentImagePdfResponce, Error>) in
                 
                 guard let self = self else { return }
                 
@@ -4309,11 +4307,10 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                     
                 case .success(let particularss):
                     
-                    for i in particularss{
                         
                         self.assigmentImagPdf = particularss
                         
-                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                        let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: .alert)
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
@@ -4346,7 +4343,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         })
                         
                         self.present(refreshAlert, animated: true)
-                    }
+                    
                     
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -4395,19 +4392,17 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                 httpMethod: .post,
                 queryParam: nil,
                 requestBody: imagePdf
-            ) { [weak self] (result: Result<[assigmentImagePdfResponce], Error>) in
+            ) { [weak self] (result: Result<assigmentImagePdfResponce, Error>) in
                 
                 guard let self = self else { return }
                 
                 switch result {
                     
                 case .success(let particularss):
-                    
-                    for i in particularss{
                         
                         self.assigmentImagPdf = particularss
                         
-                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                        let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: .alert)
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
@@ -4440,7 +4435,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         })
                         
                         self.present(refreshAlert, animated: true)
-                    }
+                    
                     
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -4485,7 +4480,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                 httpMethod: .post,
                 queryParam: nil,
                 requestBody: imagePdf
-            ) { [weak self] (result: Result<[assigmentImagePdfResponce], Error>) in
+            ) { [weak self] (result: Result<assigmentImagePdfResponce, Error>) in
                 
                 guard let self = self else { return }
                 
@@ -4493,11 +4488,11 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                     
                 case .success(let particularss):
                     
-                    for i in particularss{
+                  
                         
                         self.assigmentImagPdf = particularss
                         
-                        let refreshAlert = UIAlertController(title: "", message: i.Message, preferredStyle: .alert)
+                        let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: .alert)
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
@@ -4530,7 +4525,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         })
                         
                         self.present(refreshAlert, animated: true)
-                    }
+                    
                     
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -5352,15 +5347,6 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         }
         
         
-        //        var bucketName = ""
-        //        if countryCoded == "1" {
-        //
-        //        bucketName = DefaultsKeys.bucketNameIndia
-        //        }else  {
-        //        bucketName = DefaultsKeys.bucketNameBangkok
-        //        }
-        
-        
         AWSPreSignedURL.shared.fetchPresignedURL(
             bucket: DefaultsKeys.S3BucketName,
             fileName: imageURL,
@@ -5405,9 +5391,6 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                 print("Error fetching presigned URL: \(error.localizedDescription)")
             }
         }
-        
-        
-        
     }
     
     

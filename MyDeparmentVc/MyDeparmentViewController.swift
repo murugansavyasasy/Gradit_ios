@@ -59,7 +59,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var yreRef : [sectionDetailsData] = []
     var particularSms : [SmsdataDetails] = []
     var  imagePdfEniter : [sendImagePdfPartiDataDetails] = []
-    var assigmentImagPdf : [assigmentImagePdfResponce] = []
+    var assigmentImagPdf : assigmentImagePdfResponce?
     var sendVideoPart : [ParticularVideoUploadRespData] = []
     
     var entierRefName : [EntiercollegeDataDetails] = []
@@ -1381,7 +1381,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
             httpMethod: .post,
             queryParam: nil,
             requestBody: imagePdf
-        ) { [weak self] (result: Result<[assigmentImagePdfResponce], Error>) in
+        ) { [weak self] (result: Result<assigmentImagePdfResponce, Error>) in
             
             guard let self = self else { return }
             
@@ -1389,13 +1389,13 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 
             case .success(let particularss):
                 
-                for i in particularss{
+                
                     
                     self.assigmentImagPdf = particularss
                     
                     let refreshAlert = UIAlertController(
                         title: "",
-                        message: i.Message,
+                        message: particularss.Message,
                         preferredStyle: .alert
                     )
                     
@@ -1434,7 +1434,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     self.tv.dataSource = self
                     self.tv.delegate = self
                     self.tv.reloadData()
-                }
+                
                 
             case .failure(let error):
                 print(error.localizedDescription)
@@ -2704,7 +2704,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
             httpMethod: .post,
             queryParam: nil,
             requestBody: particular
-        ) { [weak self] (result: Result<[EventParticularResponce], Error>) in
+        ) { [weak self] (result: Result<EventParticularResponce, Error>) in
             
             guard let self = self else { return }
             
@@ -2712,13 +2712,13 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 
             case .success(let response):
                 
-                for i in response {
+              
                     
-                    if i.Status == 1 {
+                    if response.Status == 1 {
                         
                         let refreshAlert = UIAlertController(
                             title: "",
-                            message: i.Message,
+                            message: response.Message,
                             preferredStyle: .alert
                         )
                         
@@ -2761,7 +2761,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         let refreshAlert = UIAlertController(
                             title: "",
-                            message: i.Message,
+                            message: response.Message,
                             preferredStyle: .alert
                         )
                         
@@ -2801,7 +2801,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.tv.delegate = self
                         self.tv.reloadData()
                     }
-                }
+                
                 
             case .failure(let error):
                 print(error.localizedDescription)
@@ -3303,7 +3303,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
             httpMethod: .post,
             queryParam: nil,
             requestBody: particular
-        ) { [weak self] (result: Result<[EventParticularResponce], Error>) in
+        ) { [weak self] (result: Result<EventParticularResponce, Error>) in
             
             guard let self = self else { return }
             
@@ -3311,13 +3311,13 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 
             case .success(let response):
                 
-                for i in response {
+              
                     
-                    if i.Status == 1 {
+                    if response.Status == 1 {
                         
                         let refreshAlert = UIAlertController(
                             title: "",
-                            message: i.Message,
+                            message: response.Message,
                             preferredStyle: .alert
                         )
                         
@@ -3362,7 +3362,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.tv.dataSource = self
                         self.tv.delegate = self
                     }
-                }
+                
                 
             case .failure(let error):
                 print(error.localizedDescription)
@@ -3494,7 +3494,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
             httpMethod: .post,
             queryParam: nil,
             requestBody: imagePdf
-        ) { [weak self] (result: Result<[assigmentImagePdfResponce], Error>) in
+        ) { [weak self] (result: Result<assigmentImagePdfResponce, Error>) in
             
             guard let self = self else { return }
             
@@ -3502,15 +3502,15 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 
             case .success(let particularss):
                 
-                for i in particularss{
+              
                     
                     self.assigmentImagPdf = particularss
                     
-                    if i.Status == 1 {
+                    if particularss.Status == 1 {
                         
                         let refreshAlert = UIAlertController(
                             title: "",
-                            message: i.Message,
+                            message: particularss.Message,
                             preferredStyle: .alert
                         )
                         
@@ -3540,7 +3540,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         let refreshAlert = UIAlertController(
                             title: "",
-                            message: i.Message,
+                            message: particularss.Message,
                             preferredStyle: .alert
                         )
                         
@@ -3566,7 +3566,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.tv.dataSource = self
                         self.tv.delegate = self
                     }
-                }
+                
                 
             case .failure(let error):
                 print(error.localizedDescription)

@@ -587,21 +587,19 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                         httpMethod: .post,
                         queryParam: nil,
                         requestBody: particular
-                    ) { [weak self] (result: Result<[EventParticularResponce], Error>) in
+                    ) { [weak self] (result: Result<EventParticularResponce, Error>) in
                         
                         guard let self = self else { return }
                         
                         switch result {
                             
                         case .success(let response):
-                            
-                            for i in response {
                                 
-                                if i.Status == 1 {
+                                if response.Status == 1 {
                                     
                                     let refreshAlert = UIAlertController(
                                         title: "",
-                                        message: i.Message,
+                                        message: response.Message,
                                         preferredStyle: .alert
                                     )
                                     
@@ -641,7 +639,7 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                                     
                                     let refreshAlert = UIAlertController(
                                         title: "",
-                                        message: i.Message,
+                                        message: response.Message,
                                         preferredStyle: .alert
                                     )
                                     
@@ -691,7 +689,7 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                                     
                                     self.present(refreshAlert, animated: true)
                                 }
-                            }
+                            
                             
                         case .failure(let error):
                             print(error.localizedDescription)

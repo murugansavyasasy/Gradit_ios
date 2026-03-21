@@ -52,24 +52,24 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.timing.text = data.time
         
         
-        if data.deviceModel == nil || data.deviceModel == ""{
+        if data.device_model == nil || data.device_model == ""{
             
 //            cell.phoneModel.isHidden =
             cell.phoneModel.text = "Device Modal - " + "null"
         }else{
             cell.phoneModel.isHidden = false
-            cell.phoneModel.text = "Device Modal - " + data.deviceModel
+            cell.phoneModel.text = "Device Modal - " + (data.device_model ?? "")
         }
         
         
        
-        if data.punchType.value == nil || data.punchType.value == "" {
+        if data.punch_type?.value == nil || data.punch_type?.value == "" {
             
 //            cell.punchType.isHidden = true
             cell.punchType.text = "Punch Type - " + "null"
         }else{
             cell.punchType.isHidden = false
-            cell.punchType.text = "Punch Type - " + data.punchType.value
+            cell.punchType.text = "Punch Type - " + (data.punch_type?.value ?? "")
         }
         
         
@@ -86,54 +86,46 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func punchHistory(date : String){
         
-        
         timeData.removeAll()
         
-       
+        var  punchHistry = punchHistryModalReq()
         
-        
-        
-        let  punchHistry = punchHistryModalReq()
-        
-        punchHistry.CollegeId = collegeId!
-        punchHistry.UserId = staffId!
-     
+        punchHistry.CollegeId = collegeId
+        punchHistry.UserId = staffId
         punchHistry.fromdate = date
         punchHistry.todate = date
-      
-      
         
-        let punchHistrystr = punchHistry.toJSONString()
-        print("punchHistrystr",punchHistry.toJSON())
-        
-        PunchHistryRequest.call_request(param: punchHistrystr!){ [self]
-            (res) in
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetBiometricPunchHistory,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: punchHistry
+        ) {[weak self] (result:Result<punchHistryResponce, Error>) in
             
-            print("resres",res)
-            let PunchHistory : punchHistryResponce = Mapper<punchHistryResponce>().map(JSONString: res)!
+            guard let self = self else { return }
             
-            if PunchHistory.status == 1  {
+            switch result {
+            case .success(let success):
                 
-                for i in PunchHistory.data{
+                for i in success.data ?? []{
                     
                     timeData.append(contentsOf: i.timings)
                     
                 }
-                noRecordLbl.isHidden = true
+                
+                noRecordLbl.isHidden = success.status == 1 ? true : false
+                noRecordLbl.text = success.message
                 tv.dataSource = self
                 tv.delegate = self
                 tv.reloadData()
                 
-            }else{
-                
+            case .failure(let failure):
+                print("Error:",failure.localizedDescription)
+                timeData = []
                 noRecordLbl.isHidden = false
-                
-                noRecordLbl.text = PunchHistory.message
-                
+                noRecordLbl.text = failure.localizedDescription
+                tv.reloadData()
             }
-            
-            
-            
             
         }
         

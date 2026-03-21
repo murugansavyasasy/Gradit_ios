@@ -55,9 +55,9 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     var RefId = 1
     var url_date : String!
     var TvIdentfier = "LocationTableViewCell"
-    var dateAndMoth : String!
-    var memberId : Int!
-    var collegeId : String!
+    var dateAndMoth : String?
+    var memberId : Int?
+    var collegeId : String?
     var is_read_enabled = ""
     var is_write_enabled = ""
     var memberIdForTodayReport : Int!
@@ -78,7 +78,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         memberId = defaults.integer(forKey: DefaultsKeys.memberid)
                 
-        print("memberId,",memberId)
+        print("memberId,",memberId ?? 0)
       
         collegeId = defaults.string(forKey: DefaultsKeys.collegeid)!
         priority = defaults.string(forKey: DefaultsKeys.priority)
@@ -355,8 +355,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         
         stafflistdata.forEach {(arrType)  in
-            StaffId.append((arrType.staffId ?? 0))
-            staffName.append(arrType.staffName ?? "")
+            StaffId.append((arrType.staff_id ?? 0))
+            staffName.append(arrType.staff_name ?? "")
             
         }
 //        let myArray = stafflistdata[1].staffName
@@ -416,11 +416,11 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         cell.toDateLbl.isHidden = false
        
         
-        cell.namelbl.text = data.staffName
+        cell.namelbl.text = data.staff_name
         
-        cell.workingHrsLbl.text = "Working Hours - \(data.working_hours ?? "0")"
+        cell.workingHrsLbl.text = "Working Hours - \(data.working_hours ?? 0)"
         
-        let eventDate = data.date
+        let eventDate = data.attendance_dt
         
         cell.StatusLbl.layer.cornerRadius = 5
         cell.StatusLbl.layer.masksToBounds = true
@@ -461,7 +461,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             
             
         }else{
-            cell.namelbl.text = data.staffName
+            cell.namelbl.text = data.staff_name
             
             cell.StatusLbl.backgroundColor  = UIColor(named: "presentGreen")
             cell.attendanceTypeLbl.text = data.attendance_type
@@ -475,8 +475,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             cell.firstInLbl.isHidden = true
         }
         
-        cell.namelbl.text = data.staffName
-        if data.working_hours ?? "" == "" {
+        cell.namelbl.text = data.staff_name
+        if data.working_hours ?? 0 == 0 {
             cell.workingHrsLbl.isHidden = true
         }
         cell.toDateLbl.text = "Last out - \(data.out_time ?? "0")"
@@ -485,12 +485,12 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         }
         cell.attendanceTypeLbl.text = data.attendance_type
         cell.namelbl.text =
-            data.staffName
+            data.staff_name
     
         
         let click = ShowPunchHistiryClick(target: self, action: #selector(ShowHistory))
-        click.date = data.date
-        click.staffId = data.staffId
+        click.date = data.attendance_dt
+        click.staffId = data.staff_id
        
         cell.fullView.addGestureRecognizer(click)
         
@@ -515,7 +515,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
         vc.date = ges.date
-        vc.collegeId = Int(collegeId)
+        vc.collegeId = Int(collegeId ?? "")
         vc.staffId = ges.staffId
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true)
@@ -561,9 +561,9 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
        
         var history = GethistoryModalReq()
 
-        history.CollegeId = Int(collegeId)
+        history.CollegeId = Int(collegeId ?? "")
        
-        history.userId = memberId!
+        history.userId = memberId
        
         
         if RefId == 1 {
@@ -612,13 +612,9 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     
     func staffList(){
         
-       
-        
-      
-        
         var staffListReq = staffListModalReq()
         
-        staffListReq.CollegeId = Int(collegeId!)
+        staffListReq.CollegeId = Int(collegeId ?? "")
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetStaffListforBiometric, httpMethod: .post, queryParam: nil, requestBody: staffListReq) { [weak self] (result:Result<staffListModal,Error>) in
             guard let self = self else{return}
@@ -626,8 +622,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             case . success(let getattendace):
                 if getattendace.status == 1  {
                     stafflistdata = getattendace.data ?? []
-                    stafNameLbl.text = stafflistdata[0].staffName
-                    memberId = (stafflistdata[0].staffId)
+                    stafNameLbl.text = stafflistdata.first?.staff_name
+                    memberId = (stafflistdata.first?.staff_id ?? 0)
                     
                 }else{
 
@@ -660,7 +656,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             if !searchText.isEmpty{
                 let search = searchText.lowercased()
                 getHistorydata = filtered_list.filter {
-                    ($0.staffName ?? "").lowercased().contains(search)
+                    ($0.staff_name ?? "").lowercased().contains(search)
                 }
             }else{
                 

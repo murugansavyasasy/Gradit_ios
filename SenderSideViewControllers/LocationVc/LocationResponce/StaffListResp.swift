@@ -31,7 +31,7 @@ struct staffListModal : Codable{
 struct ModaldataDetails : Codable{
     
     
-    var staffId : Int?
-    var staffName : String?
+    var staff_id : Int?
+    var staff_name : String?
 
 }
