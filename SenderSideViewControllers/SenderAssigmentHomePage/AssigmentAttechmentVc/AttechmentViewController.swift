@@ -131,7 +131,7 @@ override func viewDidLoad() {
     topMessageLabel.text = defaults.string(forKey: DefaultsKeys.memberName)
     password = defaults.string(forKey: DefaultsKeys.Password)
     colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-    clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+    clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
     
     
     if piroty == "p1"{
@@ -581,10 +581,10 @@ func addApi(){
     let defaults = UserDefaults.standard
     var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
     add.device_token = deviceToken
-    add.member_id = memberId
+    add.member_id = Int(memberId)
     add.mobile_no = mobileNumber
     add.priority = piroty
-    add.college_id = colgId
+    add.college_id = Int(colgId)
     add.previous_add_id = 3
    
     APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add

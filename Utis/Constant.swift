@@ -14,7 +14,12 @@ import Foundation
 class Constant {
     
 //    static let CountrybaseUrl : String = "https://gradit.voicesnap.com/api/AppDetailsBal/"
-    static var baseUrl : String = "https://www.thegradit.com/api/AppDetailsBal/"
+    
+ //      static var baseUrl : String = "https://www.thegradit.com/api/AppDetailsBal/"
+    
+   static var baseUrl : String = "http://future.thegradit.com/mobileapp/api/AppDetailsBal/"
+  //  static var baseUrl : String = "http://192.168.5.24:3013/api/AppDetailsBal/"
+    
     //"https://gradit.voicesnap.com/api/AppDetailsBal/"
     
     static let Aws_baseUrl : String = "https://api.schoolchimes.com/nodejs/api/MergedApi/"
@@ -68,10 +73,9 @@ struct DefaultsKeys {
     static let   TermsAndCondition = "TermsAndCondition"
     static let   CountryId = "CountryId"
     static var  resiverId : [String] = []
-    static var saves : [SubjectDetailsRef] = []
-    static var clgsection : [SectiondetailRef] = []
+//    static var saves : [SubjectDetailsRef] = []
+//    static var clgsection : [SectiondetailRef] = []
     static var saveButtonId : String! // important
-    static var saveEdit : [EditSubjectDetailsRef] = [] // important
     static var MenuRefName :[menuApiDataDetails] = []
     static var   Filepath : [FilepathDataDetails] = []
     static let   isversionupdateavailable = "isversionupdateavailable"

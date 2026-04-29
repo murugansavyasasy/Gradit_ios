@@ -13,7 +13,6 @@ import KRProgressHUD
 class SenderExmainationHomePageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate {
     
     @IBOutlet weak var searchFullView: UIViewX!
-    
     @IBOutlet weak var SearchView: UIView!
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet weak var topNameview: UIView!
@@ -23,86 +22,33 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
     @IBOutlet weak var notificationView: UIView!
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
-    @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
-    
     @IBOutlet weak var reusee: ReuseView!
-    @IBOutlet weak var SwipeUpTop: NSLayoutConstraint!
     @IBOutlet weak var topLabels: UILabel!
-    
     @IBOutlet weak var topMessageLabel: UILabel!
-    
     @IBOutlet weak var clgLogoImg: UIImageView!
-    
     @IBOutlet weak var sideMenuView: UIView!
-    
-    
     @IBOutlet weak var viewTap: UIView!
-    
     @IBOutlet weak var changePasswordView: UIView!
-    
-    
     @IBOutlet weak var termsAndConditionView: UIView!
-    
-    
     @IBOutlet weak var helpView: UIView!
-    
-    
-    
     @IBOutlet weak var faqView: UIView!
-    
-    
     @IBOutlet weak var plusImageView: UIImageView!
-    
-    
     @IBOutlet weak var privacyPolicyView: UIView!
-    
-    
-    
     @IBOutlet weak var examsCountViews: UIViewX!
-    
-    
-    
     @IBOutlet weak var upcommingExamCountLabel: UILabel!
-    
-    
     @IBOutlet weak var addPlusVcNextPage: UIViewX!
     @IBOutlet weak var noDataTextView: UIView!
     @IBOutlet weak var noDataLabel: UILabel!
     @IBOutlet weak var examSegmentName: UISegmentedControl!
     @IBOutlet weak var examTableView: UITableView!
-    
     @IBOutlet weak var pastCountView: UIViewX!
     @IBOutlet weak var upcommingCountView: UIViewX!
     @IBOutlet weak var examTopCountLabel: UILabel!
-    
     @IBOutlet weak var examTopCountView: UIViewX!
     @IBOutlet weak var pastExamCoutLabel: UILabel!
-    
-    
     @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
-    
-    
-    @IBOutlet weak var swipeMenu: UIView!
-    
-    
-    
-    @IBOutlet weak var arrowImg: UIImageView!
-    
-    
-    
-    @IBOutlet weak var downView: UIView!
-    
-    
-    
-    @IBOutlet weak var menuImg: UIImageView!
-    
-    
-    @IBOutlet weak var cv: UICollectionView!
-    
-    
     @IBOutlet weak var loginView: UIView!
-    
     @IBOutlet weak var refreshView: UIView!
     
     var NoticeBoardId = "1"
@@ -111,7 +57,6 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
     var communicationId = "4"
     var imagePdfId = "5"
     var Assigment = "6"
-    
     var  identifiers = "SenderExaminationTableViewCell"
     var upcomings : [SenderUpcommingExamDataDetails] = []
     var pasts : [SenderPastExamDataDetails] = []
@@ -124,9 +69,6 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
     var isclosaps = false
     var loginDatas : [datalogin]!
     var logindataprinci :[datalogin]!
-    
-    
-    
     var memberId : String!
     var priority : String!
     var colgId  : String!
@@ -138,28 +80,15 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
     var MobileNumber : String!
     var password : String!
     var PreviousAddId : Int = 0
-    
     var str : [String] = []
-    
     var strName : [String] = []
-    
-    
     var cloneList :  [SenderUpcommingExamDataDetails] = []
-    
     var is_read_enabled = ""
     var is_write_enabled = ""
     
-    
     override func viewDidAppear(_ animated: Bool) {
-        
-        print("kljjjjjjjjj")
-        
-        
+     
         PreviousAddId = PreviousAddId+1
-        
-        
-        print("jkkkkkkk",PreviousAddId)
-        
     }
     
     
@@ -182,7 +111,7 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
         loginType = defaults.string(forKey: DefaultsKeys.loginAsType)
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         
         password  = defaults.string(forKey: DefaultsKeys.Password)
@@ -190,162 +119,29 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
         
         addApi()
 
-        
         if sectionid == ""{
             
             sectionid = "0"
         }
         
-       
-            
-            
-            upcommingRefName()
-        
+        upcommingRefName()
         
         if is_write_enabled == "1"{
-            
             addPlusVcNextPage.isHidden = false
         }else{
             addPlusVcNextPage.isHidden = true
         }
         
-    
-        
-        if priority == "p1"{
-            tapBarView.backgroundColor = UIColor(named: "Principal" )
-            topLabels.text = "Principal"
-            
-            overAllRefName()
-            
-        }
-        
-        else if priority == "p4"{
-            
-            topLabels.text = "Student"
-            
-            overAllRefName()
-            
-        }
-        
-        else if priority == "p2" {
-            
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            addPlusVcNextPage.backgroundColor = UIColor(named: "messagecolor")
-            topLabels.text = "Hod"
-            overAllRefName()
-            
-        }
-        
-        else if priority == "p5"{
-            
-            
-            topLabels.text = "Father"
-            overAllRefName()
-            
-            
-            
-        }
-        
-        else if priority == "p3"{
-            
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            addPlusVcNextPage.backgroundColor = UIColor(named: "messagecolor")
-            topLabels.text = "Teacher"
-            overAllRefName()
-            
-        }
-        
-        else if priority == "p6"{
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            upcommingCountView.isHidden = true
-            pastCountView.isHidden = true
-            examTopCountView.isHidden = true
-            
-            topLabels.text = "NonTeaching"
-            addPlusVcNextPage.isHidden = true
-        }
-        
-        else if priority == "p7"{
-            tapBarView.backgroundColor = UIColor(named: "univercityColorCod" )
-            upcommingCountView.isHidden = true
-            pastCountView.isHidden = true
-            examTopCountView.isHidden = true
-            
-            topLabels.text = "Group Head"
-            addPlusVcNextPage.isHidden = true
-        }
-        
-        
-        if priority == "p1" {
-            
-            
-            print("PrincipalVieewwColor")
-            view.backgroundColor = UIColor(named: "Principal" )
-            
-            reusee.menuImg.image = UIImage(named: "principalBigMenu")
-            
-        }else if priority == "p4" {
-            
-            print("StudentVieewwColor")
-            view.backgroundColor = UIColor(named: "studentViewColors")
-            
-            
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
-            
-        } else if priority == "p3" ||  priority == "p2" {
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-            reusee.menuImg.image = UIImage(named: "HodImage")
-            
-        }
-        else if priority == "p5"{
-            
-            
-            
-            view.backgroundColor = UIColor(named: "FatherColor")
-            
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
-            
-            
-        }
-        
-        
-        else if priority == "p6" {
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-            reusee.menuImg.image = UIImage(named: "HodImage")
-            
-        }
-        
-        
-        else if priority == "p7" {
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "univercityColorCod")
-            
-            reusee.menuImg.image = UIImage(named: "UnivercityHead")
-            
-        }
-        
-      
+        applyPriorityConfiguration()
         
         swipeMenuHeight.constant = 150
         reusee.call_back = { [self]
             (val) in
-          
-            
                 self.swipeMenuHeight.constant =  reusee.callid
            
             print("HelloWorld544544343",reusee.callid)
-            
        
         }
-        
-        
         
         
         let rowNib = UINib(nibName: identifiers, bundle: nil)
@@ -410,38 +206,92 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
         
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         loginView.addGestureRecognizer(logoutGesture)
-        
-        
-        
     }
     
-    
+    // MARK: - Apply Priority UI
+
+    private func applyPriorityConfiguration() {
+        
+        // Reset defaults
+        addPlusVcNextPage.isHidden = false
+        upcommingCountView.isHidden = false
+        pastCountView.isHidden = false
+        examTopCountView.isHidden = false
+
+        switch priority {
+            
+        case "p1":
+            topLabels.text = "Principal"
+            tapBarView.backgroundColor = UIColor(named: "Principal")
+            view.backgroundColor = UIColor(named: "Principal")
+            reusee.menuImg.image = UIImage(named: "principalBigMenu")
+            overAllRefName()
+
+        case "p2":
+            topLabels.text = "Hod"
+            tapBarView.backgroundColor = UIColor(named: "Teaching Staff")
+            addPlusVcNextPage.backgroundColor = UIColor(named: "messagecolor")
+            view.backgroundColor = UIColor(named: "Teaching Staff")
+            reusee.menuImg.image = UIImage(named: "HodImage")
+            overAllRefName()
+
+        case "p3":
+            topLabels.text = "Teacher"
+            tapBarView.backgroundColor = UIColor(named: "Teaching Staff")
+            addPlusVcNextPage.backgroundColor = UIColor(named: "messagecolor")
+            view.backgroundColor = UIColor(named: "Teaching Staff")
+            reusee.menuImg.image = UIImage(named: "HodImage")
+            overAllRefName()
+
+        case "p4":
+            topLabels.text = "Student"
+            view.backgroundColor = UIColor(named: "studentViewColors")
+            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
+            overAllRefName()
+
+        case "p5":
+            topLabels.text = "Father"
+            view.backgroundColor = UIColor(named: "FatherColor")
+            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
+            overAllRefName()
+
+        case "p6":
+            topLabels.text = "NonTeaching"
+            tapBarView.backgroundColor = UIColor(named: "Teaching Staff")
+            view.backgroundColor = UIColor(named: "Teaching Staff")
+            reusee.menuImg.image = UIImage(named: "HodImage")
+            addPlusVcNextPage.isHidden = true
+            upcommingCountView.isHidden = true
+            pastCountView.isHidden = true
+            examTopCountView.isHidden = true
+
+        case "p7":
+            topLabels.text = "Group Head"
+            tapBarView.backgroundColor = UIColor(named: "univercityColorCod")
+            view.backgroundColor = UIColor(named: "univercityColorCod")
+            reusee.menuImg.image = UIImage(named: "UnivercityHead")
+            addPlusVcNextPage.isHidden = true
+            upcommingCountView.isHidden = true
+            pastCountView.isHidden = true
+            examTopCountView.isHidden = true
+
+        default:
+            break
+        }
+    }
     
     
     
     @IBAction func Searchfield() {
         
-        
         searchbar.isHidden  = false
         searchFullView .isHidden = false
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
     
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        
-        
-        
         
         let filtered_list : [SenderUpcommingExamDataDetails] = cloneList
         
@@ -450,62 +300,30 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
             
             upcomings = filtered_list.filter {
                 
-          
-                
                 ($0.examname ?? "").lowercased().contains(searchText.lowercased()) || ($0.createdbyname ?? "").lowercased().contains(searchText.lowercased()) || ($0.startdate ?? "").lowercased().contains(searchText.lowercased())  || ($0.enddate ?? "").lowercased().contains(searchText.lowercased()) || ($0.headerid ?? "").lowercased().contains(searchText.lowercased()) || ($0.createdon ?? "").lowercased().contains(searchText.lowercased())
-                
             }
      
-            
-        }else{
+        } else{
             
             upcomings = filtered_list
-            
             print("pendingOrder")
             
         }
-    
-        
-        if upcomings.count > 0{
-            
-            print ("searchListPendigCount",upcomings.count)
-            
-            
-        }else{
-            
-        }
-        
-    
         examTableView.reloadData()
-        
     }
     
     
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
-        
-        
         searchbar.endEditing(true)
-        
-        
         
     }
     
-    
-    
-    
-    
-    
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        
-        
+      
         searchbar.resignFirstResponder()
-        
-        
-        
+      
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -515,12 +333,7 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
         
         searchbar.resignFirstResponder()
         
-        
-        
     }
-    
-    
-    
     
     @IBAction func PlusVc() {
         
@@ -537,13 +350,9 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
                 vc.is_write_enabled = is_write_enabled
                
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                
-                
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true , completion: nil)
-            }
-            
-            else if priority == "p1" {
+            } else if priority == "p1" {
                 
                 let vc = SenderExaminationPlusNextPageViewController(nibName: nil, bundle: nil)
                 vc.addImageBackGroundurl = i.background_image
@@ -558,11 +367,7 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true , completion: nil)
                 
-            }
-            
-            
-            
-            else if priority == "p2"{
+            }else if priority == "p2"{
                 
                 
                 let vc = SenderExaminationPlusNextPageViewController(nibName: nil, bundle: nil)
@@ -577,12 +382,8 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true , completion: nil)
-                
-                
-                
-            }
-            
-            else if priority == "p7"{
+                 
+            } else if priority == "p7"{
                 
                 
                 let vc = SenderExaminationPlusNextPageViewController(nibName: nil, bundle: nil)
@@ -598,122 +399,34 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true , completion: nil)
                 
-                
-                
             }
-            
-            
         }
         
     }
     
     @IBAction func examSegmentAction(_ sender: Any) {
+        guard is_read_enabled == "1" else { return }
         
+        let validPriorities = ["p1", "p2", "p3", "p6", "p7"]
+        guard validPriorities.contains(priority) else { return }
         
-        if is_read_enabled == "1"{
-            if priority == "p1"{
-                
-                if examSegmentName.selectedSegmentIndex == 0{
-                    
-                    selectedCell = IndexPath()
-                    upcommingRefName()
-              }
-                else if examSegmentName.selectedSegmentIndex == 1 {
-                    selectedCell = IndexPath()
-                    pastRefName()
-                    
-                   
-                }
-                
-            }
-            
-            else if priority == "p2" || priority == "p3"{
-                
-                
-                if examSegmentName.selectedSegmentIndex == 0{
-                    
-                    selectedCell = IndexPath()
-                    upcommingRefName()
-                    
-               }
-                else if examSegmentName.selectedSegmentIndex == 1 {
-                    selectedCell = IndexPath()
-                    pastRefName()
-                    
-                    
-                    
-                }
-            }
-            
-            else if  priority == "p6"{
-                
-                
-                if examSegmentName.selectedSegmentIndex == 0{
-                    
-                    selectedCell = IndexPath()
-                    upcommingRefName()
-                    
-              }
-                else if examSegmentName.selectedSegmentIndex == 1 {
-                    selectedCell = IndexPath()
-                    pastRefName()
-                    
-                    
-                }
-                
-                
-            }
-            
-            
-            
-            
-            else if  priority == "p7"{
-                
-                
-                if examSegmentName.selectedSegmentIndex == 0{
-                    
-                    selectedCell = IndexPath()
-                    upcommingRefName()
-                   
-                }
-                else if examSegmentName.selectedSegmentIndex == 1 {
-                    selectedCell = IndexPath()
-                    pastRefName()
-                    
-                  
-                }
-                
-                
-            }
-        }else{
-            
-            
-            
+        selectedCell = IndexPath()
+        
+        switch examSegmentName.selectedSegmentIndex {
+        case 0:
+            upcommingRefName()
+        case 1:
+            pastRefName()
+        default:
+            break
         }
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        
-        if examSegmentName.selectedSegmentIndex == 0 {
-            return upcomings.count
-        }
-        
-        
-        else if examSegmentName.selectedSegmentIndex == 1 {
-            
-            
-            return pasts.count
-            
-            
-        }
-        
-        return 0
+        return examSegmentName.selectedSegmentIndex == 0 ? upcomings.count : pasts.count
         
     }
-    
-    
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -722,55 +435,26 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
         
         SenderExaminationTableViewCell
         
+        let isExpanded = selectedCell == indexPath
         
-        
-        if let selectedCells = selectedCell, selectedCells == indexPath {
-            
-            
-            
-            cell.startDate.isHidden = false
-            cell.endDate.isHidden = false
-            cell.cellSendByLabel.isHidden = false
-            cell.startDfaultLabel.isHidden = false
-            cell.arrowImageVIew.isHidden = true
-            cell.VenuColonLabel.isHidden = false
-            cell.endDefaultLabel.isHidden = false
-            cell.syllabusColonLabel.isHidden = false
-            cell.sendByView.isHidden = false
-            
-        }
-        
-        else{
-            
-            cell.startDate.isHidden = true
-            cell.cellSendByLabel.isHidden = true
-            cell.endDate.isHidden = true
-            cell.startDfaultLabel.isHidden = true
-            cell.arrowImageVIew.isHidden = false
-            cell.VenuColonLabel.isHidden = true
-            cell.endDefaultLabel.isHidden = true
-            cell.syllabusColonLabel.isHidden = true
-            cell.sendByView.isHidden = true
-            
-        }
-        
-        
-        
+        cell.startDate.isHidden          = !isExpanded
+        cell.endDate.isHidden            = !isExpanded
+        cell.cellSendByLabel.isHidden    = !isExpanded
+        cell.startDfaultLabel.isHidden   = !isExpanded
+        cell.VenuColonLabel.isHidden     = !isExpanded
+        cell.endDefaultLabel.isHidden    = !isExpanded
+        cell.syllabusColonLabel.isHidden = !isExpanded
+        cell.sendByView.isHidden         = !isExpanded
+        cell.editDeleteStack.isHidden         = !isExpanded
+        cell.arrowImageVIew.isHidden     = isExpanded
         
         if examSegmentName.selectedSegmentIndex == 0{
             
-            
-            
             let upcom : SenderUpcommingExamDataDetails = upcomings[indexPath.row]
-            
-            let a = (upcom.createdbyname?.count ?? 0)*2
-            let b = a+150
-            cell.sendbyViewWidth.constant = CGFloat(b)
             cell.cellExamDate.text = upcom.createdon
             cell.cellSendByLabel.text = upcom.createdbyname
             cell.cellExamName.text = upcom.examname?.capitalized
             cell.startDate.text = upcom.startdate
-            
             cell.endDate.text = upcom.enddate
             
             if upcom.createdby == memberId{
@@ -778,13 +462,10 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
                 cell.deleteView.isHidden = false
                 cell.editView.isHidden = false
                 
-            }
-            
-            else{
+            }else{
                 
                 cell.deleteView.isHidden = true
                 cell.editView.isHidden = true
-                
                 
             }
             
@@ -806,51 +487,33 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
             deletee.endDate = upcom.enddate
             
             cell.deleteView.addGestureRecognizer(deletee)
-            
-            
-            
         }
         
         
         else if examSegmentName.selectedSegmentIndex == 1 {
-            
-            
             
             let past : SenderPastExamDataDetails = pasts[indexPath.row]
             
             if past.createdby == memberId{
                 
                 cell.deleteView.isHidden = false
-                cell.editView.isHidden = false
+                cell.editView.isHidden = true
                 
-            }
-            
-            else{
+            }else{
                 
                 cell.deleteView.isHidden = true
                 cell.editView.isHidden = true
-                
-                
             }
             
-            let a = (past.createdbyname?.count ?? 0)*2
-            let b = a+150
-            cell.sendbyViewWidth.constant = CGFloat(b)
-            //            
             cell.cellExamDate.text = past.createdon
             cell.cellSendByLabel.text = past.createdbyname
             cell.cellExamName.text = past.examname?.capitalized
             cell.startDate.text = past.startdate
-            
             cell.endDate.text = past.enddate
-            
-            
-            
             
             let  play = viewPage(target: self, action: #selector(connected))
             play.ExamId = past.headerid
             cell.nextView.addGestureRecognizer(play)
-            
             
             let  Edit = viewPage(target: self, action: #selector(connected))
             Edit.EditId = "1"
@@ -865,11 +528,6 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
             cell.deleteView.addGestureRecognizer(deletee)
             
         }
-        
-        
-        
-        
-        
         
         return cell
     }
@@ -1024,30 +682,11 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
             
         }))
         
-        
-        
         refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .default, handler: { (action: UIAlertAction!) in
-            
-            
-            
+           
         }))
         
         present(refreshAlert, animated: true, completion: nil)
-        
-        
-        
-        
-        
-        
-    }
-    
-    
-    
-    
-    @IBAction func deltedVc(gesture :deletessss ){
-        
-        
-        
         
     }
     
@@ -1228,9 +867,6 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
                 
             case .success(let departResp):
                 
-                print("order data", departResp)
-                
-                
                 if departResp.Status == 1{
                     
                     self.upcomings = departResp.data ?? []
@@ -1240,9 +876,7 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
                     self.examTableView.dataSource = self
                     self.examTableView.reloadData()
                    
-                }
-                
-                else{
+                }else{
                     self.noDataTextView.alpha = 1
                     
                     self.noDataTextView.isHidden = false
@@ -1322,10 +956,10 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
         let defaults = UserDefaults.standard
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
-        add.member_id = memberId
+        add.member_id = Int(memberId)
         add.mobile_no = MobileNumber
         add.priority = priority
-        add.college_id = colgId
+        add.college_id = Int(colgId)
         add.previous_add_id = PreviousAddId
         
         
@@ -1431,548 +1065,7 @@ class SenderExmainationHomePageViewController: UIViewController,UITableViewDeleg
         
         
     }
-    
-    
-    
-    // this  part is bottom swipe view .
-    
-    
-    
-    
-    
-    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-        
-        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-            if priority == "p4" {
-                switch swipeGesture.direction {
-                case .right:
-                    print("Swiped right")
-                case .down:
-                    swipeMenuHeight.constant = 150
-                    
-                    print("swipeMenuHeight.constant\(swipeMenuHeight.constant)")
-                    
-                    
-                    arrowImg.image = UIImage(named: "up")
-                    print("Swiped down")
-                case .left:
-                    print("Swiped left")
-                case .up:
-                    swipeMenuHeight.constant = 470
-                    
-                    menuImg.image = UIImage(named: "StaffBigMenu")
-                    
-                    
-                    
-                    print("swipeMenuHeight.constant\(swipeMenuHeight.constant)")
-                    
-                    arrowImg.image = UIImage(named: "down")
-                    SwipeUpTop.constant = 30
-                    print("Swiped up")
-                default:
-                    break
-                }
-            }
-            
-            
-            else if priority == "p1" {
-                
-                
-                switch swipeGesture.direction {
-                case .right:
-                    print("Swiped right")
-                case .down:
-                    swipeMenuHeight.constant = 150
-                    
-                    print("swipeMenuHeight.constant\(swipeMenuHeight.constant)")
-                    
-                    arrowImg.image = UIImage(named: "up")
-                    print("Swiped down")
-                case .left:
-                    print("Swiped left")
-                case .up:
-
-                    if str.count <= 4{
-                        
-                        print("uiouiop")
-                        swipeMenuHeight.constant = 150
-                        
-                    }
-//
-                   else if str.count  == 5{
-                        
-                        print("uioiuiopkjhgbjnkmjhvgyjbkn,m")
-                        swipeMenuHeight.constant = 240
-                        
-                    }
-                    else if str.count == 6{
-                        
-                        
-                        swipeMenuHeight.constant = 240
-                    }
-//
-                    else if str.count == 7 {
-                        
-                        
-
-                        
-                        swipeMenuHeight.constant = 240
-                    }
-                    
-                    else if str.count == 8{
-                        
-                        
-                        swipeMenuHeight.constant = 240
-                    }
-                    
-                    else if str.count == 9{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    else if str.count == 10{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    
-                    
-                    else if str.count == 11{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    
-                    
-                    else if str.count == 12{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    
-                
-                    else if str.count == 13{
-                        
-                        
-                        swipeMenuHeight.constant = 470
-                    }
-                    
-                    
-                    else if str.count == 14{
-                        
-                        
-                        swipeMenuHeight.constant = 470
-                    }
-                    
-                    else if str.count == 15{
-                        
-                        
-                        swipeMenuHeight.constant = 400
-                        
-                        
-                    }
-                    
-                    else {
-                        
-                        
-                        swipeMenuHeight.constant = 400
-                        
-                    }
-                    
-                    menuImg.image = UIImage(named: "principalBigMenu")
-                    
-                    
-                    print("swipeMenuHeight.constant\(swipeMenuHeight.constant)")
-                    
-                    arrowImg.image = UIImage(named: "down")
-                    print("Swiped up")
-                default:
-                    break
-                }
-                
-                
-            }
-            
-            else if priority == "p2" || priority == "p3" {
-                
-                print("HooodddVieewwColor")
-                
-                
-                switch swipeGesture.direction {
-                case .right:
-                    print("Swiped right")
-                case .down:
-                    swipeMenuHeight.constant = 150
-                    
-                    print("swipeMenuHeight.constant\(swipeMenuHeight.constant)")
-                    
-                    menuImg.image = UIImage(named: "HodImage")
-                    
-                    arrowImg.image = UIImage(named: "up")
-                    print("Swiped down")
-                case .left:
-                    print("Swiped left")
-                case .up:
-                   
-                    if str.count <= 4{
-                        
-                        print("uiouiop")
-                        swipeMenuHeight.constant = 150
-                        
-                    }
-//
-                   else if str.count  == 5{
-                        
-                        print("uioiuiopkjhgbjnkmjhvgyjbkn,m")
-                        swipeMenuHeight.constant = 240
-                        
-                    }
-                    else if str.count == 6{
-                        
-                        
-                        swipeMenuHeight.constant = 240
-                    }
-//
-                    else if str.count == 7 {
-                        
-                        swipeMenuHeight.constant = 240
-                    }
-                    
-                    else if str.count == 8{
-                        
-                        
-                        swipeMenuHeight.constant = 240
-                    }
-                    
-                    else if str.count == 9{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    else if str.count == 10{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    
-                    
-                    else if str.count == 11{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    
-                    
-                    else if str.count == 12{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    
-                
-                    else if str.count == 13{
-                        
-                        
-                        swipeMenuHeight.constant = 470
-                    }
-                    
-                    
-                    else if str.count == 14{
-                        
-                        
-                        swipeMenuHeight.constant = 470
-                    }
-                    
-                    else if str.count == 15{
-                        
-                        
-                        swipeMenuHeight.constant = 400
-                        
-                        
-                    }
-                    
-                    else {
-                        
-                        
-                        swipeMenuHeight.constant = 400
-                        
-                    }
-                    print("swipeMenuHeight.constant\(swipeMenuHeight.constant)")
-                    
-                    arrowImg.image = UIImage(named: "down")
-                    print("Swiped up")
-                default:
-                    break
-                }
-                //
-            }
-            
-            
-            else if priority == "p7" {
-                
-                print("HooodddVieewwColor")
-                
-                
-                switch swipeGesture.direction {
-                case .right:
-                    print("Swiped right")
-                case .down:
-                    swipeMenuHeight.constant = 150
-                    
-                    print("swipeMenuHeight.constant\(swipeMenuHeight.constant)")
-                    
-                    menuImg.image = UIImage(named: "UnivercityHead")
-                    
-                    arrowImg.image = UIImage(named: "up")
-                    print("Swiped down")
-                case .left:
-                    print("Swiped left")
-                case .up:
-                    if str.count <= 4{
-                        
-                        print("uiouiop")
-                        swipeMenuHeight.constant = 150
-                        
-                    }
-//
-                   else if str.count  == 5{
-                        
-                      
-                        swipeMenuHeight.constant = 240
-                        
-                    }
-                    else if str.count == 6{
-                        
-                        
-                        swipeMenuHeight.constant = 240
-                    }
-//
-                    else if str.count == 7 {
-                        
-                       
-                        swipeMenuHeight.constant = 240
-                    }
-                    
-                    else if str.count == 8{
-                        
-                        
-                        swipeMenuHeight.constant = 240
-                    }
-                    
-                    else if str.count == 9{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    else if str.count == 10{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    
-                    
-                    else if str.count == 11{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    
-                    
-                    else if str.count == 12{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    
-                
-                    else if str.count == 13{
-                        
-                        
-                        swipeMenuHeight.constant = 470
-                    }
-                    
-                    
-                    else if str.count == 14{
-                        
-                        
-                        swipeMenuHeight.constant = 470
-                    }
-                    
-                    else if str.count == 15{
-                        
-                        
-                        swipeMenuHeight.constant = 400
-                        
-                        
-                    }
-                    
-                    else {
-                        
-                        
-                        swipeMenuHeight.constant = 400
-                        
-                    }
-                    print("swipeMenuHeight.constant\(swipeMenuHeight.constant)")
-                    
-                    arrowImg.image = UIImage(named: "down")
-                    print("Swiped up")
-                default:
-                    break
-                }
-                //
-            }
-            
-            else if priority == "p5"{
-                switch swipeGesture.direction {
-                case .right:
-                    print("Swiped right")
-                case .down:
-                    swipeMenuHeight.constant = 170
-                    
-                    print("swipeMenuHeight.constant\(swipeMenuHeight.constant)")
-                    
-                    
-                    arrowImg.image = UIImage(named: "up")
-                    print("Swiped down")
-                case .left:
-                    print("Swiped left")
-                case .up:
-                    swipeMenuHeight.constant = 470
-                    
-                    print("swipeMenuHeight.constant\(swipeMenuHeight.constant)")
-                    
-                    arrowImg.image = UIImage(named: "down")
-                    print("Swiped up")
-                default:
-                    break
-                }
-                //
-                
-                
-                
-            }
-            
-            
-            else if priority == "p6"{
-                
-                switch swipeGesture.direction {
-                case .right:
-                    print("Swiped right")
-                case .down:
-                    swipeMenuHeight.constant = 150
-                    
-                    print("swipeMenuHeight.constant\(swipeMenuHeight.constant)")
-                    
-                    menuImg.image = UIImage(named: "HodImage")
-                    
-                    arrowImg.image = UIImage(named: "up")
-                    print("Swiped down")
-                case .left:
-                    print("Swiped left")
-                case .up:
-                    
-                    if str.count <= 4{
-                        
-                        print("uiouiop")
-                        swipeMenuHeight.constant = 150
-                        
-                    }
-//
-                   else if str.count  == 5{
-                        
-                        print("uioiuiopkjhgbjnkmjhvgyjbkn,m")
-                        swipeMenuHeight.constant = 240
-                        
-                    }
-                    else if str.count == 6{
-                        
-                        
-                        swipeMenuHeight.constant = 240
-                    }
-//
-                    else if str.count == 7 {
-                        
-                        swipeMenuHeight.constant = 240
-                    }
-                    
-                    else if str.count == 8{
-                        
-                        
-                        swipeMenuHeight.constant = 240
-                    }
-                    
-                    else if str.count == 9{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    else if str.count == 10{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    
-                    
-                    else if str.count == 11{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    
-                    
-                    else if str.count == 12{
-                        
-                        
-                        swipeMenuHeight.constant = 300
-                    }
-                    
-                
-                    else if str.count == 13{
-                        
-                        
-                        swipeMenuHeight.constant = 470
-                    }
-                    
-                    
-                    else if str.count == 14{
-                        
-                        
-                        swipeMenuHeight.constant = 470
-                    }
-                    
-                    else if str.count == 15{
-                        
-                        
-                        swipeMenuHeight.constant = 400
-                        
-                        
-                    }
-                    
-                    else {
-                        
-                        
-                        swipeMenuHeight.constant = 400
-                        
-                    }
-                    print("swipeMenuHeight.constant\(swipeMenuHeight.constant)")
-                    
-                    arrowImg.image = UIImage(named: "down")
-                    print("Swiped up")
-                default:
-                    break
-                }
-                //
-                
-            }
-            
-        }
-        
-    }
-    
-    
-    
-    
-    
+ 
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -3263,12 +2356,8 @@ class SenderExamAdd : UITapGestureRecognizer{
 
 class viewPage : UITapGestureRecognizer{
     
-    
     var ExamId : String!
-    
     var EditId : String!
-    
-    
 }
 
 

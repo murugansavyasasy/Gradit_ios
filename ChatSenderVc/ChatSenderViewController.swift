@@ -131,7 +131,7 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
         sectionid  = defaults.string(forKey: DefaultsKeys.sectionid)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         mem = defaults.string(forKey: DefaultsKeys.memberName)
         topMemberLabel.text = mem
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
@@ -387,13 +387,13 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
         
         let defaults = UserDefaults.standard
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
-        add.device_token = deviceToken
+       
         print("EventDefaultsKeys.DeviceToken",deviceToken)
-
-        add.member_id = memberId
+        add.device_token = deviceToken
+        add.member_id = Int(memberId)
         add.mobile_no = MobileNumber
         add.priority = priority
-        add.college_id = colgId
+        add.college_id = Int(colgId)
         add.previous_add_id = PreviousAddId
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add

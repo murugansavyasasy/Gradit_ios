@@ -131,7 +131,6 @@
 		5205E1D929B73AA800FFA2A1 /* GetGroupResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5205E1D829B73AA800FFA2A1 /* GetGroupResponce.swift */; };
 		520B8D5B29F161CA00C74185 /* voiceUploadResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520B8D5A29F161CA00C74185 /* voiceUploadResponce.swift */; };
 		5214ACDC2A65735F008397A3 /* CheckBoxThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5214ACDB2A65735F008397A3 /* CheckBoxThree.swift */; };
-		5214AD0D2A67E734008397A3 /* ExaminationEditModalClas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5214AD0C2A67E733008397A3 /* ExaminationEditModalClas.swift */; };
 		5215FF7C296548A80047C703 /* RectangularDashedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5215FF7B296548A80047C703 /* RectangularDashedView.swift */; };
 		5222D0E029B3230800BF4E6A /* SelectRespienceCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5222D0DE29B3230800BF4E6A /* SelectRespienceCellTableViewCell.swift */; };
 		5222D0E129B3230800BF4E6A /* SelectRespienceCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5222D0DF29B3230800BF4E6A /* SelectRespienceCellTableViewCell.xib */; };
@@ -311,8 +310,6 @@
 		529D52FD2A0CF03D0083CA4A /* HomePageAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529D52F72A0CF03D0083CA4A /* HomePageAddViewController.swift */; };
 		529D52FE2A0CF03D0083CA4A /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529D52F82A0CF03D0083CA4A /* HomeScreenViewController.swift */; };
 		529D53392A0CF1DE0083CA4A /* GetSectionYearTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529D53352A0CF1DE0083CA4A /* GetSectionYearTableViewCell.xib */; };
-		529D533A2A0CF1DE0083CA4A /* GetSectionYearHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529D53362A0CF1DE0083CA4A /* GetSectionYearHeaderFooterView.xib */; };
-		529D533B2A0CF1DE0083CA4A /* GetSectionYearHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529D53372A0CF1DE0083CA4A /* GetSectionYearHeaderFooterView.swift */; };
 		529D533C2A0CF1DE0083CA4A /* GetSectionYearTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529D53382A0CF1DE0083CA4A /* GetSectionYearTableViewCell.swift */; };
 		529EA3E82A4AA02E00119747 /* ChatAnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529EA3E62A4AA02E00119747 /* ChatAnswerTableViewCell.swift */; };
 		529EA3E92A4AA02E00119747 /* ChatAnswerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529EA3E72A4AA02E00119747 /* ChatAnswerTableViewCell.xib */; };
@@ -491,12 +488,11 @@
 		8449BB102C3FA65A0098E717 /* PlusNewTextViewControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8449BB0F2C3FA65A0098E717 /* PlusNewTextViewControllerViewController.swift */; };
 		8449BB122C3FA6630098E717 /* PlusNewTextViewControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8449BB112C3FA6630098E717 /* PlusNewTextViewControllerViewController.xib */; };
 		844DBB2A2F59975700B85E60 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DBB292F59974000B85E60 /* Model.swift */; };
-		844DCA712AD67BEB00068A70 /* ExameCreactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DCA6F2AD67BEB00068A70 /* ExameCreactionViewController.swift */; };
-		844DCA722AD67BEB00068A70 /* ExameCreactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844DCA702AD67BEB00068A70 /* ExameCreactionViewController.xib */; };
 		844DCA762AD6816D00068A70 /* ExameCreationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DCA742AD6816D00068A70 /* ExameCreationTableViewCell.swift */; };
 		844DCA772AD6816D00068A70 /* ExameCreationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844DCA752AD6816D00068A70 /* ExameCreationTableViewCell.xib */; };
 		847392B52C3923BB00828B0F /* vimeUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847392B42C3923BB00828B0F /* vimeUpload.swift */; };
 		848522DF2AA1F18300DA8F8B /* ToasteMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848522DE2AA1F18300DA8F8B /* ToasteMessage.swift */; };
+		8485ABCB2F973210000A06B8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8485ABCA2F973210000A06B8 /* GoogleService-Info.plist */; };
 		848666C62B791A0C006AEEC5 /* TextMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848666C42B791A0C006AEEC5 /* TextMessageTableViewCell.swift */; };
 		848666C72B791A0C006AEEC5 /* TextMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848666C52B791A0C006AEEC5 /* TextMessageTableViewCell.xib */; };
 		8488A4A12BCFB23800340596 /* Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8488A4A02BCFB23800340596 /* Zoom.swift */; };
@@ -586,7 +582,6 @@
 		84C38AAA2B44EA95004CC3D5 /* ChatsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C38AA82B44EA95004CC3D5 /* ChatsCollectionViewCell.xib */; };
 		84C4DEFD2B5A3A0A00B06CFC /* checkBoxFour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C4DEFC2B5A3A0A00B06CFC /* checkBoxFour.swift */; };
 		84E0E47D2B19E90200AAC2B2 /* collegeListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E0E47C2B19E90200AAC2B2 /* collegeListResponse.swift */; };
-		84E502A72C12F59E008836C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84E502A62C12F59E008836C9 /* GoogleService-Info.plist */; };
 		84E502AB2C12F5CC008836C9 /* SenderEventHomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E502AA2C12F5CC008836C9 /* SenderEventHomePageViewController.xib */; };
 		84E502AF2C12F65C008836C9 /* SenderCommunicationHomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E502AE2C12F65C008836C9 /* SenderCommunicationHomePageViewController.xib */; };
 		84E502B12C12F6EA008836C9 /* SenderVideoHomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E502B02C12F6EA008836C9 /* SenderVideoHomePageViewController.xib */; };
@@ -868,7 +863,6 @@
 		5205E1D829B73AA800FFA2A1 /* GetGroupResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGroupResponce.swift; sourceTree = "<group>"; };
 		520B8D5A29F161CA00C74185 /* voiceUploadResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voiceUploadResponce.swift; sourceTree = "<group>"; };
 		5214ACDB2A65735F008397A3 /* CheckBoxThree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxThree.swift; sourceTree = "<group>"; };
-		5214AD0C2A67E733008397A3 /* ExaminationEditModalClas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExaminationEditModalClas.swift; sourceTree = "<group>"; };
 		5215FF7B296548A80047C703 /* RectangularDashedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RectangularDashedView.swift; sourceTree = "<group>"; };
 		5222D0DE29B3230800BF4E6A /* SelectRespienceCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRespienceCellTableViewCell.swift; sourceTree = "<group>"; };
 		5222D0DF29B3230800BF4E6A /* SelectRespienceCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectRespienceCellTableViewCell.xib; sourceTree = "<group>"; };
@@ -1048,8 +1042,6 @@
 		529D52F72A0CF03D0083CA4A /* HomePageAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageAddViewController.swift; sourceTree = "<group>"; };
 		529D52F82A0CF03D0083CA4A /* HomeScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScreenViewController.swift; sourceTree = "<group>"; };
 		529D53352A0CF1DE0083CA4A /* GetSectionYearTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GetSectionYearTableViewCell.xib; sourceTree = "<group>"; };
-		529D53362A0CF1DE0083CA4A /* GetSectionYearHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GetSectionYearHeaderFooterView.xib; sourceTree = "<group>"; };
-		529D53372A0CF1DE0083CA4A /* GetSectionYearHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetSectionYearHeaderFooterView.swift; sourceTree = "<group>"; };
 		529D53382A0CF1DE0083CA4A /* GetSectionYearTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetSectionYearTableViewCell.swift; sourceTree = "<group>"; };
 		529EA3E62A4AA02E00119747 /* ChatAnswerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAnswerTableViewCell.swift; sourceTree = "<group>"; };
 		529EA3E72A4AA02E00119747 /* ChatAnswerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatAnswerTableViewCell.xib; sourceTree = "<group>"; };
@@ -1237,12 +1229,11 @@
 		8449BB0F2C3FA65A0098E717 /* PlusNewTextViewControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusNewTextViewControllerViewController.swift; sourceTree = "<group>"; };
 		8449BB112C3FA6630098E717 /* PlusNewTextViewControllerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlusNewTextViewControllerViewController.xib; sourceTree = "<group>"; };
 		844DBB292F59974000B85E60 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		844DCA6F2AD67BEB00068A70 /* ExameCreactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExameCreactionViewController.swift; sourceTree = "<group>"; };
-		844DCA702AD67BEB00068A70 /* ExameCreactionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExameCreactionViewController.xib; sourceTree = "<group>"; };
 		844DCA742AD6816D00068A70 /* ExameCreationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExameCreationTableViewCell.swift; sourceTree = "<group>"; };
 		844DCA752AD6816D00068A70 /* ExameCreationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExameCreationTableViewCell.xib; sourceTree = "<group>"; };
 		847392B42C3923BB00828B0F /* vimeUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vimeUpload.swift; sourceTree = "<group>"; };
 		848522DE2AA1F18300DA8F8B /* ToasteMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasteMessage.swift; sourceTree = "<group>"; };
+		8485ABCA2F973210000A06B8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		848666C42B791A0C006AEEC5 /* TextMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageTableViewCell.swift; sourceTree = "<group>"; };
 		848666C52B791A0C006AEEC5 /* TextMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextMessageTableViewCell.xib; sourceTree = "<group>"; };
 		8488A4A02BCFB23800340596 /* Zoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zoom.swift; sourceTree = "<group>"; };
@@ -1332,7 +1323,6 @@
 		84C38AA82B44EA95004CC3D5 /* ChatsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatsCollectionViewCell.xib; sourceTree = "<group>"; };
 		84C4DEFC2B5A3A0A00B06CFC /* checkBoxFour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = checkBoxFour.swift; sourceTree = "<group>"; };
 		84E0E47C2B19E90200AAC2B2 /* collegeListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = collegeListResponse.swift; sourceTree = "<group>"; };
-		84E502A62C12F59E008836C9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84E502AA2C12F5CC008836C9 /* SenderEventHomePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderEventHomePageViewController.xib; sourceTree = "<group>"; };
 		84E502AE2C12F65C008836C9 /* SenderCommunicationHomePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderCommunicationHomePageViewController.xib; sourceTree = SOURCE_ROOT; };
 		84E502B02C12F6EA008836C9 /* SenderVideoHomePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderVideoHomePageViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -1648,7 +1638,7 @@
 			isa = PBXGroup;
 			children = (
 				842A7C7E2F56C9120038DA62 /* API */,
-				84E502A62C12F59E008836C9 /* GoogleService-Info.plist */,
+				8485ABCA2F973210000A06B8 /* GoogleService-Info.plist */,
 				5289B2022A6159A4002D63CB /* ExamDeleteSubject */,
 				184D6CAD2A497010007DA4AB /* ExamSectionApi */,
 				529FC01F2A38740200F119A3 /* Roboto-Medium.ttf */,
@@ -1781,7 +1771,6 @@
 				528876E12A44C4CD00BFF753 /* ExamCreation.swift */,
 				528B0A252A56DA7D00AF7A54 /* File.swift */,
 				5214ACDB2A65735F008397A3 /* CheckBoxThree.swift */,
-				5214AD0C2A67E733008397A3 /* ExaminationEditModalClas.swift */,
 				848A62992A97866A007F38E1 /* toastMessage.swift */,
 				848522DE2AA1F18300DA8F8B /* ToasteMessage.swift */,
 				840F00992B29762E00C017CF /* Shinner.swift */,
@@ -2600,6 +2589,7 @@
 				52A699F329ADE6040072C0D6 /* SenderNoticeAddVc */,
 				5245E514293F733700925CBC /* SenderNoticeBoardDepartmentResponce.swift */,
 				5245E516293F733700925CBC /* SenderNoticeBoardCollegeResponce.swift */,
+				84A99DF62AC2AFC500512FEB /* SenderGraditNoticeBoardMenuViewController.xib */,
 				5245E518293F733700925CBC /* SenderGraditNoticeBoardMenuViewController.swift */,
 				5245E51E293F735900925CBC /* SenderNoticeBoardNextPage */,
 			);
@@ -3291,8 +3281,6 @@
 			isa = PBXGroup;
 			children = (
 				529D53352A0CF1DE0083CA4A /* GetSectionYearTableViewCell.xib */,
-				529D53362A0CF1DE0083CA4A /* GetSectionYearHeaderFooterView.xib */,
-				529D53372A0CF1DE0083CA4A /* GetSectionYearHeaderFooterView.swift */,
 				529D53382A0CF1DE0083CA4A /* GetSectionYearTableViewCell.swift */,
 			);
 			path = GetSectionYearTvCell;
@@ -3442,7 +3430,6 @@
 		52A699F329ADE6040072C0D6 /* SenderNoticeAddVc */ = {
 			isa = PBXGroup;
 			children = (
-				84A99DF62AC2AFC500512FEB /* SenderGraditNoticeBoardMenuViewController.xib */,
 				52A699F429ADE66A0072C0D6 /* SenderNoticeAddViewController.swift */,
 				52A699F529ADE66A0072C0D6 /* SenderNoticeAddViewController.xib */,
 			);
@@ -4077,15 +4064,6 @@
 			path = AwsCommonFile;
 			sourceTree = "<group>";
 		};
-		844DCA6E2AD67BBB00068A70 /* ExameCreationVC */ = {
-			isa = PBXGroup;
-			children = (
-				844DCA6F2AD67BEB00068A70 /* ExameCreactionViewController.swift */,
-				844DCA702AD67BEB00068A70 /* ExameCreactionViewController.xib */,
-			);
-			path = ExameCreationVC;
-			sourceTree = "<group>";
-		};
 		844DCA732AD6814500068A70 /* ExamCreactionTvCel */ = {
 			isa = PBXGroup;
 			children = (
@@ -4196,7 +4174,6 @@
 		84A99DBA2AC2A4BE00512FEB /* SenderExaminationHomePage 2 2 */ = {
 			isa = PBXGroup;
 			children = (
-				844DCA6E2AD67BBB00068A70 /* ExameCreationVC */,
 				84A99DBB2AC2A4BE00512FEB /* GetSubjectVc */,
 				84A99DC22AC2A4BE00512FEB /* SenderExmainationHomePageViewController.xib */,
 				84A99DCE2AC2A4BE00512FEB /* SenderExaminationPastResponce.swift */,
@@ -4825,7 +4802,6 @@
 				5284BD90292E4B9E00120C74 /* ExamTableViewCell.xib in Resources */,
 				5245E4B1293F62A300925CBC /* SenderEventCollectionViewCell.xib in Resources */,
 				FAC773AC2E2768EC00DE2E11 /* SelectionCV.xib in Resources */,
-				844DCA722AD67BEB00068A70 /* ExameCreactionViewController.xib in Resources */,
 				842787F82BD8E0C400DD780D /* SenderEventDetailsPageViewController.xib in Resources */,
 				52259C50292F5589008CE7CC /* ImageViewController.xib in Resources */,
 				5289B20B2A627512002D63CB /* SelectResipientsViewController.xib in Resources */,
@@ -4887,7 +4863,6 @@
 				84F6FC7E2B32B738006E768B /* OFL.txt in Resources */,
 				52AAA7A629727A480047A696 /* PickPDFViewController.xib in Resources */,
 				188F78072912452C000CB50F /* AssignmentCollectionViewCell.xib in Resources */,
-				529D533A2A0CF1DE0083CA4A /* GetSectionYearHeaderFooterView.xib in Resources */,
 				8434F2AB2CBA6B67009BA2B0 /* isnotification.wav in Resources */,
 				18BAB3C0290F92B2009FC2AA /* NoticeBoardScrollCollectionViewCell.xib in Resources */,
 				52A699E829ADC0200072C0D6 /* SenderAssigAddViewController.xib in Resources */,
@@ -4995,7 +4970,6 @@
 				528123AE29BF9E3400C08142 /* HodRespienTableViewCell.xib in Resources */,
 				52ACBE63297BA9A800A21EEA /* CategoryTableViewController.xib in Resources */,
 				84E502B12C12F6EA008836C9 /* SenderVideoHomePageViewController.xib in Resources */,
-				84E502A72C12F59E008836C9 /* GoogleService-Info.plist in Resources */,
 				FAA65F262E2906D400D98CEF /* myResumeTV.xib in Resources */,
 				18BAB410290F9349009FC2AA /* Packaging.log in Resources */,
 				52A577062A3C654E0039E1E1 /* ChatReceiverInteractViewController.xib in Resources */,
@@ -5062,6 +5036,7 @@
 				FA014B932E18F18300154C14 /* BacklogsTv.xib in Resources */,
 				848BA11D2BBEBA2600FC65BF /* ResiverTvTableViewCell.xib in Resources */,
 				FA85C7382DE70B7800B57E47 /* ResumeVC.xib in Resources */,
+				8485ABCB2F973210000A06B8 /* GoogleService-Info.plist in Resources */,
 				18BAB3D0290F92C9009FC2AA /* ImagePdfTableViewCell.xib in Resources */,
 				5284BDD3292E4DFD00120C74 /* AssigmentHomePageViewController.xib in Resources */,
 				84BCC6222B67C2390071320B /* NextVoiceTableViewCell.xib in Resources */,
@@ -5241,7 +5216,6 @@
 				842787F52BD8E0C400DD780D /* SenderImageViewController.swift in Sources */,
 				523D8107292E45F8005280C2 /* VideoResponce.swift in Sources */,
 				848A62C22A992A62007F38E1 /* VerifyOtpViewController.swift in Sources */,
-				844DCA712AD67BEB00068A70 /* ExameCreactionViewController.swift in Sources */,
 				523D8113292E4628005280C2 /* VideoTableViewCell.swift in Sources */,
 				18BAB415290F9349009FC2AA /* ProfileResponse.swift in Sources */,
 				52FD03A82A4AE56C0092D78B /* RightViewCell.swift in Sources */,
@@ -5300,7 +5274,6 @@
 				526F8AC52A304A8E009F882F /* RecentTableViewCell.swift in Sources */,
 				52A2E6B42A1261D500DFE33C /* RestrionResponce.swift in Sources */,
 				84B244502B8318A200F33A86 /* AttendDetailTableViewCell.swift in Sources */,
-				529D533B2A0CF1DE0083CA4A /* GetSectionYearHeaderFooterView.swift in Sources */,
 				529D52FE2A0CF03D0083CA4A /* HomeScreenViewController.swift in Sources */,
 				FA35D4B42E20F2050081E8CF /* AssesmentTv.swift in Sources */,
 				5284BD63292E4A0D00120C74 /* CategoryHomePageViewController.swift in Sources */,
@@ -5331,7 +5304,6 @@
 				1891461A290A69C100034317 /* PreferencesUtil.swift in Sources */,
 				524C04BB29405D77000A6975 /* SenderImagePdfDeparmentResponce.swift in Sources */,
 				FA1AC0232DE82FDB0037B996 /* MyprofileTvCell.swift in Sources */,
-				5214AD0D2A67E734008397A3 /* ExaminationEditModalClas.swift in Sources */,
 				5284BDD4292E4DFD00120C74 /* AssigmentHomePageViewController.swift in Sources */,
 				848A62C72A99B7A1007F38E1 /* ConfirmPasswordResp.swift in Sources */,
 				52877F8E2A2DF35A00AE6DAE /* NoticeBoardHomePageViewController.swift in Sources */,

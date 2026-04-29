@@ -171,10 +171,10 @@
     let emer : EmergencyDashTypes = emrgencyRef[indexPath.row]
 
 
-    let fullNameArr = emer.createdon.components(separatedBy: " ")
+        let fullNameArr = emer.createdon?.components(separatedBy: " ")
 
-    let name    = fullNameArr[0]
-    let x = String(emer.duration)
+        let name    = fullNameArr?[0]
+    let x = String(emer.duration ?? 0)
 
     cell.seconds.text = "00:0"+x
 
@@ -192,7 +192,7 @@
 
 
 
-    let date: NSDate? = dateFormatterGet.date(from: name) as NSDate?
+        let date: NSDate? = dateFormatterGet.date(from: name ?? "") as NSDate?
 
     print(dateFormatterPrint.string(from: date as! Date))
 
@@ -508,63 +508,59 @@
 
 
 
-    @IBAction func viewClickVC (){
-
-    if priority == "p4" {
-    let vc =  CommunicationHomePageViewController(nibName: nil, bundle: nil)
-    let currentController = self.getViewController()
-    vc.str = str
-    vc.strName = strName
-    vc.is_read_enabled = is_read_enabled
-    vc.is_write_enabled = is_write_enabled
-
-    vc.modalPresentationStyle = .fullScreen
-    currentController?.present(vc, animated: true,completion: nil)
-
-    }
-
-    else if priority == "p1"{
-
-    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-
-    vc.view.backgroundColor = UIColor(named: "Principal" )
-    vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-    vc.str = str
-    vc.is_read_enabled = is_read_enabled
-    vc.is_write_enabled = is_write_enabled
-
-    vc.strName = strName
-    let currentController = self.getViewController()
-    vc.modalPresentationStyle = .fullScreen
-    currentController?.present(vc, animated: true,completion: nil)
-
-    }
-
-
-    else if priority == "p2" || priority == "p3" || priority == "p6" {
-
-    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-    vc.str = str
-    vc.strName = strName
-    vc.is_read_enabled = is_read_enabled
-    vc.is_write_enabled = is_write_enabled
-
-    let currentController = self.getViewController()
-    vc.modalPresentationStyle = .fullScreen
-    currentController?.present(vc, animated: true,completion: nil)
-
-    }
-
-
-
-
-
-
-    }
+        @IBAction func viewClickVC (){
+            
+            if priority == "p4" {
+                let vc =  CommunicationHomePageViewController(nibName: nil, bundle: nil)
+                let currentController = self.getViewController()
+                vc.str = str
+                vc.strName = strName
+                vc.is_read_enabled = is_read_enabled
+                vc.is_write_enabled = is_write_enabled
+                
+                vc.modalPresentationStyle = .fullScreen
+                currentController?.present(vc, animated: true,completion: nil)
+                
+            }
+            
+            else if priority == "p1"{
+                
+                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                
+                vc.str = str
+                vc.is_read_enabled = is_read_enabled
+                vc.is_write_enabled = is_write_enabled
+                
+                vc.strName = strName
+                let currentController = self.getViewController()
+                vc.view.backgroundColor = UIColor(named: "Principal" )
+                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
+                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+                vc.modalPresentationStyle = .fullScreen
+                currentController?.present(vc, animated: true,completion: nil)
+                
+            }
+            
+            
+            else if priority == "p2" || priority == "p3" || priority == "p6" {
+                
+                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                
+                vc.str = str
+                vc.strName = strName
+                vc.is_read_enabled = is_read_enabled
+                vc.is_write_enabled = is_write_enabled
+                
+                let currentController = self.getViewController()
+                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                vc.modalPresentationStyle = .fullScreen
+                currentController?.present(vc, animated: true,completion: nil)
+                
+            }
+            
+        }
 
 
 

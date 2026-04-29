@@ -162,7 +162,7 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         departmentId = defaults.string(forKey: DefaultsKeys.deptid)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         
         password = defaults.string(forKey: DefaultsKeys.Password)
@@ -404,7 +404,8 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
                 url: APIEndpoints.GetDivisions,
                 httpMethod: .post,
                 queryParam: nil,
-                requestBody: devisions
+                requestBody: devisions,
+                showLoader: false
         ) {[weak self] (result:Result<GetDivisionResponce, Error>) in
             
             guard let self = self else { return }
@@ -525,15 +526,26 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
                                                 self.tv.reloadData()
                                                 
                                             } else{
-                                                
+                                                self.facultyForSenderRef = facultyResp.data ?? []
                                                 self.noDataTextView.alpha = 1
                                                 self.noDataLabel.alpha = 1
                                                 self.noDataTextView.isHidden = false
+                                                self.tv.delegate = self
+                                                self.tv.dataSource = self
+                                                self.tv.reloadData()
                                                 
                                             }
                                             
                                         case .failure(let error):
                                             print(error.localizedDescription)
+                                            
+                                            self.facultyForSenderRef = []
+                                            self.noDataTextView.alpha = 1
+                                            self.noDataLabel.alpha = 1
+                                            self.noDataTextView.isHidden = false
+                                            self.tv.delegate = self
+                                            self.tv.dataSource = self
+                                            self.tv.reloadData()
                                         }
                                     }
                                 }
@@ -722,8 +734,8 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
 
         var staffHod = StaffHodFacultyModal()
         
-        staffHod.userid = Int(memberId)
-        staffHod.appid = 2
+        staffHod.userid = memberId
+        staffHod.appid = String(2)
         staffHod.priority = priority
         staffHod.deptid = departmentId
         
@@ -778,10 +790,10 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
         let defaults = UserDefaults.standard
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
-        add.member_id = memberId
+        add.member_id = Int(memberId)
         add.mobile_no = MobileNumber
         add.priority = priority
-        add.college_id = colgId
+        add.college_id = Int(colgId)
         add.previous_add_id = PreviousAddId
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add

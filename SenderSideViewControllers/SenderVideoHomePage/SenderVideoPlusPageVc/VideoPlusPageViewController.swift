@@ -103,7 +103,7 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
         
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
         
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         
         password = defaults.string(forKey: DefaultsKeys.Password)
         

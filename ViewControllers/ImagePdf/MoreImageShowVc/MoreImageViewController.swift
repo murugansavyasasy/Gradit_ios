@@ -129,7 +129,7 @@ override func viewDidLoad() {
     
     password = defaults.string(forKey: DefaultsKeys.Password)
     colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-    clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+    clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
     
     topMessageLabel.text = memberName
     sideMenuView.isHidden = true
@@ -451,10 +451,10 @@ func addApi(){
     var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
     add.device_token = deviceToken
     print("EventDefaultsKeys.DeviceToken",deviceToken)
-    add.member_id = memberId
+    add.member_id = Int(memberId)
     add.mobile_no = MobileNumber
     add.priority = priority
-    add.college_id = collegId
+    add.college_id = Int(collegId)
     add.previous_add_id = PreviousAddId
     
     APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add

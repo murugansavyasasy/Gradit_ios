@@ -150,7 +150,7 @@
     let dateObj = dateFormatter.date(from: dateString2!)
     dateFormatter.dateFormat = "hh:mm a"
 
-    let a  = recentNoti.sentbyname.count*2
+        let a  = (recentNoti.sentbyname?.count ?? 0)*2
 
     var b = a+180
 
@@ -170,7 +170,7 @@
     }
 
     else{
-    let x = String(recentNoti.duration)
+    let x = String(recentNoti.duration ?? "")
 
     cell.secodsLabel.text = "00:0"+x
 
@@ -194,7 +194,7 @@
     let dateObj = dateFormatter.date(from: dateString2!)
     dateFormatter.dateFormat = "hh:mm a"
 
-    let a  = recentNoti.sentbyname.count*2
+        let a  = (recentNoti.sentbyname?.count ?? 0)*2
 
     var b = a+180
 

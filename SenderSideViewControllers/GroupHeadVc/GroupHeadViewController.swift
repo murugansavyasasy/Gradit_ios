@@ -3049,6 +3049,7 @@ class GroupHeadViewController: UIViewController,UITableViewDelegate,UITableViewD
         voiceUpload.isemergencyvoice = voiceReplyType
         voiceUpload.isstaff = staffCheckBoxView.isChecked
         voiceUpload.isstudent = studentAllCheckBox.isChecked
+        voiceUpload.subjectid = ""
         
         APiCallManager.shared.callApi(
                 url: APIEndpoints.SendVoiceToParticularTypeFromHistory,
@@ -3444,7 +3445,7 @@ class GroupHeadViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     func multypartAudioParticular() {
         
-        var vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToParticularType"
+        var vimeoVideoEndpoint = APIEndpoints.SendFileToParticularType
         
         var voiceUpload = particularVoiceUploadMoad()
         
@@ -3484,11 +3485,9 @@ class GroupHeadViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         print("chatSenderStr", voiceUploadStr)
         
-        KRProgressHUD.show()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            KRProgressHUD.dismiss()
-        }
+        DispatchQueue.main.async {
+                KRProgressHUD.show()
+            }
         
         MultipartManager.shared.uploadVoice(
             url: vimeoVideoEndpoint,
@@ -3498,6 +3497,10 @@ class GroupHeadViewController: UIViewController,UITableViewDelegate,UITableViewD
         ) { [weak self] result in
             
             guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                    KRProgressHUD.dismiss()
+                }
             
             switch result {
                 
@@ -4277,7 +4280,7 @@ class GroupHeadViewController: UIViewController,UITableViewDelegate,UITableViewD
         sendImagePdfEntier.callertype = priority
         sendImagePdfEntier.collegeid = String(collegeId)
         sendImagePdfEntier.Description = discreptionss
-        sendImagePdfEntier.Staffid = memberId
+        sendImagePdfEntier.staffid = memberId
         sendImagePdfEntier.fileduration = "0"
         sendImagePdfEntier.filetype = imageFileType
         
@@ -4381,211 +4384,220 @@ class GroupHeadViewController: UIViewController,UITableViewDelegate,UITableViewD
         }
     }
     
-    
     func uploadAWS(image : UIImage){
         
-        
-        
         KRProgressHUD.show()
-        
-        
-        var colgId : String!
+        var colgId : String
         let defaults = UserDefaults.standard
-        colgId = defaults.string(forKey: DefaultsKeys.collegeid)
+        colgId = defaults.string(forKey: DefaultsKeys.collegeid) ?? ""
         
-        let S3BucketName =  DefaultsKeys.S3BucketName
-        let CognitoPoolID =  DefaultsKeys.CognitoPoolID
-        let Region = AWSRegionType.APSouth1
-        
-        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:Region,identityPoolId:CognitoPoolID)
-        let configuration = AWSServiceConfiguration(region:Region, credentialsProvider:credentialsProvider)
-        AWSServiceManager.default().defaultServiceConfiguration = configuration
-        
-        let currentTimeStamp = NSString.init(format: "%ld",Date() as CVarArg)
-        let imageNameWithoutExtension = NSString.init(format: "vc_%@",currentTimeStamp)
-        let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".jpg")
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        
-        let  currentDate =   dateFormatter.string(from: Date())
-        
-        
-        
-        
-        
-        
+        let currentTimeStamp = NSString.init(format: "%ld", Date() as CVarArg)
+        let imageNameWithoutExtension = NSString.init(format: "vc_%@", currentTimeStamp)
+        let imageName = NSString.init(format: "%@%@", imageNameWithoutExtension, ".png")
         let ext = imageName as String
-        
-        let fileName = imageNameWithoutExtension
-        let fileType = ".jpg"
-        
         let imageURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(ext)
-        let data = image.jpegData(compressionQuality: 0.9)
-        do {
-            try data?.write(to: imageURL)
-        }
-        catch {}
         
-        print(imageURL)
-        
-        let uploadRequest = AWSS3TransferManagerUploadRequest()
-        uploadRequest?.body = imageURL
-        uploadRequest?.key = colgId + "/" + currentDate +  "/" + "File_" + ext
-        uploadRequest?.bucket = S3BucketName
-        uploadRequest?.contentType = ".jpg"
-        
-        
-        // upload
-        
-        let transferManager = AWSS3TransferManager.default()
-        transferManager.upload(uploadRequest!).continueWith { [self] (task) -> AnyObject? in
-            
-            if let error = task.error {
-                print("Upload failed : (\(error))")
-                
-                KRProgressHUD.dismiss()
+        if let data = image.jpegData(compressionQuality: 0.9) {
+            do {
+                try data.write(to: imageURL)
+            } catch {
+                print("Error writing image data to file: \(error)")
+                return
             }
-            
-            if task.result != nil {
+        }
+        
+        
+        AWSPreSignedURL.shared.fetchPresignedURL(
+            bucket: DefaultsKeys.S3BucketName,
+            fileName: imageURL,
+            bucketPath: colgId,
+            fileType: "image"
+        ) { [self] result in
+            switch result {
+            case .success(let awsResponse):
                 
-                let url = AWSS3.default().configuration.endpoint.url
-                let publicURL = url?.appendingPathComponent((uploadRequest?.bucket!)!).appendingPathComponent((uploadRequest?.key!)!)
-                if  let absoluteString = publicURL?.absoluteString {
-                    print("Uploaded to:\(absoluteString)")
-                    
-                    print("Uploaded to:\(absoluteString)")
-                    
-                    absoluteStringImg = absoluteString
-                    awsArry.append(absoluteStringImg)
-                    let imageDict = NSMutableDictionary()
-                    imageDict["FileName"] = absoluteString
-                    self.imageUrlArray.add(imageDict)
-                    self.currentImageCount = self.currentImageCount + 1
-                    if self.currentImageCount < self.totalImageCount{
-                        DispatchQueue.main.async {
-                            self.getImageURL(images: self.originalImagesArray)
-                        }
-                    }else{
-                        self.convertedImagesUrlArray = self.imageUrlArray
+                print("Presigned URL fetched: \(awsResponse.data?.presignedUrl ?? "")")
+                let presignedURL = awsResponse.data?.presignedUrl
+                let Uploadimages = awsResponse.data?.fileUrl
+                
+                AWSUploadManager.shared.uploadImageToAWS(image: image, presignedURL: presignedURL!) { result in
+                    switch result {
+                    case .success(let uploadedURL):
+                        print("Image uploaded successfully: \(uploadedURL)")
+                        self.awsArry.append(Uploadimages ?? "")
                         
-                        
+                    case .failure(let error):
+                        print("Failed to upload image: \(error.localizedDescription)")
                     }
                     
                     
-                    
-                    
-                    
-                    
+                    self.currentImageCount += 1
+                    if self.currentImageCount < self.totalImageCount {
+                        
+                        DispatchQueue.main.async {
+                            self.getImageURL(images: self.originalImagesArray)
+                            print("getImageURL",self.getImageURL)
+                        }
+                    } else {
+                        print("All images uploaded. Final URLs: \(imageUrlArray)")
+                        // Handle final uploaded URLs (e.g., send them to the server or update the UI
+                        
+                        self.convertedImagesUrlArray = self.imageUrlArray
+                        
+                    }
                 }
+                
+            case .failure(let error):
+                print("Error fetching presigned URL: \(error.localizedDescription)")
             }
-            else {
-                KRProgressHUD.dismiss()
-                print("Unexpected empty result.")
-            }
-            return nil
         }
+        
     }
+    
+//    func uploadAWS(image : UIImage){
+//        
+//        KRProgressHUD.show()
+//        
+//        var colgId : String
+//        let defaults = UserDefaults.standard
+//        colgId = defaults.string(forKey: DefaultsKeys.collegeid) ?? ""
+//        
+//        
+//        
+//        let S3BucketName =  DefaultsKeys.S3BucketName
+//        let CognitoPoolID =  DefaultsKeys.CognitoPoolID
+//        let Region = AWSRegionType.APSouth1
+//        
+//        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:Region,identityPoolId:CognitoPoolID)
+//        let configuration = AWSServiceConfiguration(region:Region, credentialsProvider:credentialsProvider)
+//        AWSServiceManager.default().defaultServiceConfiguration = configuration
+//        
+//        let currentTimeStamp = NSString.init(format: "%ld",Date() as CVarArg)
+//        let imageNameWithoutExtension = NSString.init(format: "vc_%@",currentTimeStamp)
+//        let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".jpg")
+//        let dateFormatter = DateFormatter()
+//        
+//        dateFormatter.dateFormat = "dd-MM-yyyy"
+//        
+//        let  currentDate =   dateFormatter.string(from: Date())
+//        
+//        let ext = imageName as String
+//        
+//        let fileName = imageNameWithoutExtension
+//        let fileType = ".jpg"
+//        
+//        let imageURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(ext)
+//        let data = image.jpegData(compressionQuality: 0.9)
+//        do {
+//            try data?.write(to: imageURL)
+//        }
+//        catch {}
+//        
+//        print(imageURL)
+//        
+//        let uploadRequest = AWSS3TransferManagerUploadRequest()
+//        uploadRequest?.body = imageURL
+//        uploadRequest?.key = colgId + "/" + currentDate +  "/" + "File_" + ext
+//        uploadRequest?.bucket = S3BucketName
+//        uploadRequest?.contentType = ".jpg"
+//        
+//        // upload
+//        let transferManager = AWSS3TransferManager.default()
+//        transferManager.upload(uploadRequest!).continueWith { [self] (task) -> AnyObject? in
+//            
+//            if let error = task.error {
+//                print("Upload failed : (\(error))")
+//                
+//                KRProgressHUD.dismiss()
+//            }
+//            
+//            if task.result != nil {
+//                
+//                let url = AWSS3.default().configuration.endpoint.url
+//                let publicURL = url?.appendingPathComponent((uploadRequest?.bucket!)!).appendingPathComponent((uploadRequest?.key!)!)
+//                if  let absoluteString = publicURL?.absoluteString {
+//                    print("Uploaded to:\(absoluteString)")
+//                    
+//                    print("Uploaded to:\(absoluteString)")
+//                    
+//                    absoluteStringImg = absoluteString
+//                    awsArry.append(absoluteStringImg)
+//                    let imageDict = NSMutableDictionary()
+//                    imageDict["FileName"] = absoluteString
+//                    self.imageUrlArray.add(imageDict)
+//                    self.currentImageCount = self.currentImageCount + 1
+//                    if self.currentImageCount < self.totalImageCount{
+//                        DispatchQueue.main.async {
+//                            self.getImageURL(images: self.originalImagesArray)
+//                        }
+//                    }else{
+//                        self.convertedImagesUrlArray = self.imageUrlArray
+//                    }
+//                }
+//            }
+//            else {
+//                KRProgressHUD.dismiss()
+//                print("Unexpected empty result.")
+//            }
+//            return nil
+//        }
+//    }
     
     
     func uploadPDFFileToAWS(pdfData : NSData){
-        //        self.showLoading()
-        
-        
-        KRProgressHUD.show()
-        
-        var colgId : String!
+       
+        var colgId : String
         let defaults = UserDefaults.standard
-        colgId = defaults.string(forKey: DefaultsKeys.collegeid)
-        
-        
-        let S3BucketName =  DefaultsKeys.S3BucketName
-        let CognitoPoolID =  DefaultsKeys.CognitoPoolID
-        let Region = AWSRegionType.APSouth1
-        
-        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:Region,identityPoolId:CognitoPoolID)
-        let configuration = AWSServiceConfiguration(region:Region, credentialsProvider:credentialsProvider)
-        AWSServiceManager.default().defaultServiceConfiguration = configuration
-        
-        // url for image in the bundle
+        colgId = defaults.string(forKey: DefaultsKeys.collegeid) ?? ""
         
         let currentTimeStamp = NSString.init(format: "%ld",Date() as CVarArg)
         let imageNameWithoutExtension = NSString.init(format: "vc_%@",currentTimeStamp)
         let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".pdf")
-        
-        
         let ext = imageName as String
-        
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        
-        let  currentDate =   dateFormatter.string(from: Date())
-        
-        
         let fileName = imageNameWithoutExtension
         let fileType = ".pdf"
-        
         let imageURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(ext)
-        
         do {
             try pdfData.write(to: imageURL)
         }
         catch {}
-        
         print(imageURL)
         
-        let uploadRequest = AWSS3TransferManagerUploadRequest()
-        uploadRequest?.body = imageURL
-        uploadRequest?.key = colgId + "/" + currentDate +  "/" + "File_" + ext
-        uploadRequest?.bucket = S3BucketName
-      
-        uploadRequest?.contentType = "application/pdf"
-        // upload
-        
-        let transferManager = AWSS3TransferManager.default()
-        transferManager.upload(uploadRequest!).continueWith { [self] (task) -> AnyObject? in
-            
-            if let error = task.error {
-                print("Upload failed : (\(error))")
-              
+        AWSPreSignedURL.shared.fetchPresignedURL(
+            bucket: DefaultsKeys.S3BucketName,
+            fileName: imageURL,
+            bucketPath: colgId,
+            fileType: "application"
+        ) { [self] result in
+            switch result {
+            case .success(let awsResponse):
                 
-                KRProgressHUD.dismiss()
-            }
-            
-            
-            if task.result != nil {
-                let url = AWSS3.default().configuration.endpoint.url
-                let publicURL = url?.appendingPathComponent((uploadRequest?.bucket!)!).appendingPathComponent((uploadRequest?.key!)!)
-                if let absoluteString = publicURL?.absoluteString {
-                    print("Uploaded to:\(absoluteString)")
-                   
-                    awsArry.append(absoluteString)
+                print("Presigned URL fetched: \(awsResponse.data?.presignedUrl ?? "")")
+                let presignedURL = awsResponse.data?.presignedUrl
+                let UploadPDf = awsResponse.data?.fileUrl
+                AWSUploadManager.shared.uploadPDFAWSUsingPresignedURL(pdfData: pdfData as Data, presignedURL:presignedURL! ){ [self] result in
+                    
+                    switch result {
+                    case .success(let uploadedURL):
+                        print("Image uploaded successfully: \(uploadedURL)")
+                        self.awsArry.append(UploadPDf ?? "")
+                        
+                    case .failure(let error):
+                        print("Failed to upload image: \(error.localizedDescription)")
+                    }
+                    
                     let imageDict = NSMutableDictionary()
-                    imageDict["FileName"] = absoluteString
+                    imageDict["FileName"] = UploadPDf
                     self.imageUrlArray.add(imageDict)
                     self.convertedImagesUrlArray = self.imageUrlArray
                     
-                    
-                    
-
-                        if resivre == "5"{
-                            
-                            
-                            self.ImagePdfParticular(ImageFile: awsArry)
-                            
-                        }
-                        
-                        
-
                 }
+                
+            case .failure(let error):
+                print("Error fetching presigned URL: \(error.localizedDescription)")
             }
-            else {
-                KRProgressHUD.dismiss()
-                print("Unexpected empty result.")
-            }
-            return nil
         }
+        
     }
     
     
@@ -4595,9 +4607,6 @@ class GroupHeadViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         DefaultsKeys.resiverId.removeAll()
         
-      
-       
-            
             if entireClgView.backgroundColor == UIColor(named: "selectColor"){
                 
                 

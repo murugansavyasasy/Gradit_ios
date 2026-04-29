@@ -116,7 +116,7 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
         
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         
         topMessageLabel.text = memberName
         
@@ -816,7 +816,7 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
     
     @IBAction func AssigmentSubmissionVC(gesture : AssigmentPreViewSubmision){
         
-        if priority == "p4"{
+        if priority == "p4" || priority == "p5"{
             
             if assigmentSegmentName.selectedSegmentIndex == 0{
                 let vc = AssigmentSubmissionViewController(nibName: nil, bundle: nil)
@@ -830,10 +830,7 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 vc.view.backgroundColor = UIColor(named: "StudentParent")
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true,completion: nil)
-            }
-            
-            
-            else{
+            }else{
                 
                 let vc = AssigmentSubmissionViewController(nibName: nil, bundle: nil)
                 vc.assigmentId = gesture.assigmentHeaderId
@@ -1081,10 +1078,10 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
         print("EventDefaultsKeys.DeviceToken",deviceToken)
-        add.member_id = memberId
+        add.member_id = Int(memberId)
         add.mobile_no = mobileNumber
         add.priority = priority
-        add.college_id = colgId
+        add.college_id = Int(colgId)
         add.previous_add_id = PreviousAddId
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
@@ -1436,26 +1433,14 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
     @IBAction func refreshVc() {
         
         print("refreshVcWork")
-        KRProgressHUD.show()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            
-            KRProgressHUD.dismiss()
-            
-        }
         
         if  segmentId == "1"{
             
             UpcommingRefName()
-        }
-        
-        else{
-            
+        }else{
             
             PastRefName()
         }
-        
-        
     }
     
     

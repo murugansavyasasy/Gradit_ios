@@ -28,6 +28,7 @@ struct ChatSenderInteractResponse : Codable{
     var data : [ChatSenderInteractData]?
     
 }
+
 struct ChatSenderInteractData : Codable{
     
     var studentid : String?

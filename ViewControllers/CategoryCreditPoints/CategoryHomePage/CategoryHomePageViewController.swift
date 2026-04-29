@@ -164,8 +164,8 @@ override func viewDidLoad() {
 func categorys(){
     
     var cate = categoryModal()
-    cate.colgid  = colgId
-    cate.i_student_id = memberId
+    cate.colgid  = Int(colgId)
+    cate.i_student_id = Int(memberId)
     
     APiCallManager.shared.callApi(url: APIEndpoints.getcategorylistforclgeid, httpMethod: .post, queryParam: nil, requestBody: cate) {[weak self] (result:Result<categoryResponce, Error>) in
         
@@ -221,10 +221,10 @@ func credits(){
     
     var cate = creditModal()
     
-    cate.colgid = colgId
-    cate.i_course_id = courseid
-    cate.i_category_id = "5"
-    cate.i_student_id = memberId
+    cate.colgid = Int(colgId)
+    cate.i_course_id = Int(courseid)
+    cate.i_category_id = 5
+    cate.i_student_id = Int(memberId)
     
     APiCallManager.shared.callApi(url: APIEndpoints.categorywisestudentcreditdetails, httpMethod: .post, queryParam: nil, requestBody: cate) {[weak self]
         (result:Result<creditResponce, Error>) in
@@ -266,10 +266,10 @@ func credits(){
 func creditsPc(){
     
     var catePc = creditModal()
-    catePc.colgid = colgId
-    catePc.i_course_id = courseid
-    catePc.i_category_id = "6"
-    catePc.i_student_id = memberId
+    catePc.colgid = Int(colgId)
+    catePc.i_course_id = Int(courseid)
+    catePc.i_category_id = 6
+    catePc.i_student_id = Int(memberId)
     
     APiCallManager.shared.callApi(url: APIEndpoints.categorywisestudentcreditdetails, httpMethod: .post, queryParam: nil, requestBody: catePc) {[weak self] (result:Result<creditResponce, Error>) in
     
@@ -307,10 +307,10 @@ func creditsTest(){
     
     var cateTest = creditModal()
     
-    cateTest.colgid = colgId
-    cateTest.i_course_id = courseid
-    cateTest.i_category_id = "19"
-    cateTest.i_student_id = memberId
+    cateTest.colgid = Int(colgId)
+    cateTest.i_course_id = Int(courseid)
+    cateTest.i_category_id = 19
+    cateTest.i_student_id = Int(memberId)
     
     APiCallManager.shared.callApi(url: APIEndpoints.categorywisestudentcreditdetails, httpMethod: .post, queryParam: nil, requestBody: cateTest) {[weak self] (result:Result<creditResponce, Error>) in
     

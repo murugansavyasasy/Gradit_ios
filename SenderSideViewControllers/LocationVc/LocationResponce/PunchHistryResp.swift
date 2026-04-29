@@ -14,7 +14,6 @@ struct punchHistryModalReq : Codable{
     var CollegeId : Int?
     var fromdate : String?
     var todate : String?
-    var attendance_date : String?
     
 }
 

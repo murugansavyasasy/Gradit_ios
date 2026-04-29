@@ -773,7 +773,8 @@ func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
             url: APIEndpoints.GetDepartmentsbyDivision,
             httpMethod: .post,
             queryParam: nil,
-            requestBody: deparment
+            requestBody: deparment,
+            showLoader: false
         ) {[weak self] (result:Result<RepienceDeparmentResponce, Error>) in
             
             guard let self = self else { return }
@@ -923,7 +924,8 @@ func departMents(){
             url: APIEndpoints.GetDepartmentsbyDivision,
             httpMethod: .post,
             queryParam: nil,
-            requestBody: deparment
+            requestBody: deparment,
+            showLoader: false
         ) {[weak self] (result:Result<RepienceDeparmentResponce, Error>) in
                 
             guard let self = self else { return }
@@ -1416,9 +1418,6 @@ func Group(){
 
 func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     
-    
-    
-    
     if devisionView.backgroundColor == UIColor(named: "selectColor"){
         return devisionRefName.count
     }
@@ -1504,16 +1503,13 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         
         if devi.isSelected == true
         {
-            
             cell.checkboxess.isChecked = true
             
         }else
         {
-            
-            
-            
             cell.checkboxess.isChecked = false
         }
+        
         let selectedGesture = CheckBoxEntier(target: self, action: #selector(changeSelection))
         selectedGesture.checkBoxss = cell.checkboxess
         selectedGesture.memberidssss = devi.division_id
@@ -2451,7 +2447,7 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
                             
                         }else if VoiceHstryId == "2"{
                             
-                            self.HistoryVoiceSend()
+                            self.HistoryVoiceSendParticular()
                         }
                         
                         
@@ -2659,12 +2655,6 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
     if(DefaultsKeys.resiverId.count>0){
         DefaultsKeys.resiverId.removeAll()
     }
-    
-    
-    
-    
-    if devisionView.isUserInteractionEnabled == true {
-        //                topIdentificationLabel.text = "Division"
         
         dropDownView.isHidden = true
         courseDropDownView.isHidden = true
@@ -2673,8 +2663,6 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
         
         devisionView.backgroundColor = UIColor(named: "selectColor")
         devisionTabel.textColor = UIColor.white
-        
-        
         departmentLabel.textColor = UIColor(named: "clickView")
         courseLabel.textColor = UIColor(named: "clickView")
         yourClassLabel.textColor = UIColor(named: "clickView")
@@ -2687,24 +2675,6 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
         entireClgView.backgroundColor = UIColor.white
         
         devision()
-        
-        
-        
-        
-        
-        
-        
-    }else {
-        
-        devisionView.isUserInteractionEnabled = false
-        
-        print("clickedOff")
-        
-    }
-    
-    
-    
-    
 }
 
 
@@ -3079,7 +3049,7 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
             vc.voiceDuration = voiceDuration
             vc.str = str
             vc.strName = strName
-            
+            vc.voiceReplyType = voiceReplyType
             vc.photoArray = photoArray
             
             vc.modalPresentationStyle = .fullScreen
@@ -3115,7 +3085,7 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
             vc.voiceDuration = voiceDuration
             vc.str = str
             vc.strName = strName
-            
+            vc.voiceReplyType = voiceReplyType
             vc.photoArray = photoArray
             
             vc.modalPresentationStyle = .fullScreen
@@ -3153,7 +3123,7 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
             vc.strName = strName
             vc.voiceDuration = voiceDuration
             vc.EventTime = EventTime
-            
+            vc.voiceReplyType = voiceReplyType
             
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true,completion: nil)
@@ -3626,7 +3596,7 @@ func CommunicationEntierSms(){
     
     func NoticeSendSmsEntier(ImageFile: [String]) {
         
-        KRProgressHUD.show()
+       
         
         var imageAryy: [FiletypeDataDetails] = []
         
@@ -3669,7 +3639,7 @@ func CommunicationEntierSms(){
             
             guard let self = self else { return }
             
-            KRProgressHUD.dismiss()
+           
             
             switch result {
                 
@@ -3848,11 +3818,11 @@ func CommunicationEntierSms(){
         var particular = EventParticualrModal()
         
         particular.eventid = "0"
-        particular.eventbody = titlesTextField
+        particular.eventbody = discreptionss
         particular.eventdate = DateLabels
         particular.eventvenue = VenuTestField
         particular.eventtime = EventTime
-        particular.eventtopic = discreptionss
+        particular.eventtopic = titlesTextField
         
         if resivre == "13"{
             particular.processtype = "edit"
@@ -4208,7 +4178,7 @@ func CommunicationEntierSms(){
         
         print("voiceReplyTypevoiceReplyType", discreptionss)
         
-        let vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToEntireCollege"
+        let vimeoVideoEndpoint = APIEndpoints.SendFileToEntireCollege
         
         var voiceUpload = voiceUploadEntierModal()
         
@@ -4241,11 +4211,9 @@ func CommunicationEntierSms(){
         
         print("chatSenderStr", voiceUpload)
         
-        KRProgressHUD.show()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            KRProgressHUD.dismiss()
-        }
+        DispatchQueue.main.async {
+                KRProgressHUD.show()
+            }
         
         MultipartManager.shared.uploadVoice(
             url: vimeoVideoEndpoint,
@@ -4254,6 +4222,10 @@ func CommunicationEntierSms(){
         ) { [weak self] result in
             
             guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                    KRProgressHUD.dismiss()
+                }
             
             switch result {
                 
@@ -4346,6 +4318,33 @@ func HistoryVoiceSend() {
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
+                        if self.priority == "p2" || self.priority == "p3" {
+                            
+                            let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                            vc.is_read_enabled = "1"
+                            vc.is_write_enabled = "1"
+                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                            vc.strName = self.strName
+                            vc.str = self.str
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                            
+                        } else {
+                            
+                            let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                            vc.is_read_enabled = "1"
+                            vc.is_write_enabled = "1"
+                            vc.view.backgroundColor = UIColor(named: "Principal")
+                            vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
+                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+                            vc.strName = self.strName
+                            vc.str = self.str
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                        }
+                        
                     }))
                     
                     present(refreshAlert, animated: true, completion: nil)
@@ -4392,6 +4391,7 @@ func HistoryVoiceSendParticular() {
     voiceUpload.isemergencyvoice = voiceReplyType
     voiceUpload.isstaff = staffCheckBoxView.isChecked
     voiceUpload.isstudent = studentCheckBoxView.isChecked
+    voiceUpload.subjectid = ""
     
     APiCallManager.shared.callApi(
             url: APIEndpoints.SendVoiceToParticularTypeFromHistory,
@@ -4410,6 +4410,33 @@ func HistoryVoiceSendParticular() {
                     let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                        
+                        if self.priority == "p2" || self.priority == "p3" {
+                            
+                            let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                            vc.is_read_enabled = "1"
+                            vc.is_write_enabled = "1"
+                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                            vc.strName = self.strName
+                            vc.str = self.str
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                            
+                        } else {
+                            
+                            let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                            vc.is_read_enabled = "1"
+                            vc.is_write_enabled = "1"
+                            vc.view.backgroundColor = UIColor(named: "Principal")
+                            vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
+                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+                            vc.strName = self.strName
+                            vc.str = self.str
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                        }
                         
                     }))
                     
@@ -4767,7 +4794,7 @@ func HistoryVoiceSendParticular() {
     
     func multypartAudioParticular() {
         
-        let vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToParticularType"
+        let vimeoVideoEndpoint = APIEndpoints.SendFileToParticularType
         
         var voiceUpload = particularVoiceUploadMoad()
         
@@ -4807,11 +4834,9 @@ func HistoryVoiceSendParticular() {
         
         print("chatSenderStr", voiceUpload)
         
-        KRProgressHUD.show()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            KRProgressHUD.dismiss()
-        }
+        DispatchQueue.main.async {
+                KRProgressHUD.show()
+            }
         
         MultipartManager.shared.uploadVoice(
             url: vimeoVideoEndpoint,
@@ -4821,6 +4846,10 @@ func HistoryVoiceSendParticular() {
         ) { [weak self] result in
             
             guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                    KRProgressHUD.dismiss()
+                }
             
             switch result {
                 
@@ -5522,7 +5551,7 @@ func SendSmsToParticular() {
         sendImagePdfEntier.callertype = priority
         sendImagePdfEntier.collegeid = collegeId
         sendImagePdfEntier.Description = discreptionss
-        sendImagePdfEntier.Staffid = memberId
+        sendImagePdfEntier.staffid = memberId
         sendImagePdfEntier.fileduration = "0"
         sendImagePdfEntier.filetype = fileType
         
@@ -6449,8 +6478,6 @@ func SendSmsToParticular() {
                     }
         
                    
-                    
-                    awsArry.append(UploadPDf!)
                     let imageDict = NSMutableDictionary()
                     imageDict["FileName"] = UploadPDf
                     self.imageUrlArray.add(imageDict)

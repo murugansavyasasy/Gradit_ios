@@ -11,7 +11,7 @@ struct EventImageModal: Codable {
 
     var collegeid: String?
     var eventheaderid: String?
-    var Userid: String?
+    var userid: String?
     var FileNameArray: [FileNames]?
 
 }

@@ -18,8 +18,6 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     var InstitudeId : Int!
     var userId : Int!
-    
-    var  collegeId : Int!
     var  memberId : Int!
     
     @IBOutlet weak var backView: UIView!
@@ -253,26 +251,27 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
         edit.distance = Distance
         edit.location = Location
         edit.UserId = userId
+  //      edit.CollegeId = InstitudeId
         
         APiCallManager.shared.callApi(
                 url: APIEndpoints.UpdateBiometricLocation,
                 httpMethod: .post,
                 queryParam: nil,
                 requestBody: edit
-        ) {[weak self] (result:Result<EditLocResponce, Error>) in
+        ) {[weak self] (result:Result<[EditLocResponce], Error>) in
             
             guard let self = self else { return }
             
             switch result {
             case .success(let success):
                 
-                noRecLbl.isHidden = success.status == 1 ? true : false
+                noRecLbl.isHidden = success.first?.status == 1 ? true : false
                 
-                let refreshAlert = UIAlertController(title: "", message: success.message, preferredStyle: UIAlertController.Style.alert)
+                let refreshAlert = UIAlertController(title: "", message: success.first?.message, preferredStyle: UIAlertController.Style.alert)
                 
                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
                     
-                    if success.status == 1 {
+                    if success.first?.status == 1 {
                         self?.standerAndSec()
                     }
                     

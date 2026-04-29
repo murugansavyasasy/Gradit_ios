@@ -118,7 +118,7 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
         
         passwords = defaults.string(forKey: DefaultsKeys.Password)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         mem = defaults.string(forKey: DefaultsKeys.memberName)
         mobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         topMemberLabel.text = mem
@@ -328,10 +328,10 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
         print("EventDefaultsKeys.DeviceToken",deviceToken)
-        add.member_id = memberId
+        add.member_id = Int(memberId)
         add.mobile_no = mobileNumber
         add.priority = priority
-        add.college_id = colgId
+        add.college_id = Int(colgId)
         add.previous_add_id = 2
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
@@ -585,14 +585,12 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
     @IBAction func refreshVc() {
         
         print("refreshVcWork")
-        KRProgressHUD.show()
+       
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.chatfortPage()
             self.chatCollectionView.reloadData()
             
-            
-            KRProgressHUD.dismiss()
             
         }
         

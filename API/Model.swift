@@ -17,7 +17,7 @@ struct VersionCheckResponse : Codable{
 struct VersionCheckData : Codable{
     var isversionupdateavailable : Int?
     var isforceupdaterequired    : Int?
-    var resultvalue : Int?
+    var resultvalue : String?
     var resultmessage : String?
     var imagecount : String?
     var pdfcount : String?
@@ -91,16 +91,15 @@ struct DashBoardData: Codable {
 extension DashBoardData {
     
     private func decodeArray<T: Decodable>(_ type: T.Type) -> [T] {
-        
         do {
             let jsonData = try JSONEncoder().encode(data)
             let decoded = try JSONDecoder().decode([T].self, from: jsonData)
             return decoded
         } catch {
+            print("❌ Decoding failed for \(T.self):", error)
             return []
         }
     }
-    
 }
 
 extension DashBoardData {
@@ -231,17 +230,15 @@ struct AdData: Codable {
 }
 
 struct EmergencyDashTypes: Codable {
-    let message: String
-    let detailsid: Int
-    let description: String
-    let voicefilepath: String
-    let duration: Int
-    let membername: String
-    let createdon: String
+    let detailsid: Int?
+    let description: String?
+    let voicefilepath: String?
+    let duration: Int?
+    let membername: String?
+    let createdon: String?
 }
 
 struct AssignmentsDashType: Codable {
-    let message: String?
     let idassignmentdetails: Int?
     let assignmenttopic: String?
     let assignmentdescription: String?
@@ -255,17 +252,15 @@ struct NoticeBoardDashType: Codable {
     let topicbody: String?
     let createddate: String?
     let createdtime: String?
-    let message: String?
 }
 
 struct CircularDashType: Codable {
-    let idfiledetails: Int
-    let title: String
-    let description: String
-    let filepaths: [String]
-    let createddate: String
-    let createdtime: String
-    let message: String
+    let idfiledetails: Int?
+    let title: String?
+    let description: String?
+    let filepaths: [String]?
+    let createddate: String?
+    let createdtime: String?
 }
 
 struct AttendanceDashType: Codable {
@@ -276,19 +271,17 @@ struct AttendanceDashType: Codable {
 }
 
 struct RecentNotificationsDashType: Codable {
-    let message: String?
     let id: Int?
     let typ: String?
-    let sentbyname: String
+    let sentbyname: String?
     let createdondate: String?
     let createdontime: String?
     let content: String?
     let description: String?
-    let duration: String
+    let duration: String?
 }
 
 struct UpcomingEventsDashType: Codable {
-    let message: String?
     let ideventdetails: Int?
     let eventtopic: String?
     let eventdate: String?
@@ -627,6 +620,24 @@ struct HistorySmsVoiceDataDetail : Codable{
     var description : String?
     var duration : String?
     var voicefile : String?
+}
+
+// MARK: - Student Assignment
+struct AssignmentResponse: Codable {
+    let Status: Int
+    let Message: String
+    let data: [AssignmentDetails]
+}
+
+struct AssignmentDetails: Codable {
+    let assignmentdetailsid: String
+    let obtainedmark: String?
+    let filearray: [FileItem]
+}
+
+struct FileItem: Codable {
+    let fileurl: String
+    let filetype: String
 }
 
 

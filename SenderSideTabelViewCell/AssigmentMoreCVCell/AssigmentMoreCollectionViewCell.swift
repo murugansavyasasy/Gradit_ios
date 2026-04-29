@@ -19,6 +19,11 @@ class AssigmentMoreCollectionViewCell: UICollectionViewCell,UICollectionViewDele
     @IBOutlet weak var sendView: UIViewX!
     @IBOutlet weak var MarkTextField: UITextField!
     @IBOutlet weak var NameLabel: UILabel!
+    
+    @IBOutlet weak var registerNoStack: UIStackView!
+    @IBOutlet weak var nameStack: UIStackView!
+    
+    
     var menuIdentifier = "MoreImageCCCollectionViewCell"
     var Filepath : [FilepathDataDetails] = []
     var Filepath2 : [FilepathDataDetails] = []

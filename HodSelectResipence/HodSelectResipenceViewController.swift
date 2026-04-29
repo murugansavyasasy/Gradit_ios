@@ -259,6 +259,33 @@ class HodSelectResipenceViewController: UIViewController {
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                             
+                            if self.priority == "p2" || self.priority == "p3" {
+                                
+                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                                vc.is_read_enabled = "1"
+                                vc.is_write_enabled = "1"
+                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                vc.strName = self.strName
+                                vc.str = self.str
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                                
+                            } else {
+                                
+                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                                vc.is_read_enabled = "1"
+                                vc.is_write_enabled = "1"
+                                vc.view.backgroundColor = UIColor(named: "Principal")
+                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
+                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                vc.strName = self.strName
+                                vc.str = self.str
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                            }
+                            
                         }))
                         
                         present(refreshAlert, animated: true, completion: nil)
@@ -284,7 +311,7 @@ class HodSelectResipenceViewController: UIViewController {
     
     func multypartAudio() {
         
-        let vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToEntireCollege"
+        let vimeoVideoEndpoint = APIEndpoints.SendFileToEntireCollege 
         
         var voiceUpload = voiceUploadEntierModal()
         
@@ -873,11 +900,11 @@ class HodSelectResipenceViewController: UIViewController {
         print("events")
         
         particular.eventid = "0"
-        particular.eventbody = titlesTextField
+        particular.eventbody =  discreptionss
         particular.eventdate = eventDate
         particular.eventvenue = venumtextField
         particular.eventtime = EventTime
-        particular.eventtopic = discreptionss
+        particular.eventtopic = titlesTextField
         particular.processtype = "add"
         particular.collegeid = collegeId
         particular.staffid = memberId
@@ -1073,7 +1100,7 @@ class HodSelectResipenceViewController: UIViewController {
         imagePdf.subjectid = "144"
         imagePdf.yearid = ""
         imagePdf.submissiondate = assigmentDate
-        imagePdf.fileNameArray = assigmet
+        imagePdf.FileNameArray = assigmet
         
         print("yearAndSectionModalStr", imagePdf)
         
@@ -1263,11 +1290,7 @@ class HodSelectResipenceViewController: UIViewController {
                         print("Failed to upload image: \(error.localizedDescription)")
                     }
         
-                   
-                    
-                   
-                    
-                    awsArry.append(UploadPDf!)
+    
                     let imageDict = NSMutableDictionary()
                     imageDict["FileName"] = UploadPDf
                     self.imageUrlArray.add(imageDict)

@@ -11,7 +11,7 @@ import ObjectMapper
 struct facultyModal: Codable {
 
     var userid: String?
-    var Appid: String?
+    var appid: String?
     var priority: String?
     var sectionid: String?
     var semesterid: String?

@@ -134,7 +134,7 @@ class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICo
         loginType = defaults.string(forKey: DefaultsKeys.loginAsType)
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         
         topMessageLabel.text = memberName
         
@@ -274,10 +274,10 @@ class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICo
         let defaults = UserDefaults.standard
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
-        add.member_id = userid
+        add.member_id = Int(userid)
         add.mobile_no = MobileNumber
         add.priority = priority
-        add.college_id = collegeid
+        add.college_id = Int(collegeid)
         add.previous_add_id = previousAdId
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
@@ -466,8 +466,6 @@ class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICo
         KRProgressHUD.show()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            
-            
             
             KRProgressHUD.dismiss()
             

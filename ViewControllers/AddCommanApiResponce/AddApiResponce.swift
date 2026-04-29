@@ -12,9 +12,9 @@ import ObjectMapper
 struct AddApiModal : Codable{
     
     var device_token : String?
-    var member_id : String?
+    var member_id : Int?
     var mobile_no : String?
-    var college_id : String?
+    var college_id : Int?
     var priority : String?
     var previous_add_id : Int?
 }

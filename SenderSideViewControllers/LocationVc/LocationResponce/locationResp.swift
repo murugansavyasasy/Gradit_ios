@@ -15,7 +15,7 @@ struct AddloactionModal : Codable{
     var location : String?
     var longitude : String?
     var latitude : String?
-    var distance : Int?
+    var distance : String?
  
 }
 

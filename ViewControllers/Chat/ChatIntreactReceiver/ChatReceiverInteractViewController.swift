@@ -162,7 +162,7 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
         
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
         
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         
         
         
@@ -843,24 +843,13 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
     @IBAction func refreshVc() {
         
         print("refreshVcWork")
-        KRProgressHUD.show()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [self] in
-         
-            KRProgressHUD.dismiss()
-    
-        }
        
         scrollToBottom1()
    
     }
     
     
-    
-    
     func scrollToBottom(){
-        
-        
         DispatchQueue.main.async { [self] in
             let section = 0
             let numberOfRows = self.chatData.count
@@ -868,16 +857,9 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
             if numberOfRows > 0 {
                 let indexPath = IndexPath(row: numberOfRows - 1, section: section)
                 self.tv.scrollToRow(at: indexPath, at: .bottom, animated: false)
-                
-                //
             }
         }
-        
     }
-    
-    
-    
-    
     
     
     func scrollToBottom1(){

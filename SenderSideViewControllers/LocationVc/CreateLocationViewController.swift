@@ -58,6 +58,8 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
         
         addDoneButtonOnKeyboard()
+        
+        loactiontextfiled.addDoneBtn()
        
         let combinedText = "\(firstParagraph)\n\n\(secondParagraph)"
 
@@ -259,8 +261,8 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate {
         addLocationModal.longitude = longitude
         addLocationModal.location = loactiontextfiled.text!
         addLocationModal.userId = memberId
+        addLocationModal.distance = distanceTextfiled.text
         
-        addLocationModal.distance = Int(distanceTextfiled.text!)
         APiCallManager.shared.callApi(url: APIEndpoints.SetBiometricLocation, httpMethod: .post, queryParam: nil, requestBody: addLocationModal) { [weak self] (result:Result<[punchResponce],Error>) in
             guard let self = self else{return}
             switch result{

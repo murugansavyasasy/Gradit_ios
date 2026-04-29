@@ -137,7 +137,7 @@ override func viewDidLoad() {
     password = defaults.string(forKey: DefaultsKeys.Password)
     
     colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-    clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+    clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
     
     if priority == "p1"{
         
@@ -189,6 +189,7 @@ override func viewDidLoad() {
         view.backgroundColor = UIColor(named: "Principal" )
         
         menuImg.image = UIImage(named: "principalBigMenu")
+        assigmentCount()
         
     }else if priority == "p4" {
         
@@ -198,13 +199,15 @@ override func viewDidLoad() {
         
         menuImg.image = UIImage(named: "studentSwipeImage")
         
+        AssignmentSubmissionForStudent()
+        
     } else if priority == "p3" ||  priority == "p2" {
         
         print("HooodddVieewwColor")
         view.backgroundColor = UIColor(named: "Teaching Staff")
         
         menuImg.image = UIImage(named: "HodImage")
-        
+        assigmentCount()
     }
     else if priority == "p5"{
         
@@ -213,7 +216,7 @@ override func viewDidLoad() {
         view.backgroundColor = UIColor(named: "FatherColor")
         
         menuImg.image = UIImage(named: "StaffBigMenu")
-        
+        AssignmentSubmissionForStudent()
         
     }
     
@@ -223,7 +226,7 @@ override func viewDidLoad() {
         view.backgroundColor = UIColor(named: "Teaching Staff")
         
         menuImg.image = UIImage(named: "HodImage")
-        
+        assigmentCount()
     }
     
     
@@ -240,11 +243,7 @@ override func viewDidLoad() {
     swipeDown.direction = .down
     downView.addGestureRecognizer(swipeDown)
     
-    
-    
-    
-    
-    assigmentCount()
+
     addApi()
     // tap Bar UiTapGuster.
     
@@ -342,10 +341,10 @@ func addApi(){
     var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
     add.device_token = deviceToken
     print("EventDefaultsKeys.DeviceToken",deviceToken)
-    add.member_id = memberId
+    add.member_id = Int(memberId)
     add.mobile_no = mobileNumber
     add.priority = priority
-    add.college_id = colgId
+    add.college_id = Int(colgId)
     add.previous_add_id = 3
     
     
@@ -472,6 +471,55 @@ func addApi(){
         
         APiCallManager.shared.callApi(
             url: APIEndpoints.GetAssignmentSubmissions,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: assigmentCount
+        ) { [weak self] (result: Result<assigmentMemberCountResponce, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let AssigmentResp):
+                
+                if AssigmentResp.Status == 1 {
+                    
+                    self.assigmentMemberCount = AssigmentResp.data ?? []
+                    
+                    if updateSecTime == "1" {
+                        
+                    }else{
+                        self.ImageShowCv.delegate = self
+                        self.ImageShowCv.dataSource = self
+                        self.ImageShowCv.reloadData()
+                    }
+                }
+                
+                else{
+                    
+                    self.ImageShowCv.delegate = self
+                    self.ImageShowCv.dataSource = self
+                    self.ImageShowCv.reloadData()
+                    
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func AssignmentSubmissionForStudent(){
+        
+        var assigmentCount = assigmentMemberCountModal()
+        
+        assigmentCount.assignmentid = assigmentId
+        assigmentCount.processby = memberId
+        
+        print("yearAndSectionModalStr", assigmentCount)
+        
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetSubmittedAssignmentForStudents,
             httpMethod: .post,
             queryParam: nil,
             requestBody: assigmentCount
@@ -1040,8 +1088,14 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
                 cell.studentLabel.text = " Your mark : " + "  " + (assiment.obtainedmark ?? "")
                 
             }
+            
+            cell.registerNoStack.isHidden = true
+            cell.nameStack.isHidden = true
+            
         }else{
             
+            cell.registerNoStack.isHidden = false
+            cell.nameStack.isHidden = false
             
             cell.sendView.isHidden = false
             

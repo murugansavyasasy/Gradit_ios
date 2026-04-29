@@ -5,7 +5,7 @@ import ObjectMapper
 
 struct dropDownModal: Codable {
 
-    var yearid: Int?
+    var yearid: String?
 
 }
 

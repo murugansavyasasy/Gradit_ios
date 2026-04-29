@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -56,7 +56,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VFl-r8-j3Y">
-                    <rect key="frame" x="0.0" y="50" width="375" height="728"/>
+                    <rect key="frame" x="0.0" y="88" width="375" height="661"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YrH-U3-Afy">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -288,7 +288,7 @@
                             </constraints>
                         </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FQe-xr-c1X">
-                            <rect key="frame" x="0.0" y="150" width="375" height="578"/>
+                            <rect key="frame" x="0.0" y="150" width="375" height="511"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ID7-Q2-9QF" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
                                     <rect key="frame" x="255.33333333333337" y="23" width="40" height="22"/>
@@ -331,7 +331,7 @@
                                             </connections>
                                         </segmentedControl>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mjg-TM-koA" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
-                                            <rect key="frame" x="312" y="17" width="40" height="22"/>
+                                            <rect key="frame" x="305" y="17" width="40" height="22"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YBZ-N2-JrB">
                                                     <rect key="frame" x="0.0" y="0.0" width="40" height="22"/>
@@ -386,20 +386,20 @@
                                         <constraint firstItem="Mjg-TM-koA" firstAttribute="top" secondItem="cv6-hj-pha" secondAttribute="top" constant="17" id="8f2-kT-FE7"/>
                                         <constraint firstAttribute="height" constant="54" id="F2x-bD-VSr"/>
                                         <constraint firstItem="Ij2-8a-YRC" firstAttribute="top" secondItem="cv6-hj-pha" secondAttribute="top" id="IBk-qt-RtO"/>
-                                        <constraint firstItem="Mjg-TM-koA" firstAttribute="leading" secondItem="Sd8-Nb-sNg" secondAttribute="trailing" constant="148" id="Jht-q2-CEI"/>
                                         <constraint firstItem="Ij2-8a-YRC" firstAttribute="leading" secondItem="cv6-hj-pha" secondAttribute="leading" id="Kbq-g0-ZxF"/>
                                         <constraint firstItem="Sd8-Nb-sNg" firstAttribute="leading" secondItem="cv6-hj-pha" secondAttribute="leading" constant="124" id="X3i-8c-wxg"/>
                                         <constraint firstItem="Sd8-Nb-sNg" firstAttribute="top" secondItem="cv6-hj-pha" secondAttribute="top" constant="17" id="jfa-6o-FMI"/>
                                         <constraint firstAttribute="bottom" secondItem="Ij2-8a-YRC" secondAttribute="bottom" id="oee-aV-0eO"/>
+                                        <constraint firstAttribute="trailing" secondItem="Mjg-TM-koA" secondAttribute="trailing" constant="30" id="s7E-Tw-8Gt"/>
                                         <constraint firstAttribute="trailing" secondItem="Ij2-8a-YRC" secondAttribute="trailing" id="yus-Jd-Vvw"/>
                                     </constraints>
                                 </view>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Sy2-Xg-aJa">
-                                    <rect key="frame" x="0.0" y="115" width="375" height="343"/>
+                                    <rect key="frame" x="0.0" y="115" width="375" height="276"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qsB-UL-W3n" customClass="ReuseView" customModule="Gradit" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="458" width="375" height="120"/>
+                                    <rect key="frame" x="0.0" y="391" width="375" height="120"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="120" id="0AK-O4-M3q"/>
@@ -690,7 +690,7 @@
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jpX-Z0-mOP" customClass="OptionsSheetView" customModule="Gradit" customModuleProvider="target">
-                        <rect key="frame" x="159" y="92" width="200" height="300"/>
+                        <rect key="frame" x="159" y="130" width="200" height="300"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="200" id="83f-BK-hPT"/>
@@ -730,7 +730,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -35,11 +35,11 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="up" translatesAutoresizingMaskIntoConstraints="NO" id="unj-BU-Y4J">
-                                    <rect key="frame" x="199" y="14" width="16" height="16"/>
+                                    <rect key="frame" x="204" y="18" width="16" height="16"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCZ-bP-ZuD">
-                                    <rect key="frame" x="191" y="38" width="32" height="13.666666666666664"/>
+                                    <rect key="frame" x="196" y="36" width="32" height="13.666666666666664"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
@@ -47,12 +47,11 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="unj-BU-Y4J" firstAttribute="centerX" secondItem="9Zn-UV-rCg" secondAttribute="centerX" id="Dfg-ZE-Ml0"/>
                                 <constraint firstAttribute="width" constant="414" id="EcA-Z6-Ge5"/>
                                 <constraint firstAttribute="height" constant="88" id="F4y-QH-DJ5"/>
-                                <constraint firstItem="unj-BU-Y4J" firstAttribute="top" secondItem="9Zn-UV-rCg" secondAttribute="top" constant="14" id="ITm-wf-1Sv"/>
-                                <constraint firstItem="GCZ-bP-ZuD" firstAttribute="top" secondItem="unj-BU-Y4J" secondAttribute="bottom" constant="8" symbolic="YES" id="sMG-4a-vDs"/>
-                                <constraint firstItem="GCZ-bP-ZuD" firstAttribute="centerX" secondItem="9Zn-UV-rCg" secondAttribute="centerX" id="tFe-vg-MgV"/>
+                                <constraint firstItem="unj-BU-Y4J" firstAttribute="top" secondItem="9Zn-UV-rCg" secondAttribute="top" constant="18" id="ITm-wf-1Sv"/>
+                                <constraint firstItem="GCZ-bP-ZuD" firstAttribute="centerX" secondItem="unj-BU-Y4J" secondAttribute="centerX" id="lf9-bu-ENu"/>
+                                <constraint firstItem="GCZ-bP-ZuD" firstAttribute="top" secondItem="unj-BU-Y4J" secondAttribute="bottom" constant="2" id="sMG-4a-vDs"/>
                             </constraints>
                         </view>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xRG-sh-V3U">
@@ -74,6 +73,7 @@
                         <constraint firstItem="xRG-sh-V3U" firstAttribute="leading" secondItem="BXM-17-GHV" secondAttribute="leading" id="6VD-Ir-4kE"/>
                         <constraint firstAttribute="trailing" secondItem="Unf-rY-BSF" secondAttribute="trailing" id="Akj-vi-8ks"/>
                         <constraint firstItem="Unf-rY-BSF" firstAttribute="leading" secondItem="BXM-17-GHV" secondAttribute="leading" id="FYX-7M-jca"/>
+                        <constraint firstItem="unj-BU-Y4J" firstAttribute="centerX" secondItem="Unf-rY-BSF" secondAttribute="centerX" constant="5" id="Rhc-p6-v3k"/>
                         <constraint firstAttribute="height" constant="120" id="TFt-Bs-CDq"/>
                         <constraint firstItem="xRG-sh-V3U" firstAttribute="top" secondItem="BXM-17-GHV" secondAttribute="top" constant="67" id="XTk-HP-Lb5"/>
                         <constraint firstItem="Unf-rY-BSF" firstAttribute="top" secondItem="BXM-17-GHV" secondAttribute="top" id="a88-Lc-lDm"/>

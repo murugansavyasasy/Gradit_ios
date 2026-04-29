@@ -102,7 +102,7 @@ override func viewDidLoad() {
     memberName = defaults.string(forKey: DefaultsKeys.memberName)
     mobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
     colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-    clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+    clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
     password = defaults.string(forKey: DefaultsKeys.Password)
     topMessageLabel.text = memberName
     
@@ -594,10 +594,10 @@ func addApi(){
     var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
     add.device_token = deviceToken
     print("EventDefaultsKeys.DeviceToken",deviceToken)
-    add.member_id = memberId
+    add.member_id = Int(memberId)
     add.mobile_no = mobileNumber
     add.priority = priority
-    add.college_id = colgId
+    add.college_id = Int(colgId)
     add.previous_add_id = PreviousAddId
     
     APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
@@ -723,16 +723,6 @@ func addApi(){
 @IBAction func refreshVc() {
     
     print("refreshVcWork")
-    KRProgressHUD.show()
-    
-    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-        
-        
-        
-        
-        KRProgressHUD.dismiss()
-        
-    }
     
     videoModals()
     

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -14,15 +14,12 @@
             <connections>
                 <outlet property="TodateView" destination="vz7-nn-vPZ" id="afO-7k-iu5"/>
                 <outlet property="bigImg" destination="NRi-CH-dIg" id="j1M-F6-2BR"/>
-                <outlet property="calandViewss" destination="lqy-l3-RSD" id="Hae-ex-u8f"/>
-                <outlet property="calanderTopHeight" destination="wM9-YK-Inq" id="eoj-bg-AHm"/>
                 <outlet property="calanderView" destination="re4-Rs-Oqw" id="72H-MF-yrn"/>
                 <outlet property="changePasswordView" destination="UCq-Vt-Npw" id="vGL-xt-CIw"/>
                 <outlet property="changeRolesView" destination="gt7-fm-NZs" id="eOb-lt-qkO"/>
                 <outlet property="clearCacheView" destination="tcF-l1-35I" id="sfg-Xg-4L3"/>
                 <outlet property="clgLogoImg" destination="7m8-rU-Ejk" id="j5a-9c-YfD"/>
                 <outlet property="courseNameLabel" destination="Zzu-Jf-UDs" id="SWE-xo-rex"/>
-                <outlet property="datePicker" destination="cl6-ig-aqS" id="E3x-0W-gXF"/>
                 <outlet property="departmentLabel" destination="oUY-XH-3FN" id="O6G-9M-7dm"/>
                 <outlet property="divisionSelectedLabel" destination="gau-YB-bZa" id="XKF-DW-t4V"/>
                 <outlet property="examNameTextField" destination="Qar-1x-iid" id="N96-3z-u2b"/>
@@ -61,7 +58,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ocp-Sz-1Fx">
-                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
+                    <rect key="frame" x="0.0" y="96" width="414" height="732"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jql-c4-66w" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -814,37 +811,6 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lqy-l3-RSD">
-                            <rect key="frame" x="22" y="352" width="370" height="328"/>
-                            <subviews>
-                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="cl6-ig-aqS">
-                                    <rect key="frame" x="0.0" y="35" width="370" height="293"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <connections>
-                                        <action selector="dte:" destination="-1" eventType="valueChanged" id="Hpl-ij-Kzh"/>
-                                    </connections>
-                                </datePicker>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oxN-TZ-y4t">
-                                    <rect key="frame" x="297.5" y="2" width="64.5" height="34.5"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Done"/>
-                                    <connections>
-                                        <action selector="doneBtn:" destination="-1" eventType="touchUpInside" id="QYI-sA-KM8"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="cl6-ig-aqS" secondAttribute="bottom" id="EBC-fa-dbh"/>
-                                <constraint firstItem="cl6-ig-aqS" firstAttribute="top" secondItem="lqy-l3-RSD" secondAttribute="top" constant="35" id="FUC-9o-lT0"/>
-                                <constraint firstAttribute="width" constant="370" id="Hgi-ft-xoi"/>
-                                <constraint firstItem="oxN-TZ-y4t" firstAttribute="top" secondItem="lqy-l3-RSD" secondAttribute="top" constant="2" id="Vic-0x-2UN"/>
-                                <constraint firstItem="cl6-ig-aqS" firstAttribute="leading" secondItem="lqy-l3-RSD" secondAttribute="leading" id="fW5-Rg-rrS"/>
-                                <constraint firstAttribute="trailing" secondItem="cl6-ig-aqS" secondAttribute="trailing" id="p3e-KU-ohM"/>
-                                <constraint firstAttribute="trailing" secondItem="oxN-TZ-y4t" secondAttribute="trailing" constant="8" id="t6K-9s-iq2"/>
-                                <constraint firstAttribute="height" constant="328" id="wM9-YK-Inq"/>
-                            </constraints>
-                        </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
@@ -864,7 +830,6 @@
                         <constraint firstItem="PDx-H1-pZe" firstAttribute="top" secondItem="w1Y-xI-dlV" secondAttribute="bottom" constant="8" id="KrF-HN-hba"/>
                         <constraint firstItem="y37-yL-NfV" firstAttribute="top" secondItem="c9e-We-QCZ" secondAttribute="bottom" constant="18" id="LjJ-S5-8el"/>
                         <constraint firstItem="EtU-cc-xKI" firstAttribute="top" secondItem="V3d-hf-Lo6" secondAttribute="bottom" constant="8" id="MEf-Mr-cHO"/>
-                        <constraint firstItem="lqy-l3-RSD" firstAttribute="centerX" secondItem="Ocp-Sz-1Fx" secondAttribute="centerX" id="N0O-H0-hc6"/>
                         <constraint firstItem="Pre-VU-grJ" firstAttribute="leading" secondItem="Ocp-Sz-1Fx" secondAttribute="leading" constant="22" id="NTn-Ni-M07"/>
                         <constraint firstAttribute="trailing" secondItem="SG1-Pu-INX" secondAttribute="trailing" id="OEi-sN-wEl"/>
                         <constraint firstItem="4CW-ju-gKp" firstAttribute="leading" secondItem="Ocp-Sz-1Fx" secondAttribute="leading" constant="22" id="Ozu-rV-weT"/>
@@ -885,7 +850,6 @@
                         <constraint firstAttribute="trailing" secondItem="4CW-ju-gKp" secondAttribute="trailing" constant="22" id="clJ-lw-xoP"/>
                         <constraint firstItem="c9e-We-QCZ" firstAttribute="top" secondItem="Pre-VU-grJ" secondAttribute="bottom" constant="8" id="eU0-cb-SfY"/>
                         <constraint firstAttribute="trailing" secondItem="w1Y-xI-dlV" secondAttribute="trailing" constant="24" id="enh-lZ-eN9"/>
-                        <constraint firstItem="4CW-ju-gKp" firstAttribute="top" secondItem="lqy-l3-RSD" secondAttribute="bottom" constant="-28.5" id="g9m-j8-tWQ"/>
                         <constraint firstAttribute="trailing" secondItem="Gnz-gY-zfh" secondAttribute="trailing" constant="45" id="hBy-LW-EjP"/>
                         <constraint firstItem="V3d-hf-Lo6" firstAttribute="top" secondItem="9fB-xC-goK" secondAttribute="bottom" constant="15" id="iGt-ny-RWN"/>
                         <constraint firstItem="4lp-2g-nUq" firstAttribute="leading" secondItem="Ocp-Sz-1Fx" secondAttribute="leading" constant="8" id="jXl-fH-2JH"/>

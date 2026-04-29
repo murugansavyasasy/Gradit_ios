@@ -204,7 +204,7 @@ override func viewDidLoad() {
     loginType = defaults.string(forKey: DefaultsKeys.loginAsType)
     memberName = defaults.string(forKey: DefaultsKeys.memberName)
     colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-    clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+    clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
     
     mobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
     
@@ -407,7 +407,7 @@ func FromDate_Action(){
     
     
     
-    RPicker.selectDate(title: "Select Date", cancelText: "Cancel", datePickerMode: .date, style: .Inline, didSelectDate: {[weak self] (today_date) in
+    RPicker.selectDate(title: "Select Date", cancelText: "Cancel", datePickerMode: .date, minDate: Date() ,style: .Inline, didSelectDate: {[weak self] (today_date) in
         
         
         

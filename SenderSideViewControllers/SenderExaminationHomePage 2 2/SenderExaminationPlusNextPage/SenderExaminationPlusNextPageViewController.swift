@@ -13,10 +13,6 @@ import DropDown
 @available(iOS 16.0, *)
 class SenderExaminationPlusNextPageViewController: UIViewController, UITextFieldDelegate {
     
-    
-    @IBOutlet weak var calanderTopHeight: NSLayoutConstraint!
-    @IBOutlet weak var calandViewss: UIView!
-    
     @IBOutlet weak var vtopNameview: UIView!
     @IBOutlet weak var tapBarView: UIViewX!
     
@@ -58,8 +54,6 @@ class SenderExaminationPlusNextPageViewController: UIViewController, UITextField
     @IBOutlet weak var clgLogoImg: UIImageView!
     @IBOutlet weak var changePasswordView: UIView!
     
-    @IBOutlet weak var datePicker: UIDatePicker!
-    
     @IBOutlet weak var topMessageLabel: UILabel!
     
     @IBOutlet weak var termsAndConditionView: UIView!
@@ -85,12 +79,10 @@ class SenderExaminationPlusNextPageViewController: UIViewController, UITextField
     
     @IBOutlet weak var privacyPolicyView: UIView!
     
-    
-    @IBOutlet weak var profileView: UIView!
-    
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
-    var addImageBackGroundurl : String!
+    
+    var addImageBackGroundurl : String?
     var imageWebUrl : String!
     var smallImageUrl  : String!
     
@@ -121,10 +113,12 @@ class SenderExaminationPlusNextPageViewController: UIViewController, UITextField
     var loginDatas : [datalogin]!
     var logindataprinci :[datalogin]!
     
-    var examsectionRef : [SectiondetailRef]!
+//    var examsectionRef : [SectiondetailRef]!
     var semid : String!
     
-    var calanderId : String!
+    var activeDateField: String?   // "from" or "to"
+    var fromDate: Date?
+    var toDate: Date?
     
     var str : [String] = []
     var strName : [String] = []
@@ -136,7 +130,7 @@ class SenderExaminationPlusNextPageViewController: UIViewController, UITextField
         
         print("sert5",smallImageUrl)
         
-        bigImg.sd_setImage(with: URL(string: addImageBackGroundurl), placeholderImage: UIImage(named: "ic_white"))
+        bigImg.sd_setImage(with: URL(string: addImageBackGroundurl ?? ""), placeholderImage: UIImage(named: "ic_white"))
         smallImg.sd_setImage(with: URL(string: smallImageUrl ), placeholderImage: UIImage(named: "ic_white"))
         
         
@@ -144,15 +138,14 @@ class SenderExaminationPlusNextPageViewController: UIViewController, UITextField
         toDateLabel.text = "-SelectDate-"
         
         sideMenuView.isHidden = true
-        datePicker.isHidden = true
-        calandViewss.isHidden = true
+
         let defaults = UserDefaults.standard
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         priority = defaults.string(forKey: DefaultsKeys.priority)
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
         memberID = defaults.string(forKey: DefaultsKeys.memberid)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         
         topMessageLabel.text = memberName
         
@@ -307,192 +300,102 @@ class SenderExaminationPlusNextPageViewController: UIViewController, UITextField
     
     @IBAction func getSubAndSecVc(){
         
-        
-        
-        
         if examNameTextField.text == ""{
-            
-            
-            
             
             let refreshAlert = UIAlertController(title: "", message: "Please Enter ExamName", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 
-                
-                
             }))
-            
             
             present(refreshAlert, animated: true, completion: nil)
             
-        }
-        
-        else if fromDateLabel.text == "-SelectDate-"{
-            
-            
-            
-            
+        }else if fromDateLabel.text == "-SelectDate-"{
             
             let refreshAlert = UIAlertController(title: "", message: "Please Select FromDate", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 
                 
-                
             }))
-            
             
             present(refreshAlert, animated: true, completion: nil)
             
-            
-        }
-        
-        
-        else if toDateLabel.text == "-SelectDate-"{
-            
-            
-            
-            
-            
+        }else if toDateLabel.text == "-SelectDate-"{
             
             let refreshAlert = UIAlertController(title: "", message: "Please Select FromDate", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 
-                
-                
             }))
             
             
             present(refreshAlert, animated: true, completion: nil)
             
-            
-            
-        }
-        
-        
-        else if divisionSelectedLabel.text == "Select Division"{
-            
-            
-            
-            
+        } else if divisionSelectedLabel.text == "Select Division"{
             
             let refreshAlert = UIAlertController(title: "", message: "Please Select Division", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 
                 
-                
             }))
-            
             
             present(refreshAlert, animated: true, completion: nil)
             
-            
-        }
-        
-        else if departmentLabel.text == "Select Department"{
-            
-            
+        }else if departmentLabel.text == "Select Department"{
             
             let refreshAlert = UIAlertController(title: "", message: "Please Select Department", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 
-                
-                
             }))
             
             
             present(refreshAlert, animated: true, completion: nil)
             
-            
-        }
-        
-        else if courseNameLabel.text == "Select Courrse"{
-            
-            
-            
+        }else if courseNameLabel.text == "Select Courrse"{
             
             let refreshAlert = UIAlertController(title: "", message: "Please Select Courrs", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 
-                
-                
             }))
             
             
             present(refreshAlert, animated: true, completion: nil)
             
-        }
-        
-        else if yearLabel.text == "Select Year"{
-            
-            
-            
+        } else if yearLabel.text == "Select Year"{
             
             let refreshAlert = UIAlertController(title: "", message: "Please Select Year", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 
-                
-                
             }))
             
-            
             present(refreshAlert, animated: true, completion: nil)
-        }
-        
-        else if semesterLabel.text == "Select Semester"{
-            
-            
-            
-            
-            
+        } else if semesterLabel.text == "Select Semester"{
             
             let refreshAlert = UIAlertController(title: "", message: "Please Select Semester", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 
-                
-                
             }))
-            
             
             present(refreshAlert, animated: true, completion: nil)
             
-        }
-        else{
-            
-            let addExm = exameMainDetail()
-      
-            
-            addExm.examname = examNameTextField.text
-            addExm.enddate = toDateLabel.text
-            addExm.startdate = fromDateLabel.text
-            addExm.sectiondetails = examsectionRef
-            
-            
-            print("addExm.examname addExm.examname", addExm.examname)
-            
+        }else{
+           
             let vc = GetSectionAndViewController(nibName: nil, bundle: nil)
             vc.semsterID = semid
-            vc.exameName = examNameTextField.text
+            vc.examName = examNameTextField.text
             vc.startDate = fromDateLabel.text
             vc.endDate = toDateLabel.text
-            vc.clgDepartId = departsss
-            vc.sectionId = sectionID
-            vc.EndDateEdit = toDateLabel.text
-            vc.StartDateEdit = fromDateLabel.text
-            vc.examCre.append(addExm)
-         
+            vc.departmentId = departsss
             vc.addImageBackGroundurl = addImageBackGroundurl
             vc.strName = strName
             vc.str = str
             vc.smallImageUrl = addImageBackGroundurl
-            
             vc.imageWebUrl = imageWebUrl
             
             vc.modalPresentationStyle = .fullScreen
@@ -500,6 +403,7 @@ class SenderExaminationPlusNextPageViewController: UIViewController, UITextField
             
         }
     }
+    
     @IBAction func semesterDropDownVc(){
         
         
@@ -538,478 +442,263 @@ class SenderExaminationPlusNextPageViewController: UIViewController, UITextField
     }
     
     
-    func DropDowns(){
-        
-        var devisions = getDivisionModal()
-        
-        devisions.college_id = colgId
-        devisions.user_id =  memberID
-        
+    func dropDowns() {
+
+        var divisionsRequest = getDivisionModal()
+        divisionsRequest.college_id = colgId
+        divisionsRequest.user_id = memberID
+
         APiCallManager.shared.callApi(
             url: APIEndpoints.GetDivisions,
             httpMethod: .post,
             queryParam: nil,
-            requestBody: devisions
-        ) {[weak self] (result:Result<GetDivisionResponce, Error>) in
-            
+            requestBody: divisionsRequest,
+            showLoader: false
+        ) { [weak self] (result: Result<GetDivisionResponce, Error>) in
+
             guard let self = self else { return }
-            
+
             switch result {
-            case .success(let success):
-                devisionRefName = success.data ?? []
+
+            case .success(let response):
+
+                self.devisionRefName = response.data ?? []
+
+                let divisionNames = self.devisionRefName.map { $0.division_name ?? "" }
+                let divisionIds   = self.devisionRefName.map { $0.division_id ?? "" }
+
+                    self.configureDropDown(
+                        data: divisionNames,
+                        anchor: self.selectDivisionDropDown
+                    )
                 
-                var myArray: [String] = []
-                var myArrayId: [String] = [ ]
-                
-                devisionRefName.forEach {(arrType)  in
-                    myArray.append((arrType.division_name ?? ""))
-                    myArrayId.append((arrType.division_id ?? ""))
-                    
-                }
-                print("frdfd",myArray)
-                
-                dropDown.dataSource = myArray//4
-                
-                dropDown.anchorView = selectDivisionDropDown //5
-                
-                dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-                
-                dropDown.direction = .bottom
-                DropDown.appearance().backgroundColor = UIColor.white
-                dropDown.show() //7
-                //
-                dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-                    print("Selected item: \(item) at index: \(index)")
-                    
-                    
+
+                self.dropDown.selectionAction = { [unowned self] index, item in
+
                     self.divisionSelectedLabel.text = item
-                    
-                    var idArray : [String] = []
-                    self.devisionRefName.forEach {(arrType)  in
-                        idArray.append((arrType.division_id ?? ""))
-                        
-                    }
-                    
-                    print("dropDownTextLabel.text\(item)")
-                    var deparment = DepartmentModal()
-                    
-                    deparment.user_id =  self.memberID
-                    
-                    deparment.college_id =  self.colgId
-                    
-                    deparment.div_id =  idArray[index]
-                    
-                    self.courseTypeId = idArray[index]
-                    
-                    print("idArray[index]\(idArray[index])")
-                    
-                    
-                    APiCallManager.shared.callApi(
-                            url: APIEndpoints.GetDepartmentsbyDivision,
-                            httpMethod: .post,
-                            queryParam: nil,
-                            requestBody: deparment
-                        ) {[weak self] (result:Result<RepienceDeparmentResponce, Error>) in
-                                
-                            guard let self = self else { return }
-                            
-                            switch result {
-                            case .success(let success):
-                                self.deparmentRefName = success.data ?? []
-                                
-                                var departs : [String] = []
-                                var departmenIds : [String] = []
-                                self.deparmentRefName.forEach {(arrType)  in
-                                    departs.append((arrType.department_name ?? ""))
-                                    departmenIds.append((arrType.department_id ?? ""))
-                                    
-                                }
-                                print("frdfd",departs)
-                                
-                                self.dropDown.dataSource = departs//4
-                                
-                                self.dropDown.anchorView =  self.selectDepartDropDown //5
-                                
-                                self.dropDown.bottomOffset = CGPoint(x: 0, y:( self.dropDown.anchorView?.plainView.bounds.height)!)
-                                
-                                self.dropDown.direction = .bottom
-                                DropDown.appearance().backgroundColor = UIColor.white
-                                self.dropDown.show() //7
-                                //
-                                self.dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-                                    print("Selected item: \(item) at index: \(index)")
-                                    
-                                    //
-                                    self.departmentLabel.text = item
-                                    
-                                    
-                                    var courseName : [String] = []
-                                    
-                                    
-                                    var course =  getCourseModal()
-                                    
-                                    course.user_id =  self.memberID
-                                    course.college_id =  self.colgId
-                                    course.dept_id = departmenIds[index]
-                                    
-                                    print("fhfytghfg",departmenIds[index])
-                                    
-                                    self.departsss = departmenIds[index]
-                                    
-                                    APiCallManager.shared.callApi(
-                                            url: APIEndpoints.GetCoursesByDepartment,
-                                            httpMethod: .post,
-                                            queryParam: nil,
-                                            requestBody: course
-                                        ) {[weak self] (result:Result<getCourseResponce, Error>) in
-                                                
-                                            guard let self = self else { return }
-                                            
-                                            switch result {
-                                            case .success(let cour):
-                                                self.courseRefName = cour.data ?? []
-                                                var CourseIds : [String] = []
-                                                self.courseRefName.forEach {(arrType)  in
-                                                    courseName.append((arrType.course_name ?? ""))
-                                                    CourseIds.append(arrType.course_id ?? "")
-                                                }
-                                                self.dropDown.dataSource = courseName//4
-                                                
-                                                self.dropDown.anchorView =  self.selectCourseDropDown //5
-                                                
-                                                self.dropDown.bottomOffset = CGPoint(x: 0, y:( self.dropDown.anchorView?.plainView.bounds.height)!)
-                                                
-                                                self.dropDown.direction = .bottom
-                                                DropDown.appearance().backgroundColor = UIColor.white
-                                                self.dropDown.show() //7
-                                                //
-                                                self.dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-                                                    print("Selected item: \(item) at index: \(index)")
-                                                    
-                                                    self.courseNameLabel.text = item
-                                                    
-                                                    
-                                                    var years = getYearListModal()
-                                                    
-                                                    years.idcollege =  self.colgId
-                                                    years.clgprocessby =  self.memberID
-                                                    years.idcourse = CourseIds[index]
-                                                    years.iddept =  self.departsss
-                                                    
-                                                    print("depaertt", self.departsss)
-                                                    
-//                                                    let yearstr = years.toJSONString()
-//                                                    getYearListRequest.call_request(param: yearstr!){ [self]
-//                                                        
-//                                                        (res) in
-//                                                       
-//                                                        //
-//                                                        let cour : getYearListResponce  = Mapper<getYearListResponce>().map(JSONString: res)!
-//                                                        
-//                                                        self.yearRef = cour.data
-//                                                        
-//                                                        var yearName : [String] = []
-//                                                        var yearIdss : [Int] = []
-//                                                        self.yearRef.forEach {(arrType)  in
-//                                                            yearName.append((arrType.yearname))
-//                                                            yearIdss.append(arrType.yearid)
-//                                                        }
-//                                                        
-//                                                        let stringArray = yearIdss.map { String($0) }
-//                                                        let string = stringArray.joined(separator: ", ")
-//                                                        
-//                                                        print("thoiedasefcdsx",string)
-//                                                        //
-//                                                        
-//                                                        self.dropDown.dataSource = yearName//4
-//                                                        
-//                                                        self.dropDown.anchorView =  self.selectYearDropDown //5
-//                                                        
-//                                                        self.dropDown.bottomOffset = CGPoint(x: 0, y:( self.dropDown.anchorView?.plainView.bounds.height)!)
-//                                                        
-//                                                        self.dropDown.direction = .bottom
-//                                                        DropDown.appearance().backgroundColor = UIColor.white
-//                                                        self.dropDown.show() //7
-//                                                        //
-//                                                        self.dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-//                                                            print("Selected item: \(item) at index: \(index)")
-//                                                            
-//                                                            self.yearLabel.text = item
-//                                                            
-//                                                            
-//                                                            
-//                                                            let faculDrops = dropDownModal()
-//                                                            
-//                                                            faculDrops.yearid = yearIdss[index]
-//                                                            
-//                                                            let faculStr = faculDrops.toJSONString()
-//                                                            
-//                                                            facultyDropDownRequest.call_request(param: faculStr!){ [self]
-//                                                                (res) in
-//                                                                
-//                                                                let facultyResp : dropDownResponce =
-//                                                                Mapper<dropDownResponce>().map(JSONString: res)!
-//                                                                
-//                                                                self.facultyDropDownRef = facultyResp.data
-//                                                                
-//                                                                var semesterNam : [String] = []
-//                                                                
-//                                                                
-//                                                                self.facultyDropDownRef.forEach {(arrType)  in
-//                                                                    semesterNam.append((arrType.semestername))
-//                                                                    
-//                                                                }
-//                                                                
-//                                                                
-//                                                                self.dropDown.dataSource = semesterNam//4
-//                                                                
-//                                                                self.dropDown.anchorView =  self.selectSemesterDropDown //5
-//                                                                
-//                                                                self.dropDown.bottomOffset = CGPoint(x: 0, y:( self.dropDown.anchorView?.plainView.bounds.height)!)
-//                                                                
-//                                                                self.dropDown.direction = .bottom
-//                                                                DropDown.appearance().backgroundColor = UIColor.white
-//                                                                self.dropDown.show() //7
-//                                                                //
-//                                                                self.dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-//                                                                    print("Selected item: \(item) at index: \(index)")
-//                                                                    
-//                                                                    self.semesterLabel.text = item
-//                                                                    
-//                                                                    for i in facultyResp.data{
-//                                                                        
-//                                                                        
-//                                                                        self.semid = i.clgsemesterid
-//                                                                        for isa in i.sectiondetails{
-//                                                                            
-//                                                                            self.sectionID = isa.sectionid
-//                                                                            
-//                                                                        }
-//                                                                    }
-//                                                                }
-//                                                            }
-//                                                        }
-//                                                    }
-                                                    
-                                                    APiCallManager.shared.callApi(
-                                                        url: APIEndpoints.GetYearListforApp,
-                                                        httpMethod: .post,
-                                                        queryParam: nil,
-                                                        requestBody: years
-                                                    ) { [weak self] (result: Result<getYearListResponce, Error>) in
-                                                        
-                                                        guard let self = self else { return }
-                                                        
-                                                        switch result {
-                                                            
-                                                        case .success(let cour):
-                                                            
-                                                            self.yearRef = cour.data ?? []
-                                                            
-                                                            var yearName : [String] = []
-                                                            var yearIdss : [Int] = []
-                                                            
-                                                            self.yearRef.forEach {(arrType)  in
-                                                                yearName.append((arrType.yearname ?? ""))
-                                                                yearIdss.append(arrType.yearid ?? 0)
-                                                            }
-                                                            
-                                                            let stringArray = yearIdss.map { String($0) }
-                                                            let string = stringArray.joined(separator: ", ")
-                                                            
-                                                            print("thoiedasefcdsx",string)
-                                                            
-                                                            self.dropDown.dataSource = yearName
-                                                            
-                                                            self.dropDown.anchorView = self.selectYearDropDown
-                                                            
-                                                            self.dropDown.bottomOffset = CGPoint(x: 0, y:(self.dropDown.anchorView?.plainView.bounds.height)!)
-                                                            
-                                                            self.dropDown.direction = .bottom
-                                                            DropDown.appearance().backgroundColor = UIColor.white
-                                                            self.dropDown.show()
-                                                            
-                                                            self.dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-                                                                print("Selected item: \(item) at index: \(index)")
-                                                                
-                                                                self.yearLabel.text = item
-                                                                
-                                                                var faculDrops = dropDownModal()
-                                                                
-                                                                faculDrops.yearid = yearIdss[index]
-                                                                
-                                                                APiCallManager.shared.callApi(
-                                                                    url: APIEndpoints.semesterandsectionListforApp,
-                                                                    httpMethod: .post,
-                                                                    queryParam: nil,
-                                                                    requestBody: faculDrops
-                                                                ) { [weak self] (result: Result<dropDownResponce, Error>) in
-                                                                    
-                                                                    guard let self = self else { return }
-                                                                    
-                                                                    switch result {
-                                                                        
-                                                                    case .success(let facultyResp):
-                                                                        
-                                                                        self.facultyDropDownRef = facultyResp.data ?? []
-                                                                        
-                                                                        var semesterNam : [String] = []
-                                                                        
-                                                                        self.facultyDropDownRef.forEach {(arrType)  in
-                                                                            semesterNam.append((arrType.semestername ?? ""))
-                                                                        }
-                                                                        
-                                                                        self.dropDown.dataSource = semesterNam
-                                                                        
-                                                                        self.dropDown.anchorView = self.selectSemesterDropDown
-                                                                        
-                                                                        self.dropDown.bottomOffset = CGPoint(x: 0, y:(self.dropDown.anchorView?.plainView.bounds.height)!)
-                                                                        
-                                                                        self.dropDown.direction = .bottom
-                                                                        DropDown.appearance().backgroundColor = UIColor.white
-                                                                        self.dropDown.show()
-                                                                        
-                                                                        self.dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-                                                                            print("Selected item: \(item) at index: \(index)")
-                                                                            
-                                                                            self.semesterLabel.text = item
-                                                                            
-                                                                            for i in facultyResp.data ?? []{
-                                                                                
-                                                                                self.semid = i.clgsemesterid
-                                                                                
-                                                                                for isa in i.sectiondetails ?? []{
-                                                                                    self.sectionID = isa.sectionid
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                        
-                                                                    case .failure(let error):
-                                                                        print(error.localizedDescription)
-                                                                    }
-                                                                }
-                                                            }
-                                                            
-                                                        case .failure(let error):
-                                                            print(error.localizedDescription)
-                                                        }
-                                                    }
-                                                }
-                                                
-                                                
-                                            case .failure(let failure):
-                                                 print("Error:",failure.localizedDescription)
-                                            }
-                                            
-                                            }
-                                }
-                            case .failure(let failure):
-                                 print("Error:",failure.localizedDescription)
-                            }
-                            
-                            }
+                    let selectedDivisionId = divisionIds[index]
+                    self.courseTypeId = selectedDivisionId
+
+                    var departmentRequest = DepartmentModal()
+                    departmentRequest.user_id = self.memberID
+                    departmentRequest.college_id = self.colgId
+                    departmentRequest.div_id = selectedDivisionId
+
+                    self.fetchDepartments(request: departmentRequest)
                 }
-            case .failure(let failure):
-                print("Error:",failure.localizedDescription)
+
+            case .failure(let error):
+                print("Error:", error.localizedDescription)
             }
-            
         }
     }
-    
-    
-    
-    
-    @IBAction func dropDownVc(){
-        
-        
-        var deparment = DepartmentModal()
-        deparment.user_id = memberID
-        deparment.college_id = colgId
-        deparment.div_id =  courseTypeId
-        
+
+    // MARK: - Departments
+    private func fetchDepartments(request: DepartmentModal) {
+
         APiCallManager.shared.callApi(
-                url: APIEndpoints.GetDepartmentsbyDivision,
-                httpMethod: .post,
-                queryParam: nil,
-                requestBody: deparment
-            ) {[weak self] (result:Result<RepienceDeparmentResponce, Error>) in
-                    
-                guard let self = self else { return }
-                
-                switch result {
-                case .success(let success):
-                    var addAryy: [String] = [ ]
-                    var itemAryy: [String] = [ ]
-                    
-                    
-                    success.data?.forEach {(arrType)  in
-                        addAryy.append((arrType.department_name ?? ""))
-                        
-                    }
-                    
-                    
-                    dropDown.dataSource = addAryy//4
-                    dropDown.anchorView = selectCourseDropDown //5
-                    
-                    dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-                    //
-                    dropDown.direction = .bottom
-                    DropDown.appearance().backgroundColor = UIColor.white
-                    dropDown.show() //7
-                    
-                    var idArray : [String] = []
-                    deparmentRefName.forEach {(arrType)  in
-                        idArray.append((arrType.department_id ?? ""))
-                        
-                    }
-                    //
-                    dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-                        print("Selected item: \(item) at index: \(index)")
-                        
-                        
-                        
-                        var course =  getCourseModal()
-                        
-                        course.user_id = self.memberID
-                        course.college_id = self.colgId
-                        course.dept_id = idArray[index]
-                        
-                        print("fhfytghfg",idArray[index])
-                        
-                        APiCallManager.shared.callApi(
-                                url: APIEndpoints.GetCoursesByDepartment,
-                                httpMethod: .post,
-                                queryParam: nil,
-                                requestBody: course
-                            ) {[weak self] (result:Result<getCourseResponce, Error>) in
-                                    
-                                guard let self = self else { return }
-                                
-                                switch result {
-                                case .success(let success):
-                                    self.courseRefName = success.data ?? []
-                                case .failure(let failure):
-                                     print("Error:",failure.localizedDescription)
-                                }
-                                
-                                }
-                    }
-                    
-                case .failure(let failure):
-                     print("Error:",failure.localizedDescription)
+            url: APIEndpoints.GetDepartmentsbyDivision,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: request,
+            showLoader: false
+        ) { [weak self] (result: Result<RepienceDeparmentResponce, Error>) in
+
+            guard let self = self else { return }
+
+            switch result {
+
+            case .success(let response):
+
+                self.deparmentRefName = response.data ?? []
+
+                let departmentNames = self.deparmentRefName.map { $0.department_name ?? "" }
+                let departmentIds   = self.deparmentRefName.map { $0.department_id ?? "" }
+
+                self.configureDropDown(
+                    data: departmentNames,
+                    anchor: self.selectDepartDropDown
+                )
+
+                self.dropDown.selectionAction = { [unowned self] index, item in
+
+                    self.departmentLabel.text = item
+                    let selectedDeptId = departmentIds[index]
+                    self.departsss = selectedDeptId
+
+                    var courseRequest = getCourseModal()
+                    courseRequest.user_id = self.memberID
+                    courseRequest.college_id = self.colgId
+                    courseRequest.dept_id = selectedDeptId
+
+                    self.fetchCourses(request: courseRequest)
                 }
-                
-                }
+
+            case .failure(let error):
+                print("Error:", error.localizedDescription)
+            }
+        }
     }
+
+    // MARK: - Courses
+    private func fetchCourses(request: getCourseModal) {
+
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetCoursesByDepartment,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: request
+        ) { [weak self] (result: Result<getCourseResponce, Error>) in
+
+            guard let self = self else { return }
+
+            switch result {
+
+            case .success(let response):
+
+                self.courseRefName = response.data ?? []
+
+                let courseNames = self.courseRefName.map { $0.course_name ?? "" }
+                let courseIds   = self.courseRefName.map { $0.course_id ?? "" }
+
+                self.configureDropDown(
+                    data: courseNames,
+                    anchor: self.selectCourseDropDown
+                )
+
+                self.dropDown.selectionAction = { [unowned self] index, item in
+
+                    self.courseNameLabel.text = item
+
+                    var yearRequest = getYearListModal()
+                    yearRequest.idcollege = self.colgId
+                    yearRequest.clgprocessby = self.memberID
+                    yearRequest.idcourse = courseIds[index]
+                    yearRequest.iddept = self.departsss
+
+                    self.fetchYears(request: yearRequest)
+                }
+
+            case .failure(let error):
+                print("Error:", error.localizedDescription)
+            }
+        }
+    }
+
+    // MARK: - Years
+    private func fetchYears(request: getYearListModal) {
+
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.GetYearListforApp,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: request,
+            showLoader: false
+        ) { [weak self] (result: Result<getYearListResponce, Error>) in
+
+            guard let self = self else { return }
+
+            switch result {
+
+            case .success(let response):
+
+                self.yearRef = response.data ?? []
+
+                let yearNames = self.yearRef.map { $0.yearname ?? "" }
+                let yearIds   = self.yearRef.map { $0.yearid ?? 0 }
+
+                self.configureDropDown(
+                    data: yearNames,
+                    anchor: self.selectYearDropDown
+                )
+
+                self.dropDown.selectionAction = { [unowned self] index, item in
+
+                    self.yearLabel.text = item
+
+                    var semesterRequest = dropDownModal()
+                    semesterRequest.yearid = String(yearIds[index])
+
+                    self.fetchSemesters(request: semesterRequest)
+                }
+
+            case .failure(let error):
+                print("Error:", error.localizedDescription)
+            }
+        }
+    }
+
+    // MARK: - Semesters
+    private func fetchSemesters(request: dropDownModal) {
+
+        APiCallManager.shared.callApi(
+            url: APIEndpoints.semesterandsectionListforApp,
+            httpMethod: .post,
+            queryParam: nil,
+            requestBody: request,
+            showLoader: false
+        ) { [weak self] (result: Result<dropDownResponce, Error>) in
+
+            guard let self = self else { return }
+
+            switch result {
+
+            case .success(let response):
+
+                self.facultyDropDownRef = response.data ?? []
+
+                let semesterNames = self.facultyDropDownRef.map {
+                    $0.semestername ?? ""
+                }
+                
+              
+                    
+                    self.configureDropDown(
+                        data: semesterNames,
+                        anchor: self.selectSemesterDropDown
+                    )
+
+                
+
+                
+                self.dropDown.selectionAction = { [unowned self] index, item in
+
+                    self.semesterLabel.text = item
+
+                    for semester in response.data ?? [] {
+                        self.semid = semester.clgsemesterid
+
+                        for section in semester.sectiondetails ?? [] {
+                            self.sectionID = section.sectionid
+                        }
+                    }
+                }
+
+            case .failure(let error):
+                print("Error:", error.localizedDescription)
+            }
+        }
+    }
+
+    // MARK: - Common Dropdown Config
+    private func configureDropDown(data: [String], anchor: UIView) {
+
+        dropDown.dataSource = data
+        dropDown.anchorView = anchor
+        dropDown.bottomOffset = CGPoint(
+            x: 0,
+            y: anchor.bounds.height
+        )
+        dropDown.direction = .bottom
+        DropDown.appearance().backgroundColor = .white
+        dropDown.show()
+    }
+    
     
     
     @IBAction func devisionVc(){
         
-        
-        
-        DropDowns()
-        
-        
+        dropDowns()
     }
     
     @IBAction func adLoad(){
@@ -1032,62 +721,64 @@ class SenderExaminationPlusNextPageViewController: UIViewController, UITextField
         toDateLabel.text = "DD/MM/YYY"
         FromDate_Action()
         
-        
-        
     }
     
     
     
     @IBAction func todateClick(){
-        datePicker.isHidden = false
-        calandViewss.isHidden = false
-        calanderTopHeight.constant = 328
-        Todate()
+        // 🚫 Block if From Date not selected
+        guard let start = fromDate else {
+            let alert = UIAlertController(title: "",
+                                          message: "Select from date first",
+                                          preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+            return
+        }
         
+        activeDateField = "to"
         
-        
+        RPicker.selectDate(title: "Select To Date",
+                           cancelText: "Cancel",
+                           datePickerMode: .date,
+                           minDate: start,   // ✅ key logic
+                           style: .Inline,
+                           didSelectDate: { [weak self] selectedDate in
+            
+            guard let self = self else { return }
+            
+            self.toDate = selectedDate
+            
+            let display = selectedDate.dateString("dd/MM/yyyy")
+            let api = selectedDate.dateString("yyyy-M-dd")
+            
+            self.toDateLabel.text = display
+        })
     }
-    
     
     func FromDate_Action(){
         
-        calanderId = "1"
+        activeDateField = "from"
         
-        RPicker.selectDate(title: "Select Date", cancelText: "Cancel", datePickerMode: .date, style: .Inline, didSelectDate: {[weak self] (today_date) in
+        RPicker.selectDate(title: "Select From Date",
+                           cancelText: "Cancel",
+                           datePickerMode: .date,
+                           minDate: Date(),   // or Date() if you want only future
+                           style: .Inline,
+                           didSelectDate: { [weak self] selectedDate in
             
+            guard let self = self else { return }
             
+            self.fromDate = selectedDate
+            self.toDate = nil   // 🔥 reset To Date when From Date changes
             
-            self?.display_date = today_date.dateString("dd/MM/yyyy")
+            let display = selectedDate.dateString("dd/MM/yyyy")
+            let api = selectedDate.dateString("yyyy-M-dd")
             
-            self?.url_date = today_date.dateString("yyyy-M-dd")
-            
-            self?.fromDateLabel.text = self!.display_date
+            self.fromDateLabel.text = display
             
         })
-        
-    }
-    
-    func Todate(){
-        
-        
-        let dateFormater: DateFormatter = DateFormatter()
-        dateFormater.dateFormat = "dd/M/yyyy"
-        let currentDate = fromDateLabel.text
-        let date = dateFormater.date(from:currentDate!)!
-        var dt : Date!
-        dt = date
-        
-        
-        datePicker.minimumDate = dt
-        
-        let selectedDate = dateFormater.string(from: datePicker.date)
-        print("selectedDate",selectedDate)
-        
-        
-        
-        
-        
-        
     }
     
     
@@ -1247,19 +938,10 @@ class SenderExaminationPlusNextPageViewController: UIViewController, UITextField
     }
     
     
-    
-    
     @IBAction func priorityVc() {
         let vc = PriorityViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true,completion: nil)
-    }
-    
-    @IBAction func doneBtn(_ sender: Any) {
-        
-        print("click")
-        calandViewss.isHidden = true
-        calanderTopHeight.constant = 0
     }
     
 }

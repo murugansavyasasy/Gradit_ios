@@ -156,10 +156,10 @@ class ExamDetailsHomePageViewController: UIViewController,UITableViewDelegate,UI
         
         var examDetail = examDetailsModal()
         
-        examDetail.colgid = colgId
-        examDetail.i_course_id = courseid
-        examDetail.i_semester_id = semesterid
-        examDetail.i_student_id  = memberId
+        examDetail.colgid = Int(colgId)
+        examDetail.i_course_id = Int(courseid)
+        examDetail.i_semester_id = Int(semesterid)
+        examDetail.i_student_id  = Int(memberId)
         
         APiCallManager.shared.callApi(url: APIEndpoints.getExamApplicationDetails, httpMethod: .post, queryParam: nil, requestBody: examDetail) {[weak self] (result:Result<examDetailsResponce, Error>) in
             

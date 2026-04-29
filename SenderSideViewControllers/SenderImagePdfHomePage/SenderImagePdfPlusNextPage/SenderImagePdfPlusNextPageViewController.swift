@@ -184,7 +184,7 @@ class SenderImagePdfPlusNextPageViewController: UIViewController,UITextViewDeleg
         
         topMessageLabel.text = defaults.string(forKey: DefaultsKeys.memberName)
         
-        clgLogoImg.sd_setImage(with: URL(string: cologLog), placeholderImage: UIImage(named: "ic_white"))
+        clgLogoImg.sd_setImage(with: URL(string: cologLog), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         
         
         

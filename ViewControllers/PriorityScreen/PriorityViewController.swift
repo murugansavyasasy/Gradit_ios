@@ -98,7 +98,7 @@ class PriorityViewController: UIViewController,UITableViewDataSource,UITableView
                 
             case "p5":
                 IdentfierLabel = "PARENT"
-                loginStudent.append(user)
+                loginPrincipal.append(user)
                 
             case "p6":
                 IdentfierLabel = "NON TEACHING"
@@ -120,7 +120,6 @@ class PriorityViewController: UIViewController,UITableViewDataSource,UITableView
             
             principalView.isHidden = true
             parentView.isHidden = true
-            
             StudentViewVc()
             
         } else {

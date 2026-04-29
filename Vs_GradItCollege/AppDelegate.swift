@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             
 
             FirebaseApp.configure()
-
+            UNUserNotificationCenter.current().delegate = self
             Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
 //            getAccessToken()
             if #available(iOS 10.0, *) {

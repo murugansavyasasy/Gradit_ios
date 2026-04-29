@@ -136,9 +136,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         topNameLabel.text = memberName
         
         
-        if colgImg == ""{
+        if colgImg != ""{
             
-            clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+            clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         } else{
             
             clgLogoImg.image = UIImage(named: "EmptyCollegeIcon")
@@ -473,7 +473,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                         self?.loadingCustom.isHidden  = true
                     }
                     
-                    let refreshAlert = UIAlertController(title: "MobileNumber Are Not Similar", message: success.Message, preferredStyle: UIAlertController.Style.alert)
+                    let refreshAlert = UIAlertController(title: "Something Went Wrong, Try Again later", message: success.Message, preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
                         
@@ -488,7 +488,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     self?.loadingCustom.isHidden  = true
                 }
                 
-                let refreshAlert = UIAlertController(title: "MobileNumber Are Not Similar", message: failure.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                let refreshAlert = UIAlertController(title: "Something Went Wrong, Try Again later", message: failure.localizedDescription, preferredStyle: UIAlertController.Style.alert)
                 
                 refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
                     
@@ -524,12 +524,8 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         let dashBoardList : DashBoardData = dashBoardDataList[indexPath.row]
         
         
-        
         var indeRow = indexPath.row + 1
         
-        print("indexsss",indeRow)
-        
-        print("ordertypesss",dashBoardList.emerSubData)
         if dashBoardList.type == "Ad" {
             
             indeRow = dashBoardList.order
@@ -537,7 +533,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             let cell = tableView.dequeueReusableCell(withIdentifier: advertisementIdentifier, for: indexPath)as! HomeTableViewCell
             
             for i in dashBoardList.dashSubData{
-                
                 
                 cell.bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
                 cell.smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
@@ -607,16 +602,18 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         
         else if dashBoardList.type == "Assignments"  {
             
-            
             indeRow = dashBoardList.order
-            
             
             let cell = tableView.dequeueReusableCell(withIdentifier: assignmentListIdentifier, for: indexPath)as! AssignmentTableviewCel
             
             cell.strName = strName
             cell.str = str
-            cell.is_read_enabled = is_read_enabled
-            cell.is_write_enabled = is_write_enabled
+            for i in DefaultsKeys.MenuRefName{
+                if i.menu_slug == "assignment"{
+                    cell.is_read_enabled = String(i.is_read_enabled)
+                    cell.is_write_enabled = String(i.is_write_enabled)
+                }
+            }
             cell.assignmentDatas = dashBoardList.assigment
             
             let assigmentViewAll = UITapGestureRecognizer(target: self, action: #selector(AssigmentViewAllVc))
@@ -636,8 +633,12 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             cell.strName = strName
             cell.str = str
-            cell.is_read_enabled = is_read_enabled
-            cell.is_write_enabled = is_write_enabled
+            for i in DefaultsKeys.MenuRefName{
+                if i.menu_slug == "notice_board"{
+                    cell.is_read_enabled = String(i.is_read_enabled)
+                    cell.is_write_enabled = String(i.is_write_enabled)
+                }
+            }
             cell.noticeBoardData = dashBoardList.noticeSubData
             
             let viewClick = UITapGestureRecognizer(target: self, action: #selector(viewVc))
@@ -656,8 +657,12 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             cell.strName = strName
             cell.str = str
-            cell.is_read_enabled = is_read_enabled
-            cell.is_write_enabled = is_write_enabled
+            for i in DefaultsKeys.MenuRefName{
+                if i.menu_slug == "circular"{
+                    cell.is_read_enabled = String(i.is_read_enabled)
+                    cell.is_write_enabled = String(i.is_write_enabled)
+                }
+            }
             cell.circularData = dashBoardList.circular
             let circularViewClick = UITapGestureRecognizer(target: self, action: #selector(circularViewVc))
             
@@ -689,16 +694,18 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             cell.str = str
             cell.strName = strName
-            cell.is_read_enabled = is_read_enabled
-            cell.is_write_enabled = is_write_enabled
+            for i in DefaultsKeys.MenuRefName{
+                if i.menu_slug == "events"{
+                    cell.is_read_enabled = String(i.is_read_enabled)
+                    cell.is_write_enabled = String(i.is_write_enabled)
+                }
+            }
             cell.EventData = dashBoardList.Events
             if  EventData.count == 1 {
                 
                 cell.EventViewClick.isHidden = true
                 
-            }
-            
-            else{
+            }else{
                 let EventView = UITapGestureRecognizer(target: self, action: #selector(EventViewVc))
                 
                 cell.EventViewClick.addGestureRecognizer(EventView)
@@ -718,8 +725,12 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             cell.strName = strName
             cell.str = str
-            cell.is_read_enabled = is_read_enabled
-            cell.is_write_enabled = is_write_enabled
+            for i in DefaultsKeys.MenuRefName{
+                if i.menu_slug == "chat"{
+                    cell.is_read_enabled = String(i.is_read_enabled)
+                    cell.is_write_enabled = String(i.is_write_enabled)
+                }
+            }
             cell.chatsData = dashBoardList.Chat
             
             let chats = UITapGestureRecognizer(target: self, action: #selector(chatViewVc))
@@ -755,7 +766,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else{
             
             let cell = tableView.dequeueReusableCell(withIdentifier: EventsIdentifier, for: indexPath)as! EventsTableViewCell
-            
+            print("Unknownnnnn")
             return cell
             
         }
@@ -1083,49 +1094,40 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             vc.str = str
             vc.strName = strName
             
-            
-            
             for i in DefaultsKeys.MenuRefName{
                 if i.menu_slug == "assignment"{
                     vc.is_read_enabled = String(i.is_read_enabled)
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
-            
             
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
-        }
-        
-        else if priority == "p1" {
+        }else if priority == "p1" {
             
-            let vc = SenderAssigmentHomePageViewController(nibName: nil, bundle: nil)
+            let vc = SenderAssigmentHomePageViewController()
+            
+            vc.str = str
+            vc.strName = strName
+            for i in DefaultsKeys.MenuRefName{
+                if i.menu_slug == "assignment"{
+                    vc.is_read_enabled = String(i.is_read_enabled)
+                    vc.is_write_enabled = String(i.is_write_enabled)
+                }
+            }
             
             vc.view.backgroundColor = UIColor(named: "Principal" )
             vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
             vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-            vc.str = str
-            vc.strName = strName
-            for i in DefaultsKeys.MenuRefName{
-                if i.menu_slug == "assignment"{
-                    vc.is_read_enabled = String(i.is_read_enabled)
-                    vc.is_write_enabled = String(i.is_write_enabled)
-                }
-            }
             
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false, completion: nil)
             
-            
-        }
-        
-        else if priority == "p7"  {
+        }else if priority == "p7"  {
             
             let vc = SenderAssigmentHomePageViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+            
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1134,6 +1136,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
+            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+            vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         }
@@ -1142,9 +1147,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p3" ||  priority == "p2"  {
             
             let vc = SenderAssigmentHomePageViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+            
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1153,6 +1156,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
+            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+            vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         }
@@ -1160,9 +1166,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p5"{
             
             let vc =  AssigmentHomePageViewController(nibName: nil, bundle: nil)
-            vc.assigmentSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
-            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
-            vc.view.backgroundColor = UIColor(named: "FatherColor" )
+            
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1171,6 +1175,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
+            vc.assigmentSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
+            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
+            vc.view.backgroundColor = UIColor(named: "FatherColor" )
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
@@ -1182,9 +1189,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             
             let vc = SenderAssigmentHomePageViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+           
             vc.str = str
             vc.strName = strName
             
@@ -1194,7 +1199,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
-            
+            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+            vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
@@ -1226,9 +1233,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
             
-            vc.view.backgroundColor = UIColor(named: "Principal" )
-            vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+           
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1237,7 +1242,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
-            
+            vc.view.backgroundColor = UIColor(named: "Principal" )
+            vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
+            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false, completion: nil)
             
@@ -1248,9 +1255,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p3" ||  priority == "p2"  {
             
             let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+           
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1259,6 +1264,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
+            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+            vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         }
@@ -1266,9 +1274,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p7" {
             
             let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-            vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+            
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1277,6 +1283,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
+            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
+            vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         }
@@ -1284,9 +1293,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p5"{
             
             let vc =  EventsViewController(nibName: nil, bundle: nil)
-            vc.eventSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
-            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
-            vc.view.backgroundColor = UIColor(named: "FatherColor" )
+            
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1295,6 +1302,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
+            vc.eventSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
+            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
+            vc.view.backgroundColor = UIColor(named: "FatherColor" )
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
@@ -1306,9 +1316,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             
             let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+            
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1317,6 +1325,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
+            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+            vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
@@ -1332,8 +1343,12 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             let vc =  AttendanceViewController(nibName: nil, bundle: nil)
             vc.str = str
             vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
+            for i in DefaultsKeys.MenuRefName{
+                if i.menu_slug == "attendance"{
+                    vc.is_read_enabled = String(i.is_read_enabled)
+                    vc.is_write_enabled = String(i.is_write_enabled)
+                }
+            }
             
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
@@ -1344,14 +1359,13 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             let vc = SenderAttendanceVcViewController(nibName: nil, bundle: nil)
             
-            vc.view.backgroundColor = UIColor(named: "Principal" )
-            vc.segmentName.backgroundColor = UIColor(named: "UnSelector")
-            vc.segmentName.selectedSegmentTintColor = UIColor(named: "Selector")
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
-            
+            vc.view.backgroundColor = UIColor(named: "Principal" )
+            vc.segmentName.backgroundColor = UIColor(named: "UnSelector")
+            vc.segmentName.selectedSegmentTintColor = UIColor(named: "Selector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false, completion: nil)
             
@@ -1362,14 +1376,14 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p7"  {
             
             let vc = SenderAttendanceVcViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+           
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
-            
+            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
+            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         }
@@ -1378,14 +1392,14 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p3" ||  priority == "p2"  {
             
             let vc = SenderAttendanceVcViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+            
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
-            
+            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         }
@@ -1393,14 +1407,18 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p5"{
             
             let vc =  AttendanceViewController(nibName: nil, bundle: nil)
+            
+            vc.str = str
+            vc.strName = strName
+            for i in DefaultsKeys.MenuRefName{
+                if i.menu_slug == "attendance"{
+                    vc.is_read_enabled = String(i.is_read_enabled)
+                    vc.is_write_enabled = String(i.is_write_enabled)
+                }
+            }
             vc.segmentName.backgroundColor = UIColor(named: "FatherUnselector")
             vc.segmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
             vc.view.backgroundColor = UIColor(named: "FatherColor" )
-            vc.str = str
-            vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
@@ -1410,23 +1428,20 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         
         else if priority == "p6"{
             
-            
-            
             let vc = SenderAttendanceVcViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+            
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
-            
+            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
             
         }
-        
         
     }
     
@@ -1452,14 +1467,18 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
             
+            vc.str = str
+            vc.strName = strName
+            
+            for i in DefaultsKeys.MenuRefName{
+                if i.menu_slug == "voice"{
+                    vc.is_read_enabled = String(i.is_read_enabled)
+                    vc.is_write_enabled = String(i.is_write_enabled)
+                }
+            }
             vc.view.backgroundColor = UIColor(named: "Principal" )
             vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
             vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-            vc.str = str
-            vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false, completion: nil)
             
@@ -1470,14 +1489,18 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p3" ||  priority == "p2"  {
             
             let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+           
+            vc.str = str
+            vc.strName = strName
+            for i in DefaultsKeys.MenuRefName{
+                if i.menu_slug == "voice"{
+                    vc.is_read_enabled = String(i.is_read_enabled)
+                    vc.is_write_enabled = String(i.is_write_enabled)
+                }
+            }
             vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
             vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
             vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-            vc.str = str
-            vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         }
@@ -1485,14 +1508,18 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p7" {
             
             let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+           
+            vc.str = str
+            vc.strName = strName
+            for i in DefaultsKeys.MenuRefName{
+                if i.menu_slug == "voice"{
+                    vc.is_read_enabled = String(i.is_read_enabled)
+                    vc.is_write_enabled = String(i.is_write_enabled)
+                }
+            }
             vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
             vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
             vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-            vc.str = str
-            vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         }
@@ -1500,14 +1527,18 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p5"{
             
             let vc =  CommunicationHomePageViewController(nibName: nil, bundle: nil)
+           
+            vc.str = str
+            vc.strName = strName
+            for i in DefaultsKeys.MenuRefName{
+                if i.menu_slug == "voice"{
+                    vc.is_read_enabled = String(i.is_read_enabled)
+                    vc.is_write_enabled = String(i.is_write_enabled)
+                }
+            }
             vc.CommuniSegementName.backgroundColor = UIColor(named: "FatherUnselector")
             vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
             vc.view.backgroundColor = UIColor(named: "FatherColor" )
-            vc.str = str
-            vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
@@ -1520,14 +1551,18 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             
             let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+            
+            vc.str = str
+            vc.strName = strName
+            for i in DefaultsKeys.MenuRefName{
+                if i.menu_slug == "voice"{
+                    vc.is_read_enabled = String(i.is_read_enabled)
+                    vc.is_write_enabled = String(i.is_write_enabled)
+                }
+            }
             vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
             vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
             vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-            vc.str = str
-            vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
@@ -1560,9 +1595,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             let vc = SenderGraditNoticeBoardMenuViewController(nibName: nil, bundle: nil)
             
-            vc.view.backgroundColor = UIColor(named: "Principal" )
-            vc.noticeSegments.backgroundColor = UIColor(named: "UnSelector")
-            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "Selector")
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1571,6 +1603,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
+            vc.view.backgroundColor = UIColor(named: "Principal" )
+            vc.noticeSegments.backgroundColor = UIColor(named: "UnSelector")
+            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "Selector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false, completion: nil)
         }
@@ -1579,9 +1614,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p3" ||  priority == "p2"  {
             
             let vc = SenderGraditNoticeBoardMenuViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
+           
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1590,7 +1623,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
-            
+            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+            vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         }
@@ -1598,9 +1633,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p7" {
             
             let vc = SenderGraditNoticeBoardMenuViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-            vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
+           
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1609,6 +1642,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
+            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
+            vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         }
@@ -1617,9 +1653,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p5"{
             
             let vc =  NoticeBoardHomePageViewController(nibName: nil, bundle: nil)
-            vc.noticeSegments.backgroundColor = UIColor(named: "FatherUnselector")
-            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "FatherSelector")
-            vc.view.backgroundColor = UIColor(named: "FatherColor" )
+           
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1628,6 +1662,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
+            vc.noticeSegments.backgroundColor = UIColor(named: "FatherUnselector")
+            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "FatherSelector")
+            vc.view.backgroundColor = UIColor(named: "FatherColor" )
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
@@ -1639,9 +1676,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             
             let vc = SenderGraditNoticeBoardMenuViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
+            
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1650,6 +1685,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
+            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+            vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
@@ -1669,14 +1707,13 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             let vc =  SenderAttendanceVcViewController(nibName: nil, bundle: nil)
             
-            vc.view.backgroundColor = UIColor(named: "Principal" )
-            vc.segmentName.backgroundColor = UIColor(named: "UnSelector")
-            vc.segmentName.selectedSegmentTintColor = UIColor(named: "Selector")
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
-            
+            vc.view.backgroundColor = UIColor(named: "Principal" )
+            vc.segmentName.backgroundColor = UIColor(named: "UnSelector")
+            vc.segmentName.selectedSegmentTintColor = UIColor(named: "Selector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true,completion: nil)
             
@@ -1689,14 +1726,14 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             let vc =  SenderAttendanceVcViewController(nibName: nil, bundle: nil)
             
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+            
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
-            
+            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true,completion: nil)
@@ -1710,15 +1747,15 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             let vc =  SenderAttendanceVcViewController(nibName: nil, bundle: nil)
             
-            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+            
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
             
-            
+            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
+            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true,completion: nil)
             
@@ -1732,14 +1769,14 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             let vc =  SenderAttendanceVcViewController(nibName: nil, bundle: nil)
             
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+            
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
-            
+            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true,completion: nil)
@@ -1755,15 +1792,15 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             let vc =  AttendanceViewController(nibName: nil, bundle: nil)
             
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+           
             vc.str = str
             vc.strName = strName
             
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
-            
+            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true,completion: nil)
             
@@ -1908,9 +1945,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
             
-            vc.view.backgroundColor = UIColor(named: "Principal" )
-            vc.imageSegmentName.backgroundColor = UIColor(named: "UnSelector")
-            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1919,6 +1953,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
+            vc.view.backgroundColor = UIColor(named: "Principal" )
+            vc.imageSegmentName.backgroundColor = UIColor(named: "UnSelector")
+            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false, completion: nil)
             
@@ -1929,9 +1966,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p3" ||  priority == "p2"{
             
             let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+            
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1940,7 +1975,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
-            
+            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+            vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         }
@@ -1949,9 +1986,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p7" {
             
             let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-            vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+           
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1960,6 +1995,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
+            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
+            vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         }
@@ -1969,9 +2007,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         else if priority == "p5"{
             
             let vc =  ImageViewController (nibName: nil, bundle: nil)
-            vc.imageSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
-            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
-            vc.view.backgroundColor = UIColor(named: "FatherColor" )
+           
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -1980,6 +2016,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
+            vc.imageSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
+            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
+            vc.view.backgroundColor = UIColor(named: "FatherColor" )
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
@@ -1991,9 +2030,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             
             let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+            
             vc.str = str
             vc.strName = strName
             for i in DefaultsKeys.MenuRefName{
@@ -2002,6 +2039,9 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
+            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+            vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
@@ -2094,15 +2134,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
     }
     
     @IBAction func refreshVc() {
-        
-        
-        KRProgressHUD.show()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            
-            KRProgressHUD.dismiss()
-            
-        }
         
         dashBoardList()
         

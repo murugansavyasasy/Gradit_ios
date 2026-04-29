@@ -147,7 +147,7 @@ override func viewDidLoad() {
     userID =  defaults.string(forKey: DefaultsKeys.memberid)
     topMemberLabel.text =  defaults.string(forKey: DefaultsKeys.memberName)
     colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-    clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+    clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
     
     if piroty == "p1"{
         topLabels.text = "Principal"
@@ -362,10 +362,10 @@ func addApi(){
     var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
     add.device_token = deviceToken
     print("EventDefaultsKeys.DeviceToken",deviceToken)
-    add.member_id = userID
+    add.member_id = Int(userID)
     add.mobile_no = MobileNumber
     add.priority = piroty
-    add.college_id = collegeId
+    add.college_id = Int(collegeId)
     add.previous_add_id = PreviousAddId
     
     APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
@@ -430,36 +430,66 @@ func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replace
 }
 
     @IBAction func FromdateVc() {
+        
         activeDateField = "from"
-
-        datePicker.datePickerMode = .date
-        datePicker.minimumDate = nil
-
-        datePicker.isHidden = false
-        calandViewss.isHidden = false
-        calanderTopHeight.constant = 328
+        
+        RPicker.selectDate(title: "Select From Date",
+                           cancelText: "Cancel",
+                           datePickerMode: .date,
+                           minDate: nil,   // or Date() if you want only future
+                           style: .Inline,
+                           didSelectDate: { [weak self] selectedDate in
+            
+            guard let self = self else { return }
+            
+            self.fromDate = selectedDate
+            self.toDate = nil   // 🔥 reset To Date when From Date changes
+            
+            let display = selectedDate.dateString("dd/MM/yyyy")
+            let api = selectedDate.dateString("yyyy-M-dd")
+            
+            self.fromDateLabel.text = display
+            
+            // Optional: clear To Date UI
+          //  self.toDateLabel.text = ""
+            self.toDateLabel.text = "dd/mm/yyy"
+            
+        })
     }
 
-
     @IBAction func TodateVc() {
-
+        
+        // 🚫 Block if From Date not selected
         guard let start = fromDate else {
-            let alert = UIAlertController(title: "", message: "Select from date first", preferredStyle: .alert)
-
+            let alert = UIAlertController(title: "",
+                                          message: "Select from date first",
+                                          preferredStyle: .alert)
+            
             alert.addAction(UIAlertAction(title: "OK", style: .default))
-
             present(alert, animated: true)
             return
         }
-
+        
         activeDateField = "to"
-
-        datePicker.datePickerMode = .date
-        datePicker.minimumDate = start
-
-        datePicker.isHidden = false
-        calandViewss.isHidden = false
-        calanderTopHeight.constant = 328
+        
+        RPicker.selectDate(title: "Select To Date",
+                           cancelText: "Cancel",
+                           datePickerMode: .date,
+                           minDate: start,   // ✅ key logic
+                           style: .Inline,
+                           didSelectDate: { [weak self] selectedDate in
+            
+            guard let self = self else { return }
+            
+            self.toDate = selectedDate
+            
+            let display = selectedDate.dateString("dd/MM/yyyy")
+            let api = selectedDate.dateString("yyyy-M-dd")
+            
+            self.toDateLabel.text = display
+            
+            calculateDays()
+        })
     }
 
     @IBAction func dte(_ sender: UIDatePicker) {

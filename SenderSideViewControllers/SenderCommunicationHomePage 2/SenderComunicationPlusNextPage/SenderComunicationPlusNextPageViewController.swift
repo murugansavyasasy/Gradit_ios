@@ -160,7 +160,7 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         
         topMessageLabel.text = memberName
         password  = defaults.string(forKey: DefaultsKeys.Password)
@@ -549,21 +549,12 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
             
-            
-            
             vc.titlesTextField = gesture.MsgContent
             vc.discreptionss = gesture.Discreption
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true,completion: nil)
-            
-            
-            
-        }
         
-        
-        else if priority == "p3"{
-            
-            
+        }else if priority == "p3"{
             
             let vc = HodRespienViewController(nibName: nil, bundle: nil)
             
@@ -578,18 +569,7 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true,completion: nil)
             
-            
-            
-            
-            
-            
-        }
-        
-        
-        
-        else if priority == "p7"{
-            
-            
+        }else if priority == "p7"{
             
             let vc = GroupHeadViewController(nibName: nil, bundle: nil)
             
@@ -603,17 +583,10 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
             
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true,completion: nil)
-            
-            
-            
-            
-            
-            
+             
         }
         
         else if priority == "p2"{
-            
-            
             
             let vc = HodSelectResipenceViewController(nibName: nil, bundle: nil)
             
@@ -629,9 +602,6 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
             present(vc, animated: true,completion: nil)
             
         }
-        
-        
-        
     }
     
     
@@ -1028,10 +998,10 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
         let defaults = UserDefaults.standard
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
-        add.member_id = memberId
+        add.member_id = Int(memberId)
         add.mobile_no = MobileNumber
         add.priority = priority
-        add.college_id = collegeId
+        add.college_id = Int(collegeId)
         add.previous_add_id = 3
         
         previousAddId = previousAddId + 1

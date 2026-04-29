@@ -148,7 +148,7 @@ class CountryListViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func countryList () {
         
-        let param : [String : String] = ["AppId" : "1"]
+        let param : [String : Int] = ["AppId" : 1]
         
         APiCallManager.shared.callApi(
             url: APIEndpoints.countryList,

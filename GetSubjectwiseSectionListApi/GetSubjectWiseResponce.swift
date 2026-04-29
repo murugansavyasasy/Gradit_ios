@@ -32,8 +32,14 @@ struct getSubjectWiseDataDetails: Codable {
 }
 
 struct getSectionDatasDetails: Codable {
-
+    
     var subjectid: String?
     var subjectname: String?
-
+    
+    // UI state properties Not coming from API
+    var examdate: String?
+    var examsyllabus: String?
+    var examvenue: String?
+    var examsession: String?
+    var isSaved: Bool? = false
 }

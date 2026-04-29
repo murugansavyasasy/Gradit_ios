@@ -21,19 +21,15 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     @IBOutlet weak var AttendanceTheryHeight: NSLayoutConstraint!
     @IBOutlet weak var partialBtnName: UIButton!
     @IBOutlet weak var theroyBtnName: UIButton!
-    
     @IBOutlet weak var generalBtnName: UIButton!
     @IBOutlet weak var allCheckTotalView: UIView!
-    
     @IBOutlet weak var pleaseChooseLbl: UILabel!
     @IBOutlet weak var hourLabel: UILabel!
     @IBOutlet weak var attendanceDropLbl: UILabel!
     @IBOutlet weak var attendanceDropDown: UIViewX!
     @IBOutlet weak var parentDefaultLbl: UILabel!
     @IBOutlet weak var searchbar: UISearchBar!
-    
     @IBOutlet weak var attendanceDepartLAbl: UILabel!
-    
     @IBOutlet weak var AttendanceViewHigth: NSLayoutConstraint!
     @IBOutlet weak var attendanceSemeLabl: UILabel!
     @IBOutlet weak var attendanceYearLabl: UILabel!
@@ -41,22 +37,16 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     @IBOutlet weak var selectBtn: UIButton!
     @IBOutlet weak var allCheckBox: CheckBoxTwo!
     @IBOutlet weak var parentChck: CheckBoxTwo!
-    
     @IBOutlet weak var AttendanceTextView: UITextView!
-    
     @IBOutlet weak var tagetViewHeight: NSLayoutConstraint!
     @IBOutlet weak var attendanceSectionLbl: UILabel!
     @IBOutlet weak var studentChck: CheckBoxTwo!
     @IBOutlet weak var sendView: UIViewX!
-    
     @IBOutlet weak var Tv: UITableView!
     @IBOutlet weak var attendanceInfoView: UIView!
     @IBOutlet weak var cancelView: UIViewX!
-    
-    
     @IBOutlet weak var attendanceSelectallBtn: UIButton!
     @IBOutlet weak var markAllAsDefLbl: UILabel!
-    
     @IBOutlet weak var presentAllBtn: UIButton!
     @IBOutlet weak var AbsentAllBtn: UIButton!
     @IBOutlet weak var OndutyAllBtn: UIButton!
@@ -65,9 +55,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     @IBOutlet weak var SortBtn: UIButton!
     
     
-    
     var  identifier = "SpecifyStudentTableViewCell"
-    
     var studentRef : [GetstudentListData] = []
     var clone_list : [GetMentorstudentListData] = []
     var clonelist2 : [GetstudentListData] = []
@@ -80,7 +68,6 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     var imagePdfEniter : [sendImagePdfPartiDataDetails] = []
     var attendanceEditsss : [AttendanceEditDataDEtails] = []
     var sendVideoPart : [ParticularVideoUploadRespData] = []
-    
     var edit_hours : [editHoursdataDEtaild] = []
     var clonelist3 : [AttendanceEditDataDEtails] = []
     var collegeId : String!
@@ -97,36 +84,22 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     var searching = false
     var TextDiscrition : String!
     var piroty : String!
-    
-    
-    
     var demoMem : String!
     var resiverType  = "7"
-    
     var subjectID : String!
-    
     var AssigmentAwsURl : String!
-    
     var eventDate : String!
-    
     var eventVenu : String!
-    
     var imageFileType : String!
     var awsurl: String!
-    
     var assigmentForwardHeaderId : String!
-    
     var attendancePresent : String!
-    
     var attendanceDate : String!
-    
     var AttendanceSubjectmemberId : [String] = []
-    
     var presentMemberIds : [String] = []
     var absentMemberIds : [String] = []
     var onDutyMemberIds : [String] = []
     var onLeaveMemberIds : [String] = []
-    
     var people = [GetstudentListData]()
     var attendanceType : [String] = []
     
@@ -782,41 +755,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     
     
     
-    
-//    @IBAction func AllboxVC(gesture:CheckBoxSpecify ){
-//        
-//        
-//        
-//        if AllcheckBox.isChecked == true{
-//            
-//            AllcheckBox.isChecked = false
-//            AllcheckBox.setImage(UIImage.init(named: "checkboxs"), for: .normal)
-//            resiverId.removeLast()
-//            
-//            
-//        } else if AllcheckBox.isChecked == false  {
-//            
-//            AllcheckBox.isChecked = true
-//            
-//            gesture.bool = true
-//            AllcheckBox.setImage(UIImage.init(named: "done"), for: .normal)
-//            gesture.checkBoxss.setImage(UIImage.init(named: "done"), for: .normal)
-//            
-//            resiverId.append(gesture.memberidssss)
-//            
-//            
-//            nameString =  resiverId.joined(separator: "~")
-//            
-//        }
-//        
-//        
-//    }
-    
-    
     @IBAction func allCheckboxvc(){
-        
-        
-        
         
         if allCheckBox.isChecked == true{
             
@@ -893,14 +832,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
             
             
         }
-        
-        
-        
-        
-        
-        
-        
-        
+       
     }
     
     
@@ -950,21 +882,13 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                     
                 }
             }
-            
-            //
-            
+           
         }
-        
-        
-        
-        
         
     }
     
     
     @IBAction func parentCheckBoxVc(){
-        
-        
         
         if parentChck.isChecked == true{
             
@@ -1002,15 +926,8 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                     
                 }
             }
-            
-            
-            
-            
+           
         }
-        
-        
-        
-        
     }
     
     
@@ -1440,30 +1357,6 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                 self.Tv.reloadRows(at: [indexPath], with: .none)
                 check_MarkAll_count()
             }
-    
-            
-//            cell.imageViewAttendance.image = UIImage(named: "letter-p")
-//            //
-//            let check = AttendanceCheckBoxSpecify(target: self, action:#selector(AttencanceCheckVc))
-//            
-//            check.checkBoxss = cell.SpecifyStudentChck
-//            
-//            check.memberidssss = student.memberid
-//            check.IndicatiopnImage =   cell.imageViewAttendance
-//            check.pos = indexPath.row
-//            
-//            cell.selectedViewAttendance.addGestureRecognizer(check)
-//            //
-//            cell.imageViewAttendance.image = UIImage(named: "letter-p")
-//            
-//            if(AttendancePresentId.contains(student.memberid)){
-//                
-//                cell.imageViewAttendance.image = UIImage(named: "letter-p")
-//            }
-//            else{
-//                cell.imageViewAttendance.image = UIImage(named: "letter-a")
-//                
-//            }
             
         }
         
@@ -1490,12 +1383,8 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
             if student.isSelected == true
                 
             {
-                
-                
+               
                 cell.SpecifyStudentChck.isChecked = true
-                
-                
-                
                 
             }else
             
@@ -1505,12 +1394,6 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                 
                 
             }
-            
-            
-            
-            
-           
-            
             
             
             let check = CheckBoxSpecify(target: self, action:#selector(SubjectVc))
@@ -2889,6 +2772,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         voiceUpload.isemergencyvoice = voiceReplyType
         voiceUpload.isstaff = false
         voiceUpload.isstudent = studentChck.isChecked
+        voiceUpload.subjectid = ""
         
         APiCallManager.shared.callApi(
                 url: APIEndpoints.SendVoiceToParticularTypeFromHistory,
@@ -2979,338 +2863,12 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     
     
     
-//    func multypartAudio() {
-//        
-//        var vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToParticularType"
-//        var vimeoVideoEndpointTutor = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToParticularTypeFromTutor"
-//        
-//        
-//        var voiceUpload = particularVoiceUploadMoad()
-//        
-//        voiceUpload.staffid = stafId
-//        voiceUpload.description = TextDiscrition
-//        voiceUpload.callertype = piroty
-//        voiceUpload.collegeid = collegeId
-//        voiceUpload.fileduration = voiceDuration
-//        voiceUpload.filetype = "1"
-//        voiceUpload.isemergencyvoice = voiceReplyType
-//        
-//        if is_parent_target_enabled == "0"{
-//            
-//            voiceUpload.isparent = false
-//            
-//        } else{
-//            
-//            voiceUpload.isparent = parentChck.isChecked
-//        }
-//        
-//        voiceUpload.isstaff = false
-//        voiceUpload.isstudent = studentChck.isChecked
-//        voiceUpload.receiverid = nameString
-//        voiceUpload.receivertype = resiverType
-//        
-//        
-//        let voiceUploadStr = voiceUpload.toJSONString()
-//        
-//        print("voiceUploadStr",voiceUploadStr)
-//        //
-//        
-//        if ItemName == "Subject" || HodYearSpefiy == "12"{
-//            
-//            AF.upload(multipartFormData: { [self] (multipartFormData) in
-//                KRProgressHUD.show()
-//                
-//                var videoU : String!
-//                
-//                let pathURL = voiceURl
-//                
-//                let pathString = pathURL!.path
-//                
-//                multipartFormData.append(URL(fileURLWithPath: pathString), withName: "file")
-//                
-//                multipartFormData.append(Data(voiceUploadStr!.description.utf8), withName: "info")
-//                
-//                print("parameters.description.utf8",voiceUploadStr!.description.utf8)
-//                
-//            },to: vimeoVideoEndpoint).responseJSON{
-//                //
-//                res in
-//                
-//                
-//                KRProgressHUD.dismiss()
-//                
-//                let json_str = String(data: res.data!, encoding: .utf8)
-//                
-//                print("json \(json_str!)")
-//                
-//                
-//                do {
-//                    if let json = try JSONSerialization.jsonObject(with: res.data!, options: []) as? [String: Any] {
-//                        if let status = json["Status"] as? Int {
-//                            print("Status: \(status)")
-//                            
-//                            if status == 1 {
-//                                
-//                                
-//                                let a = json["Message"]
-//                                
-//                                
-//                                let refreshAlert = UIAlertController(title: "", message: a as! String, preferredStyle: UIAlertController.Style.alert)
-//                                
-//                                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-//                                    
-//                                    
-//                                    if piroty == "p2" || piroty == "p3" {
-//                                        
-//                                        let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                        vc.is_read_enabled = is_read_enabled
-//                                        vc.is_write_enabled = is_write_enabled
-//                                        
-//                                        vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-//                                        
-//                                        vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-//                                        vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-//                                        vc.strName = self.strName
-//                                        vc.str = self.strs
-//                                        
-//                                        vc.modalPresentationStyle = .fullScreen
-//                                        self.present(vc, animated: true , completion: nil)
-//                                        
-//                                    } else{
-//                                        
-//                                        let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                        vc.is_read_enabled = is_read_enabled
-//                                        vc.is_write_enabled = is_write_enabled
-//                                        
-//                                        vc.view.backgroundColor = UIColor(named: "Principal" )
-//                                        
-//                                        vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-//                                        vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-//                                        
-//                                        vc.strName = self.strName
-//                                        vc.str = self.strs
-//                                        
-//                                        
-//                                        vc.modalPresentationStyle = .fullScreen
-//                                        self.present(vc, animated: true , completion: nil)
-//                                        
-//                                    }
-//                                    
-//                                }))
-//                                
-//                                self.present(refreshAlert, animated: true, completion: nil)
-//                                   
-//                            }else {
-//                                
-//                                let a = json["Message"]
-//                                
-//                                let refreshAlert = UIAlertController(title: "", message: a as! String, preferredStyle: UIAlertController.Style.alert)
-//                                
-//                                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-//                                    
-//                                    
-//                                    if piroty == "p2" || piroty == "p3" {
-//                                        
-//                                        let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                        vc.is_read_enabled = is_read_enabled
-//                                        vc.is_write_enabled = is_write_enabled
-//                                        
-//                                        vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-//                                        
-//                                        vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-//                                        vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-//                                        vc.strName = self.strName
-//                                        vc.str = self.strs
-//                                        
-//                                        
-//                                        vc.modalPresentationStyle = .fullScreen
-//                                        self.present(vc, animated: true , completion: nil)
-//                                        
-//                                    } else{
-//                                        
-//                                        let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                        vc.is_read_enabled = is_read_enabled
-//                                        vc.is_write_enabled = is_write_enabled
-//                                        
-//                                        vc.view.backgroundColor = UIColor(named: "Principal" )
-//                                        
-//                                        vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-//                                        vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-//                                        
-//                                        vc.strName = self.strName
-//                                        vc.str = self.strs
-//                                        
-//                                        vc.modalPresentationStyle = .fullScreen
-//                                        self.present(vc, animated: true , completion: nil)
-//                                        
-//                                    }
-//                                    
-//                                }))
-//                                
-//                                self.present(refreshAlert, animated: true, completion: nil)
-//                                 
-//                            }
-//                            
-//                        }
-//                    }
-//                } catch {
-//                    print("Error parsing JSON: \(error)")
-//                }
-//                 
-//            }
-//        } else{
-//            
-//            AF.upload(multipartFormData: { [self] (multipartFormData) in
-//                KRProgressHUD.show()
-//                
-//                var videoU : String!
-//                
-//                let pathURL = voiceURl
-//                
-//                let pathString = pathURL!.path
-//                
-//                multipartFormData.append(URL(fileURLWithPath: pathString), withName: "file")
-//                
-//                multipartFormData.append(Data(voiceUploadStr!.description.utf8), withName: "info")
-//                
-//                print("parameters.description.utf8",voiceUploadStr!.description.utf8)
-//                
-//                
-//            },to: vimeoVideoEndpointTutor).responseJSON{
-//                //
-//                res in
-//                
-//                KRProgressHUD.dismiss()
-//                
-//                let json_str = String(data: res.data!, encoding: .utf8)
-//                
-//                print("json \(json_str!)")
-//                
-//                
-//                do {
-//                    if let json = try JSONSerialization.jsonObject(with: res.data!, options: []) as? [String: Any] {
-//                        if let status = json["Status"] as? Int {
-//                            print("Status: \(status)")
-//                            
-//                            if status == 1 {
-//                                
-//                                
-//                                let a = json["Message"]
-//                                
-//                                
-//                                let refreshAlert = UIAlertController(title: "", message: a as! String, preferredStyle: UIAlertController.Style.alert)
-//                                
-//                                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-//                                    
-//                                    
-//                                    if piroty == "p2" || piroty == "p3" {
-//                                        
-//                                        let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                        vc.is_read_enabled = is_read_enabled
-//                                        vc.is_write_enabled = is_write_enabled
-//                                        
-//                                        vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-//                                        
-//                                        vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-//                                        vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-//                                        vc.strName = self.strName
-//                                        vc.str = self.strs
-//                                        
-//                                        vc.modalPresentationStyle = .fullScreen
-//                                        self.present(vc, animated: true , completion: nil)
-//                                        
-//                                    }else{
-//                                        
-//                                        let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                        vc.is_read_enabled = is_read_enabled
-//                                        vc.is_write_enabled = is_write_enabled
-//                                        
-//                                        vc.view.backgroundColor = UIColor(named: "Principal" )
-//                                        
-//                                        vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-//                                        vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-//                                        
-//                                        vc.strName = self.strName
-//                                        vc.str = self.strs
-//                                        
-//                                        
-//                                        vc.modalPresentationStyle = .fullScreen
-//                                        self.present(vc, animated: true , completion: nil)
-//                                        
-//                                    }
-//                                    
-//                                    
-//                                }))
-//                                
-//                                self.present(refreshAlert, animated: true, completion: nil)
-//                                
-//                            }
-//                            else {
-//                                
-//                                let a = json["Message"]
-//                                
-//                                let refreshAlert = UIAlertController(title: "", message: a as! String, preferredStyle: UIAlertController.Style.alert)
-//                                
-//                                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-//                                    
-//                                    
-//                                    if piroty == "p2" || piroty == "p3" {
-//                                        
-//                                        let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                        vc.is_read_enabled = is_read_enabled
-//                                        vc.is_write_enabled = is_write_enabled
-//                                        
-//                                        vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-//                                        
-//                                        vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-//                                        vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-//                                        vc.strName = self.strName
-//                                        vc.str = self.strs
-//                                        vc.is_read_enabled = is_read_enabled
-//                                        vc.is_write_enabled = is_write_enabled
-//                                        
-//                                        
-//                                        vc.modalPresentationStyle = .fullScreen
-//                                        self.present(vc, animated: true , completion: nil)
-//                                        
-//                                    }
-//                                    
-//                                    else{
-//                                        
-//                                        let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                        vc.is_read_enabled = is_read_enabled
-//                                        vc.is_write_enabled = is_write_enabled
-//                                        vc.view.backgroundColor = UIColor(named: "Principal" )
-//                                        
-//                                        vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-//                                        vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-//                                        
-//                                        vc.strName = self.strName
-//                                        vc.str = self.strs
-//                                        
-//                                        vc.modalPresentationStyle = .fullScreen
-//                                        self.present(vc, animated: true , completion: nil)
-//                                        
-//                                    }
-//                                    
-//                                }))
-//                                
-//                                self.present(refreshAlert, animated: true, completion: nil)
-//                                
-//                            }
-//                        }
-//                    }
-//                } catch {
-//                    print("Error parsing JSON: \(error)")
-//                }
-//            }
-//        }
-//    }
+//    func multypartAudio()
     
     func multypartAudio() {
         
-        let vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToParticularType"
-        let vimeoVideoEndpointTutor = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToParticularTypeFromTutor"
+        let vimeoVideoEndpoint = APIEndpoints.SendFileToParticularType
+        let vimeoVideoEndpointTutor = APIEndpoints.SendFileToParticularTypeFromTutor
         
         var voiceUpload = particularVoiceUploadMoad()
         
@@ -3348,7 +2906,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         let isMainAPI = (ItemName == "Subject" || HodYearSpefiy == "12")
         let finalURL = isMainAPI ? vimeoVideoEndpoint : vimeoVideoEndpointTutor
         
-        KRProgressHUD.show()
+        DispatchQueue.main.async {
+                KRProgressHUD.show()
+            }
         
         MultipartManager.shared.uploadVoice(
             url: finalURL,
@@ -3360,7 +2920,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
             
             guard let self = self else { return }
             
-            KRProgressHUD.dismiss()
+            DispatchQueue.main.async {
+                    KRProgressHUD.dismiss()
+                }
             
             switch result {
                 
@@ -3859,7 +3421,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
 
         mentorModal.collegeid = collegeId
         mentorModal.staffid = stafId
-        mentorModal.deptid = departmentId
+      //  mentorModal.deptid = departmentId
         mentorModal.sectionid = sectionId
         mentorModal.yearid = YearId
 
@@ -4200,7 +3762,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
             imagePdf.subjectid = subjectID
             imagePdf.yearid = YearId
             imagePdf.submissiondate = assigmentDate
-            imagePdf.fileNameArray = assigmet
+            imagePdf.FileNameArray = assigmet
             
             print("yearAndSectionModalStr", imagePdf)
             
@@ -4289,7 +3851,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
             imagePdf.subjectid = subjectID
             imagePdf.yearid = YearId
             imagePdf.submissiondate = assigmentDate
-            imagePdf.fileNameArray = assigmet
+            imagePdf.FileNameArray = assigmet
             
             print("yearAndSectionModalStr", imagePdf)
             
@@ -4382,7 +3944,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
             imagePdf.subjectid = subjectID
             imagePdf.yearid = YearId
             imagePdf.submissiondate = assigmentDate
-            imagePdf.fileNameArray = assigmet
+            imagePdf.FileNameArray = assigmet
             
             print("yearAndSectionModalStr", imagePdf)
             
@@ -4470,7 +4032,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
             imagePdf.subjectid = subjectID
             imagePdf.yearid = YearId
             imagePdf.submissiondate = assigmentDate
-            imagePdf.fileNameArray = assigmet
+            imagePdf.FileNameArray = assigmet
             
             print("yearAndSectionModalStr", imagePdf)
             
@@ -4909,7 +4471,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
 
         var sendImagePdfEntier = ImagePdfPartResponce()
 
-        sendImagePdfEntier.Staffid = stafId
+        sendImagePdfEntier.staffid = stafId
         sendImagePdfEntier.collegeid = collegeId
         sendImagePdfEntier.callertype = piroty
 
@@ -5314,9 +4876,6 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     
     // Upload Image To Aws File.
     
-    
-    
-    
     func getImageURL(images: [UIImage]) {
         
         self.originalImagesArray = images
@@ -5393,9 +4952,6 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         }
     }
     
-    
-    
-    
     func uploadPDFFileToAWS(pdfData : NSData){
         //        self.showLoading()
         let currentTimeStamp = NSString.init(format: "%ld",Date() as CVarArg)
@@ -5410,11 +4966,6 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         }
         catch {}
         print(imageURL)
-        
-        
-        
-        
-        
         
         AWSPreSignedURL.shared.fetchPresignedURL(
             bucket: DefaultsKeys.S3BucketName,
@@ -5441,43 +4992,26 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                     
                     
                     
-                    
-                    
-                    awsArry.append(UploadPDf!)
                     let imageDict = NSMutableDictionary()
                     imageDict["FileName"] = UploadPDf
                     self.imageUrlArray.add(imageDict)
                     self.convertedImagesUrlArray = self.imageUrlArray
                     
                     
-                    
-                    
                     if  MenuType == "5"{
                         
                         ImagePdfParticular(ImageFile: awsArry)
                         
-                        
-                    }
-                    
-                    else if MenuType == "6"      ||   MenuType == "6" {
+                    } else if MenuType == "6"      ||   MenuType == "6" {
                         
                         
                         assigmentImagePdf(imageArry : awsArry)
                         
-                        
-                        
-                    }
-                    
-                    else if  MenuType == "1"{
+                    }else if  MenuType == "1"{
                         
                         self.NoticeSendSmsToParticular(ImageFile: awsArry)
-                        //
-                        
-                        
                         
                     }
-                    
-                    
                 }
                 
             case .failure(let error):
@@ -5488,281 +5022,74 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    //    func getImageURL(images : [UIImage]){
-    //
-    //
-    //        self.originalImagesArray = images
-    //        self.totalImageCount = images.count
-    //        if currentImageCount < images.count{
-    //            uploadAWS(image: images[currentImageCount])
-    //            print("uploadAWS",self.uploadAWS)
-    //        }
-    //    }
-    //
-    //
-    //
-    //
-    //
-    //    func uploadAWS(image : UIImage){
-    //
-    //
-    //        KRProgressHUD.show()
-    //        var colgId : String!
-    //        let defaults = UserDefaults.standard
-    //        colgId = defaults.string(forKey: DefaultsKeys.collegeid)
-    //
-    //
-    //        let S3BucketName = DefaultsKeys.S3BucketName
-    //
-    //        print("S3BucketNameS3BucketName",DefaultsKeys.S3BucketName)
-    //
-    //        let CognitoPoolID = DefaultsKeys.CognitoPoolID
-    //        let Region = AWSRegionType.APSouth1
-    //
-    //        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:Region,identityPoolId:CognitoPoolID)
-    //        let configuration = AWSServiceConfiguration(region:Region, credentialsProvider:credentialsProvider)
-    //        AWSServiceManager.default().defaultServiceConfiguration = configuration
-    //
-    //        let currentTimeStamp = NSString.init(format: "%ld",Date() as CVarArg)
-    //        let imageNameWithoutExtension = NSString.init(format: "vc_%@",currentTimeStamp)
-    //        let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".jpg")
-    //        let dateFormatter = DateFormatter()
-    //
-    //        dateFormatter.dateFormat = "dd-MM-yyyy"
-    //
-    //        let  currentDate =   dateFormatter.string(from: Date())
-    //
-    //        let ext = imageName as String
-    //
-    //        let fileName = imageNameWithoutExtension
-    //        let fileType = ".jpg"
-    //
-    //        let imageURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(ext)
-    //        let data = image.jpegData(compressionQuality: 0.9)
-    //        do {
-    //            try data?.write(to: imageURL)
-    //        }
-    //        catch {}
-    //
-    //        print(imageURL)
-    //
-    //        let uploadRequest = AWSS3TransferManagerUploadRequest()
-    //        uploadRequest?.body = imageURL
-    //        uploadRequest?.key = colgId + "/" + currentDate +  "/" + "File_" + ext
-    //        uploadRequest?.bucket = S3BucketName
-    //        uploadRequest?.contentType = "image/jpeg"
-    //        uploadRequest?.acl = .publicRead
-    //
-    //
-    //        print("uploadRequestdd",uploadRequest)
-    //        // upload
-    //
-    //        let transferManager = AWSS3TransferManager.default()
-    //        transferManager.upload(uploadRequest!).continueWith { [self] (task) -> AnyObject? in
-    //
-    //            if let error = task.error {
-    //                print("Upload failed : (\(error))")
-    //
-    //                KRProgressHUD.dismiss()
-    //            }
-    //
-    //            if task.result != nil {
-    //
-    //                let url = AWSS3.default().configuration.endpoint.url
-    //                let publicURL = url?.appendingPathComponent((uploadRequest?.bucket!)!).appendingPathComponent((uploadRequest?.key!)!)
-    //                if  let absoluteString = publicURL?.absoluteString {
-    //                    print("Uploaded to:\(absoluteString)")
-    //
-    //
-    //                    print("Uploaded to:\(absoluteString)")
-    //
-    //                    absoluteStringImg = absoluteString
-    //                    awsArry.append(absoluteStringImg)
-    //
-    //                    let imageDict = NSMutableDictionary()
-    //                    imageDict["FileName"] = absoluteString
-    //                    self.imageUrlArray.add(imageDict)
-    //                    self.currentImageCount = self.currentImageCount + 1
-    //                    if self.currentImageCount < self.totalImageCount{
-    //                        DispatchQueue.main.async {
-    //                            self.getImageURL(images: self.originalImagesArray)
-    //                        }
-    //                    }else{
-    //                        self.convertedImagesUrlArray = self.imageUrlArray
-    //
-    //
-    //                    }
-    //
-    //
-    //
-    //
-    //
-    //
-    //                    //
-    //
-    //
-    //
-    //                }
-    //            }
-    //            else {
-    //                KRProgressHUD.dismiss()
-    //                print("Unexpected empty result.")
-    //            }
-    //            return nil
-    //        }
-    //    }
-    //
-    //
-    //
-    //
-    //
-    
-    
-    
-    // AWS PDF Upload Part
-    
-    
-    
-    
-    
-    
-    //    func uploadPDFFileToAWS(pdfData : Data){
-    //
-    //
-    //        KRProgressHUD.show()
-    //
-    //        var colgId : String!
-    //        let defaults = UserDefaults.standard
-    //        colgId = defaults.string(forKey: DefaultsKeys.collegeid)
-    //
-    //
-    //        let S3BucketName =  DefaultsKeys.S3BucketName
-    //        let CognitoPoolID =  DefaultsKeys.CognitoPoolID
-    //
-    //        let Region = AWSRegionType.APSouth1
-    //
-    //        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:Region,identityPoolId:CognitoPoolID)
-    //        let configuration = AWSServiceConfiguration(region:Region, credentialsProvider:credentialsProvider)
-    //        AWSServiceManager.default().defaultServiceConfiguration = configuration
-    //
-    //        // url for image in the bundle
-    //
-    //        let currentTimeStamp = NSString.init(format: "%ld",Date() as CVarArg)
-    //        let imageNameWithoutExtension = NSString.init(format: "vc_%@",currentTimeStamp)
-    //        let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".pdf")
-    //
-    //        let ext = imageName as String
-    //
-    //        let dateFormatter = DateFormatter()
-    //        dateFormatter.dateFormat = "dd-MM-yyyy"
-    //
-    //        let  currentDate =   dateFormatter.string(from: Date())
-    //
-    //
-    //        let fileName = imageNameWithoutExtension
-    //        let fileType = ".pdf"
-    //
-    //        let imageURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(ext)
-    //
-    //        do {
-    //            try pdfData.write(to: imageURL)
-    //        }
-    //        catch {}
-    //
-    //        print(imageURL)
-    //
-    //        let uploadRequest = AWSS3TransferManagerUploadRequest()
-    //        uploadRequest?.body = imageURL
-    //        uploadRequest?.key = colgId + "/" + currentDate +  "/" + "File_" + ext
-    //        uploadRequest?.bucket = S3BucketName
-    //
-    //        uploadRequest?.contentType = "application/pdf"
-    //
-    //
-    //        let transferManager = AWSS3TransferManager.default()
-    //        transferManager.upload(uploadRequest!).continueWith { [self] (task) -> AnyObject? in
-    //
-    //            if let error = task.error {
-    //                print("Upload failed : (\(error))")
-    //
-    //                KRProgressHUD.dismiss()
-    //            }
-    //
-    //            if task.result != nil {
-    //                let url = AWSS3.default().configuration.endpoint.url
-    //                let publicURL = url?.appendingPathComponent((uploadRequest?.bucket!)!).appendingPathComponent((uploadRequest?.key!)!)
-    //                if let absoluteString = publicURL?.absoluteString {
-    //                    print("Uploaded to:\(absoluteString)")
-    //                    awsArry.append(absoluteString)
-    //                    let imageDict = NSMutableDictionary()
-    //                    imageDict["FileName"] = absoluteString
-    //                    self.imageUrlArray.add(imageDict)
-    //                    self.convertedImagesUrlArray = self.imageUrlArray
-    //
-    //
-    //
-    //
-    //                    if  MenuType == "5"{
-    //
-    //                        ImagePdfParticular(ImageFile: awsArry)
-    //
-    //
-    //                    }
-    //
-    //                    else if MenuType == "6"      ||   MenuType == "6" {
-    //
-    //
-    //                        assigmentImagePdf(imageArry : awsArry)
-    //
-    //
-    //
-    //                    }
-    //
-    //                    else if  MenuType == "1"{
-    //
-    //                        self.NoticeSendSmsToParticular(ImageFile: awsArry)
-    //                        //
-    //
-    //
-    //                    }
-    //                }
-    //            }
-    //            else {
-    //
-    //                KRProgressHUD.dismiss()
-    //                print("Unexpected empty result.")
-    //            }
-    //            return nil
-    //        }
-    //    }
-    
-    
-    
-    
-    
+//    func uploadPDFFileToAWS(pdfData : NSData){
+//        //        self.showLoading()
+//        let currentTimeStamp = NSString.init(format: "%ld",Date() as CVarArg)
+//        let imageNameWithoutExtension = NSString.init(format: "vc_%@",currentTimeStamp)
+//        let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".pdf")
+//        let ext = imageName as String
+//        let fileName = imageNameWithoutExtension
+//        let fileType = ".pdf"
+//        let imageURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(ext)
+//        do {
+//            try pdfData.write(to: imageURL)
+//        }
+//        catch {}
+//        print(imageURL)
+//        
+//        AWSPreSignedURL.shared.fetchPresignedURL(
+//            bucket: DefaultsKeys.S3BucketName,
+//            fileName: imageURL,
+//            bucketPath: collegeId,
+//            fileType: "application"
+//        ) { [self] result in
+//            switch result {
+//            case .success(let awsResponse):
+//                
+//                print("Presigned URL fetched: \(awsResponse.data?.presignedUrl)")
+//                let presignedURL = awsResponse.data?.presignedUrl
+//                let UploadPDf = awsResponse.data?.fileUrl
+//                AWSUploadManager.shared.uploadPDFAWSUsingPresignedURL(pdfData: pdfData as Data, presignedURL:presignedURL! ){ [self] result in
+//                    
+//                    switch result {
+//                    case .success(let uploadedURL):
+//                        print("Image uploaded successfully: \(uploadedURL)")
+//                        self.awsArry.append(UploadPDf ?? "")
+//                        
+//                    case .failure(let error):
+//                        print("Failed to upload image: \(error.localizedDescription)")
+//                    }
+//                    
+//                    
+//                    
+//                    let imageDict = NSMutableDictionary()
+//                    imageDict["FileName"] = UploadPDf
+//                    self.imageUrlArray.add(imageDict)
+//                    self.convertedImagesUrlArray = self.imageUrlArray
+//                    
+//                    
+//                    if  MenuType == "5"{
+//                        
+//                        ImagePdfParticular(ImageFile: awsArry)
+//                        
+//                    } else if MenuType == "6"      ||   MenuType == "6" {
+//                        
+//                        
+//                        assigmentImagePdf(imageArry : awsArry)
+//                        
+//                    }else if  MenuType == "1"{
+//                        
+//                        self.NoticeSendSmsToParticular(ImageFile: awsArry)
+//                        
+//                    }
+//                }
+//                
+//            case .failure(let error):
+//                print("Error fetching presigned URL: \(error.localizedDescription)")
+//            }
+//        }
+//        
+//    }
     
     @IBAction func generalBtn(_ sender: Any) {
         

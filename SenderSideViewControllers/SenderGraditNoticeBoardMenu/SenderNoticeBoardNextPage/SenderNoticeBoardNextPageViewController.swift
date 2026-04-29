@@ -143,7 +143,7 @@ class SenderNoticeBoardNextPageViewController: UIViewController, UITextViewDeleg
         topMessageLabel.text = defaults.string(forKey: DefaultsKeys.memberName)
         
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         
         
         

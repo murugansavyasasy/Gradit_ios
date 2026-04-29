@@ -18,10 +18,6 @@ import KRProgressHUD
 class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
     
-    
-    
-    
-    
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var topNameview: UIView!
     @IBOutlet weak var historyVoiceMsgCheckBox: checkBoxFour!
@@ -227,7 +223,7 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
         memberId = defaults.string(forKey: DefaultsKeys.memberid)
         topMessageLabel.text = defaults.string(forKey: DefaultsKeys.memberName)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         CallEnabel = defaults.integer(forKey: DefaultsKeys.is_allow_to_make_call)
         
         print("is_write_enabledis_write_enabledis_write_enabledis_write_enabled",is_write_enabled)
@@ -431,14 +427,8 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
         replyType = "0"
         if piroty == "p1" {
             
-            
-            
-            
-            
-            
+           
             let vc = SelectResipientsViewController(nibName: nil, bundle: nil)
-            
-            
             
             vc.resivre = Types
             
@@ -450,12 +440,9 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
             
             vc.discreptionss = voiceDisprectionLabl.text
             
-            
-            
             vc.voiceDuration = audioSeconds
             
             vc.voiceReplyType = replyType
-            
             
             vc.VoiceHstryId = VoiceHstryID
             vc.voiceHstryHeaderId = VoiceHstryHeaderId
@@ -463,30 +450,16 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
             vc.is_write_enabled = is_write_enabled
             vc.modalPresentationStyle = .fullScreen
             
-            
-            
             present(vc, animated: true,completion: nil)
-            
-            
-            
-            
+           
         }
         
     
         else if piroty == "p2"   {
             
-            
-            
-            
             selectRespinceView.backgroundColor = UIColor(named: "ConfirmColor")
             
-            
-            
             selectRespinceView.isUserInteractionEnabled = true
-            
-            
-            
-            
             
             let vc = HodSelectResipenceViewController(nibName: nil, bundle: nil)
             
@@ -515,38 +488,19 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
             
             vc.modalPresentationStyle = .fullScreen
             
-            
-            
             present(vc, animated: true,completion: nil)
-            
-            
             
         }
         
-        
-        
-        
-        
-        
         else if piroty == "p7"   {
             
-            
-            
-            
             selectRespinceView.backgroundColor = UIColor(named: "ConfirmColor")
-            
-            
             
             selectRespinceView.isUserInteractionEnabled = true
             
             
-            
-            
-            
             let vc = GroupHeadViewController(nibName: nil, bundle: nil)
             
-            
-            //
             vc.resivre = Types
             
             vc.str = str
@@ -570,36 +524,15 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
             vc.is_write_enabled = is_write_enabled
             vc.modalPresentationStyle = .fullScreen
             
-            
-            
             present(vc, animated: true,completion: nil)
             
-            
-            
-        }
-        
-        
-        
-        
-        
-        else if piroty == "p3" {
-            
-            
-            
+        }else if piroty == "p3" {
             
             selectRespinceView.backgroundColor = UIColor(named: "ConfirmColor")
             
-            
-            
             selectRespinceView.isUserInteractionEnabled = true
             
-            
-            
-            
-            
             let vc = HodRespienViewController(nibName: nil, bundle: nil)
-            
-            
             
             vc.resivre = Types
             
@@ -610,8 +543,6 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
             vc.voiceUrl = url
             
             vc.discreptionss = voiceDisprectionLabl.text
-            
-            
             
             vc.voiceDuration = audioSeconds
             
@@ -631,18 +562,7 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
             present(vc, animated: true,completion: nil)
             
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
         }
-        
-        
         
     }
     
@@ -664,14 +584,7 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
         
         
         
-        
-        
-        
-        
         if piroty == "p1" {
-            
-            
-            
             
             
             
@@ -687,9 +600,7 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
             
             vc.voiceUrl = url
             
-            vc.discreptionss = voiceDisprectionLabl.text
-            
-            
+            vc.discreptionss = ges.Title //voiceDisprectionLabl.text
             
             vc.voiceDuration = audioSeconds
             
@@ -751,7 +662,7 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
             
             vc.voiceUrl = url
             
-            vc.discreptionss = voiceDisprectionLabl.text
+            vc.discreptionss = ges.Title//voiceDisprectionLabl.text
             
             
             vc.voiceDuration = audioSeconds
@@ -804,7 +715,7 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
             
             vc.voiceUrl = url
             
-            vc.discreptionss = voiceDisprectionLabl.text
+            vc.discreptionss = ges.Title//voiceDisprectionLabl.text
             
             
             vc.voiceDuration = audioSeconds
@@ -858,7 +769,7 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
             
             vc.voiceUrl = url
             
-            vc.discreptionss = voiceDisprectionLabl.text
+            vc.discreptionss = ges.Title//voiceDisprectionLabl.text
             
             
             
@@ -952,8 +863,6 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
             contentView.isHidden = false
         }
         
-        
-        
         else{
             
             
@@ -978,6 +887,8 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
     
     
     @IBAction func NewVoiceMsgVC(){
+        
+        nodataLbl.isHidden = true
         
         VoiceHstryID = "1"
         if newVoiceMsgCheckBox.isChecked == true{
@@ -1390,10 +1301,10 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
         print("EventDefaultsKeys.DeviceToken",deviceToken)
-        add.member_id = memberId
+        add.member_id = Int(memberId)
         add.mobile_no = MobileNumber
         add.priority = piroty
-        add.college_id = colgId
+        add.college_id = Int(colgId)
         add.previous_add_id = previousAddId
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add

@@ -170,7 +170,7 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
         
         print("mobileeess",MobileNumber)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         
         topMessageLabel.text = memberName
         
@@ -1157,10 +1157,10 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
         let defaults = UserDefaults.standard
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
-        add.member_id = memberId
+        add.member_id = Int(memberId)
         add.mobile_no = MobileNumber
         add.priority = priority
-        add.college_id = collegeId
+        add.college_id = Int(collegeId)
         add.previous_add_id = 1
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
@@ -1258,7 +1258,7 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
     @IBAction func refreshVc() {
         
         print("refreshVcWork")
-        KRProgressHUD.show()
+     
         
         
         

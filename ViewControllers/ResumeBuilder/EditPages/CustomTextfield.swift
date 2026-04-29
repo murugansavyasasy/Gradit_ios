@@ -462,3 +462,50 @@ extension String {
         return outputFormatter.string(from: date)
     }
 }
+
+
+import UIKit
+
+
+import UIKit
+
+extension UIView {
+
+    func addDoneBtn(title: String = "Done") {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+
+        let flexSpace = UIBarButtonItem(
+            barButtonSystemItem: .flexibleSpace,
+            target: nil,
+            action: nil
+        )
+
+        let done = UIBarButtonItem(
+            title: title,
+            style: .done,
+            target: self,
+            action: #selector(dismissKeyboard)
+        )
+
+        toolbar.items = [flexSpace, done]
+
+        switch self {
+        case let textField as UITextField:
+            textField.inputAccessoryView = toolbar
+
+        case let textView as UITextView:
+            textView.inputAccessoryView = toolbar
+
+        case let searchBar as UISearchBar:
+            searchBar.searchTextField.inputAccessoryView = toolbar
+
+        default:
+            break
+        }
+    }
+
+    @objc private func dismissKeyboard() {
+        self.endEditing(true)
+    }
+}

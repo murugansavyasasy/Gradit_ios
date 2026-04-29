@@ -26,7 +26,7 @@ struct assigmentImagePdfModal: Codable {
     var assignmenttype: String?
     var receivertype: String?
     var receiverid: String?
-    var fileNameArray: [FileNameArray]?
+    var FileNameArray: [FileNameArray]?
 
 }
 

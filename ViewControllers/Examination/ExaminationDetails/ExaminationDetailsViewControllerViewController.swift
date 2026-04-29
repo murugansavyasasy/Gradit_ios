@@ -135,7 +135,7 @@ class ExaminationDetailsViewControllerViewController: UIViewController,UITableVi
         print("mobileee",MobileNumber)
         mem = defaults.string(forKey: DefaultsKeys.memberName)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
         password = defaults.string(forKey: DefaultsKeys.Password)
         topMemberLabel.text = mem
@@ -409,10 +409,10 @@ class ExaminationDetailsViewControllerViewController: UIViewController,UITableVi
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
         print("EventDefaultsKeys.DeviceToken",deviceToken)
-        add.member_id = memberId
+        add.member_id = Int(memberId)
         add.mobile_no = MobileNumber
         add.priority = priority
-        add.college_id = colgId
+        add.college_id = Int(colgId)
         add.previous_add_id = prevoiusAddId
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add

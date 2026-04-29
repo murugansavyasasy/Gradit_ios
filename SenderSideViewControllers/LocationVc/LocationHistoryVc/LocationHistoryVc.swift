@@ -7,10 +7,9 @@
 //
 
 import UIKit
-import ObjectMapper
 import DropDown
 class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate {
-   
+    
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var seachHeight: NSLayoutConstraint!
     @IBOutlet weak var todayDefaultLbl: UILabel!
@@ -35,9 +34,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     @IBOutlet weak var monthView: UIViewX!
     @IBOutlet weak var yearsView: UIViewX!
     
-    var type : Int!
-   
-    var DropDownstaffId : Int!
+    
     var stafflistdata : [ModaldataDetails] = []
     var display_date : String!
     var dropDown  = DropDown()
@@ -47,7 +44,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     
     
     var years: [String] = []
-   
+    
     var monthNames: [String] = []
     let currentYear = Calendar.current.component(.year, from: Date())
     // DateFormatter to get the month names
@@ -60,8 +57,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     var collegeId : String?
     var is_read_enabled = ""
     var is_write_enabled = ""
-    var memberIdForTodayReport : Int!
     var priority : String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         noRecordLbl.isHidden = true
@@ -77,34 +74,26 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         let defaults = UserDefaults.standard
         
         memberId = defaults.integer(forKey: DefaultsKeys.memberid)
-                
+        
         print("memberId,",memberId ?? 0)
-      
+        
         collegeId = defaults.string(forKey: DefaultsKeys.collegeid)!
         priority = defaults.string(forKey: DefaultsKeys.priority)
         
         if priority == "p1" {
             
-            
             print("PrincipalVieewwColor")
             topView.backgroundColor = UIColor(named: "Principal" )
-            
-           
             
         }else if priority == "p4" {
             
             print("StudentVieewwColor")
             topView.backgroundColor = UIColor(named: "studentViewColors")
             
-            
-           
-            
         } else if priority == "p3" ||  priority == "p2" {
             
             print("HooodddVieewwColor")
             topView.backgroundColor = UIColor(named: "Teaching Staff")
-            
-          
             
         }
         else if priority == "p7" {
@@ -112,37 +101,21 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             print("HooodddVieewwColor")
             topView.backgroundColor = UIColor(named: "univercityColorCod")
             
-          
-            
         }
         else if priority == "p5"{
             
-            
-            
             topView.backgroundColor = UIColor(named: "FatherColor")
             
-          
-            
-            
-        }
-        
-        else if priority == "p6"{
-            
-            
+        }else if priority == "p6"{
             
             topView.backgroundColor = UIColor(named: "Teaching Staff")
-            
-            
-            
-            
-            
             
         }
         
         let currentDate = Date()
         
         let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "MMM d, yyyy"
+        //        dateFormatter.dateFormat = "MMM d, yyyy"
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let formattedDate = dateFormatter.string(from: currentDate)
         print(formattedDate) // Example output: "Mo
@@ -157,16 +130,11 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         selectMthLbl.text! = monthName
         
         let userDefaults = UserDefaults.standard
-      
-      
-       
-        
         
         staffList()
         for i in 0..<21 {
             let year = currentYear - i
             years.append(String(year))
-            
             
         }
         yearLbl.text! = years[0]
@@ -182,44 +150,45 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             }
         }
         
-   
+        
         let rowNib = UINib(nibName: TvIdentfier, bundle: nil)
         tv.register(rowNib, forCellReuseIdentifier: TvIdentfier)
         
-       
+        
         let today = UITapGestureRecognizer(target: self, action: #selector(todayView))
-        todayStaffView.addGestureRecognizer(today) 
+        todayStaffView.addGestureRecognizer(today)
         let back = UITapGestureRecognizer(target: self, action: #selector(backClick))
         backView.addGestureRecognizer(back)
         let allStaff = UITapGestureRecognizer(target: self, action: #selector(allStaffVIew))
         allsatffView.addGestureRecognizer(allStaff)
-         let seletYrs = UITapGestureRecognizer(target: self, action: #selector(selectYearsViewClick))
+        let seletYrs = UITapGestureRecognizer(target: self, action: #selector(selectYearsViewClick))
         yearsView.addGestureRecognizer(seletYrs)
-         let selectMonth = UITapGestureRecognizer(target: self, action: #selector(selectMonthViewClick))
+        let selectMonth = UITapGestureRecognizer(target: self, action: #selector(selectMonthViewClick))
         monthView.addGestureRecognizer(selectMonth)
         
         let StaffDrop = UITapGestureRecognizer(target: self, action: #selector(staffDropDownList))
-       staffDropView.addGestureRecognizer(StaffDrop)
-       
+        staffDropView.addGestureRecognizer(StaffDrop)
+        
         AttendaceHistory()
         
         
     }
-
+    
     @IBAction func backClick(){
         dismiss(animated: true)
     }
+    
     @IBAction func todayView(){
         
         let defaults = UserDefaults.standard
         
         memberId = defaults.integer(forKey: DefaultsKeys.memberid)
         
-        seachHeight.constant = 56
+        seachHeight.constant = 40
         tv.isHidden = true
-            
-            todayStaffView.backgroundColor = UIColor(named: "Principal")
-       
+        
+        todayStaffView.backgroundColor = UIColor(named: "Principal")
+        
         allsatffView.backgroundColor = .white
         staffWiseDefaultLbl.textColor = .black
         todayDefaultLbl.textColor = .white
@@ -234,7 +203,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         let currentDate = Date()
         
         let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "MMM d, yyyy"
+        //        dateFormatter.dateFormat = "MMM d, yyyy"
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let formattedDate = dateFormatter.string(from: currentDate)
         print(formattedDate) // Example output: "Mo
@@ -242,17 +211,13 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         noRecordLbl.isHidden = true
         RefId = 1
         AttendaceHistory()
-      
         
-     
     }
     
     @IBAction func allStaffVIew(){
-        seachHeight.constant = 0
+        seachHeight.constant = 40
         noRecordLbl.isHidden = true
         allsatffView.backgroundColor = UIColor(named: "Principal")
-      
-      
         
         todayStaffView.backgroundColor = .white
         staffWiseDefaultLbl.textColor = .white
@@ -266,11 +231,9 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         staffDefaultsLbl.isHidden = false
         tv.isHidden = true
         dateAndMoth = ""
-        
-       
-     AttendaceHistory()
-        
-        
+        stafNameLbl.text = stafflistdata.first?.staff_name
+        memberId = stafflistdata.first?.staff_id
+        AttendaceHistory()
         
     }
     
@@ -311,7 +274,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 
                 yearLbl.text = item
                 
-              
+                
                 
                 AttendaceHistory()
                 
@@ -338,7 +301,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
-          
+            
             
             selectMthLbl.text = item
             
@@ -347,7 +310,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         
     }
-
+    
     @IBAction func staffDropDownList(){
         
         var StaffId: [Int] = []
@@ -359,7 +322,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             staffName.append(arrType.staff_name ?? "")
             
         }
-//        let myArray = stafflistdata[1].staffName
+        //        let myArray = stafflistdata[1].staffName
         
         dropDown.dataSource = staffName//4
         dropDown.anchorView = staffDropView //5
@@ -373,7 +336,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
-          
+            
             memberId = StaffId[index]
             
             
@@ -414,7 +377,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         cell.firstInLbl.isHidden = false
         cell.workingHrsLbl.isHidden = false
         cell.toDateLbl.isHidden = false
-       
+        
         
         cell.namelbl.text = data.staff_name
         
@@ -485,13 +448,13 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         }
         cell.attendanceTypeLbl.text = data.attendance_type
         cell.namelbl.text =
-            data.staff_name
-    
+        data.staff_name
+        
         
         let click = ShowPunchHistiryClick(target: self, action: #selector(ShowHistory))
         click.date = data.attendance_dt
         click.staffId = data.staff_id
-       
+        
         cell.fullView.addGestureRecognizer(click)
         
         
@@ -501,11 +464,11 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-            
-            return UITableView.automaticDimension
-
-       
+        
+        
+        return UITableView.automaticDimension
+        
+        
     }
     
     
@@ -525,8 +488,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     
     func AttendaceHistory(){
         
-        
-        
         var YearLbl = ""
         
         
@@ -538,7 +499,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             let monthName = selectMthLbl.text!
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MMMM" // Full month name format
-
+            
             if let date = dateFormatter.date(from: monthName) {
                 let calendar = Calendar.current
                 let monthNumber = calendar.component(.month, from: date)
@@ -554,28 +515,24 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             }
             
         }
-       
-
         
         
-       
         var history = GethistoryModalReq()
-
+        
         history.CollegeId = Int(collegeId ?? "")
-       
+        
         history.userId = memberId
-       
+        
         
         if RefId == 1 {
             history.attendance_dt = display_date
-            
             history.attendance_month = ""
         }else{
             
             history.attendance_dt = ""
             history.attendance_month = YearLbl
         }
-      
+        
         APiCallManager.shared.callApi(url: APIEndpoints.GetBiometricPrincipalAttendance, httpMethod: .post, queryParam: nil, requestBody: history) { [weak self] (result:Result<GethistoryModal,Error>) in
             guard let self = self else{return}
             switch result{
@@ -601,8 +558,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                     
                     
                 }
-            
-            
+                
+                
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
             }
@@ -626,8 +583,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                     memberId = (stafflistdata.first?.staff_id ?? 0)
                     
                 }else{
-
-
+                    
+                    
                 }
             case . failure(let error):
                 print("Error: \(error.localizedDescription)")
@@ -639,99 +596,69 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     
     
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
         
+        filtered_list = searchtodayHistiry
         
-        
-        
-            
-            
-            filtered_list = searchtodayHistiry
-            
-            
-            
-            
-            
-            
-            if !searchText.isEmpty{
-                let search = searchText.lowercased()
-                getHistorydata = filtered_list.filter {
-                    ($0.staff_name ?? "").lowercased().contains(search)
-                }
-            }else{
-                
-               
-                getHistorydata = filtered_list
-                
-                print("pendingOrder")
-                
+        if !searchText.isEmpty{
+            let search = searchText.lowercased()
+            getHistorydata = filtered_list.filter {
+                ($0.staff_name ?? "").lowercased().contains(search)
             }
+        }else{
             
             
+            getHistorydata = filtered_list
             
-            if getHistorydata.count > 0{
-                
-                print ("searchListPendigCount",getHistorydata.count)
-                
-                noRecordLbl.isHidden = true
-                
-                tv.alpha = 1
-                
-            }else{
-                noRecordLbl.isHidden = false
-                noRecordLbl.text = "No record found"
-                tv.alpha = 0
-                
-            }
+            print("pendingOrder")
             
+        }
+        
+        if getHistorydata.count > 0{
             
+            print ("searchListPendigCount",getHistorydata.count)
             
-            tv.reloadData()
+            noRecordLbl.isHidden = true
             
+            tv.alpha = 1
             
- 
+        }else{
+            noRecordLbl.isHidden = false
+            noRecordLbl.text = "No record found"
+            tv.alpha = 0
+            
+        }
+        
+        tv.reloadData()
+        
     }
-
+    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
         print("scrollViewWillBeginDragging")
         searchbar.endEditing(true)
         
     }
-
-
-
+    
+    
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print("searchBarSearchButtonClicked")
         searchbar.resignFirstResponder()
         
     }
-
-
-
-
-
+    
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         
+        searchBar.resignFirstResponder()
+        tv.alpha = 1
         
-      
-            
-            
-            searchBar.resignFirstResponder()
-            
-            
-            
-            tv.alpha = 1
-            
-            AttendaceHistory()
-            
-            self.tv.reloadData()
-       
+        AttendaceHistory()
         
-      
+        self.tv.reloadData()
+        
     }
-    
-    
     
 }
 

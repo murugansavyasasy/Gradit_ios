@@ -107,7 +107,7 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
         loginType = defaults.string(forKey: DefaultsKeys.loginAsType)
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         
         topMessageLabel.text = memberName
         
@@ -271,10 +271,10 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
         print("EventDefaultsKeys.DeviceToken",deviceToken)
-        add.member_id = memberId
+        add.member_id = Int(memberId)
         add.mobile_no = MobileNumber
         add.priority = priority
-        add.college_id = colgId
+        add.college_id = Int(colgId)
         add.previous_add_id = prevoiusAdId
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
@@ -310,13 +310,14 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
         
         var faculDrops = dropDownModal()
         
-        faculDrops.yearid = yearid
+        faculDrops.yearid = String(yearid)
         
         APiCallManager.shared.callApi(
             url: APIEndpoints.semesterandsectionListforApp,
             httpMethod: .post,
             queryParam: nil,
-            requestBody: faculDrops
+            requestBody: faculDrops,
+            showLoader: false
         ) { [weak self] (result: Result<dropDownResponce, Error>) in
             
             guard let self = self else { return }
@@ -392,7 +393,7 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
                             var faculty = facultyModal()
                             
                             faculty.userid = self.memberId
-                            faculty.Appid = "2"
+                            faculty.appid = "2"
                             faculty.priority = self.priority
                             
                             faculty.sectionid = sectionids[index]

@@ -118,7 +118,7 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         sectionId = defaults.string(forKey: DefaultsKeys.sectionid)
         loginType = defaults.string(forKey: DefaultsKeys.loginAsType)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         topMessageLabel.text = memberName
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
@@ -597,10 +597,10 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
         print("EventDefaultsKeys.DeviceToken",deviceToken)
-        add.member_id = memberId
+        add.member_id = Int(memberId)
         add.mobile_no = MobileNumber
         add.priority = priority
-        add.college_id = collegeId
+        add.college_id = Int(collegeId)
         add.previous_add_id = 1
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add

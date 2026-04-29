@@ -97,39 +97,14 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
     
     
     var chatData :  [ChatSenderInteractData] = []
-    
     let chatIdentifier = "ResiverTvTableViewCell"
     let chatIdentifier1 = "ChatSenderTvTableViewCell"
-    //    ChatSenderTvTableViewCell
-    var chats :  [AnswerStudentQuestionForAppData] = []
-    
-    
-    
-    
-    
-    var indexForCell : Int!
-    
-    var student_id : String!
-    
-    var staff_id : String!
-    
     var section_id : String!
-    
     var is_classteacher : String!
-    
     var subject_id : String!
-    
     var userID : String!
-    
-    
-    
-    var replyViewType : String!
-    
     var replyType : Int = 2
-    
-    
     var subjectName : String!
-    
     var section : String!
     var semesterName : String!
     
@@ -140,12 +115,8 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
     var priority : String!
     
     var colgImg : String!
-    
     var loginDatas : [datalogin]!
     var logindataprinci :[datalogin]!
-    
-    
-    
     var mobileNumber : String!
     
     
@@ -165,20 +136,13 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
     var imagePdfId = "5"
     var Assigment = "6"
     var blocknamestudent : String!
-    var indexPathss : Int!
-    
-    var hideView : Bool!
-    
-    var viewsss : UIView!
-    
     let refreshControl = UIRefreshControl()
-    var ReplyId  = ""
-    
     var ofsetId = 0
-    var tt :  [ChatSenderInteractData] = []
     var StatusId : Int!
     var is_read_enabled = ""
     var is_write_enabled = ""
+    var isRefresh: Bool = false
+    var selecedReplyChat: ChatSenderInteractData?
     
     override func viewDidLoad() {
         
@@ -194,7 +158,6 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
         subjectNameLabel.text = course
         subLabel.text = subjectName
         
-        
         noDataTextView.isHidden = true
         noDataTextLabel.isHidden = true
         
@@ -203,10 +166,6 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
         chatReplyShowView.isHidden = true
         
         let defaults = UserDefaults.standard
-        
-        
-        
-        
         
         mobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         password = defaults.string(forKey: DefaultsKeys.Password)
@@ -218,7 +177,7 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
         
         
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         
         print("   chatMsgHight.constant = 150",   chatMsgHight.constant)
         if priority == "p1"{
@@ -411,7 +370,9 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
         let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         redirectLoginView.addGestureRecognizer(loginRediectGesture)
         
+        chatIntView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideReplyView)))
         
+        sendMessageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ReplychatSend)))
         
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         tv.refreshControl = refreshControl
@@ -439,12 +400,10 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
     @objc func handleRefresh() {
         
         if StatusId == 1 {
-            
             tv.refreshControl?.endRefreshing()
-            
+            isRefresh = true
             ofsetId += 1
             chatList()
-            
         }
         
     }
@@ -498,9 +457,6 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
     }
     
     
-    
-    
-    
     @IBAction  func backVc() {
         
         dismiss(animated: true)
@@ -508,56 +464,44 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
     }
     
     
-    
-    @IBAction  func chatIntss(ges : ReplyGesture) {
+   @IBAction func hideReplyView() {
         chatMsgHight.constant = 0
-        viewsss.isHidden = true
-        
         chatToolView.isHidden = true
-        if let replyView = ges.replyView {
-            replyView.isHidden = true
-        }
         chatReplyShowView.isHidden = true
     }
-    
     
     
     func chatList() {
         
         var chatSender = ChatSenderInteractModal()
         chatSender.limit = "10"
-        
         chatSender.staff_id = userID
-        
         chatSender.section_id = section_id
-        
         chatSender.is_classteacher = is_classteacher
-        
         chatSender.subject_id = subject_id
+        chatSender.offset = String(ofsetId)
         
-        var str = String(ofsetId)
-        chatSender.offset = str
         APiCallManager.shared.callApi(url: APIEndpoints.GetStaffChatScreenForApp, httpMethod: .post, queryParam: nil, requestBody: chatSender) { [weak self] (result:Result<ChatSenderInteractResponse,Error>) in
             guard let self = self else{return}
             
             switch result{
             case .success(let success):
-                if ((success.result?.elementsEqual("1")) != nil){
+                if success.result == "1"{
                     
+                    let newData = success.data?.reversed() ?? []
+                   
+                    if isRefresh == true {
+                        self.chatData.insert(contentsOf: newData, at: 0)
+                    }else {
+                        chatData = newData
+                    }
                     
-                    
-                    chatData = success.data?.reversed() ?? []
-                    tt.append(contentsOf: chatData)
                     StatusId = 1
-                    
                     noDataTextView.isHidden = true
                     noDataTextLabel.isHidden = true
                     tv.dataSource = self
-                    
                     tv.delegate = self
-                    
                     tv.reloadData()
-                    
                     
                     if ofsetId == 0 {
                         
@@ -574,8 +518,6 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
                     tv.delegate = self
                     
                     tv.reloadData()
-                    
-                    
                 }
             case .failure(let error):
                 print("Error: \(error)")
@@ -587,491 +529,109 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if ofsetId == 0 {
-            
             return chatData.count
-            
-        }else{
-            
-            print("chatDatachatDatachatData",tt.count)
-            return tt.count
-            
-        }
-        
+       
     }
-    
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        let cell = tableView.dequeueReusableCell(withIdentifier: chatIdentifier1 , for: indexPath) as! ChatSenderTvTableViewCell
         
+        var chat : ChatSenderInteractData = chatData[indexPath.row]
         
-        if ofsetId == 0 {
-            
-            let chat : ChatSenderInteractData = chatData[indexPath.row]
-            
-            
-            if chat.answer == "Not answered yet"{
-                
-                
-                
-                
-                let cell = tableView.dequeueReusableCell(withIdentifier: chatIdentifier , for: indexPath) as! ResiverTvTableViewCell
-                
-                
-                
-                
-                cell.nameLabel.text = chat.studentname
-                cell.messageContentLbl.text = chat.question
-                
-                
-                let datees = String(chat.createdon?.prefix(10) ?? "")
-                print("uiiiiii",chat.createdon)
-                let first = String(chat.createdon?.prefix(16) ?? "")
-                let second = String(first.suffix(5))
-                print("selll",second)
-                
-                print("gggggfff",first)
-                let dateAsString = second
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "HH:mm"
-                
-                let date = dateFormatter.date(from: dateAsString)
-                dateFormatter.dateFormat = "h:mm a"
-                let Date12 = dateFormatter.string(from: date!)
-                print("12 hour formatted Date:",Date12)
-                
-                
-                let firsts = String(chat.createdon?.prefix(10) ?? "")
-                
-                let dateFormatterGet = DateFormatter()
-                
-                dateFormatterGet.dateFormat = "yyy-MM-dd"
-                
-                
-                
-                let dateFormatterPrint = DateFormatter()
-                
-                dateFormatterPrint.dateFormat = " dd MMM,yyyy"
-                
-                
-                
-                let dates: NSDate? = dateFormatterGet.date(from: firsts) as NSDate?
-                
-                cell.timeAndDateLbl.text = dateFormatterPrint.string(from: dates! as Date)  +  "  " + Date12
-                
-                
-                
-                if  chat.is_student_blocked == "0"{
-                    
-                    
-                    cell.blockLabelName.text = "Block Student"
-                    
-                    
-                }
-                
-                else{
-                    
-                    
-                    cell.blockLabelName.text = "UnBlock Students"
-                    
-                }
-                
-                
-                
-                
-                if chat.changeanswer == "1"{
-                    
-                    
-                    cell.changeReplyLabl.text = "ChangeReply"
-                    
-                    
-                }
-                
-                
-                
-                else{
-                    
-                    
-                    cell.changeReplyLabl.text = "Reply"
-                    
-                }
-                
-                
-                
-                let replyViewGest = ReplyGesture(target: self, action: #selector(ReplyView))
-                
-                replyViewGest.replyView = cell.dotSelView
-                
-                cell.dotSelectView.addGestureRecognizer(replyViewGest)
-                
-                
-                let chatInt = ReplyGesture(target: self, action: #selector( chatIntss))
-                chatInt.replyView = cell.dotSelView
-                
-                chatIntView.addGestureRecognizer(chatInt)
-                
-                
-                
-                let blockGest = ReplyGesture(target: self, action: #selector(BlockStud))
-
-                blockGest.blockstudent = chat.studentid ?? ""
-                blockGest.blockStudentId = chat.is_student_blocked ?? "0"
-                cell.blockStudView.isUserInteractionEnabled = true
-                cell.blockStudView.addGestureRecognizer(blockGest)
-                
-                
-                let replyGest = ReplyGesture(target: self, action: #selector(ReplySelect))
-                
-                
-                replyGest.questinos = chat.question
-                
-                cell.replyView.addGestureRecognizer(replyGest)
-                
-                
-                let chatSendGesture = ReplyGesture(target: self, action: #selector( ReplychatSend))
-                
-                chatSendGesture.indexss = indexPath.row
-                chatSendGesture.section = indexPath.section
-                
-                chatSendGesture.quesId = chat.questionid
-                
-                sendMessageView.addGestureRecognizer(chatSendGesture)
-                
-                
-                
-                
-                
-                
-                return cell
-            }
-            
-            
-            else{
-                
-                
-                
-                let cell = tableView.dequeueReusableCell(withIdentifier: chatIdentifier1 , for: indexPath) as! ChatSenderTvTableViewCell
-                
-                
-                
-                
-                cell.ansLbl.text = chat.answer
-                cell.questionLbl.text = chat.question
-                cell.studentName.text = chat.studentname
-                
-                
-                
-                let datees = String(chat.createdon?.prefix(10) ?? "")
-                print("uiiiiii",chat.createdon)
-                let first = String(chat.createdon?.prefix(16) ?? "")
-                let second = String(first.suffix(5))
-                print("selll",second)
-                
-                print("gggggfff",first)
-                let dateAsString = second
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "HH:mm"
-                
-                let date = dateFormatter.date(from: dateAsString)
-                dateFormatter.dateFormat = "h:mm a"
-                let Date12 = dateFormatter.string(from: date!)
-                print("12 hour formatted Date:",Date12)
-                
-                
-                let firsts = String(chat.createdon?.prefix(10) ?? "")
-                
-                let dateFormatterGet = DateFormatter()
-                
-                dateFormatterGet.dateFormat = "yyy-MM-dd"
-                
-                
-                
-                let dateFormatterPrint = DateFormatter()
-                
-                dateFormatterPrint.dateFormat = " dd MMM,yyyy"
-                
-                
-                
-                let dates: NSDate? = dateFormatterGet.date(from: firsts) as NSDate?
-                
-                cell.timeLbl.text = dateFormatterPrint.string(from: dates! as Date)  +  "  " + Date12
-                
-                
-                return cell
-            }
-            
-            
-            
-            
-            
+        cell.OptionsPopupView.isHidden = true
+        cell.StudentNameLbl.text = chat.studentname
+        cell.studentMessageLbl.text = chat.question
+        cell.studentMsgDateLbl.text = formatDate(chat.createdon ?? "")
+        cell.ansLbl.text = chat.answer
+        cell.questionLbl.text = chat.question
+        cell.studentName.text = chat.studentname
+        cell.timeLbl.text = formatDate(chat.answeredon ?? "")
+        cell.staffMessageStack.isHidden = chat.answer == "Not answered yet" ? true : false
+        
+        chatData[indexPath.row].changeanswer = chat.answer == "Not answered yet" ? "0" : "1"
+       chat.changeanswer = chat.answer == "Not answered yet" ? "0" : "1"
+        let replyText = chat.answer == "Not answered yet" ? "Reply" : "Change Reply"
+        cell.replyBtn.setTitle(replyText, for: .normal)
+        
+        let blockText = chat.is_student_blocked == "1" ? "Unblock Student" : "Block Student"
+        
+        cell.blockbtn.setTitle(blockText, for: .normal)
+        
+        cell.onReply = { [weak self] in
+            self?.selecedReplyChat = chat
+            self?.ShowReplyView(chat: chat)
         }
         
-        
-        else{
-            
-            let chat : ChatSenderInteractData = tt[indexPath.row]
-            
-            
-            if chat.answer == "Not answered yet"{
-                
-                
-                
-                
-                let cell = tableView.dequeueReusableCell(withIdentifier: chatIdentifier , for: indexPath) as! ResiverTvTableViewCell
-                
-                
-                
-                
-                cell.nameLabel.text = chat.studentname
-                cell.messageContentLbl.text = chat.question
-                
-                
-                let datees = String(chat.createdon?.prefix(10) ?? "")
-                print("uiiiiii",chat.createdon)
-                let first = String(chat.createdon?.prefix(16) ?? "")
-                let second = String(first.suffix(5))
-                print("selll",second)
-                
-                print("gggggfff",first)
-                let dateAsString = second
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "HH:mm"
-                
-                let date = dateFormatter.date(from: dateAsString)
-                dateFormatter.dateFormat = "h:mm a"
-                let Date12 = dateFormatter.string(from: date!)
-                print("12 hour formatted Date:",Date12)
-                
-                
-                let firsts = String(chat.createdon?.prefix(10) ?? "")
-                
-                let dateFormatterGet = DateFormatter()
-                
-                dateFormatterGet.dateFormat = "yyy-MM-dd"
-                
-                
-                
-                let dateFormatterPrint = DateFormatter()
-                
-                dateFormatterPrint.dateFormat = " dd MMM,yyyy"
-                
-                
-                
-                let dates: NSDate? = dateFormatterGet.date(from: firsts) as NSDate?
-                
-                cell.timeAndDateLbl.text = dateFormatterPrint.string(from: dates! as Date)  +  "  " + Date12
-                
-                
-                
-                if  chat.is_student_blocked == "0"{
-                    
-                    
-                    cell.blockLabelName.text = "Block Student"
-                    
-                    
-                }
-                
-                else{
-                    
-                    
-                    cell.blockLabelName.text = "UnBlock Students"
-                    
-                }
-                
-                
-                
-                
-                if chat.changeanswer == "1"{
-                    
-                    
-                    cell.changeReplyLabl.text = "ChangeReply"
-                    
-                    
-                }
-                
-                
-                
-                else{
-                    
-                    
-                    cell.changeReplyLabl.text = "Reply"
-                    
-                }
-                
-                
-                
-                let replyViewGest = ReplyGesture(target: self, action: #selector(ReplyView))
-                
-                replyViewGest.replyView = cell.dotSelView
-                
-                cell.dotSelectView.addGestureRecognizer(replyViewGest)
-                
-                
-                let chatInt = ReplyGesture(target: self, action: #selector( chatIntss))
-                chatInt.replyView = cell.dotSelView
-                
-                chatIntView.addGestureRecognizer(chatInt)
-                
-                
-                
-                let blockGest = ReplyGesture(target: self, action: #selector(BlockStud))
-                
-                blockGest.blockstudent = chat.studentid
-                
-                blockGest.blockStudentId = chat.is_student_blocked
-                
-                cell.blockStudView.addGestureRecognizer(blockGest)
-                
-                
-                let replyGest = ReplyGesture(target: self, action: #selector(ReplySelect))
-                
-                
-                replyGest.questinos = chat.question
-                
-                cell.replyView.addGestureRecognizer(replyGest)
-                
-                
-                
-                
-                
-                
-                
-                let chatSendGesture = ReplyGesture(target: self, action: #selector( ReplychatSend))
-                
-                chatSendGesture.indexss = indexPath.row
-                chatSendGesture.section = indexPath.section
-                
-                chatSendGesture.quesId = chat.questionid
-                
-                sendMessageView.addGestureRecognizer(chatSendGesture)
-                
-                
-                
-                
-                
-                
-                return cell
-            }
-            
-            
-            else{
-                
-                
-                
-                let cell = tableView.dequeueReusableCell(withIdentifier: chatIdentifier1 , for: indexPath) as! ChatSenderTvTableViewCell
-                
-                
-                
-                
-                cell.ansLbl.text = chat.answer
-                cell.questionLbl.text = chat.question
-                cell.studentName.text = chat.studentname
-                
-                
-                
-                let datees = String(chat.createdon?.prefix(10) ?? "")
-                print("uiiiiii",chat.createdon)
-                let first = String(chat.createdon?.prefix(16) ?? "")
-                let second = String(first.suffix(5))
-                print("selll",second)
-                
-                print("gggggfff",first)
-                let dateAsString = second
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "HH:mm"
-                
-                let date = dateFormatter.date(from: dateAsString)
-                dateFormatter.dateFormat = "h:mm a"
-                let Date12 = dateFormatter.string(from: date!)
-                print("12 hour formatted Date:",Date12)
-                
-                
-                
-                let firsts = String(chat.createdon?.prefix(10) ?? "")
-                //
-                let dateFormatterGet = DateFormatter()
-                
-                dateFormatterGet.dateFormat = "yyy-MM-dd"
-                
-                
-                
-                let dateFormatterPrint = DateFormatter()
-                
-                dateFormatterPrint.dateFormat = " dd MMM,yyyy"
-                
-                
-                
-                let dates: NSDate? = dateFormatterGet.date(from: firsts) as NSDate?
-                
-                cell.timeLbl.text = dateFormatterPrint.string(from: dates! as Date)  +  "  " + Date12
-                
-                
-                return cell
-            }
-            
-            
-            
+        cell.onBlock = { [weak self] in
+            self?.BlockStud(chatData: chat)
         }
+        
+        return cell
     }
     
-    
-    
-    
-    
-    @IBAction func ReplyView(ges: ReplyGesture) {
-
-        guard let replyView = ges.replyView else { return }
-
-        viewsss = replyView
-
-        if replyView.isHidden {
-            replyView.isHidden = false
-        } else {
-            replyView.isHidden = true
-            hideView = replyView.isHidden
-        }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return UITableView.automaticDimension
+        
     }
-    
-    
-    
-    
-    
-    
-    @IBAction func BlockStud(gesture: ReplyGesture) {
 
-        guard let blockId = gesture.blockStudentId else { return }
-        guard let studentId = gesture.blockstudent else { return }
+    func formatDate(_ dateString: String) -> String {
+        // Step 1: Parse the incoming string
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        guard let date = inputFormatter.date(from: dateString) else {
+            return "Invalid date"
+        }
+        
+        // Step 2: Format into desired style
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "dd MMM yyyy  hh:mm a"
+        outputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        return outputFormatter.string(from: date)
+    }
 
-        var studName: String?
+   
+    
+    func BlockStud(chatData: ChatSenderInteractData) {
 
-        if blockId == "0" {
+        let studName: String?
+        let apiurl : String
+
+        if chatData.is_student_blocked == "0" {
             studName = "Trying to block \(blocknamestudent ?? "")"
+            apiurl = APIEndpoints.BlockStudentForApp
         } else {
             studName = "Trying to Unblock \(blocknamestudent ?? "")"
+            apiurl = APIEndpoints.UnblockStudentForApp
         }
 
         let alertController = UIAlertController(title: studName,
                                                 message: "Press OK to confirm",
                                                 preferredStyle: .alert)
 
-        viewsss?.isHidden = true
-
         let okAction = UIAlertAction(title: "Ok", style: .default) { [weak self] _ in
             guard let self = self else { return }
 
             var blockModal = ChatBlockModal()
             blockModal.staff_id = self.userID
-            blockModal.student_id = studentId
+            blockModal.student_id = chatData.studentid
             blockModal.college_id = "1"
+            
+            
 
             APiCallManager.shared.callApi(
-                url: APIEndpoints.UnblockStudentForApp,
+                url: apiurl,
                 httpMethod: .post,
                 queryParam: nil,
                 requestBody: blockModal
             ) { (result: Result<ChatBlocResponse, Error>) in
+                
+               
+
 
                 switch result {
 
@@ -1079,8 +639,8 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
                     if success.Status == 1 {
 
                         self.view.makeToast(success.Message, duration: 1.0)
-
                         self.tv.reloadData()
+                        self.isRefresh = false
                         self.chatList()
                     }
 
@@ -1098,67 +658,31 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
         self.present(alertController, animated: true)
     }
     
-    @IBAction func ReplySelect(gesture : ReplyGesture ) {
-        
-        
-        
-        print("Reply")
-        
-        ReplyId = "0"
-        viewsss.isHidden = true
-        chatReplyShowLabel.text = gesture.questinos
-        
+    func ShowReplyView(chat: ChatSenderInteractData) {
+        replyTextField.text = ""
+        chatReplyShowLabel.text = chat.question
         chatReplyShowView.isHidden = false
-        
-        
         chatToolView.isHidden = false
         chatMsgHight.constant = 100
-        
-        
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        
-        return UITableView.automaticDimension
-        
-    }
-    
-    
-    @IBAction  func ReplychatSend(ges : ReplyGesture) {
-        
-        
+    @IBAction func ReplychatSend() {
         
         if replyTextField.text == ""{
-            
             
             let refreshAlert = UIAlertController(title: "", message: "Message should not be empty", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                
-                
-                
-                
+            
             }))
-            
-            
-            
             
             self.present(refreshAlert, animated: true, completion: nil)
             
         }else{
             var answerChatSender = AnswerStudentQuestionForAppModal()
-            answerChatSender.question_id =  ges.quesId
+            answerChatSender.question_id =  selecedReplyChat?.questionid
             answerChatSender.answer = replyTextField.text
-            
-            print("ReplyIdReplyId", ReplyId)
-            
-            if ReplyId == "0"{
-                answerChatSender.is_changeanswer =  "0"
-            }else{
-                answerChatSender.is_changeanswer =  "1"
-            }
-            
+            answerChatSender.is_changeanswer = selecedReplyChat?.changeanswer
             answerChatSender.reply_type =  String(replyType)
             answerChatSender.staff_id = userID
             
@@ -1171,10 +695,11 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
                         chatReplyShowView.isHidden = true
                         chatToolView.isHidden = true
                         chatMsgHight.constant = 0
-                        viewsss.isHidden = true
+                      
                         tv.dataSource = self
                         tv.delegate = self
                         tv.reloadData()
+                        isRefresh = false
                         chatList()
                     }
                 case .failure(let error):
@@ -1182,17 +707,14 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
                 }
             }
         }
-        
     }
     
     @IBAction func helpRedirect() {
         
         let vc = HelpViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        
         present(vc, animated: true, completion: nil)
-        
-        
+
     }
     
     
@@ -1254,9 +776,6 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
     }
     
     
-    
-    
-    
     @IBAction func refreshVc() {
         
         print("refreshVcWork")
@@ -1264,24 +783,14 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             
-            
             KRProgressHUD.dismiss()
-            
             
         }
         
-        
         scrollToBottom()
-        
     }
     
-    
-    
-    
-    
-    
     func scrollToBottom(){
-        
         
         DispatchQueue.main.async { [self] in
             let section = 0
@@ -1290,109 +799,38 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
             if numberOfRows > 0 {
                 let indexPath = IndexPath(row: numberOfRows - 1, section: section)
                 self.tv.scrollToRow(at: indexPath, at: .bottom, animated: false)
-                
-                //
             }
         }
         
     }
-    
-    
-    
-    
-    
-    
-    func scrollToBottom1(){
-        
-        if ofsetId == 0 {
-            
-            DispatchQueue.main.async { [self] in
-                let section = 0
-                let numberOfRows = self.chatData.count
-                
-                if numberOfRows > 0 {
-                    let indexPath = IndexPath(row: numberOfRows - 1, section: section)
-                    self.tv.scrollToRow(at: indexPath, at: .bottom, animated: false)
-                    
-                    chatList()
-                }
-            }
-            
-        }
-        
-        else{
-            
-            DispatchQueue.main.async { [self] in
-                let section = 0
-                let numberOfRows = self.tt.count
-                
-                if numberOfRows > 0 {
-                    let indexPath = IndexPath(row: numberOfRows - 1, section: section)
-                    self.tv.scrollToRow(at: indexPath, at: .bottom, animated: false)
-                    
-                    chatList()
-                }
-            }
-            
-            
-            
-        }
-        
-    }
+
     
     @IBAction func notificationVc() {
         print("NotificationViewController")
         let vc = NotificationViewController(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         present(vc, animated: false, completion: nil)
-        
-        
-        
+       
     }
-    
-    
-    
-    
-    
     
     @IBAction func changePassowrdVC(){
         
         let vc = ChangePasswordViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        
         present(vc, animated: true, completion: nil)
         
-        
-        
     }
-    
-    
-    
-    
-    
     
     @IBAction func menu() {
         
         if sideMenuView.isHidden == true{
             
             sideMenuView.isHidden = false
-            //
-            
-            
-        }
-        
-        else{
+        } else{
             
             sideMenuView.isHidden = true
-            //
-            
         }
-        
-        
     }
-    
     
     
     @IBAction func priorityVc() {
@@ -1405,11 +843,8 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
         
         let vc = ProfileViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        
         present(vc, animated: true, completion: nil)
-        
     }
-    
     
 }
 

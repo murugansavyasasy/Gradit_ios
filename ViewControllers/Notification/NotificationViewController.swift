@@ -70,7 +70,7 @@ override func viewDidLoad() {
     MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
     
     colgLog = defaults.string(forKey: DefaultsKeys.colglogo)
-    clgLogoImg.sd_setImage(with: URL(string:  colgLog), placeholderImage: UIImage(named: "person.fill"))
+    clgLogoImg.sd_setImage(with: URL(string:  colgLog), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
     tv.dataSource = self
     tv.delegate = self
     

@@ -18,119 +18,67 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
     @IBOutlet weak var lblCount: UILabel!
     @IBOutlet weak var tapBarView: UIViewX!
     @IBOutlet weak var redirectLoginView: UIViewX!
-    
     @IBOutlet weak var selectRepicDeafultId: UILabel!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var selectRespView: UIViewX!
     @IBOutlet weak var notificationView: UIView!
     @IBOutlet weak var calanderView: UIViewX!
     @IBOutlet weak var DateLabel: UILabel!
-    
     @IBOutlet weak var venuTextField: UITextField!
-    
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
-    
     @IBOutlet weak var topMessageLabel: UILabel!
     @IBOutlet weak var clgLogoImg: UIImageView!
-    
-    
     @IBOutlet weak var cancelView: UIViewX!
     @IBOutlet weak var logoutView: UIView!
-    
     @IBOutlet weak var changeRolesView: UIView!
-    
-    
-    @IBOutlet weak var profileView: UIView!
-    
-    
-    
     @IBOutlet weak var changePasswordView: UIView!
-    
-    
-    @IBOutlet weak var pickerView: UIPickerView!
-    
     @IBOutlet weak var termsAndConditionView: UIView!
-    
     @IBOutlet weak var helpView: UIView!
-    
-    
     @IBOutlet weak var topLabels: UILabel!
-    
     @IBOutlet weak var viewTap: UIView!
-    
-    
-    
     @IBOutlet weak var faqView: UIView!
-    
-    
     @IBOutlet weak var privacyPolicyView: UIView!
-    
-    
     @IBOutlet weak var refreshView: UIView!
-    
-    
-    
     @IBOutlet weak var sideMenuView: UIView!
-    
-    
-    
     @IBOutlet weak var setTimeView: UIViewX!
-    
-    
     @IBOutlet weak var descripitionTextField: UITextView!
     
     let maxLenghth = 500
     var time : String!
-    
     var url_time: String!
-    
     var menuId : String!
     var display_date : String!
-    
     var url_date : String!
-    
     var backGroundImageUrl : String!
     var smallImageUrl : String!
     var addWebUrl : String!
     var toolBar = UIToolbar()
     var datePicker  = UIDatePicker()
     var priority : String!
-    
     var loginDatas : [datalogin]!
     var logindataprinci :[datalogin]!
-    
     var password : String!
-    
     var memberName : String!
-    
     var colgImg : String!
-    
     var  mobileNumber : String!
-    
     var interval: TimeInterval = 60.0
-    
     var editVenu : String!
     var editdate : String!
     var editTitle : String!
     var editDiscreption : String!
-    
     var str : [String] = []
-    
     var strName : [String] = []
     var eventHeaderId : String!
-    
-    
     var EditId : String!
-    
     var colgId :  String!
     var UserId : String!
-    
     var dateStr : String!
     var TimeStr : String!
     var is_read_enabled = ""
     var is_write_enabled = ""
+    var selectedDate: Date?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,59 +95,35 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
             
             dateFormatterGet.dateFormat =  "dd MMM,yyyy"
             
-            
-            
             let dateFormatterPrint = DateFormatter()
             
             dateFormatterPrint.dateFormat = "dd-MM-yyyy"
             
-            
-            
             let dates: NSDate? = dateFormatterGet.date(from: firsts!) as NSDate?
-            
-            
-            
             
             DateLabel.text = dateFormatterPrint.string(from: dates as! Date)
             timeLabel.text = TimeStr
             
-            
-        }
-        
-        
-        
-        else{
+        } else{
             
             selectRepicDeafultId.text = " Select Recipients"
             DateLabel.text = "-SelectDate-"
             timeLabel.text = "-Select Time-"
-            
-            
         }
         
         overrideUserInterfaceStyle = .light
         
-        
-        
         sideMenuView.isHidden = true
-        
         
         let defaults = UserDefaults.standard
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         priority = defaults.string(forKey: DefaultsKeys.priority)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
-        
-        
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         mobileNumber  = defaults.string(forKey: DefaultsKeys.mobileNumber)
-        
         password  = defaults.string(forKey: DefaultsKeys.Password)
-        
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
-        
         UserId = defaults.string(forKey: DefaultsKeys.memberid)
-        
-        
         topMessageLabel.text = memberName
         
         bigImg.sd_setImage(with: URL(string: backGroundImageUrl), placeholderImage: UIImage(named: "ic_white"))
@@ -207,57 +131,34 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         
         smallImg.sd_setImage(with: URL(string: smallImageUrl), placeholderImage: UIImage(named: "ic_white"))
         
-        
-        
-        
-        
-        
-        
-        
-        
         if priority == "p1"{
             tapBarView.backgroundColor = UIColor(named: "Principal" )
             topLabels.text = "Principal"
             
-        }
-        
-        else if priority == "p4"{
+        }else if priority == "p4"{
             
             topLabels.text = "Student"
             
-        }
-        
-        else if priority == "p2" {
+        }else if priority == "p2" {
             tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
             
             topLabels.text = "HOD"
             
-        }
-        
-        else if priority == "p5"{
-            
+        }else if priority == "p5"{
             
             topLabels.text = "Father"
-            
-            
-            
-        }
-        
-        else if priority == "p3"{
+    
+        } else if priority == "p3"{
             
             tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
             topLabels.text = "Teacher"
             
-        }
-        
-        else if priority == "p7"{
+        }else if priority == "p7"{
             
             tapBarView.backgroundColor = UIColor(named: "univercityColorCod" )
             topLabels.text = "University Head"
             
         }
-        
-        
         
         descripitionTextField.returnKeyType = .done
         descripitionTextField.delegate = self
@@ -271,35 +172,24 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         bigImg.isUserInteractionEnabled = true
         bigImg.addGestureRecognizer(singleTap)
         
-        
         let cancel = UITapGestureRecognizer(target: self, action: #selector(cancelVc))
         cancelView.addGestureRecognizer(cancel)
         
-        
-        
         // tap Bar UiTapGuster.
-        
-        
         
         let timess = UITapGestureRecognizer(target: self, action: #selector(SetTimeVc))
         setTimeView.addGestureRecognizer(timess)
         
-        
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
-        
         
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
         let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         redirectLoginView.addGestureRecognizer(loginRediectGesture)
         
-        
-        
-        
         let selectResp = UITapGestureRecognizer(target: self, action: #selector(SelectVc))
         selectRespView.addGestureRecognizer(selectResp)
-        
         
         let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
         viewTap.addGestureRecognizer(menuGestureHide)
@@ -310,13 +200,11 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
         refreshView.addGestureRecognizer(refreshGesture)
         
-        
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
         
         let helpGesture = UITapGestureRecognizer(target: self, action: #selector(helpRedirect))
         helpView.addGestureRecognizer(helpGesture)
-        //
         
         let privacyPolicyGesture = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyRedirect))
         privacyPolicyView.addGestureRecognizer(privacyPolicyGesture)
@@ -324,14 +212,8 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
         termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
         
-        
-        
-        
-        
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
-        
-        
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -342,10 +224,6 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
     
     func textViewDidChange(_ textView: UITextView) {
         lblCount.text = "\(maxLenghth - descripitionTextField.text.count)/"+"\(500)"
-        
-        
-        
-        
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -366,9 +244,6 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
     
     @objc func keyboardWillShow(notification: NSNotification) {
         
-        
-        
-        
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
                 self.view.frame.origin.y -= keyboardSize.height-91
@@ -387,174 +262,123 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
     @IBAction func SetTimeVc(){
         
         timeSS()
-        
-        
     }
-    
-    
     
     func timeSS(){
         
-        RPicker.selectDate(title: "Select time", cancelText: "Cancel", datePickerMode: .time, style: .Wheel, didSelectDate: {[weak self] (today_date) in
+        // ✅ Check if date is selected
+        guard let selected = selectedDate else {
+            let alert = UIAlertController(title: "Select Date",
+                                              message: "Please select date first",
+                                              preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        let now = Date()
+        var minTime: Date? = nil
+        
+        if Calendar.current.isDate(selected, inSameDayAs: now) {
+            minTime = now
+        }
+        
+        RPicker.selectDate(title: "Select time",
+                           cancelText: "Cancel",
+                           datePickerMode: .time,
+                           minDate: minTime,
+                           style: .Wheel,
+                           didSelectDate: {[weak self] (today_date) in
             
+            guard let self = self else { return }
             
-            self?.display_date = today_date.dateString("hh:mm:a")
-            self?.url_time = today_date.dateString("a:mm:hh")
+            self.display_date = today_date.dateString("hh:mm a")
+            self.url_time = today_date.dateString("HH:mm:ss")
             
-            self?.timeLabel.text = self!.display_date
-            
-            
+            self.timeLabel.text = self.display_date
         })
-        
-        
     }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,          inComponent component: Int) {
-        //        myLabel.text = pickerData[row]
         interval = Double(row+1) * 60.0
     }
     
     
     func FromDate_Action(){
         
-        
-        
-        RPicker.selectDate(title: "Select Date", cancelText: "Cancel", datePickerMode: .date, style: .Inline, didSelectDate: {[weak self] (today_date) in
+        RPicker.selectDate(title: "Select Date",
+                           cancelText: "Cancel",
+                           datePickerMode: .date,
+                           minDate: Date(),
+                           style: .Inline,
+                           didSelectDate: {[weak self] (today_date) in
             
+            guard let self = self else { return }
             
+            self.selectedDate = today_date   // ✅ store selected date
             
-            self?.display_date = today_date.dateString("dd/MM/yyyy")
-            
-            self?.url_date = today_date.dateString("yyyy/MM/dd")
-            
-            self?.DateLabel.text = self!.display_date
-            
-            
-            
+            self.display_date = today_date.dateString("dd/MM/yyyy")
+            self.url_date = today_date.dateString("yyyy/MM/dd")
+            self.DateLabel.text = self.display_date
         })
-        
     }
-    
-    
-    
     
     @IBAction func cancelVc(){
         
-        
         dismiss(animated: true)
-        
     }
     
     
     @IBAction func SelectVc(){
         
-        
-        
-        
         if menuId == "13"{
-            
-            
-            
             
             if (descripitionTextField.text!.isEmpty) && (titleTextField.text!.isEmpty) {
                 
-                
-                
                 print("heloo",descripitionTextField.text.count)
-                
-                
-                
                 
                 let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Details ", preferredStyle: UIAlertController.Style.alert)
                 
                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                     
-                    
-                    
-                    
-                    
                 }))
                 
-                
-                
                 present(refreshAlert, animated: true, completion: nil)
-            }
-            
-            
-            else if  DateLabel.text ==  "-SelectDate-" {
-                
-                
-                
+            }else if  DateLabel.text ==  "-SelectDate-" {
                 
                 let refreshAlert = UIAlertController(title: "", message: "  Please Select Date ", preferredStyle: UIAlertController.Style.alert)
                 
                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                     
                     
-                    
-                    
-                    
                 }))
-                
-                
                 
                 present(refreshAlert, animated: true, completion: nil)
                 
-            }
-            
-            
-            
-            
-            else if  timeLabel.text == "-Select Time-" {
-                
-                
-                
+            }else if  timeLabel.text == "-Select Time-" {
                 
                 let refreshAlert = UIAlertController(title: "", message: "  Please Select Time ", preferredStyle: UIAlertController.Style.alert)
                 
                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                    
-                    
-                    
-                    
-                    
+                   
                 }))
-                
-                
                 
                 present(refreshAlert, animated: true, completion: nil)
                 
-                
-                
-            }
-            
-            
-            else if venuTextField.text == ""{
+            } else if venuTextField.text == ""{
                 
                 
                 let refreshAlert = UIAlertController(title: "", message: "  Kindly Enter Venue Details ", preferredStyle: UIAlertController.Style.alert)
                 
                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                     
-                    
-                    
-                    
-                    
                 }))
-                
-                
                 
                 present(refreshAlert, animated: true, completion: nil)
                 
-                
-                
-                
-                
-            }
-            
-            
-            
-            else{
-                
+            }else{
                 
                 let refreshAlert = UIAlertController(title: "", message: "Are You Sure Want To Submit?", preferredStyle: UIAlertController.Style.alert)
                 
@@ -698,8 +522,6 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                     
                 }))
                 
-                
-                
                 present(refreshAlert, animated: true, completion: nil)
                 
                 
@@ -707,122 +529,55 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                     
                     
                 }))
-                
-                
-                
-                
-                
+               
             }
             
-        }
-        
-        
-        
-        
-        else{
-            
-            
+        } else{
             
             if priority == "p1"{
                 
                 if (descripitionTextField.text!.isEmpty) && (titleTextField.text!.isEmpty) {
                     
-                    
-                    
                     print("heloo",descripitionTextField.text.count)
-                    
-                    
-                    
                     
                     let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Details ", preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
-                        
-                        
-                        
-                        
                     }))
                     
-                    
-                    
                     present(refreshAlert, animated: true, completion: nil)
-                }
-                
-                
-                else if  DateLabel.text ==  "-SelectDate-" {
-                    
-                    
-                    
+                } else if  DateLabel.text ==  "-SelectDate-" {
                     
                     let refreshAlert = UIAlertController(title: "", message: "  Please Select Date ", preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
-                        
+                       
                     }))
-                    
-                    
                     
                     present(refreshAlert, animated: true, completion: nil)
                     
-                }
-                
-                
-                
-                
-                else if  timeLabel.text == "-Select Time-" {
-                    
-                    
-                    
+                }else if  timeLabel.text == "-Select Time-" {
                     
                     let refreshAlert = UIAlertController(title: "", message: "  Please Select Time ", preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
-                        
+                       
                     }))
-                    
-                    
                     
                     present(refreshAlert, animated: true, completion: nil)
                     
-                    
-                    
-                }
-                
-                
-                else if venuTextField.text == ""{
-                    
+                } else if venuTextField.text == ""{
                     
                     let refreshAlert = UIAlertController(title: "", message: "  Kindly Enter Venue Details ", preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
-                        
-                        
-                        
-                        
                     }))
-                    
-                    
                     
                     present(refreshAlert, animated: true, completion: nil)
                     
-                    
-                    
-                    
-                    
-                }
-                
-                
-                else{
+                }else{
                     
                     let vc = SelectResipientsViewController(nibName: nil, bundle: nil)
                     
@@ -841,14 +596,9 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                     
                 }
                 
-            }
-            
-            
-            else if priority == "p3"{
+            } else if priority == "p3"{
                 
                 if (descripitionTextField.text!.isEmpty) && (titleTextField.text!.isEmpty) {
-                    
-                    
                     
                     print("heloo",descripitionTextField.text.count)
                     
@@ -856,32 +606,15 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
-                        
-                        
-                        
-                        
                     }))
-                    
-                    
                     
                     present(refreshAlert, animated: true, completion: nil)
                     
-                }
-                
-                
-                
-                else if  DateLabel.text ==  "-SelectDate-" {
-                    
-                    
-                    
+                } else if  DateLabel.text ==  "-SelectDate-" {
                     
                     let refreshAlert = UIAlertController(title: "", message: "  Please Select Date ", preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
                         
                     }))
                     

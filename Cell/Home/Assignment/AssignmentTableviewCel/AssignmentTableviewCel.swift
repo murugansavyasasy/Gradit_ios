@@ -40,49 +40,49 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
         loginAsType = defaults.string(forKey: DefaultsKeys.loginAsType)
         priority = defaults.string(forKey: DefaultsKeys.priority)
         
-      cv.dataSource  = self
+        cv.dataSource  = self
         cv.delegate = self
         
         let cvRowib = UINib(nibName: cvIdentifier, bundle: nil)
         cv.register(cvRowib, forCellWithReuseIdentifier: cvIdentifier)
         
-//        pageContorler.numberOfPages = pageCount
-       
+        //        pageContorler.numberOfPages = pageCount
+        
         startAutoScroll()
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willResignActiveNotification, object: nil)
-                NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         
-//        UIApplication.
-     }
+        //        UIApplication.
+    }
     
     
     
     @objc func startAutoScroll() {
-          autoScrollTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
-      }
-
-      @objc func autoScroll() {
-       
-          let nextIndex = (currentIndex + 1) % assignmentDatas.count
-          let nextIndexPath = IndexPath(item: nextIndex, section: 0)
-          cv.scrollToItem(at: nextIndexPath, at: .right, animated: true)
-          currentIndex = nextIndex
-          
-          pageContorler.currentPage = currentIndex
-          
-      }
-
+        autoScrollTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
+    }
+    
+    @objc func autoScroll() {
+        
+        let nextIndex = (currentIndex + 1) % assignmentDatas.count
+        let nextIndexPath = IndexPath(item: nextIndex, section: 0)
+        cv.scrollToItem(at: nextIndexPath, at: .right, animated: true)
+        currentIndex = nextIndex
+        
+        pageContorler.currentPage = currentIndex
+        
+    }
+    
     @objc func stopAutoScroll() {
-          autoScrollTimer?.invalidate()
-          autoScrollTimer = nil
-      }
+        autoScrollTimer?.invalidate()
+        autoScrollTimer = nil
+    }
     
     
-       
-       
+    
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
@@ -110,28 +110,28 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
         
         
         
-  var todaysDate = NSDate()
-  var dateFormatter = DateFormatter()
-           dateFormatter.dateFormat = "dd-MM-yyyy"
-  var DateInFormat = dateFormatter.string(from: todaysDate as Date)
+        var todaysDate = NSDate()
+        var dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        var DateInFormat = dateFormatter.string(from: todaysDate as Date)
         
         
         let dateFormatterGet = DateFormatter()
-
-                dateFormatterGet.dateFormat = "dd-MM-yyy"
-
-
-
-                let dateFormatterPrint = DateFormatter()
-
-                dateFormatterPrint.dateFormat = " dd MMM,yyyy"
-
-
-
-                let date: NSDate? = dateFormatterGet.date(from: DateInFormat) as NSDate?
+        
+        dateFormatterGet.dateFormat = "dd-MM-yyy"
+        
+        
+        
+        let dateFormatterPrint = DateFormatter()
+        
+        dateFormatterPrint.dateFormat = " dd MMM,yyyy"
+        
+        
+        
+        let date: NSDate? = dateFormatterGet.date(from: DateInFormat) as NSDate?
         let date2: NSDate? = dateFormatterGet.date(from: assigment.submissiondate ?? "") as NSDate?
-
-
+        
+        
         cell.dateLbl.text = dateFormatterPrint.string(from: date as! Date)
         cell.dueDateLbl.text = dateFormatterPrint.string(from: date2 as! Date)
         cell.assDescLbl.text = assigment.assignmentdescription
@@ -157,7 +157,7 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
         if assigment.filepaths == [""]{
             
             cell.attchmentView.isHidden = true
-         
+            
             
         }
         
@@ -165,14 +165,14 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
             
             
             cell.attchmentView.isHidden = true
-        
+            
         }
         
         
         else if assigment.filepaths == ([]){
-        
-       cell.attchmentView.isHidden = true
-       }
+            
+            cell.attchmentView.isHidden = true
+        }
         else{
             
             
@@ -184,7 +184,7 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
                 play.imagurl =  i
                 
             }
-           
+            
             
             cell.attchmentView.addGestureRecognizer(play)
             
@@ -192,7 +192,7 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
             
         }
         
-    
+        
         
         return cell
         
@@ -202,22 +202,22 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
     
     @IBAction func attachmentVc( gesture : Attchment){
         
-
+        
         let currentController = self.getViewController()
-      
-     
-            let vc =  DashBordShwViewController (nibName: nil, bundle: nil)
-            vc.imgfilePath = gesture.img_url
-            
-            vc.modalPresentationStyle = .fullScreen
-            currentController?.present(vc, animated: true, completion: nil)
-
+        
+        
+        let vc =  DashBordShwViewController (nibName: nil, bundle: nil)
+        vc.imgfilePath = gesture.img_url
+        
+        vc.modalPresentationStyle = .fullScreen
+        currentController?.present(vc, animated: true, completion: nil)
+        
         
     }
     
     
     func getViewController() -> UIViewController? {
-
+        
         if let rootController = UIApplication.shared.keyWindow?.rootViewController {
             var currentController: UIViewController! = rootController
             while( currentController.presentedViewController != nil ) {
@@ -226,7 +226,7 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
             return currentController
         }
         return nil
-
+        
     }
     
     @IBAction func AssigmentViewAllVc(){
@@ -239,7 +239,7 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
-           
+            
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true, completion: nil)
             
@@ -248,16 +248,15 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
         else if priority == "p1" {
             
             let vc = SenderAssigmentHomePageViewController(nibName: nil, bundle: nil)
-
-                            vc.view.backgroundColor = UIColor(named: "Principal" )
-            vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
-            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+            
             let currentController = self.getViewController()
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
-           
+            vc.view.backgroundColor = UIColor(named: "Principal" )
+            vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
+            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true, completion: nil)
             
@@ -268,15 +267,15 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
         else if priority == "p3" ||  priority == "p2"  {
             
             let vc = SenderAssigmentHomePageViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+           
             let currentController = self.getViewController()
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
-           
+            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+            vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true, completion: nil)
             
@@ -285,15 +284,15 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
         else if priority == "p5"{
             
             let vc =  AssigmentHomePageViewController(nibName: nil, bundle: nil)
-            vc.assigmentSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
-            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
-            vc.view.backgroundColor = UIColor(named: "FatherColor" )
+           
             let currentController = self.getViewController()
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
-           
+            vc.assigmentSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
+            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
+            vc.view.backgroundColor = UIColor(named: "FatherColor" )
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true, completion: nil)
             
@@ -306,15 +305,15 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
             
             
             let vc =  SenderAssigmentHomePageViewController(nibName: nil, bundle: nil)
-            vc.assigmentSegmentName.backgroundColor = UIColor(named: "CellColor")
-            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "attendanceColor")
-            vc.view.backgroundColor = UIColor(named: "attendanceColor" )
+           
             let currentController = self.getViewController()
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
-           
+            vc.assigmentSegmentName.backgroundColor = UIColor(named: "CellColor")
+            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "attendanceColor")
+//            vc.view.backgroundColor = UIColor(named: "attendanceColor" )
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true, completion: nil)
             

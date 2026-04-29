@@ -130,7 +130,7 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         loginType = defaults.string(forKey: DefaultsKeys.loginAsType)
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         password = defaults.string(forKey: DefaultsKeys.Password)
         topMessageLabel.text = memberName
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
@@ -413,10 +413,10 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
         print("EventDefaultsKeys.DeviceToken",deviceToken)
-        add.member_id = userid
+        add.member_id = Int(userid)
         add.mobile_no = MobileNumber
         add.priority = priority
-        add.college_id = collegeid
+        add.college_id = Int(collegeid)
         add.previous_add_id = PreviousAddId
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add

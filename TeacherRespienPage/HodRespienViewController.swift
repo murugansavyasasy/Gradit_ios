@@ -401,9 +401,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as!
-        
-        HodRespienTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! HodRespienTableViewCell
         
         
         cell.selectionStyle = .none
@@ -420,20 +418,11 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
             let subject : particualrDataDetails = ParticalStaffRef[indexPath.row]
             
             
-            
             if(AssigmentSelectedIDString == subject.subjectid){
-                
-                
                 
                 cell.CheckImageView.image = UIImage(named: "done")
                 
-            }
-            
-            else{
-                
-                
-                
-                
+            }else{
                 cell.CheckImageView.image = UIImage(named: "checkboxs")
                 
             }
@@ -443,8 +432,6 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
             cell.SubjectNameLabel.text = subject.subjectname
             cell.courseNameLabel.text = subject.coursename
             cell.yearLabel.text = subject.yearname
-            
-            
             
             let selectSpecify = SpecifyCell(target: self, action: #selector(SelectSpecifyVc))
             selectSpecify.sectionId = subject.sectionid
@@ -458,13 +445,6 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
             
         }
         
-        
-        
-        
-        
-        
-        
-        
         else if resivre == "8"{
             
             
@@ -474,9 +454,6 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
             
             
             let subject : particualrDataDetails = ParticalStaffRef[indexPath.row]
-            
-            
-            
             
             cell.SecLabel.text = subject.sectionname
             cell.SemesterLabel.text = subject.semestername
@@ -488,10 +465,6 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
             //
             
             if(AssigmentSelectedIDString == subject.subjectid){
-                
-                
-                
-                
                 
                 cell.CheckImageView.image = UIImage(named: "done")
             }
@@ -618,13 +591,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         let currentCell = tableView.cellForRow(at: indexPath) as! HodRespienTableViewCell
         
-        
-        
-        
         if resivre == "6"  ||  resivre == "8"{
-            
-            
-            
             
             
             let subject : particualrDataDetails = ParticalStaffRef[indexPath.row]
@@ -644,19 +611,9 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
             
             tv.reloadData()   // important
             
-        }
-        
-        
-        
-        
-        
-        else{
-            
-            
+        }else{
             print("fvfdv")
-            
         }
-        
     }
     
     
@@ -673,22 +630,10 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
     
     @IBAction func AttendanceSbjectVc(gestur : CheckBoxGest){
         
-        
-        
-        
-        
-        
     }
     
     
     @IBAction func sbjectVc(gestur : CheckBoxGest){
-        
-        
-        
-        
-        
-        
-        
         
         
         if gestur.checkBoxss.isChecked == true{
@@ -702,18 +647,11 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
             if(DefaultsKeys.resiverId.contains(gestur.memberName)){
                 
                 
-                
-                
-                
-                
-                
                 if let index = DefaultsKeys.resiverId.firstIndex(of: gestur.memberName) {
                     
                     
                     print("indexxxxxxxxxxssssas",index)
                     DefaultsKeys.resiverId.remove(at: index)
-                    
-                    
                     
                 }
                 
@@ -1675,7 +1613,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                 vc.courseId = AssigemtcourseId
                 vc.YearId = AssigemtyearIdsSpefy
                 vc.departmentId = assigemtDeparmentId
-                
+                vc.voiceReplyType = voiceReplyType
                 vc.sectionId = nameString
                 vc.eventVenu = venumtextField
                 vc.awsurl = awsurl
@@ -1798,7 +1736,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                     vc.ItemName = dropItemsName
                     vc.is_read_enabled = is_read_enabled
                     vc.is_write_enabled = is_write_enabled
-                    
+                    vc.voiceReplyType = voiceReplyType
                     vc.courseId = courseIdTutor
                     vc.YearId = yearIdsSpefyTutor
                     vc.departmentId = deptidTutor
@@ -1867,10 +1805,8 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
     
     func multypartAudio() {
         
-        KRProgressHUD.show()
-        
-        let vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToParticularType"
-        let vimeoVideoEndpointTutor = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToParticularTypeFromTutor"
+        let vimeoVideoEndpoint = APIEndpoints.SendFileToParticularType
+        let vimeoVideoEndpointTutor = APIEndpoints.SendFileToParticularTypeFromTutor
         
         let endPointUrl = dropItemsName == "Subject" ? vimeoVideoEndpoint : vimeoVideoEndpointTutor
         
@@ -1902,6 +1838,10 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
         
         let param = ["info": voiceUploadStr]
         
+        DispatchQueue.main.async {
+                KRProgressHUD.show()
+            }
+        
         MultipartManager.shared.uploadVoice(
             url: endPointUrl,
             fileURL: voiceUrl,
@@ -1909,7 +1849,11 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
         ) {[weak self] (result)  in
             
             guard let self = self else { return }
-            KRProgressHUD.dismiss()
+            
+            DispatchQueue.main.async {
+                    KRProgressHUD.dismiss()
+                }
+            
             switch result {
                     
                 case .success(let json):
@@ -2579,9 +2523,6 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
     
     func SendSmsToParticular() {
         
-        
-        KRProgressHUD.show()
-        
         var particular = SendSmsToParticularModal()
         
         particular.collegeid = clgId
@@ -2604,11 +2545,6 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
         
         particular.filetype = "1"
         
-//        let particularStr = particular.toJSONString()
-//        
-//        print("yearAndSectionModalStr14",particularStr)
-        
-        
         if dropItemsName == "Subject"{
             
             APiCallManager.shared.callApi(
@@ -2623,7 +2559,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                     switch result {
                     case .success(let success):
                         if success.Status == 1 {
-                            KRProgressHUD.dismiss()
+                            
                             particularSms  = success.data ?? []
                             
                             let refreshAlert = UIAlertController(title: "", message:  success.Message, preferredStyle: UIAlertController.Style.alert)
@@ -2686,7 +2622,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             
                         }else{
                             
-                            KRProgressHUD.dismiss()
+                           
                             
                             
                             let refreshAlert = UIAlertController(title: "", message:  success.Message, preferredStyle: UIAlertController.Style.alert)
@@ -2772,7 +2708,6 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                         
                         if particular.Status == 1 {
                             
-                            KRProgressHUD.dismiss()
                             particularSms  = particular.data ?? []
                             
                             let refreshAlert = UIAlertController(title: "", message:  particular.Message, preferredStyle: UIAlertController.Style.alert)
@@ -2835,7 +2770,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             
                         }else{
                             
-                            KRProgressHUD.dismiss()
+                          
                             
                             let refreshAlert = UIAlertController(title: "", message:  particular.Message, preferredStyle: UIAlertController.Style.alert)
                             
@@ -2908,8 +2843,6 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
     
     func NoticeSendSmsToParticular(ImageFile: [String]) {
         
-        KRProgressHUD.show()
-        
         var imageAryy: [FiletypeDataDetails] = []
         
         for i in ImageFile {
@@ -2964,7 +2897,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                         
                         if particularss.Status == 1 {
                             
-                            KRProgressHUD.dismiss()
+                           
                             
                             let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: .alert)
                             
@@ -3019,7 +2952,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             
                         } else {
                             
-                            KRProgressHUD.dismiss()
+                           
                             
                             let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: .alert)
                             
@@ -3074,7 +3007,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                         }
                     
                 case .failure(let error):
-                    KRProgressHUD.dismiss()
+                   
                     print("API Error:", error.localizedDescription)
                 }
             }
@@ -3098,7 +3031,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                         
                         if particularss.Status == 1 {
                             
-                            KRProgressHUD.dismiss()
+                           
                             
                             let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: .alert)
                             
@@ -3153,7 +3086,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             
                         } else {
                             
-                            KRProgressHUD.dismiss()
+                           
                             
                             let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: .alert)
                             
@@ -3168,7 +3101,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                     
                     
                 case .failure(let error):
-                    KRProgressHUD.dismiss()
+                    
                     print("API Error:", error.localizedDescription)
                 }
             }
@@ -3176,8 +3109,6 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
     }
     
     func EventParticular() {
-        
-        KRProgressHUD.show()
         
         var particular = EventParticualrModal()
         
@@ -3226,7 +3157,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                    
                         
                         if response.Status == 1 {
-                            KRProgressHUD.dismiss()
+                           
                             
                             let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
                             
@@ -3281,7 +3212,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             
                         } else {
                             
-                            KRProgressHUD.dismiss()
+                          
                             
                             let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
                             
@@ -3337,7 +3268,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                     
                     
                 case .failure(let error):
-                    KRProgressHUD.dismiss()
+                   
                     print(error.localizedDescription)
                 }
             }
@@ -3421,7 +3352,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
             imagePdf.subjectid = AssigemtSubjectId
             imagePdf.yearid = AssigemtyearIdsSpefy
             imagePdf.submissiondate = assigmentDate
-            imagePdf.fileNameArray = assigmet
+            imagePdf.FileNameArray = assigmet
             
             print("imagePdfStrs", imagePdf)
             
@@ -3443,103 +3374,108 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                         
                         if particularss.Status == 1 {
                             
-                            _ = SweetAlert().showAlert("", subTitle: particularss.Message, style: .none, buttonTitle: "Ok", buttonColor: .gray) { [self] okclick in
-                                
-                                if okclick {
-                                    
-                                    if self.priority == "p2" || self.priority == "p3" {
-                                        
-                                        let vc = SenderAssigmentHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                        vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                        vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                        
-                                    } else if self.priority == "p7" {
-                                        
-                                        let vc = SenderAssigmentHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "univercityColorCod")
-                                        vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                        vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                        
-                                    } else {
-                                        
-                                        let vc = SenderAssigmentHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Principal")
-                                        vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                        vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                    }
-                                }
-                            }
+                            let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: .alert)
                             
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                                
+                                if self.priority == "p2" || self.priority == "p3" {
+                                    
+                                    let vc = SenderAssigmentHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                    vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                    vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                    vc.str = self.str
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                    
+                                } else if self.priority == "p7" {
+                                    
+                                    let vc = SenderAssigmentHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "univercityColorCod")
+                                    vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                    vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                    vc.str = self.str
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                    
+                                } else {
+                                    
+                                    let vc = SenderAssigmentHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "Principal")
+                                    vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                    vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                    vc.str = self.str
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                }
+
+                                
+                            })
+                            
+                            
+                            self.present(refreshAlert, animated: true)
                             tv.dataSource = self
                             tv.delegate = self
                             tv.reloadData()
                             
                         } else {
                             
-                            _ = SweetAlert().showAlert("", subTitle: particularss.Message, style: .none, buttonTitle: "Ok", buttonColor: .gray) { [self] okclick in
+                            let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: .alert)
+                            
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                                 
-                                if okclick {
+                                if self.priority == "p2" || self.priority == "p3" {
                                     
-                                    if self.priority == "p2" || self.priority == "p3" {
-                                        
-                                        let vc = SenderAssigmentHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                        vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                        vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                        
-                                    } else if self.priority == "p7" {
-                                        
-                                        let vc = SenderAssigmentHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "univercityColorCod")
-                                        vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                        vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                        
-                                    } else {
-                                        
-                                        let vc = SenderAssigmentHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Principal")
-                                        vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                        vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                    }
+                                    let vc = SenderAssigmentHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                    vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                    vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                    vc.str = self.str
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                    
+                                } else if self.priority == "p7" {
+                                    
+                                    let vc = SenderAssigmentHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "univercityColorCod")
+                                    vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                    vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                    vc.str = self.str
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                    
+                                } else {
+                                    
+                                    let vc = SenderAssigmentHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "Principal")
+                                    vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                    vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                    vc.str = self.str
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
                                 }
-                            }
+
+                            })
+                            
+                            self.present(refreshAlert, animated: true)
                             
                             tv.dataSource = self
                             tv.delegate = self
@@ -3582,7 +3518,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
             imagePdf.subjectid = AssigemtSubjectId
             imagePdf.yearid = AssigemtyearIdsSpefy
             imagePdf.submissiondate = assigmentDate
-            imagePdf.fileNameArray = assigmet
+            imagePdf.FileNameArray = assigmet
             
             print("imagePdfStrs", imagePdf)
             
@@ -3694,7 +3630,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
             imagePdf.subjectid = AssigemtSubjectId
             imagePdf.yearid = AssigemtyearIdsSpefy
             imagePdf.submissiondate = assigmentDate
-            imagePdf.fileNameArray = assigmet
+            imagePdf.FileNameArray = assigmet
             
             print("imagePdfStrs", imagePdf)
             
@@ -3712,57 +3648,58 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                     
                 case .success(let particularss):
                     
-                   
-                        
                         self.assigmentImagPdf = particularss
                         
                         if particularss.Status == 1 {
                             
-                            _ = SweetAlert().showAlert("", subTitle: particularss.Message, style: .none, buttonTitle: "Ok", buttonColor: .gray) { [self] okclick in
+                            
+                            let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: .alert)
+                            
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                                 
-                                if okclick {
+                                if self.priority == "p2" || self.priority == "p3" {
                                     
-                                    if self.priority == "p2" || self.priority == "p3" {
-                                        
-                                        let vc = SenderAssigmentHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                        vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                        vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                        
-                                    } else if self.priority == "p7" {
-                                        
-                                        let vc = SenderAssigmentHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "univercityColorCod")
-                                        vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                        vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                        
-                                    } else {
-                                        
-                                        let vc = SenderAssigmentHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Principal")
-                                        vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                        vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                    }
+                                    let vc = SenderAssigmentHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                    vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                    vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                    vc.str = self.str
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                    
+                                } else if self.priority == "p7" {
+                                    
+                                    let vc = SenderAssigmentHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "univercityColorCod")
+                                    vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                    vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                    vc.str = self.str
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                    
+                                } else {
+                                    
+                                    let vc = SenderAssigmentHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "Principal")
+                                    vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                    vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                    vc.str = self.str
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
                                 }
-                            }
+
+                            })
+                            
+                            self.present(refreshAlert, animated: true)
                             
                             tv.dataSource = self
                             tv.delegate = self
@@ -3770,52 +3707,53 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             
                         } else {
                             
-                            _ = SweetAlert().showAlert("", subTitle: particularss.Message, style: .none, buttonTitle: "Ok", buttonColor: .gray) { [self] okclick in
-                                
-                                if okclick {
-                                    
-                                    if self.priority == "p2" || self.priority == "p3" {
-                                        
-                                        let vc = SenderAssigmentHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                        vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                        vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                        
-                                    } else if self.priority == "p7" {
-                                        
-                                        let vc = SenderAssigmentHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "univercityColorCod")
-                                        vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                        vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                        
-                                    } else {
-                                        
-                                        let vc = SenderAssigmentHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Principal")
-                                        vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                        vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                    }
-                                }
-                            }
+                            let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: .alert)
                             
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                                
+                                if self.priority == "p2" || self.priority == "p3" {
+                                    
+                                    let vc = SenderAssigmentHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                    vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                    vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                    vc.str = self.str
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                    
+                                } else if self.priority == "p7" {
+                                    
+                                    let vc = SenderAssigmentHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "univercityColorCod")
+                                    vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                    vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                    vc.str = self.str
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                    
+                                } else {
+                                    
+                                    let vc = SenderAssigmentHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "Principal")
+                                    vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                    vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                    vc.str = self.str
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                }
+
+                            })
+                            
+                            self.present(refreshAlert, animated: true)
                             tv.dataSource = self
                             tv.delegate = self
                             tv.reloadData()
@@ -3857,7 +3795,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
             imagePdf.subjectid = AssigemtSubjectId
             imagePdf.yearid = AssigemtyearIdsSpefy
             imagePdf.submissiondate = assigmentDate
-            imagePdf.fileNameArray = assigmet
+            imagePdf.FileNameArray = assigmet
             
             print("imagePdfStrs", imagePdf)
             
@@ -3954,7 +3892,7 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
         sendImagePdfEntier.callertype = priority
         sendImagePdfEntier.collegeid = clgId
         sendImagePdfEntier.Description = discreptionss
-        sendImagePdfEntier.Staffid = memberId
+        sendImagePdfEntier.staffid = memberId
         sendImagePdfEntier.fileduration = "0"
         sendImagePdfEntier.filetype = imageFileType
         sendImagePdfEntier.subjectid = sectionAndSubject
@@ -4285,10 +4223,6 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                     }
         
                    
-                    
-                   
-                    
-                    awsArry.append(UploadPDf!)
                     let imageDict = NSMutableDictionary()
                     imageDict["FileName"] = UploadPDf
                     self.imageUrlArray.add(imageDict)

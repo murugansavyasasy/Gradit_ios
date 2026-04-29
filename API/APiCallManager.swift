@@ -5,57 +5,100 @@
 //  Created by Lakshmanan on 03/03/26.
 //
 import Foundation
+import KRProgressHUD
 
 final class APiCallManager {
     
     static let shared = APiCallManager()
-    
     private init() {}
     
+    // MARK: - Loader State
+    private var activeRequestCount = 0
+    private let loaderQueue = DispatchQueue(label: "loader.queue")
+    
+    // MARK: - Headers
     let defaultHeaders: [String: String] = [
         "Content-Type": "application/json",
         "Accept": "application/json"
     ]
     
-    func callApi<T:Decodable> (
+    // MARK: - Loader Handling
+    
+    private func showLoader() {
+        loaderQueue.sync {
+            activeRequestCount += 1
+            
+            if activeRequestCount == 1 {
+                DispatchQueue.main.async {
+                    KRProgressHUD.show()
+                }
+            }
+        }
+    }
+    
+    private func hideLoader() {
+        loaderQueue.sync {
+            activeRequestCount -= 1
+            
+            if activeRequestCount <= 0 {
+                activeRequestCount = 0
+                DispatchQueue.main.async {
+                    KRProgressHUD.dismiss()
+                }
+            }
+        }
+    }
+    
+    // MARK: - API Call
+    
+    func callApi<T: Decodable>(
         url: String,
         httpMethod: HTTPMethod,
         isBaseUrl: Bool? = true,
-        queryParam: [String:Any]?,
+        queryParam: [String: Any]?,
         requestBody: Encodable?,
-        completion: @escaping (Result<T,Error>) -> Void
-    ){
+        showLoader: Bool = true,
+        completion: @escaping (Result<T, Error>) -> Void
+    ) {
+        
+        if showLoader {
+            self.showLoader()
+        }
+        
         var logOutput = "\n================ API CALL START ================\n"
         
         let baseUrl = (isBaseUrl ?? false) ? Constant.baseUrl : Constant.Resume_baseUrl
         
-        var componets = URLComponents(string: baseUrl+url)
+        var components = URLComponents(string: baseUrl + url)
         
         if let queryParams = queryParam {
-            componets?.queryItems = queryParams.map {
+            components?.queryItems = queryParams.map {
                 URLQueryItem(name: $0.key, value: String(describing: $0.value))
             }
         }
         
-        guard let url = componets?.url else {
+        guard let finalURL = components?.url else {
+            if showLoader { self.hideLoader() }
             completionOnMain(.failure(NetworkError.invalidURL), completion: completion)
             return
         }
         
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: finalURL)
         request.httpMethod = httpMethod.rawValue
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.allHTTPHeaderFields = defaultHeaders
         
-        logOutput += "🌍 URL: \(url.absoluteString)\n"
+        logOutput += "🌍 URL: \(finalURL.absoluteString)\n"
         logOutput += "📡 Method: \(httpMethod.rawValue)\n"
         logOutput += "📦 Headers: \(request.allHTTPHeaderFields ?? [:])\n"
         
+        // MARK: Body Encoding
         if let body = requestBody {
             do {
                 request.httpBody = try JSONEncoder().encode(body)
-            }catch {
-                completion(.failure(error))
+            } catch {
+                if showLoader { self.hideLoader() }
+                completionOnMain(.failure(error), completion: completion)
+                return
             }
         }
         
@@ -63,14 +106,17 @@ final class APiCallManager {
            let json = String(data: body, encoding: .utf8) {
             logOutput += "📤 Request Body: \(json)\n"
         }
-
-        URLSession.shared.dataTask(with: request){ data, response, error in
+        
+        // MARK: API Call
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
             
             if let error = error {
                 logOutput += "❌ Error: \(error.localizedDescription)\n"
                 logOutput += "================ API CALL END ================\n"
                 print(logOutput)
                 
+                if showLoader { self.hideLoader() }
                 self.completionOnMain(.failure(error), completion: completion)
                 return
             }
@@ -80,6 +126,7 @@ final class APiCallManager {
                 logOutput += "================ API CALL END ================\n"
                 print(logOutput)
                 
+                if showLoader { self.hideLoader() }
                 self.completionOnMain(.failure(NetworkError.invalidResponse), completion: completion)
                 return
             }
@@ -91,41 +138,40 @@ final class APiCallManager {
                 logOutput += "================ API CALL END ================\n"
                 print(logOutput)
                 
-                self.completionOnMain(.failure(NetworkError.noData),completion: completion)
-               
+                if showLoader { self.hideLoader() }
+                self.completionOnMain(.failure(NetworkError.noData), completion: completion)
                 return
             }
             
-            if let responseString = String(data: data, encoding: .utf8){
+            if let responseString = String(data: data, encoding: .utf8) {
                 logOutput += "📩 Response: \(responseString)\n"
             }
             
             logOutput += "================ API CALL END ================\n"
-            
             print(logOutput)
             
             do {
                 let decoded = try JSONDecoder().decode(T.self, from: data)
-               
-                self.completionOnMain(.success(decoded),completion: completion)
+                if showLoader { self.hideLoader() }
+                self.completionOnMain(.success(decoded), completion: completion)
                 
-            }catch{
-               
+            } catch {
+                if showLoader { self.hideLoader() }
                 self.completionOnMain(.failure(error), completion: completion)
-                
             }
+            
         }.resume()
-        
     }
     
-    func completionOnMain<T>(
-        _ result : Result<T,Error>,
-        completion: @escaping (Result<T,Error>) -> Void
+    // MARK: - Main Thread Completion
+    
+    private func completionOnMain<T>(
+        _ result: Result<T, Error>,
+        completion: @escaping (Result<T, Error>) -> Void
     ) {
         DispatchQueue.main.async {
             completion(result)
         }
-        
     }
 }
 
@@ -275,7 +321,11 @@ final class MultipartManager {
         completion: @escaping (Result<[String: Any], Error>) -> Void
     ) {
         
-        guard let requestURL = URL(string: url) else {
+        var logOutput = "\n================ MULTIPART API START ================\n"
+        
+        let finalUrl = Constant.baseUrl + url
+        
+        guard let requestURL = URL(string: finalUrl) else {
             completion(.failure(NetworkError.invalidURL))
             return
         }
@@ -285,6 +335,10 @@ final class MultipartManager {
         var request = URLRequest(url: requestURL)
         request.httpMethod = "POST"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+           logOutput += "🌍 URL: \(finalUrl)\n"
+           logOutput += "📡 Method: POST\n"
+           logOutput += "📦 Headers: \(request.allHTTPHeaderFields ?? [:])\n"
         
         var body = Data()
         
@@ -317,6 +371,8 @@ final class MultipartManager {
             // ---------------------------
             body.append("--\(boundary)--\r\n")
             
+            
+            
         } catch {
             completion(.failure(error))
             return
@@ -324,11 +380,17 @@ final class MultipartManager {
         
         request.httpBody = body
         
-        print("🌍 URL:", url)
+        logOutput += "📤 Info JSON: \(infoJSONString)\n"
+        logOutput += "📤 File: voice.mp3 (\(body.count) bytes total multipart size)\n"
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             
             if let error = error {
+                
+                logOutput += "❌ Error: \(error.localizedDescription)\n"
+                          logOutput += "================ MULTIPART API END ================\n"
+                          print(logOutput)
+                
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
@@ -336,6 +398,11 @@ final class MultipartManager {
             }
             
             guard let data = data else {
+                
+                logOutput += "❌ No Data Received\n"
+                           logOutput += "================ MULTIPART API END ================\n"
+                           print(logOutput)
+                
                 DispatchQueue.main.async {
                     completion(.failure(NetworkError.noData))
                 }
@@ -343,8 +410,11 @@ final class MultipartManager {
             }
             
             if let responseString = String(data: data, encoding: .utf8) {
-                print("📩 Response:", responseString)
+                logOutput += "📩 Response: \(responseString)\n"
             }
+            
+            logOutput += "================ MULTIPART API END ================\n"
+                  print(logOutput)
             
             do {
                 let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]

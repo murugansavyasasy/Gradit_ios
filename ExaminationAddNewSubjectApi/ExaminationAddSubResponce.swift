@@ -16,14 +16,14 @@ struct Main: Codable {
     var startdate: String?
     var enddate: String?
     var processtype: String?
+    var departmentid: String?
     var sectiondetails: [Sectiondetails]?
 
 }
 
 struct Sectiondetails: Codable {
 
-    var clgdepartmentid: String?
-    var clgsectionid: String?
+    var clgsectionid: Int?
     var Subjectdetails: [Subjectdetails]?
 
 }

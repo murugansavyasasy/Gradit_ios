@@ -184,8 +184,8 @@ class SemesterHomePageViewController: UIViewController,UITableViewDelegate,UITab
     func semCreditDropDown() {
 
         var sem = semCreditDropDownModal()
-        sem.colgid = colgId
-        sem.i_course_id = courseid
+        sem.colgid = Int(colgId)
+        sem.i_course_id = Int(courseid)
 
         APiCallManager.shared.callApi(
             url: APIEndpoints.getsemesterlistforcourseid,
@@ -230,10 +230,10 @@ class SemesterHomePageViewController: UIViewController,UITableViewDelegate,UITab
                     self.credsEc = item
 
                     var all = semcreditDetailsModal()
-                    all.colgid = self.colgId
-                    all.i_course_id = self.courseid
+                    all.colgid = Int(self.colgId)
+                    all.i_course_id = Int(self.courseid)
                     all.i_semester_id = semIdArray[index]
-                    all.i_student_id = self.memberId
+                    all.i_student_id = Int(self.memberId)
 
                     let apiURL = (self.credsEc == "ALL")
                     ? APIEndpoints.semesterwisestudentcreditdetailsALL

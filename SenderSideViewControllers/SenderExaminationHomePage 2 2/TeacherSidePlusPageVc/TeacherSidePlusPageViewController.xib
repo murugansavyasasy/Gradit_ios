@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -14,12 +14,9 @@
             <connections>
                 <outlet property="TodateView" destination="8te-Xd-E3d" id="5gp-WL-M3z"/>
                 <outlet property="bigImg" destination="P9r-LF-PA0" id="rRr-aF-SJk"/>
-                <outlet property="calandViewss" destination="bCy-mf-6PR" id="Yry-hi-PUy"/>
-                <outlet property="calanderTopHeight" destination="MTg-tZ-Wf9" id="SCO-fK-pt3"/>
                 <outlet property="changePasswordView" destination="bSI-5T-AUh" id="SJG-Ar-vMr"/>
                 <outlet property="changeRolesView" destination="IIT-qW-9QT" id="tEr-i7-l5u"/>
                 <outlet property="clgLogoImg" destination="OhL-lq-QR8" id="1tQ-sj-ptM"/>
-                <outlet property="datePicker" destination="XCO-Xd-T2l" id="rcE-Mw-39g"/>
                 <outlet property="examNameTextField" destination="gXe-RY-glL" id="jf0-43-E1m"/>
                 <outlet property="faqView" destination="Ivq-Tm-pa5" id="xkN-dG-a6q"/>
                 <outlet property="fromDateLabel" destination="GXF-cb-iUh" id="Rwj-XU-Cer"/>
@@ -49,7 +46,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xxe-gb-fEf">
-                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
+                    <rect key="frame" x="0.0" y="96" width="414" height="732"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="obN-tp-tHZ" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -60,7 +57,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cfx-yy-u6c" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
                                             <rect key="frame" x="15" y="5" width="41" height="41"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OhL-lq-QR8">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EmptyCollegeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="OhL-lq-QR8">
                                                     <rect key="frame" x="0.0" y="0.0" width="41" height="41"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -235,8 +232,8 @@
                                         <constraint firstAttribute="height" constant="35" id="XJU-Na-sdR"/>
                                         <constraint firstAttribute="width" constant="54" id="qqV-fg-YXk"/>
                                     </constraints>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="left-arrow "/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="left-arrow "/>
                                     <connections>
                                         <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="arl-jM-bDQ"/>
                                     </connections>
@@ -258,10 +255,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oy7-3Y-P8b">
-                            <rect key="frame" x="0.0" y="208" width="414" height="606"/>
+                            <rect key="frame" x="0.0" y="208" width="414" height="524"/>
                             <subviews>
                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eBJ-mb-XZa">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="606"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="524"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sql-Ha-PRM">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="606"/>
@@ -416,37 +413,6 @@
                                                         <constraint firstAttribute="bottom" secondItem="gCH-wz-4J6" secondAttribute="bottom" id="oEl-bI-6ar"/>
                                                     </constraints>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bCy-mf-6PR">
-                                                    <rect key="frame" x="22" y="139" width="370" height="328"/>
-                                                    <subviews>
-                                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="XCO-Xd-T2l">
-                                                            <rect key="frame" x="0.0" y="35" width="370" height="293"/>
-                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <connections>
-                                                                <action selector="dte:" destination="-1" eventType="valueChanged" id="W23-Vg-FRL"/>
-                                                            </connections>
-                                                        </datePicker>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N7X-m1-6hg">
-                                                            <rect key="frame" x="297.5" y="2" width="64.5" height="34.5"/>
-                                                            <state key="normal" title="Button"/>
-                                                            <buttonConfiguration key="configuration" style="plain" title="Done"/>
-                                                            <connections>
-                                                                <action selector="doneBtn:" destination="-1" eventType="touchUpInside" id="NH3-9B-zyn"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                    <constraints>
-                                                        <constraint firstItem="XCO-Xd-T2l" firstAttribute="top" secondItem="bCy-mf-6PR" secondAttribute="top" constant="35" id="3eb-F9-Hk9"/>
-                                                        <constraint firstItem="XCO-Xd-T2l" firstAttribute="leading" secondItem="bCy-mf-6PR" secondAttribute="leading" id="4kh-2o-Ccf"/>
-                                                        <constraint firstAttribute="width" constant="370" id="ESf-wf-H4z"/>
-                                                        <constraint firstAttribute="trailing" secondItem="XCO-Xd-T2l" secondAttribute="trailing" id="F7N-0x-2pw"/>
-                                                        <constraint firstItem="N7X-m1-6hg" firstAttribute="top" secondItem="bCy-mf-6PR" secondAttribute="top" constant="2" id="M8j-8a-cI7"/>
-                                                        <constraint firstAttribute="height" constant="328" id="MTg-tZ-Wf9"/>
-                                                        <constraint firstAttribute="bottom" secondItem="XCO-Xd-T2l" secondAttribute="bottom" id="eF4-4n-RtK"/>
-                                                        <constraint firstAttribute="trailing" secondItem="N7X-m1-6hg" secondAttribute="trailing" constant="8" id="eu4-Lx-Ovr"/>
-                                                    </constraints>
-                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
@@ -459,11 +425,9 @@
                                                 <constraint firstItem="mNT-Aw-ajQ" firstAttribute="top" secondItem="7fV-Of-2Ca" secondAttribute="bottom" constant="20" id="908-ig-EhT"/>
                                                 <constraint firstItem="ssX-DW-LKB" firstAttribute="top" secondItem="Yfm-Cg-vsf" secondAttribute="bottom" id="Bk4-p7-r9c"/>
                                                 <constraint firstAttribute="trailing" secondItem="mNT-Aw-ajQ" secondAttribute="trailing" id="CEl-8N-P8o"/>
-                                                <constraint firstItem="bCy-mf-6PR" firstAttribute="top" secondItem="ssX-DW-LKB" secondAttribute="bottom" constant="34" id="Cb2-pJ-iVo"/>
                                                 <constraint firstAttribute="trailing" secondItem="Yfm-Cg-vsf" secondAttribute="trailing" id="Dhb-wb-hDW"/>
                                                 <constraint firstItem="Yfm-Cg-vsf" firstAttribute="leading" secondItem="Sql-Ha-PRM" secondAttribute="leading" constant="15" id="LaJ-ob-Gfh"/>
                                                 <constraint firstAttribute="height" constant="606" id="Mcz-7v-pdl"/>
-                                                <constraint firstItem="bCy-mf-6PR" firstAttribute="leading" secondItem="Sql-Ha-PRM" secondAttribute="leading" constant="22" id="OWN-Ya-S6y"/>
                                                 <constraint firstItem="7fV-Of-2Ca" firstAttribute="leading" secondItem="Sql-Ha-PRM" secondAttribute="leading" constant="15" id="Qdz-cv-gSD"/>
                                                 <constraint firstAttribute="trailing" secondItem="Odq-hb-vKD" secondAttribute="trailing" constant="104" id="RzN-Rx-4ix"/>
                                                 <constraint firstAttribute="trailing" secondItem="a9A-cB-GOC" secondAttribute="trailing" constant="26" id="SGC-3B-Jcn"/>
@@ -699,27 +663,14 @@
             </constraints>
             <point key="canvasLocation" x="105.79710144927537" y="19.419642857142858"/>
         </view>
-        <view contentMode="scaleToFill" id="psA-LY-hoM">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <viewLayoutGuide key="safeArea" id="koG-Ac-ctI"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-            <point key="canvasLocation" x="823" y="19"/>
-        </view>
-        <view contentMode="scaleToFill" id="X0g-ed-Z2Z">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <viewLayoutGuide key="safeArea" id="dNt-QH-dFs"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-            <point key="canvasLocation" x="1590" y="19"/>
-        </view>
     </objects>
     <resources>
+        <image name="EmptyCollegeIcon" width="511" height="511"/>
         <image name="GraditWhiteLogo" width="512" height="512"/>
         <image name="bell (1)" width="64" height="64"/>
         <image name="calendars" width="24" height="24"/>
         <image name="left-arrow " width="32" height="32"/>
-        <image name="man" width="29" height="29"/>
+        <image name="man" width="512" height="512"/>
         <image name="refresh" width="64" height="64"/>
         <namedColor name="Color-2">
             <color red="0.51899999380111694" green="0.17599999904632568" blue="0.45100000500679016" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -731,10 +682,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

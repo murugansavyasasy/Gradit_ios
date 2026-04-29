@@ -122,42 +122,42 @@ struct courseModal : Codable{
 //MARK: Get category
 struct categoryModal : Codable{
     
-    var  colgid          : String?
-    var  i_student_id    :  String?
+    var  colgid          : Int?
+    var  i_student_id    :  Int?
 }
 
 //MARK: Credit
 struct creditModal : Codable{
     
-    var colgid      : String?
-    var i_course_id : String?
-    var i_category_id : String?
-    var i_student_id : String?
+    var colgid      : Int?
+    var i_course_id : Int?
+    var i_category_id : Int?
+    var i_student_id : Int?
 }
 
 //MARK: Sem Credit
 
 struct semCreditDropDownModal : Codable{
     
-    var colgid           : String?
-    var i_course_id       : String?
+    var colgid           : Int?
+    var i_course_id       : Int?
 }
 
 struct semcreditDetailsModal : Codable{
     
-    var  colgid         :    String?
-    var  i_course_id    :   String?
+    var  colgid         :    Int?
+    var  i_course_id    :   Int?
     var i_semester_id   :  Int?
-    var i_student_id    :  String?
+    var i_student_id    :  Int?
 }
 
 //MARK: Exam Details
 struct examDetailsModal : Codable{
     
-    var  i_course_id        : String?
-    var  colgid             : String?
-    var  i_semester_id      : String?
-    var  i_student_id       : String?
+    var  i_course_id        : Int?
+    var  colgid             : Int?
+    var  i_semester_id      : Int?
+    var  i_student_id       : Int?
 }
 
 //MARK: Halltickets

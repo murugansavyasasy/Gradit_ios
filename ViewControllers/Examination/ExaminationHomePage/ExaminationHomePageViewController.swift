@@ -77,24 +77,13 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
     
     @IBOutlet weak var viewTap: UIView!
     @IBOutlet weak var sideMenuView: UIView!
-    
-    
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
     @IBOutlet weak var noDataLabel: UILabel!
     @IBOutlet weak var noDataTextView: UIView!
-    
-    @IBOutlet weak var adView: UIView!
     @IBOutlet weak var examTableView: UITableView!
     @IBOutlet weak var examSegmentName: UISegmentedControl!
-    
-    
     @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
-    
-    
-    
-    
-    
     
     var loginDatas : [datalogin]!
     var logindataprinci :[datalogin]!
@@ -164,7 +153,7 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
         loginType = defaults.string(forKey: DefaultsKeys.loginAsType)
         mem = defaults.string(forKey: DefaultsKeys.memberName)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         password = defaults.string(forKey: DefaultsKeys.Password)
         topMemberLabel.text = mem
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
@@ -962,10 +951,10 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
         print("EventDefaultsKeys.DeviceToken",deviceToken)
-        add.member_id = memberId
+        add.member_id = Int(memberId)
         add.mobile_no = MobileNumber
         add.priority = priority
-        add.college_id = colgId
+        add.college_id = Int(colgId)
         add.previous_add_id = PreviousAddId
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
@@ -1075,13 +1064,6 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
     @IBAction func refreshVc() {
         
         print("refreshVcWork")
-        KRProgressHUD.show()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            
-            KRProgressHUD.dismiss()
-            
-        }
         
         if segmentId == "1"{
             

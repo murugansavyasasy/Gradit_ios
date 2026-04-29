@@ -134,7 +134,7 @@ class GetSubjectVcViewController: UIViewController,UITableViewDataSource,UITable
         priority = defaults.string(forKey: DefaultsKeys.priority)
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         password = defaults.string(forKey: DefaultsKeys.Password)
         topMessageLabel.text = memberName
@@ -296,6 +296,7 @@ class GetSubjectVcViewController: UIViewController,UITableViewDataSource,UITable
             cell.syllubusDefaultLbl.isHidden = false
             cell.subjectNameLabel.isHidden = false
             cell.syllabusName.isHidden = false
+            cell.ArrowImagview.image = UIImage(systemName: "chevron.up")
         }
         
         else{
@@ -304,6 +305,8 @@ class GetSubjectVcViewController: UIViewController,UITableViewDataSource,UITable
             cell.LineView.isHidden = true
             cell.syllubusDefaultLbl.isHidden = true
             cell.syllabusName.isHidden = true
+            cell.ArrowImagview.image = UIImage(systemName: "chevron.down")
+           
             
         }
         
@@ -325,7 +328,7 @@ class GetSubjectVcViewController: UIViewController,UITableViewDataSource,UITable
         print("examViewRefName.count",examss.count)
         
         cell.examDate.text = sunjectList.examdate
-        cell.sectionLabel.text = sunjectList.examsession
+        cell.sessionLabel.text = sunjectList.examsession
         cell.ExamVenuLabel.text = sunjectList.examvenue
         cell.subjectNameLabel.text = sunjectList.examsubjectname
         cell.syllabusName.text = sunjectList.examsyllabus
@@ -393,10 +396,10 @@ class GetSubjectVcViewController: UIViewController,UITableViewDataSource,UITable
         let defaults = UserDefaults.standard
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
-        add.member_id = memberId
+        add.member_id = Int(memberId)
         add.mobile_no = MobileNumber
         add.priority = priority
-        add.college_id = clgId
+        add.college_id = Int(clgId)
         add.previous_add_id = 2
         
         

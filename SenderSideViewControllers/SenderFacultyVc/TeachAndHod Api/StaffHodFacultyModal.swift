@@ -10,8 +10,8 @@ import ObjectMapper
 
 struct StaffHodFacultyModal: Codable {
 
-    var userid: Int?
-    var appid: Int?
+    var userid: String?
+    var appid: String?
     var priority: String?
     var deptid: String?
 
@@ -27,7 +27,7 @@ struct StaffHodFacultyResponse: Codable {
 
 struct StaffHodFacultyResponseData: Codable {
 
-    var memberid: Int?
+    var memberid: String?
     var staffname: String?
     var facultyphoto: String?
     var stafftype: String?

@@ -99,11 +99,6 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
             plusViewHeight.constant = 0
         }
         
-        
-       
-
-        
-        
         switchBtn.isHidden = true
         faceIdDefaultLbl.isHidden = true
 //        locationAlertFullView.isHidden = true
@@ -1074,11 +1069,11 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     noRecordLbl.isHidden = true
                     for i in getattendace.data ?? []{
                         var distanceInt = Int(i.distance ?? "")
-                        let distance = haversineDistance(lat1: Double(i.latitude ?? "")!, lon1: Double(i.longitude ?? "")!, lat2: Double(currentLatitute)!, lon2: Double(curentLogittude)!)
+                        let distance = haversineDistance(lat1: Double(i.latitude ?? "") ?? 0, lon1: Double(i.longitude ?? "") ?? 0, lat2: Double(currentLatitute) ?? 0, lon2: Double(curentLogittude) ?? 0)
                         currentDistanceForPuchCheck = distance
                         apiDistanceForPuchCheck = distanceInt
                         // Check if the distance is smaller
-                        if distance <= Double(distanceInt!) {
+                        if distance <= Double(distanceInt ?? 0) {
                             print("The existing are within 5 meters of the current location.")
                             punchFullView.isHidden = false
                             errorLabel.isHidden = true

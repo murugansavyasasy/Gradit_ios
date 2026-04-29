@@ -964,6 +964,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
         voiceUpload.isemergencyvoice = voiceReplyType
         voiceUpload.isstaff = false
         voiceUpload.isstudent = studentChck.isChecked
+        voiceUpload.subjectid = ""
         
         
         APiCallManager.shared.callApi(
@@ -983,6 +984,33 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                            
+                            if self.priority == "p2" || self.priority == "p3" {
+                                
+                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                                vc.is_read_enabled = self.is_read_enabled
+                                vc.is_write_enabled = self.is_write_enabled
+                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
+                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                vc.strName = self.strName
+                                vc.str = self.str
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                                
+                            } else {
+                                
+                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
+                                vc.is_read_enabled = self.is_read_enabled
+                                vc.is_write_enabled = self.is_write_enabled
+                                vc.view.backgroundColor = UIColor(named: "Principal")
+                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
+                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                vc.strName = self.strName
+                                vc.str = self.str
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                            }
                             
                         }))
                         
@@ -1189,7 +1217,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func multypartAudio() {
         
-        let vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToParticularType"
+        let vimeoVideoEndpoint = APIEndpoints.SendFileToParticularType
         
         var voiceUpload = particularVoiceUploadMoad()
         
@@ -1229,11 +1257,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         print("chatSenderStr", voiceUpload)
         
-        KRProgressHUD.show()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            KRProgressHUD.dismiss()
-        }
+        DispatchQueue.main.async {
+                KRProgressHUD.show()
+            }
         
         MultipartManager.shared.uploadVoice(
             url: vimeoVideoEndpoint,
@@ -1243,6 +1269,10 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
         ) { [weak self] result in
             
             guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                    KRProgressHUD.dismiss()
+                }
             
             switch result {
                 
@@ -1371,7 +1401,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
         imagePdf.subjectid = "144"
         imagePdf.yearid = ""
         imagePdf.submissiondate = assigmentDate
-        imagePdf.fileNameArray = assigmet
+        imagePdf.FileNameArray = assigmet
         
         print("yearAndSectionModalStr11", imagePdf)
         
@@ -1583,7 +1613,8 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 url: APIEndpoints.GetCoursesByDepartment,
                 httpMethod: .post,
                 queryParam: nil,
-                requestBody: GetCourseRequestModal
+                requestBody: GetCourseRequestModal,
+                showLoader: false
             ) {[weak self] (result:Result<getCourseResponce, Error>) in
                     
                 guard let self = self else { return }
@@ -1903,25 +1934,13 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        
-        
         if   courseView.backgroundColor == UIColor(named: "selectColor"){
             
             print("rfwdd",courseRefName.count)
             return courseRefName.count
             
-            
-            
-        }
-        
-        
-        
-        else if   YearView.backgroundColor == UIColor(named: "selectColor"){
-            
-            
-            
+        } else if   YearView.backgroundColor == UIColor(named: "selectColor"){
             return yearRefName[section].sectiondetails?.count ?? 0
-            
             
         }
         
@@ -1938,39 +1957,25 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
             cell.sectionCourseChck.isChecked = false
             let course : getCourseDataDetails = courseRefName[indexPath.row]
             
-            
             cell.sectionLabel.text = course.course_name
             
             let selectedGestures = CheckBoxclickMyDepartMent(target: self, action: #selector(changeSelection))
             
             selectedGestures.MyDepartcheckBoxss = cell.sectionCourseChck
-            //
             selectedGestures.MyDepartmemberNames = course.course_id
             selectedGestures.MyDepartposs = indexPath.row
             cell.sectionCourseChck.addGestureRecognizer(selectedGestures)
         
             
-        }
-        
-        
-        
-        
-        else if   YearView.backgroundColor == UIColor(named: "selectColor"){
-            
-            
-            
+        } else if   YearView.backgroundColor == UIColor(named: "selectColor"){
             
             cell.sectionCourseChck.isChecked = false
             
-            
-            let secion : sectionDetailsData = yreRef[indexPath.row]
-            
+           // let secion : sectionDetailsData = yreRef[indexPath.row]
             
             cell.sectionLabel.text =  yearRefName[indexPath.section].sectiondetails?[indexPath.row].sectionname
             
-            
             let selectedGestures = CheckBoxclickMyDepartMent2(target: self, action: #selector(changesecitonVc))
-            
             
             selectedGestures.MyDepartcheckBoxss = cell.sectionCourseChck
             selectedGestures.MyDepartmemberNames =  (yearRefName[indexPath.section].sectiondetails?[indexPath.row].sectionid)
@@ -1978,36 +1983,18 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
             selectedGestures.YearId = String((yearRefName[indexPath.section].yearid ?? 0))
             cell.sectionCourseChck.addGestureRecognizer(selectedGestures)
             
-            
-            
             print("ffgfgfdfddfdsdfds",String((yearRefName[indexPath.section].yearid ?? 0)))
             
-            
             let specify = specifyStu(target: self, action: #selector(SpecifyVc))
-            
             
             specify.YearId = String((yearRefName[indexPath.section].yearid ?? 0))
             specify.sectionId = String((yearRefName[indexPath.section].sectiondetails?[indexPath.row].sectionid ?? 0))
             
             specifyStudView.addGestureRecognizer(specify)
             
-            
-            
-            
-            
-            
-            
         }
         
-        
-        
-        
-        
         return cell
-        
-        
-        
-        
     }
     
     
@@ -2053,18 +2040,8 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
             nameString = resiverId.joined(separator: "~")
             
             print("resiverId.append(gestur.memberName12)",nameString)
-            
-            
-            
-            
+             
         }
-        
-        
-        
-        
-        
-        
-        
     }
     
     @IBAction func changesecitonVc(gestur : CheckBoxclickMyDepartMent2){
@@ -2436,7 +2413,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         var sendImagePdfEntier = ImagePdfPartResponce()
         
-        sendImagePdfEntier.Staffid = memberId
+        sendImagePdfEntier.staffid = memberId
         sendImagePdfEntier.collegeid = collegeId
         sendImagePdfEntier.callertype = priority
         
@@ -2662,11 +2639,11 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
         print("events")
         
         particular.eventid = "0"
-        particular.eventbody = titlesText
+        particular.eventbody = discreptionsTextField
         particular.eventdate = eventDate
         particular.eventvenue = eventVenu
         particular.eventtime = EventTime
-        particular.eventtopic = discreptionsTextField
+        particular.eventtopic = titlesText
         
         particular.processtype = "add"
         particular.collegeid = collegeId
@@ -2871,7 +2848,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func multypartAudioEntierDepart() {
         
-        var vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToEntireCollege"
+        var vimeoVideoEndpoint = APIEndpoints.SendFileToEntireCollege
         
         var voiceUpload = voiceUploadEntierModal()
         
@@ -2904,7 +2881,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         print("chatSenderStr", voiceUpload)
         
-        KRProgressHUD.show()
+        DispatchQueue.main.async {
+                KRProgressHUD.show()
+            }
         
         MultipartManager.shared.uploadVoice(
             url: vimeoVideoEndpoint,
@@ -2912,7 +2891,12 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
             infoJSONString: voiceUploadStr
         ) { result in
             
+            DispatchQueue.main.async {
+                    KRProgressHUD.dismiss()
+                }
+            
             switch result {
+                
                 
             case .success(let json):
                 
@@ -2946,7 +2930,6 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.present(refreshAlert, animated: true)
             }
             
-            KRProgressHUD.dismiss()
         }
     }
     
@@ -3274,11 +3257,11 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
         var particular = EventParticualrModal()
         
         particular.eventid = "0"
-        particular.eventbody = titlesText
+        particular.eventbody = discreptionsTextField
         particular.eventdate = eventDate
         particular.eventvenue = eventVenu
         particular.eventtime = EventTime
-        particular.eventtopic = discreptionsTextField
+        particular.eventtopic = titlesText
         
         particular.processtype = "add"
         particular.collegeid = collegeId
@@ -3484,7 +3467,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
         imagePdf.subjectid = "144"
         imagePdf.yearid = ""
         imagePdf.submissiondate = assigmentDate
-        imagePdf.fileNameArray = [imagePdfFileArry]
+        imagePdf.FileNameArray = [imagePdfFileArry]
         
         print("yearAndSectionModalStr", imagePdf)
         
@@ -3662,19 +3645,7 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
        
     }
     
-    
-
-    
-    
-    
-    
-    
     // AWS PDF Upload Part
-    
-    
-    
-    
-    
     
     func uploadPDFFileToAWS(pdfData : NSData){
         KRProgressHUD.show()
@@ -3747,11 +3718,6 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         print("Failed to upload image: \(error.localizedDescription)")
                     }
                     
-                    
-                    
-                    
-                    
-                    awsArry.append(UploadPDf!)
                     let imageDict = NSMutableDictionary()
                     imageDict["FileName"] = UploadPDf
                     self.imageUrlArray.add(imageDict)
@@ -3761,11 +3727,8 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     if resivre == "5"{
                         
-                        
                         ImagePdfParticular(ImageFile: awsArry)
-                    }
-                    
-                    else if resivre == "1"{
+                    }else if resivre == "1"{
                         
                         NoticeSendSmsEntier(ImageFile: awsArry)
                     }

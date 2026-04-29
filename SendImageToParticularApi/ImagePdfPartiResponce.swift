@@ -10,7 +10,7 @@ import Foundation
 struct ImagePdfPartResponce: Codable {
 
     var collegeid: String?
-    var Staffid: String?
+    var staffid: String?
     var callertype: String?
     var filetype: String?
     var fileduration: String?

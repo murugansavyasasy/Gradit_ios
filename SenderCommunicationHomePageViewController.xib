@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -59,7 +59,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="760-kB-B8r">
-                    <rect key="frame" x="0.0" y="50" width="375" height="728"/>
+                    <rect key="frame" x="0.0" y="88" width="375" height="661"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8px-i0-b5o">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -381,11 +381,11 @@
                             </constraints>
                         </view>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0a6-Sx-29a">
-                            <rect key="frame" x="0.0" y="321.66666666666674" width="375" height="286.33333333333326"/>
+                            <rect key="frame" x="0.0" y="321.66666666666669" width="375" height="219.33333333333331"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yWE-wV-JYF" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
-                            <rect key="frame" x="304" y="510" width="56" height="58"/>
+                            <rect key="frame" x="304" y="443" width="56" height="58"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="voice-message-microphone-button" translatesAutoresizingMaskIntoConstraints="NO" id="tan-39-3Dj">
                                     <rect key="frame" x="15" y="15" width="26" height="28"/>
@@ -449,7 +449,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rHA-UI-RbK" customClass="ReuseView" customModule="Gradit" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="608" width="375" height="120"/>
+                            <rect key="frame" x="0.0" y="541" width="375" height="120"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="120" id="2R6-6f-0bN"/>
@@ -462,7 +462,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="L1w-B5-92l">
-                            <rect key="frame" x="177.66666666666666" y="354" width="20" height="20"/>
+                            <rect key="frame" x="177.66666666666666" y="320.66666666666669" width="20" height="20"/>
                         </activityIndicatorView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y7b-Xp-cae" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
                             <rect key="frame" x="246.33333333333337" y="160" width="35" height="24"/>
@@ -490,7 +490,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Below messages are sent from the management. Messages that you send to students will not appear here." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IzP-3N-WV4">
-                            <rect key="frame" x="8" y="195.33333333333334" width="347" height="57.333333333333343"/>
+                            <rect key="frame" x="8" y="195.33333333333331" width="347" height="57.333333333333343"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>

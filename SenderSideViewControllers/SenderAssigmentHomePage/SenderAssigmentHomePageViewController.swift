@@ -135,8 +135,8 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
     
     var cloneList :  [upcommingdataDetails] = []
     
-    var is_read_enabled : String!
-    var is_write_enabled : String!
+    var is_read_enabled : String?
+    var is_write_enabled : String?
     
     override func viewDidAppear(_ animated: Bool) {
         
@@ -155,6 +155,7 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("INSIDE VC:", self)
         overrideUserInterfaceStyle = .light
         loadingCustom.startAnimating()
         
@@ -183,7 +184,7 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
         }
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         
         topMessageLabel.text = memberName
         addApi()
@@ -196,7 +197,9 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
         if is_read_enabled == "1"{
             UpcommingRefName()
             
-        }else{}
+        }else{
+            
+        }
         if is_write_enabled == "1"{
             
             addPlusVcNextPage.isHidden = false
@@ -266,6 +269,7 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
             assigmentTopCount.isHidden = true
             assigmentPastCountView.isHidden = true
             upcommingcountView.isHidden = true
+           
         }
         
         
@@ -1497,8 +1501,8 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
             vc.assigmentFileType = gesture.fileType
             vc.str = str
             vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
+            vc.is_read_enabled = is_read_enabled ?? ""
+            vc.is_write_enabled = is_write_enabled ?? ""
             
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true,completion: nil)
@@ -1512,8 +1516,8 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
             vc.assigmentFileType = gesture.fileType
             vc.str = str
             vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
+            vc.is_read_enabled = is_read_enabled ?? ""
+            vc.is_write_enabled = is_write_enabled ?? ""
             
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true,completion: nil)
@@ -1605,7 +1609,7 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
         imagePdf.subjectid = ""
         imagePdf.yearid = ""
         imagePdf.submissiondate = ""
-        imagePdf.fileNameArray = [imagePdfFileArry]
+        imagePdf.FileNameArray = [imagePdfFileArry]
         
         print("SenderAssigmentDelete", imagePdf)
         
@@ -1674,7 +1678,7 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
         imagePdf.subjectid = ""
         imagePdf.yearid = ""
         imagePdf.submissiondate = ""
-        imagePdf.fileNameArray = [imagePdfFileArry]
+        imagePdf.FileNameArray = [imagePdfFileArry]
         
         print("yearAndSectionModalStr", imagePdf)
         
@@ -1734,8 +1738,8 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
         
         vc.str = str
         vc.strName = strName
-        vc.is_read_enabled = is_read_enabled
-        vc.is_write_enabled = is_write_enabled
+        vc.is_read_enabled = is_read_enabled ?? ""
+        vc.is_write_enabled = is_write_enabled ?? ""
         
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true,completion: nil)
@@ -2043,10 +2047,10 @@ func apread(gesture : String){
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
         print("EventDefaultsKeys.DeviceToken",deviceToken)
-        add.member_id = memberId
+        add.member_id = Int(memberId)
         add.mobile_no = mobileNumber
         add.priority = priority
-        add.college_id = colgId
+        add.college_id = Int(colgId)
         add.previous_add_id = PreviousAddId
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
@@ -2173,16 +2177,6 @@ func apread(gesture : String){
     @IBAction func refreshVc() {
         
         print("refreshVcWork")
-        KRProgressHUD.show()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            
-            //            self.tv.reloadData()
-            
-            
-            KRProgressHUD.dismiss()
-            
-        }
         
         if  segmentID == "1"{
             

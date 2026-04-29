@@ -11,7 +11,7 @@ struct GetMentorstudentListforappModal: Codable {
 
     var collegeid: String?
     var staffid: String?
-    var deptid: String?
+//    var deptid: String?
     var yearid: String?
     var sectionid: String?
 

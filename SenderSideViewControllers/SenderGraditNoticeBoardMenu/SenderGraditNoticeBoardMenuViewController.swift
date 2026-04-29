@@ -194,7 +194,7 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
         }
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         
         topMessageLabel.text = memberName
         addApi()
@@ -1427,10 +1427,10 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
         print("EventDefaultsKeys.DeviceToken",deviceToken)
-        add.member_id = memberId
+        add.member_id = Int(memberId)
         add.mobile_no = mobileNumber
         add.priority = priority
-        add.college_id = collegeId
+        add.college_id = Int(collegeId)
         add.previous_add_id = PreviousAddId
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetAddsForCollege, httpMethod: .post, queryParam: nil, requestBody: add
@@ -1557,15 +1557,6 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
     @IBAction func refreshVc() {
         
         print("refreshVcWork")
-        KRProgressHUD.show()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            
-        
-            
-            KRProgressHUD.dismiss()
-            
-        }
         
         
         if segmentTypeId == "1"{
@@ -1576,8 +1567,6 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
         else{
             
             collegeRefName()
-            
-            
         }
         
     }

@@ -196,7 +196,7 @@ override func viewDidLoad() {
     mobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
     password = defaults.string(forKey: DefaultsKeys.Password)
     
-    clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "person.fill"))
+    clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
     
     topMessageLabel.text = memberName
     addApi()
@@ -1107,10 +1107,10 @@ func addApi(){
     let defaults = UserDefaults.standard
     var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
     add.device_token = deviceToken
-    add.member_id = memberId
+    add.member_id = Int(memberId)
     add.mobile_no = mobileNumber
     add.priority = priority
-    add.college_id = collegeId
+    add.college_id = Int(collegeId)
     add.previous_add_id = PreviousAddId
     
     
@@ -1340,14 +1340,6 @@ func overAllRefName() {
 @IBAction func refreshVc() {
     
     print("refreshVcWork")
-    KRProgressHUD.show()
-    
-    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-        
-        KRProgressHUD.dismiss()
-        
-    }
-    
     
     if segmentID == "1"{
         

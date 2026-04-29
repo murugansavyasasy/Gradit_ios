@@ -98,7 +98,7 @@ class ShowSelectedImageViewController: UIViewController,UICollectionViewDelegate
         var eventImagess = EventImageModal()
         
         eventImagess.collegeid = coldId
-        eventImagess.Userid = userId
+        eventImagess.userid = userId
         eventImagess.eventheaderid = headerId
         eventImagess.FileNameArray = [evenimageName]
         

@@ -162,8 +162,6 @@ class ReuseTabController  : UIView {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             
-//            self.tv.reloadData()
-            
             
             KRProgressHUD.dismiss()
             
