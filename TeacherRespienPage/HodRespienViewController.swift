@@ -3292,7 +3292,37 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             KRProgressHUD.dismiss()
                             
                             let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action:UIAlertAction) in
+                                
+                                guard let self = self else {return}
+                                
+                                if self.priority == "p2" || self.priority == "p3" {
+                                    
+                                    let vc = SenderEventHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                    vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                    vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                    vc.str = self.str
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                    
+                                } else {
+                                    
+                                    let vc = SenderEventHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "Principal")
+                                    vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                    vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                    vc.str = self.str
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                }
+                            }))
                             
                             self.present(refreshAlert, animated: true)
                             

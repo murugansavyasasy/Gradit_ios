@@ -130,6 +130,9 @@ class CountryListViewController: UIViewController,UITableViewDelegate,UITableVie
             
             gesture.checkBoxss.setImage(UIImage.init(named: "radio"), for: .normal)
             countryTableView.isHidden = true
+            
+            UserDefaults.standard.set(gesture.baseURl,forKey: DefaultsKeys.baseUrl)
+            
             // Constant.baseUrl = (gesture.baseURl ?? "https://www.thegradit.com/")+"api/AppDetailsBal/"
             arrowImageView.image = UIImage(named: "download")
             countrySelectLabel.text = countryName

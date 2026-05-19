@@ -134,6 +134,7 @@ override func viewDidLoad() {
     sideMenuView.isHidden = true
     searchbar.delegate = self
     searchbar.isHidden  = true
+    searchFullView.isHidden = true
     
     EventTableView.delegate = self
     EventTableView.dataSource = self
@@ -309,6 +310,7 @@ override func viewDidLoad() {
 @IBAction func Searchfield() {
     
     searchbar.isHidden  = false
+    searchFullView.isHidden  = false
 }
 
 
@@ -371,6 +373,7 @@ func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     
     searchbar.isHidden  = true
+    searchFullView.isHidden  = true
     
     noDataTextView.isHidden = true
     noDataLabel.isHidden = true

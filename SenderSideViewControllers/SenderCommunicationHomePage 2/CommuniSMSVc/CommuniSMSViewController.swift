@@ -10,7 +10,7 @@ import KRProgressHUD
 import ObjectMapper
 
 @available(iOS 16.0, *)
-class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     
     
     @IBOutlet weak var reusee: ReuseView!
@@ -174,6 +174,7 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
         
         topMessageLabel.text = memberName
         
+        searchbar.delegate = self
         searchFullView .isHidden = true
         
         tv.delegate = self

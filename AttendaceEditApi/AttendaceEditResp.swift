@@ -16,7 +16,8 @@ struct attendanceEditModal: Codable {
     var appid: String?
     var date: String?
     var attendancehour: String?
-
+    var period: String?
+    var attn_type: String?
 }
 
 struct attendanceEditResponce: Codable {

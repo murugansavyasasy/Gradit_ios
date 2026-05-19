@@ -68,7 +68,6 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     var imagePdfEniter : [sendImagePdfPartiDataDetails] = []
     var attendanceEditsss : [AttendanceEditDataDEtails] = []
     var sendVideoPart : [ParticularVideoUploadRespData] = []
-    var edit_hours : [editHoursdataDEtaild] = []
     var clonelist3 : [AttendanceEditDataDEtails] = []
     var collegeId : String!
     var departmentId : String!
@@ -101,7 +100,6 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     var onDutyMemberIds : [String] = []
     var onLeaveMemberIds : [String] = []
     var people = [GetstudentListData]()
-    var attendanceType : [String] = []
     
     var videoUrl : String!
     
@@ -185,7 +183,6 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     var is_write_enabled : String!
     var VoiceHstryId : String!
     var voiceHstryHeaderId : String!
-    var attendanceHourDropRef : [Int] = []
     var subjectIdForStuddent : String!
     var inc = 0
     
@@ -193,6 +190,14 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     
     var SortingDropdown = DropDown()
     var selectedSoringIndex = 0
+    
+    var HoursAndPeriod: [HoursdataDEtails] = []
+    var edit_hours : [editHoursdataDEtaild] = []
+    var attendance_type : String?
+    var selected_hourAndPeriod: HoursdataDEtails?
+    var selected_edit_hourAndPeriod: editHoursdataDEtaild?
+    var isEditAttendance : Bool = false
+    var attenanceAlertString = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -203,11 +208,11 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         //        AttendanceTextView.isHidden = true
         // command end
         
+        attenanceAlertString = attendance_type == "nth" ? "period" : "hour"
+        
         searchbar.delegate = self
         overrideUserInterfaceStyle = .light
         AttendanceTextView.delegate = self
-        
-        print("helooo",attendanceHourDropRef.count)
         
         let defaults = UserDefaults.standard
         
@@ -265,6 +270,13 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         
         
         if MenuType == "9" || MenuType == "10"{
+            
+            if attendance_type == "nth"{
+                attendanceDropLbl.text = "Select period"
+            }else{
+                attendanceDropLbl.text = "Select hour"
+            }
+            
             attendanceStack.isHidden = false
             allCheckTotalView.isHidden = true
             SortBtn.isHidden = false
@@ -324,12 +336,14 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         
         else if MenuType == "10"{
             
-            
-            hourLabel.text =  "Choose hours to edit"
+            if attendance_type == "nth"{
+                hourLabel.text = "Choose period to edit"
+                attendanceDropLbl.text = "Select period"
+            }else{
+                hourLabel.text =  "Choose hour to edit"
+                attendanceDropLbl.text = "Select hour"
+            }
             pleaseChooseLbl.isHidden = false
-            
-            
-            
             
         }
         
@@ -684,7 +698,23 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         EditAttendanceOnDutyId.removeAll()
         EditAttendanceOnLeaveId.removeAll()
         
-        let stringArray = attendanceHourDropRef.map(String.init)
+        var stringArray: [String] = []
+        
+        if isEditAttendance {
+            
+            if attendance_type == "nth"{
+                stringArray = edit_hours.map{ String($0.period ?? 0) }
+            }else{
+                stringArray = edit_hours.map{ String($0.hour ?? 0) }
+            }
+        }else{
+            
+            if attendance_type == "nth"{
+                stringArray = HoursAndPeriod.map{ String($0.period ?? 0) }
+            }else{
+                stringArray = HoursAndPeriod.map{ String($0.hour ?? 0) }
+            }
+        }
         
         
         let myArray = stringArray
@@ -703,54 +733,42 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
             print("Selected item: \(item) at index: \(index)")
             self.attendanceDropLbl.text = item
             
-            
+            if isEditAttendance{
+                self.selected_edit_hourAndPeriod = edit_hours[index]
+            }else{
+                self.selected_hourAndPeriod = HoursAndPeriod[index]
+            }
             
             if MenuType == "10"{
                 
-                for i in  edit_hours {
+                AttendanceTextView.textColor = .black
+                AttendanceTextView.text = selected_edit_hourAndPeriod?.title
+                
+                if selected_edit_hourAndPeriod?.type == "Practical"{
+                    partialBtnName.setImage(UIImage(named: "radios"), for: .normal)
+                    generalBtnName.setImage(UIImage(named: "radio-button"), for: .normal)
+                    theroyBtnName.setImage(UIImage(named: "radio-button"), for: .normal)
+                    typeofAttendance = "Practical"
+                }else if selected_edit_hourAndPeriod?.type == "General"{
                     
+                    generalBtnName.setImage(UIImage(named: "radios"), for: .normal)
+                    theroyBtnName.setImage(UIImage(named: "radio-button"), for: .normal)
+                    partialBtnName.setImage(UIImage(named: "radio-button"), for: .normal)
+                    typeofAttendance = "General"
+                }else if selected_edit_hourAndPeriod?.type == "Theory"{
                     
-                    if i.hour == Int(item){
-                        AttendanceTextView.textColor = .black
-                        AttendanceTextView.text = i.title
-                        
-                        
-                        if i.type == "Practical"{
-                            partialBtnName.setImage(UIImage(named: "radios"), for: .normal)
-                            generalBtnName.setImage(UIImage(named: "radio-button"), for: .normal)
-                            theroyBtnName.setImage(UIImage(named: "radio-button"), for: .normal)
-                            typeofAttendance = "Practical"
-                            
-                            
-                        }else if i.type == "General"{
-                            
-                            generalBtnName.setImage(UIImage(named: "radios"), for: .normal)
-                            theroyBtnName.setImage(UIImage(named: "radio-button"), for: .normal)
-                            partialBtnName.setImage(UIImage(named: "radio-button"), for: .normal)
-                            typeofAttendance = "General"
-                            
-                            
-                        }else if i.type == "Theory"{
-                            
-                            theroyBtnName.setImage(UIImage(named: "radios"), for: .normal)
-                            generalBtnName.setImage(UIImage(named: "radio-button"), for: .normal)
-                            partialBtnName.setImage(UIImage(named: "radio-button"), for: .normal)
-                            typeofAttendance = "Theory"
-                            
-                        }
-                        
-                    }
-                    
+                    theroyBtnName.setImage(UIImage(named: "radios"), for: .normal)
+                    generalBtnName.setImage(UIImage(named: "radio-button"), for: .normal)
+                    partialBtnName.setImage(UIImage(named: "radio-button"), for: .normal)
+                    typeofAttendance = "Theory"
                     
                 }
-                attendanceEdits(hoursRef : item)
+                
+                let selected_hour = selected_edit_hourAndPeriod?.hour
+                let selected_period = selected_edit_hourAndPeriod?.period
+                attendanceEdits(hoursRef : String(selected_hour ?? 0), period: String(selected_period ?? 0))
             }
-            
-            
-            //
         }
-        //
-        //
     }
     
     
@@ -1151,25 +1169,16 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     }
     
     
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         searchbar.resignFirstResponder()
         
     }
     
-    
-    
-    
-    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
-        
-        
-        
+       
         if ItemName == "Tutor"{
             searchBar.resignFirstResponder()
-            
             
             print("TutorTutor",studentRef.count)
             
@@ -1178,11 +1187,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
             mentorListReseponse()
             
             self.Tv.reloadData()
-        }
-        
-        
-        
-        else if  ItemName == "Subject" || HodYearSpefiy == "12"{
+        }else if  ItemName == "Subject" || HodYearSpefiy == "12"{
             
             
             searchBar.resignFirstResponder()
@@ -2580,9 +2585,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
             else if self.MenuType == "10"{
                 
                 
-                if attendanceDropLbl.text == "Select hours"{
+                if selected_edit_hourAndPeriod == nil/*attendanceDropLbl.text == "Select hours"*/{
                     
-                    let refreshAlert = UIAlertController(title: "Enter the Attendance Hour", message: "Click ok to confirm", preferredStyle: UIAlertController.Style.alert)
+                    let refreshAlert = UIAlertController(title: "Enter the Attendance " + attenanceAlertString, message: "Click ok to confirm", preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
@@ -2621,9 +2626,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                 
             }else if self.MenuType == "9"{
                 
-                if attendanceDropLbl.text == "Select hours"{
+                if selected_hourAndPeriod == nil/*attendanceDropLbl.text == "Select hours"*/{
                     
-                    let refreshAlert = UIAlertController(title: "Enter the Attendance Hour", message: "Click ok to confirm", preferredStyle: UIAlertController.Style.alert)
+                    let refreshAlert = UIAlertController(title: "Enter the Attendance " + attenanceAlertString, message: "Click ok to confirm", preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
@@ -3331,11 +3336,42 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                 case .success(let response):
                     
                     
-                        
                         if response.Status == 1 {
                             
                             let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
+                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self](alertAction:UIAlertAction) in
+                                
+                                guard let self = self else { return }
+                                
+                                if self.piroty == "p2" || self.piroty == "p3" {
+                                    
+                                    let vc = SenderEventHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                    vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                    vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                    vc.str = self.strs
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                    
+                                } else {
+                                    
+                                    let vc = SenderEventHomePageViewController()
+                                    vc.is_read_enabled = self.is_read_enabled
+                                    vc.is_write_enabled = self.is_write_enabled
+                                    vc.view.backgroundColor = UIColor(named: "Principal")
+                                    vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                    vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                    vc.str = self.strs
+                                    vc.strName = self.strName
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                }
+                                
+                            }))
+                            
                             self.present(refreshAlert, animated: true)
                             
                         } else {
@@ -3347,6 +3383,10 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                     
                     
                 case .failure(let error):
+                    
+                    let refreshAlert = UIAlertController(title: "Failed", message: error.localizedDescription, preferredStyle: .alert)
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(refreshAlert, animated: true)
                     print(error.localizedDescription)
                 }
             }
@@ -4149,11 +4189,14 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         attendanceMark.type = typeofAttendance
         attendanceMark.title = AttendanceTextView.text
         attendanceMark.presentlist = sss
-        attendanceMark.attendance_hours = attendanceDropLbl.text
         
         attendanceMark.absentlist = ttt
         attendanceMark.odlist = OD
         attendanceMark.leavelist = OL
+        
+        attendanceMark.attendance_hours = String(selected_edit_hourAndPeriod?.hour ?? 0)
+        attendanceMark.period = String(selected_edit_hourAndPeriod?.period ?? 0)
+        attendanceMark.attn_type = attendance_type
         
         print("yearAndSectionModalStr",attendanceMark)
         
@@ -4338,11 +4381,13 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         attendanceMark.title = AttendanceTextView.text
         attendanceMark.processtype = "add"
         attendanceMark.date = attendanceDate
-        attendanceMark.attendance_hours = attendanceDropLbl.text
         attendanceMark.presentlist = presentList
         attendanceMark.absentlist = absentList
         attendanceMark.odlist = OdList
         attendanceMark.leavelist = leaveList
+        attendanceMark.attendance_hours = String(selected_hourAndPeriod?.hour ?? 0)//attendanceDropLbl.text
+        attendanceMark.period = String(selected_hourAndPeriod?.period ?? 0)
+        attendanceMark.attn_type = attendance_type
         
         print("yearAndSectionModalStr",attendanceMark)
         
@@ -4616,7 +4661,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     }
     
     
-    func attendanceEdits(hoursRef : String){
+    func attendanceEdits(hoursRef : String, period: String){
         
         print("this attencedce")
         
@@ -4639,7 +4684,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         attendanceEdit.attendancehour = hoursRef
         attendanceEdit.userid = stafId
         attendanceEdit.appid = "2"
-        
+        attendanceEdit.period = period
+        attendanceEdit.attn_type = attendance_type
+        attendanceEdit.date = attendanceDate
         
         print("yearAndSectionModalStr",attendanceEdit)
         

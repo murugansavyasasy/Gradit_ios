@@ -735,19 +735,9 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
-        
-        
-        
-        
-        
         if  tableView == self.attendanceTV{
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifers2,for: indexPath) as!
-            
-            
-            
-            attendanceSubjectTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifers2,for: indexPath) as! attendanceSubjectTableViewCell
             
             
             let subject : particualrDataDetails =  ParticalStaffRef[indexPath.row]
@@ -786,6 +776,8 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
             takeAttwndance.YearName = subject.yearname
             takeAttwndance.editId = subject.isedit
             
+            takeAttwndance.hourAndPeriod = subject.add_hours ?? []
+            takeAttwndance.attendance_type = subject.attendance_type ?? ""
             
             for i in subject.add_hours ?? []{
                 if let hour = i.hour {
@@ -812,6 +804,7 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
             editAttndace.YearName = subject.yearname
             editAttndace.editId = subject.isedit
             editAttndace.edit_hours = subject.edit_hours ?? []
+            editAttndace.attendance_type = subject.attendance_type ?? ""
             
             for i in subject.edit_hours ?? []{
                 
@@ -1008,8 +1001,9 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         vc.AttendancessYearName = gesture.YearName
         vc.AttendancessSemesterName = gesture.SemesterName
         vc.attendanceDate = datessString
-        vc.attendanceHourDropRef = uniqueNumbers
         vc.edit_hours = gesture.edit_hours
+        vc.attendance_type = gesture.attendance_type
+        vc.isEditAttendance = true
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true,completion: nil)
         
@@ -1043,7 +1037,8 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         vc.AttendancessSemesterName = gesture.SemesterName
         vc.strs = str
         vc.strName = strName
-        vc.attendanceHourDropRef = uniqueNumbers
+        vc.HoursAndPeriod = gesture.hourAndPeriod
+        vc.attendance_type = gesture.attendance_type
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true,completion: nil)
         
@@ -1412,6 +1407,8 @@ class TakeAttendance : UITapGestureRecognizer{
     var SectionNamw : String!
     var editId : String!
     var attendasEdit : [Int] = []
+    var hourAndPeriod: [HoursdataDEtails] = []
+    var attendance_type: String = ""
     var edit_hours : [editHoursdataDEtaild] = []
 }
 

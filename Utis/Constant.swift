@@ -13,21 +13,23 @@ import Foundation
 
 class Constant {
     
-//    static let CountrybaseUrl : String = "https://gradit.voicesnap.com/api/AppDetailsBal/"
+// static let CountrybaseUrl : String = "https://gradit.voicesnap.com/api/AppDetailsBal/"
+//    static var baseUrl : String = "https://www.thegradit.com/api/AppDetailsBal/"
+// static var baseUrl : String = "http://future.thegradit.com/mobileapp/api/AppDetailsBal/"
     
- //      static var baseUrl : String = "https://www.thegradit.com/api/AppDetailsBal/"
-    
-   static var baseUrl : String = "http://future.thegradit.com/mobileapp/api/AppDetailsBal/"
-  //  static var baseUrl : String = "http://192.168.5.24:3013/api/AppDetailsBal/"
-    
-    //"https://gradit.voicesnap.com/api/AppDetailsBal/"
-    
+    static var baseUrl: String {
+           guard let url = UserDefaults.standard.string(forKey: DefaultsKeys.baseUrl),
+                 !url.isEmpty else {
+               return "https://www.thegradit.com/mobileapp/api/AppDetailsBal/"
+           }
+           return url + "api/AppDetailsBal/"
+       }
+  
     static let Aws_baseUrl : String = "https://api.schoolchimes.com/nodejs/api/MergedApi/"
     static let CountryResponse : String = "Getcountrylist"
     static let VimeoUrl : String = "https://api.vimeo.com/"
     static let keyId : String = "LoginFromApp"
     static let Resume_baseUrl : String = "http://placement.thegradit.com/v1/api/"
-    
     
 }
 
@@ -61,7 +63,13 @@ struct DefaultsKeys {
     static let feepaymentlink = "feepaymentlink"
     static let  vimeoAccessToken = "vimeoAccessToken"
     
-    static let versionID = 40
+    static let baseUrl = "baseUrl"
+    
+    
+    static let versionID = 41
+    // static let versionID = 40 Note: Api calles changed from Alomofire to Url session. base url changed to https://www.thegradit.com/mobileapp/, Period wise attendance added
+    
+    
    // static let versionID = 39 Note: attachemnt in resume academic records added
    // static let versionID = 38 Note: sort function added in attendance and staff group enabled in recipient
    // static let versionID = 37 Note: admission no added in attendance page

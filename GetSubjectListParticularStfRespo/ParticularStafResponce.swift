@@ -43,10 +43,12 @@ struct particualrDataDetails : Codable{
     var isedit   : String?
     var add_hours : [HoursdataDEtails]?
     var edit_hours : [editHoursdataDEtaild]?
+    var attendance_type: String? //if attendance_type is "nth" then use period
 }
 
 struct HoursdataDEtails : Codable{
     var hour : Int?
+    var period : Int?
 }
 
 struct editHoursdataDEtaild : Codable{
@@ -54,4 +56,5 @@ struct editHoursdataDEtaild : Codable{
     var hour : Int?
     var title : String?
     var type : String?
+    var period: Int?
 }

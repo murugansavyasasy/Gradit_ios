@@ -18,7 +18,6 @@ struct SenderPAstExamResponce: Codable {
     var Status: Int?
     var Message: String?
     var data: [SenderPastExamDataDetails]?
-
 }
 
 struct SenderPastExamDataDetails: Codable {

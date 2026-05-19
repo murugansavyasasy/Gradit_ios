@@ -23,6 +23,9 @@ struct attendanceMarkigModal: Codable {
     var absentlist: [absentlistdataDetails]?
     var odlist: [onDutylistdataDetails]?
     var leavelist: [onLeavelistdataDetails]?
+    var period: String?
+    var attn_type: String?
+    
 
 }
 

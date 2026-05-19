@@ -477,7 +477,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                     
                     refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
                         
-                        UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
+//                        UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
                     }))
                     
                     present(refreshAlert, animated: true, completion: nil)
@@ -492,7 +492,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
                 
                 refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
                     
-                    UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
+//                    UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
                 }))
                 
                 present(refreshAlert, animated: true, completion: nil)
