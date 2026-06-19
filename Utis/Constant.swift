@@ -13,18 +13,16 @@ import Foundation
 
 class Constant {
     
-// static let CountrybaseUrl : String = "https://gradit.voicesnap.com/api/AppDetailsBal/"
-//    static var baseUrl : String = "https://www.thegradit.com/api/AppDetailsBal/"
-// static var baseUrl : String = "http://future.thegradit.com/mobileapp/api/AppDetailsBal/"
+    //   static var baseUrl : String = "http://192.168.10.50:3013/api/AppDetailsBal/"
     
     static var baseUrl: String {
-           guard let url = UserDefaults.standard.string(forKey: DefaultsKeys.baseUrl),
-                 !url.isEmpty else {
-               return "https://www.thegradit.com/mobileapp/api/AppDetailsBal/"
-           }
-           return url + "api/AppDetailsBal/"
-       }
-  
+        guard let url = UserDefaults.standard.string(forKey: DefaultsKeys.baseUrl),
+              !url.isEmpty else {
+            return "https://www.thegradit.com/mobileapp/api/AppDetailsBal/"
+        }
+        return url + "api/AppDetailsBal/"
+    }
+    
     static let Aws_baseUrl : String = "https://api.schoolchimes.com/nodejs/api/MergedApi/"
     static let CountryResponse : String = "Getcountrylist"
     static let VimeoUrl : String = "https://api.vimeo.com/"
@@ -34,6 +32,15 @@ class Constant {
 }
 
 struct DefaultsKeys {
+    
+    //MARK: Version id should be updated with +1 before Moving to Upate
+    static let versionID = 42
+    ///Whats added in this version :  Web view url for Terms&condition,privacy policy, Faq and help was changed,Profile menu bug fixed
+     
+    //static let versionID = 41
+    ///Whats added in this version :Api calles changed from Alomofire to Url session. base url changed to https://www.thegradit.com/mobileapp/, Period wise attendance added
+    
+    
     static let Password = "Password"
     static let loginDataList = "loginDataList"
     static let country = "country"
@@ -62,55 +69,30 @@ struct DefaultsKeys {
     static let  is_parent_target_enabled   =  "is_parent_target_enabled"
     static let feepaymentlink = "feepaymentlink"
     static let  vimeoAccessToken = "vimeoAccessToken"
-    
     static let baseUrl = "baseUrl"
-    
-    
-    static let versionID = 41
-    // static let versionID = 40 Note: Api calles changed from Alomofire to Url session. base url changed to https://www.thegradit.com/mobileapp/, Period wise attendance added
-    
-    
-   // static let versionID = 39 Note: attachemnt in resume academic records added
-   // static let versionID = 38 Note: sort function added in attendance and staff group enabled in recipient
-   // static let versionID = 37 Note: admission no added in attendance page
-    
-
     static let   videosizelimit = " videosizelimit"
     static let   DEVICETOKEN = "deviceToken"
     static let   videosizealert = "videosizealert"
     static let   TermsAndCondition = "TermsAndCondition"
     static let   CountryId = "CountryId"
     static var  resiverId : [String] = []
-//    static var saves : [SubjectDetailsRef] = []
-//    static var clgsection : [SectiondetailRef] = []
     static var saveButtonId : String! // important
     static var MenuRefName :[menuApiDataDetails] = []
     static var   Filepath : [FilepathDataDetails] = []
     static let   isversionupdateavailable = "isversionupdateavailable"
-        static let   isforceupdaterequired = "isforceupdaterequired"
+    static let   isforceupdaterequired = "isforceupdaterequired"
     static let  is_allow_to_make_call = "is_allow_to_make_call"
     static let   versionalertcontent = "versionalertcontent"
-        static let   versionalerttitle = "versionalerttitle"
-    
-//    static let S3BucketName = "schoolchimes-files-india"
-//    static let S3BucketName = "gradit-app-files"
-    
+    static let   versionalerttitle = "versionalerttitle"
     static let S3BucketName = "gradit-communication"
     static   let CognitoPoolID = "ap-south-1:a8650d2e-79d6-4668-85db-110e9917583f"
-    
-    
-    
-    static var Voice : String!
-    static var Text : String!
-    
     static var DeviceToken = "DeviceToken"
-//    static let keyId  = "keyId"
 }
 
 
 
-           
-           
-           
-          
-   
+
+
+
+
+

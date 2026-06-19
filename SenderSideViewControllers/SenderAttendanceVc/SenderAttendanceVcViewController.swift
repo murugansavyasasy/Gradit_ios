@@ -86,6 +86,7 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
     @IBOutlet weak var Attendanceheights: NSLayoutConstraint!
     
   
+    @IBOutlet weak var nodataLbl: UILabel!
     
     
     @IBOutlet weak var bigImg: UIImageView!
@@ -565,6 +566,7 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
                         print("12calendarHeight.constant")
                         attendanceTV.isHidden = true
                         attendaceCountLbl.text = "0"
+                        nodataLbl.text = success.Message
                         if calendarHeight.constant == 127.08333333333334 {
                             
                             calendarImgView.isHidden = false
@@ -583,6 +585,7 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
                     }
                 case .failure(let failure):
                      print("Error:",failure.localizedDescription)
+                    nodataLbl.text = "Something went wrong"
                 }
                 
                 }

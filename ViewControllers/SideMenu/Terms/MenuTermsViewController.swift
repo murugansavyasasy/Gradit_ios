@@ -28,7 +28,7 @@ class MenuTermsViewController: UIViewController {
 
 
     func webViewLoad() {
-        let url = URL (string: "https://gradit.voicesnap.com/Home/TermsAndConditions")
+        let url = URL (string: "https://www.thegradit.com/termsandconditions.html")
         let requestObj = URLRequest(url: url!)
         webView.load(requestObj)
     }

@@ -36,7 +36,7 @@ class PrivacyPolicyViewController: UIViewController {
 
     
     func webViewLoad() {
-        let url = URL (string: "https://gradit.voicesnap.com/Home/PrivacyPolicy")
+        let url = URL (string: "https://www.thegradit.com/privacyandpolicy.html")
         let requestObj = URLRequest(url: url!)
         webkit.load(requestObj)
     }

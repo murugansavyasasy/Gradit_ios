@@ -345,7 +345,9 @@ final class MultipartManager {
         do {
             // ✅ FILE DATA
             let fileData = try Data(contentsOf: fileURL)
-            print("📦 File size:", fileData.count)
+            logOutput += "📂 File Name: \(fileURL.lastPathComponent)\n"
+            logOutput += "📂 File Size: \(fileData.count) bytes\n"
+            logOutput += "📂 Extension: \(fileURL.pathExtension)\n"
             
             // ---------------------------
             // ✅ INFO PART (IMPORTANT)

@@ -9,7 +9,7 @@ import Foundation
 
 struct ProfileResponse: Codable {
 
-    var Status: String?
+    var Status: Int?
     var Message: String?
     var data: [ProfileData]?
 

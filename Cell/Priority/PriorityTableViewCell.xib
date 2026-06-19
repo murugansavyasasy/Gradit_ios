@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -88,11 +89,19 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KgD-sV-5OB">
-                                        <rect key="frame" x="108" y="152" width="280" height="18"/>
+                                        <rect key="frame" x="108" y="152" width="235" height="18"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xTA-vX-ley">
+                                        <rect key="frame" x="360" y="148" width="25" height="19"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="25" id="mNS-8u-sR6"/>
+                                            <constraint firstAttribute="height" constant="25" id="pVM-fY-3kN"/>
+                                        </constraints>
+                                        <imageReference key="image" image="chevron.right" catalog="system" symbolScale="small"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -102,7 +111,7 @@
                                     <constraint firstItem="hOB-In-hGj" firstAttribute="leading" secondItem="CVt-Km-MjN" secondAttribute="leading" constant="108" id="2CA-XI-SXM"/>
                                     <constraint firstAttribute="trailing" secondItem="LuC-Pn-xF1" secondAttribute="trailing" constant="5" id="2JR-0a-kDr"/>
                                     <constraint firstItem="LuC-Pn-xF1" firstAttribute="leading" secondItem="CVt-Km-MjN" secondAttribute="leading" constant="108" id="3rV-C6-CkK"/>
-                                    <constraint firstAttribute="trailing" secondItem="KgD-sV-5OB" secondAttribute="trailing" constant="5" id="6pY-n0-3sW"/>
+                                    <constraint firstAttribute="trailing" secondItem="KgD-sV-5OB" secondAttribute="trailing" constant="50" id="6pY-n0-3sW"/>
                                     <constraint firstItem="YWE-Kh-civ" firstAttribute="top" secondItem="hOB-In-hGj" secondAttribute="bottom" constant="8" symbolic="YES" id="8Bt-Bs-BYI"/>
                                     <constraint firstItem="iAv-xa-dma" firstAttribute="top" secondItem="ORv-8I-lFx" secondAttribute="bottom" constant="7" id="9HP-St-Sns"/>
                                     <constraint firstAttribute="trailing" secondItem="hOB-In-hGj" secondAttribute="trailing" constant="5" id="BYe-2r-0O2"/>
@@ -111,6 +120,8 @@
                                     <constraint firstItem="nxi-me-PbB" firstAttribute="leading" secondItem="CVt-Km-MjN" secondAttribute="leading" constant="8" id="G9b-Yl-0Z8"/>
                                     <constraint firstItem="ORv-8I-lFx" firstAttribute="leading" secondItem="nxi-me-PbB" secondAttribute="trailing" constant="33" id="HrJ-Y2-MA8"/>
                                     <constraint firstAttribute="trailing" secondItem="YWE-Kh-civ" secondAttribute="trailing" constant="5" id="I2Q-HC-oRz"/>
+                                    <constraint firstAttribute="bottom" secondItem="xTA-vX-ley" secondAttribute="bottom" constant="7" id="O9e-9P-9JJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="xTA-vX-ley" secondAttribute="trailing" constant="8" id="Ue1-6U-PLc"/>
                                     <constraint firstItem="YWE-Kh-civ" firstAttribute="leading" secondItem="CVt-Km-MjN" secondAttribute="leading" constant="108" id="aLm-Ju-m74"/>
                                     <constraint firstAttribute="bottom" secondItem="KgD-sV-5OB" secondAttribute="bottom" constant="7" id="d9g-VW-kTO"/>
                                     <constraint firstItem="ORv-8I-lFx" firstAttribute="top" secondItem="CVt-Km-MjN" secondAttribute="top" constant="17" id="dY1-4X-LzF"/>
@@ -167,6 +178,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="school" width="512" height="512"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -39,7 +39,7 @@ class FaqViewController: UIViewController {
     func webViewLoad() {
         
         KRProgressHUD.show()
-        let url = URL (string: "https://gradit.voicesnap.com/Home/FAQ")
+        let url = URL (string: "https://www.thegradit.com/faq.html")
         let requestObj = URLRequest(url: url!)
         webView.load(requestObj)
         DispatchQueue.main.asyncAfter(deadline: .now()+2.3) {

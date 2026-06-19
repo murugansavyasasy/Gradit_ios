@@ -21,7 +21,7 @@ class TermsViewController: UIViewController {
         
         overrideUserInterfaceStyle = .light
         
-        let myURL = URL(string: "https://gradit.voicesnap.com/Home/TermsAndConditions")
+        let myURL = URL(string: "https://www.thegradit.com/termsandconditions.html")
         let myRequest = URLRequest(url: myURL!)
         
         webView.load(myRequest)

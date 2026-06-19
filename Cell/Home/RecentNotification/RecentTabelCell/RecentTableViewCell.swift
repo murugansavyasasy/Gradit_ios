@@ -15,7 +15,6 @@ class RecentTableViewCell: UITableViewCell {
     @IBOutlet weak var playFulViewTop: NSLayoutConstraint!
     @IBOutlet weak var sendDefltLbl: UILabel!
     @IBOutlet weak var sendbyTop: NSLayoutConstraint!
-    
     @IBOutlet weak var sendViewWidth: NSLayoutConstraint!
     @IBOutlet weak var sendbydefaltLblTop: NSLayoutConstraint!
     @IBOutlet weak var discreptionLbl: UILabel!
@@ -190,10 +189,10 @@ func createAndDownloadFile(fileNameUrl : String) {
     }
     
     // Download the file
-    let url = URL(string: fileNameUrl)
+    guard let url = URL(string: fileNameUrl) else {return}
     print("urlurlurlurl",url)
     let session = URLSession.shared
-    let downloadTask = session.downloadTask(with: url!) { (tempURL, response, error) in
+    let downloadTask = session.downloadTask(with: url) { (tempURL, response, error) in
         guard let tempURL = tempURL else {
             print("Error downloading file: \(error)")
             return

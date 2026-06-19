@@ -292,7 +292,7 @@ class PriorityViewController: UIViewController,UITableViewDataSource,UITableView
                 
             }else{
                 
-                cell.clgLogoImg.sd_setImage(with: URL(string:  loginDetail.colglogo ?? ""), placeholderImage: UIImage(named: "person.fill"))
+                cell.clgLogoImg.sd_setImage(with: URL(string:  loginDetail.colglogo ?? ""), placeholderImage: UIImage(named: "school"))
             }
         } else if studentView.backgroundColor == UIColor.black{
             
@@ -325,7 +325,7 @@ class PriorityViewController: UIViewController,UITableViewDataSource,UITableView
                 cell.clgLogoImg.image = UIImage(named: "school")
                 
             }else{
-                cell.clgLogoImg.sd_setImage(with: URL(string:  loginDetail.colglogo ?? ""), placeholderImage: UIImage(named: "person.fill"))
+                cell.clgLogoImg.sd_setImage(with: URL(string:  loginDetail.colglogo ?? ""), placeholderImage: UIImage(named: "school"))
             }
             
         }

@@ -37,7 +37,7 @@ class HelpViewController: UIViewController {
     func webViewLoad() {
         
         KRProgressHUD.show()
-        let url = URL (string: "https://gradit.voicesnap.com/Home/Help")
+        let url = URL (string: "https://www.thegradit.com/help.html")
         let requestObj = URLRequest(url: url!)
         webView.load(requestObj)
         DispatchQueue.main.asyncAfter(deadline: .now()+2.3) {

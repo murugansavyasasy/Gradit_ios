@@ -294,7 +294,6 @@
 		5292BB2329C31E5600D6FB94 /* MydeparmentHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292BB2229C31E5600D6FB94 /* MydeparmentHeaderFooterView.swift */; };
 		5292BB2529C31E8C00D6FB94 /* MydeparmentHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5292BB2429C31E8C00D6FB94 /* MydeparmentHeaderFooterView.xib */; };
 		5292BB2929C342B400D6FB94 /* SendSmsToParticularTypeRespon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292BB2829C342B400D6FB94 /* SendSmsToParticularTypeRespon.swift */; };
-		5292BB2E29C4CE8B00D6FB94 /* SendTextParticualTypeConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292BB2D29C4CE8B00D6FB94 /* SendTextParticualTypeConstant.swift */; };
 		5292BB3129C4D59400D6FB94 /* SendTxtParticularNoticeApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292BB3029C4D59400D6FB94 /* SendTxtParticularNoticeApi.swift */; };
 		5292BB3829C6249300D6FB94 /* EventParticularResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292BB3729C6249300D6FB94 /* EventParticularResponce.swift */; };
 		5295815A29D576200032794E /* EventImageSendResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295815929D576200032794E /* EventImageSendResponce.swift */; };
@@ -1026,7 +1025,6 @@
 		5292BB2229C31E5600D6FB94 /* MydeparmentHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MydeparmentHeaderFooterView.swift; sourceTree = "<group>"; };
 		5292BB2429C31E8C00D6FB94 /* MydeparmentHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MydeparmentHeaderFooterView.xib; sourceTree = "<group>"; };
 		5292BB2829C342B400D6FB94 /* SendSmsToParticularTypeRespon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendSmsToParticularTypeRespon.swift; sourceTree = "<group>"; };
-		5292BB2D29C4CE8B00D6FB94 /* SendTextParticualTypeConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTextParticualTypeConstant.swift; sourceTree = "<group>"; };
 		5292BB3029C4D59400D6FB94 /* SendTxtParticularNoticeApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTxtParticularNoticeApi.swift; sourceTree = "<group>"; };
 		5292BB3729C6249300D6FB94 /* EventParticularResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventParticularResponce.swift; sourceTree = "<group>"; };
 		5295815929D576200032794E /* EventImageSendResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventImageSendResponce.swift; sourceTree = "<group>"; };
@@ -1671,7 +1669,6 @@
 				527027B429C7517E007C34FD /* SendImagePdfEntierClg */,
 				5292BB3629C6245400D6FB94 /* EventParticularTextMsg */,
 				5292BB2F29C4D53600D6FB94 /* SendParticularTxtNoticeBoardAPi */,
-				5292BB2C29C4CDFE00D6FB94 /* SendTextParticularTypeApi */,
 				5292BB2729C3426600D6FB94 /* SendSmsToParticularType */,
 				842FD0D22AAB025300CE44A5 /* SpecificStudentsVc */,
 				52CF617429C0982F00053BC9 /* YearAndSectionApi */,
@@ -3181,14 +3178,6 @@
 				5292BB2829C342B400D6FB94 /* SendSmsToParticularTypeRespon.swift */,
 			);
 			path = SendSmsToParticularType;
-			sourceTree = "<group>";
-		};
-		5292BB2C29C4CDFE00D6FB94 /* SendTextParticularTypeApi */ = {
-			isa = PBXGroup;
-			children = (
-				5292BB2D29C4CE8B00D6FB94 /* SendTextParticualTypeConstant.swift */,
-			);
-			path = SendTextParticularTypeApi;
 			sourceTree = "<group>";
 		};
 		5292BB2F29C4D53600D6FB94 /* SendParticularTxtNoticeBoardAPi */ = {
@@ -5292,7 +5281,6 @@
 				524C04B329405D5D000A6975 /* SenderImagePdfTableViewCell.swift in Sources */,
 				52D9146029ED5E0500D0D8DD /* chatBlockResp.swift in Sources */,
 				18AF2ABF29113A7F00898894 /* AttandanceTableViewCell.swift in Sources */,
-				5292BB2E29C4CE8B00D6FB94 /* SendTextParticualTypeConstant.swift in Sources */,
 				5205E1D429B5C53400FFA2A1 /* SendTextEntierCollegeResponce.swift in Sources */,
 				5214ACDC2A65735F008397A3 /* CheckBoxThree.swift in Sources */,
 				52A576BA2A39C2E60039E1E1 /* EmerTableViewCell.swift in Sources */,
@@ -5777,7 +5765,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vs_GradItCollege/Vs_GradItCollegeDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.5.4;
+				CURRENT_PROJECT_VERSION = 3.5.5;
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vs_GradItCollege/Info.plist;
@@ -5800,7 +5788,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.5.4;
+				MARKETING_VERSION = 3.5.5;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.com.gradit;
 				PRODUCT_NAME = Gradit;
@@ -5818,7 +5806,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vs_GradItCollege/Vs_GradItCollege.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.5.4;
+				CURRENT_PROJECT_VERSION = 3.5.5;
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vs_GradItCollege/Info.plist;
@@ -5841,7 +5829,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.5.4;
+				MARKETING_VERSION = 3.5.5;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.com.gradit;
 				PRODUCT_NAME = Gradit;
