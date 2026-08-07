@@ -37,7 +37,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var actionView: UIView!
     @IBOutlet weak var reusee: ReuseView!
-    @IBOutlet weak var ResumeBuildView: UIView!
     
     var loginDatas : [datalogin]!
     var logindataprinci :[datalogin]!
@@ -109,7 +108,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         overrideUserInterfaceStyle = .light
         
         loadingCustom.startAnimating()
-        
         sideMenuView.isHidden = true
         
         priorityVc()
@@ -363,9 +361,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         faqView.addGestureRecognizer(faqGesture)
         let privacyPolicyGesture = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyRedirect))
         privacyPolicyView.addGestureRecognizer(privacyPolicyGesture)
-        
-        let ResumeTap = UITapGestureRecognizer(target: self, action: #selector(resumeBuilderRedirect))
-        ResumeBuildView.addGestureRecognizer(ResumeTap)
         
         getDeviceToken()
         
@@ -671,7 +666,7 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             return cell
         }
-        else if dashBoardList.type == "Recent Notifications"   {
+        else if dashBoardList.type == "Recent Notifications"{
             
             indeRow = dashBoardList.order
             
@@ -2057,8 +2052,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
     
     @IBAction func adLoad(gesture : HomeViewGesture) {
         
-        
-        
         let vc = HomePageAddViewController(nibName: nil, bundle: nil)
         vc.AddWebUrl = gesture.url
         vc.modalPresentationStyle = .fullScreen
@@ -2096,13 +2089,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
         
         present(vc, animated: true, completion: nil)
         
-    }
-    
-    @IBAction func resumeBuilderRedirect(){
-        
-        let vc = ResumeVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
     }
     
     
@@ -2253,14 +2239,10 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
     }
     
     
-    
-    
-    class HomeViewGesture : UITapGestureRecognizer {
-        
-        
-        var url : String!
-    }
-    
 }
 
 
+class HomeViewGesture : UITapGestureRecognizer {
+    
+    var url : String!
+}

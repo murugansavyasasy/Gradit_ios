@@ -340,7 +340,8 @@ class PriorityViewController: UIViewController,UITableViewDataSource,UITableView
             let loginDetail : datalogin = loginPrincipal[indexPath.row]
             
             
-            let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+           // let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+            let vc = NewHomescreenVC(nibName: nil, bundle: nil)
             let defaults = UserDefaults.standard
             
             
@@ -372,15 +373,15 @@ class PriorityViewController: UIViewController,UITableViewDataSource,UITableView
             defaults.set(loginDetail.is_parent_target_enabled,forKey: DefaultsKeys.is_parent_target_enabled)
             defaults.set(loginDetail.is_allow_to_make_call,forKey: DefaultsKeys.is_allow_to_make_call)
             
-            vc.loginAsType = defaults.string(forKey: DefaultsKeys.loginAsType)
-            print("vc.loginAsType\(vc.loginAsType)")
+           
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         }else if studentView.backgroundColor == UIColor.black{
             
             let loginDetail : datalogin = loginStudent[indexPath.row]
             
-            let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+           // let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+            let vc = NewHomescreenVC(nibName: nil, bundle: nil)
             let defaults = UserDefaults.standard
             
             defaults.set(loginDetail.colglogo, forKey: DefaultsKeys.colglogo)
@@ -410,8 +411,6 @@ class PriorityViewController: UIViewController,UITableViewDataSource,UITableView
             defaults.set(loginDetail.semestername,forKey: DefaultsKeys.semestername)
             defaults.set(loginDetail.is_parent_target_enabled,forKey: DefaultsKeys.is_parent_target_enabled)
             
-            vc.loginAsType = defaults.string(forKey: DefaultsKeys.loginAsType)
-            print("vc.loginAsType\(vc.loginAsType)")
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         }

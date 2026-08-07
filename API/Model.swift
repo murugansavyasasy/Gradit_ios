@@ -143,6 +143,10 @@ extension DashBoardData {
     var dashSubData: [AdData] {
         decodeArray(AdData.self)
     }
+    
+    var menus: [menuApiDataDetails]{
+        decodeArray(menuApiDataDetails.self)
+    }
 }
 
 struct AnyCodable: Codable {

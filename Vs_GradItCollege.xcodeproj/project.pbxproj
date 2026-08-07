@@ -480,6 +480,8 @@
 		8434F2F82CBCD538009BA2B0 /* punchResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2BF2CBCD538009BA2B0 /* punchResp.swift */; };
 		8434F2F92CBCD538009BA2B0 /* StaffListResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2C12CBCD538009BA2B0 /* StaffListResp.swift */; };
 		8434F2FD2CBCD599009BA2B0 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8434F2FC2CBCD599009BA2B0 /* UIImage+Gif.swift */; };
+		843D67E83021F51500359FF7 /* EmergencyVoiceCV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843D67E73021F51500359FF7 /* EmergencyVoiceCV.xib */; };
+		843D67E93021F51500359FF7 /* EmergencyVoiceCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843D67E63021F51500359FF7 /* EmergencyVoiceCV.swift */; };
 		843DA5AF2F5BF0A20080102D /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DA5AE2F5BF09A0080102D /* RequestModel.swift */; };
 		8444FE992D1D2C8E00FC936C /* CommonAwsUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8444FE982D1D2C6800FC936C /* CommonAwsUpload.swift */; };
 		8444FE9A2D1D2C9400FC936C /* AwsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8444FE972D1D2C6400FC936C /* AwsRequest.swift */; };
@@ -489,6 +491,10 @@
 		844DBB2A2F59975700B85E60 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DBB292F59974000B85E60 /* Model.swift */; };
 		844DCA762AD6816D00068A70 /* ExameCreationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DCA742AD6816D00068A70 /* ExameCreationTableViewCell.swift */; };
 		844DCA772AD6816D00068A70 /* ExameCreationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844DCA752AD6816D00068A70 /* ExameCreationTableViewCell.xib */; };
+		846EDCDC3023435300BE47B3 /* MenuTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846EDCDB3023435300BE47B3 /* MenuTVCell.xib */; };
+		846EDCDD3023435300BE47B3 /* MenuTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EDCDA3023435300BE47B3 /* MenuTVCell.swift */; };
+		846EDCE0302343D200BE47B3 /* MenuCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846EDCDF302343D200BE47B3 /* MenuCVCell.xib */; };
+		846EDCE1302343D200BE47B3 /* MenuCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EDCDE302343D200BE47B3 /* MenuCVCell.swift */; };
 		847392B52C3923BB00828B0F /* vimeUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847392B42C3923BB00828B0F /* vimeUpload.swift */; };
 		848522DF2AA1F18300DA8F8B /* ToasteMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848522DE2AA1F18300DA8F8B /* ToasteMessage.swift */; };
 		8485ABCB2F973210000A06B8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8485ABCA2F973210000A06B8 /* GoogleService-Info.plist */; };
@@ -519,6 +525,8 @@
 		849009822B958FA600FC28DF /* AssigmentNotSubViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849009802B958FA600FC28DF /* AssigmentNotSubViewController.xib */; };
 		849009852B9594C600FC28DF /* NotSubmitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849009832B9594C600FC28DF /* NotSubmitTableViewCell.swift */; };
 		849009862B9594C600FC28DF /* NotSubmitTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849009842B9594C600FC28DF /* NotSubmitTableViewCell.xib */; };
+		8490EDA83024B2DE00616CA3 /* MenuPageCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8490EDA73024B2DE00616CA3 /* MenuPageCVCell.xib */; };
+		8490EDA93024B2DE00616CA3 /* MenuPageCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8490EDA63024B2DE00616CA3 /* MenuPageCVCell.swift */; };
 		84928CE42B3C0106007C18D5 /* SenderCommuTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84928CE22B3C0106007C18D5 /* SenderCommuTextTableViewCell.swift */; };
 		84928CE52B3C0106007C18D5 /* SenderCommuTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84928CE32B3C0106007C18D5 /* SenderCommuTextTableViewCell.xib */; };
 		8495DC282C1B0CCE00783AD7 /* FeePaymentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8495DC272C1B0CCE00783AD7 /* FeePaymentViewController.xib */; };
@@ -580,6 +588,10 @@
 		84C38AA92B44EA95004CC3D5 /* ChatsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C38AA72B44EA95004CC3D5 /* ChatsCollectionViewCell.swift */; };
 		84C38AAA2B44EA95004CC3D5 /* ChatsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C38AA82B44EA95004CC3D5 /* ChatsCollectionViewCell.xib */; };
 		84C4DEFD2B5A3A0A00B06CFC /* checkBoxFour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C4DEFC2B5A3A0A00B06CFC /* checkBoxFour.swift */; };
+		84C85C08301B389400F8F9BB /* NewHomescreenVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C85C07301B389400F8F9BB /* NewHomescreenVC.xib */; };
+		84C85C09301B389400F8F9BB /* NewHomescreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C85C06301B389400F8F9BB /* NewHomescreenVC.swift */; };
+		84C85C20301B55D400F8F9BB /* BannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C85C1F301B55D400F8F9BB /* BannerCell.xib */; };
+		84C85C21301B55D400F8F9BB /* BannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C85C1E301B55D400F8F9BB /* BannerCell.swift */; };
 		84E0E47D2B19E90200AAC2B2 /* collegeListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E0E47C2B19E90200AAC2B2 /* collegeListResponse.swift */; };
 		84E502AB2C12F5CC008836C9 /* SenderEventHomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E502AA2C12F5CC008836C9 /* SenderEventHomePageViewController.xib */; };
 		84E502AF2C12F65C008836C9 /* SenderCommunicationHomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E502AE2C12F65C008836C9 /* SenderCommunicationHomePageViewController.xib */; };
@@ -1220,6 +1232,8 @@
 		8434F2D42CBCD538009BA2B0 /* PunchHistoryListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistoryListVC.swift; sourceTree = "<group>"; };
 		8434F2D52CBCD538009BA2B0 /* PunchHistoryListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PunchHistoryListVC.xib; sourceTree = "<group>"; };
 		8434F2FC2CBCD599009BA2B0 /* UIImage+Gif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
+		843D67E63021F51500359FF7 /* EmergencyVoiceCV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyVoiceCV.swift; sourceTree = "<group>"; };
+		843D67E73021F51500359FF7 /* EmergencyVoiceCV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmergencyVoiceCV.xib; sourceTree = "<group>"; };
 		843DA5AE2F5BF09A0080102D /* RequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestModel.swift; sourceTree = "<group>"; };
 		8444FE962D1D2C6100FC936C /* AwsResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwsResp.swift; sourceTree = "<group>"; };
 		8444FE972D1D2C6400FC936C /* AwsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwsRequest.swift; sourceTree = "<group>"; };
@@ -1229,6 +1243,10 @@
 		844DBB292F59974000B85E60 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		844DCA742AD6816D00068A70 /* ExameCreationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExameCreationTableViewCell.swift; sourceTree = "<group>"; };
 		844DCA752AD6816D00068A70 /* ExameCreationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExameCreationTableViewCell.xib; sourceTree = "<group>"; };
+		846EDCDA3023435300BE47B3 /* MenuTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTVCell.swift; sourceTree = "<group>"; };
+		846EDCDB3023435300BE47B3 /* MenuTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTVCell.xib; sourceTree = "<group>"; };
+		846EDCDE302343D200BE47B3 /* MenuCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCVCell.swift; sourceTree = "<group>"; };
+		846EDCDF302343D200BE47B3 /* MenuCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuCVCell.xib; sourceTree = "<group>"; };
 		847392B42C3923BB00828B0F /* vimeUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vimeUpload.swift; sourceTree = "<group>"; };
 		848522DE2AA1F18300DA8F8B /* ToasteMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasteMessage.swift; sourceTree = "<group>"; };
 		8485ABCA2F973210000A06B8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -1259,6 +1277,8 @@
 		849009802B958FA600FC28DF /* AssigmentNotSubViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssigmentNotSubViewController.xib; sourceTree = "<group>"; };
 		849009832B9594C600FC28DF /* NotSubmitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotSubmitTableViewCell.swift; sourceTree = "<group>"; };
 		849009842B9594C600FC28DF /* NotSubmitTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotSubmitTableViewCell.xib; sourceTree = "<group>"; };
+		8490EDA63024B2DE00616CA3 /* MenuPageCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPageCVCell.swift; sourceTree = "<group>"; };
+		8490EDA73024B2DE00616CA3 /* MenuPageCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuPageCVCell.xib; sourceTree = "<group>"; };
 		84928CE22B3C0106007C18D5 /* SenderCommuTextTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderCommuTextTableViewCell.swift; sourceTree = "<group>"; };
 		84928CE32B3C0106007C18D5 /* SenderCommuTextTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderCommuTextTableViewCell.xib; sourceTree = "<group>"; };
 		8495DC262C1B0CCE00783AD7 /* FeePaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeePaymentViewController.swift; sourceTree = "<group>"; };
@@ -1320,6 +1340,10 @@
 		84C38AA72B44EA95004CC3D5 /* ChatsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsCollectionViewCell.swift; sourceTree = "<group>"; };
 		84C38AA82B44EA95004CC3D5 /* ChatsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatsCollectionViewCell.xib; sourceTree = "<group>"; };
 		84C4DEFC2B5A3A0A00B06CFC /* checkBoxFour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = checkBoxFour.swift; sourceTree = "<group>"; };
+		84C85C06301B389400F8F9BB /* NewHomescreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomescreenVC.swift; sourceTree = "<group>"; };
+		84C85C07301B389400F8F9BB /* NewHomescreenVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewHomescreenVC.xib; sourceTree = "<group>"; };
+		84C85C1E301B55D400F8F9BB /* BannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCell.swift; sourceTree = "<group>"; };
+		84C85C1F301B55D400F8F9BB /* BannerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BannerCell.xib; sourceTree = "<group>"; };
 		84E0E47C2B19E90200AAC2B2 /* collegeListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = collegeListResponse.swift; sourceTree = "<group>"; };
 		84E502AA2C12F5CC008836C9 /* SenderEventHomePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderEventHomePageViewController.xib; sourceTree = "<group>"; };
 		84E502AE2C12F65C008836C9 /* SenderCommunicationHomePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderCommunicationHomePageViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -3142,6 +3166,8 @@
 		5289E8BB299BA858006E90C8 /* emergencyCVCell */ = {
 			isa = PBXGroup;
 			children = (
+				843D67E63021F51500359FF7 /* EmergencyVoiceCV.swift */,
+				843D67E73021F51500359FF7 /* EmergencyVoiceCV.xib */,
 			);
 			path = emergencyCVCell;
 			sourceTree = "<group>";
@@ -3253,6 +3279,16 @@
 				529D52F52A0CF03D0083CA4A /* HomePageAddVc */,
 				529D52F22A0CF03C0083CA4A /* HomeScreenViewController.xib */,
 				529D52F82A0CF03D0083CA4A /* HomeScreenViewController.swift */,
+				84C85C06301B389400F8F9BB /* NewHomescreenVC.swift */,
+				84C85C07301B389400F8F9BB /* NewHomescreenVC.xib */,
+				84C85C1E301B55D400F8F9BB /* BannerCell.swift */,
+				84C85C1F301B55D400F8F9BB /* BannerCell.xib */,
+				846EDCDA3023435300BE47B3 /* MenuTVCell.swift */,
+				846EDCDB3023435300BE47B3 /* MenuTVCell.xib */,
+				846EDCDE302343D200BE47B3 /* MenuCVCell.swift */,
+				846EDCDF302343D200BE47B3 /* MenuCVCell.xib */,
+				8490EDA63024B2DE00616CA3 /* MenuPageCVCell.swift */,
+				8490EDA73024B2DE00616CA3 /* MenuPageCVCell.xib */,
 			);
 			path = HomeScreen;
 			sourceTree = "<group>";
@@ -4747,6 +4783,7 @@
 				52A577042A3C654E0039E1E1 /* ChatAddViewController.xib in Resources */,
 				5284BDA7292E4C1F00120C74 /* CommunicationTableViewCell.xib in Resources */,
 				52FE201E29DE3A98008D548B /* AssigmentSubmissionTableViewCell.xib in Resources */,
+				843D67E83021F51500359FF7 /* EmergencyVoiceCV.xib in Resources */,
 				52905AAF29D5F1C600272E0F /* SubmitionViewController.xib in Resources */,
 				FAB08DE72EFBD5750053DD55 /* AttachmentCvCell.xib in Resources */,
 				FA7C841A2E1F8FDF00673050 /* FooterCell.xib in Resources */,
@@ -4793,6 +4830,7 @@
 				FAC773AC2E2768EC00DE2E11 /* SelectionCV.xib in Resources */,
 				842787F82BD8E0C400DD780D /* SenderEventDetailsPageViewController.xib in Resources */,
 				52259C50292F5589008CE7CC /* ImageViewController.xib in Resources */,
+				84C85C20301B55D400F8F9BB /* BannerCell.xib in Resources */,
 				5289B20B2A627512002D63CB /* SelectResipientsViewController.xib in Resources */,
 				FA25AEF72DE9BECE00A0BE3F /* ColoursCvCell.xib in Resources */,
 				52D298F629FA3596008DD072 /* HomeLeaveRequestTableViewCell.xib in Resources */,
@@ -4852,6 +4890,7 @@
 				84F6FC7E2B32B738006E768B /* OFL.txt in Resources */,
 				52AAA7A629727A480047A696 /* PickPDFViewController.xib in Resources */,
 				188F78072912452C000CB50F /* AssignmentCollectionViewCell.xib in Resources */,
+				846EDCDC3023435300BE47B3 /* MenuTVCell.xib in Resources */,
 				8434F2AB2CBA6B67009BA2B0 /* isnotification.wav in Resources */,
 				18BAB3C0290F92B2009FC2AA /* NoticeBoardScrollCollectionViewCell.xib in Resources */,
 				52A699E829ADC0200072C0D6 /* SenderAssigAddViewController.xib in Resources */,
@@ -4861,13 +4900,16 @@
 				842787EF2BD8E0C400DD780D /* ShowSelectedImageViewController.xib in Resources */,
 				84F6FC612B31C31A006E768B /* LoginNewViewController.xib in Resources */,
 				524C04B229405D5D000A6975 /* SenderImagePdfTableViewCell.xib in Resources */,
+				8490EDA83024B2DE00616CA3 /* MenuPageCVCell.xib in Resources */,
 				5245E4B5293F62CE00925CBC /* SenderEventTableViewCell.xib in Resources */,
+				84C85C08301B389400F8F9BB /* NewHomescreenVC.xib in Resources */,
 				52259C57292F559D008CE7CC /* ImageDownloadViewController.xib in Resources */,
 				84F6FC772B32B737006E768B /* Nunito-SemiBold.ttf in Resources */,
 				848EF9E42B833A3F00A9DDFA /* AttendanceDetailsTVTableViewCell.xib in Resources */,
 				52A576BB2A39C2E60039E1E1 /* EmerTableViewCell.xib in Resources */,
 				1865D8AF2A0903F800CD43F3 /* ShowAdvertisementViewController.xib in Resources */,
 				52D9145629ED5CD500D0D8DD /* ChatSenderInteractViewController.xib in Resources */,
+				846EDCE0302343D200BE47B3 /* MenuCVCell.xib in Resources */,
 				52AAA79C297272AE0047A696 /* PickvideoViewController.xib in Resources */,
 				84F6FC722B32B737006E768B /* Nunito-ExtraBoldItalic.ttf in Resources */,
 				FAC5E5A72E26352F009287B7 /* GenerateResumeVC.xib in Resources */,
@@ -5346,6 +5388,7 @@
 				5284BD81292E4B6100120C74 /* ExaminationHomePageViewController.swift in Sources */,
 				84B25FAF2AB58985006159C6 /* AttendanceAddVcViewController.swift in Sources */,
 				84A99DD82AC2A4BE00512FEB /* SenderExaminationPlusNextPageViewController.swift in Sources */,
+				843D67E93021F51500359FF7 /* EmergencyVoiceCV.swift in Sources */,
 				52877F962A2DF4E500AE6DAE /* NoticeBoardTableViewCellsTableViewCell.swift in Sources */,
 				52F1D46729D4103B00CD5E86 /* AssigmentImagePdfResponce.swift in Sources */,
 				52A699E729ADC0200072C0D6 /* SenderAssigAddViewController.swift in Sources */,
@@ -5437,6 +5480,7 @@
 				84E8904F2BA30E860021379C /* MoreSubCollectionViewCell.swift in Sources */,
 				848BA1212BBF10F800FC65BF /* chatResTableViewCell.swift in Sources */,
 				52E3B7A62A0E458700371DF5 /* ShowSelectedImageViewController.swift in Sources */,
+				846EDCE1302343D200BE47B3 /* MenuCVCell.swift in Sources */,
 				52D298F729FA3596008DD072 /* HomeScreenLeaveRequestTableViewCell.swift in Sources */,
 				52C0DADE29D6C57E0051F95F /* ExameViewResiverTableViewCell.swift in Sources */,
 				840F009A2B29762E00C017CF /* Shinner.swift in Sources */,
@@ -5481,6 +5525,7 @@
 				5292BB2029C1ED6C00D6FB94 /* mydepartmentssTableViewCell.swift in Sources */,
 				FA7C841B2E1F8FDF00673050 /* FooterCell.swift in Sources */,
 				52F1D44929D16F2100CD5E86 /* ExamViewPageResponcess.swift in Sources */,
+				8490EDA93024B2DE00616CA3 /* MenuPageCVCell.swift in Sources */,
 				FA25AEFA2DE9DDFB00A0BE3F /* TemplateTvCell.swift in Sources */,
 				52F1D43F29D1483500CD5E86 /* SendVideoToEntierResponce.swift in Sources */,
 				5245E521293F735900925CBC /* SenderNoticeBoardNextPageViewController.swift in Sources */,
@@ -5510,6 +5555,7 @@
 				18BAB3EF290F933F009FC2AA /* NotificationViewController.swift in Sources */,
 				5245E4A7293F61EC00925CBC /* SenderImageViewController.swift in Sources */,
 				5245E44F293F4F3800925CBC /* SenderVideoHomePageViewController.swift in Sources */,
+				84C85C21301B55D400F8F9BB /* BannerCell.swift in Sources */,
 				FAB08DE82EFBD5750053DD55 /* AttachmentCvCell.swift in Sources */,
 				529A50B629DE5A0E00951E05 /* AssigmentAttechmentTableViewCell.swift in Sources */,
 				52A8DCD629CDA54E0002C587 /* ManageLeaveApproveAndRejResp.swift in Sources */,
@@ -5574,10 +5620,12 @@
 				842D393B2C09E1A6002F217B /* DarwinNotificationCenter.swift in Sources */,
 				52D9144D29ED59DD00D0D8DD /* chatSenderIntractApiResp.swift in Sources */,
 				528876E22A44C4CD00BFF753 /* ExamCreation.swift in Sources */,
+				84C85C09301B389400F8F9BB /* NewHomescreenVC.swift in Sources */,
 				18E8902B2A27571900DF9BF2 /* VoiceRecoredViewController.swift in Sources */,
 				5284BDC3292E4D8400120C74 /* FacultyResponce.swift in Sources */,
 				FA3717182E5AEA770089D831 /* PlacementCVcell.swift in Sources */,
 				842787F12BD8E0C400DD780D /* SenderUpcomEventResponce.swift in Sources */,
+				846EDCDD3023435300BE47B3 /* MenuTVCell.swift in Sources */,
 				5245E46D293F546900925CBC /* PlusScreenNextPageViewController.swift in Sources */,
 				52A2E6BA2A13412200DFE33C /* VideoRestionTableViewCell.swift in Sources */,
 				52845AE329433EB400EDDB0F /* SenderAssigmentImageUploadViewController.swift in Sources */,

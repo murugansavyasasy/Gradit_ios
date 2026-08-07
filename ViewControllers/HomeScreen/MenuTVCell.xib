@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="228" id="KGk-i7-Jjw" customClass="MenuTVCell" customModule="Gradit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="228"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="228"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yad-Gg-WhW">
+                        <rect key="frame" x="10" y="10" width="300" height="208"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="IsE-PX-arn">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="182"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="tbG-Uj-aIO">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                            </collectionView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="ikz-Je-Phs">
+                                <rect key="frame" x="10" y="182" width="280" height="26"/>
+                                <color key="pageIndicatorTintColor" name="eventdashcolorr"/>
+                                <color key="currentPageIndicatorTintColor" name="Principal"/>
+                                <connections>
+                                    <action selector="pageChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="s4T-v7-tcH"/>
+                                </connections>
+                            </pageControl>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="IsE-PX-arn" secondAttribute="trailing" id="2FV-mJ-8Kb"/>
+                            <constraint firstItem="IsE-PX-arn" firstAttribute="leading" secondItem="Yad-Gg-WhW" secondAttribute="leading" id="9tO-Oe-f6t"/>
+                            <constraint firstItem="IsE-PX-arn" firstAttribute="top" secondItem="Yad-Gg-WhW" secondAttribute="top" id="S4P-Gi-AE0"/>
+                            <constraint firstItem="ikz-Je-Phs" firstAttribute="leading" secondItem="Yad-Gg-WhW" secondAttribute="leading" constant="10" id="Sw6-UY-x1Z"/>
+                            <constraint firstAttribute="bottom" secondItem="ikz-Je-Phs" secondAttribute="bottom" id="UwV-FF-WP3"/>
+                            <constraint firstItem="ikz-Je-Phs" firstAttribute="top" secondItem="IsE-PX-arn" secondAttribute="bottom" id="cgO-ix-gMi"/>
+                            <constraint firstAttribute="trailing" secondItem="ikz-Je-Phs" secondAttribute="trailing" constant="10" id="u4u-g4-pUJ"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Yad-Gg-WhW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="9yf-TI-VtP"/>
+                    <constraint firstAttribute="trailing" secondItem="Yad-Gg-WhW" secondAttribute="trailing" constant="10" id="VC2-Cv-qc6"/>
+                    <constraint firstItem="Yad-Gg-WhW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="vgR-3n-Sd0"/>
+                    <constraint firstAttribute="bottom" secondItem="Yad-Gg-WhW" secondAttribute="bottom" constant="10" id="wjd-Kd-dnv"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="cv" destination="IsE-PX-arn" id="NTd-5e-l7Y"/>
+                <outlet property="pageControl" destination="ikz-Je-Phs" id="ccf-0x-hSl"/>
+            </connections>
+            <point key="canvasLocation" x="109.9236641221374" y="160.56338028169014"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="Principal">
+            <color red="0.56499999761581421" green="0.14100000262260437" blue="0.46299999952316284" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="eventdashcolorr">
+            <color red="0.70599997043609619" green="0.88999998569488525" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
