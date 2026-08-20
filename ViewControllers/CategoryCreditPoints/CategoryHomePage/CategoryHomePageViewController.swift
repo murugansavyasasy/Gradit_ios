@@ -13,7 +13,6 @@ import ObjectMapper
 class CategoryHomePageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
 
-@IBOutlet weak var reusee: ReuseView!
 @IBOutlet weak var tv: UITableView!
 
 @IBOutlet weak var upArrowImageView: UIImageView!
@@ -23,18 +22,7 @@ class CategoryHomePageViewController: UIViewController,UITableViewDelegate,UITab
 @IBOutlet weak var selectedCategoryView: UIView!
 @IBOutlet weak var noDataLabel: UILabel!
 @IBOutlet weak var noDataTextView: UIView!
-@IBOutlet weak var collection: UICollectionView!
 @IBOutlet weak var selectCategoryLabel: UILabel!
-
-
-
-@IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
-
-
-
-
-
-
 
 let dropDown = DropDown()
 
@@ -99,46 +87,23 @@ override func viewDidLoad() {
         print("PrincipalVieewwColor")
         view.backgroundColor = UIColor(named: "Principal" )
         
-        reusee.menuImg.image = UIImage(named: "principalBigMenu")
         
     }else if priority == "p4" {
         
         print("StudentVieewwColor")
         view.backgroundColor = UIColor(named: "studentViewColors")
         
-        
-        reusee.menuImg.image = UIImage(named: "studentSwipeImage")
-        
     } else if priority == "p3" ||  priority == "p2" {
         
         print("HooodddVieewwColor")
         view.backgroundColor = UIColor(named: "Teaching Staff")
-        
-        reusee.menuImg.image = UIImage(named: "HodImage")
-        
     }
     else if priority == "p5"{
         
-        
-        
         view.backgroundColor = UIColor(named: "FatherColor")
         
-        reusee.menuImg.image = UIImage(named: "StaffBigMenu")
-        
-        
     }
-    swipeMenuHeight.constant = 150
-    reusee.call_back = { [self]
-        (val) in
-        
-        
-        self.swipeMenuHeight.constant =  reusee.callid
-        
-        print("CategoryHomePageViewController",reusee.callid)
-        
-        
-    }
-  
+   
     noDataTextView.isHidden = true
     noDataLabel.isHidden = true
     headingView.isHidden = true

@@ -77,7 +77,6 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
 @IBOutlet weak var sideMenuView: UIView!
 
 
-@IBOutlet weak var reusee: ReuseView!
 
 
 
@@ -94,8 +93,6 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
 @IBOutlet weak var noDataLabel: UILabel!
 
 @IBOutlet weak var EventTableView: UITableView!
-
-@IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
 
 
 
@@ -293,7 +290,6 @@ override func viewDidLoad() {
         print("PrincipalVieewwColor")
         view.backgroundColor = UIColor(named: "Principal" )
         
-        reusee.menuImg.image = UIImage(named: "principalBigMenu")
         
     }else if priority == "p4" {
         
@@ -301,14 +297,12 @@ override func viewDidLoad() {
         view.backgroundColor = UIColor(named: "studentViewColors")
         
         
-        reusee.menuImg.image = UIImage(named: "studentSwipeImage")
         
     } else if priority == "p3" ||  priority == "p2" {
         
         print("HooodddVieewwColor")
         view.backgroundColor = UIColor(named: "Teaching Staff")
         
-        reusee.menuImg.image = UIImage(named: "HodImage")
         
     }
     else if priority == "p5"{
@@ -317,7 +311,6 @@ override func viewDidLoad() {
         
         view.backgroundColor = UIColor(named: "FatherColor")
         
-        reusee.menuImg.image = UIImage(named: "StaffBigMenu")
         
         
     }
@@ -328,7 +321,6 @@ override func viewDidLoad() {
         
         view.backgroundColor = UIColor(named: "Teaching Staff")
         
-        reusee.menuImg.image = UIImage(named: "HodImage")
         
     }
     
@@ -337,23 +329,8 @@ override func viewDidLoad() {
         
         view.backgroundColor = UIColor(named: "univercityColorCod")
         
-        reusee.menuImg.image = UIImage(named: "UnivercityHead")
         
     }
-    
-    swipeMenuHeight.constant = 150
-    reusee.call_back = { [self]
-        (val) in
-        
-        
-        self.swipeMenuHeight.constant =  reusee.callid
-        
-        print("HelloWorld544544343",reusee.callid)
-        
-        
-    }
-    
-    
     
     
     
@@ -375,9 +352,6 @@ override func viewDidLoad() {
     
     
     // tap Bar UiTapGuster.
-    
-    
-    
     
     
     let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))

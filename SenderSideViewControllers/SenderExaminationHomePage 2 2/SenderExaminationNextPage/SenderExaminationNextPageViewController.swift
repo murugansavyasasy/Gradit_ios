@@ -39,8 +39,6 @@ final class SenderExaminationNextPageViewController: UIViewController, UITableVi
     @IBOutlet private weak var refreshView: UIView!
     @IBOutlet private weak var notificationView: UIView!
     @IBOutlet private weak var privacyPolicyView: UIView!
-    @IBOutlet private weak var swipeMenuHeight: NSLayoutConstraint!
-    @IBOutlet private weak var reusee: ReuseView!
 
     // MARK: - Properties
     private let identifer = "ExamViewPageTvTableViewCell"
@@ -111,13 +109,6 @@ final class SenderExaminationNextPageViewController: UIViewController, UITableVi
         applyPriorityAppearance()
         applyBackgroundAppearance()
 
-        // Swipe menu handling
-        swipeMenuHeight.constant = 150
-        reusee.call_back = { [weak self] _ in
-            guard let self = self else { return }
-            self.swipeMenuHeight.constant = self.reusee.callid
-        }
-
         // API Calls
         addApi()
         examViewPage()
@@ -160,19 +151,19 @@ final class SenderExaminationNextPageViewController: UIViewController, UITableVi
         switch priority {
         case "p1":
             view.backgroundColor = UIColor(named: "Principal")
-            reusee.menuImg.image = UIImage(named: "principalBigMenu")
+           
         case "p4":
             view.backgroundColor = UIColor(named: "studentViewColors")
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
+           
         case "p3", "p2":
             view.backgroundColor = UIColor(named: "Teaching Staff")
-            reusee.menuImg.image = UIImage(named: "HodImage")
+            
         case "p5":
             view.backgroundColor = UIColor(named: "FatherColor")
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
+           
         case "p6":
             view.backgroundColor = UIColor(named: "Teaching Staff")
-            reusee.menuImg.image = UIImage(named: "HodImage")
+           
         default:
             break
         }

@@ -14,7 +14,6 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,AVPlayerViewControllerDelegate,UISearchBarDelegate{
     
-    @IBOutlet weak var reusee: ReuseView!
     @IBOutlet weak var topNameview: UIView!
     @IBOutlet weak var tapBarView: UIViewX!
     @IBOutlet weak var loadingCustom: UIActivityIndicatorView!
@@ -49,12 +48,7 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     @IBOutlet weak var noDataView: UIView!
     @IBOutlet weak var bigImg: UIImageView!
-    
-    
-    
-    @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
-    
-  
+   
     @IBOutlet weak var searchbar: UISearchBar!
  
     
@@ -176,22 +170,15 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             print("PrincipalVieewwColor")
             view.backgroundColor = UIColor(named: "Principal" )
             
-                reusee.menuImg.image = UIImage(named: "principalBigMenu")
-            
         }else if priority == "p4" {
             
             print("StudentVieewwColor")
             view.backgroundColor = UIColor(named: "studentViewColors")
             
-            
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
-            
         } else if priority == "p3" ||  priority == "p2" {
             
             print("HooodddVieewwColor")
             view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-            reusee.menuImg.image = UIImage(named: "HodImage")
             
         }
         else if priority == "p5"{
@@ -200,25 +187,7 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             
             view.backgroundColor = UIColor(named: "FatherColor")
             
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
-            
-            
         }
-        
-        
-        swipeMenuHeight.constant = 150
-                reusee.call_back = { [self]
-                    (val) in
-                  
-                    
-                        self.swipeMenuHeight.constant =  reusee.callid
-                   
-                    print("VideoViewController",reusee.callid)
-                    
-               
-                }
-        
-       
         
         let rownib = UINib(nibName: identifers, bundle: nil)
         videoTableView.register(rownib, forCellReuseIdentifier: identifers)

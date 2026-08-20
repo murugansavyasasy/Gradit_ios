@@ -42,7 +42,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U3e-rJ-Gyn">
-                                            <rect key="frame" x="0.0" y="0.0" width="180" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBS-fC-8H8" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
                                                     <rect key="frame" x="15" y="5" width="41" height="41"/>
@@ -78,13 +78,13 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wLt-GH-ATZ">
-                                                    <rect key="frame" x="64" y="10" width="108" height="17"/>
+                                                    <rect key="frame" x="64" y="10" width="78" height="17"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25C-Ip-l84">
-                                                    <rect key="frame" x="64" y="25.666666666666657" width="108" height="19.333333333333329"/>
+                                                    <rect key="frame" x="64" y="25.666666666666657" width="78" height="19.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -93,7 +93,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="25C-Ip-l84" secondAttribute="bottom" constant="5" id="1vy-ya-TRj"/>
-                                                <constraint firstAttribute="width" constant="180" id="4pS-fJ-iDb"/>
+                                                <constraint firstAttribute="width" constant="150" id="4pS-fJ-iDb"/>
                                                 <constraint firstAttribute="trailing" secondItem="wLt-GH-ATZ" secondAttribute="trailing" constant="8" id="5HB-BI-pfA"/>
                                                 <constraint firstItem="XBS-fC-8H8" firstAttribute="top" secondItem="U3e-rJ-Gyn" secondAttribute="top" constant="5" id="9Xl-Nl-ugD"/>
                                                 <constraint firstItem="XBS-fC-8H8" firstAttribute="leading" secondItem="U3e-rJ-Gyn" secondAttribute="leading" constant="15" id="A0l-aI-O9V"/>
@@ -104,7 +104,7 @@
                                             </constraints>
                                         </view>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="GraditWhiteLogo" translatesAutoresizingMaskIntoConstraints="NO" id="W2d-5O-aqP">
-                                            <rect key="frame" x="180" y="0.0" width="63" height="50"/>
+                                            <rect key="frame" x="150" y="0.0" width="93" height="50"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zh2-Tw-3TN">

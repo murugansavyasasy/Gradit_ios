@@ -19,6 +19,63 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
     var communicationId = "4"
     var imagePdfId = "5"
     var Assigment = "6"
+    let menuIconMapping: [String: String] = [
+        
+        // MARK: - Common Menus
+        
+        "home": "house.fill",
+        "chat": "bubble.left.and.bubble.right.fill",
+        "voice": "mic.fill",
+        "text": "text.bubble.fill",
+        
+        
+        // MARK: - Academic
+        
+        "examination": "list.clipboard.fill",
+        "attendance": "calendar.badge.checkmark",
+        "assignment": "doc.plaintext.fill",
+        "circular": "photo.fill",
+        
+        
+        // MARK: - Communication / Campus
+        
+        "notice_board": "megaphone.fill",
+        "events": "calendar",
+        "faculty": "person.2.fill",
+        "video": "video.fill",
+        
+        
+        // MARK: - Attendance
+        
+       // "mark_your_attendance": "hand.point.up.fill",
+        "attendance_report": "chart.bar.doc.horizontal.fill",
+        
+        
+        // MARK: - Course / Credit
+        
+        "course_details": "book.fill",
+        "category_credit_points": "chart.bar.fill",
+        "sem_credit_points": "chart.pie.fill",
+        
+        
+        // MARK: - Examination
+        
+       // "exam_application_details": "list.clipboard.fill",
+        "hall_ticket": "list.bullet.clipboard.fill",
+        
+        
+        // MARK: - Fees
+        
+        "feedetails": "indianrupeesign.circle.fill",
+        
+        
+        // MARK: - Placement
+        
+        "resume_builder": "doc.richtext.fill",
+        "placement_events": "briefcase.fill",
+        "placement_training": "person.2.badge.gearshape.fill"
+    ]
+    
     private var priority: String? = UserDefaults.standard.string(forKey: DefaultsKeys.priority)
     
     override func awakeFromNib() {
@@ -37,6 +94,22 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
         cv.reloadData()
     }
     
+    func colorForPriority() -> UIColor? {
+        switch priority {
+        case "p1":
+            return UIColor(named: "Principal")
+        case "p2", "p3", "p6":
+            return UIColor(named: "Teaching Staff")
+        case "p4":
+            return UIColor(named: "studentViewColors")
+        case "p5":
+            return UIColor(named: "FatherColor")
+        case "p7":
+            return UIColor(named: "univercityColorCod")
+        default:
+            return UIColor.systemBackground // fallback color
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         menuList.count
@@ -51,10 +124,19 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
         let menu = menuList[indexPath.item]
         
         cell.menuNameLbl.text = menu.menu_name
-        cell.iconImageview.image = UIImage(named: String(menu.menu_slug))
+        
+        if let iconName = menuIconMapping[menu.menu_slug] {
+            cell.iconImageview.image = UIImage(systemName: iconName)
+        }else{
+            cell.iconImageview.image = UIImage(named: String(menu.menu_slug))
+        }
+        
+        cell.iconImageview.tintColor = colorForPriority()
         
         return cell
     }
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -87,7 +169,7 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                 // Routing copied from ReuseView.swift, adapted to use `slug`, `str`, and `strName`
                 if priority == "p4" {
                     if slug == "home" {
-                        let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+                        let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                         present(vc)
                     } else if slug == "resume_builder" {
                         let vc = ResumeVC(nibName: nil, bundle: nil)
@@ -233,7 +315,7 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                     }
                 } else if priority == "p1" {
                     if slug == "home" {
-                        let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+                        let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                         vc.view.backgroundColor = UIColor(named: "Principal")
                         present(vc)
                     } else if slug == "feedetails" {
@@ -361,7 +443,7 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                     }
                 } else if priority == "p3" || priority == "p2" {
                     if slug == "home" {
-                        let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+                        let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                         vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                         present(vc)
                     } else if slug == "feedetails" {
@@ -492,7 +574,7 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                     }
                 } else if priority == "p7" {
                     if slug == "home" {
-                        let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+                        let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                         vc.str = str
                         vc.strName = strName
                         vc.view.backgroundColor = UIColor(named: "univercityColorCod")
@@ -620,7 +702,7 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                     }
                 } else if priority == "p5" {
                     if slug == "home" {
-                        let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+                        let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                         vc.modalPresentationStyle = .fullScreen
                         currentController?.present(vc, animated: false, completion: nil)
                     } else if slug == "feedetails" {
@@ -764,7 +846,7 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                     }
                 } else if priority == "p6" {
                     if slug == "home" {
-                        let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+                        let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                         vc.str = str
                         vc.strName = strName
                         vc.view.backgroundColor = UIColor(named: "Teaching Staff")

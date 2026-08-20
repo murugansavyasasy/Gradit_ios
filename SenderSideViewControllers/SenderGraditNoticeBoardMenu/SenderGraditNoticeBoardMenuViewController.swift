@@ -13,7 +13,6 @@ import KRProgressHUD
 class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     
     
-    @IBOutlet weak var reusee: ReuseView!
     
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet weak var topNameview: UIView!
@@ -88,11 +87,6 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
     
     @IBOutlet weak var collegeCountLabel: UILabel!
     @IBOutlet weak var noRecordView: UIView!
-    
-    
-    
-    @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
-    
     
     
    
@@ -304,7 +298,6 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
             print("PrincipalVieewwColor")
             view.backgroundColor = UIColor(named: "Principal" )
             
-                reusee.menuImg.image = UIImage(named: "principalBigMenu")
             
         }else if priority == "p4" {
             
@@ -312,14 +305,12 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
             view.backgroundColor = UIColor(named: "studentViewColors")
             
             
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
             
         } else if priority == "p3" ||  priority == "p2" {
             
             print("HooodddVieewwColor")
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
             
         }
         else if priority == "p5"{
@@ -328,7 +319,6 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
             
             view.backgroundColor = UIColor(named: "FatherColor")
             
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
             
             
         }
@@ -339,7 +329,6 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
             print("non")
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
             
         }
         else if priority == "p7" {
@@ -347,26 +336,8 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
             print("non")
             view.backgroundColor = UIColor(named: "univercityColorCod")
             
-            reusee.menuImg.image = UIImage(named: "UnivercityHead")
             
         }
-        swipeMenuHeight.constant = 150
-                reusee.call_back = { [self]
-                    (val) in
-                  
-                    
-                        self.swipeMenuHeight.constant =  reusee.callid
-                   
-                    print("SenderFacultyViewController",reusee.callid)
-                    
-               
-                }
-        
-      
-        
-        
-        
-        
         
         
         let rowNib = UINib(nibName: Indentifiers, bundle: nil)

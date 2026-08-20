@@ -15,8 +15,7 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate,UITextFieldDelegate {
     
-    @IBOutlet weak var reusee: ReuseView!
-    @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
+
     
     
     @IBOutlet weak var replyViewHeight: NSLayoutConstraint!
@@ -143,12 +142,16 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
     var is_write_enabled = ""
     var isRefresh: Bool = false
     var selecedReplyChat: ChatSenderInteractData?
+    private var originalViewY: CGFloat = 0
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         overrideUserInterfaceStyle = .light
+        
+        originalViewY = view.frame.origin.y
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
@@ -267,7 +270,7 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
             print("PrincipalVieewwColor")
             view.backgroundColor = UIColor(named: "Principal" )
             
-            reusee.menuImg.image = UIImage(named: "principalBigMenu")
+          
             
         }else if priority == "p4" {
             
@@ -275,14 +278,14 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
             view.backgroundColor = UIColor(named: "studentViewColors")
             
             
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
+           
             
         } else if priority == "p3" ||  priority == "p2" {
             
             print("HooodddVieewwColor")
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
+           
             
         }
         else if priority == "p5"{
@@ -291,7 +294,7 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
             
             view.backgroundColor = UIColor(named: "FatherColor")
             
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
+         
             
             
         }
@@ -302,31 +305,15 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
             
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
+          
             
             
         }
         
-        swipeMenuHeight.constant = 150
-        reusee.call_back = { [self]
-            (val) in
-            
-            
-            self.swipeMenuHeight.constant =  reusee.callid
-            
-            print("ChatSenderInteractViewController",reusee.callid)
-            
-            
-        }
-        
-        
-        
+     
         let backGesture = UITapGestureRecognizer(target: self, action: #selector( backVc))
         
         backView.addGestureRecognizer(backGesture)
-        
-        
-        
         
         let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
         viewTap.addGestureRecognizer(menuGestureHide)
@@ -407,20 +394,36 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
         }
         
     }
-    @objc func keyboardWillShow(notification: NSNotification) {
+    
+    @objc func keyboardWillShow(notification: Notification) {
         
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height-91
-                print("keyboardSize.height",keyboardSize.height)
-            }
+        guard let keyboardFrame = notification.userInfo?[
+            UIResponder.keyboardFrameEndUserInfoKey
+        ] as? CGRect else {
+            return
         }
+        
+        let keyboardHeight = keyboardFrame.height
+        
+        // Move the entire screen upward
+        let moveUp = keyboardHeight + 5
+        
+        UIView.animate(
+            withDuration: 0.3,
+            animations: {
+                self.view.frame.origin.y = self.originalViewY - moveUp
+            }
+        )
     }
     
-    @objc func keyboardWillHide(notification: NSNotification) {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
-        }
+    @objc func keyboardWillHide(notification: Notification) {
+        
+        UIView.animate(
+            withDuration: 0.3,
+            animations: {
+                self.view.frame.origin.y = self.originalViewY
+            }
+        )
     }
     
     

@@ -73,6 +73,11 @@ class NewHomescreenVC: UIViewController {
         loadDashboardAndMenu()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AudioPlayerManager.shared.stop()
+    }
+    
     private func setupInitialUI() {
         
         loadingCustom.startAnimating()
@@ -367,6 +372,9 @@ class NewHomescreenVC: UIViewController {
                 if success.Status == 1 {
                     
                     MenuRefName = success.data
+                    MenuRefName.removeAll { menuApiDataDetails in
+                        menuApiDataDetails.menu_slug == "home"
+                    }
                     DefaultsKeys.MenuRefName = MenuRefName
                     
                     for i in MenuRefName{
@@ -551,6 +559,9 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             }
             
             cell.configure(Data: dashBoardList.emerSubData)
+            cell.onViewAll = { [weak self] in
+                self?.RecentNotificationVc()
+            }
             return cell
             
         case "Attendance":
@@ -663,12 +674,8 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             
             cell.EventData = dashBoardList.Events
             
-            if EventData.count == 1 {
-                cell.EventViewClick.isHidden = true
-            } else {
-                let EventView = UITapGestureRecognizer(target: self, action: #selector(EventViewVc))
-                cell.EventViewClick.addGestureRecognizer(EventView)
-            }
+            let EventView = UITapGestureRecognizer(target: self, action: #selector(EventViewVc))
+            cell.EventViewClick.addGestureRecognizer(EventView)
             
             return cell
             
@@ -724,10 +731,10 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             return assignmentData.isEmpty ? 0 : 180
             
         case "MenuList":
-            return 370
+            return MenuRefName.count < 9 ? 250 : 370
             
         case "Emergency Notification":
-            return 250
+            return 290
             
         case "Attendance":
             return CGFloat(200 * attendanceData.count)
@@ -1330,4 +1337,81 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
         present(vc, animated: true,completion: nil)
     }
     
+}
+
+
+
+import UIKit
+
+class BackButton: UIButton {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        
+        let symbolConfiguration = UIImage.SymbolConfiguration(
+                pointSize: 20,
+                weight: .medium
+            )
+        
+        // UI
+        let backImage = UIImage(
+               systemName: "chevron.left",
+               withConfiguration: symbolConfiguration
+           )
+        setImage(backImage, for: .normal)
+        setTitle("", for: .normal)
+        
+        tintColor = .white
+        setTitleColor(.black, for: .normal)
+        
+        titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        
+        imageView?.contentMode = .scaleAspectFit
+        semanticContentAttribute = .forceLeftToRight
+        contentHorizontalAlignment = .leading
+        
+        addTarget(self, action: #selector(backTapped), for: .touchUpInside)
+    }
+    
+    @objc private func backTapped() {
+        parentViewController?.dismiss(animated: true)
+    }
+}
+
+extension UIColor {
+
+    static var priorityColor: UIColor {
+        let priority = UserDefaults.standard
+            .string(forKey: DefaultsKeys.priority)?
+            .lowercased()
+
+        switch priority {
+        case "p1":
+            return UIColor(named: "Principal") ?? .systemBackground
+
+        case "p2", "p3", "p6":
+            return UIColor(named: "Teaching Staff") ?? .systemBackground
+
+        case "p4":
+            return UIColor(named: "studentViewColors") ?? .systemBackground
+
+        case "p5":
+            return UIColor(named: "FatherColor") ?? .systemBackground
+
+        case "p7":
+            return UIColor(named: "univercityColorCod") ?? .systemBackground
+
+        default:
+            return UIColor(named: "Principal") ?? .systemBackground
+        }
+    }
 }

@@ -11,9 +11,7 @@ import KRProgressHUD
 
 @available(iOS 16.0, *)
 class ExaminationDetailsViewControllerViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
-    
-    @IBOutlet weak var reusee: ReuseView!
-    
+        
     @IBOutlet weak var topNameview: UIView!
     
     @IBOutlet weak var tapBarView: UIViewX!
@@ -76,8 +74,6 @@ class ExaminationDetailsViewControllerViewController: UIViewController,UITableVi
     @IBOutlet weak var noDataTextView: UIView!
     
     @IBOutlet weak var adView: UIView!
-    
-    @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
     
     
     
@@ -184,7 +180,7 @@ class ExaminationDetailsViewControllerViewController: UIViewController,UITableVi
             print("PrincipalVieewwColor")
             view.backgroundColor = UIColor(named: "Principal" )
             
-                reusee.menuImg.image = UIImage(named: "principalBigMenu")
+          
             
         }else if priority == "p4" {
             
@@ -192,14 +188,14 @@ class ExaminationDetailsViewControllerViewController: UIViewController,UITableVi
             view.backgroundColor = UIColor(named: "studentViewColors")
             
             
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
+         
             
         } else if priority == "p3" ||  priority == "p2" {
             
             print("HooodddVieewwColor")
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
+         
             
         }
         else if priority == "p5"{
@@ -208,23 +204,10 @@ class ExaminationDetailsViewControllerViewController: UIViewController,UITableVi
             
             view.backgroundColor = UIColor(named: "FatherColor")
             
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
+           
             
             
         }
-        swipeMenuHeight.constant = 150
-                reusee.call_back = { [self]
-                    (val) in
-                  
-                    
-                        self.swipeMenuHeight.constant =  reusee.callid
-                   
-                    print("CommunicationHomePageViewController",reusee.callid)
-                    
-               
-                }
-        
-    
         
         let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         redirectLoginView.addGestureRecognizer(loginRediectGesture)

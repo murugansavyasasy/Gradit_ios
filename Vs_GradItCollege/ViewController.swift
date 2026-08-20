@@ -199,7 +199,7 @@ class ViewController: UIViewController {
                     }
                     
                     if loginData.count == 1 {
-                        let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+                        let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                         for i in loginData {
                             
                             defaults.set(i.colglogo, forKey: DefaultsKeys.colglogo)

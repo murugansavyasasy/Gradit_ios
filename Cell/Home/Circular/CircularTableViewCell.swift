@@ -65,7 +65,7 @@ class CircularTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollecti
         
         startAutoScroll()
         
-        
+        pageContorler.currentPageIndicatorTintColor = .priorityColor
         
         NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willEnterForegroundNotification, object: nil)

@@ -17,13 +17,19 @@ class MenuTVCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewD
     var menuList: [menuApiDataDetails] = []
     var Pages:[[menuApiDataDetails]] = []
     var pageSize: Int = 12
+    private var priority: String? = UserDefaults.standard.string(forKey: DefaultsKeys.priority)
+  
     
     override func awakeFromNib() {
         super.awakeFromNib()
        
+        self.priority = UserDefaults.standard.string(forKey: DefaultsKeys.priority)
+        
         cv.register(UINib(nibName: "MenuPageCVCell", bundle: nil), forCellWithReuseIdentifier: "MenuPageCVCell")
         cv.delegate = self
         cv.dataSource = self
+        
+        pageControl.currentPageIndicatorTintColor = .priorityColor
     }
     
     func configure(with data: [menuApiDataDetails]) {

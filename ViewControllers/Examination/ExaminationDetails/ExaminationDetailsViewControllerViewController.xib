@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -26,10 +26,8 @@
                 <outlet property="profileView" destination="glV-NE-SJU" id="cwY-1F-S9r"/>
                 <outlet property="redirectLoginView" destination="pst-jD-rxR" id="Nli-Bo-d0d"/>
                 <outlet property="refreshView" destination="2nW-P2-7I2" id="pPA-VO-RzC"/>
-                <outlet property="reusee" destination="MWd-NN-C84" id="foh-fF-q0c"/>
                 <outlet property="sideMenuView" destination="l1J-YG-D8B" id="lN6-ld-kZy"/>
                 <outlet property="smallImg" destination="mFk-rQ-edd" id="kvM-YZ-oqN"/>
-                <outlet property="swipeMenuHeight" destination="0i1-6x-cvN" id="Fsx-nA-RQo"/>
                 <outlet property="tapBarView" destination="no3-O8-1fe" id="s6I-dn-sko"/>
                 <outlet property="termsAndConditionView" destination="sb0-fn-Qxq" id="T2I-wZ-eJu"/>
                 <outlet property="topLabels" destination="SvI-no-a0q" id="uNA-jB-gZc"/>
@@ -47,7 +45,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fm6-gf-LRW">
-                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
+                    <rect key="frame" x="0.0" y="96" width="414" height="732"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="21I-4s-pMK">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -289,19 +287,12 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DG1-Uz-1ka" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="261" width="414" height="553"/>
+                            <rect key="frame" x="0.0" y="261" width="414" height="471"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hCF-71-TE1">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="425"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="471"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MWd-NN-C84" customClass="ReuseView" customModule="Gradit" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="433" width="414" height="120"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="120" id="0i1-6x-cvN"/>
-                                    </constraints>
-                                </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ade-IF-ibV">
                                     <rect key="frame" x="120" y="206" width="174" height="43"/>
                                     <subviews>
@@ -326,14 +317,11 @@
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="hCF-71-TE1" firstAttribute="top" secondItem="DG1-Uz-1ka" secondAttribute="top" id="5Yo-Ou-L8N"/>
-                                <constraint firstItem="MWd-NN-C84" firstAttribute="top" secondItem="hCF-71-TE1" secondAttribute="bottom" constant="8" symbolic="YES" id="CZw-MZ-wG1"/>
-                                <constraint firstAttribute="trailing" secondItem="MWd-NN-C84" secondAttribute="trailing" id="WGR-J0-mfq"/>
                                 <constraint firstItem="ade-IF-ibV" firstAttribute="leading" secondItem="DG1-Uz-1ka" secondAttribute="leading" constant="120" id="Y8j-Ck-JFd"/>
-                                <constraint firstAttribute="bottom" secondItem="MWd-NN-C84" secondAttribute="bottom" id="YDE-Qc-kx6"/>
+                                <constraint firstAttribute="bottom" secondItem="hCF-71-TE1" secondAttribute="bottom" id="Yv0-oc-CvT"/>
                                 <constraint firstItem="hCF-71-TE1" firstAttribute="leading" secondItem="DG1-Uz-1ka" secondAttribute="leading" id="dsV-ER-g7g"/>
                                 <constraint firstAttribute="trailing" secondItem="hCF-71-TE1" secondAttribute="trailing" id="f06-y3-1yE"/>
                                 <constraint firstItem="ade-IF-ibV" firstAttribute="top" secondItem="DG1-Uz-1ka" secondAttribute="top" constant="206" id="hwc-X2-sJc"/>
-                                <constraint firstItem="MWd-NN-C84" firstAttribute="leading" secondItem="DG1-Uz-1ka" secondAttribute="leading" id="qcl-Mc-hMD"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

@@ -48,7 +48,7 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
     
     var callid : CGFloat!
     var call_back: ((CGFloat) -> Void)?
-    static var main_Vc : HomeScreenViewController!
+    static var main_Vc : NewHomescreenVC!
     let backgroundView = UIView()
     
     
@@ -1174,7 +1174,7 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
             if str[indexPath.row] == "home"{
                 print("ytrtrew")
                 let currentController = self.getCurrentViewController()
-                let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+                let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                 
                 vc.modalPresentationStyle = .fullScreen
                 currentController?.present(vc, animated: true, completion: nil)
@@ -1498,7 +1498,7 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 
                 
                 let currentController = self.getCurrentViewController()
-                let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+                let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                 
                 vc.view.backgroundColor = UIColor(named: "Principal" )
                 vc.modalPresentationStyle = .fullScreen
@@ -1797,7 +1797,7 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 
                 
                 
-                let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+                let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                 
                 
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
@@ -2076,7 +2076,7 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 
                 
                 
-                let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+                let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                 
                 
                 vc.str = str
@@ -2336,7 +2336,7 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
             
             if str[indexPath.row] == "home"{
                 
-                let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+                let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                 //
                 vc.modalPresentationStyle = .fullScreen
                 currentController?.present(vc, animated: false, completion: nil)
@@ -2653,7 +2653,7 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 
                 
                 
-                let vc = HomeScreenViewController(nibName: nil, bundle: nil)
+                let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                 
                
                 vc.str = str

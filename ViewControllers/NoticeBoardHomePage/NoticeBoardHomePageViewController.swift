@@ -14,7 +14,6 @@ import WebKit
 class NoticeBoardHomePageViewController:
     UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate{
     
-    @IBOutlet weak var reusee: ReuseView!
     @IBOutlet weak var topNameview: UIView!
     @IBOutlet weak var tapBarView: UIViewX!
     @IBOutlet weak var searchFullView: UIViewX!
@@ -48,7 +47,6 @@ class NoticeBoardHomePageViewController:
     @IBOutlet weak var bigImg: UIImageView!
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var noDataTextLabel: UILabel!
-    @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
     @IBOutlet weak var changeRolesView: UIView!
     @IBOutlet weak var SearchView: UIView!
     
@@ -147,7 +145,7 @@ class NoticeBoardHomePageViewController:
             print("PrincipalVieewwColor")
             view.backgroundColor = UIColor(named: "Principal" )
             
-            reusee.menuImg.image = UIImage(named: "principalBigMenu")
+           
             
         }else if priority == "p4" {
             
@@ -155,32 +153,23 @@ class NoticeBoardHomePageViewController:
             view.backgroundColor = UIColor(named: "studentViewColors")
             tapBarView.backgroundColor = UIColor(named: "StudentParent" )
             
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
+          
             
         } else if priority == "p3" ||  priority == "p2"  || priority == "p6"{
             
             print("HooodddVieewwColor")
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
+          
             
         }else if priority == "p5"{
             
             view.backgroundColor = UIColor(named: "FatherColor")
             tapBarView.backgroundColor = UIColor(named: "FatherColor" )
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
+          
         }
         
-        swipeMenuHeight.constant = 150
-        reusee.call_back = { [self]
-            (val) in
-            
-            
-            self.swipeMenuHeight.constant =  reusee.callid
-            
-            print("NoticeBoardHomePageViewController",reusee.callid)
-        }
-        
+       
         let rowNib = UINib(nibName: Indentifiers, bundle: nil)
         noticesBoardTableView.register(rowNib, forCellReuseIdentifier: Indentifiers)
         

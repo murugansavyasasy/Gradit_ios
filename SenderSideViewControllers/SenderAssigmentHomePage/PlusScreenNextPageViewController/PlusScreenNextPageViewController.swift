@@ -58,33 +58,16 @@ class PlusScreenNextPageViewController: UIViewController,UITextViewDelegate,UIIm
 @IBOutlet weak var termsAndConditionView: UIView!
 
 @IBOutlet weak var sideMenuView: UIView!
-
-
 @IBOutlet weak var cancelView: UIViewX!
-
 @IBOutlet weak var descripitionTextField: UITextView!
-
 @IBOutlet weak var SelectResipionsView: UIViewX!
-
-
 @IBOutlet weak var uploadView: UIView!
-
-
 @IBOutlet weak var selectTypeDropDownView: UIViewX!
-
-
-
-
 @IBOutlet weak var dropDownTextLabel: UILabel!
-
-
-
 @IBOutlet weak var uploadImageView: UIImageView!
-
-
 @IBOutlet weak var uploadTextLabel: UILabel!
-
-
+    @IBOutlet weak var scrollView: UIScrollView!
+    
 var assImagePdf : [assigmentImagePdfResponce] = []
 
 let dropDown = DropDown()
@@ -189,8 +172,19 @@ override func viewDidLoad() {
     bigImg.sd_setImage(with: URL(string: addImageBackGroundurl ?? ""), placeholderImage: UIImage(named: "ic_white"))
     smallImg.sd_setImage(with: URL(string: smallImageUrl ?? "" ), placeholderImage: UIImage(named: "ic_white"))
     
-    
-    
+    NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     
     sideMenuView.isHidden = true
     refreshView.isHidden = true
@@ -382,6 +376,10 @@ override func viewDidLoad() {
     
     
 }
+    
+deinit {
+    NotificationCenter.default.removeObserver(self)
+}
 
 func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     titleTextField.resignFirstResponder()
@@ -457,14 +455,53 @@ func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition:
 }
 
 
-
-
+    @objc func keyboardWillShow(notification: Notification) {
+        
+        guard let keyboardFrame = notification.userInfo?[
+            UIResponder.keyboardFrameEndUserInfoKey
+        ] as? CGRect else {
+            return
+        }
+        
+        let keyboardHeight = keyboardFrame.height
+        
+        UIView.animate(withDuration: 0.3) {
+            self.scrollView.contentInset.bottom = keyboardHeight
+            self.scrollView.verticalScrollIndicatorInsets.bottom = keyboardHeight
+        }
+        
+        // Wait until the inset/layout has been applied
+        DispatchQueue.main.async {
+            
+            if let textView = self.view.findFirstResponder() {
+                self.scrollToVisible(textView)
+            }
+        }
+    }
+        
+    @objc func keyboardWillHide(notification: Notification) {
+        
+        UIView.animate(withDuration: 0.3) {
+            self.scrollView.contentInset.bottom = 0
+            self.scrollView.verticalScrollIndicatorInsets.bottom = 0
+        }
+    }
+    
+    private func scrollToVisible(_ targetView: UIView) {
+        
+        let rect = targetView.convert(
+            targetView.bounds,
+            to: scrollView
+        )
+        
+        scrollView.scrollRectToVisible(
+            rect.insetBy(dx: 0, dy: -20),
+            animated: true
+        )
+    }
 
 func textViewDidChange(_ textView: UITextView) {
     lblCount.text = "\(maxLenghth - descripitionTextField.text.count)/"+"\(500)"
-    
-    
-    
     
 }
 
@@ -1479,10 +1516,6 @@ func convertAssetToImages() -> Void {
 
 public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
     
-    
-    
-    
-    
     print("urldsss",url)
     
     let fileurl: URL = url as URL
@@ -1494,17 +1527,11 @@ public func documentPicker(_ controller: UIDocumentPickerViewController, didPick
     
     let imageData = NSData(contentsOf: url)
     
-    
-    
-    
     do {
         pdfData = try Data(contentsOf: url, options: NSData.ReadingOptions())
         
         self.uploadFileLabel.text = "number of file selected :" + "1"
-        
-        
-        
-        
+       
     } catch {
         print("set PDF filer error : ", error)
         
@@ -1516,18 +1543,9 @@ public func documentPicker(_ controller: UIDocumentPickerViewController, didPick
         }))
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
 }
 
 @objc public func documentMenu(_ documentMenu:UIDocumentMenuViewController, didPickDocumentPicker documentPicker: UIDocumentPickerViewController) {
-    
     
     documentPicker.delegate = self
     present(documentPicker, animated: true, completion: nil)

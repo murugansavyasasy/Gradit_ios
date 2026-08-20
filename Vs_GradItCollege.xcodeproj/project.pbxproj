@@ -592,6 +592,8 @@
 		84C85C09301B389400F8F9BB /* NewHomescreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C85C06301B389400F8F9BB /* NewHomescreenVC.swift */; };
 		84C85C20301B55D400F8F9BB /* BannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C85C1F301B55D400F8F9BB /* BannerCell.xib */; };
 		84C85C21301B55D400F8F9BB /* BannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C85C1E301B55D400F8F9BB /* BannerCell.swift */; };
+		84D87BF63025E03500782DBA /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D87BF53025E03500782DBA /* CustomTabBar.swift */; };
+		84D87BFA3025E84F00782DBA /* CustomTabBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D87BF93025E84F00782DBA /* CustomTabBar.xib */; };
 		84E0E47D2B19E90200AAC2B2 /* collegeListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E0E47C2B19E90200AAC2B2 /* collegeListResponse.swift */; };
 		84E502AB2C12F5CC008836C9 /* SenderEventHomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E502AA2C12F5CC008836C9 /* SenderEventHomePageViewController.xib */; };
 		84E502AF2C12F65C008836C9 /* SenderCommunicationHomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E502AE2C12F65C008836C9 /* SenderCommunicationHomePageViewController.xib */; };
@@ -1344,6 +1346,8 @@
 		84C85C07301B389400F8F9BB /* NewHomescreenVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewHomescreenVC.xib; sourceTree = "<group>"; };
 		84C85C1E301B55D400F8F9BB /* BannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCell.swift; sourceTree = "<group>"; };
 		84C85C1F301B55D400F8F9BB /* BannerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BannerCell.xib; sourceTree = "<group>"; };
+		84D87BF53025E03500782DBA /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		84D87BF93025E84F00782DBA /* CustomTabBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTabBar.xib; sourceTree = "<group>"; };
 		84E0E47C2B19E90200AAC2B2 /* collegeListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = collegeListResponse.swift; sourceTree = "<group>"; };
 		84E502AA2C12F5CC008836C9 /* SenderEventHomePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderEventHomePageViewController.xib; sourceTree = "<group>"; };
 		84E502AE2C12F65C008836C9 /* SenderCommunicationHomePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderCommunicationHomePageViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -3289,6 +3293,8 @@
 				846EDCDF302343D200BE47B3 /* MenuCVCell.xib */,
 				8490EDA63024B2DE00616CA3 /* MenuPageCVCell.swift */,
 				8490EDA73024B2DE00616CA3 /* MenuPageCVCell.xib */,
+				84D87BF53025E03500782DBA /* CustomTabBar.swift */,
+				84D87BF93025E84F00782DBA /* CustomTabBar.xib */,
 			);
 			path = HomeScreen;
 			sourceTree = "<group>";
@@ -4907,6 +4913,7 @@
 				84F6FC772B32B737006E768B /* Nunito-SemiBold.ttf in Resources */,
 				848EF9E42B833A3F00A9DDFA /* AttendanceDetailsTVTableViewCell.xib in Resources */,
 				52A576BB2A39C2E60039E1E1 /* EmerTableViewCell.xib in Resources */,
+				84D87BFA3025E84F00782DBA /* CustomTabBar.xib in Resources */,
 				1865D8AF2A0903F800CD43F3 /* ShowAdvertisementViewController.xib in Resources */,
 				52D9145629ED5CD500D0D8DD /* ChatSenderInteractViewController.xib in Resources */,
 				846EDCE0302343D200BE47B3 /* MenuCVCell.xib in Resources */,
@@ -5262,6 +5269,7 @@
 				848BA1262BBF113700FC65BF /* ChatsendTVTableViewCell.swift in Sources */,
 				188E62F2291913210030C9D0 /* EventsViewController.swift in Sources */,
 				52A5770D2A3C654E0039E1E1 /* ChatReceiverInteractModal.swift in Sources */,
+				84D87BF63025E03500782DBA /* CustomTabBar.swift in Sources */,
 				52ACBE62297BA9A800A21EEA /* CategoryTableViewController.swift in Sources */,
 				5245E4B6293F62CE00925CBC /* SenderEventTableViewCell.swift in Sources */,
 				52259C5C292F55E4008CE7CC /* ImageTableViewCell.swift in Sources */,

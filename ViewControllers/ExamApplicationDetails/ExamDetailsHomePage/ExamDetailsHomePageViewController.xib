@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -15,8 +15,6 @@
                 <outlet property="examDetailsTabelView" destination="Bpu-7h-Qrm" id="YM0-ud-YZE"/>
                 <outlet property="noDataTextLabel" destination="epL-UD-aUg" id="BhU-jB-izN"/>
                 <outlet property="noDataView" destination="cau-Hd-RAH" id="H4C-Jr-Nqm"/>
-                <outlet property="reusee" destination="vYq-Vk-ab2" id="5E2-ea-UVn"/>
-                <outlet property="swipeMenuHeight" destination="70y-ot-iSS" id="Zpb-G3-CVc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -26,7 +24,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="khp-9G-9hd">
-                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
+                    <rect key="frame" x="0.0" y="96" width="414" height="732"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iBC-jI-UwO">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
@@ -59,7 +57,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vAr-iY-E35">
-                            <rect key="frame" x="0.0" y="65" width="414" height="749"/>
+                            <rect key="frame" x="0.0" y="65" width="414" height="667"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ls4-Sc-4kz">
                                     <rect key="frame" x="0.0" y="8" width="414" height="1"/>
@@ -70,7 +68,7 @@
                                     </constraints>
                                 </view>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Bpu-7h-Qrm">
-                                    <rect key="frame" x="0.0" y="9" width="414" height="620"/>
+                                    <rect key="frame" x="0.0" y="9" width="414" height="658"/>
                                     <color key="backgroundColor" name="examDetailsView"/>
                                 </tableView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cau-Hd-RAH">
@@ -93,28 +91,18 @@
                                         <constraint firstAttribute="width" constant="240" id="wcu-te-wQv"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vYq-Vk-ab2" customClass="ReuseView" customModule="Gradit" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="629" width="414" height="120"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="120" id="70y-ot-iSS"/>
-                                    </constraints>
-                                </view>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="vYq-Vk-ab2" secondAttribute="bottom" id="7aa-Mq-EMw"/>
-                                <constraint firstItem="vYq-Vk-ab2" firstAttribute="top" secondItem="Bpu-7h-Qrm" secondAttribute="bottom" id="GcN-Jr-YO4"/>
                                 <constraint firstItem="Bpu-7h-Qrm" firstAttribute="leading" secondItem="vAr-iY-E35" secondAttribute="leading" id="N7N-eo-sOJ"/>
                                 <constraint firstItem="cau-Hd-RAH" firstAttribute="leading" secondItem="vAr-iY-E35" secondAttribute="leading" constant="87" id="QHM-7c-1m9"/>
                                 <constraint firstItem="ls4-Sc-4kz" firstAttribute="leading" secondItem="vAr-iY-E35" secondAttribute="leading" id="Spy-Kb-KM7"/>
-                                <constraint firstAttribute="trailing" secondItem="vYq-Vk-ab2" secondAttribute="trailing" id="XNB-Lr-HWu"/>
                                 <constraint firstItem="Bpu-7h-Qrm" firstAttribute="top" secondItem="ls4-Sc-4kz" secondAttribute="bottom" id="Zp4-d6-Ssl"/>
                                 <constraint firstAttribute="trailing" secondItem="ls4-Sc-4kz" secondAttribute="trailing" id="le0-Lp-XZh"/>
+                                <constraint firstAttribute="bottom" secondItem="Bpu-7h-Qrm" secondAttribute="bottom" id="lmr-ta-v5Z"/>
                                 <constraint firstItem="ls4-Sc-4kz" firstAttribute="top" secondItem="vAr-iY-E35" secondAttribute="top" constant="8" id="tP1-RZ-6ZB"/>
                                 <constraint firstItem="cau-Hd-RAH" firstAttribute="top" secondItem="ls4-Sc-4kz" secondAttribute="bottom" constant="200" id="uSO-Xp-6Q0"/>
                                 <constraint firstAttribute="trailing" secondItem="Bpu-7h-Qrm" secondAttribute="trailing" id="wlR-Cd-2Tl"/>
-                                <constraint firstItem="vYq-Vk-ab2" firstAttribute="leading" secondItem="vAr-iY-E35" secondAttribute="leading" id="yfp-ve-HpF"/>
                             </constraints>
                         </view>
                     </subviews>

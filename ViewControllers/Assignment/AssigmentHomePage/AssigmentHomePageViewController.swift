@@ -13,7 +13,6 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     
-    @IBOutlet weak var reusee: ReuseView!
     @IBOutlet weak var topNameView: UIView!
     @IBOutlet weak var tapBarView: UIViewX!
     @IBOutlet weak var SearchView: UIView!
@@ -49,7 +48,6 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
     @IBOutlet weak var assigmentUpcommingCount: UILabel!
     @IBOutlet weak var assigmentTopCount: UILabel!
     @IBOutlet weak var assigmentPastCount: UILabel!
-    @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
     
     var Indentifiers = "AssigmentTvTableViewCell"
     let menuIdentifier = "MenuCollectionViewCell"
@@ -159,41 +157,28 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
             print("PrincipalVieewwColor")
             view.backgroundColor = UIColor(named: "Principal" )
             
-            reusee.menuImg.image = UIImage(named: "principalBigMenu")
+            
             
         }else if priority == "p4" {
             
             print("StudentVieewwColor")
             view.backgroundColor = UIColor(named: "studentViewColors")
             
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
+           
             
         } else if priority == "p3" ||  priority == "p2" {
             
             print("HooodddVieewwColor")
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
+          
             
         }
         
         else if priority == "p5"{
             view.backgroundColor = UIColor(named: "FatherColor")
             
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
-            
         }
-        
-        swipeMenuHeight.constant = 150
-        reusee.call_back = { [self]
-            (val) in
-            
-            
-            self.swipeMenuHeight.constant =  reusee.callid
-            
-            print("AssigmentHomePageViewController",reusee.callid)
-        }
-        
         
         
         let rowNib = UINib(nibName: Indentifiers, bundle: nil)

@@ -13,7 +13,6 @@ import DropDown
 @available(iOS 16.0, *)
 class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var reusee: ReuseView!
     
     
     
@@ -77,7 +76,6 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
     
     
     
-    @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
     
  
     
@@ -252,7 +250,6 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
             print("PrincipalVieewwColor")
             view.backgroundColor = UIColor(named: "Principal" )
             
-            reusee.menuImg.image = UIImage(named: "principalBigMenu")
             
         }else if priority == "p4" {
             
@@ -260,14 +257,12 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
             view.backgroundColor = UIColor(named: "studentViewColors")
             
             
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
             
         } else if priority == "p3" ||  priority == "p2" {
             
             print("HooodddVieewwColor")
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
             
         }
         else if priority == "p5"{
@@ -276,7 +271,6 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
             
             view.backgroundColor = UIColor(named: "FatherColor")
             
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
             
             
         }
@@ -288,7 +282,6 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
             print("non")
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
             
             
         }
@@ -300,25 +293,9 @@ class SenderFacultyViewController: UIViewController, UITableViewDataSource, UITa
             print("non")
             view.backgroundColor = UIColor(named: "univercityColorCod")
             
-            reusee.menuImg.image = UIImage(named: "UnivercityHead")
             
             
         }
-        
-        
-        swipeMenuHeight.constant = 150
-                reusee.call_back = { [self]
-                    (val) in
-                  
-                    
-                        self.swipeMenuHeight.constant =  reusee.callid
-                   
-                    print("SenderFacultyViewController",reusee.callid)
-                    
-               
-                }
-     
-        
         
         
         let rowNib = UINib(nibName: identifers, bundle: nil)

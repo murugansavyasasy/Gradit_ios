@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -34,14 +34,12 @@
                 <outlet property="replySwitch" destination="AtR-pv-686" id="tFa-7e-zoA"/>
                 <outlet property="replyTextField" destination="8HT-kC-WKu" id="5gA-Oj-HXf"/>
                 <outlet property="replyViewHeight" destination="pKV-hg-MR7" id="1Y4-QD-glZ"/>
-                <outlet property="reusee" destination="mf4-HH-8Fd" id="ifO-qM-vcY"/>
                 <outlet property="secLabel" destination="zdt-Mk-Mx6" id="2Qd-3m-tEX"/>
                 <outlet property="semLabel" destination="hA0-j6-l0O" id="tdE-nc-lXR"/>
                 <outlet property="sendMessageView" destination="1bF-1U-tHy" id="owk-Iv-RYK"/>
                 <outlet property="sideMenuView" destination="BkV-JA-bIa" id="9mU-XE-Wec"/>
                 <outlet property="subLabel" destination="jU0-he-fmC" id="mhI-in-rr6"/>
                 <outlet property="subjectNameLabel" destination="PFM-Rn-LTJ" id="ct5-tZ-vhO"/>
-                <outlet property="swipeMenuHeight" destination="1t9-2q-8mc" id="wzK-PR-LSF"/>
                 <outlet property="tapBarView" destination="E3c-6Y-6AW" id="mI3-gm-yUZ"/>
                 <outlet property="termsAndConditionView" destination="5LR-1M-gQo" id="gxg-Dz-JFa"/>
                 <outlet property="topLabels" destination="0eB-y2-bfp" id="8gv-3Z-uMM"/>
@@ -58,10 +56,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SPS-KY-W0q">
-                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
+                    <rect key="frame" x="0.0" y="96" width="414" height="732"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sgp-dx-Rte">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="814"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="732"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fuo-lp-EH0">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
@@ -419,7 +417,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pxb-ee-1HF">
-                                    <rect key="frame" x="0.0" y="589" width="414" height="105"/>
+                                    <rect key="frame" x="0.0" y="627" width="414" height="105"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tnU-Lw-0a4" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
                                             <rect key="frame" x="10" y="55" width="394" height="40"/>
@@ -536,11 +534,11 @@
                                     </constraints>
                                 </view>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="RTX-5c-hNe">
-                                    <rect key="frame" x="0.0" y="130" width="414" height="459"/>
+                                    <rect key="frame" x="0.0" y="130" width="414" height="497"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1eF-yT-BUT">
-                                    <rect key="frame" x="0.0" y="519" width="414" height="70"/>
+                                    <rect key="frame" x="0.0" y="557" width="414" height="70"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gpb-Vf-WLi" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
                                             <rect key="frame" x="8" y="10" width="324" height="50"/>
@@ -612,13 +610,6 @@
                                         <constraint firstItem="uY3-WK-Hga" firstAttribute="top" secondItem="HRn-vn-bMx" secondAttribute="top" id="hdB-ig-8Lz"/>
                                         <constraint firstItem="uY3-WK-Hga" firstAttribute="leading" secondItem="HRn-vn-bMx" secondAttribute="leading" id="j2i-cl-WQi"/>
                                         <constraint firstAttribute="bottom" secondItem="uY3-WK-Hga" secondAttribute="bottom" id="s53-WC-ro6"/>
-                                    </constraints>
-                                </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mf4-HH-8Fd" customClass="ReuseView" customModule="Gradit" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="694" width="414" height="120"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="120" id="1t9-2q-8mc"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BkV-JA-bIa">
@@ -818,23 +809,20 @@
                                 <constraint firstItem="RTX-5c-hNe" firstAttribute="top" secondItem="Fuo-lp-EH0" secondAttribute="bottom" id="4gZ-fR-uJ8"/>
                                 <constraint firstItem="Fuo-lp-EH0" firstAttribute="leading" secondItem="Sgp-dx-Rte" secondAttribute="leading" id="4lg-Yy-b0r"/>
                                 <constraint firstAttribute="trailing" secondItem="RTX-5c-hNe" secondAttribute="trailing" id="Ag4-dK-aSk"/>
-                                <constraint firstItem="mf4-HH-8Fd" firstAttribute="top" secondItem="pxb-ee-1HF" secondAttribute="bottom" id="B4v-2Z-DWL"/>
                                 <constraint firstAttribute="trailing" secondItem="pxb-ee-1HF" secondAttribute="trailing" id="E4I-sz-afr"/>
                                 <constraint firstItem="BkV-JA-bIa" firstAttribute="top" secondItem="Sgp-dx-Rte" secondAttribute="top" constant="50" id="Iut-C8-uTT"/>
                                 <constraint firstItem="Fuo-lp-EH0" firstAttribute="top" secondItem="Sgp-dx-Rte" secondAttribute="top" id="Lzo-j0-aWe"/>
-                                <constraint firstItem="mf4-HH-8Fd" firstAttribute="leading" secondItem="Sgp-dx-Rte" secondAttribute="leading" id="OXt-1a-4Cf"/>
                                 <constraint firstItem="pxb-ee-1HF" firstAttribute="leading" secondItem="Sgp-dx-Rte" secondAttribute="leading" id="Z9g-zT-GrP"/>
+                                <constraint firstAttribute="bottom" secondItem="pxb-ee-1HF" secondAttribute="bottom" id="aN9-gZ-d2J"/>
                                 <constraint firstAttribute="trailing" secondItem="1eF-yT-BUT" secondAttribute="trailing" id="cg0-ff-6mf"/>
                                 <constraint firstItem="pxb-ee-1HF" firstAttribute="top" secondItem="1eF-yT-BUT" secondAttribute="bottom" id="dOi-TO-MqS"/>
                                 <constraint firstItem="pxb-ee-1HF" firstAttribute="top" secondItem="RTX-5c-hNe" secondAttribute="bottom" id="fWK-gt-p2e"/>
                                 <constraint firstItem="RTX-5c-hNe" firstAttribute="leading" secondItem="Sgp-dx-Rte" secondAttribute="leading" id="glM-bc-BOy"/>
                                 <constraint firstItem="HRn-vn-bMx" firstAttribute="leading" secondItem="Sgp-dx-Rte" secondAttribute="leading" constant="64" id="hVe-sc-yhD"/>
-                                <constraint firstAttribute="trailing" secondItem="mf4-HH-8Fd" secondAttribute="trailing" id="kth-i9-p5h"/>
                                 <constraint firstAttribute="trailing" secondItem="Fuo-lp-EH0" secondAttribute="trailing" id="rjK-yl-wdM"/>
                                 <constraint firstAttribute="trailing" secondItem="BkV-JA-bIa" secondAttribute="trailing" id="t1a-DU-blp"/>
                                 <constraint firstItem="HRn-vn-bMx" firstAttribute="top" secondItem="Fuo-lp-EH0" secondAttribute="bottom" constant="209" id="yii-t0-1DE"/>
                                 <constraint firstItem="1eF-yT-BUT" firstAttribute="leading" secondItem="Sgp-dx-Rte" secondAttribute="leading" id="ykv-yU-ntZ"/>
-                                <constraint firstAttribute="bottom" secondItem="mf4-HH-8Fd" secondAttribute="bottom" id="zmx-aD-9JF"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -876,7 +864,7 @@
             <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.53333333329999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

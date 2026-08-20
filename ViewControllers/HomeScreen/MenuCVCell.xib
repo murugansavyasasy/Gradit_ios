@@ -22,13 +22,13 @@
                         <rect key="frame" x="2" y="2" width="92" height="86"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Xz-FA-S62">
-                                <rect key="frame" x="23.666666666666671" y="8" width="45" height="45"/>
+                                <rect key="frame" x="23.666666666666671" y="5" width="45" height="45"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2A7-yx-KRU">
-                                        <rect key="frame" x="5" y="5" width="35" height="35"/>
+                                        <rect key="frame" x="7.3333333333333321" y="7.6666666666666643" width="29.999999999999996" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="35" id="y0K-Q5-LSt"/>
-                                            <constraint firstAttribute="height" constant="35" id="yq4-KP-7b2"/>
+                                            <constraint firstAttribute="width" constant="30" id="y0K-Q5-LSt"/>
+                                            <constraint firstAttribute="height" constant="30" id="yq4-KP-7b2"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
@@ -40,9 +40,9 @@
                                     <constraint firstAttribute="height" constant="45" id="yTD-Bc-nMF"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBG-g2-1ZV">
-                                <rect key="frame" x="2" y="58" width="88" height="23"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBG-g2-1ZV">
+                                <rect key="frame" x="2" y="52" width="88" height="32"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -50,10 +50,10 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="3Xz-FA-S62" firstAttribute="centerX" secondItem="YUR-OB-vbo" secondAttribute="centerX" id="GAm-v4-3iF"/>
-                            <constraint firstAttribute="bottom" secondItem="WBG-g2-1ZV" secondAttribute="bottom" constant="5" id="Qic-MP-GSp"/>
+                            <constraint firstAttribute="bottom" secondItem="WBG-g2-1ZV" secondAttribute="bottom" constant="2" id="Qic-MP-GSp"/>
                             <constraint firstAttribute="trailing" secondItem="WBG-g2-1ZV" secondAttribute="trailing" constant="2" id="UXH-fn-ckB"/>
-                            <constraint firstItem="WBG-g2-1ZV" firstAttribute="top" secondItem="3Xz-FA-S62" secondAttribute="bottom" constant="5" id="ZLI-iL-fqU"/>
-                            <constraint firstItem="3Xz-FA-S62" firstAttribute="top" secondItem="YUR-OB-vbo" secondAttribute="top" constant="8" id="soj-zL-zpR"/>
+                            <constraint firstItem="WBG-g2-1ZV" firstAttribute="top" secondItem="3Xz-FA-S62" secondAttribute="bottom" constant="2" id="ZLI-iL-fqU"/>
+                            <constraint firstItem="3Xz-FA-S62" firstAttribute="top" secondItem="YUR-OB-vbo" secondAttribute="top" constant="5" id="soj-zL-zpR"/>
                             <constraint firstItem="WBG-g2-1ZV" firstAttribute="leading" secondItem="YUR-OB-vbo" secondAttribute="leading" constant="2" id="ueV-3j-AR5"/>
                         </constraints>
                     </view>

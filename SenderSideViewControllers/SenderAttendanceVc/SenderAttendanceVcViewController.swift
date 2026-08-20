@@ -13,7 +13,6 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, FSCalendarDelegate,UITableViewDelegate,UITableViewDataSource, UIGestureRecognizerDelegate{
     
-    @IBOutlet weak var reusee: ReuseView!
     @IBOutlet weak var attendaceCountLbl: UILabel!
     @IBOutlet weak var attendaneLblCount: UILabel!
     @IBOutlet weak var tvHeight: NSLayoutConstraint!
@@ -26,10 +25,6 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
     
     @IBOutlet weak var attendanceTV: UITableView!
     
-    @IBOutlet weak var noDataView: UIView!
-    
-    @IBOutlet weak var fullView: UIView!
-    
     @IBOutlet weak var clanderView: FSCalendar!
     
     @IBOutlet weak var Tv: UITableView!
@@ -37,9 +32,6 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
     @IBOutlet weak var logoutView: UIView!
     
     @IBOutlet weak var changeRolesView: UIView!
-    
-    
-    @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var topLabels: UILabel!
     @IBOutlet weak var clgLogoImg: UIImageView!
     
@@ -77,29 +69,23 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
     
     @IBOutlet weak var changePasswordView: UIView!
     
-    @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
-    
     
     @IBOutlet weak var calendarImgView: UIView!
-    
-  
-    @IBOutlet weak var Attendanceheights: NSLayoutConstraint!
     
   
     @IBOutlet weak var nodataLbl: UILabel!
     
     
     @IBOutlet weak var bigImg: UIImageView!
-    @IBOutlet weak var adView: UIView!
     @IBOutlet weak var segmentName: UISegmentedControl!
     
     @IBOutlet weak var smallImg: UIImageView!
     
     
     @IBOutlet weak var swipeImg: UIImageView!
+    
     var  identifers  = "SenderAttendanceTableViewCell"
     let menuIdentifier = "MenuCollectionViewCell"
-    
     var  identifers2 = "attendanceSubjectTableViewCell"
     var MenuRefName :[menuApiDataDetails] = []
     var LeaveRefName : [ getLeaveApplicationDataDetails] = []
@@ -110,29 +96,19 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
     var isAllowedToLimitFutureDates = true
     var ParticalStaffRef : [particualrDataDetails] = []
     var leaveId : String!
-    
     var maxValidFutureDateAsString : String!
-    //
     var calendar: FSCalendar!
-    
     var HomepageLeaveHistoryId : String!
     var str : [String] = []
-    
     var strName : [String] = []
-    
     var is_read_enabled = ""
     var is_write_enabled = ""
-    
-    
     var NoticeBoardId = "1"
     var videoId = "2"
     var EventId = "3"
     var communicationId = "4"
     var imagePdfId = "5"
     var Assigment = "6"
-    
-    
-    //
     var collegeid : String!
     var userid    : String!
     var priority   : String!
@@ -140,26 +116,17 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
     var departmentId : String!
     var imageRef : [String] = []
     var loginType : String!
-    
     var memberName : String!
-    
     var colgImg : String!
-    
     var MobileNumber : String!
-    
     var appreadId : String!
-    
     var datessString : String!
-    
     var password : String!
-    
     var selectedCell:IndexPath?
     
     func maximumDate(for calendar: FSCalendar) -> Date {
         return Date()
     }
-    
-    
     
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
         [unowned self] in
@@ -172,6 +139,7 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         
         return panGesture
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -180,12 +148,9 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         attendaneLblCount.layer.cornerRadius = 13
         attendaneLblCount.layer.masksToBounds = true
         
-        
-        
         datessString = Date().today(format: "dd/MM/yyyy")
         
         clanderView.delegate = self
-      
         noDataLabel.isHidden = true
         sideMenuView.isHidden = true
         calendarImgView.isHidden = true
@@ -196,7 +161,6 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         
         collegeid = defaults.string(forKey: DefaultsKeys.collegeid)
         userid = defaults.string(forKey: DefaultsKeys.memberid)
-        
         
         priority = defaults.string(forKey:DefaultsKeys.priority)
         
@@ -216,165 +180,59 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         
         addApi()
         
-        
         if is_read_enabled == "1"{
             attendance()
             subject()
-            
-        }else{
-            
-            
-            
         }
-        
-        
         
         leaveApi(id : "1")
         
         print("LeaveRefName",LeaveRefName.count)
-        
-        
-        
         clanderView.dataSource = self
         if priority == "p1"{
             tapBarView.backgroundColor = UIColor(named: "Principal" )
-            topLabels.text = "Principal"
-            
-        }
-        
-        else if priority == "p4"{
-            
-            topLabels.text = "Student"
-            
-        }
-        
-        else if priority == "p2" {
-            
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            topLabels.text = "Hod"
-            
-        }
-        
-        else if priority == "p5"{
-            
-            
-            topLabels.text = "Father"
-            
-            
-            
-        }
-        
-        else if priority == "p3"{
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            topLabels.text = "Teacher"
-            
-        }
-        
-        
-        else if priority == "p6"{
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            topLabels.text = "Non Teaching"
-            
-            
-            
-        }
-        if priority == "p1" {
-            
-            
-            print("PrincipalVieewwColor")
             view.backgroundColor = UIColor(named: "Principal" )
-            
-                reusee.menuImg.image = UIImage(named: "principalBigMenu")
-            
-        }else if priority == "p4" {
-            
-            print("StudentVieewwColor")
+            topLabels.text = "Principal"
+        }else if priority == "p2" {
+            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
+            view.backgroundColor = UIColor(named: "Teaching Staff")
+            topLabels.text = "Hod"
+        }else if priority == "p3"{
+            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
+            view.backgroundColor = UIColor(named: "Teaching Staff")
+            topLabels.text = "Teacher"
+        }else if priority == "p4"{
+            topLabels.text = "Student"
             view.backgroundColor = UIColor(named: "studentViewColors")
-            
-            
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
-            
-        } else if priority == "p3" ||  priority == "p2" {
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-            reusee.menuImg.image = UIImage(named: "HodImage")
-            
-        }
-        else if priority == "p5"{
-            
-            
-            
+        }else if priority == "p5"{
+            topLabels.text = "Father"
             view.backgroundColor = UIColor(named: "FatherColor")
-            
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
-            
-            
-        }
-        
-        
-        else if priority == "p6"{
-            
-            
-            
+        }else if priority == "p6"{
+            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
             view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-            reusee.menuImg.image = UIImage(named: "HodImage")
-            
-            
+            topLabels.text = "Non Teaching"
         }
-        
-        
-        //
+      
         calendarHeight.constant = 350
         
         self.clanderView.select(Date())
-        
         self.clanderView.addGestureRecognizer(self.scopeGesture)
         self.clanderView.addGestureRecognizer(self.scopeGesture)
         self.clanderView.scope = .week
-        
-        
-        
-        
-        swipeMenuHeight.constant = 150
-                reusee.call_back = { [self]
-                    (val) in
-                  
-                    
-                        self.swipeMenuHeight.constant =  reusee.callid
-                   
-                    print("SenderFacultyViewController",reusee.callid)
-                    
-               
-                }
-     
-        
      
         let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         redirectLoginView.addGestureRecognizer(loginRediectGesture)
         
-        
-        
         attendanceTV.delegate = self
         attendanceTV.dataSource  = self
-        
         
         let rownib = UINib(nibName: identifers, bundle: nil)
         Tv.register(rownib, forCellReuseIdentifier: identifers)
         
-        
         let attendanceTVrownib = UINib(nibName: identifers2, bundle: nil)
         attendanceTV.register(attendanceTVrownib, forCellReuseIdentifier: identifers2)
         
-        
-        
-        
         // tap Bar UiTapGuster.
-        
-        
-        
         
         let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
         viewTap.addGestureRecognizer(menuGestureHide)
@@ -385,14 +243,11 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
         refreshView.addGestureRecognizer(refreshGesture)
         
-        
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
         
-        
         let helpGesture = UITapGestureRecognizer(target: self, action: #selector(helpRedirect))
         helpView.addGestureRecognizer(helpGesture)
-        //
         
         let privacyPolicyGesture = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyRedirect))
         privacyPolicyView.addGestureRecognizer(privacyPolicyGesture)
@@ -400,23 +255,14 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
         termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
         
-        
-        
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
-        
         
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
         
-        
-        
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
-        
-        
-        
-        
     }
     
     
@@ -426,13 +272,10 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         view.endEditing(true)
         
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated) // No need for semicolon
-        //  FromDate_Action()
-        
-        
         print("viewWillAppear")
-        
     }
     
     
@@ -468,14 +311,10 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         }
     }
     
-    
-    
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         // Handle the selected date
         print("Selected date: \(date)")
         
-        
-      
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         
@@ -486,27 +325,14 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         
         datessString = dateString
         subject()
-        
-        
-        
-        
-        
-        
     }
-    
-    
  
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
         self.calendarHeight.constant = bounds.height
         
-        
         print("boundingRectWillChange",bounds.height)
         
-        
-        
-        
         swipeImg.isHidden = false
-        
         
         if self.calendarHeight.constant == 350 {
             
@@ -522,7 +348,6 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
     func subject(){
         
         print("attendanceTV.isHidden",attendanceTV.isHidden)
-        
         
         var subj = ParticularStaffModal()
         
@@ -591,10 +416,6 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
                 }
     }
     
-    
-    
-    
-    
     @IBAction func segmentActions(_ sender: Any) {
         
         
@@ -638,15 +459,12 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
     
     func attendance(){
         
-      
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
         
         let result = formatter.string(from: date)
         print("minits",result)
-        
-        
         
     }
     
@@ -822,17 +640,7 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
             
             return cell
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+       
         else{
             
             let  cell = tableView.dequeueReusableCell(withIdentifier: identifers, for: indexPath) as!
@@ -846,8 +654,6 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
                 cell.lineView.isHidden = true
                 
             }
-            
-            
             
             let leaveApi : getLeaveApplicationDataDetails = LeaveRefName[indexPath.row]
             
@@ -877,52 +683,27 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
             if leaveApi.leavestatus == "WaitingForApproval"{
                 
                 cell.approvedLabel.textColor = UIColor.blue
-                
                 cell.rejectView.isHidden = false
                 cell.approvelView.isHidden = false
                 
-                
-                
-                
-                
-            }
-            
-            
-            else if leaveApi.leavestatus == "Approved"{
-                
+            }else if leaveApi.leavestatus == "Approved"{
                 
                 cell.approvedLabel.textColor = UIColor.green
                 cell.rejectView.isHidden = true
                 cell.approvelView.isHidden = true
-                
-                
             }
             
             if leaveApi.leavestatus == "Rejected"{
                 
                 cell.approvedLabel.textColor = UIColor.red
-                
                 cell.rejectView.isHidden = true
                 cell.approvelView.isHidden = true
-                
-                
-                
-                
                 
             }
             return cell
             
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+         
     }
     
     
@@ -934,40 +715,23 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
                 
                 
             }
-            
-            
-            
-        }
-        
-        
-        else    if segmentName.selectedSegmentIndex == 1 {
+        }else if segmentName.selectedSegmentIndex == 1 {
             
             if  tableView == self.Tv{
                 
-                
                 if let selectedCells = selectedCell, selectedCells == indexPath {
-                    
-                    
+                
                     selectedCell = nil
                     
                 } else {
                     
                     selectedCell = indexPath
-                    
                 }
-                
             }
             
-            
-            
             Tv.beginUpdates()
-            
             Tv.endUpdates()
-            
             Tv.reloadData()
-            
-            
-            
         }
     }
     
@@ -1034,7 +798,6 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         vc.AttendancessSectionNamw = gesture.SectionNamw
         vc.is_read_enabled = is_read_enabled
         vc.is_write_enabled = is_write_enabled
-        
         vc.AttendancessdepartmentName = gesture.departmentName
         vc.AttendancessYearName = gesture.YearName
         vc.AttendancessSemesterName = gesture.SemesterName
@@ -1216,21 +979,7 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         
     }
     
-    
-    
-    
-    
-    
-    // this part bottom swipe view .
-    
-    
-    
-    
-    
-    
     // Tab Bar Nagivation
-    
-    
     
     @IBAction func helpRedirect() {
         
@@ -1296,10 +1045,6 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         
     }
     
-    
-    
-    
-    
     @IBAction func refreshVc() {
         
         print("refreshVcWork")
@@ -1322,12 +1067,8 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
         vc.strName = strName
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: false, completion: nil)
-        
-        
     }
-    
-    
-    
+  
     
     @IBAction func menu() {
         
@@ -1380,18 +1121,12 @@ class AttendAdd : UITapGestureRecognizer{
     
     var url : String!
     
-    
-    
-    
 }
 
 
 class approve : UITapGestureRecognizer{
     
     var Leaveid : String!
-    
-    
-    
     
 }
 

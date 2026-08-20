@@ -14,7 +14,6 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class NotificationViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
-@IBOutlet weak var reusee: ReuseView!
 @IBOutlet weak var topNameview: UIView!
 @IBOutlet weak var topLabels: UILabel!
 @IBOutlet weak var tapBarView: UIViewX!
@@ -24,11 +23,9 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
 @IBOutlet weak var termsAndConditionView: UIView!
 @IBOutlet weak var helpView: UIView!
 @IBOutlet weak var clgLogoImg: UIImageView!
-@IBOutlet weak var priorityView: UIViewX!
 @IBOutlet weak var loginView: UIView!
 @IBOutlet weak var sideMenuView: UIView!
 @IBOutlet weak var faqView: UIView!
-@IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
 @IBOutlet weak var noRecordLbl: UILabel!
 @IBOutlet weak var privacyPolicyView: UIView!
 @IBOutlet weak var refreshView: UIView!
@@ -132,28 +129,20 @@ override func viewDidLoad() {
         print("PrincipalVieewwColor")
         view.backgroundColor = UIColor(named: "Principal" )
         
-        reusee.menuImg.image = UIImage(named: "principalBigMenu")
-        
     }else if priority == "p4" {
         
         print("StudentVieewwColor")
         view.backgroundColor = UIColor(named: "studentViewColors")
-        
-        reusee.menuImg.image = UIImage(named: "studentSwipeImage")
         
     } else if priority == "p3" ||  priority == "p2" || priority == "p6" {
         
         print("HooodddVieewwColor")
         view.backgroundColor = UIColor(named: "Teaching Staff")
         
-        reusee.menuImg.image = UIImage(named: "HodImage")
-        
     }
     else if priority == "p5"{
         
         view.backgroundColor = UIColor(named: "FatherColor")
-        
-        reusee.menuImg.image = UIImage(named: "StaffBigMenu")
         
     }
     
@@ -162,21 +151,9 @@ override func viewDidLoad() {
         
         view.backgroundColor = UIColor(named: "univercityColorCod")
         
-        reusee.menuImg.image = UIImage(named: "UnivercityHead")
-        
     }
-    swipeMenuHeight.constant = 150
-    reusee.call_back = { [self]
-        (val) in
-        
-        
-        self.swipeMenuHeight.constant =  reusee.callid
-        
-        print("NotificationViewController",reusee.callid)
-        
-        
-    }
-    let testVC = HomeScreenViewController()
+    
+    let testVC = NewHomescreenVC()
     
     let rowNib = UINib(nibName: rowIdentifier, bundle: nil)
     tv.register(rowNib, forCellReuseIdentifier: rowIdentifier)
@@ -184,7 +161,7 @@ override func viewDidLoad() {
     
     
     
-    let tapGes = UITapGestureRecognizer(target: self, action: #selector(testVC.refreshVc))
+    let tapGes = UITapGestureRecognizer(target: self, action: #selector(testVC.refreshBtnAct(_:)))
     refreshView.addGestureRecognizer(tapGes)
     
     

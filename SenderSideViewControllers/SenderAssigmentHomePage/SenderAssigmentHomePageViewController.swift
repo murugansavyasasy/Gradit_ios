@@ -12,8 +12,6 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate {
     
-    
-    @IBOutlet weak var reusee: ReuseView!
     @IBOutlet weak var SearchView: UIView!
     @IBOutlet weak var searchFullView: UIViewX!
     @IBOutlet weak var searchbar: UISearchBar!
@@ -30,9 +28,6 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
     @IBOutlet weak var logoutView: UIView!
     
     @IBOutlet weak var changeRolesView: UIView!
-    
-    
-    @IBOutlet weak var profileView: UIView!
     
     @IBOutlet weak var topLabels: UILabel!
     @IBOutlet weak var refreshView: UIView!
@@ -79,10 +74,6 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
     
     @IBOutlet weak var addPlusVcNextPage: UIViewX!
     @IBOutlet weak var assigmentTableView: UITableView!
-    
-    
-    @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
-    
     
     
     
@@ -280,7 +271,6 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
             print("PrincipalVieewwColor")
             view.backgroundColor = UIColor(named: "Principal" )
             
-            reusee.menuImg.image = UIImage(named: "principalBigMenu")
             
         }else if priority == "p4" {
             
@@ -288,14 +278,12 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
             view.backgroundColor = UIColor(named: "studentViewColors")
             
             
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
             
         } else if priority == "p3" ||  priority == "p2" {
             
             print("HooodddVieewwColor")
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
             
         }
         else if priority == "p5"{
@@ -304,7 +292,6 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
             
             view.backgroundColor = UIColor(named: "FatherColor")
             
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
             
             
         }
@@ -313,7 +300,6 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
             
             view.backgroundColor = UIColor(named: "attendanceColor")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
             
             
         }
@@ -322,26 +308,9 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
             
             view.backgroundColor = UIColor(named: "univercityColorCod")
             
-            reusee.menuImg.image = UIImage(named: "UnivercityHead")
             
             
         }
-        
-        
-        swipeMenuHeight.constant = 150
-        reusee.call_back = { [self]
-            (val) in
-            
-            
-            self.swipeMenuHeight.constant =  reusee.callid
-            
-            print("HelloWorld544544343",reusee.callid)
-            
-            
-        }
-        
-        
-        
         
         
         

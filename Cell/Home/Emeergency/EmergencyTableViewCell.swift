@@ -69,7 +69,7 @@
     var strName : [String] = []
     var is_read_enabled = ""
     var is_write_enabled = ""
-    var helo = HomeScreenViewController()
+    var helo = NewHomescreenVC()
 
 
     var expandType = "0"

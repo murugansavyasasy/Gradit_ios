@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -23,16 +23,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="331" height="269"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Assignment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="teF-4J-8Jw">
-                                <rect key="frame" x="10" y="10" width="70" height="14.5"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                <rect key="frame" x="15" y="10" width="226" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="am4-Ic-OhM">
-                                <rect key="frame" x="0.0" y="34.5" width="331" height="194.5"/>
+                                <rect key="frame" x="0.0" y="46.5" width="331" height="182.5"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Qgl-5k-fUF">
-                                        <rect key="frame" x="0.0" y="0.0" width="331" height="194.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="331" height="182.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cTV-NR-Ecp">
                                             <size key="itemSize" width="128" height="128"/>
@@ -51,11 +51,11 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4BD-pR-dwP" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
-                                <rect key="frame" x="253" y="5" width="70" height="28"/>
+                                <rect key="frame" x="251" y="5" width="70" height="28"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View All" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tE5-TN-zmQ">
-                                        <rect key="frame" x="11" y="6" width="48" height="16"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <rect key="frame" x="10.5" y="6" width="49.5" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -84,7 +84,7 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="4BD-pR-dwP" secondAttribute="trailing" constant="8" id="0Rj-aY-uLo"/>
+                            <constraint firstAttribute="trailing" secondItem="4BD-pR-dwP" secondAttribute="trailing" constant="10" id="0Rj-aY-uLo"/>
                             <constraint firstAttribute="bottom" secondItem="n13-Su-3Ey" secondAttribute="bottom" constant="6" id="2oC-Ul-Wec"/>
                             <constraint firstItem="teF-4J-8Jw" firstAttribute="top" secondItem="ui4-di-OuN" secondAttribute="top" constant="10" id="3Pp-Ez-lfC"/>
                             <constraint firstItem="n13-Su-3Ey" firstAttribute="leading" secondItem="ui4-di-OuN" secondAttribute="leading" constant="15" id="6Ff-xd-hg8"/>
@@ -92,9 +92,10 @@
                             <constraint firstAttribute="trailing" secondItem="am4-Ic-OhM" secondAttribute="trailing" id="WBv-kb-Ie3"/>
                             <constraint firstItem="4BD-pR-dwP" firstAttribute="top" secondItem="ui4-di-OuN" secondAttribute="top" constant="5" id="XSS-Dl-1zd"/>
                             <constraint firstItem="n13-Su-3Ey" firstAttribute="top" secondItem="am4-Ic-OhM" secondAttribute="bottom" constant="8" symbolic="YES" id="cih-Ej-Bqp"/>
-                            <constraint firstItem="am4-Ic-OhM" firstAttribute="top" secondItem="teF-4J-8Jw" secondAttribute="bottom" constant="10" id="gQi-m3-OX4"/>
+                            <constraint firstItem="4BD-pR-dwP" firstAttribute="leading" secondItem="teF-4J-8Jw" secondAttribute="trailing" constant="10" id="g3X-Rw-dmU"/>
+                            <constraint firstItem="am4-Ic-OhM" firstAttribute="top" secondItem="teF-4J-8Jw" secondAttribute="bottom" constant="17" id="gQi-m3-OX4"/>
                             <constraint firstAttribute="trailing" secondItem="n13-Su-3Ey" secondAttribute="trailing" constant="15" id="o1T-7o-akS"/>
-                            <constraint firstItem="teF-4J-8Jw" firstAttribute="leading" secondItem="ui4-di-OuN" secondAttribute="leading" constant="10" id="ouY-a2-xd4"/>
+                            <constraint firstItem="teF-4J-8Jw" firstAttribute="leading" secondItem="ui4-di-OuN" secondAttribute="leading" constant="15" id="ouY-a2-xd4"/>
                         </constraints>
                     </view>
                 </subviews>

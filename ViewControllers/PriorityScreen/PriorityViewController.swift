@@ -340,7 +340,6 @@ class PriorityViewController: UIViewController,UITableViewDataSource,UITableView
             let loginDetail : datalogin = loginPrincipal[indexPath.row]
             
             
-           // let vc = HomeScreenViewController(nibName: nil, bundle: nil)
             let vc = NewHomescreenVC(nibName: nil, bundle: nil)
             let defaults = UserDefaults.standard
             
@@ -380,7 +379,6 @@ class PriorityViewController: UIViewController,UITableViewDataSource,UITableView
             
             let loginDetail : datalogin = loginStudent[indexPath.row]
             
-           // let vc = HomeScreenViewController(nibName: nil, bundle: nil)
             let vc = NewHomescreenVC(nibName: nil, bundle: nil)
             let defaults = UserDefaults.standard
             

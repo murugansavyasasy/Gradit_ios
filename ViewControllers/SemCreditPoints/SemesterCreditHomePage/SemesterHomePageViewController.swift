@@ -12,8 +12,6 @@ import DropDown
 @available(iOS 16.0, *)
 class SemesterHomePageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
-    @IBOutlet weak var reusee: ReuseView!
-    @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var headingView: UIView!
     @IBOutlet weak var noDataTextView: UIView!
@@ -69,45 +67,23 @@ class SemesterHomePageViewController: UIViewController,UITableViewDelegate,UITab
             print("PrincipalVieewwColor")
             view.backgroundColor = UIColor(named: "Principal" )
             
-                reusee.menuImg.image = UIImage(named: "principalBigMenu")
-            
         }else if priority == "p4" {
             
             print("StudentVieewwColor")
             view.backgroundColor = UIColor(named: "studentViewColors")
             
-            
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
-            
+         
         } else if priority == "p3" ||  priority == "p2" {
             
             print("HooodddVieewwColor")
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
-            
         }
         else if priority == "p5"{
            
             view.backgroundColor = UIColor(named: "FatherColor")
-            
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
-            
-            
+           
         }
-     
-        swipeMenuHeight.constant = 150
-                reusee.call_back = { [self]
-                    (val) in
-                  
-                    
-                        self.swipeMenuHeight.constant =  reusee.callid
-                   
-                    print("SemesterHomePageViewController",reusee.callid)
-                    
-               
-                }
-   
         
         let rowNib = UINib(nibName: identiers, bundle: nil)
         tv.register(rowNib, forCellReuseIdentifier: identiers)

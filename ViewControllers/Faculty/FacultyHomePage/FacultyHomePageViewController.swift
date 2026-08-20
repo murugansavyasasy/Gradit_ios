@@ -14,7 +14,6 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
-    @IBOutlet weak var reusee: ReuseView!
     @IBOutlet weak var tapNameview: UIView!
     @IBOutlet weak var tapBarView: UIViewX!
     @IBOutlet weak var redirectLoginView: UIViewX!
@@ -43,7 +42,6 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
     @IBOutlet weak var facultyDropDownView: UIViewX!
     @IBOutlet weak var facultyTabelViews: UITableView!
     @IBOutlet weak var facultyLabel: UILabel!
-    @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
     
     
     let dropDown = DropDown()
@@ -149,7 +147,6 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
             print("PrincipalVieewwColor")
             view.backgroundColor = UIColor(named: "Principal" )
             
-                reusee.menuImg.image = UIImage(named: "principalBigMenu")
             
         }else if priority == "p4" {
             
@@ -157,14 +154,12 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
             view.backgroundColor = UIColor(named: "studentViewColors")
             
             
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
             
         } else if priority == "p3" ||  priority == "p2" {
             
             print("HooodddVieewwColor")
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
             
         }
         else if priority == "p5"{
@@ -173,20 +168,7 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
             
             view.backgroundColor = UIColor(named: "FatherColor")
             
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
         }
-        
-        
-        swipeMenuHeight.constant = 150
-                reusee.call_back = { [self]
-                    (val) in
-                  
-                        self.swipeMenuHeight.constant =  reusee.callid
-                   
-                    print("FacultyHomePageViewController",reusee.callid)
-                    
-                }
-        
        
         let rowNib = UINib(nibName: identifers, bundle: nil)
         facultyTabelViews.register(rowNib, forCellReuseIdentifier: identifers)

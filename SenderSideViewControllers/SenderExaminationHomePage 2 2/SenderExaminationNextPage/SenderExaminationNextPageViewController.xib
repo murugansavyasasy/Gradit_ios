@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -28,10 +28,8 @@
                 <outlet property="privacyPolicyView" destination="rwb-6T-vOB" id="gF3-rx-ZGP"/>
                 <outlet property="redirectLoginView" destination="awp-Or-Rb5" id="QLS-aU-TZg"/>
                 <outlet property="refreshView" destination="xLl-Xj-HhN" id="lji-mH-oc5"/>
-                <outlet property="reusee" destination="05s-bn-ZK6" id="Omz-rA-4dU"/>
                 <outlet property="sideMenuView" destination="HX5-SH-NME" id="U8o-67-1wG"/>
                 <outlet property="smallImg" destination="91a-jk-V15" id="xM9-AZ-RL7"/>
-                <outlet property="swipeMenuHeight" destination="Xfn-c7-ev8" id="HTP-2Q-em1"/>
                 <outlet property="tapBarView" destination="Nzj-29-dGk" id="Li1-Ob-ONe"/>
                 <outlet property="termsAndConditionView" destination="Dmy-GU-svJ" id="y9w-Jg-1SX"/>
                 <outlet property="topLabels" destination="1as-T2-c8O" id="0vL-zy-9vE"/>
@@ -48,7 +46,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qFT-F4-lGG">
-                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
+                    <rect key="frame" x="0.0" y="96" width="414" height="732"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u5M-eI-CkE">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -323,10 +321,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R3K-gY-gRY">
-                            <rect key="frame" x="0.0" y="212" width="414" height="482"/>
+                            <rect key="frame" x="0.0" y="212" width="414" height="520"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="srx-uw-ro4">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="482"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="520"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ITL-H2-Hrf">
@@ -360,32 +358,22 @@
                                 <constraint firstItem="srx-uw-ro4" firstAttribute="top" secondItem="R3K-gY-gRY" secondAttribute="top" id="KIi-fK-rbi"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="05s-bn-ZK6" customClass="ReuseView" customModule="Gradit" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="694" width="414" height="120"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="120" id="Xfn-c7-ev8"/>
-                            </constraints>
-                        </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="R3K-gY-gRY" secondAttribute="trailing" id="0fA-oA-DSI"/>
+                        <constraint firstAttribute="bottom" secondItem="R3K-gY-gRY" secondAttribute="bottom" id="4Rc-Vq-ucq"/>
                         <constraint firstAttribute="trailing" secondItem="u5M-eI-CkE" secondAttribute="trailing" id="IOU-PE-bZ3"/>
                         <constraint firstItem="u5M-eI-CkE" firstAttribute="top" secondItem="qFT-F4-lGG" secondAttribute="top" id="JQB-gS-D6L"/>
                         <constraint firstAttribute="trailing" secondItem="hhx-jE-Rz0" secondAttribute="trailing" id="M8Z-eJ-8PM"/>
                         <constraint firstItem="zWL-nE-VI7" firstAttribute="leading" secondItem="qFT-F4-lGG" secondAttribute="leading" id="NCH-bf-28v"/>
                         <constraint firstItem="zWL-nE-VI7" firstAttribute="top" secondItem="hhx-jE-Rz0" secondAttribute="bottom" id="RRa-Id-hLL"/>
-                        <constraint firstItem="05s-bn-ZK6" firstAttribute="top" secondItem="R3K-gY-gRY" secondAttribute="bottom" id="Rdg-mM-HHJ"/>
-                        <constraint firstItem="05s-bn-ZK6" firstAttribute="leading" secondItem="qFT-F4-lGG" secondAttribute="leading" id="T6n-HV-z0V"/>
-                        <constraint firstAttribute="bottom" secondItem="05s-bn-ZK6" secondAttribute="bottom" id="ZCR-fw-Eqp"/>
                         <constraint firstItem="hhx-jE-Rz0" firstAttribute="leading" secondItem="qFT-F4-lGG" secondAttribute="leading" id="g5S-g6-jfa"/>
                         <constraint firstItem="hhx-jE-Rz0" firstAttribute="top" secondItem="u5M-eI-CkE" secondAttribute="bottom" id="qNV-8N-moY"/>
                         <constraint firstItem="R3K-gY-gRY" firstAttribute="top" secondItem="zWL-nE-VI7" secondAttribute="bottom" id="qZi-oI-FTG"/>
                         <constraint firstItem="u5M-eI-CkE" firstAttribute="leading" secondItem="qFT-F4-lGG" secondAttribute="leading" id="utY-oY-o6p"/>
                         <constraint firstAttribute="trailing" secondItem="zWL-nE-VI7" secondAttribute="trailing" id="vy4-oe-3dM"/>
                         <constraint firstItem="R3K-gY-gRY" firstAttribute="leading" secondItem="qFT-F4-lGG" secondAttribute="leading" id="wQi-Nn-QKm"/>
-                        <constraint firstAttribute="trailing" secondItem="05s-bn-ZK6" secondAttribute="trailing" id="xym-Hz-D8M"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HX5-SH-NME">

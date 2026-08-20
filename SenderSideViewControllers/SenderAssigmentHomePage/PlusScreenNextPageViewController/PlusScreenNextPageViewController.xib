@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -31,6 +31,7 @@
                 <outlet property="privacyPolicyView" destination="4SQ-Xu-6Pl" id="ErE-9r-lS1"/>
                 <outlet property="redirectLoginView" destination="5RW-WR-Ygq" id="5Zf-0M-7Pn"/>
                 <outlet property="refreshView" destination="HpN-SJ-i85" id="Wcy-1C-3gc"/>
+                <outlet property="scrollView" destination="Ptk-d7-3o0" id="x3Y-je-W3E"/>
                 <outlet property="selectTypeDropDownView" destination="Paa-pj-Vov" id="ghS-QF-bhw"/>
                 <outlet property="sideMenuView" destination="Qdt-QR-jwA" id="KJC-R4-0f7"/>
                 <outlet property="smallImg" destination="zZf-aW-n3a" id="Bl4-uZ-73V"/>
@@ -54,7 +55,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A45-op-Ntn">
-                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
+                    <rect key="frame" x="0.0" y="96" width="414" height="732"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2iD-ap-aTB">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -291,10 +292,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oZc-IZ-zca">
-                            <rect key="frame" x="0.0" y="216" width="414" height="598"/>
+                            <rect key="frame" x="0.0" y="216" width="414" height="516"/>
                             <subviews>
                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ptk-d7-3o0">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="598"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="516"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LI9-Co-dQ8">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="690"/>

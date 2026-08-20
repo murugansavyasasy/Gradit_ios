@@ -12,8 +12,7 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
-  
-    @IBOutlet weak var reusee: ReuseView!
+
     @IBOutlet weak var tapNameview: UIView!
     @IBOutlet weak var tapBarView: UIViewX!
     @IBOutlet weak var topMemberLabel: UILabel!
@@ -37,7 +36,6 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
     
     @IBOutlet weak var helpView: UIView!
     
-    @IBOutlet weak var profileView: UIView!
     
     
     @IBOutlet weak var termsAndConditionView: UIView!
@@ -47,7 +45,6 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
     
     @IBOutlet weak var changeRolesView: UIView!
     
-    @IBOutlet weak var topMessageLabel: UILabel!
     
     
     
@@ -57,11 +54,9 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
     
     @IBOutlet weak var viewTap: UIView!
     
-    @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
    
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
-    @IBOutlet weak var adView: UIView!
     @IBOutlet weak var chatCollectionView: UICollectionView!
     var Indentifiers = "ChatsCollectionViewCell"
     
@@ -211,22 +206,20 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
             print("PrincipalVieewwColor")
             view.backgroundColor = UIColor(named: "Principal" )
             
-                reusee.menuImg.image = UIImage(named: "principalBigMenu")
-            
         }else if priority == "p4" {
             
             print("StudentVieewwColor")
             view.backgroundColor = UIColor(named: "studentViewColors")
             
             
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
+           
             
         } else if priority == "p3" ||  priority == "p2" {
             
             print("HooodddVieewwColor")
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
+          
             
         }
         else if priority == "p5"{
@@ -235,7 +228,7 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
             
             view.backgroundColor = UIColor(named: "FatherColor")
             
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
+         
             
             
         }
@@ -246,7 +239,7 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
             
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
+          
             
             
         }
@@ -258,23 +251,10 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
             
             view.backgroundColor = UIColor(named: "univercityColorCod")
             
-            reusee.menuImg.image = UIImage(named: "UnivercityHead")
+           
             
             
         }
-        
-        
-        swipeMenuHeight.constant = 150
-                reusee.call_back = { [self]
-                    (val) in
-                  
-                    
-                        self.swipeMenuHeight.constant =  reusee.callid
-                   
-                    print("ChatSenderInteractViewController",reusee.callid)
-                    
-               
-                }
       
      
         
@@ -297,16 +277,12 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
         
         let helpGesture = UITapGestureRecognizer(target: self, action: #selector(helpRedirect))
         helpView.addGestureRecognizer(helpGesture)
-        //
         
         let privacyPolicyGesture = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyRedirect))
         privacyPolicyView.addGestureRecognizer(privacyPolicyGesture)
         
-        
         let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
         termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
-        
-        
         
         let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         redirectLoginView.addGestureRecognizer(loginRediectGesture)
@@ -314,17 +290,12 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
         let tpname = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         tapNameview.addGestureRecognizer(tpname)
         
-        
-        //
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
         
         
         let changeRol = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRol)
-        
-        
-        
         
     }
     
@@ -536,19 +507,7 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-      
-        if UIDevice.current.name == "iPhone 8"{
-            
-            return CGSize(width: collectionView.frame.size.width / 2, height: 200)
-            
-        }
-        else{
-            
-            return CGSize(width: collectionView.frame.size.width / 2, height: collectionView.frame.size.height - 180)
-            
-            
-        }
-        
+            return CGSize(width: collectionView.frame.size.width / 2, height: 230)
     }
     
     

@@ -16,7 +16,6 @@ class AttendanceViewController: UIViewController,FSCalendarDataSource, FSCalenda
 
 
 
-@IBOutlet weak var reusee: ReuseView!
 @IBOutlet weak var topNameview: UIView!
 @IBOutlet weak var tapBarView: UIViewX!
 @IBOutlet weak var attendaneLblCount: UILabel!
@@ -37,13 +36,11 @@ class AttendanceViewController: UIViewController,FSCalendarDataSource, FSCalenda
 @IBOutlet weak var helpView: UIView!
 @IBOutlet weak var termsAndConditionView: UIView!
 @IBOutlet weak var changePasswordView: UIView!
-@IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
 @IBOutlet weak var pluPageView: UIView!
 @IBOutlet weak var bigImg: UIImageView!
 @IBOutlet weak var segmentName: UISegmentedControl!
 @IBOutlet weak var smallImg: UIImageView!
-@IBOutlet weak var tvTop: NSLayoutConstraint!
-    @IBOutlet weak var noDataLabel: UILabel!
+@IBOutlet weak var noDataLabel: UILabel!
     
 var indentifer2 = "AttendancesTVTableViewCell"
 var  identifers  = "AttendanceMenuTableViewCell"
@@ -144,32 +141,18 @@ var smallImageAddImageView : String!
         if priority == "p1"{
             topLabels.text = "Principal"
             view.backgroundColor = UIColor(named: "Principal" )
-            reusee.menuImg.image = UIImage(named: "principalBigMenu")
         } else if priority == "p4"{
             tapBarView.backgroundColor = UIColor(named: "StudentParent" )
             view.backgroundColor = UIColor(named: "studentViewColors")
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
             topLabels.text = "Student"
         }else if priority == "p2" || priority == "p3"{
             topLabels.text = "Teacher"
             view.backgroundColor = UIColor(named: "Teaching Staff")
-            reusee.menuImg.image = UIImage(named: "HodImage")
         }else if priority == "p5"{
             tapBarView.backgroundColor = UIColor(named: "FatherColor" )
             topLabels.text = "Father"
             view.backgroundColor = UIColor(named: "FatherColor")
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
         }
-        
-        swipeMenuHeight.constant = 150
-        reusee.call_back = { [self]
-            (val) in
-            
-            self.swipeMenuHeight.constant =  reusee.callid
-            
-            print("AttendanceViewController",reusee.callid)
-        }
-        
         
         let rownib = UINib(nibName: identifers, bundle: nil)
         Tv.register(rownib, forCellReuseIdentifier: identifers)

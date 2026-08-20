@@ -13,12 +13,8 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate {
     
-    @IBOutlet weak var reusee: ReuseView!
     
     @IBOutlet weak var viewtotalheight: NSLayoutConstraint!
-    
-    @IBOutlet weak var tvHeight: NSLayoutConstraint!
-    
     
     @IBOutlet weak var menubottom: NSLayoutConstraint!
     
@@ -72,12 +68,8 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
     @IBOutlet weak var clgLogoImg: UIImageView!
     
     @IBOutlet weak var sideMenuView: UIView!
-    
     @IBOutlet weak var viewTap: UIView!
-    
-    @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
-    
-    
+    @IBOutlet weak var noDataLbl: UILabel!
     
   
     
@@ -121,7 +113,7 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
     var is_read_enabled = ""
     var is_write_enabled = ""
     
-   
+    private var originalViewY: CGFloat = 0
     
     var StatusId : Int!
     var rowForScroll = 1
@@ -134,11 +126,12 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
         
         overrideUserInterfaceStyle = .light
         
+        originalViewY = view.frame.origin.y
+        
+        noDataLbl.isHidden = true
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        
         
         sideMenuView.isHidden = true
         
@@ -233,7 +226,6 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
             print("PrincipalVieewwColor")
             view.backgroundColor = UIColor(named: "Principal" )
             
-                reusee.menuImg.image = UIImage(named: "principalBigMenu")
             
         }else if priority == "p4" {
             
@@ -241,14 +233,12 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
             view.backgroundColor = UIColor(named: "studentViewColors")
             
             
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
             
         } else if priority == "p3" ||  priority == "p2" {
             
             print("HooodddVieewwColor")
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
             
         }
         else if priority == "p5"{
@@ -257,22 +247,7 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
             
             view.backgroundColor = UIColor(named: "FatherColor")
             
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
-            
-            
         }
-        
-        swipeMenuHeight.constant = 150
-                reusee.call_back = { [self]
-                    (val) in
-                  
-                    
-                        self.swipeMenuHeight.constant =  reusee.callid
-                   
-                    print("ChatReceiverInteractViewController",reusee.callid)
-                    
-               
-                }
         
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         tv.refreshControl = refreshControl
@@ -418,16 +393,22 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
                     tv.dataSource = self
                     tv.delegate = self
                     tv.reloadData()
+                    noDataLbl.isHidden = true
                 }else{
                     StatusId = 0
+                    noDataLbl.text = success.Message
+                    if chatData.count == 0 && tt.count == 0 {
+                        noDataLbl.isHidden = false
+                    }
                 }
             case .failure(let error):
                 print("Error: \(error)")
+                noDataLbl.text = error.localizedDescription
+                if chatData.count == 0 && tt.count == 0 {
+                    noDataLbl.isHidden = false
+                }
             }
-            
-        
         }
-     
     }
     
     
@@ -749,22 +730,53 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
     }
     
     
-    @objc func keyboardWillShow(notification: NSNotification) {
+//    @objc func keyboardWillShow(notification: NSNotification) {
+//        
+//        
+//        
+//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//            if self.view.frame.origin.y == 0 {
+//                self.view.frame.origin.y -= keyboardSize.height-91
+//                print("keyboardSize.height",keyboardSize.height)
+//            }
+//        }
+//    }
+//    
+//    @objc func keyboardWillHide(notification: NSNotification) {
+//        if self.view.frame.origin.y != 0 {
+//            self.view.frame.origin.y = 0
+//        }
+//    }
+    
+    @objc func keyboardWillShow(notification: Notification) {
         
-        
-        
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height-91
-                print("keyboardSize.height",keyboardSize.height)
-            }
+        guard let keyboardFrame = notification.userInfo?[
+            UIResponder.keyboardFrameEndUserInfoKey
+        ] as? CGRect else {
+            return
         }
+        
+        let keyboardHeight = keyboardFrame.height
+        
+        // Move the entire screen upward
+        let moveUp = keyboardHeight + 5
+        
+        UIView.animate(
+            withDuration: 0.3,
+            animations: {
+                self.view.frame.origin.y = self.originalViewY - moveUp
+            }
+        )
     }
     
-    @objc func keyboardWillHide(notification: NSNotification) {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
-        }
+    @objc func keyboardWillHide(notification: Notification) {
+        
+        UIView.animate(
+            withDuration: 0.3,
+            animations: {
+                self.view.frame.origin.y = self.originalViewY
+            }
+        )
     }
     
     

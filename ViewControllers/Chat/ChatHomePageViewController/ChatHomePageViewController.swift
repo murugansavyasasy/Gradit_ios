@@ -14,7 +14,6 @@ import KRProgressHUD
 class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     
     
-    @IBOutlet weak var reusee: ReuseView!
     @IBOutlet weak var tapBarView: UIViewX!
     
     @IBOutlet weak var topMemberLabel: UILabel!
@@ -57,9 +56,6 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
     @IBOutlet weak var sideMenuView: UIView!
     
     @IBOutlet weak var viewTap: UIView!
-    
-    @IBOutlet weak var swipeMenuHeight: NSLayoutConstraint!
-    
     
     
     
@@ -170,7 +166,6 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
             print("PrincipalVieewwColor")
             view.backgroundColor = UIColor(named: "Principal" )
             
-            reusee.menuImg.image = UIImage(named: "principalBigMenu")
             
         }else if priority == "p4" {
             
@@ -178,14 +173,12 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
             view.backgroundColor = UIColor(named: "studentViewColors")
             
             
-            reusee.menuImg.image = UIImage(named: "studentSwipeImage")
             
         } else if priority == "p3" ||  priority == "p2" {
             
             print("HooodddVieewwColor")
             view.backgroundColor = UIColor(named: "Teaching Staff")
             
-            reusee.menuImg.image = UIImage(named: "HodImage")
             
         }
         else if priority == "p5"{
@@ -194,25 +187,11 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
             
             view.backgroundColor = UIColor(named: "FatherColor")
             
-            reusee.menuImg.image = UIImage(named: "StaffBigMenu")
             
             
         }
         
-        swipeMenuHeight.constant = 150
-        reusee.call_back = { [self]
-            (val) in
-            
-            
-            self.swipeMenuHeight.constant =  reusee.callid
-            
-            print("ChatReceiverInteractViewController",reusee.callid)
-            
-            
-        }
-        
-        
-        
+      
         
         let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
         viewTap.addGestureRecognizer(menuGestureHide)

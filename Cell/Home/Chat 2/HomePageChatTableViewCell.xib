@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -10,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="219" id="KGk-i7-Jjw" customClass="HomePageChatTableViewCell" customModule="Vs_GradItCollege" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="219" id="KGk-i7-Jjw" customClass="HomePageChatTableViewCell" customModule="Gradit" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="381" height="219"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -21,8 +22,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="381" height="219"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chat" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iOC-RZ-6fP">
-                                <rect key="frame" x="10.000000000000002" y="5.0000000000000009" width="28.666666666666671" height="14.333333333333336"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                <rect key="frame" x="15" y="5" width="280" height="19.333333333333332"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -48,12 +49,12 @@
                                     <constraint firstAttribute="bottom" secondItem="MZ4-0q-8Jp" secondAttribute="bottom" id="lOO-Un-6IW"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kU2-jd-qWe" customClass="UIViewX" customModule="Vs_GradItCollege" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kU2-jd-qWe" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
                                 <rect key="frame" x="303" y="5" width="70" height="28"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View All" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zKn-fM-KHK">
-                                        <rect key="frame" x="12.666666666666686" y="7.0000000000000009" width="45" height="14.333333333333336"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <rect key="frame" x="10.333333333333318" y="6.3333333333333348" width="49.333333333333343" height="15.666666666666664"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -82,9 +83,10 @@
                             <constraint firstItem="tZw-mU-foM" firstAttribute="top" secondItem="kU2-jd-qWe" secondAttribute="bottom" constant="8" id="NDN-Dt-ngV"/>
                             <constraint firstAttribute="trailing" secondItem="kU2-jd-qWe" secondAttribute="trailing" constant="8" id="VeZ-Zu-BF3"/>
                             <constraint firstItem="tZw-mU-foM" firstAttribute="leading" secondItem="RZC-CS-WQl" secondAttribute="leading" constant="5" id="ZeQ-Te-sul"/>
-                            <constraint firstItem="iOC-RZ-6fP" firstAttribute="leading" secondItem="RZC-CS-WQl" secondAttribute="leading" constant="10" id="cE6-g8-7f7"/>
+                            <constraint firstItem="iOC-RZ-6fP" firstAttribute="leading" secondItem="RZC-CS-WQl" secondAttribute="leading" constant="15" id="cE6-g8-7f7"/>
                             <constraint firstItem="iOC-RZ-6fP" firstAttribute="top" secondItem="RZC-CS-WQl" secondAttribute="top" constant="5" id="dl1-f9-Vfh"/>
                             <constraint firstAttribute="bottom" secondItem="tZw-mU-foM" secondAttribute="bottom" constant="8" id="tY9-rE-bDn"/>
+                            <constraint firstItem="kU2-jd-qWe" firstAttribute="leading" secondItem="iOC-RZ-6fP" secondAttribute="trailing" constant="8" id="ug6-b7-rQh"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -108,7 +110,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
