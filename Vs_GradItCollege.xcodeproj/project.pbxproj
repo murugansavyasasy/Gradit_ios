@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -1473,6 +1473,10 @@
 		FADD3CA12EFD686800F37E85 /* AttachmentPreviewCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentPreviewCvCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		8465E0F13036C8A500FF2213 /* NewAuthScreens */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = NewAuthScreens; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		189145D9290A616E00034317 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -1809,6 +1813,7 @@
 		1891461C290A69D000034317 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				8465E0F13036C8A500FF2213 /* NewAuthScreens */,
 				FA37170A2E5ACDE20089D831 /* PlacementEventTraining */,
 				FA85C7342DE70AE700B57E47 /* ResumeBuilder */,
 				8495DC252C1B0C8A00783AD7 /* FeePaymentVc */,
@@ -4690,6 +4695,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				8465E0F13036C8A500FF2213 /* NewAuthScreens */,
 			);
 			name = Vs_GradItCollege;
 			productName = Vs_GradItCollege;

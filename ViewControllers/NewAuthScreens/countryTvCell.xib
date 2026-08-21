@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="73" id="KGk-i7-Jjw" customClass="countryTvCell" customModule="Gradit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="391" height="73"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="391" height="73"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="avD-oa-6bl">
+                        <rect key="frame" x="5" y="5" width="381" height="63"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="DRT-5f-hQd">
+                                <rect key="frame" x="5" y="5" width="371" height="53"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradit_logo" translatesAutoresizingMaskIntoConstraints="NO" id="vdV-gU-aJR">
+                                        <rect key="frame" x="0.0" y="6.6666666666666679" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="SbQ-3o-s0f"/>
+                                            <constraint firstAttribute="height" constant="40" id="qht-H6-4go"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xoc-Rr-wl0">
+                                        <rect key="frame" x="48" y="16.333333333333336" width="280" height="20.333333333333336"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fri-5g-VVL">
+                                        <rect key="frame" x="336" y="9" width="35" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="35" id="3hn-vD-RKM"/>
+                                            <constraint firstAttribute="height" constant="35" id="wFt-ka-VEP"/>
+                                        </constraints>
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="circle" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="DRT-5f-hQd" firstAttribute="leading" secondItem="avD-oa-6bl" secondAttribute="leading" constant="5" id="Ba7-jQ-7Zj"/>
+                            <constraint firstAttribute="trailing" secondItem="DRT-5f-hQd" secondAttribute="trailing" constant="5" id="dmQ-Aq-iQH"/>
+                            <constraint firstItem="DRT-5f-hQd" firstAttribute="top" secondItem="avD-oa-6bl" secondAttribute="top" constant="5" id="fuQ-B6-cb7"/>
+                            <constraint firstAttribute="bottom" secondItem="DRT-5f-hQd" secondAttribute="bottom" constant="5" id="uSR-W8-Hww"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="avD-oa-6bl" secondAttribute="bottom" constant="5" id="GNC-ke-aIz"/>
+                    <constraint firstItem="avD-oa-6bl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="Tza-k2-2Fk"/>
+                    <constraint firstItem="avD-oa-6bl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="cCe-0o-Wgm"/>
+                    <constraint firstAttribute="trailing" secondItem="avD-oa-6bl" secondAttribute="trailing" constant="5" id="e4H-ts-xBl"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="SelectionCheckbox" destination="Fri-5g-VVL" id="zfy-iM-PU1"/>
+                <outlet property="countryNameLbl" destination="Xoc-Rr-wl0" id="FDN-4j-mAF"/>
+                <outlet property="flagImageView" destination="vdV-gU-aJR" id="v6Z-vc-YgG"/>
+            </connections>
+            <point key="canvasLocation" x="164.12213740458014" y="125"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="circle" catalog="system" width="128" height="123"/>
+        <image name="gradit_logo" width="512" height="512"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SplashScreenVC" customModule="Gradit" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iAf-FT-S0s">
+                    <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="graditicons" translatesAutoresizingMaskIntoConstraints="NO" id="9e3-Wf-hsR">
+                            <rect key="frame" x="35" y="198" width="323" height="150"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="150" id="5pk-gE-fjc"/>
+                            </constraints>
+                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your smart college assistant" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpf-3w-qxV">
+                            <rect key="frame" x="20" y="356" width="353" height="28.666666666666686"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ellipsis" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="dMJ-iD-FZ8">
+                            <rect key="frame" x="40" y="472.33333333333331" width="313" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="xtX-di-aqO"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="dMJ-iD-FZ8" secondAttribute="trailing" constant="40" id="9WA-AK-4Bb"/>
+                        <constraint firstAttribute="trailing" secondItem="qpf-3w-qxV" secondAttribute="trailing" constant="20" id="DJH-xA-YGk"/>
+                        <constraint firstItem="dMJ-iD-FZ8" firstAttribute="top" secondItem="qpf-3w-qxV" secondAttribute="bottom" constant="80" id="FTl-WT-7sG"/>
+                        <constraint firstItem="qpf-3w-qxV" firstAttribute="leading" secondItem="iAf-FT-S0s" secondAttribute="leading" constant="20" id="MwD-hl-FE9"/>
+                        <constraint firstItem="9e3-Wf-hsR" firstAttribute="leading" secondItem="iAf-FT-S0s" secondAttribute="leading" constant="35" id="QsD-id-rKo"/>
+                        <constraint firstAttribute="trailing" secondItem="9e3-Wf-hsR" secondAttribute="trailing" constant="35" id="UoO-Zl-33i"/>
+                        <constraint firstItem="9e3-Wf-hsR" firstAttribute="centerY" secondItem="iAf-FT-S0s" secondAttribute="centerY" constant="-60" id="nMC-3U-mI8"/>
+                        <constraint firstItem="qpf-3w-qxV" firstAttribute="top" secondItem="9e3-Wf-hsR" secondAttribute="bottom" constant="8" id="ugr-dJ-90c"/>
+                        <constraint firstItem="dMJ-iD-FZ8" firstAttribute="leading" secondItem="iAf-FT-S0s" secondAttribute="leading" constant="40" id="yPe-36-RiY"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" red="0.62640984420000001" green="0.80495345809999996" blue="0.96782869100000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="iAf-FT-S0s" secondAttribute="bottom" id="Ato-7j-AI1"/>
+                <constraint firstItem="iAf-FT-S0s" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Zgv-o3-kKj"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="iAf-FT-S0s" secondAttribute="trailing" id="mH8-dl-IqK"/>
+                <constraint firstItem="iAf-FT-S0s" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="uY5-nr-68h"/>
+            </constraints>
+            <point key="canvasLocation" x="110.68702290076335" y="104.92957746478874"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
+        <image name="graditicons" width="925" height="800"/>
+    </resources>
+</document>
