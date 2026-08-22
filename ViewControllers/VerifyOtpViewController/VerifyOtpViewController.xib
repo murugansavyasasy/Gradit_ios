@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -35,13 +35,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhr-n1-h35">
-                    <rect key="frame" x="0.0" y="48" width="414" height="848"/>
+                    <rect key="frame" x="0.0" y="96" width="414" height="800"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UYv-qK-OR2">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="416"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="368"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create New Password Screen" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="elp-Tn-ANM">
-                                    <rect key="frame" x="0.0" y="81" width="414" height="29"/>
+                                    <rect key="frame" x="0.0" y="81" width="414" height="24.5"/>
                                     <fontDescription key="fontDescription" name="Nunito-ExtraBoldItalic" family="Nunito" pointSize="21"/>
                                     <color key="textColor" red="0.077355660500000006" green="0.1406655014" blue="0.41570961480000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <nil key="highlightedColor"/>
@@ -55,7 +55,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ASh-lw-Xiz" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
-                            <rect key="frame" x="-128" y="220" width="655" height="714"/>
+                            <rect key="frame" x="-128" y="220" width="655" height="666"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="63s-nC-Kd7" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
                                     <rect key="frame" x="188" y="91.5" width="279" height="45"/>
@@ -106,7 +106,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="Reset password" translatesAutoresizingMaskIntoConstraints="NO" id="FWQ-Mq-T7H">
-                                    <rect key="frame" x="128" y="193" width="416" height="434"/>
+                                    <rect key="frame" x="128" y="188.5" width="416" height="390.5"/>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gol-1w-XvW" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
                                     <rect key="frame" x="188" y="33" width="279" height="45"/>
@@ -157,10 +157,10 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XFw-Qp-cuW" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
-                                    <rect key="frame" x="212" y="158" width="231" height="31.5"/>
+                                    <rect key="frame" x="212" y="158" width="231" height="27"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONFIRM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIs-MD-SNt">
-                                            <rect key="frame" x="0.0" y="0.0" width="231" height="31.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="231" height="27"/>
                                             <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="23"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
