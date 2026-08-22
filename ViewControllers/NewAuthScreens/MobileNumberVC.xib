@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MobileNumberVC" customModule="Gradit" customModuleProvider="target">
             <connections>
                 <outlet property="baseView" destination="iUj-XB-TvP" id="aAD-2f-BXz"/>
+                <outlet property="countryCodeLbl" destination="YEg-c8-ANC" id="F8z-aP-B14"/>
                 <outlet property="mobileNumberTextField" destination="cQ0-g4-K3l" id="CIG-4U-Jw0"/>
                 <outlet property="nextButton" destination="5yo-vt-1VE" id="lWQ-sz-970"/>
                 <outlet property="textFieldBaseView" destination="gQB-qR-qeV" id="sOB-Cr-eGP"/>
@@ -32,6 +33,9 @@
                     </constraints>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" image="arrow.left" catalog="system"/>
+                    <connections>
+                        <action selector="backAct:" destination="-1" eventType="touchUpInside" id="y44-DD-nRQ"/>
+                    </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iUj-XB-TvP">
                     <rect key="frame" x="0.0" y="208" width="393" height="644"/>
@@ -76,7 +80,7 @@
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="00000 00000" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cQ0-g4-K3l">
                                     <rect key="frame" x="74.666666666666657" y="0.0" width="278.33333333333337" height="51"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done" textContentType="tel"/>
                                 </textField>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -99,24 +103,38 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="d6p-VQ-mi6"/>
                             </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             <state key="normal" title="Next"/>
+                            <connections>
+                                <action selector="nextBtnAct:" destination="-1" eventType="touchUpInside" id="QQz-rL-xgt"/>
+                            </connections>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CKD-fP-MJQ">
+                            <rect key="frame" x="0.0" y="352" width="393" height="282"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="Akc-Bb-fUw" firstAttribute="leading" secondItem="iUj-XB-TvP" secondAttribute="leading" constant="20" id="1za-hk-iPj"/>
                         <constraint firstItem="RGE-aX-XA2" firstAttribute="leading" secondItem="iUj-XB-TvP" secondAttribute="leading" constant="20" id="3q5-Wg-QmB"/>
                         <constraint firstAttribute="trailing" secondItem="gQB-qR-qeV" secondAttribute="trailing" constant="20" id="8tq-kh-Dcw"/>
+                        <constraint firstAttribute="trailing" secondItem="CKD-fP-MJQ" secondAttribute="trailing" id="9dd-Dv-l68"/>
                         <constraint firstItem="Akc-Bb-fUw" firstAttribute="top" secondItem="RGE-aX-XA2" secondAttribute="bottom" constant="30" id="Gnj-I2-zKm"/>
                         <constraint firstAttribute="trailing" secondItem="ESC-sG-MQp" secondAttribute="trailing" id="Jeb-S7-Z3g"/>
                         <constraint firstItem="5yo-vt-1VE" firstAttribute="top" secondItem="gQB-qR-qeV" secondAttribute="bottom" constant="40" id="Kgy-Eu-EVL"/>
                         <constraint firstItem="RGE-aX-XA2" firstAttribute="top" secondItem="ESC-sG-MQp" secondAttribute="bottom" constant="15" id="M9f-2h-4t2"/>
                         <constraint firstItem="gQB-qR-qeV" firstAttribute="leading" secondItem="iUj-XB-TvP" secondAttribute="leading" constant="20" id="T5s-8k-6fw"/>
                         <constraint firstItem="ESC-sG-MQp" firstAttribute="leading" secondItem="iUj-XB-TvP" secondAttribute="leading" id="XuI-Pp-Z91"/>
+                        <constraint firstAttribute="bottom" secondItem="CKD-fP-MJQ" secondAttribute="bottom" constant="10" id="ZvX-UM-Dt3"/>
                         <constraint firstAttribute="trailing" secondItem="5yo-vt-1VE" secondAttribute="trailing" constant="20" id="bZg-1k-H48"/>
+                        <constraint firstItem="CKD-fP-MJQ" firstAttribute="leading" secondItem="iUj-XB-TvP" secondAttribute="leading" id="jXl-w0-RbC"/>
                         <constraint firstItem="5yo-vt-1VE" firstAttribute="leading" secondItem="iUj-XB-TvP" secondAttribute="leading" constant="20" id="o2B-1C-Zj6"/>
+                        <constraint firstItem="CKD-fP-MJQ" firstAttribute="top" secondItem="5yo-vt-1VE" secondAttribute="bottom" constant="10" id="ozs-z8-bXu"/>
                         <constraint firstAttribute="trailing" secondItem="Akc-Bb-fUw" secondAttribute="trailing" constant="20" id="pVT-50-Ow4"/>
                         <constraint firstItem="gQB-qR-qeV" firstAttribute="top" secondItem="Akc-Bb-fUw" secondAttribute="bottom" constant="20" id="rQg-QF-Ta1"/>
                         <constraint firstItem="ESC-sG-MQp" firstAttribute="top" secondItem="iUj-XB-TvP" secondAttribute="top" constant="25" id="xoF-xv-GuV"/>

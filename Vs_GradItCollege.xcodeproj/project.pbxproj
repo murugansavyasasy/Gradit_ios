@@ -33,7 +33,6 @@
 		188F78072912452C000CB50F /* AssignmentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188F78052912452C000CB50F /* AssignmentCollectionViewCell.xib */; };
 		188F780B29124824000CB50F /* AssignmentTableviewCel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F780929124824000CB50F /* AssignmentTableviewCel.swift */; };
 		188F780C29124824000CB50F /* AssignmentTableviewCel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188F780A29124824000CB50F /* AssignmentTableviewCel.xib */; };
-		188F780F29127C9D000CB50F /* GetUsermenuModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F780E29127C9D000CB50F /* GetUsermenuModal.swift */; };
 		189145E0290A616E00034317 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189145DF290A616E00034317 /* AppDelegate.swift */; };
 		189145E2290A616E00034317 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189145E1290A616E00034317 /* SceneDelegate.swift */; };
 		189145E4290A616E00034317 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189145E3290A616E00034317 /* ViewController.swift */; };
@@ -775,7 +774,6 @@
 		188F78052912452C000CB50F /* AssignmentCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentCollectionViewCell.xib; sourceTree = "<group>"; };
 		188F780929124824000CB50F /* AssignmentTableviewCel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentTableviewCel.swift; sourceTree = "<group>"; };
 		188F780A29124824000CB50F /* AssignmentTableviewCel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentTableviewCel.xib; sourceTree = "<group>"; };
-		188F780E29127C9D000CB50F /* GetUsermenuModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUsermenuModal.swift; sourceTree = "<group>"; };
 		189145DC290A616E00034317 /* Gradit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gradit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		189145DF290A616E00034317 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		189145E1290A616E00034317 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -1656,14 +1654,6 @@
 			path = AssignmentTableviewCel;
 			sourceTree = "<group>";
 		};
-		188F780D29127C75000CB50F /* GetUsermenu */ = {
-			isa = PBXGroup;
-			children = (
-				188F780E29127C9D000CB50F /* GetUsermenuModal.swift */,
-			);
-			path = GetUsermenu;
-			sourceTree = "<group>";
-		};
 		189145D3290A616E00034317 = {
 			isa = PBXGroup;
 			children = (
@@ -1837,7 +1827,6 @@
 				5284BD6C292E4A6000120C74 /* SemCreditPoints */,
 				5284BD58292E486F00120C74 /* CategoryCreditPoints */,
 				1888410B291A667700A81C26 /* ReuseController */,
-				188F780D29127C75000CB50F /* GetUsermenu */,
 				18BAB3F0290F9349009FC2AA /* SideMenu */,
 				18BAB3E7290F933F009FC2AA /* Notification */,
 				18914655290A6E3000034317 /* PriorityScreen */,
@@ -5335,7 +5324,6 @@
 				1865D8AB2A0903F800CD43F3 /* CommunicationHomePageViewController.swift in Sources */,
 				FADD3CA32EFD686800F37E85 /* AttachmentPreviewCvCell.swift in Sources */,
 				18AF2AC929113BFB00898894 /* EventsCollectionViewCell.swift in Sources */,
-				188F780F29127C9D000CB50F /* GetUsermenuModal.swift in Sources */,
 				524C04B329405D5D000A6975 /* SenderImagePdfTableViewCell.swift in Sources */,
 				52D9146029ED5E0500D0D8DD /* chatBlockResp.swift in Sources */,
 				18AF2ABF29113A7F00898894 /* AttandanceTableViewCell.swift in Sources */,

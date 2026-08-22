@@ -151,14 +151,14 @@ class ViewController: UIViewController {
         // Country check
         guard countryId != nil else {
             print("CountryListViewController")
-            presentVC(CountryListViewController())
+            presentVC(NewCountryScreenVC())
             return
         }
         
         // Mobile check
         guard mobileNum != nil else {
             print("LoginViewController")
-            presentVC(LoginNewViewController())
+            presentVC(MobileNumberVC())
             return
         }
         

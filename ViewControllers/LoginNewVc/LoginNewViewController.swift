@@ -11,11 +11,9 @@ import ObjectMapper
 @available(iOS 16.0, *)
 class LoginNewViewController: UIViewController,UITextFieldDelegate {
     
-    
     @IBOutlet weak var mobileNumText: UITextField!
-    
-    
     @IBOutlet weak var nextView: UIViewX!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.mobileNumText.delegate = self
@@ -24,7 +22,6 @@ class LoginNewViewController: UIViewController,UITextFieldDelegate {
         addDoneButtonOnKeyboard()
         let vc = UITapGestureRecognizer(target: self, action: #selector(loginVc))
         nextView.addGestureRecognizer(vc)
-        
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)

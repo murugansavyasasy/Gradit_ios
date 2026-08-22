@@ -56,7 +56,6 @@ class NewHomescreenVC: UIViewController {
     var  sti : [AdData] = []
     var EventData : [UpcomingEventsDashType] = []
     var chatDatas : [chatData] = []
-    var getMenuData : [GetUsermenuData] = []
     var LeaveeReq : [LeaveRequestType] = []
     var str : [String] = []
     var strName : [String] = []

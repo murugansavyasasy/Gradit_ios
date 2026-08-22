@@ -90,7 +90,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
     var  sti : [AdData] = []
     var EventData : [UpcomingEventsDashType] = []
     var chatDatas : [chatData] = []
-    var getMenuData : [GetUsermenuData] = []
     let NC = UINavigationController()
     var str : [String] = []
     var strName : [String] = []
