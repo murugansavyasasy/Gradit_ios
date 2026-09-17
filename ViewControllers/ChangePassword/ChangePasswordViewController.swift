@@ -197,7 +197,7 @@ class ChangePasswordViewController: UIViewController,UITextFieldDelegate {
             
             let defaults = UserDefaults.standard
             let getmobil = defaults.string(forKey: DefaultsKeys.mobileNumber)
-            var changepass = chageModal()
+            var changepass = changePasswordModal()
             
             changepass.mobilenumber = getmobil
             changepass.oldpassword = oldPasswordTextField.text
@@ -208,7 +208,7 @@ class ChangePasswordViewController: UIViewController,UITextFieldDelegate {
                 httpMethod: .post,
                 queryParam: nil,
                 requestBody: changepass
-            ) { [weak self] (result: Result<chageResponce, Error>) in
+            ) { [weak self] (result: Result<changePasswordResponse, Error>) in
                 
                 guard let self = self else { return }
                 
@@ -221,8 +221,8 @@ class ChangePasswordViewController: UIViewController,UITextFieldDelegate {
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
                         if changePassRess.Status == 1 {
-                            let vc =  LoginViewController()
-                            vc.mobile_num = defaults.string(forKey: DefaultsKeys.mobileNumber)
+                            let vc =  LoginVc()
+                            vc.mobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
                             vc.modalPresentationStyle = .fullScreen
                             self.present(vc, animated: true)
                         }

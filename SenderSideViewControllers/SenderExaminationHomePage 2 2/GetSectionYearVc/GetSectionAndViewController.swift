@@ -480,7 +480,7 @@ class GetSectionAndViewController: UIViewController, UITextFieldDelegate, UIGest
         let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to logout", preferredStyle: .alert)
         refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { _ in
             UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
-            let vc = LoginNewViewController(nibName: nil, bundle: nil)
+            let vc = MobileNumberVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }))
@@ -516,13 +516,13 @@ class GetSectionAndViewController: UIViewController, UITextFieldDelegate, UIGest
     }
     
     @IBAction func changePassowrdVC() {
-        let vc = ChangePasswordViewController(nibName: nil, bundle: nil)
+        let vc = ChangePasswordVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
     
     @IBAction func priorityVc() {
-        let vc = PriorityViewController(nibName: nil, bundle: nil)
+        let vc = PriorityScreenVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }

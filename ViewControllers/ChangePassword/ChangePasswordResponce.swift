@@ -3,7 +3,7 @@
 import Foundation
 import ObjectMapper
 
-struct chageModal: Codable {
+struct changePasswordModal: Codable {
 
     var mobilenumber: String?
     var oldpassword: String?
@@ -11,7 +11,7 @@ struct chageModal: Codable {
 
 }
 
-struct chageResponce: Codable {
+struct changePasswordResponse: Codable {
 
     var Status: Int?
     var Message: String?

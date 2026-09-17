@@ -38,7 +38,7 @@ class TermsViewController: UIViewController {
     
     @IBAction  func acceptVc() {
         
-        let vc = CountryListViewController(nibName: nil, bundle: nil)
+        let vc = NewCountryScreenVC(nibName: nil, bundle: nil)
         
         let term : String = "1"
         let userDefault = UserDefaults.standard

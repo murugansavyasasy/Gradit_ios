@@ -466,39 +466,94 @@ extension String {
 
 import UIKit
 
-
-import UIKit
+//extension UIView {
+//
+//    func addDoneBtn(title: String = "Done") {
+//        let toolbar = UIToolbar()
+//        toolbar.sizeToFit()
+//
+//        let flexSpace = UIBarButtonItem(
+//            barButtonSystemItem: .flexibleSpace,
+//            target: nil,
+//            action: nil
+//        )
+//
+//        let done = UIBarButtonItem(
+//            title: title,
+//            style: .done,
+//            target: self,
+//            action: #selector(dismissKeyboard)
+//        )
+//
+//        toolbar.items = [flexSpace, done]
+//
+//        switch self {
+//        case let textField as UITextField:
+//            textField.inputAccessoryView = toolbar
+//
+//        case let textView as UITextView:
+//            textView.inputAccessoryView = toolbar
+//
+//        case let searchBar as UISearchBar:
+//            searchBar.searchTextField.inputAccessoryView = toolbar
+//
+//        default:
+//            break
+//        }
+//    }
+//
+//    @objc private func dismissKeyboard() {
+//        self.endEditing(true)
+//    }
+//}
 
 extension UIView {
 
     func addDoneBtn(title: String = "Done") {
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
 
-        let flexSpace = UIBarButtonItem(
-            barButtonSystemItem: .flexibleSpace,
-            target: nil,
-            action: nil
+        let accessoryView = UIView()
+        accessoryView.backgroundColor = .systemGray6
+
+        let doneButton = UIButton(type: .system)
+        doneButton.setTitle(title, for: .normal)
+        doneButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .medium)
+
+        doneButton.addTarget(
+            self,
+            action: #selector(dismissKeyboard),
+            for: .touchUpInside
         )
 
-        let done = UIBarButtonItem(
-            title: title,
-            style: .done,
-            target: self,
-            action: #selector(dismissKeyboard)
-        )
+        accessoryView.addSubview(doneButton)
 
-        toolbar.items = [flexSpace, done]
+        doneButton.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            doneButton.trailingAnchor.constraint(
+                equalTo: accessoryView.trailingAnchor,
+                constant: -16
+            ),
+            doneButton.topAnchor.constraint(
+                equalTo: accessoryView.topAnchor,
+                constant: 8
+            ),
+            doneButton.bottomAnchor.constraint(
+                equalTo: accessoryView.bottomAnchor,
+                constant: -8
+            )
+        ])
+
+        accessoryView.frame.size.height = 44
 
         switch self {
         case let textField as UITextField:
-            textField.inputAccessoryView = toolbar
+            textField.inputAccessoryView = accessoryView
 
         case let textView as UITextView:
-            textView.inputAccessoryView = toolbar
+            textView.inputAccessoryView = accessoryView
 
         case let searchBar as UISearchBar:
-            searchBar.searchTextField.inputAccessoryView = toolbar
+            searchBar.searchTextField.inputAccessoryView = accessoryView
 
         default:
             break
@@ -506,6 +561,6 @@ extension UIView {
     }
 
     @objc private func dismissKeyboard() {
-        self.endEditing(true)
+        endEditing(true)
     }
 }

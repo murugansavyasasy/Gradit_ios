@@ -48,7 +48,7 @@ import UIKit
     public var defaultBackgroundColor: UIColor = UIColor.clear
     public var filledBackgroundColor: UIColor = UIColor.white
     public var defaultBorderColor: UIColor = UIColor.systemGray3
-    public var filledBorderColor: UIColor = UIColor.blue
+    public var filledBorderColor: UIColor = UIColor.systemBlue
     public var errorBorderColor: UIColor?
     
     public weak var delegate: OTPFieldViewDelegate?
@@ -87,6 +87,8 @@ import UIKit
             addSubview(otpField)
             
             secureEntryData.append("")
+            
+            otpField.addDoneBtn()
         }
     }
     
@@ -140,7 +142,7 @@ import UIKit
 
         if requireCursor {
             otpField.tintColor = cursorColor
-            otpField.placeholder = "0"
+            otpField.placeholder = ""
         } else {
             otpField.tintColor = .clear
         }

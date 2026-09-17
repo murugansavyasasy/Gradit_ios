@@ -75,6 +75,7 @@ struct DefaultsKeys {
     static let   videosizealert = "videosizealert"
     static let   TermsAndCondition = "TermsAndCondition"
     static let   CountryId = "CountryId"
+    static let   SelectedCountry = "SelectedCountry"
     static var  resiverId : [String] = []
     static var saveButtonId : String! // important
     static var MenuRefName :[menuApiDataDetails] = []

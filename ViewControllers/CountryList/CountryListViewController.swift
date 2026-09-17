@@ -72,7 +72,7 @@ class CountryListViewController: UIViewController,UITableViewDelegate,UITableVie
             let userDefault = UserDefaults.standard
             userDefault.set(term, forKey: DefaultsKeys.CountryId)
             
-            let vc = LoginNewViewController(nibName: nil, bundle: nil)
+            let vc = MobileNumberVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true,completion: nil)
         }

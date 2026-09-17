@@ -8,10 +8,9 @@
 import UIKit
 
 @available(iOS 16.0, *)
-class NewCountryScreenVC: UIViewController {
+class NewCountryScreenVC: UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var baseView: UIView!
-    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var logoImgview: UIImageView!
     @IBOutlet weak var selectCountryLbl: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -19,9 +18,12 @@ class NewCountryScreenVC: UIViewController {
     @IBOutlet weak var CheckBoxBtn: UIButton!
     @IBOutlet weak var agreeTermsLbl: UILabel!
     @IBOutlet weak var nextBtn: UIButton!
+    @IBOutlet weak var nodataImage: UIImageView!
+    @IBOutlet weak var noDataLbl: UILabel!
     
     private var countryList : [CountryData] = []
-    private var selectedIndex: IndexPath?
+    private var FiltercountryList : [CountryData] = []
+    private var selectedCountry: CountryData?
     private var termsRange : NSRange?
     private var isTermsAgreed : Bool = false
     
@@ -40,8 +42,11 @@ class NewCountryScreenVC: UIViewController {
         searchBar.delegate = self
         nextBtn.layer.cornerRadius = 10
         
-        let fullText = "I agree to the Terms and Conditions"
-        let underlineText = "Terms and Conditions"
+        nodataImage.isHidden = true
+        noDataLbl.isHidden = true
+        
+        let fullText = "I agree to the Terms & Conditions"
+        let underlineText = "Terms & Conditions"
         let attributedString = NSMutableAttributedString(string: fullText)
         
         if let range = fullText.range(of: underlineText){
@@ -77,11 +82,26 @@ class NewCountryScreenVC: UIViewController {
             case .success(let success):
                 
                 countryList = success.data ?? []
+                FiltercountryList = countryList
                 tv.reloadData()
+                
+                if countryList.isEmpty {
+                    nodataImage.isHidden = false
+                    noDataLbl.isHidden = false
+                }else{
+                    nodataImage.isHidden = true
+                    noDataLbl.isHidden = true
+                }
+                
+                noDataLbl.text = success.Message
                 
             case .failure(let failure):
                 countryList = []
+                FiltercountryList = countryList
                 tv.reloadData()
+                nodataImage.isHidden = false
+                noDataLbl.isHidden = false
+                noDataLbl.text = failure.localizedDescription
             }
         }
     }
@@ -119,6 +139,7 @@ class NewCountryScreenVC: UIViewController {
     }
     
     @IBAction func bactBtnAct(_ sender: Any) {
+        dismiss(animated: true)
     }
     
     @IBAction func checkBoxAct(_ sender: UIButton) {
@@ -133,26 +154,27 @@ class NewCountryScreenVC: UIViewController {
     
     @IBAction func nextBtnAct(_ sender: Any) {
         
-        if selectedIndex == nil {
+        guard let selectedCountry = selectedCountry else {
             showAlert(message: "Please select your country")
             return
         }
         
-        if !isTermsAgreed {
+        guard isTermsAgreed else{
             showAlert(message: "Please agree to the terms and conditions")
             return
         }
         
        // UserDefaults.standard.set("1", forKey: DefaultsKeys.TermsAndCondition)
+        UserDefaults.standard.set("1", forKey: DefaultsKeys.CountryId)
         
-        let selectedCountry = countryList[selectedIndex?.row ?? 0]
         if let data = try? JSONEncoder().encode(selectedCountry) {
-            UserDefaults.standard.set(data, forKey: DefaultsKeys.CountryId)
+            UserDefaults.standard.set(data, forKey: DefaultsKeys.SelectedCountry)
         }
         
-        UserDefaults.standard.set(countryList[selectedIndex!.row].baseurls,forKey: DefaultsKeys.baseUrl)
+        UserDefaults.standard.set(selectedCountry.baseurls,forKey: DefaultsKeys.baseUrl)
         
         let vc = MobileNumberVC()
+        vc.HideBackBtn = false
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
@@ -170,43 +192,66 @@ class NewCountryScreenVC: UIViewController {
 
         present(alert, animated: true)
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        let text = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        
+        if text.isEmpty {
+            FiltercountryList = countryList
+        }else {
+            FiltercountryList = countryList.filter { country in
+                country.country?.lowercased().contains(text) ?? false ||
+                country.codecountry?.lowercased().contains(text) ?? false
+            }
+        }
+        
+        tv.reloadData()
+        
+        if FiltercountryList.isEmpty {
+            nodataImage.isHidden = false
+            noDataLbl.isHidden = false
+            noDataLbl.text = "No Data Found!"
+        }else {
+            nodataImage.isHidden = true
+            noDataLbl.isHidden = true
+        }
+    }
 }
 
 @available(iOS 16.0, *)
 extension NewCountryScreenVC : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         return countryList.count
+         return FiltercountryList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tv.dequeueReusableCell(withIdentifier: "countryTvCell", for: indexPath) as? countryTvCell else { return UITableViewCell() }
         
-        let country = countryList[indexPath.row]
+        let country = FiltercountryList[indexPath.row]
         cell.countryNameLbl.text = country.country
-        
-        if selectedIndex == indexPath {
+        let flag_url = URL(string: "https://www.worldometers.info//img/flags/small/tn_in-flag.gif")
+        cell.flagImageView.sd_setImage(with: flag_url, placeholderImage: UIImage(named: "gradit_logo"))
+        if let selectedCountry = selectedCountry,
+           selectedCountry.country == country.country
+        {
             cell.SelectionCheckbox.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+            cell.SelectionCheckbox.tintColor = .systemGreen
         }else {
             cell.SelectionCheckbox.setImage(UIImage(systemName: "circle"), for: .normal)
+            cell.SelectionCheckbox.tintColor = .lightGray
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedIndex = indexPath
+        selectedCountry = FiltercountryList[indexPath.row]
         tv.reloadData()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
-}
-
-@available(iOS 16.0, *)
-extension NewCountryScreenVC : UISearchBarDelegate {
-    
-    
 }

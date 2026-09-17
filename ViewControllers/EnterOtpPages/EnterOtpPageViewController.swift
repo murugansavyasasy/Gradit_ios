@@ -106,7 +106,7 @@ verifyOtp ()
 @IBAction func loginViewVc () {
 
 
-let vc = LoginViewController(nibName: nil, bundle: nil)
+let vc = LoginVc(nibName: nil, bundle: nil)
 
 vc.modalPresentationStyle = .fullScreen
 present(vc, animated: true,completion: nil)

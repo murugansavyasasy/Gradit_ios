@@ -15,8 +15,6 @@ class SenderPlayingVideoViewController: UIViewController {
     
     @IBOutlet weak var WebVideo: WKWebView!
     
-   
-    @IBOutlet weak var videoView: UIView!
     @IBOutlet weak var descriptionLabel: UILabel!
     
     

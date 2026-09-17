@@ -12,63 +12,31 @@ import SystemConfiguration
 @available(iOS 16.0, *)
 class ViewController: UIViewController {
     
-    
     @IBOutlet weak var gifimageView: UIImageView!
+    
     var versionCheck : [VersionCheckData] = []
-    
-    
-    
-    
-    
-    var termsCondition : String!
-    
-    
-    
+    // var termsCondition : String!
     var countryId : String!
-    
-    
-    
     var mobileNum : String!
-    
-    var data                            : [datalogin]!
-    
-    
-    
-    var LIVE_ITUNES =
-    
-    "https://apps.apple.com/us/app/gradit/id1574188445"
-    
-    
-    
-    var isversionupdateavailable   :  Int!
-    
-    var isforceupdaterequired :  Int!
-    
-    
-    
-    
-    var versionalertcontent   :  String!
-    
-    var versionalerttitle :  String!
-    
-    
+    var data : [datalogin]!
+    var LIVE_ITUNES = "https://apps.apple.com/us/app/gradit/id1574188445"
+    var isversionupdateavailable : Int!
+    var isforceupdaterequired : Int!
+    var versionalertcontent : String!
+    var versionalerttitle : String!
     var princiData : [String] = []
-    
-   var myArray = [[String:AnyObject]]()
+    var myArray = [[String:AnyObject]]()
     
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
+        animateEllipsisColor()
         
-//        fatalError("test Crash")
+        //fatalError("test Crash")
         
         overrideUserInterfaceStyle = .light
-        
-        // Do any additional setup after loading the view.
-        
-        
         
         var deviceId = UIDevice.current.identifierForVendor?.uuidString
         
@@ -77,54 +45,30 @@ class ViewController: UIViewController {
         print("DeviceTo1111kenDeviceToken",deviceId)
         
         defaults.set(deviceId, forKey: DefaultsKeys.DeviceToken)
-
         
         print("DeviceTokenDeviceToken",deviceId)
         print("DefaultsKeys.DeviceToken",DefaultsKeys.DeviceToken)
-        
-        
-//        let button = UIButton(type: .roundedRect)
-//        button.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
-//        button.setTitle("Test Crash", for: [])
-//        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
-//        view.addSubview(button)
-//    
-        
         print("viewDidload")
-        VersionCheck ()
-       
-         
         
-        
-        
-        
-        
-//        showAlert()
-        
-        
-        
-        
-        
-        
+       // VersionCheck ()
         
         let nc = NotificationCenter.default
         
         nc.addObserver(self,selector: #selector(ViewController.callNotification), name: NSNotification.Name(rawValue: "PushNotification"), object:nil)
-        
-        
-        
+        CheckCountrySelection()
     }
     
-    
-//    @IBAction func crashButtonTapped(_ sender: AnyObject) {
-//          let numbers = [0]
-//          let _ = numbers[1]
-//      }
-    
-    
-    
-    
-    
+    func animateEllipsisColor() {
+       
+            UIView.animate(withDuration: 0.8,
+                           delay: 0,
+                           options: [.repeat, .autoreverse],
+                           animations: {
+                self.gifimageView.alpha = 0.3   // fade out
+            }, completion: nil)
+
+    }
+
     
     @objc func callNotification(notification:Notification) -> Void {
         
@@ -132,6 +76,22 @@ class ViewController: UIViewController {
         
     }
     
+    func CheckCountrySelection() {
+        
+        let defaults = UserDefaults.standard
+        
+        guard let countryId = defaults.string(forKey: DefaultsKeys.CountryId),
+              !countryId.isEmpty else {
+
+            DispatchQueue.main.async { [weak self] in
+                self?.presentVC(NewCountryScreenVC())
+            }
+            
+            return
+        }
+        
+        VersionCheck()
+    }
     
     func loginDetails() {
         
@@ -139,25 +99,24 @@ class ViewController: UIViewController {
         
         mobileNum      = defaults.string(forKey: DefaultsKeys.mobileNumber)
         let password   = defaults.string(forKey: DefaultsKeys.Password)
-        termsCondition = defaults.string(forKey: DefaultsKeys.TermsAndCondition)
+       // termsCondition = defaults.string(forKey: DefaultsKeys.TermsAndCondition)
         countryId      = defaults.string(forKey: DefaultsKeys.CountryId)
         
         // Terms check
-        guard termsCondition != nil else {
-            presentVC(TermsViewController())
-            return
-        }
+//        guard termsCondition != nil else {
+//            presentVC(TermsViewController())
+//            return
+//        }
         
         // Country check
-        guard countryId != nil else {
-            print("CountryListViewController")
-            presentVC(NewCountryScreenVC())
-            return
-        }
+//        guard countryId != nil else {
+//            print("CountryListViewController")
+//            presentVC(NewCountryScreenVC())
+//            return
+//        }
         
         // Mobile check
         guard mobileNum != nil else {
-            print("LoginViewController")
             presentVC(MobileNumberVC())
             return
         }
@@ -165,8 +124,7 @@ class ViewController: UIViewController {
         let isUserSelectCountry = PreferencesUtil.checkPrefs(key: Constant.keyId)
         
         guard isUserSelectCountry else {
-            print("LoginViewController")
-            presentVC(LoginNewViewController())
+            presentVC(MobileNumberVC())
             return
         }
         
@@ -230,23 +188,23 @@ class ViewController: UIViewController {
                         present(vc, animated: true,completion: nil)
                     }else{
                         
-                        let vc = PriorityViewController(nibName: nil, bundle: nil)
+                        let vc = PriorityScreenVC(nibName: nil, bundle: nil)
                         vc.modalPresentationStyle = .fullScreen
                         present(vc, animated: true,completion: nil)
                         
                     }
                 } else {
                     
-                    presentVC(LoginNewViewController())
+                    presentVC(MobileNumberVC())
                 }
                 
             case .failure(let error):
                 print("Error:", error.localizedDescription)
-                presentVC(LoginNewViewController())
+                presentVC(MobileNumberVC())
             }
         }
     }
-
+    
     private func presentVC(_ vc: UIViewController) {
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
@@ -268,7 +226,7 @@ class ViewController: UIViewController {
             queryParam: param,
             requestBody: nil
         ) { [weak self] (result: Result<VersionCheckResponse,Error>) in
-                
+            
             guard let self = self else {return}
             
             switch result {
@@ -336,7 +294,7 @@ class ViewController: UIViewController {
                 print("Error",failure.localizedDescription)
             }
             
-            }
+        }
     }
     
     
@@ -350,24 +308,13 @@ class ViewController: UIViewController {
             
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
-    
         
         // or outside scope use this
-        
         guard let url = URL(string: "\(myUrl)"), !url.absoluteString.isEmpty else {
             
             return
-            
         }
         
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        
     }
-    
-    
-    
-    
-    
-    
-   
 }

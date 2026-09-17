@@ -15,19 +15,24 @@ class MobileNumberVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var mobileNumberTextField: UITextField!
     @IBOutlet weak var countryCodeLbl: UILabel!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var backBtn: RoundedBackBtn!
     
     private var CountryData : CountryData?
+    var HideBackBtn: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         baseView.layer.cornerRadius = 40
         baseView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        backBtn.isHidden = HideBackBtn
         
-        if let data = UserDefaults.standard.data(forKey: DefaultsKeys.CountryId),
+        if let data = UserDefaults.standard.data(forKey: DefaultsKeys.SelectedCountry),
            let country = try? JSONDecoder().decode(Gradit.CountryData.self, from: data){
             CountryData = country
         }
+        
+        countryCodeLbl.text = "+\(CountryData?.codecountry ?? "91")"
         
         textFieldBaseView.layer.cornerRadius = 12
         textFieldBaseView.layer.borderWidth =  1
@@ -37,6 +42,13 @@ class MobileNumberVC: UIViewController, UITextFieldDelegate {
         
         mobileNumberTextField.delegate = self
         mobileNumberTextField.addDoneBtn()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -79,15 +91,15 @@ class MobileNumberVC: UIViewController, UITextFieldDelegate {
                     
                     if loginResponse?.first?.is_redirect_otp_screen == 1 {
                         
-                        let vc = EnterOtpViewController(nibName: nil, bundle: nil)
-                        vc.phnNumber = loginResponse?.first?.resultmessage
-                        vc.resiveMsg = loginResponse?.first?.ivrnumbers ?? []
-                        vc.ShowPhnumber = mobileNumberTextField.text
+                        let vc = OTPScreenVC(nibName: nil, bundle: nil)
+                        vc.NotReceivedMessage = loginResponse?.first?.resultmessage
+                        vc.IVR_numbers = loginResponse?.first?.ivrnumbers ?? []
+                        vc.mobileNumber = mobileNumberTextField.text
                         vc.modalPresentationStyle = .fullScreen
                         present(vc, animated: true,completion: nil)
                     }else {
-                        let vc = LoginViewController(nibName: nil, bundle: nil)
-                        vc.mobile_num = mobileNumberTextField.text
+                        let vc = LoginVc(nibName: nil, bundle: nil)
+                        vc.mobileNumber = mobileNumberTextField.text
                         vc.modalPresentationStyle = .fullScreen
                         present(vc, animated: true,completion: nil)
                     }
@@ -124,12 +136,36 @@ class MobileNumberVC: UIViewController, UITextFieldDelegate {
         
         if text < length {
             
-            let refreshAlert = UIAlertController(title: "", message: "Please Enter a valid a mobile number", preferredStyle: UIAlertController.Style.alert)
+            let refreshAlert = UIAlertController(title: "", message: "Please Enter a valid mobile number", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
             }))
+            
+            present(refreshAlert, animated: true)
         }else {
             verifyMobileNumber()
+        }
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+        
+        let textFieldBottom = mobileNumberTextField.convert(mobileNumberTextField.bounds, to: self.view).maxY
+        let keyboardTop = self.view.frame.height - keyboardFrame.height
+       
+        if textFieldBottom > keyboardTop {
+            let overlap = textFieldBottom - keyboardTop + 45
+            UIView.animate(withDuration: 0.3) {
+                self.view.frame.origin.y = -overlap
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = 0
         }
     }
 }

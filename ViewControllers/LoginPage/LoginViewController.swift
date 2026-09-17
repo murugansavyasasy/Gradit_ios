@@ -12,15 +12,11 @@
     class LoginViewController: UIViewController,UITextFieldDelegate {
 
 
-        @IBOutlet weak var backView: UIView!
-        @IBOutlet weak var mobileNumberText: UITextField!
-
-
+    @IBOutlet weak var backView: UIView!
+    @IBOutlet weak var mobileNumberText: UITextField!
     @IBOutlet weak var passwordImg: UIImageView!
     @IBOutlet weak var passwordHideView: UIView!
     @IBOutlet weak var passwordText: UITextField!
-
-
     @IBOutlet weak var loginBtnView: UIViewX!
 
     var forArr : [dataForgetDetails] = []
@@ -217,7 +213,7 @@
                         present(vc, animated: true,completion: nil)
                     }else{
                         
-                        let vc = PriorityViewController(nibName: nil, bundle: nil)
+                        let vc = PriorityScreenVC(nibName: nil, bundle: nil)
                         vc.modalPresentationStyle = .fullScreen
                         present(vc, animated: true,completion: nil)
 

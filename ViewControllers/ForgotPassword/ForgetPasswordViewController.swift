@@ -95,7 +95,7 @@ self.view.frame.origin.y = 0
 
 @IBAction  func LogVc() {
 
-let vc = LoginViewController(nibName: nil, bundle: nil)
+let vc = LoginVc(nibName: nil, bundle: nil)
 vc.modalPresentationStyle = .fullScreen
 present(vc, animated: true,completion: nil)
 

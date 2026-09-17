@@ -320,7 +320,7 @@ final class SenderExaminationNextPageViewController: UIViewController, UITableVi
         refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
-            let vc = LoginNewViewController(nibName: nil, bundle: nil)
+            let vc = MobileNumberVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }))
@@ -361,13 +361,13 @@ final class SenderExaminationNextPageViewController: UIViewController, UITableVi
     }
 
     @IBAction private func changePassowrdVC() {
-        let vc = ChangePasswordViewController(nibName: nil, bundle: nil)
+        let vc = ChangePasswordVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
 
     @IBAction private func priorityVc() {
-        let vc = PriorityViewController(nibName: nil, bundle: nil)
+        let vc = PriorityScreenVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }

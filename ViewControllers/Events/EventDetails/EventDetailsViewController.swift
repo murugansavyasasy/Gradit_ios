@@ -420,7 +420,7 @@ class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICo
             
             UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
             
-            let vc = LoginNewViewController(nibName: nil, bundle: nil)
+            let vc = MobileNumberVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             
             self.present(vc, animated: true, completion: nil)
@@ -511,7 +511,7 @@ class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICo
     
     @IBAction func changePassowrdVC(){
         
-        let vc = ChangePasswordViewController(nibName: nil, bundle: nil)
+        let vc = ChangePasswordVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         let currentController = self.getCurrentViewController()
         currentController?.present(vc, animated: true, completion: nil)
@@ -527,21 +527,6 @@ class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICo
         
         
     }
-    
-    
-    @IBAction func loginRedirect() {
-        
-        
-        let vc = LoginViewController(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
-        
-        
-    }
-    
-    
-    
-    
     
 }
 

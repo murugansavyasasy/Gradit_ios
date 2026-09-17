@@ -39,7 +39,7 @@ class CustomTabBar: UIView {
     @IBAction func refreshBtnAct(_ sender: UIButton) {
         guard let vc = parentViewController else { return }
 
-           let priorityVC = PriorityViewController(nibName: nil, bundle: nil)
+           let priorityVC = PriorityScreenVC(nibName: nil, bundle: nil)
            priorityVC.modalPresentationStyle = .fullScreen
            vc.present(priorityVC, animated: true)
     }

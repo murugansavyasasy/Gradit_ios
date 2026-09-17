@@ -192,8 +192,8 @@ class VerifyOtpViewController: UIViewController,UITextFieldDelegate {
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
                         guard let self = self else { return }
                         
-                        let vc = LoginViewController(nibName: nil, bundle: nil)
-                        vc.mobile_num = mobileNumber
+                        let vc = LoginVc(nibName: nil, bundle: nil)
+                        vc.mobileNumber = mobileNumber
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true)
                     }))

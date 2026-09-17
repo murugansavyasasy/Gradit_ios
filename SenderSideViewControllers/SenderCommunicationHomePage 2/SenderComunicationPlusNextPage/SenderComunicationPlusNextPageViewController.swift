@@ -1068,7 +1068,7 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
             
             UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
             
-            let vc = LoginNewViewController(nibName: nil, bundle: nil)
+            let vc = MobileNumberVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             
             self.present(vc, animated: true, completion: nil)
@@ -1156,7 +1156,7 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
     
     @IBAction func changePassowrdVC(){
         
-        let vc = ChangePasswordViewController(nibName: nil, bundle: nil)
+        let vc = ChangePasswordVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
         
@@ -1172,7 +1172,7 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
     
     @IBAction func priorityVc() {
         
-        let vc = PriorityViewController(nibName: nil, bundle: nil)
+        let vc = PriorityScreenVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true,completion: nil)
     }

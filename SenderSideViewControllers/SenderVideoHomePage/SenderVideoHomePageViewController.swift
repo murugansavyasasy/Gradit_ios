@@ -29,7 +29,7 @@ class SenderVideoHomePageViewController: UIViewController,UITableViewDelegate,UI
 @IBOutlet weak var refreshView: UIView!
 @IBOutlet weak var logoutView: UIView!
 @IBOutlet weak var changeRolesView: UIView!
-@IBOutlet weak var profileView: UIView!
+@IBOutlet weak var bgView: UIView!
 @IBOutlet weak var topLabels: UILabel!
 @IBOutlet weak var topMessageLabel: UILabel!
 @IBOutlet weak var clgLogoImg: UIImageView!
@@ -590,7 +590,7 @@ func addApi(){
         case .success(let success):
             if success.Status == 1 {
                 addapiRef = success.data ?? []
-                
+                bgView.isHidden = addapiRef.count == 0
                 for i in addapiRef{
                   
                     bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
@@ -663,7 +663,7 @@ func addApi(){
         
         UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
         
-        let vc = LoginNewViewController(nibName: nil, bundle: nil)
+        let vc = MobileNumberVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         
         self.present(vc, animated: true, completion: nil)
@@ -748,7 +748,7 @@ func addApi(){
 
 @IBAction func changePassowrdVC(){
     
-    let vc = ChangePasswordViewController(nibName: nil, bundle: nil)
+    let vc = ChangePasswordVC(nibName: nil, bundle: nil)
     vc.modalPresentationStyle = .fullScreen
     present(vc, animated: true, completion: nil)
     
@@ -766,7 +766,7 @@ func addApi(){
 
     @IBAction func priorityVc() {
         
-        let vc = PriorityViewController(nibName: nil, bundle: nil)
+        let vc = PriorityScreenVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true,completion: nil)
     }
