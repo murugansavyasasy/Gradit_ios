@@ -29,12 +29,16 @@ class ChangePasswordVC: UIViewController, UITextFieldDelegate {
         setBorder(view: newPassword)
         setBorder(view: confirmPassword)
         resetPassword.layer.cornerRadius = 10
-        bodyView.layer.cornerRadius = 40
-        bodyView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
         
         oldPasswordTxt.delegate = self
         newPasswordTxt.delegate = self
         confirmPasswordTxt.delegate = self
+        
+        oldPasswordTxt.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        newPasswordTxt.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        confirmPasswordTxt.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        updateNextButtonState()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -48,6 +52,7 @@ class ChangePasswordVC: UIViewController, UITextFieldDelegate {
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.lightGray.cgColor
         view.layer.cornerRadius = 10
+        view.backgroundColor = .systemGray6.withAlphaComponent(0.5)
     }
     
     func showAlert(message:String){
@@ -158,6 +163,26 @@ class ChangePasswordVC: UIViewController, UITextFieldDelegate {
     
     @IBAction func back(_ sender: RoundedBackBtn) {
         dismiss(animated: true)
+    }
+    
+    private func updateNextButtonState() {
+        let isOldPasswordEmpty = (oldPasswordTxt.text ?? "").isEmpty
+        let isNewPasswordEmpty = (newPasswordTxt.text ?? "").isEmpty
+        let isConfirmPasswordEmpty = (confirmPasswordTxt.text ?? "").isEmpty
+        let isEnabled = !isOldPasswordEmpty && !isNewPasswordEmpty && !isConfirmPasswordEmpty
+
+        resetPassword.isEnabled = isEnabled
+        if isEnabled {
+            resetPassword.backgroundColor = UIColor(named: "IndigoColour")
+            resetPassword.setTitleColor(UIColor.white, for: .normal)
+        } else {
+            resetPassword.backgroundColor = .systemGray5
+            resetPassword.setTitleColor(UIColor.lightGray, for: .normal)
+        }
+    }
+    
+    @objc private func textFieldEditingChanged(_ textField: UITextField) {
+        updateNextButtonState()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -8,6 +8,11 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Nunito-Regular.ttf">
+            <string>Nunito-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -17,39 +22,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vB4-m7-xw5" customClass="GradientHeaderView" customModule="Gradit" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vB4-m7-xw5">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your smart college assistant" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Elh-FF-XQR">
-                                        <rect key="frame" x="16" y="468" width="382" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="graditicons" translatesAutoresizingMaskIntoConstraints="NO" id="7fq-Nd-OAm">
-                                        <rect key="frame" x="0.0" y="258" width="414" height="200"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EO8-CE-crD" customClass="CurveView" customModule="Gradit" customModuleProvider="target">
+                                        <rect key="frame" x="-5" y="100" width="424" height="696"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GraditNewLogo" translatesAutoresizingMaskIntoConstraints="NO" id="7fq-Nd-OAm">
+                                                <rect key="frame" x="5" y="200" width="414" height="120"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="120" id="fMr-HZ-vG4"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ACE IT. GRAD IT." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Elh-FF-XQR">
+                                                <rect key="frame" x="20" y="355" width="384" height="31.5"/>
+                                                <fontDescription key="fontDescription" name="Nunito-Regular" family="Nunito" pointSize="23"/>
+                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="200" id="fMr-HZ-vG4"/>
+                                            <constraint firstItem="7fq-Nd-OAm" firstAttribute="top" secondItem="EO8-CE-crD" secondAttribute="top" constant="200" id="Bw1-sb-07Q"/>
+                                            <constraint firstAttribute="trailing" secondItem="Elh-FF-XQR" secondAttribute="trailing" constant="20" id="LXr-L2-2Ac"/>
+                                            <constraint firstItem="Elh-FF-XQR" firstAttribute="top" secondItem="7fq-Nd-OAm" secondAttribute="bottom" constant="35" id="QZg-Cb-sD4"/>
+                                            <constraint firstAttribute="trailing" secondItem="7fq-Nd-OAm" secondAttribute="trailing" constant="5" id="doQ-Th-tKv"/>
+                                            <constraint firstItem="Elh-FF-XQR" firstAttribute="leading" secondItem="EO8-CE-crD" secondAttribute="leading" constant="20" id="v3C-33-eEt"/>
+                                            <constraint firstItem="7fq-Nd-OAm" firstAttribute="leading" secondItem="EO8-CE-crD" secondAttribute="leading" constant="5" id="wgu-6a-eiH"/>
                                         </constraints>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ellipsis" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="FMI-qd-cSv">
-                                        <rect key="frame" x="50" y="585" width="314" height="25.5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="Pvo-7p-xIr"/>
-                                        </constraints>
-                                    </imageView>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="curveHeight">
+                                                <real key="value" value="100"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                <color key="value" red="0.98919921875000005" green="0.8977951125708119" blue="0.85879273824917735" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                <real key="value" value="7"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="FMI-qd-cSv" firstAttribute="top" secondItem="Elh-FF-XQR" secondAttribute="bottom" constant="80" id="00E-cJ-pjb"/>
-                                    <constraint firstItem="7fq-Nd-OAm" firstAttribute="centerY" secondItem="vB4-m7-xw5" secondAttribute="centerY" constant="-90" id="1F8-um-uhO"/>
-                                    <constraint firstItem="7fq-Nd-OAm" firstAttribute="leading" secondItem="vB4-m7-xw5" secondAttribute="leading" id="Bp9-yn-UJQ"/>
-                                    <constraint firstAttribute="trailing" secondItem="7fq-Nd-OAm" secondAttribute="trailing" id="EnI-U3-bta"/>
-                                    <constraint firstItem="FMI-qd-cSv" firstAttribute="leading" secondItem="vB4-m7-xw5" secondAttribute="leading" constant="50" id="IpY-TY-SkD"/>
-                                    <constraint firstItem="Elh-FF-XQR" firstAttribute="leading" secondItem="vB4-m7-xw5" secondAttribute="leading" constant="16" id="NLw-pM-zGA"/>
-                                    <constraint firstAttribute="trailing" secondItem="Elh-FF-XQR" secondAttribute="trailing" constant="16" id="bl1-fF-dFO"/>
-                                    <constraint firstAttribute="trailing" secondItem="FMI-qd-cSv" secondAttribute="trailing" constant="50" id="dPb-Jw-vYd"/>
-                                    <constraint firstItem="Elh-FF-XQR" firstAttribute="top" secondItem="7fq-Nd-OAm" secondAttribute="bottom" constant="10" id="g3Q-X6-3g1"/>
+                                    <constraint firstAttribute="trailing" secondItem="EO8-CE-crD" secondAttribute="trailing" constant="-5" id="Ajj-p1-qvt"/>
+                                    <constraint firstAttribute="bottom" secondItem="EO8-CE-crD" secondAttribute="bottom" constant="100" id="V62-kD-enA"/>
+                                    <constraint firstItem="EO8-CE-crD" firstAttribute="top" secondItem="vB4-m7-xw5" secondAttribute="top" constant="100" id="b0D-1D-wIM"/>
+                                    <constraint firstItem="EO8-CE-crD" firstAttribute="leading" secondItem="vB4-m7-xw5" secondAttribute="leading" constant="-5" id="t1U-Ru-2jw"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -62,9 +81,6 @@
                             <constraint firstItem="vB4-m7-xw5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="t5D-Mj-ND5"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="gifimageView" destination="FMI-qd-cSv" id="IgK-9D-AUp"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -72,8 +88,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ellipsis" catalog="system" width="128" height="37"/>
-        <image name="graditicons" width="925" height="800"/>
+        <image name="GraditNewLogo" width="89" height="56"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

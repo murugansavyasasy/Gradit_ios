@@ -30,17 +30,12 @@ class NewCountryScreenVC: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        baseView.layer.cornerRadius = 40
-        baseView.layer.maskedCorners = [
-            .layerMinXMinYCorner,
-            .layerMaxXMinYCorner
-        ]
         
         searchBar.backgroundImage = UIImage()
         searchBar.backgroundColor = .clear
         searchBar.searchTextField.addDoneBtn()
         searchBar.delegate = self
-        nextBtn.layer.cornerRadius = 10
+        nextBtn.layer.cornerRadius = 8
         
         nodataImage.isHidden = true
         noDataLbl.isHidden = true
@@ -52,7 +47,7 @@ class NewCountryScreenVC: UIViewController, UISearchBarDelegate {
         if let range = fullText.range(of: underlineText){
             termsRange = NSRange(range, in: fullText)
             
-            attributedString.addAttributes([.foregroundColor: UIColor.systemBlue, .underlineStyle: NSUnderlineStyle.single.rawValue], range: termsRange!)
+            attributedString.addAttributes([.foregroundColor: UIColor.systemIndigo, .underlineStyle: NSUnderlineStyle.single.rawValue], range: termsRange!)
         }
         agreeTermsLbl.attributedText = attributedString
         let tapgesture = UITapGestureRecognizer(target: self, action: #selector(clickTermsUrl))

@@ -480,7 +480,7 @@ class GetSectionAndViewController: UIViewController, UITextFieldDelegate, UIGest
         let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to logout", preferredStyle: .alert)
         refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { _ in
             UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
-            let vc = MobileNumberVC(nibName: nil, bundle: nil)
+            let vc = LoginVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }))

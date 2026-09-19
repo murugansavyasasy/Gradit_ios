@@ -23,8 +23,6 @@ class MobileNumberVC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        baseView.layer.cornerRadius = 40
-        baseView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         backBtn.isHidden = HideBackBtn
         
         if let data = UserDefaults.standard.data(forKey: DefaultsKeys.SelectedCountry),
@@ -37,11 +35,14 @@ class MobileNumberVC: UIViewController, UITextFieldDelegate {
         textFieldBaseView.layer.cornerRadius = 12
         textFieldBaseView.layer.borderWidth =  1
         textFieldBaseView.layer.borderColor = UIColor.lightGray.cgColor
+        textFieldBaseView.backgroundColor = .systemGray6.withAlphaComponent(0.5)
         
         nextButton.layer.cornerRadius = 10
-        
+
         mobileNumberTextField.delegate = self
         mobileNumberTextField.addDoneBtn()
+        mobileNumberTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        updateNextButtonState()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -49,6 +50,21 @@ class MobileNumberVC: UIViewController, UITextFieldDelegate {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func updateNextButtonState() {
+        let isEmpty = (mobileNumberTextField.text ?? "").isEmpty
+        if isEmpty {
+            nextButton.backgroundColor = .systemGray5
+            nextButton.setTitleColor(UIColor.lightGray, for: .normal)
+        } else {
+            nextButton.backgroundColor = UIColor(named: "IndigoColour")
+            nextButton.setTitleColor(UIColor.white, for: .normal)
+        }
+    }
+    
+    @objc private func textFieldEditingChanged(_ textField: UITextField) {
+        updateNextButtonState()
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -98,7 +114,7 @@ class MobileNumberVC: UIViewController, UITextFieldDelegate {
                         vc.modalPresentationStyle = .fullScreen
                         present(vc, animated: true,completion: nil)
                     }else {
-                        let vc = LoginVc(nibName: nil, bundle: nil)
+                        let vc = PasswordVC(nibName: nil, bundle: nil)
                         vc.mobileNumber = mobileNumberTextField.text
                         vc.modalPresentationStyle = .fullScreen
                         present(vc, animated: true,completion: nil)

@@ -12,7 +12,6 @@ import SystemConfiguration
 @available(iOS 16.0, *)
 class ViewController: UIViewController {
     
-    @IBOutlet weak var gifimageView: UIImageView!
     
     var versionCheck : [VersionCheckData] = []
     // var termsCondition : String!
@@ -31,8 +30,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        animateEllipsisColor()
         
         //fatalError("test Crash")
         
@@ -56,17 +53,6 @@ class ViewController: UIViewController {
         
         nc.addObserver(self,selector: #selector(ViewController.callNotification), name: NSNotification.Name(rawValue: "PushNotification"), object:nil)
         CheckCountrySelection()
-    }
-    
-    func animateEllipsisColor() {
-       
-            UIView.animate(withDuration: 0.8,
-                           delay: 0,
-                           options: [.repeat, .autoreverse],
-                           animations: {
-                self.gifimageView.alpha = 0.3   // fade out
-            }, completion: nil)
-
     }
 
     
@@ -117,14 +103,14 @@ class ViewController: UIViewController {
         
         // Mobile check
         guard mobileNum != nil else {
-            presentVC(MobileNumberVC())
+            presentVC(LoginVc())
             return
         }
         
         let isUserSelectCountry = PreferencesUtil.checkPrefs(key: Constant.keyId)
         
         guard isUserSelectCountry else {
-            presentVC(MobileNumberVC())
+            presentVC(LoginVc())
             return
         }
         
@@ -195,12 +181,12 @@ class ViewController: UIViewController {
                     }
                 } else {
                     
-                    presentVC(MobileNumberVC())
+                    presentVC(LoginVc())
                 }
                 
             case .failure(let error):
                 print("Error:", error.localizedDescription)
-                presentVC(MobileNumberVC())
+                presentVC(LoginVc())
             }
         }
     }

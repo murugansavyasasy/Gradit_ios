@@ -35,7 +35,7 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xbN-C2-3vZ" customClass="GradientHeaderView" customModule="Gradit" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xbN-C2-3vZ">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Rv-EU-pUU" customClass="RoundedBackBtn" customModule="Gradit" customModuleProvider="target">
@@ -54,45 +54,45 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aSq-XS-9Xn">
-                            <rect key="frame" x="0.0" y="208" width="393" height="644"/>
+                            <rect key="frame" x="0.0" y="186" width="393" height="666"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="Vdn-o0-TVY">
-                                    <rect key="frame" x="146.66666666666666" y="30" width="100" height="50"/>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GraditNewLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Vdn-o0-TVY">
+                                    <rect key="frame" x="10" y="30" width="120" height="55"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="50" id="SGO-Od-Xbt"/>
-                                        <constraint firstAttribute="width" constant="100" id="gfh-9w-r4E"/>
+                                        <constraint firstAttribute="height" constant="55" id="SGO-Od-Xbt"/>
+                                        <constraint firstAttribute="width" constant="120" id="gfh-9w-r4E"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter OTP" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DjL-NU-At9">
-                                    <rect key="frame" x="20" y="100" width="353" height="28.666666666666657"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter OTP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DjL-NU-At9">
+                                    <rect key="frame" x="20" y="105" width="353" height="28.666666666666657"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kkx-Md-uBB">
-                                    <rect key="frame" x="16" y="140.66666666666669" width="361" height="24"/>
-                                    <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="17"/>
-                                    <color key="textColor" white="0.0" alpha="0.72045810929999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kkx-Md-uBB">
+                                    <rect key="frame" x="16" y="145.66666666666669" width="361" height="22.666666666666657"/>
+                                    <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cPf-Ea-bsa" customClass="OTPFieldView" customModule="Gradit" customModuleProvider="target">
-                                    <rect key="frame" x="16" y="184.66666666666669" width="361" height="80"/>
+                                    <rect key="frame" x="16" y="188.33333333333331" width="361" height="80"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="80" id="Lxv-g9-vrz"/>
                                     </constraints>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="oWs-sp-0Br">
-                                    <rect key="frame" x="16" y="279.66666666666669" width="361" height="46.333333333333314"/>
+                                    <rect key="frame" x="16" y="283.33333333333331" width="361" height="46.333333333333314"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Didn't receive the verification code?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K7C-yo-sCc">
                                             <rect key="frame" x="0.0" y="0.0" width="361" height="18"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                            <color key="textColor" white="0.0" alpha="0.72045810929999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U2V-qS-pdd">
-                                            <rect key="frame" x="0.0" y="25.999999999999943" width="361" height="20.333333333333329"/>
+                                            <rect key="frame" x="0.0" y="26" width="361" height="20.333333333333329"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                             <color key="textColor" systemColor="linkColor"/>
                                             <nil key="highlightedColor"/>
@@ -100,8 +100,8 @@
                                     </subviews>
                                 </stackView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CB9-1O-bJu">
-                                    <rect key="frame" x="16" y="346" width="361" height="45"/>
-                                    <color key="backgroundColor" name="ResumeBlue"/>
+                                    <rect key="frame" x="16" y="349.66666666666663" width="361" height="45"/>
+                                    <color key="backgroundColor" name="IndigoColour"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="45" id="DOO-So-haH"/>
                                     </constraints>
@@ -114,16 +114,16 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you didn't receive OTP through SMS or mail, Please Call us" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxW-kb-TAt">
-                                    <rect key="frame" x="15" y="421" width="363" height="42"/>
+                                    <rect key="frame" x="15" y="424.66666666666663" width="363" height="42"/>
                                     <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="15"/>
                                     <color key="textColor" white="0.0" alpha="0.72045810929999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nAt-o5-2SQ">
-                                    <rect key="frame" x="25" y="483" width="343" height="80"/>
+                                    <rect key="frame" x="25" y="486.66666666666657" width="343" height="98.333333333333314"/>
                                 </stackView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oX2-vX-lQj">
-                                    <rect key="frame" x="0.0" y="571" width="393" height="0.0"/>
+                                    <rect key="frame" x="0.0" y="593" width="393" height="0.0"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -142,13 +142,13 @@
                                 <constraint firstAttribute="trailing" secondItem="DjL-NU-At9" secondAttribute="trailing" constant="20" id="Hny-5q-zI5"/>
                                 <constraint firstItem="nAt-o5-2SQ" firstAttribute="leading" secondItem="aSq-XS-9Xn" secondAttribute="leading" constant="25" id="L7F-lk-UjN"/>
                                 <constraint firstItem="nAt-o5-2SQ" firstAttribute="top" secondItem="gxW-kb-TAt" secondAttribute="bottom" constant="20" id="OqI-WI-jLN"/>
-                                <constraint firstItem="Vdn-o0-TVY" firstAttribute="centerX" secondItem="aSq-XS-9Xn" secondAttribute="centerX" id="Oyr-4V-s3e"/>
                                 <constraint firstItem="cPf-Ea-bsa" firstAttribute="leading" secondItem="aSq-XS-9Xn" secondAttribute="leading" constant="16" id="Pv0-MZ-xoO"/>
                                 <constraint firstItem="oX2-vX-lQj" firstAttribute="top" secondItem="nAt-o5-2SQ" secondAttribute="bottom" constant="8" id="W8t-M9-sxR"/>
                                 <constraint firstItem="oWs-sp-0Br" firstAttribute="top" secondItem="cPf-Ea-bsa" secondAttribute="bottom" constant="15" id="eEl-ld-Ftg"/>
                                 <constraint firstItem="gxW-kb-TAt" firstAttribute="leading" secondItem="aSq-XS-9Xn" secondAttribute="leading" constant="15" id="eRj-1c-0EO"/>
                                 <constraint firstAttribute="trailing" secondItem="cPf-Ea-bsa" secondAttribute="trailing" constant="16" id="fyt-Qg-4d0"/>
                                 <constraint firstItem="Vdn-o0-TVY" firstAttribute="top" secondItem="aSq-XS-9Xn" secondAttribute="top" constant="30" id="g7H-Cr-5JU"/>
+                                <constraint firstItem="Vdn-o0-TVY" firstAttribute="leading" secondItem="aSq-XS-9Xn" secondAttribute="leading" constant="10" id="h53-ej-Efh"/>
                                 <constraint firstAttribute="trailing" secondItem="oWs-sp-0Br" secondAttribute="trailing" constant="16" id="jzh-FB-0dL"/>
                                 <constraint firstItem="DjL-NU-At9" firstAttribute="leading" secondItem="aSq-XS-9Xn" secondAttribute="leading" constant="20" id="lGm-q3-MiE"/>
                                 <constraint firstItem="CB9-1O-bJu" firstAttribute="top" secondItem="oWs-sp-0Br" secondAttribute="bottom" constant="20" id="nZf-Gf-Khy"/>
@@ -166,7 +166,7 @@
                         <constraint firstItem="5Rv-EU-pUU" firstAttribute="leading" secondItem="xbN-C2-3vZ" secondAttribute="leading" constant="10" id="FLf-hy-ZBu"/>
                         <constraint firstAttribute="trailing" secondItem="aSq-XS-9Xn" secondAttribute="trailing" id="PIr-dH-PdJ"/>
                         <constraint firstItem="aSq-XS-9Xn" firstAttribute="leading" secondItem="xbN-C2-3vZ" secondAttribute="leading" id="dbs-HI-OKx"/>
-                        <constraint firstItem="aSq-XS-9Xn" firstAttribute="top" secondItem="5Rv-EU-pUU" secondAttribute="bottom" constant="30" id="ix5-tE-vgJ"/>
+                        <constraint firstItem="aSq-XS-9Xn" firstAttribute="top" secondItem="5Rv-EU-pUU" secondAttribute="bottom" constant="8" id="ix5-tE-vgJ"/>
                     </constraints>
                 </view>
             </subviews>
@@ -184,16 +184,16 @@
         </view>
     </objects>
     <resources>
+        <image name="GraditNewLogo" width="89" height="56"/>
         <image name="arrow.backward" catalog="system" width="128" height="95"/>
-        <image name="image" width="459" height="182"/>
-        <namedColor name="ResumeBlue">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="IndigoColour">
+            <color red="0.30980392156862746" green="0.27450980392156865" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

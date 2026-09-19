@@ -732,9 +732,6 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
     
     @IBAction func logoutPressed() {
         
-        
-        
-        
         let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to logout", preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
@@ -742,7 +739,7 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
             
             UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
             
-            let vc = MobileNumberVC(nibName: nil, bundle: nil)
+            let vc = LoginVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             
             self.present(vc, animated: true, completion: nil)

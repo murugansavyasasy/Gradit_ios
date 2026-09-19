@@ -28,8 +28,12 @@ class ReasetPasswordVC: UIViewController, UITextFieldDelegate {
         setBorder(view: newPassword)
         setBorder(view: confirmPassword)
         resetPassword.layer.cornerRadius = 10
-        bodyView.layer.cornerRadius = 40
-        bodyView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        newPassword.backgroundColor = .systemGray6.withAlphaComponent(0.5)
+        confirmPassword.backgroundColor = .systemGray6.withAlphaComponent(0.5)
+        
+        newPasswordTxt.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        confirmPasswordTxt.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        updateNextButtonState()
         
         newPasswordTxt.delegate = self
         confirmPasswordTxt.delegate = self
@@ -147,6 +151,25 @@ class ReasetPasswordVC: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    private func updateNextButtonState() {
+        let isNewaPasswordEmpty = (newPasswordTxt.text ?? "").isEmpty
+        let isConfirmPasswordEmpty = (confirmPasswordTxt.text ?? "").isEmpty
+        let isEnabled = !isNewaPasswordEmpty && !isConfirmPasswordEmpty
+
+        resetPassword.isEnabled = isEnabled
+        if isEnabled {
+            resetPassword.backgroundColor = UIColor(named: "IndigoColour")
+            resetPassword.setTitleColor(UIColor.white, for: .normal)
+        } else {
+            resetPassword.backgroundColor = .systemGray5
+            resetPassword.setTitleColor(UIColor.lightGray, for: .normal)
+        }
+    }
+    
+    @objc private func textFieldEditingChanged(_ textField: UITextField) {
+        updateNextButtonState()
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {

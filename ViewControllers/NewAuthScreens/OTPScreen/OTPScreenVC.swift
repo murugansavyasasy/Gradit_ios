@@ -41,11 +41,6 @@ class OTPScreenVC: UIViewController, OTPFieldViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupOtp()
-        bodyView.layer.cornerRadius = 40
-        bodyView.layer.maskedCorners = [
-            .layerMinXMinYCorner,
-            .layerMaxXMinYCorner
-        ]
         verifyBtn.layer.cornerRadius = 10
         let maskedNumber = MaskMobileNumber()
         
@@ -135,6 +130,12 @@ class OTPScreenVC: UIViewController, OTPFieldViewDelegate {
     }
     
     @IBAction func verifyBtn(_ sender: Any) {
+        
+        let vc = ReasetPasswordVC(nibName: nil, bundle: nil)
+        vc.mobileNumber = mobileNumber
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true,completion: nil)
+        return
         
         guard let otp = otp, !otp.isEmpty else {
             let alert = UIAlertController(

@@ -1193,7 +1193,7 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
             
             UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
             
-            let vc = MobileNumberVC(nibName: nil, bundle: nil)
+            let vc = LoginVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             
             self.present(vc, animated: true, completion: nil)
