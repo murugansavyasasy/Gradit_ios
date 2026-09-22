@@ -15,12 +15,15 @@ class MenuCVCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         imageBaseView.layer.cornerRadius = imageBaseView.frame.height/2
-        imageBaseView.layer.shadowColor = UIColor.black.cgColor
-        imageBaseView.layer.shadowOpacity = 0.15
-        imageBaseView.layer.shadowRadius = 4
-        imageBaseView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        imageBaseView.layer.borderWidth = 0.6
+        imageBaseView.layer.borderColor = UIColor.lightGray.cgColor
+        
+//        imageBaseView.layer.cornerRadius = imageBaseView.frame.height/2
+//        imageBaseView.layer.shadowColor = UIColor.black.cgColor
+//        imageBaseView.layer.shadowOpacity = 0.15
+//        imageBaseView.layer.shadowRadius = 4
+//        imageBaseView.layer.shadowOffset = CGSize(width: 0, height: 2)
     }
 
 }

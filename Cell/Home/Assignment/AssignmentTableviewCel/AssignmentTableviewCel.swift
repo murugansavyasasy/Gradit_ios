@@ -14,6 +14,7 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
     
     @IBOutlet weak var pageContorler: UIPageControl!
     @IBOutlet weak var viewAll: UIViewX!
+    @IBOutlet weak var leftBorder: UILabel!
     @IBOutlet weak var cv: UICollectionView!
     
     let cvIdentifier = "AssignmentCollectionViewCell"
@@ -33,7 +34,10 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        viewAll.borderColor = .tintColor.withAlphaComponent(0.13)
+        viewAll.borderWidth = 1
+        leftBorder.clipsToBounds = true
+        leftBorder.layer.cornerRadius = leftBorder.frame.width/2
         let defaults = UserDefaults.standard
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
         memberId = defaults.string(forKey: DefaultsKeys.memberid)
@@ -45,9 +49,6 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
         
         let cvRowib = UINib(nibName: cvIdentifier, bundle: nil)
         cv.register(cvRowib, forCellWithReuseIdentifier: cvIdentifier)
-        
-        //        pageContorler.numberOfPages = pageCount
-        
         startAutoScroll()
         
         
@@ -55,9 +56,6 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
         NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         pageContorler.currentPageIndicatorTintColor = .priorityColor
-        
-        
-        //        UIApplication.
     }
     
     
@@ -83,17 +81,8 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
     }
     
     
-    
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
-    }
-    
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 310, height: 230)
+        return CGSize(width: 310, height: 190)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -107,94 +96,28 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
         
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cvIdentifier, for: indexPath) as! AssignmentCollectionViewCell
-        
         let assigment : AssignmentsDashType = assignmentDatas[indexPath.row]
-        
-        
-        
-        var todaysDate = NSDate()
-        var dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        var DateInFormat = dateFormatter.string(from: todaysDate as Date)
-        
-        
-        let dateFormatterGet = DateFormatter()
-        
-        dateFormatterGet.dateFormat = "dd-MM-yyy"
-        
-        
-        
-        let dateFormatterPrint = DateFormatter()
-        
-        dateFormatterPrint.dateFormat = " dd MMM,yyyy"
-        
-        
-        
-        let date: NSDate? = dateFormatterGet.date(from: DateInFormat) as NSDate?
-        let date2: NSDate? = dateFormatterGet.date(from: assigment.submissiondate ?? "") as NSDate?
-        
-        
-        cell.dateLbl.text = dateFormatterPrint.string(from: date as! Date)
-        cell.dueDateLbl.text = dateFormatterPrint.string(from: date2 as! Date)
+        cell.dateLbl.text = "".dateFormater()
+        cell.dueDateLbl.text =  assigment.submissiondate?.dateFormater()
         cell.assDescLbl.text = assigment.assignmentdescription
         cell.assTopicLbl.text = assigment.assignmenttopic
-        
-        if (indexPath.row % 2 == 0){
-            
-            cell.assigmentFullView.backgroundColor = UIColor(named: "assigmentCvcolor")
-            
-        }
-        
-        else{
-            
-            cell.assigmentFullView.backgroundColor = UIColor(named: "assigmentCvEvenColor")
-            
-        }
+        cell.assigmentFullView.backgroundColor = indexPath.row % 2 == 0 ? UIColor(red: 132/255, green: 45/255, blue: 255/255, alpha: 0.10):UIColor(red: 132/255, green: 45/255, blue: 255/255, alpha: 0.10)
         
         
         let  viewClick = UITapGestureRecognizer(target: self, action: #selector(AssigmentViewAllVc))
         cell.assigmentFullView.addGestureRecognizer(viewClick)
         
         
-        if assigment.filepaths == [""]{
-            
+        if assigment.filepaths == [""] || assigment.filepaths == nil || assigment.filepaths == []{
             cell.attchmentView.isHidden = true
-            
-            
-        }
-        
-        else if assigment.filepaths == nil {
-            
-            
-            cell.attchmentView.isHidden = true
-            
-        }
-        
-        
-        else if assigment.filepaths == ([]){
-            
-            cell.attchmentView.isHidden = true
-        }
-        else{
-            
-            
-            
+        }else{
             let  play = attchmentClikc(target: self, action: #selector(attachmentVc))
-            
             for i in assigment.filepaths ?? []{
-                
                 play.imagurl =  i
-                
             }
             
-            
             cell.attchmentView.addGestureRecognizer(play)
-            
-            
-            
         }
-        
-        
         
         return cell
         
@@ -206,7 +129,6 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
         
         
         let currentController = self.getViewController()
-        
         
         let vc =  DashBordShwViewController (nibName: nil, bundle: nil)
         vc.imgfilePath = gesture.img_url
@@ -235,7 +157,6 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
         
         if priority == "p4" {
             let vc =  AssigmentHomePageViewController(nibName: nil, bundle: nil)
-            
             let currentController = self.getViewController()
             vc.str = str
             vc.strName = strName
@@ -245,12 +166,9 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true, completion: nil)
             
-        }
-        
-        else if priority == "p1" {
+        }else if priority == "p1" {
             
             let vc = SenderAssigmentHomePageViewController(nibName: nil, bundle: nil)
-            
             let currentController = self.getViewController()
             vc.str = str
             vc.strName = strName
@@ -263,13 +181,9 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
             currentController?.present(vc, animated: true, completion: nil)
             
             
-        }
-        
-        
-        else if priority == "p3" ||  priority == "p2"  {
+        }else if priority == "p3" ||  priority == "p2"  {
             
             let vc = SenderAssigmentHomePageViewController(nibName: nil, bundle: nil)
-           
             let currentController = self.getViewController()
             vc.str = str
             vc.strName = strName
@@ -281,12 +195,9 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true, completion: nil)
             
-        }
-        
-        else if priority == "p5"{
+        }else if priority == "p5"{
             
             let vc =  AssigmentHomePageViewController(nibName: nil, bundle: nil)
-           
             let currentController = self.getViewController()
             vc.str = str
             vc.strName = strName
@@ -298,16 +209,8 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true, completion: nil)
             
-            
-        }
-        
-        
-        else if priority == "p6"{
-            
-            
-            
+        }else if priority == "p6"{
             let vc =  SenderAssigmentHomePageViewController(nibName: nil, bundle: nil)
-           
             let currentController = self.getViewController()
             vc.str = str
             vc.strName = strName
@@ -315,22 +218,13 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
             vc.is_write_enabled = is_write_enabled
             vc.assigmentSegmentName.backgroundColor = UIColor(named: "CellColor")
             vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "attendanceColor")
-//            vc.view.backgroundColor = UIColor(named: "attendanceColor" )
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true, completion: nil)
-            
-            
         }
-        
     }
 }
 
 
 class attchmentClikc : UITapGestureRecognizer{
-    
-    
     var imagurl : String!
-    
-    
-    
 }

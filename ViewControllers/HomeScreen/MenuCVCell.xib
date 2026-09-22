@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -22,32 +21,32 @@
                         <rect key="frame" x="2" y="2" width="92" height="86"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Xz-FA-S62">
-                                <rect key="frame" x="23.666666666666671" y="5" width="45" height="45"/>
+                                <rect key="frame" x="21" y="5" width="50" height="50"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2A7-yx-KRU">
-                                        <rect key="frame" x="7.3333333333333321" y="7.6666666666666643" width="29.999999999999996" height="30"/>
+                                        <rect key="frame" x="10" y="10" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="y0K-Q5-LSt"/>
                                             <constraint firstAttribute="height" constant="30" id="yq4-KP-7b2"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" red="0.92549019607843142" green="0.86274509803921573" blue="1" alpha="0.40516439783755964" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="2A7-yx-KRU" firstAttribute="centerX" secondItem="3Xz-FA-S62" secondAttribute="centerX" id="0wC-MG-OMx"/>
                                     <constraint firstItem="2A7-yx-KRU" firstAttribute="centerY" secondItem="3Xz-FA-S62" secondAttribute="centerY" id="2ve-yq-slX"/>
-                                    <constraint firstAttribute="width" constant="45" id="JOp-dD-V7r"/>
-                                    <constraint firstAttribute="height" constant="45" id="yTD-Bc-nMF"/>
+                                    <constraint firstAttribute="width" constant="50" id="JOp-dD-V7r"/>
+                                    <constraint firstAttribute="height" constant="50" id="yTD-Bc-nMF"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBG-g2-1ZV">
-                                <rect key="frame" x="2" y="52" width="88" height="32"/>
+                                <rect key="frame" x="2" y="57" width="88" height="27"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="3Xz-FA-S62" firstAttribute="centerX" secondItem="YUR-OB-vbo" secondAttribute="centerX" id="GAm-v4-3iF"/>
                             <constraint firstAttribute="bottom" secondItem="WBG-g2-1ZV" secondAttribute="bottom" constant="2" id="Qic-MP-GSp"/>
@@ -60,6 +59,7 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="YUR-OB-vbo" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="KdH-9k-7a1"/>
                 <constraint firstAttribute="bottom" secondItem="YUR-OB-vbo" secondAttribute="bottom" constant="2" id="NML-qd-Etn"/>
@@ -75,9 +75,4 @@
             <point key="canvasLocation" x="146.56488549618319" y="128.16901408450704"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>

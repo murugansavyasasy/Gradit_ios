@@ -11,60 +11,45 @@ import ObjectMapper
 @available(iOS 16.0, *)
 class CircularTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
-    
-    weak var parent:ViewController?
-    
-    
+    @IBOutlet weak var sideIndicater: UILabel!
     @IBOutlet weak var pageContorler: UIPageControl!
     @IBOutlet weak var circularView: UIViewX!
-    
-    
-    
     @IBOutlet weak var cv: UICollectionView!
     
     
     var identifier = "CircularCollectionViewCell"
-    
-    
+    weak var parent:ViewController?
     var dashBoardDataList : [DashBoardData] = []
-    
     var circularData : [CircularDashType] = []
-    
     var dashtype : String!
-    
     var colgId : String!
     var memberId : String!
     var loginAsType : String!
     var priority : String!
     var str : [String] = []
-    
     var strName : [String] = []
-    
     var is_read_enabled = ""
     var is_write_enabled = ""
     var currentIndex = 0
     var autoScrollTimer: Timer?
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        
-        
+        circularView.layer.borderColor = UIColor.tintColor.withAlphaComponent(0.13).cgColor
+        circularView.layer.borderWidth = 1
         let defaults = UserDefaults.standard
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
         memberId = defaults.string(forKey: DefaultsKeys.memberid)
         loginAsType = defaults.string(forKey: DefaultsKeys.loginAsType)
         priority = defaults.string(forKey: DefaultsKeys.priority)
         
-        
+        sideIndicater.clipsToBounds = true
+        sideIndicater.layer.cornerRadius = sideIndicater.frame.width/2
         cv.dataSource  = self
         cv.delegate = self
-        //        circular()
-        
         let cvRowib = UINib(nibName: identifier, bundle: nil)
         cv.register(cvRowib, forCellWithReuseIdentifier: identifier)
         
         startAutoScroll()
-        
         pageContorler.currentPageIndicatorTintColor = .priorityColor
         
         NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willResignActiveNotification, object: nil)
@@ -118,53 +103,12 @@ class CircularTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollecti
         CircularCollectionViewCell
         
         cell.parent = parent
-        
         let circular : CircularDashType = circularData[indexPath.row]
-        
-        
-        let dateFormatterGet = DateFormatter()
-        
-        dateFormatterGet.dateFormat = "dd-MM-yyy"
-        
-        
-        
-        let dateFormatterPrint = DateFormatter()
-        
-        dateFormatterPrint.dateFormat = " dd MMM,yyyy"
-        
-        
-        
-        let date: NSDate? = dateFormatterGet.date(from: circular.createddate ?? "") as NSDate?
-        
-        cell.creatDate.text = dateFormatterPrint.string(from: date as! Date)
-        
-        var dateString2 = circular.createdtime ?? ""
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm:ss a"
-        dateFormatter.locale = Locale.init(identifier: "en_US_POSIX")
-        
-        let dateObj = dateFormatter.date(from: dateString2)
-        dateFormatter.dateFormat = "hh:mm a"
-        
-        cell.createTime.text = (dateFormatter.string(from: dateObj!))
+        cell.creatDate.text = circular.createddate?.dateFormater()
+        cell.createTime.text = circular.createddate?.dateFormater(input: "hh:mm:ss a",output:"hh:mm a")
         cell.discreption.text = circular.description
         cell.title.text = circular.title
-        
-        if (indexPath.row % 2 == 0){
-            
-            cell.CircularFullView.backgroundColor = UIColor(named: "circularCellcolor")
-            
-        }
-        
-        else{
-            
-            cell.CircularFullView.backgroundColor = UIColor(named: "circularEvenColor")
-            
-        }
-        
-        
-        
-        
+        cell.CircularFullView.backgroundColor = UIColor(red: 190/255, green: 174/255, blue: 255/255, alpha: 0.23)
         let  play = Attchment(target: self, action: #selector(attachmentVc))
         for i in circular.filepaths ?? [] {
             play.img_url =  i
@@ -207,16 +151,11 @@ class CircularTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollecti
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
             vc.modalPresentationStyle = .fullScreen
-            
             currentController?.present(vc, animated: true,completion: nil)
             
-            
-        }
-        
-        else if priority == "p1" {
+        }else if priority == "p1" {
             
             let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-            
             let currentController = self.getViewController()
             vc.str = str
             vc.strName = strName
@@ -229,15 +168,10 @@ class CircularTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollecti
             currentController?.present(vc, animated: true,completion: nil)
             
             
-        }
-        
-        
-        else if priority == "p2" || priority == "p3" {
+        }else if priority == "p2" || priority == "p3" {
             
             let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-           
             let currentController = self.getViewController()
-            
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
@@ -248,14 +182,10 @@ class CircularTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollecti
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true,completion: nil)
             
-        }
-        
-        
-        
-        else if priority == "p6"  {
+        }else if priority == "p6"  {
             
             let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-           
+            
             let currentController = self.getViewController()
             vc.str = str
             vc.strName = strName
@@ -277,22 +207,12 @@ class CircularTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollecti
     
     
     @IBAction func attachmentVc( gesture : Attchment){
-        
-        
         let currentController = self.getViewController()
-        
-        
         let vc =  DashBordShwViewController (nibName: nil, bundle: nil)
         vc.imgfilePath = gesture.img_url
-        
         vc.modalPresentationStyle = .fullScreen
         currentController?.present(vc, animated: true, completion: nil)
-        
-        
     }
-    
-    
-    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 278, height: 180)
@@ -301,7 +221,5 @@ class CircularTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollecti
 }
 
 class Attchment : UITapGestureRecognizer {
-    
     var img_url : String!
-    
 }

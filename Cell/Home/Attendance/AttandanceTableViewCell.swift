@@ -10,22 +10,14 @@ import ObjectMapper
 
 class AttandanceTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource {
     
-    
     @IBOutlet weak var viewAllClick: UIViewX!
-    
     @IBOutlet weak var tv: UITableView!
-    
+    @IBOutlet weak var sideIndecator: UILabel!
     
     var identifer = "AttandanceTableCell"
-    
     var attend : [AttendanceDashType] = []
-    
     var dash : [DashBoardData] = []
-    
-    
-    
     var dashtypes : String!
-    
     var colgId : String!
     var memberId : String!
     var loginAsType : String!
@@ -38,21 +30,14 @@ class AttandanceTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDa
         memberId = defaults.string(forKey: DefaultsKeys.memberid)
         loginAsType = defaults.string(forKey: DefaultsKeys.loginAsType)
         priority = defaults.string(forKey: DefaultsKeys.priority)
-        
-        
-        
         tv.dataSource  = self
         tv.delegate = self
-        
         let rowNib = UINib(nibName: identifer, bundle: nil)
-        
         tv.register(rowNib, forCellReuseIdentifier: identifer)
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        
+        sideIndecator.clipsToBounds = true
+        sideIndecator.layer.cornerRadius = sideIndecator.frame.width/2
+        viewAllClick.layer.borderColor = UIColor.tintColor.withAlphaComponent(0.13).cgColor
+        viewAllClick.layer.borderWidth = 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -68,62 +53,35 @@ class AttandanceTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDa
         
         cell.selectionStyle = .none
         let atte : AttendanceDashType = attend[indexPath.row]
-        
-        //        Today's attendance is not yet available
-        print("atte.attendancetype",atte.attendancetype)
-        print("atte.message",atte.message)
-        
-        
         cell.subjectNamLbl.text =  atte.subjectname
-        
-        
-        
+
         if  atte.message != nil{
-            
-            
-            cell.notYetLabel.text = atte.message
-            
+//            cell.notYetLabel.text = atte.message
             cell.overAllCellView.isHidden = true
-        }
-        
-        else{
-            
+        }else{
             cell.overAllCellView.isHidden = false
-            cell.dateLabel.text = atte.attendancedate
+            cell.dateLabel.text = atte.attendancedate?.dateFormater()
             cell.messageLabel.text = atte.attendancetype
-            
-            
             if  atte.attendancetype == "Present"{
                 cell.presentView.isHidden = false
                 cell.presentView.backgroundColor = UIColor(named: "ConfirmColor")
-                cell.notYetLabel.isHidden = true
+//                cell.notYetLabel.isHidden = true
                 cell.dateView.isHidden = false
                 cell.messageLabel.text = atte.attendancetype
-            }
-            
-            else if  atte.attendancetype == "Absent"{
+            }else if  atte.attendancetype == "Absent"{
                 cell.presentView.isHidden = false
                 cell.presentView.backgroundColor = UIColor.red
-                cell.notYetLabel.isHidden = true
+//                cell.notYetLabel.isHidden = true
                 cell.dateView.isHidden = false
                 cell.messageLabel.text = atte.attendancetype
             }
-            
-            
-            
-            
         }
-        
-        
-        
-        
         return cell
     }
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
-        
     }
     
 }
