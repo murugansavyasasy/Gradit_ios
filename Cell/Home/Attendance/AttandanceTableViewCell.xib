@@ -4,8 +4,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,10 +23,10 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ozz-w3-EEu">
                                 <rect key="frame" x="0.0" y="0.0" width="383" height="123.5"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ozz-w3-EEu" firstAttribute="top" secondItem="zMO-is-4oy" secondAttribute="top" id="2J9-Bc-N72"/>
                             <constraint firstAttribute="bottom" secondItem="ozz-w3-EEu" secondAttribute="bottom" id="WVg-2c-Bq7"/>
@@ -35,27 +35,38 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attendance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g3r-rV-rtq">
-                        <rect key="frame" x="10" y="10" width="283" height="19.5"/>
+                        <rect key="frame" x="19" y="10" width="274" height="19.5"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6A-ff-XEv">
+                        <rect key="frame" x="10" y="10" width="4" height="20"/>
+                        <color key="backgroundColor" name="FatherColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="8dA-wv-oyj"/>
+                            <constraint firstAttribute="width" constant="4" id="ldN-HK-3V5"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lwD-1Z-2r2" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
-                        <rect key="frame" x="303" y="5" width="70" height="28"/>
+                        <rect key="frame" x="303" y="5" width="70" height="30"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View All" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3wq-ru-ZIS">
-                                <rect key="frame" x="10.5" y="6" width="49.5" height="16"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
-                                <nil key="textColor"/>
+                                <rect key="frame" x="10" y="7" width="50.5" height="16"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                <color key="textColor" name="FatherColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                        <color key="backgroundColor" red="0.92941176470588238" green="0.94117647058823528" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="ESw-b7-KNu"/>
                             <constraint firstItem="3wq-ru-ZIS" firstAttribute="centerY" secondItem="lwD-1Z-2r2" secondAttribute="centerY" id="Gly-DB-E2g"/>
                             <constraint firstItem="3wq-ru-ZIS" firstAttribute="centerX" secondItem="lwD-1Z-2r2" secondAttribute="centerX" id="IZp-al-QFh"/>
-                            <constraint firstAttribute="height" constant="28" id="LVx-SA-FzW"/>
+                            <constraint firstAttribute="height" constant="30" id="LVx-SA-FzW"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -67,20 +78,25 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="zMO-is-4oy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="1fp-Um-LFS"/>
                     <constraint firstItem="lwD-1Z-2r2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="5wf-4m-5hL"/>
                     <constraint firstItem="lwD-1Z-2r2" firstAttribute="leading" secondItem="g3r-rV-rtq" secondAttribute="trailing" constant="10" id="BLC-WZ-jTJ"/>
                     <constraint firstItem="zMO-is-4oy" firstAttribute="top" secondItem="g3r-rV-rtq" secondAttribute="bottom" constant="12" id="LeJ-8O-HK3"/>
+                    <constraint firstItem="h6A-ff-XEv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Oed-mE-LFv"/>
                     <constraint firstAttribute="bottom" secondItem="zMO-is-4oy" secondAttribute="bottom" id="ama-hk-5cD"/>
-                    <constraint firstItem="g3r-rV-rtq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="hxo-c3-QCa"/>
+                    <constraint firstItem="h6A-ff-XEv" firstAttribute="centerY" secondItem="g3r-rV-rtq" secondAttribute="centerY" id="bpH-k1-FAM"/>
                     <constraint firstItem="g3r-rV-rtq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="ubi-ZQ-tvL"/>
                     <constraint firstAttribute="trailing" secondItem="zMO-is-4oy" secondAttribute="trailing" id="v1a-4V-Msq"/>
                     <constraint firstAttribute="trailing" secondItem="lwD-1Z-2r2" secondAttribute="trailing" constant="10" id="wdW-cs-bWt"/>
+                    <constraint firstItem="g3r-rV-rtq" firstAttribute="leading" secondItem="h6A-ff-XEv" secondAttribute="trailing" constant="5" id="zDZ-S0-TGu"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="sideIndecator" destination="h6A-ff-XEv" id="crs-Gz-RMk"/>
                 <outlet property="tv" destination="ozz-w3-EEu" id="OZH-7X-GWa"/>
                 <outlet property="viewAllClick" destination="lwD-1Z-2r2" id="Ueo-AS-NJi"/>
             </connections>
@@ -88,11 +104,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
+        <namedColor name="FatherColor">
+            <color red="0.14499999582767487" green="0.29800000786781311" blue="0.59200000762939453" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

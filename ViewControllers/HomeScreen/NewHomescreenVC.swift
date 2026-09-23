@@ -80,14 +80,13 @@ class NewHomescreenVC: UIViewController {
         super.viewWillAppear(animated)
         sideMenuView.isHidden = true
     }
+    
     private func setupInitialUI() {
         
         loadingCustom.startAnimating()
         sideMenuView.isHidden = true
-        
         let topnameview = UITapGestureRecognizer(target: self, action: #selector(ChangeRoleBtnAct))
         topNameview.addGestureRecognizer(topnameview)
-        
         let showSideMenuTap = UITapGestureRecognizer(target: self, action: #selector(showSideMenu))
         PersonIconView.addGestureRecognizer(showSideMenuTap)
         
@@ -96,25 +95,21 @@ class NewHomescreenVC: UIViewController {
     private func loadUserDefaults() {
         
         let defaults = UserDefaults.standard
-        
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
         memberId = defaults.string(forKey: DefaultsKeys.memberid)
         priority = defaults.string(forKey: DefaultsKeys.priority)
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
-        
         UserNameLabels.text = memberName
         
         if colgImg != "" {
-            
             clgLogoImg.sd_setImage(
                 with: URL(string: colgImg),
                 placeholderImage: UIImage(named: "EmptyCollegeIcon")
             )
             
         } else {
-            
             clgLogoImg.image = UIImage(named: "EmptyCollegeIcon")
         }
     }
@@ -192,7 +187,8 @@ class NewHomescreenVC: UIViewController {
         registerNib(EventsIdentifier)
         registerNib(attendanceIdentifier)
         registerNib(MenuTVCellIdentifier)
-        
+        tv.showsVerticalScrollIndicator = false
+        tv.showsHorizontalScrollIndicator = false
         tv.delegate = self
         tv.dataSource = self
     }
@@ -209,13 +205,11 @@ class NewHomescreenVC: UIViewController {
         var devicToken = DeviceTokenModal()
         
         let defaults = UserDefaults.standard
-        var mobileNum = defaults.string(forKey: DefaultsKeys.mobileNumber)
+        let mobileNum = defaults.string(forKey: DefaultsKeys.mobileNumber)
         
         defaults.set( devicToken.devicetoken, forKey: DefaultsKeys.DEVICETOKEN)
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let myOtherVariable = appDelegate.DeviceToken
-        
-        print("devicetoken",myOtherVariable)
         devicToken.mobileno = mobileNum
         devicToken.devicetype    = "iphone"
         devicToken.devicetoken    = myOtherVariable
@@ -223,7 +217,6 @@ class NewHomescreenVC: UIViewController {
         APiCallManager.shared.callApi(url: APIEndpoints.DeviceToken, httpMethod: .post, queryParam: nil, requestBody: devicToken) {[weak self] (result:Result<DeviceTokenResponse, any Error>) in
             
             guard let self = self else {return}
-            
             switch result {
             case .success(let success):
                 print(success.Message ?? "")
@@ -237,8 +230,6 @@ class NewHomescreenVC: UIViewController {
     func loadDashboardAndMenu() {
         loadingCustom.startAnimating()
         let group = DispatchGroup()
-        
-        // Dashboard API
         group.enter()
         dashBoardList { [weak self] in
             group.leave()
@@ -254,8 +245,6 @@ class NewHomescreenVC: UIViewController {
             guard let self = self else { return }
             self.loadingCustom.stopAnimating()
             self.loadingCustom.isHidden = true
-            
-            // Insert MenuList at index 1
             if let menuDashData = self.createMenuDashData() {
                 self.dashBoardDataList.insert(menuDashData, at: 1)
             }
@@ -412,12 +401,6 @@ class NewHomescreenVC: UIViewController {
         )
     }
     
-    //MARK: Button Actions
-    
-    @IBAction func refreshBtnAct(_ sender: UIButton) {
-        loadDashboardAndMenu()
-    }
-    
     @IBAction func NotificationBtnAct(_ sender: UIButton) {
         let vc = NotificationViewController(nibName: nil, bundle: nil)
         vc.str = str
@@ -550,8 +533,6 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             }
             
             cell.configure(with: MenuRefName)
-            //cell.menuList = MenuRefName
-            
             return cell
             
         case "Emergency Notification":
@@ -559,7 +540,6 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: emergencyIdentifier, for: indexPath) as? BannerCell else {
                 return UITableViewCell()
             }
-            
             cell.configure(Data: dashBoardList.emerSubData)
             cell.onViewAll = { [weak self] in
                 self?.RecentNotificationVc()
@@ -572,7 +552,6 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             }
             
             cell.attend = dashBoardList.attendanceSubData
-            
             let viewClick = UITapGestureRecognizer(target: self, action: #selector(AttendanceViewVc))
             cell.viewAllClick.addGestureRecognizer(viewClick)
             
@@ -583,7 +562,6 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: assignmentListIdentifier, for: indexPath) as? AssignmentTableviewCel else {
                 return UITableViewCell()
             }
-            
             cell.strName = strName
             cell.str = str
             
@@ -595,7 +573,6 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             }
             
             cell.assignmentDatas = dashBoardList.assigment
-            
             let assigmentViewAll = UITapGestureRecognizer(target: self, action: #selector(AssigmentViewAllVc))
             cell.viewAll.addGestureRecognizer(assigmentViewAll)
             
@@ -710,7 +687,6 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             
             cell.mainPresent = self
             cell.LeaveRequestData = dashBoardList.leaveRequest
-            
             let leavess = UITapGestureRecognizer(target: self, action: #selector(LeaveViewsVc))
             cell.leaveView.addGestureRecognizer(leavess)
             
@@ -742,7 +718,7 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             return CGFloat(200 * attendanceData.count)
             
         case "Assignments":
-            return assignmentData.isEmpty ? 0 : 280
+            return assignmentData.isEmpty ? 0 : 260
             
         case "Notice Board":
             return noticeBoardData.isEmpty ? 0 : 285
@@ -760,7 +736,7 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             }
             
         case "Upcoming Events":
-            return EventData.isEmpty ? 0 : 220
+            return EventData.isEmpty ? 0 : 180
             
         case "Chat":
             for chat in dashBoardList.Chat {
@@ -1360,15 +1336,15 @@ class BackButton: UIButton {
     private func commonInit() {
         
         let symbolConfiguration = UIImage.SymbolConfiguration(
-                pointSize: 20,
-                weight: .medium
-            )
+            pointSize: 20,
+            weight: .medium
+        )
         
         // UI
         let backImage = UIImage(
-               systemName: "chevron.left",
-               withConfiguration: symbolConfiguration
-           )
+            systemName: "chevron.left",
+            withConfiguration: symbolConfiguration
+        )
         setImage(backImage, for: .normal)
         setTitle("", for: .normal)
         
@@ -1390,28 +1366,28 @@ class BackButton: UIButton {
 }
 
 extension UIColor {
-
+    
     static var priorityColor: UIColor {
         let priority = UserDefaults.standard
             .string(forKey: DefaultsKeys.priority)?
             .lowercased()
-
+        
         switch priority {
         case "p1":
             return UIColor(named: "Principal") ?? .systemBackground
-
+            
         case "p2", "p3", "p6":
             return UIColor(named: "Teaching Staff") ?? .systemBackground
-
+            
         case "p4":
             return UIColor(named: "studentViewColors") ?? .systemBackground
-
+            
         case "p5":
             return UIColor(named: "FatherColor") ?? .systemBackground
-
+            
         case "p7":
             return UIColor(named: "univercityColorCod") ?? .systemBackground
-
+            
         default:
             return UIColor(named: "Principal") ?? .systemBackground
         }

@@ -28,7 +28,6 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
 @IBOutlet weak var faqView: UIView!
 @IBOutlet weak var noRecordLbl: UILabel!
 @IBOutlet weak var privacyPolicyView: UIView!
-@IBOutlet weak var refreshView: UIView!
 @IBOutlet weak var tv: UITableView!
 @IBOutlet weak var profileView: UIView!
 @IBOutlet weak var changeRolesView: UIView!
@@ -54,7 +53,6 @@ override func viewDidLoad() {
     super.viewDidLoad()
     
     sideMenuView.isHidden = true
-    refreshView.isHidden = true
     noRecordLbl.isHidden = true
     let defaults = UserDefaults.standard
     
@@ -159,18 +157,8 @@ override func viewDidLoad() {
     tv.register(rowNib, forCellReuseIdentifier: rowIdentifier)
     
     
-    
-    
-    let tapGes = UITapGestureRecognizer(target: self, action: #selector(testVC.refreshBtnAct(_:)))
-    refreshView.addGestureRecognizer(tapGes)
-    
-    
     let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
     viewTap.addGestureRecognizer(menuGestureHide)
-    
-    
-    let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-    refreshView.addGestureRecognizer(refreshGesture)
     
     
     let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))

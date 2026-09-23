@@ -4,8 +4,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,15 +21,25 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="20W-FY-CvY">
                         <rect key="frame" x="0.0" y="0.0" width="394" height="154"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upcoming Events &amp; Workshop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N3y-XD-em3">
-                                <rect key="frame" x="15" y="10" width="291" height="19.5"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="baE-kr-jAJ">
+                                <rect key="frame" x="8" y="10" width="4" height="19.5"/>
+                                <color key="backgroundColor" name="FatherColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="4" id="bEj-kt-4vW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upcoming Events" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N3y-XD-em3">
+                                <rect key="frame" x="18" y="10" width="286" height="19.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Qbk-ex-sw9">
                                 <rect key="frame" x="10" y="37.5" width="374" height="106.5"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="oXr-f0-NI5">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -38,20 +48,20 @@
                                 </collectionViewFlowLayout>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0l4-Eh-pgV" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
-                                <rect key="frame" x="314" y="5" width="70" height="28"/>
+                                <rect key="frame" x="314" y="5" width="70" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View All" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WjS-YD-LaV">
-                                        <rect key="frame" x="10.5" y="6" width="49.5" height="16"/>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
-                                        <nil key="textColor"/>
+                                        <rect key="frame" x="10" y="7" width="50.5" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                        <color key="textColor" name="FatherColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <color key="backgroundColor" red="0.92941176470588238" green="0.94117647058823528" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="WjS-YD-LaV" firstAttribute="centerY" secondItem="0l4-Eh-pgV" secondAttribute="centerY" id="Kec-Xj-YpM"/>
                                     <constraint firstItem="WjS-YD-LaV" firstAttribute="centerX" secondItem="0l4-Eh-pgV" secondAttribute="centerX" id="MVR-Qz-9fb"/>
-                                    <constraint firstAttribute="height" constant="28" id="ipm-N3-KLo"/>
+                                    <constraint firstAttribute="height" constant="30" id="ipm-N3-KLo"/>
                                     <constraint firstAttribute="width" constant="70" id="otf-AE-50w"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -64,20 +74,24 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Qbk-ex-sw9" secondAttribute="bottom" constant="10" id="3rr-yo-u2V"/>
+                            <constraint firstItem="N3y-XD-em3" firstAttribute="top" secondItem="baE-kr-jAJ" secondAttribute="top" id="4fK-gH-Egi"/>
                             <constraint firstAttribute="trailing" secondItem="0l4-Eh-pgV" secondAttribute="trailing" constant="10" id="Jxr-wq-0jO"/>
                             <constraint firstItem="Qbk-ex-sw9" firstAttribute="top" secondItem="N3y-XD-em3" secondAttribute="bottom" constant="8" id="ZQy-1C-niU"/>
+                            <constraint firstItem="N3y-XD-em3" firstAttribute="bottom" secondItem="baE-kr-jAJ" secondAttribute="bottom" id="eom-th-hHW"/>
                             <constraint firstItem="Qbk-ex-sw9" firstAttribute="leading" secondItem="20W-FY-CvY" secondAttribute="leading" constant="10" id="f5A-TR-jA9"/>
                             <constraint firstAttribute="trailing" secondItem="Qbk-ex-sw9" secondAttribute="trailing" constant="10" id="g8O-bW-cJ8"/>
                             <constraint firstItem="N3y-XD-em3" firstAttribute="top" secondItem="20W-FY-CvY" secondAttribute="top" constant="10" id="ghn-6H-KCZ"/>
-                            <constraint firstItem="N3y-XD-em3" firstAttribute="leading" secondItem="20W-FY-CvY" secondAttribute="leading" constant="15" id="hi6-uE-pn1"/>
-                            <constraint firstItem="0l4-Eh-pgV" firstAttribute="leading" secondItem="N3y-XD-em3" secondAttribute="trailing" constant="8" id="ofq-zF-Dh2"/>
+                            <constraint firstItem="0l4-Eh-pgV" firstAttribute="leading" secondItem="N3y-XD-em3" secondAttribute="trailing" constant="10" id="mpE-OP-CxM"/>
+                            <constraint firstItem="baE-kr-jAJ" firstAttribute="leading" secondItem="20W-FY-CvY" secondAttribute="leading" constant="8" id="rmy-mS-HUn"/>
+                            <constraint firstItem="N3y-XD-em3" firstAttribute="leading" secondItem="baE-kr-jAJ" secondAttribute="trailing" constant="6" id="xP0-2G-7NS"/>
                             <constraint firstItem="0l4-Eh-pgV" firstAttribute="top" secondItem="20W-FY-CvY" secondAttribute="top" constant="5" id="z1O-Ba-MRV"/>
                         </constraints>
                     </view>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="20W-FY-CvY" secondAttribute="trailing" id="CuU-fh-imT"/>
                     <constraint firstAttribute="bottom" secondItem="20W-FY-CvY" secondAttribute="bottom" id="WIr-x2-iT8"/>
@@ -86,19 +100,18 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="EventViewClick" destination="0l4-Eh-pgV" id="SB8-RK-YzO"/>
                 <outlet property="cv" destination="Qbk-ex-sw9" id="wAJ-FB-7OU"/>
+                <outlet property="leftBorder" destination="baE-kr-jAJ" id="EDw-7k-Izm"/>
             </connections>
             <point key="canvasLocation" x="191.30434782608697" y="79.6875"/>
         </tableViewCell>
     </objects>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
+        <namedColor name="FatherColor">
+            <color red="0.14499999582767487" green="0.29800000786781311" blue="0.59200000762939453" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

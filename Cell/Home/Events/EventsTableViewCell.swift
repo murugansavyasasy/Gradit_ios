@@ -12,6 +12,7 @@ import ObjectMapper
 class EventsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
    
     
+    @IBOutlet weak var leftBorder: UILabel!
     @IBOutlet weak var EventViewClick: UIViewX!
     @IBOutlet weak var cv: UICollectionView!
     
@@ -31,7 +32,10 @@ class EventsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        EventViewClick.borderColor = .tintColor.withAlphaComponent(0.13)
+        EventViewClick.borderWidth = 1
+        leftBorder.clipsToBounds = true
+        leftBorder.layer.cornerRadius = leftBorder.frame.width/2
         let defaults = UserDefaults.standard
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
         memberId = defaults.string(forKey: DefaultsKeys.memberid)
@@ -67,47 +71,19 @@ class EventsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
         EventsCollectionViewCell
        
         let circular : UpcomingEventsDashType = EventData[indexPath.row]
-        
-        print("ccjlllt",EventData.count)
-        
-        let dateFormatterGet = DateFormatter()
-        
-        dateFormatterGet.dateFormat = "dd-MM-yyy"
-        
-        let dateFormatterPrint = DateFormatter()
-        
-        dateFormatterPrint.dateFormat = " dd MMM,yyyy"
-        
-        let date: NSDate? = dateFormatterGet.date(from: circular.eventdate ?? "") as NSDate?
-        
-        print(dateFormatterPrint.string(from: date as! Date))
-        
-        var dateString2 = circular.eventtime
-        let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "HH:mm:ss"
-                dateFormatter.locale = Locale.init(identifier: "en_US_POSIX")
-        
-                let dateObj = dateFormatter.date(from: dateString2!)
-                dateFormatter.dateFormat = "hh:mm"
-        
-        cell.dateLabel.text = dateFormatterPrint.string(from: date as! Date)
-        cell.timeLabel.text = (dateFormatter.string(from: dateObj!))
+        cell.dateLabel.text = circular.eventdate?.dateFormater()
+        cell.timeLabel.text = circular.eventtime?.dateFormater(input: "HH:mm:ss",output: "hh:mm a")
         cell.eventTopic.text = circular.eventtopic
         
         
         if (indexPath.row % 2 == 0){
-            
-            cell.fullView.backgroundColor = UIColor(named: "eventclrdashboard")
-            
+            cell.fullView.backgroundColor = UIColor(red: 184/255, green: 242/255, blue: 200/255, alpha: 0.10)
         }else{
-            
-            cell.fullView.backgroundColor = UIColor(named: "eventdashcolorr")
-            
+            cell.fullView.backgroundColor = UIColor(red: 184/255, green: 242/255, blue: 200/255, alpha: 0.10)
         }
         
         let  viewClick = UITapGestureRecognizer(target: self, action: #selector(EventViewVc))
         cell.fullView.addGestureRecognizer(viewClick)
-        
         
         return cell
     }
@@ -138,12 +114,9 @@ class EventsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true, completion: nil)
             
-        }
-        
-        else if priority == "p1" {
+        }else if priority == "p1" {
             
             let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-            
             let currentController = self.getViewController()
             vc.str = str
             vc.strName = strName
@@ -155,15 +128,9 @@ class EventsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true, completion: nil)
             
-            
-            
-        }
-        
-        
-        else if priority == "p3" ||  priority == "p2"  {
+        }else if priority == "p3" ||  priority == "p2"  {
             
             let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-            
             let currentController = self.getViewController()
             vc.str = str
             vc.strName = strName
@@ -174,13 +141,8 @@ class EventsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
             vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true, completion: nil)
-            
-        }
-        
-        else if priority == "p5"{
-            
+        }else if priority == "p5"{
             let vc =  EventsViewController(nibName: nil, bundle: nil)
-            
             let currentController = self.getViewController()
             vc.str = str
             vc.strName = strName
@@ -192,9 +154,7 @@ class EventsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true, completion: nil)
         } else if priority == "p6"{
-            
             let vc =  SenderEventHomePageViewController(nibName: nil, bundle: nil)
-            
             let currentController = self.getViewController()
             vc.str = str
             vc.strName = strName
@@ -211,7 +171,7 @@ class EventsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 278, height: 150)
+        return CGSize(width: 258, height: 130)
     }
     
 }

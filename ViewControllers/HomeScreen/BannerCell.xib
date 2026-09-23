@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -22,23 +21,35 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aZx-Re-dsx">
                         <rect key="frame" x="10" y="10" width="300" height="180"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="taG-Hv-Bt3">
-                                <rect key="frame" x="10" y="10" width="280" height="28"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="taG-Hv-Bt3">
+                                <rect key="frame" x="10" y="10" width="280" height="30"/>
                                 <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8E-zH-6Oj">
+                                        <rect key="frame" x="0.0" y="5" width="4" height="20"/>
+                                        <color key="backgroundColor" name="FatherColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="0ip-aJ-LQS"/>
+                                            <constraint firstAttribute="width" constant="4" id="btI-k4-rWB"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emergency Notification" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZW5-0o-mYX">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="28"/>
+                                        <rect key="frame" x="9" y="5.3333333333333321" width="191" height="19.333333333333332"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UXo-CV-IfN">
-                                        <rect key="frame" x="200" y="0.0" width="80" height="28"/>
-                                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                        <rect key="frame" x="205" y="0.0" width="75" height="30"/>
+                                        <color key="backgroundColor" red="0.92941176470588238" green="0.94117647058823528" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="IlA-oD-JNj"/>
+                                            <constraint firstAttribute="width" constant="75" id="IlA-oD-JNj"/>
+                                            <constraint firstAttribute="height" constant="30" id="Pbw-eh-AcY"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
-                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                        <color key="tintColor" name="FatherColor"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="View All"/>
                                         <connections>
@@ -48,8 +59,8 @@
                                 </subviews>
                             </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="2gY-04-EsK">
-                                <rect key="frame" x="0.0" y="47.999999999999993" width="300" height="101.33333333333331"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <rect key="frame" x="0.0" y="49.999999999999993" width="300" height="99.333333333333314"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="I0a-bx-rYa">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -66,7 +77,7 @@
                                 </connections>
                             </pageControl>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="2gY-04-EsK" firstAttribute="leading" secondItem="aZx-Re-dsx" secondAttribute="leading" id="1lX-vJ-eA1"/>
                             <constraint firstItem="taG-Hv-Bt3" firstAttribute="top" secondItem="aZx-Re-dsx" secondAttribute="top" constant="10" id="9f2-YW-Gk2"/>
@@ -81,6 +92,7 @@
                         </constraints>
                     </view>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="aZx-Re-dsx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="T2b-Wx-eAy"/>
                     <constraint firstAttribute="bottom" secondItem="aZx-Re-dsx" secondAttribute="bottom" constant="10" id="VBR-gX-H1v"/>
@@ -89,27 +101,26 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="cv" destination="2gY-04-EsK" id="Vvp-k4-yKA"/>
                 <outlet property="headerLbl" destination="ZW5-0o-mYX" id="C6Y-w7-mag"/>
                 <outlet property="pageController" destination="cbs-MD-nj1" id="s4d-QS-fe6"/>
+                <outlet property="sideIndicater" destination="c8E-zH-6Oj" id="31R-4Q-2wg"/>
                 <outlet property="viewAllBtn" destination="UXo-CV-IfN" id="kbz-Xg-igX"/>
             </connections>
             <point key="canvasLocation" x="109.9236641221374" y="154.22535211267606"/>
         </tableViewCell>
     </objects>
     <resources>
+        <namedColor name="FatherColor">
+            <color red="0.14499999582767487" green="0.29800000786781311" blue="0.59200000762939453" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="Principal">
             <color red="0.56499999761581421" green="0.14100000262260437" blue="0.46299999952316284" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="eventdashcolorr">
             <color red="0.70599997043609619" green="0.88999998569488525" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>
