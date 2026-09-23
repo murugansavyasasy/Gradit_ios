@@ -33,7 +33,6 @@
                 <outlet property="readCountLabel" destination="YBZ-N2-JrB" id="Qq0-z9-05o"/>
                 <outlet property="readCountView" destination="Mjg-TM-koA" id="qYr-ym-TmR"/>
                 <outlet property="redirectLoginView" destination="46i-2S-iun" id="UBt-WX-1P6"/>
-                <outlet property="refreshView" destination="qx2-W9-gQG" id="SHl-f4-kwO"/>
                 <outlet property="searchFullView" destination="GhL-bU-C2B" id="qh0-eV-d3M"/>
                 <outlet property="searchbar" destination="9mT-5Q-lHG" id="ygz-Dg-LCW"/>
                 <outlet property="sideMenuView" destination="R42-yS-nYp" id="NTs-V8-gOd"/>
@@ -139,29 +138,10 @@
                                             </constraints>
                                         </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Mpk-gl-gMu">
-                                            <rect key="frame" x="224" y="0.0" width="149" height="50"/>
+                                            <rect key="frame" x="262" y="0.0" width="111" height="50"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qx2-W9-gQG">
-                                                    <rect key="frame" x="0.0" y="0.0" width="35" height="50"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="refresh" translatesAutoresizingMaskIntoConstraints="NO" id="eGA-Kj-Igg">
-                                                            <rect key="frame" x="7.6666666666666572" y="15" width="20" height="20"/>
-                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="20" id="A6b-g1-xD6"/>
-                                                                <constraint firstAttribute="width" constant="20" id="QQV-Yl-hXV"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstItem="eGA-Kj-Igg" firstAttribute="centerX" secondItem="qx2-W9-gQG" secondAttribute="centerX" id="3QS-6M-Lzr"/>
-                                                        <constraint firstAttribute="width" constant="35" id="Ha1-ve-vCl"/>
-                                                        <constraint firstItem="eGA-Kj-Igg" firstAttribute="centerY" secondItem="qx2-W9-gQG" secondAttribute="centerY" id="ORN-rO-1NW"/>
-                                                    </constraints>
-                                                </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NZR-3U-vEw">
-                                                    <rect key="frame" x="38" y="0.0" width="35" height="50"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="35" height="50"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifying-glass-search" translatesAutoresizingMaskIntoConstraints="NO" id="whj-6K-jfG">
                                                             <rect key="frame" x="7.6666666666666856" y="15" width="20" height="20"/>
@@ -180,7 +160,7 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ijz-7H-oDI">
-                                                    <rect key="frame" x="76" y="0.0" width="35" height="50"/>
+                                                    <rect key="frame" x="38" y="0.0" width="35" height="50"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bell (1)" translatesAutoresizingMaskIntoConstraints="NO" id="FyF-Cd-qNl">
                                                             <rect key="frame" x="7.6666666666666856" y="15" width="20" height="20"/>
@@ -199,7 +179,7 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ugB-xE-hJs">
-                                                    <rect key="frame" x="114" y="0.0" width="35" height="50"/>
+                                                    <rect key="frame" x="76" y="0.0" width="35" height="50"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="man" translatesAutoresizingMaskIntoConstraints="NO" id="19T-Eh-8ay">
                                                             <rect key="frame" x="3.6666666666666856" y="11" width="28" height="28"/>
@@ -219,7 +199,7 @@
                                             </subviews>
                                         </stackView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GraditWhiteLogo" translatesAutoresizingMaskIntoConstraints="NO" id="4HW-Og-1T1">
-                                            <rect key="frame" x="162" y="0.0" width="60" height="50"/>
+                                            <rect key="frame" x="162" y="0.0" width="98" height="50"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GhL-bU-C2B" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
@@ -679,36 +659,12 @@
             </constraints>
             <point key="canvasLocation" x="47.200000000000003" y="20.689655172413794"/>
         </view>
-        <viewController id="TIo-Z1-Vlo">
-            <view key="view" contentMode="scaleToFill" id="WuN-fZ-Mva">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jpX-Z0-mOP" customClass="OptionsSheetView" customModule="Gradit" customModuleProvider="target">
-                        <rect key="frame" x="159" y="142" width="200" height="300"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="200" id="83f-BK-hPT"/>
-                            <constraint firstAttribute="height" constant="300" id="Hix-Tm-e6L"/>
-                        </constraints>
-                    </view>
-                </subviews>
-                <viewLayoutGuide key="safeArea" id="bAP-Ff-Gnc"/>
-                <color key="backgroundColor" systemColor="systemGray5Color"/>
-                <constraints>
-                    <constraint firstItem="bAP-Ff-Gnc" firstAttribute="trailing" secondItem="jpX-Z0-mOP" secondAttribute="trailing" constant="16" id="3ik-g1-1Wj"/>
-                    <constraint firstItem="jpX-Z0-mOP" firstAttribute="top" secondItem="bAP-Ff-Gnc" secondAttribute="top" constant="42" id="iju-l2-oYl"/>
-                </constraints>
-            </view>
-            <point key="canvasLocation" x="1308" y="-18"/>
-        </viewController>
     </objects>
     <resources>
         <image name="GraditWhiteLogo" width="512" height="512"/>
         <image name="bell (1)" width="64" height="64"/>
         <image name="magnifying-glass-search" width="32" height="32"/>
         <image name="man" width="512" height="512"/>
-        <image name="refresh" width="64" height="64"/>
         <namedColor name="CountColor">
             <color red="0.96100002527236938" green="0.3880000114440918" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -723,9 +679,6 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

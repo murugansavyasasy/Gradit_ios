@@ -31,7 +31,6 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
     @IBOutlet weak var helpView: UIView!
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var termsAndConditionView: UIView!
-    @IBOutlet weak var refreshView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
     @IBOutlet weak var topMessageLabel: UILabel!
     @IBOutlet weak var clgLogoImg: UIImageView!
@@ -211,9 +210,6 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         
         let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
         termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
         
         let profileGesture = UITapGestureRecognizer(target: self, action: #selector(profileRedirect))
         profileView.addGestureRecognizer(profileGesture)
@@ -646,27 +642,20 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         cell.selectionStyle = .none
         
         if let selectedCell = selectedCell, selectedCell == indexPath {
-            cell.PlayerViewHeight.constant = 46
             cell.msgContentLabel.isHidden = false
-           
             cell.voiceView.isHidden = false
             cell.playView.isHidden = true
             cell.arrowImage.image = UIImage(named: "up")
             cell.sendByLabel.isHidden = false
             cell.sendByView.isHidden = false
-            
         } else {
-            cell.PlayerViewHeight.constant = 0
             cell.sendByLabel.isHidden = true
             cell.voiceView.isHidden = true
             cell.playView.isHidden = false
             cell.arrowImage.image = UIImage(named: "down")
-            
-            
             cell.sendByLabel.isHidden = true
             cell.sendByView.isHidden = true
             cell.player?.pause()
-            
             cell.btnName.setImage(UIImage(named: "plays"), for: .normal)
         }
         
@@ -708,7 +697,6 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
             
             cell.audioFileURL = comuCell.voicefile
             cell.messageId = comuCell.msgdetailsid
-            cell.dateLabel.text = comuCell.timing
             
             if comuCell.description != nil{
                 cell.durationLAbel.text = "00:0"+(comuCell.duration ?? "")
@@ -717,20 +705,13 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
                 cell.durationLAbel.text = "00:00"
             }
             
-            
-            print("cell.audioFileURL",cell.audioFileURL)
-            var dateString2 = comuCell.timing
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMM yyyy - hh:mm:ss a"
-            dateFormatter.locale = Locale.init(identifier: "en_US_POSIX")
-            
-            let dateObj = dateFormatter.date(from: dateString2!)
-            dateFormatter.dateFormat = "dd MMM yyyy  hh:mm a"
-            
-            
-        }
-        
-        else if CommuniSegementName.selectedSegmentIndex == 1 {
+            if let timing = comuCell.timing {
+                let dateAndTime = timing.components(separatedBy: " - ")
+
+                cell.dateLabel.text = dateAndTime.first ?? ""
+                cell.timeLabel.text = dateAndTime.dropFirst().joined(separator: " - ")
+            }
+        }else if CommuniSegementName.selectedSegmentIndex == 1 {
             
             let unreadCell : ReadCommunicationDetails = ReadData[indexPath.row]
             
@@ -762,8 +743,6 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
             cell.msgContentLabel.text = unreadCell.description?.capitalized
             
             cell.sendByLabel.text = unreadCell.sentby
-            
-            cell.dateLabel.text = unreadCell.timing
             cell.audioFileURL = unreadCell.voicefile
             cell.messageId = unreadCell.msgdetailsid
             
@@ -774,13 +753,13 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
                 
                 cell.durationLAbel.text = "00:00"
             }
-            var dateString2 = unreadCell.timing
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMM yyyy - hh:mm:ss a"
-            dateFormatter.locale = Locale.init(identifier: "en_US_POSIX")
             
-            let dateObj = dateFormatter.date(from: dateString2!)
-            dateFormatter.dateFormat = "dd MMM yyyy  hh:mm a"
+            if let timing = unreadCell.timing {
+                let dateAndTime = timing.components(separatedBy: " - ")
+
+                cell.dateLabel.text = dateAndTime.first ?? ""
+                cell.timeLabel.text = dateAndTime.dropFirst().joined(separator: " - ")
+            }
             
         }
         
@@ -1102,21 +1081,6 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         
         present(refreshAlert, animated: true, completion: nil)
         
-    }
-    
-    @IBAction func refreshVc() {
-        
-        print("segTyp",segTyp)
-        if segTyp == "1"{
-            
-            unReadModal()
-            overAllRefName()
-        }
-        else{
-            
-            overAllRefName()
-            ReadApi()
-        }
     }
     
     @IBAction func priorityVc() {

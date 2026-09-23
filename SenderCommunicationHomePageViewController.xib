@@ -29,8 +29,6 @@
                 <outlet property="noDataTextLabel" destination="bkM-E3-QlB" id="BdF-do-TUh"/>
                 <outlet property="noDataView" destination="vhB-ob-4Qh" id="bfs-t9-NGM"/>
                 <outlet property="notificationView" destination="Hxd-Gm-glD" id="1cT-Ad-9p0"/>
-                <outlet property="plusImageView" destination="utQ-Pr-zYl" id="1aV-yL-qTr"/>
-                <outlet property="plusView" destination="5Mr-OU-hGT" id="kXa-Az-k21"/>
                 <outlet property="privacyPolicyView" destination="AYJ-CQ-Grk" id="xfe-hT-4nt"/>
                 <outlet property="readCountLabel" destination="mNN-2x-ePZ" id="K4k-LR-GuO"/>
                 <outlet property="readCountView" destination="LUs-sx-6yq" id="94f-5K-hBj"/>
@@ -397,7 +395,7 @@
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yWE-wV-JYF" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
-                            <rect key="frame" x="304" y="426" width="56" height="58"/>
+                            <rect key="frame" x="304" y="486" width="56" height="58"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="voice-message-microphone-button" translatesAutoresizingMaskIntoConstraints="NO" id="tan-39-3Dj">
                                     <rect key="frame" x="15" y="15" width="26" height="28"/>
@@ -438,30 +436,8 @@
                                 <constraint firstAttribute="trailing" secondItem="bkM-E3-QlB" secondAttribute="trailing" id="i85-ZI-LxU"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Mr-OU-hGT" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
-                            <rect key="frame" x="291" y="469" width="56" height="58"/>
-                            <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="left-align" translatesAutoresizingMaskIntoConstraints="NO" id="utQ-Pr-zYl">
-                                    <rect key="frame" x="15" y="15" width="26" height="28"/>
-                                </imageView>
-                            </subviews>
-                            <color key="backgroundColor" name="messagecolor"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="56" id="0Q8-pD-lAe"/>
-                                <constraint firstAttribute="trailing" secondItem="utQ-Pr-zYl" secondAttribute="trailing" constant="15" id="1GV-gk-Gae"/>
-                                <constraint firstItem="utQ-Pr-zYl" firstAttribute="top" secondItem="5Mr-OU-hGT" secondAttribute="top" constant="15" id="bcJ-Ky-OdP"/>
-                                <constraint firstAttribute="bottom" secondItem="utQ-Pr-zYl" secondAttribute="bottom" constant="15" id="hpQ-C7-IrL"/>
-                                <constraint firstItem="utQ-Pr-zYl" firstAttribute="leading" secondItem="5Mr-OU-hGT" secondAttribute="leading" constant="15" id="myk-04-jWR"/>
-                                <constraint firstAttribute="height" constant="58" id="u7C-pr-jtQ"/>
-                            </constraints>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <real key="value" value="28"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VoiceMessage" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ljk-QK-6Ym">
-                            <rect key="frame" x="126" y="160" width="115.33333333333331" height="20.333333333333343"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Voice Message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ljk-QK-6Ym">
+                            <rect key="frame" x="126" y="160" width="119.33333333333331" height="20.333333333333343"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -470,7 +446,7 @@
                             <rect key="frame" x="177.66666666666666" y="312" width="20" height="20"/>
                         </activityIndicatorView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y7b-Xp-cae" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
-                            <rect key="frame" x="246.33333333333337" y="160" width="35" height="24"/>
+                            <rect key="frame" x="250.33333333333337" y="160" width="35" height="24"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMp-I3-Ocl">
                                     <rect key="frame" x="0.0" y="0.0" width="35" height="24"/>
@@ -503,11 +479,10 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="yWE-wV-JYF" secondAttribute="bottom" constant="160" id="04L-f2-Lbw"/>
+                        <constraint firstAttribute="bottom" secondItem="yWE-wV-JYF" secondAttribute="bottom" constant="100" id="04L-f2-Lbw"/>
                         <constraint firstItem="8px-i0-b5o" firstAttribute="leading" secondItem="760-kB-B8r" secondAttribute="leading" id="1s8-uE-2i6"/>
                         <constraint firstItem="L1w-B5-92l" firstAttribute="centerY" secondItem="760-kB-B8r" secondAttribute="centerY" id="2qu-ZV-ldt"/>
                         <constraint firstItem="G1w-E0-vpB" firstAttribute="top" secondItem="IzP-3N-WV4" secondAttribute="bottom" constant="15" id="30M-Hg-Lg5"/>
-                        <constraint firstAttribute="trailing" secondItem="5Mr-OU-hGT" secondAttribute="trailing" constant="28" id="4vd-xH-oHo"/>
                         <constraint firstAttribute="trailing" secondItem="0a6-Sx-29a" secondAttribute="trailing" id="5oH-XI-cpm"/>
                         <constraint firstItem="vhB-ob-4Qh" firstAttribute="leading" secondItem="760-kB-B8r" secondAttribute="leading" constant="83" id="AIt-mB-xo4"/>
                         <constraint firstItem="IzP-3N-WV4" firstAttribute="leading" secondItem="760-kB-B8r" secondAttribute="leading" constant="8" id="FLg-sC-xni"/>
@@ -718,7 +693,6 @@
     <resources>
         <image name="GraditWhiteLogo" width="512" height="512"/>
         <image name="bell (1)" width="64" height="64"/>
-        <image name="left-align" width="64" height="64"/>
         <image name="magnifying-glass-search" width="32" height="32"/>
         <image name="man" width="512" height="512"/>
         <image name="refresh" width="64" height="64"/>

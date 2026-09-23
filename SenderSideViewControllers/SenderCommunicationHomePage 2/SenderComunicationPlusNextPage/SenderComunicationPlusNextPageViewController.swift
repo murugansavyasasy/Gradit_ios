@@ -14,13 +14,11 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
     
     
     
-    
+    @IBOutlet weak var newTextMessageBtn: UIButton!
+    @IBOutlet weak var selectFromHistoryBtn: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var bottomOverAllView: UIView!
-    @IBOutlet weak var historyTextMsgCheckBox: checkBoxFour!
-    
     @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var newTextMsgCheckBox: checkBoxFour!
-    
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var lblCount: UILabel!
     @IBOutlet weak var tapBarView: UIViewX!
@@ -28,7 +26,6 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
     
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var topNameview: UIView!
-    @IBOutlet weak var enterDiscripitonsLabel: UILabel!
     @IBOutlet weak var titleTextField: UITextField!
     
     @IBOutlet weak var smallImg: UIImageView!
@@ -45,7 +42,6 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
     @IBOutlet weak var logoutView: UIView!
     
     @IBOutlet weak var changeRolesView: UIView!
-    @IBOutlet weak var profileView: UIView!
     
     @IBOutlet weak var clgLogoImg: UIImageView!
     
@@ -144,8 +140,6 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
         tv.dataSource = self
         tv.isHidden = true
         nodataLbl.isHidden = true
-        
-        newTextMsgCheckBox.setImage(UIImage.init(named: "radios"), for: .normal)
         
         sideMenuView.isHidden = true
         
@@ -260,19 +254,8 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
         
-        
-        
-        let NewTextCheckBox = UITapGestureRecognizer(target: self, action: #selector(NewTextMsgVC))
-        newTextMsgCheckBox.addGestureRecognizer(NewTextCheckBox)
-        
-        
-        let historyCheckBoxs = UITapGestureRecognizer(target: self, action: #selector(HistoryMsgVC))
-        historyTextMsgCheckBox.addGestureRecognizer(historyCheckBoxs)
-        
-        
         let helpGesture = UITapGestureRecognizer(target: self, action: #selector(helpRedirect))
         helpView.addGestureRecognizer(helpGesture)
-        //
         
         let privacyPolicyGesture = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyRedirect))
         privacyPolicyView.addGestureRecognizer(privacyPolicyGesture)
@@ -293,88 +276,32 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
         
         
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    @IBAction func HistoryMsgVC(){
-        
-        
-        if historyTextMsgCheckBox.isChecked == true{
-            
-            historyTextMsgCheckBox.isChecked = false
-            
-          
-            newTextMsgCheckBox.isChecked = true
-            print("offff")
-            tv.isHidden = true
-            bottomOverAllView.isHidden = false
-            contentView.isHidden = false
-        }
-        
-        
-        
-        else{
-            
-            
-            newTextMsgCheckBox.isChecked = false
-            print("onnnnnn")
-            tv.isHidden = false
-            contentView.isHidden = true
-            bottomOverAllView.isHidden = true
-            HistoryApi()
-            
-            historyTextMsgCheckBox.isChecked = true
-        }
-        
-        
-        
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
-    
-    
-    
-    @IBAction func NewTextMsgVC(){
+    @IBAction func SelectFromHistoryAct(_sender: UIButton){
         
-        nodataLbl.isHidden = true
-        if newTextMsgCheckBox.isChecked == true{
-            
-            newTextMsgCheckBox.isChecked = false
-            
-            
-            historyTextMsgCheckBox.isChecked = true
-            
-            tv.isHidden = false
-            contentView.isHidden = true
-            bottomOverAllView.isHidden = true
-            print("offff")
-        }
+        tv.isHidden = false
+        contentView.isHidden = true
+        selectRecipientsView.isHidden = true
+        HistoryApi()
+        newTextMessageBtn.setImage(UIImage(systemName: "circle"), for: .normal)
+        selectFromHistoryBtn.setImage(UIImage(systemName: "inset.filled.circle"), for: .normal)
+    }
+  
+    @IBAction func NewTextMessageAct(_sender: UIButton){
         
-        
-        else{
-            
-            tv.isHidden = true
-            print("onnnnnn")
-            contentView.isHidden = false
-            bottomOverAllView.isHidden = false
-            historyTextMsgCheckBox.isChecked = false
-            newTextMsgCheckBox.isChecked = true
-        }
-        
-        
-        
-        
-        
-        
+        tv.isHidden = true
+        contentView.isHidden = false
+        selectRecipientsView.isHidden = false
+        newTextMessageBtn.setImage(UIImage(systemName: "inset.filled.circle"), for: .normal)
+        selectFromHistoryBtn.setImage(UIImage(systemName: "circle"), for: .normal)
     }
     
     
@@ -502,29 +429,28 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
         
         let historys : HistorySmsVoiceDataDetail = historyDataDetails[indexPath.row]
         
-        
         cell.DiscreptionLbl.text = historys.description
         cell.msgContent.text = historys.msgcontent
-        cell.timeAndDateLbl.text = historys.timing
+        
+        if let timing = historys.timing {
+            let dateAndTime = timing.components(separatedBy: " - ")
+
+            cell.DateLbl.text = dateAndTime.first ?? ""
+            cell.TimeLbl.text = dateAndTime.dropFirst().joined(separator: " - ")
+        }
         
         let send  = sendGesture(target: self, action: #selector(sendVc))
         send.Discreption = historys.description
         send.MsgContent = historys.msgcontent
         cell.sendView.addGestureRecognizer(send)
         
-        
         return cell
-        
-        
     }
-    
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return UITableView.automaticDimension
     }
-    
     
     
     @IBAction func backbtn(_ sender: Any) {
@@ -1185,6 +1111,29 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
         return range.location <= 99
     }
     
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        
+        guard let keyboardFrame = notification.userInfo?[
+            UIResponder.keyboardFrameEndUserInfoKey
+        ] as? CGRect else { return }
+        
+        let keyboardHeight = keyboardFrame.height + 20
+        
+        scrollView.contentInset.bottom = keyboardHeight
+        scrollView.verticalScrollIndicatorInsets.bottom = keyboardHeight
+        
+//        DispatchQueue.main.async {
+//               self.scrollView.scrollRectToVisible(
+//                   self.descripitionTextField.frame,
+//                   animated: true
+//               )
+//           }
+    }
+    
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        scrollView.contentInset.bottom = 0
+           scrollView.verticalScrollIndicatorInsets.bottom = 0
+    }
 }
 
 

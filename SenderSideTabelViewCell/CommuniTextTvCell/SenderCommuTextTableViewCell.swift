@@ -11,11 +11,11 @@ import AVFoundation
 import KRProgressHUD
 
 class SenderCommuTextTableViewCell: UITableViewCell,AVAudioPlayerDelegate {
-    @IBOutlet weak var PlayerViewHeight: NSLayoutConstraint!
     @IBOutlet weak var sendByView: UIViewX!
     @IBOutlet weak var voiceView: UIViewX!
     @IBOutlet weak var btnName: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var redDotImage: UIImageView!
     @IBOutlet weak var arrowImage: UIImageView!
     @IBOutlet weak var TypeImageView: UIImageView!
@@ -25,6 +25,8 @@ class SenderCommuTextTableViewCell: UITableViewCell,AVAudioPlayerDelegate {
     @IBOutlet weak var secondsTimeLabel: UILabel!
     @IBOutlet weak var durationLAbel: UILabel!
     @IBOutlet weak var playbackSlider: UISlider!
+    @IBOutlet weak var timeLbl: UILabel!
+    @IBOutlet weak var micImageBaseView: UIView!
     
     var audioFileURL: String?
     var audioRecorder: AVAudioRecorder!
@@ -48,6 +50,7 @@ class SenderCommuTextTableViewCell: UITableViewCell,AVAudioPlayerDelegate {
         
         secondsTimeLabel.text = "00:00"
         voiceView.isHidden = true
+        micImageBaseView.layer.cornerRadius = micImageBaseView.frame.height/2
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

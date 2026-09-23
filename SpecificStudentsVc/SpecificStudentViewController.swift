@@ -13,11 +13,11 @@ import AWSS3
 import DropDown
 
 @available(iOS 16.0, *)
-class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource ,UISearchBarDelegate,UITextViewDelegate{
+class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource ,UISearchBarDelegate, UITextFieldDelegate{
     
     
+    @IBOutlet weak var attendanceDetailsBaseview: UIView!
     @IBOutlet weak var attendanceLineView: UIView!
-    @IBOutlet weak var textViewHeight: NSLayoutConstraint!
     @IBOutlet weak var AttendanceTheryHeight: NSLayoutConstraint!
     @IBOutlet weak var partialBtnName: UIButton!
     @IBOutlet weak var theroyBtnName: UIButton!
@@ -37,7 +37,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     @IBOutlet weak var selectBtn: UIButton!
     @IBOutlet weak var allCheckBox: CheckBoxTwo!
     @IBOutlet weak var parentChck: CheckBoxTwo!
-    @IBOutlet weak var AttendanceTextView: UITextView!
+    @IBOutlet weak var AttendanceTextField: UITextField!
     @IBOutlet weak var tagetViewHeight: NSLayoutConstraint!
     @IBOutlet weak var attendanceSectionLbl: UILabel!
     @IBOutlet weak var studentChck: CheckBoxTwo!
@@ -208,11 +208,23 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         //        AttendanceTextView.isHidden = true
         // command end
         
+        attendanceDetailsBaseview.layer.cornerRadius = 10
+        attendanceDetailsBaseview.layer.borderWidth = 0.3
+        attendanceDetailsBaseview.layer.borderColor = UIColor.systemGray6.cgColor
+        attendanceDetailsBaseview.layer.shadowColor = UIColor.black.cgColor
+        attendanceDetailsBaseview.layer.shadowOpacity = 0.2
+        attendanceDetailsBaseview.layer.shadowRadius = 4
+        attendanceDetailsBaseview.layer.shadowOffset = .init(width: 0, height: 2)
+        
+        attendanceLineView.layer.cornerRadius = 10
+        attendanceLineView.layer.borderWidth = 1
+        attendanceLineView.layer.borderColor = UIColor.lightGray.cgColor
+        
         attenanceAlertString = attendance_type == "nth" ? "period" : "hour"
         
         searchbar.delegate = self
         overrideUserInterfaceStyle = .light
-        AttendanceTextView.delegate = self
+        AttendanceTextField.delegate = self
         
         let defaults = UserDefaults.standard
         
@@ -225,13 +237,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         
         selectBtn.setImage(UIImage.init(named: "checkboxs"), for: .normal)
         
-        AttendanceTextView.text = "Enter the topic"
-        AttendanceTextView.textColor = UIColor.lightGray
         pleaseChooseLbl.isHidden = true
         
         addDoneButtonOnKeyboard()
-        
-        AttendanceTextView.delegate = self
         
         if  is_parent_target_enabled == "0"{
             
@@ -280,7 +288,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
             attendanceStack.isHidden = false
             allCheckTotalView.isHidden = true
             SortBtn.isHidden = false
-            AttendanceViewHigth.constant = 250
+            AttendanceViewHigth.constant = 260
             //            AttendanceViewHigth.constant = 180
             TargetView.isHidden  = true
             tagetViewHeight.constant = 0
@@ -390,11 +398,11 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         doneToolbar.items = items
         doneToolbar.sizeToFit()
         
-        AttendanceTextView.inputAccessoryView = doneToolbar
+        AttendanceTextField.inputAccessoryView = doneToolbar
     }
     
     @objc func doneButtonAction(){
-        AttendanceTextView.resignFirstResponder()
+        AttendanceTextField.resignFirstResponder()
     }
     
     
@@ -643,51 +651,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
 
     }
     
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        
-        
-        
-        print("textviewwwwcount",textView.text)
-        
-        
-        
-        
-        let height  = AttendanceTextView.contentSize.height
-        
-        print("fffrr",AttendanceTextView.contentSize.height)
-        
-        AttendanceViewHigth.constant = 250 + height-20
-        
-        
-        if textView.text == "" {
-            
-            
-            AttendanceViewHigth.constant = 250
-            
-        }
-        
-        
-        return true
-    }
-    
-    
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor.lightGray {
-            textView.text = nil
-            textView.textColor = UIColor.black
-        }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "Enter the topic"
-            textView.textColor = UIColor.lightGray
-        }
-    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        AttendanceTextView.resignFirstResponder()
+        AttendanceTextField.resignFirstResponder()
         return true
     }
     
@@ -741,8 +707,8 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
             
             if MenuType == "10"{
                 
-                AttendanceTextView.textColor = .black
-                AttendanceTextView.text = selected_edit_hourAndPeriod?.title
+              
+                AttendanceTextField.text = selected_edit_hourAndPeriod?.title
                 
                 if selected_edit_hourAndPeriod?.type == "Practical"{
                     partialBtnName.setImage(UIImage(named: "radios"), for: .normal)
@@ -2614,7 +2580,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                     refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { [self] (action: UIAlertAction!) in
                         print("Handle Cancel Logic here")
                         
-                        print("AttendanceTextView.textAttendanceTextView.text",AttendanceTextView.text)
+                        print("AttendanceTextView.textAttendanceTextView.text",AttendanceTextField.text)
                         
                         print("typeofAttendancetypeofAttendance",typeofAttendance)
                         
@@ -4187,7 +4153,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         attendanceMark.processtype = "edit"
         attendanceMark.date = attendanceDate
         attendanceMark.type = typeofAttendance
-        attendanceMark.title = AttendanceTextView.text
+        attendanceMark.title = AttendanceTextField.text
         attendanceMark.presentlist = sss
         
         attendanceMark.absentlist = ttt
@@ -4313,13 +4279,6 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
     
     func attendanceMarking(){
         
-        
-        if AttendanceTextView.text == "Enter the topic"{
-            
-            AttendanceTextView.text = ""
-            
-        }
-        
         var sss : [presentListDataDetails] = []
         var ttt : [absentlistdataDetails] = []
         
@@ -4378,7 +4337,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         attendanceMark.userid =  stafId
         attendanceMark.subjectid = subjectID
         attendanceMark.type = typeofAttendance
-        attendanceMark.title = AttendanceTextView.text
+        attendanceMark.title = AttendanceTextField.text
         attendanceMark.processtype = "add"
         attendanceMark.date = attendanceDate
         attendanceMark.presentlist = presentList

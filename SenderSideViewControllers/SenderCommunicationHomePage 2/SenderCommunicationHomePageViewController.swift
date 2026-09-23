@@ -38,12 +38,10 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
     @IBOutlet weak var termsAndConditionView: UIView!
     @IBOutlet weak var sideMenuView: UIView!
     @IBOutlet weak var refreshView: UIView!
-    @IBOutlet weak var plusImageView: UIImageView!
     @IBOutlet weak var communicationcountViews: UIViewX!
     @IBOutlet weak var unreadCountView: UIViewX!
     @IBOutlet weak var communiTableView: UITableView!
     @IBOutlet weak var readCountView: UIViewX!
-    @IBOutlet weak var plusView: UIViewX!
     @IBOutlet weak var communication: UILabel!
     @IBOutlet weak var CommuniSegementName: UISegmentedControl!
     @IBOutlet weak var readCountLabel: UILabel!
@@ -129,7 +127,6 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         sideMenuView.isHidden = true
         searchbar.delegate = self
         micRecordView.isHidden = true
-        plusView.isHidden = true
         let defaults = UserDefaults.standard
         
         memberId = defaults.string(forKey: DefaultsKeys.memberid)
@@ -202,7 +199,6 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         else if priority == "p2" {
             
             micRecordView.backgroundColor = UIColor(named: "messagecolor")
-            plusView.backgroundColor = UIColor(named: "messagecolor")
             tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
             topLabels.text = "Hod"
             
@@ -211,7 +207,6 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         else if priority == "p7" {
             
             micRecordView.backgroundColor = UIColor(named: "univercityColorCod")
-            plusView.backgroundColor = UIColor(named: "univercityColorCod")
             tapBarView.backgroundColor = UIColor(named: "univercityColorCod" )
             topLabels.text = "university Head"
             
@@ -227,7 +222,6 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         
         else if priority == "p3"{
             micRecordView.backgroundColor = UIColor(named: "messagecolor")
-            plusView.backgroundColor = UIColor(named: "messagecolor")
             tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
             topLabels.text = "Teacher"
             
@@ -241,7 +235,6 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
             unreadCountView.isHidden = true
             communicationcountViews.isHidden = true
             
-            plusView.isHidden = true
             micRecordView.isHidden = true
             
             topLabels.text = "Non Teaching"
@@ -312,7 +305,6 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         
         
         let plusAddViews = UITapGestureRecognizer(target: self, action: #selector(PlusVc))
-        plusView.addGestureRecognizer(plusAddViews)
         
         
         let Serach = UITapGestureRecognizer(target: self, action: #selector(Searchfield))
@@ -375,9 +367,7 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
         
-        
-        plusView.isHidden = true
-        
+                
         
     }
     
@@ -797,49 +787,6 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         }else{}
     }
     
-    
-    func MenuIdList() {
-        
-        var Menu = menuApiIdModal()
-        
-        Menu.college_id = collegeId
-        Menu.priority = priority
-        Menu.user_id = memberId
-        
-        APiCallManager.shared.callApi(
-            url: APIEndpoints.GetTextMessageBytype,
-            httpMethod: .post,
-            queryParam: nil,
-            requestBody: Menu
-        ) {[weak self] (result:Result<menuApiIdResponce , Error>) in
-            
-            guard let self = self else {return}
-            switch result {
-            case .success(let success):
-                
-                if success.Status == 1 {
-                    MenuRefName = success.data
-                    
-                    for i in MenuRefName {
-                        
-                        CallEnabel = i.menu_slug
-                        
-                        if i.is_write_enabled == 1 {
-                            plusView.isHidden = !(i.menu_slug == "text")
-                            micRecordView.isHidden = !(i.menu_slug == "voice")
-                        }else {
-                            plusView.isHidden = true
-                            micRecordView.isHidden = true
-                        }
-                    }
-                }
-                
-            case .failure(let failure):
-                print("Error:",failure.localizedDescription)
-            }
-        }
-    }
-    
     func ReadApi() {
         
         var Commu = SenderCommuniReadModal()
@@ -1103,191 +1050,110 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: Textidentifier, for: indexPath) as!
-        SenderCommuTextTableViewCell
-        
-        
-        
+
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: Textidentifier,
+            for: indexPath
+        ) as! SenderCommuTextTableViewCell
+
         cell.selectionStyle = .none
-        
-        if let selectedCell = selectedCell, selectedCell == indexPath {
+
+        // MARK: - Common Cell State
+
+        let isSelected = selectedCell == indexPath
+
+        if isSelected {
             cell.msgContentLabel.isHidden = false
-            
-            cell.PlayerViewHeight.constant = 46
             cell.voiceView.isHidden = false
             cell.playView.isHidden = true
             cell.arrowImage.image = UIImage(named: "up")
-            
             cell.sendByLabel.isHidden = false
             cell.sendByView.isHidden = false
-            
         } else {
-            cell.PlayerViewHeight.constant = 0
             cell.sendByLabel.isHidden = true
             cell.voiceView.isHidden = true
             cell.playView.isHidden = false
             cell.arrowImage.image = UIImage(named: "down")
-            
-            
-            cell.sendByLabel.isHidden = true
             cell.sendByView.isHidden = true
             cell.player?.pause()
-            
-            cell.btnName.setImage(UIImage(named: "plays"), for: .normal)
-            
-            
+            cell.btnName.setImage(
+                UIImage(named: "plays"),
+                for: .normal
+            )
         }
-        
-        
-        
-        
-        
-        
-        if CommuniSegementName.selectedSegmentIndex == 0{
-            
-            
-            
-            let comuCell : SenderCommuniUnReadDataDetails = UnReadData[indexPath.row]
-            
-            
-            if comuCell.isappread == "1"{
-                
-                cell.redDotImage.isHidden =  true
-                
-            }
-            
-            else {
-                
-                cell.redDotImage.isHidden = false
-                
-            }
-            
-            if comuCell.isemergency == "true"{
+
+        // MARK: - Get Data
+
+        if CommuniSegementName.selectedSegmentIndex == 0 {
+
+            let comuCell = UnReadData[indexPath.row]
+
+            // Read status
+            cell.redDotImage.isHidden = comuCell.isappread == "1"
+
+            // Message type
+            if comuCell.isemergency == "true" {
                 type = "Emergency"
                 cell.TypeImageView.image = UIImage(named: "emergency")
-                
-            }else{
+            } else {
                 type = "voice"
-                
                 cell.TypeImageView.image = UIImage(named: "dashboard_recent_voice")
-                
             }
-            
-            
+
+            // Message details
             cell.msgContentLabel.text = comuCell.description?.capitalized
-            
             cell.sendByLabel.text = comuCell.sentby
-            
-            cell.dateLabel.text = comuCell.timing
-            
             cell.audioFileURL = comuCell.voicefile
             cell.messageId = comuCell.msgdetailsid
-            
-            cell.durationLAbel.text = "00:00"+(comuCell.duration ?? "")
-            
-            print("cell.audioFileURL",cell.audioFileURL)
-            var dateString2 = comuCell.timing
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMM yyyy - hh:mm:ss a"
-            dateFormatter.locale = Locale.init(identifier: "en_US_POSIX")
-            
-            let dateObj = dateFormatter.date(from: dateString2!)
-            dateFormatter.dateFormat = "dd MMM yyyy  hh:mm a"
-            
-            
-            
-            
-        }
-        
-        
-        
-        else if CommuniSegementName.selectedSegmentIndex == 1 {
-            
-            
-            
-            let unreadCell : SenderCommuniReadDataDetails = ReadData[indexPath.row]
-            
-            print("unreadCell",unreadCell.isappread)
-            if unreadCell.isappread == "1"{
-                
-                cell.redDotImage.isHidden =  true
-                
+            cell.durationLAbel.text = "00:00" + (comuCell.duration ?? "")
+
+            // Date & Time
+            if let timing = comuCell.timing {
+                let dateAndTime = timing.components(separatedBy: " - ")
+
+                cell.dateLabel.text = dateAndTime.first ?? ""
+                cell.timeLabel.text = dateAndTime.dropFirst().joined(separator: " - ")
             }
-            
-            else {
-                
-                cell.redDotImage.isHidden = false
-                
-            }
-            
-            
-            
-            
-            if unreadCell.isemergency == "true"{
+
+        } else if CommuniSegementName.selectedSegmentIndex == 1 {
+
+            let unreadCell = ReadData[indexPath.row]
+
+            // Read status
+            cell.redDotImage.isHidden = unreadCell.isappread == "1"
+
+            // Message type
+            if unreadCell.isemergency == "true" {
                 type = "Emergency"
                 cell.TypeImageView.image = UIImage(named: "emergency")
-                
-            }else{
-                
+            } else {
                 type = "voice"
-                
                 cell.TypeImageView.image = UIImage(named: "dashboard_recent_voice")
-                
             }
-            
-            
-            
-            
-            
-            
+
+            // Message details
             cell.msgContentLabel.text = unreadCell.description?.capitalized
-            
             cell.sendByLabel.text = unreadCell.sentby
-            
-            cell.dateLabel.text = unreadCell.timing
             cell.audioFileURL = unreadCell.voicefile
             cell.messageId = unreadCell.msgdetailsid
-            
-            cell.durationLAbel.text = "00:0"+(unreadCell.duration ?? "")
-            
-            var dateString2 = unreadCell.timing
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMM yyyy - hh:mm:ss a"
-            dateFormatter.locale = Locale.init(identifier: "en_US_POSIX")
-            
-            let dateObj = dateFormatter.date(from: dateString2!)
-            dateFormatter.dateFormat = "dd MMM yyyy  hh:mm a"
-            
-            
-            
+            cell.durationLAbel.text = "00:0" + (unreadCell.duration ?? "")
+
+            // Date & Time
+            if let timing = unreadCell.timing {
+                let dateAndTime = timing.components(separatedBy: " - ")
+
+                cell.dateLabel.text = dateAndTime.first ?? ""
+                cell.timeLabel.text = dateAndTime.dropFirst().joined(separator: " - ")
+            }
         }
-        
-        
-        
-        
-        
-        
-        
+
         return cell
-        
-        
     }
-    
-    
-    
-    
-    
-    
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return UITableView.automaticDimension
     }
-    
-    
-    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         

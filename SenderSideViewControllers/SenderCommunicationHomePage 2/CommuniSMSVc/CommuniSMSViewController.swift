@@ -786,8 +786,7 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: Textidentifier, for: indexPath) as!
-        TextMessageTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Textidentifier, for: indexPath) as! TextMessageTableViewCell
         
         
         cell.selectionStyle = .none
@@ -795,12 +794,12 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
         if let selectedCell = selectedCell, selectedCell == indexPath {
             
             cell.discreptionsLbl.isHidden = false
-            cell.arrowImage.image = UIImage(named: "up")
+            cell.arrowImage.image = UIImage(systemName: "chevron.up")
             cell.sendByView.isHidden = false
             
         } else {
             
-            cell.arrowImage.image = UIImage(named: "down")
+            cell.arrowImage.image = UIImage(systemName: "chevron.down")
             cell.discreptionsLbl.isHidden = true
             cell.sendByView.isHidden = true
         }
@@ -810,37 +809,26 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
             let comuCell : SenderCommuniUnReadDataDetails = UnReadData[indexPath.row]
            
             if comuCell.isappread == "1"{
-                
                 cell.redDotImgView.isHidden =  true
-            }
-            
-            else {
-                
+            }else {
                 cell.redDotImgView.isHidden = false
             }
             
             type = "Text"
-            cell.TextImgView.image = UIImage(named: "dashboard_text")
-            
-            
             cell.MsgContentLbl.text = comuCell.msgcontent
             cell.discreptionsLbl.text =  comuCell.description?.capitalized
             cell.SendByLbl.text = comuCell.sentby
-            cell.dateLbl.text = comuCell.timing
             
+            if let timing = comuCell.timing {
+                let dateAndTime = timing.components(separatedBy: " - ")
+                cell.dateLbl.text = dateAndTime.first ?? ""
+                cell.timeLbl.text = dateAndTime.dropFirst().joined(separator: " - ")
+            }
             
-            
-        }
-        
-        
-        
-        else if CommuniSegementName.selectedSegmentIndex == 1 {
-            
-            
+        }else if CommuniSegementName.selectedSegmentIndex == 1 {
             
             let unreadCell : SenderCommuniReadDataDetails = ReadData[indexPath.row]
             
-            print("unreadCell",unreadCell.isappread)
             if unreadCell.isappread == "1"{
                 
                 cell.redDotImgView.isHidden =  true
@@ -856,42 +844,24 @@ class CommuniSMSViewController: UIViewController,UITableViewDelegate,UITableView
             
             
             type = "Text"
-            cell.TextImgView.image = UIImage(named: "dashboard_text")
-            
             cell.MsgContentLbl.text = unreadCell.msgcontent
             cell.discreptionsLbl.text =  unreadCell.description?.capitalized
             cell.SendByLbl.text = unreadCell.sentby
-            cell.dateLbl.text = unreadCell.timing
-            
-            
-            
-            //
+            if let timing = unreadCell.timing {
+                let dateAndTime = timing.components(separatedBy: " - ")
+                cell.dateLbl.text = dateAndTime.first ?? ""
+                cell.timeLbl.text = dateAndTime.dropFirst().joined(separator: " - ")
+            }
         }
-        
-        
-        
-        
-        
-        
-        
+         
         return cell
-        
-        
     }
     
-    
-    
-    
-    
-    
-    
-    //
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return UITableView.automaticDimension
         
     }
-    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         

@@ -17,153 +17,78 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var topNameview: UIView!
-    @IBOutlet weak var historyVoiceMsgCheckBox: checkBoxFour!
-    @IBOutlet weak var bottomOverAllView: UIView!
+    @IBOutlet weak var historyVoiceMsgBtn: UIButton!
     @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var newVoiceMsgCheckBox: checkBoxFour!
+    @IBOutlet weak var newVoiceMsgBtn: UIButton!
     @IBOutlet weak var btnName: UIButton!
     @IBOutlet weak var tapBarView: UIViewX!
-    @IBOutlet weak var lineView: UIView!
     @IBOutlet weak var textViewss: UIView!
-    
-    @IBOutlet weak var tickMarkView: UIView!
-    @IBOutlet weak var clearAudio: UIView!
-    
+    @IBOutlet weak var clearAudioBtn: UIButton!
     @IBOutlet weak var pleaseDefaultLabel: UILabel!
     @IBOutlet weak var voiceSilderFullView: UIView!
     @IBOutlet weak var replySwitch: UISwitch!
-    
-    @IBOutlet weak var cancelView: UIViewX!
-    
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var selectRespinceView: UIViewX!
-    
     @IBOutlet weak var voiceDisprectionLabl: UITextField!
     @IBOutlet weak var durationLable: UILabel!
-    
-    @IBOutlet weak var playVoiceImageView: UIImageView!
     @IBOutlet weak var Slider: UISlider!
-    
-    @IBOutlet weak var PlayAudioView: UIView!
-    
     @IBOutlet weak var RecodingImageView: UIImageView!
-    
     @IBOutlet weak var voiceRecodeView: UIView!
-    
-    
     @IBOutlet weak var recodSecondsLabel: UILabel!
-    
-    
     @IBOutlet weak var notificationView: UIView!
-    
     @IBOutlet weak var smallImg: UIImageView!
-    
     @IBOutlet weak var bigImg: UIImageView!
-    
     @IBOutlet weak var logoutView: UIView!
-    
     @IBOutlet weak var changeRolesView: UIView!
-    
-    
-    
-    
     @IBOutlet weak var topLabels: UILabel!
-    
-    
-    
     @IBOutlet weak var clgLogoImg: UIImageView!
-    
     @IBOutlet weak var topMessageLabel: UILabel!
-    
-    
-    
     @IBOutlet weak var canclView: UIViewX!
-    
     @IBOutlet weak var privacyPolicyView: UIView!
-    
-    
     @IBOutlet weak var redirectLoginView: UIViewX!
-    
     @IBOutlet weak var faqView: UIView!
-    
-    
     @IBOutlet weak var viewTap: UIView!
-    
     @IBOutlet weak var helpView: UIView!
-    
-    
     @IBOutlet weak var changePasswordView: UIView!
-    
-    
     @IBOutlet weak var termsAndConditionView: UIView!
-    
-    
     @IBOutlet weak var clickHereLabel: UILabel!
     @IBOutlet weak var sideMenuView: UIView!
-    
-    
-    
     @IBOutlet weak var refreshView: UIView!
-    
-    
     @IBOutlet weak var CallView: UIView!
+    
     var voiceUploadss : [VoiceEntierDataDetails] = []
     var addapiRef : [AddDataDeatils] = []
-    
     var player:AVPlayer?
     var playerItem:AVPlayerItem?
-    
-    
     var audioRecorder: AVAudioRecorder!
     var audioPlayer : AVAudioPlayer!
     var meterTimer:Timer!
     var isAudioRecordingGranted: Bool!
     var isRecording = false
     var isPlaying = false
-   
     var url: URL!
-    
     var Types = "11"
     var replyType : String = "0"
-    
     var audioSeconds : String!
     var piroty : String!
-    
-    
     var players: AVAudioPlayer?
-    
     var AudioPlayUrl : String!
-    
-    
     var loginDatas : [datalogin]!
     var logindataprinci :[datalogin]!
-    
-    
     var previousAddId : Int!
     var MobileNumber : String!
     var password : String!
-    
     var colgId : String!
-    
     fileprivate let seekDuration: Float64 = 10
-    
     var memberId : String!
-    
     var colgImg : String!
     var str : [String] = []
-    
     var strName : [String] = []
-    
     var timeLabelForPlayVoice : String!
-    
     var secondsLabel  : String!
-    
     var strPlayStatus : NSString = ""
-    
-    
     var timer = Timer()
     var time : Float64 = 0;
     var sliderIndex : NSInteger = NSInteger()
@@ -175,12 +100,9 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
     var CallEnabel : Int!
     var VoiceHstryHeaderId : String!
     var VoiceHstryID  = "1"
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated) // No need for semicolon
-        
-        
-
-        
         
         tv.isScrollEnabled = true
         replyType  = "0"
@@ -189,28 +111,25 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-    
+       
         overrideUserInterfaceStyle = .light
         
         refreshView.isHidden = true
         sideMenuView.isHidden = true
         recodSecondsLabel.text = "00:00" + " / " + "03:00"
         durationLable.text = "00:00"
-        clickHereLabel.text = "Click here,Start Recording"
+        clickHereLabel.text = "Click here to start recording"
         voiceSilderFullView.isHidden = true
-        textViewss.isHidden = true
-        lineView.isHidden = true
+        textViewss.layer.cornerRadius = 10
+        textViewss.layer.borderWidth = 1
+        textViewss.layer.borderColor = UIColor.lightGray.cgColor
         
         durationLable.isHidden = true
-        clearAudio.isHidden = true
-        tickMarkView.isHidden = true
-        clickHereLabel.isHidden = true
+        clickHereLabel.isHidden = false
+        clearAudioBtn.isHidden = true
         
         tv.isHidden = true
-        newVoiceMsgCheckBox.setImage(UIImage.init(named: "radios"), for: .normal)
+        newVoiceMsgBtn.setImage(UIImage(systemName: "inset.filled.circle"), for: .normal)
         nodataLbl.isHidden = true
         let defaults = UserDefaults.standard
         
@@ -299,14 +218,10 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
         let cancelViewss = UITapGestureRecognizer(target: self, action: #selector(CancelVc))
         canclView.addGestureRecognizer(cancelViewss)
         
-        let clearAudioFile = UITapGestureRecognizer(target: self, action: #selector(clearAudioVc))
-        clearAudio.addGestureRecognizer(clearAudioFile)
-        
         let voiceRecord = UITapGestureRecognizer(target: self, action: #selector(recodeVc))
         voiceRecodeView.addGestureRecognizer(voiceRecord)
         
         let tickView = UITapGestureRecognizer(target: self, action: #selector(TickMarkVC))
-        tickMarkView.addGestureRecognizer(tickView)
         
         
         let SelectRespience = UITapGestureRecognizer(target: self, action: #selector(SelectRespienceVc))
@@ -357,23 +272,11 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
         
-        
-        let newVoice = UITapGestureRecognizer(target: self, action: #selector(NewVoiceMsgVC))
-        newVoiceMsgCheckBox.addGestureRecognizer(newVoice)
-        
-        let HistorynewVoice = UITapGestureRecognizer(target: self, action: #selector(HistoryVoiceMsgVC))
-        historyVoiceMsgCheckBox.addGestureRecognizer(HistorynewVoice)
-        
-        
-        
         print("is_read_enabled",is_read_enabled)
         print("is_write_enabled",is_write_enabled)
         
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        
     }
     
     func touchesBegan(_ touches: Set<AnyHashable>, withEvent event: UIEvent) {
@@ -394,22 +297,20 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
         let historys : HistorySmsVoiceDataDetail = historyDataDetails[indexPath.row]
         
         cell.descriptionLbl.text = historys.description
-        cell.dateTimeLbl.text = historys.timing
         
-        print("historys.durationhistorys.duration",historys.duration)
+        if let timing = historys.timing {
+            let dateAndTime = timing.components(separatedBy: " - ")
+
+            cell.dateLbl.text = dateAndTime.first ?? ""
+            cell.TimeLbl.text = dateAndTime.dropFirst().joined(separator: " - ")
+        }
         
         if historys.duration != nil{
             cell.durationLAbel.text = "00:00"+(historys.duration ?? "")
-        }
-        
-        else{
-            
+        }else{
             cell.durationLAbel.text = "00:00"
-            
         }
         cell.audioFileURL = historys.voicefile
-        
-        
         let send  = sendHistryView(target: self, action: #selector(SendVc))
         send.voiceHeaderId = historys.headerid
         send.Title = historys.description
@@ -848,78 +749,22 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
     }
     
     
-    @IBAction func HistoryVoiceMsgVC(){
+    @IBAction func HistoryVoiceMsgAct(_ sender: UIButton){
+        historyVoiceMsgBtn.setImage(UIImage(systemName: "inset.filled.circle"), for: .normal)
+        newVoiceMsgBtn.setImage(UIImage(systemName: "circle"), for: .normal)
         VoiceHstryID = "2"
-        
-        if historyVoiceMsgCheckBox.isChecked == true{
-            
-            historyVoiceMsgCheckBox.isChecked = false
-            
-           
-            newVoiceMsgCheckBox.isChecked = true
-            print("offff")
-            tv.isHidden = true
-            
-            contentView.isHidden = false
-        }
-        
-        else{
-            
-            
-            newVoiceMsgCheckBox.isChecked = false
-            print("onnnnnn")
-            tv.isHidden = false
-            contentView.isHidden = true
-           
-           
-            HistoryApi()
-            
-            
-            
-            historyVoiceMsgCheckBox.isChecked = true
-        }
-        
-        
-        
+        tv.isHidden = false
+        contentView.isHidden = true
+        HistoryApi()
     }
     
-    
-    
-    
-    @IBAction func NewVoiceMsgVC(){
-        
-        nodataLbl.isHidden = true
-        
+    @IBAction func NewVoiceMsgAct(_ sender: UIButton){
+        newVoiceMsgBtn.setImage(UIImage(systemName: "inset.filled.circle"), for: .normal)
+        historyVoiceMsgBtn.setImage(UIImage(systemName: "circle"), for: .normal)
         VoiceHstryID = "1"
-        if newVoiceMsgCheckBox.isChecked == true{
-            
-            newVoiceMsgCheckBox.isChecked = false
-            
-            
-            historyVoiceMsgCheckBox.isChecked = true
-            
-            tv.isHidden = false
-            contentView.isHidden = true
-            
-            print("offff")
-        }
-        
-        
-        else{
-            
-            tv.isHidden = true
-            print("onnnnnn")
-            contentView.isHidden = false
-            
-            historyVoiceMsgCheckBox.isChecked = false
-            newVoiceMsgCheckBox.isChecked = true
-        }
-        
-        
-        
-        
-        
-        
+        tv.isHidden = true
+        contentView.isHidden = false
+        nodataLbl.isHidden = true
     }
     
     
@@ -1013,8 +858,6 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
         
         else{
             voiceSilderFullView.isHidden = false
-            textViewss.isHidden = false
-            lineView.isHidden = false
             pleaseDefaultLabel.isHidden = true
             durationLable.isHidden = false
             
@@ -1395,10 +1238,10 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
     
     @IBAction func recodeVc(){
         
-        clickHereLabel.text = "Click here,Stop Recording"
+        clickHereLabel.isHidden = true
         if(isRecording){
             finishAudioRecording(success: true)
-            
+            clearAudioBtn.isHidden = false
             RecodingImageView.image = UIImage(named: "voiceRecodeMic")
             
             isRecording = false
@@ -1460,10 +1303,6 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
         
         AudioPlayUrl = filePath.absoluteString
         
-        let VoicePalyRecord = UITapGestureRecognizer(target: self, action: #selector(OrderplayAudio))
-        
-        PlayAudioView.addGestureRecognizer(VoicePalyRecord)
-        
         return filePath
     }
     
@@ -1523,9 +1362,7 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
             meterTimer.invalidate()
             
             RecodingImageView.image = UIImage(named: "voiceRecodeMic")
-            
-            tickMarkView.isHidden = true
-            
+                        
             if  durationLable.text == "00:00" + " / " + "00:00"{
                 
                 let refreshAlert = UIAlertController(title: "", message: "Voice file is Empty ", preferredStyle: UIAlertController.Style.alert)
@@ -1541,8 +1378,6 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
                 selectRespinceView.isUserInteractionEnabled = false
             } else{
                 voiceSilderFullView.isHidden = false
-                textViewss.isHidden = false
-                lineView.isHidden = false
                 
                 durationLable.isHidden = false
                 
@@ -1560,7 +1395,6 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
                 }
             }
             
-            clearAudio.isHidden = false
         } else{
             
             display_alert(msg_title: "Error", msg_desc: "Recording failed.", action_title: "OK")
@@ -1632,12 +1466,10 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
     
     
     
-    @IBAction func clearAudioVc(){
+    @IBAction func clearAudioAct(_ sender: Any){
         
-        
-        clearAudio.isHidden = true
-        
-        clickHereLabel.text = "Click here,Start Recording"
+        clickHereLabel.isHidden = false
+        clearAudioBtn.isHidden = true
         
         durationLable.text = ""
         
@@ -1646,20 +1478,8 @@ class VoiceRecoredViewController: UIViewController, AVAudioRecorderDelegate, AVA
         selectRespinceView.backgroundColor = .lightGray
         
         voiceSilderFullView.isHidden = true
-        
-        textViewss.isHidden = true
-        
-        lineView.isHidden = true
-        
-        
+     
         durationLable.isHidden = true
-        
-        tickMarkView.isHidden = true
-        
-        
-        
-        
-        
     }
     
     
