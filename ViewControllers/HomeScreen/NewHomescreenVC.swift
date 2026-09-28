@@ -1076,7 +1076,6 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
@@ -1121,7 +1120,6 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
             vc.noticeSegments.backgroundColor = UIColor(named: "FatherUnselector")
             vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "FatherSelector")
             vc.view.backgroundColor = UIColor(named: "FatherColor")
@@ -1365,31 +1363,3 @@ class BackButton: UIButton {
     }
 }
 
-extension UIColor {
-    
-    static var priorityColor: UIColor {
-        let priority = UserDefaults.standard
-            .string(forKey: DefaultsKeys.priority)?
-            .lowercased()
-        
-        switch priority {
-        case "p1":
-            return UIColor(named: "Principal") ?? .systemBackground
-            
-        case "p2", "p3", "p6":
-            return UIColor(named: "Teaching Staff") ?? .systemBackground
-            
-        case "p4":
-            return UIColor(named: "studentViewColors") ?? .systemBackground
-            
-        case "p5":
-            return UIColor(named: "FatherColor") ?? .systemBackground
-            
-        case "p7":
-            return UIColor(named: "univercityColorCod") ?? .systemBackground
-            
-        default:
-            return UIColor(named: "Principal") ?? .systemBackground
-        }
-    }
-}

@@ -267,8 +267,6 @@
 		52877F902A2DF35A00AE6DAE /* NoticeBoardHomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52877F852A2DF35A00AE6DAE /* NoticeBoardHomePageViewController.xib */; };
 		52877F912A2DF35A00AE6DAE /* AddNoticeBoardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52877F872A2DF35A00AE6DAE /* AddNoticeBoardViewController.xib */; };
 		52877F922A2DF35A00AE6DAE /* AddNoticeBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52877F882A2DF35A00AE6DAE /* AddNoticeBoardViewController.swift */; };
-		52877F962A2DF4E500AE6DAE /* NoticeBoardTableViewCellsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52877F942A2DF4E500AE6DAE /* NoticeBoardTableViewCellsTableViewCell.swift */; };
-		52877F972A2DF4E500AE6DAE /* NoticeBoardTableViewCellsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52877F952A2DF4E500AE6DAE /* NoticeBoardTableViewCellsTableViewCell.xib */; };
 		528876E22A44C4CD00BFF753 /* ExamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528876E12A44C4CD00BFF753 /* ExamCreation.swift */; };
 		5288FE15299E3156000AB6AA /* ShowExaminationAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288FE13299E3156000AB6AA /* ShowExaminationAddViewController.swift */; };
 		5288FE16299E3156000AB6AA /* ShowExaminationAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5288FE14299E3156000AB6AA /* ShowExaminationAddViewController.xib */; };
@@ -1012,8 +1010,6 @@
 		52877F852A2DF35A00AE6DAE /* NoticeBoardHomePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoticeBoardHomePageViewController.xib; sourceTree = "<group>"; };
 		52877F872A2DF35A00AE6DAE /* AddNoticeBoardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddNoticeBoardViewController.xib; sourceTree = "<group>"; };
 		52877F882A2DF35A00AE6DAE /* AddNoticeBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNoticeBoardViewController.swift; sourceTree = "<group>"; };
-		52877F942A2DF4E500AE6DAE /* NoticeBoardTableViewCellsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeBoardTableViewCellsTableViewCell.swift; sourceTree = "<group>"; };
-		52877F952A2DF4E500AE6DAE /* NoticeBoardTableViewCellsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoticeBoardTableViewCellsTableViewCell.xib; sourceTree = "<group>"; };
 		528876E12A44C4CD00BFF753 /* ExamCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamCreation.swift; sourceTree = "<group>"; };
 		5288FE13299E3156000AB6AA /* ShowExaminationAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowExaminationAddViewController.swift; sourceTree = "<group>"; };
 		5288FE14299E3156000AB6AA /* ShowExaminationAddViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowExaminationAddViewController.xib; sourceTree = "<group>"; };
@@ -1906,7 +1902,6 @@
 				84A99DE92AC2A55900512FEB /* ChatCollectionViewCell 2 */,
 				52FD03A12A4AE56C0092D78B /* ChatDetails */,
 				529EA3E52A4AA00100119747 /* ChatAswerTvCelll */,
-				52877F932A2DF4E500AE6DAE /* NoticeBoardCells */,
 				52721DB429D969A600351A54 /* AttendanceTvCell  */,
 				52C0DAE529D70C220051F95F /* MoreImageShowTvCell */,
 				52C0DADB29D6C5570051F95F /* ExameViewPageResiverTvCell */,
@@ -3092,15 +3087,6 @@
 				52877F882A2DF35A00AE6DAE /* AddNoticeBoardViewController.swift */,
 			);
 			path = AddNoticeBoardVC;
-			sourceTree = "<group>";
-		};
-		52877F932A2DF4E500AE6DAE /* NoticeBoardCells */ = {
-			isa = PBXGroup;
-			children = (
-				52877F942A2DF4E500AE6DAE /* NoticeBoardTableViewCellsTableViewCell.swift */,
-				52877F952A2DF4E500AE6DAE /* NoticeBoardTableViewCellsTableViewCell.xib */,
-			);
-			path = NoticeBoardCells;
 			sourceTree = "<group>";
 		};
 		5288FE12299E3128000AB6AA /* ShowExaminationAdd */ = {
@@ -4805,7 +4791,6 @@
 				525197DC2983911000238CB8 /* AttechmentDownloadViewController.xib in Resources */,
 				849009862B9594C600FC28DF /* NotSubmitTableViewCell.xib in Resources */,
 				848BA1222BBF10F800FC65BF /* chatResTableViewCell.xib in Resources */,
-				52877F972A2DF4E500AE6DAE /* NoticeBoardTableViewCellsTableViewCell.xib in Resources */,
 				18BAB413290F9349009FC2AA /* DistributionSummary.plist in Resources */,
 				52E3B7A72A0E458700371DF5 /* ShowSelectedImageViewController.xib in Resources */,
 				52A699D929AC8A240072C0D6 /* SenderAttendanceTableViewCell.xib in Resources */,
@@ -5388,7 +5373,6 @@
 				84B25FAF2AB58985006159C6 /* AttendanceAddVcViewController.swift in Sources */,
 				84A99DD82AC2A4BE00512FEB /* SenderExaminationPlusNextPageViewController.swift in Sources */,
 				843D67E93021F51500359FF7 /* EmergencyVoiceCV.swift in Sources */,
-				52877F962A2DF4E500AE6DAE /* NoticeBoardTableViewCellsTableViewCell.swift in Sources */,
 				52F1D46729D4103B00CD5E86 /* AssigmentImagePdfResponce.swift in Sources */,
 				52A699E729ADC0200072C0D6 /* SenderAssigAddViewController.swift in Sources */,
 				52C0DAE329D707070051F95F /* MoreImageViewController.swift in Sources */,

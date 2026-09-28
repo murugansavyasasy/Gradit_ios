@@ -25,50 +25,85 @@ extension Int {
         return String(format: "%02d:%02d", minutes, seconds)
     }
 }
-enum Colour {
-    static func backgroundColor(for priority: String) -> UIColor? {
+extension UIColor {
+    
+    static var priorityColor: UIColor {
+        let priority = UserDefaults.standard
+            .string(forKey: DefaultsKeys.priority)?
+            .lowercased()
         switch priority {
         case "p1":
-            return UIColor(named: "Principal")
+            return UIColor(named: "Principal") ?? .systemBackground
+            
         case "p2", "p3", "p6":
-            return UIColor(named: "Teaching Staff")
+            return UIColor(named: "Teaching Staff") ?? .systemBackground
             
         case "p4":
-            return UIColor(named: "studentViewColors")
+            return UIColor(named: "studentViewColors") ?? .systemBackground
             
         case "p5":
-            return UIColor(named: "FatherColor")
+            return UIColor(named: "FatherColor") ?? .systemBackground
+            
         case "p7":
-            return UIColor(named: "univercityColorCod")
+            return UIColor(named: "univercityColorCod") ?? .systemBackground
             
         default:
-            return nil
+            return UIColor(named: "Principal") ?? .systemBackground
         }
     }
 }
-enum Role: String {
-    case principal = "p1"
-    case teachingStaffP2 = "p2"
-    case teachingStaffP3 = "p3"
-    case student = "p4"
-    case father = "p5"
-    case teachingStaffP6 = "p6"
-    case university = "p7"
-
-    var roleName: String {
-        switch self {
-        case .principal:
+ 
+extension String {
+    
+    static var priorityRole: String {
+        let priority = UserDefaults.standard
+            .string(forKey: DefaultsKeys.priority)?
+            .lowercased()
+        
+        switch priority {
+        case "p1":
             return "Principal"
-        case .teachingStaffP2,
-             .teachingStaffP3,
-             .teachingStaffP6:
-            return "Teaching Staff"
-        case .student:
+            
+        case "p2":
+            return "Hod"
+            
+        case "p3":
+            return "Teacher"
+            
+        case "p4":
             return "Student"
-        case .father:
+            
+        case "p5":
             return "Father"
-        case .university:
-            return "University"
+            
+        case "p6":
+            return "Non Teaching"
+            
+        case "p7":
+            return "University Head"
+        default:
+            return ""
         }
+    }
+}
+extension UIViewController {
+
+    func showAlert(_ message: String) {
+        let alert = UIAlertController(
+            title: "",
+            message: message,
+            preferredStyle: .alert
+        )
+
+        alert.addAction(
+            UIAlertAction(title: "OK", style: .default)
+        )
+
+        present(alert, animated: true)
+    }
+
+    func presentFullScreen(_ vc: UIViewController) {
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
 }

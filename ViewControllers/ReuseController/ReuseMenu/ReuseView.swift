@@ -1345,7 +1345,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 let vc = NoticeBoardHomePageViewController(nibName: nil, bundle: nil)
                 
                 vc.is_read_enabled = read
-                vc.is_write_enabled = write
                 
                 vc.str = str
                 vc.strName = strName
@@ -1946,9 +1945,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 let vc = SenderGraditNoticeBoardMenuViewController(nibName: nil, bundle: nil)
                 vc.is_read_enabled = read
                 vc.is_write_enabled = write
-                
-                
-                vc.menuTypessww = NoticeBoardId
                 vc.str = str
                 vc.strName = strName
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
@@ -2227,8 +2223,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 let vc = SenderGraditNoticeBoardMenuViewController(nibName: nil, bundle: nil)
                 vc.is_read_enabled = read
                 vc.is_write_enabled = write
-               
-                vc.menuTypessww = NoticeBoardId
                 vc.str = str
                 vc.strName = strName
                 
@@ -2487,8 +2481,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = read
-                vc.is_write_enabled = write
-                
                 vc.view.backgroundColor = UIColor(named: "FatherColor")
                 vc.noticeSegments.backgroundColor = UIColor(named: "FatherUnselector")
                 vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "FatherSelector")
@@ -2775,13 +2767,9 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 vc.modalPresentationStyle = .fullScreen
                 currentController?.present(vc, animated: true, completion: nil)
                 //
-            }
-            
-            
-            else if str[indexPath.row] == "circular"{
+            }else if str[indexPath.row] == "circular"{
                 
                 let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-               
                 vc.imagePdfMenuIdType = imagePdfId
                 vc.str = str
                 vc.strName = strName
@@ -2791,16 +2779,11 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
                 vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
                 vc.modalPresentationStyle = .fullScreen
-                currentController?.present(vc, animated:
-                                            true, completion: nil)
+                currentController?.present(vc, animated:true, completion: nil)
                 
-            }
-            
-            else if str[indexPath.row] == "notice_board"{
+            }else if str[indexPath.row] == "notice_board"{
                 
                 let vc = SenderGraditNoticeBoardMenuViewController(nibName: nil, bundle: nil)
-               
-                vc.menuTypessww = NoticeBoardId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = read
@@ -2809,9 +2792,7 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
                 vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
                 vc.modalPresentationStyle = .fullScreen
-                currentController?.present(vc, animated:
-                                            true, completion: nil)
-                
+                currentController?.present(vc, animated:true, completion: nil)
             }
             
             

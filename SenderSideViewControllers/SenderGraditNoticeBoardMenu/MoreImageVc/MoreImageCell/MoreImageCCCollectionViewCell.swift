@@ -18,10 +18,8 @@ class MoreImageCCCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var CellmageView: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         
         countView.isHidden = true
-        
     }
 
 }
