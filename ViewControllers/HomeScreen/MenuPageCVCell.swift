@@ -407,8 +407,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         present(vc)
                     } else if slug == "faculty" {
                         let vc = SenderFacultyViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = read
-                        vc.is_write_enabled = write
                         vc.str = str
                         vc.strName = strName
                         vc.view.backgroundColor = UIColor(named: "Principal")
@@ -537,8 +535,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         present(vc)
                     } else if slug == "faculty" {
                         let vc = SenderFacultyViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = read
-                        vc.is_write_enabled = write
                         vc.str = str
                         vc.strName = strName
                         vc.view.backgroundColor = UIColor(named: "Teaching Staff")
@@ -670,8 +666,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         present(vc)
                     } else if slug == "faculty" {
                         let vc = SenderFacultyViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = read
-                        vc.is_write_enabled = write
                         vc.str = str
                         vc.strName = strName
                         vc.view.backgroundColor = UIColor(named: "univercityColorCod")
@@ -944,8 +938,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         let vc = SenderFacultyViewController(nibName: nil, bundle: nil)
                         vc.str = str
                         vc.strName = strName
-                        vc.is_read_enabled = read
-                        vc.is_write_enabled = write
                         vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                         present(vc)
                     } else if slug == "video" {

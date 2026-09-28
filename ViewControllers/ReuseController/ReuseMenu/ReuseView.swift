@@ -1701,9 +1701,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 
                 let currentController = self.getCurrentViewController()
                 let vc = SenderFacultyViewController(nibName: nil, bundle: nil)
-                vc.is_read_enabled = read
-                vc.is_write_enabled = write
-               
                 vc.str = str
                 vc.strName = strName
                 vc.view.backgroundColor = UIColor(named: "Principal" )
@@ -1988,10 +1985,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 
                 
                 let vc = SenderFacultyViewController(nibName: nil, bundle: nil)
-                vc.is_read_enabled = read
-                vc.is_write_enabled = write
-                
-               
                 vc.str = str
                 vc.strName = strName
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
@@ -2270,10 +2263,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 
                 
                 let vc = SenderFacultyViewController(nibName: nil, bundle: nil)
-                vc.is_read_enabled = read
-                vc.is_write_enabled = write
-                
-               
                 vc.str = str
                 vc.strName = strName
                 vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
@@ -2846,8 +2835,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                
                 vc.str = str
                 vc.strName = strName
-                vc.is_read_enabled = read
-                vc.is_write_enabled = write
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
                 vc.modalPresentationStyle = .fullScreen
                 currentController?.present(vc, animated: true, completion: nil)

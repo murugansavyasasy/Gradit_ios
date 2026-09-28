@@ -7,6 +7,16 @@
 
 import Foundation
 
+//struct StaffHodFacultyModal: Codable {
+//
+//    var userid: String?
+//    var appid: String?
+//    var priority: String?
+//    var deptid: String?
+//
+//}
+
+
 struct FacultyListSenderApp: Codable {
 
     var userid: String?

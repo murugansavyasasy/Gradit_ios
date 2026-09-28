@@ -86,6 +86,7 @@
                                 </button>
                                 <searchBar contentMode="redraw" text="" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="v78-za-TiF">
                                     <rect key="frame" x="125" y="0.0" width="273" height="64"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <connections>
                                         <outlet property="delegate" destination="-1" id="Kls-Cd-2ZZ"/>
@@ -98,7 +99,7 @@
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2GW-so-qnQ">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="169"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </tableView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose hours to edit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3BX-cV-ENG">
                                     <rect key="frame" x="15" y="181" width="384" height="23"/>
@@ -107,7 +108,6 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="2GW-so-qnQ" firstAttribute="leading" secondItem="a1U-6L-a6G" secondAttribute="leading" id="1SQ-sc-SQK"/>
                                 <constraint firstAttribute="bottom" secondItem="2GW-so-qnQ" secondAttribute="bottom" id="ES8-eK-ixG"/>
@@ -203,7 +203,6 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="iny-8b-56F" firstAttribute="leading" secondItem="ALf-ZT-wT8" secondAttribute="trailing" constant="8" symbolic="YES" id="0Oj-gL-LoR"/>
                                 <constraint firstItem="LeN-s4-jM7" firstAttribute="top" secondItem="Mjv-HM-xac" secondAttribute="top" constant="5" id="9wj-H2-W6L"/>
@@ -248,7 +247,6 @@
                                             </connections>
                                         </button>
                                     </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstItem="ppx-U7-fA9" firstAttribute="leading" secondItem="5pZ-0s-tIM" secondAttribute="trailing" constant="15" id="7zQ-Jo-cfv"/>
                                         <constraint firstItem="ppx-U7-fA9" firstAttribute="top" secondItem="97e-x1-zlW" secondAttribute="top" constant="10" id="PQk-By-KmZ"/>
@@ -598,7 +596,6 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="OUB-kp-fs3" secondAttribute="bottom" constant="14" id="0aP-Ip-gmh"/>
                                         <constraint firstItem="OUB-kp-fs3" firstAttribute="top" secondItem="864-1S-lR7" secondAttribute="top" constant="15" id="6GW-eP-eFx"/>
@@ -633,6 +630,7 @@
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                         </textField>
                                     </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="iL4-MR-bXj" firstAttribute="top" secondItem="PeX-oP-XgE" secondAttribute="top" constant="5" id="BhX-rK-A5Y"/>
                                         <constraint firstAttribute="trailing" secondItem="iL4-MR-bXj" secondAttribute="trailing" constant="10" id="rRe-PW-NAE"/>
@@ -641,7 +639,6 @@
                                     </constraints>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="s4l-bm-0eF" firstAttribute="top" secondItem="5Y2-hR-zph" secondAttribute="top" constant="8" id="7O9-Bb-0IS"/>
                                 <constraint firstAttribute="trailing" secondItem="PeX-oP-XgE" secondAttribute="trailing" constant="10" id="9SA-Dc-XxD"/>
@@ -658,7 +655,7 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="1QM-fu-9bK" secondAttribute="trailing" constant="10" id="3By-bP-8IK"/>
                         <constraint firstItem="ezj-ti-Wv7" firstAttribute="top" secondItem="JNE-gf-mBB" secondAttribute="top" constant="20" id="6E0-ML-wlo"/>
@@ -685,7 +682,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" systemColor="systemGray6Color"/>
             <constraints>
                 <constraint firstItem="JNE-gf-mBB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="8ts-kH-hfP"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="JNE-gf-mBB" secondAttribute="trailing" id="RyK-Ip-IVg"/>
@@ -1518,6 +1515,9 @@ AABsAAAAAAAAAAAAAAAAAAC6Iw
         </systemColor>
         <systemColor name="systemGray2Color">
             <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPurpleColor">
             <color red="0.79607843140000001" green="0.18823529410000001" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -379,9 +379,9 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
                     
                     for i in addapiRef{
                       
-                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
+                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "Default_Ad"))
                         
-                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
+                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "Default_Ad"))
                         
                         let singleTap = adds(target: self, action: #selector(adLoad))
                         singleTap.url = i.add_url
@@ -431,11 +431,11 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
         
         
             
-            print("chat3")
+            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Indentifiers, for: indexPath) as!
             
             ChatsCollectionViewCell
-            print("chat4")
+           
             let chatForntPages : intractChatData = chatFortPageRefName[indexPath.row]
             
             cell.subjectNameCellLabel.text = chatForntPages.subjectname

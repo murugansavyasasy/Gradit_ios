@@ -223,6 +223,8 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         attenanceAlertString = attendance_type == "nth" ? "period" : "hour"
         
         searchbar.delegate = self
+        searchbar.searchTextField.addDoneBtn()
+        searchbar.backgroundImage = UIImage()
         overrideUserInterfaceStyle = .light
         AttendanceTextField.delegate = self
         
@@ -1222,6 +1224,8 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
         if  MenuType == "9"    {
             Tv.separatorStyle = .none
             cell.selectedViewAttendance.layer.cornerRadius = 10
+            cell.selectedViewAttendance.layer.borderWidth = 0.3
+            cell.selectedViewAttendance.layer.borderColor = UIColor.systemGray5.cgColor
             cell.selectedViewAttendance.layer.shadowColor = UIColor.black.cgColor
             cell.selectedViewAttendance.layer.shadowOpacity = 0.2
             cell.selectedViewAttendance.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -1340,7 +1344,6 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
             cell.onDutyView.isHidden = true
             cell.onLeaveView.isHidden = true
             cell.separatorView.isHidden = true
-            cell.separatorView2.isHidden = true
             
             let student : GetstudentListData = studentRef[indexPath.row]
             
@@ -1546,7 +1549,6 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                 cell.onDutyView.isHidden = true
                 cell.onLeaveView.isHidden = true
                 cell.separatorView.isHidden = true
-                cell.separatorView2.isHidden = true
                 
                 let check = CheckBoxSpecify(target: self, action:#selector(SubjectVc))
                 
@@ -1590,7 +1592,6 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                 cell.onDutyView.isHidden = true
                 cell.onLeaveView.isHidden = true
                 cell.separatorView.isHidden = true
-                cell.separatorView2.isHidden = true
                 cell.admissionNoLbl.isHidden = true
                 
                 

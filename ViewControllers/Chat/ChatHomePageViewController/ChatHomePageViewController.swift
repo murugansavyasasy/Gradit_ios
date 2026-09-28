@@ -369,7 +369,7 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         
-        print("chat3")
+       
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Indentifiers, for: indexPath) as!
         
@@ -378,7 +378,7 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
         
         cell.yrNamLbl.isHidden = true
         
-        print("chat4")
+       
         let chatForntPages : chatFrontPageDataDetails = chatFortPageRefName[indexPath.row]
         
         cell.subjectNameCellLabel.text = chatForntPages.subjectname
@@ -404,7 +404,6 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
         FullClick.subjectName = chatForntPages.subjectname
         FullClick.staffName = chatForntPages.staffname
         
-        //
         cell.fullView.addGestureRecognizer(FullClick)
         
         return cell
@@ -441,11 +440,7 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        
-        print("chat5")
         return CGSize(width: collectionView.frame.size.width / 2, height: 250)
-        
-        
     }
     
     

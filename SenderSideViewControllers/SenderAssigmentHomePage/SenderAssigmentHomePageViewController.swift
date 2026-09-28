@@ -581,7 +581,6 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
                 let vc = PlusScreenNextPageViewController(nibName: nil, bundle: nil)
                 
                 vc.addImageBackGroundurl = i.background_image
-                vc.assigmentID = Assigment
                 vc.imageWebUrl = i.add_url
                 vc.smallImageUrl = i.add_image
                 vc.is_read_enabled = is_read_enabled
@@ -599,7 +598,6 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
                 let vc = PlusScreenNextPageViewController(nibName: nil, bundle: nil)
                 
                 vc.addImageBackGroundurl = i.background_image
-                vc.assigmentID = Assigment
                 vc.imageWebUrl = i.add_url
                 vc.smallImageUrl = i.add_image
                 
@@ -620,7 +618,6 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
                 let vc = PlusScreenNextPageViewController(nibName: nil, bundle: nil)
                 
                 vc.addImageBackGroundurl = i.background_image
-                vc.assigmentID = Assigment
                 vc.imageWebUrl = i.add_url
                 vc.smallImageUrl = i.add_image
                 vc.is_read_enabled = is_read_enabled
@@ -1511,7 +1508,6 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
             vc.ImgeType = gesture.ImgeType
             vc.fileType = gesture.fileType
             vc.titleText = gesture.titleText
-            vc.dateText = gesture.dateText
             vc.addImageBackGroundurl = addapiRef.first?.background_image
             vc.smallImageUrl = smallImageUrl
             vc.imageWebUrl = addurls
@@ -1538,7 +1534,6 @@ class SenderAssigmentHomePageViewController: UIViewController,UITableViewDataSou
             vc.str = str
             vc.ImgeType = gesture.ImgeType
             vc.titleText = gesture.titleText
-            vc.dateText = gesture.dateText
             vc.addImageBackGroundurl = addImageBackGroundurl
             vc.smallImageUrl = smallImageUrl
             vc.forwadDiscreption = gesture.discreptionForwad

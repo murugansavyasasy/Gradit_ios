@@ -23,7 +23,6 @@ class SpecifyStudentTableViewCell: UITableViewCell {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var onLeaveView: UIView!
     @IBOutlet weak var onLeaveSwitch: UISwitch!
-    @IBOutlet weak var separatorView2: UIView!
     @IBOutlet weak var admissionNoLbl: UILabel!
     
     

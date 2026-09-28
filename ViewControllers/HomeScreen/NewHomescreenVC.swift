@@ -1393,3 +1393,37 @@ extension UIColor {
         }
     }
 }
+
+extension String {
+    
+    static var priorityRole: String {
+        let priority = UserDefaults.standard
+            .string(forKey: DefaultsKeys.priority)?
+            .lowercased()
+        
+        switch priority {
+        case "p1":
+            return "Principal"
+            
+        case "p2":
+            return "Hod"
+            
+        case "p3":
+            return "Teacher"
+            
+        case "p4":
+            return "Student"
+            
+        case "p5":
+            return "Father"
+            
+        case "p6":
+            return "Non Teaching"
+            
+        case "p7":
+            return "University Head"
+        default:
+            return ""
+        }
+    }
+}

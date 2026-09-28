@@ -1623,8 +1623,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
         else if str[indexPath.row] == "faculty"{
             
             let vc = SenderFacultyViewController(nibName: nil, bundle: nil)
-            vc.is_read_enabled = read
-            vc.is_write_enabled = write
             vc.view.backgroundColor = UIColor(named: "univercityColorCodf" )
             vc.str = str
             vc.strName = strName
@@ -1848,8 +1846,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
             vc.view.backgroundColor = UIColor(named: "Principal" )
             vc.str = str
             vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
             
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: false, completion: nil)
@@ -2061,9 +2057,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
             vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
             vc.str = str
             vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: false, completion: nil)
             
@@ -2581,9 +2574,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
             vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
             vc.str = str
             vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: false, completion: nil)
             

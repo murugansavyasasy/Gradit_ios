@@ -105,7 +105,7 @@ class HallTicketViewController: UIViewController, UICollectionViewDataSource, UI
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         
-        print("chat3")
+       
         
         
         
@@ -325,11 +325,6 @@ class HallTicketViewController: UIViewController, UICollectionViewDataSource, UI
         pageController.currentPage = Int(offSet + horizontalCenter) / Int(width)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        
-        print("chat5")
-        
-        
         
         return   CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
         
