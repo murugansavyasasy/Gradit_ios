@@ -1577,7 +1577,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             for i in DefaultsKeys.MenuRefName{
                 if i.menu_slug == "notice_board"{
                     vc.is_read_enabled = String(i.is_read_enabled)
-                    vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
             vc.modalPresentationStyle = .fullScreen
@@ -1653,7 +1652,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             for i in DefaultsKeys.MenuRefName{
                 if i.menu_slug == "notice_board"{
                     vc.is_read_enabled = String(i.is_read_enabled)
-                    vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
             vc.noticeSegments.backgroundColor = UIColor(named: "FatherUnselector")

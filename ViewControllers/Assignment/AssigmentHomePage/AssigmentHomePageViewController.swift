@@ -1134,12 +1134,6 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
         vc.fileType = gesture.imageFileType
         
         vc.TopicLbl = gesture.titee
-        
-        vc.str = str
-        vc.strName = strName
-        vc.is_read_enabled = is_read_enabled
-        vc.is_write_enabled = is_write_enabled
-        
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true,completion: nil)
     }

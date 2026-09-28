@@ -50,18 +50,11 @@ class NoticeBoardHomePageViewController:
     @IBOutlet weak var changeRolesView: UIView!
     @IBOutlet weak var SearchView: UIView!
     
-    var Indentifiers = "NoticeBoardTableViewCellsTableViewCell"
+    var Indentifiers = "SenderNoticeBoardTableViewCell"
     var addapiRef : [AddDataDeatils] = []
     var departmentRef : [departmentDataDetails] = []
     var collegeRef    : [departmentDataDetails] = []
     var overAllRef    : [overAllDataDetails] = []
-    var readStatusRef : [readStatusResponce] = []
-    let menuIdentifier = "MenuCollectionViewCell"
-    var MenuRefName :[menuApiDataDetails] = []
-    var loginDatas : [datalogin]!
-    var logindataprinci :[datalogin]!
-    var isAppear : String!
-    var isAppearCollege : String!
     var collegeid : String!
     var userid : String!
     var priority : String!
@@ -72,14 +65,12 @@ class NoticeBoardHomePageViewController:
     var colgImg : String!
     var MobileNumber : String!
     var PreviousAddId  = 3
-    var password : String!
     var str : [String] = []
     var strName : [String] = []
     var selectedCell : IndexPath?
     var segmentId : String!
     var  cloneList : [departmentDataDetails] = []
     var is_read_enabled = ""
-    var is_write_enabled = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,7 +82,8 @@ class NoticeBoardHomePageViewController:
         searchFullView .isHidden = true
         noDataView.isHidden =  true
         noDataTextLabel.isHidden =  true
-        
+        noticesBoardTableView.delegate = self
+        noticesBoardTableView.dataSource = self
         let defaults = UserDefaults.standard
         
         collegeid = defaults.string(forKey: DefaultsKeys.collegeid)
@@ -106,70 +98,15 @@ class NoticeBoardHomePageViewController:
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
         clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        
-        password  = defaults.string(forKey: DefaultsKeys.Password)
         topMessageLabel.text = memberName
-        
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
-        
         overAllRefName()
-        
         addApi()
-        
         departRefName()
+        topLabels.text = .priorityRole
+        view.backgroundColor = .priorityColor
+        tapBarView.backgroundColor = .priorityColor
         
-        
-        if priority == "p1"{
-            
-            topLabels.text = "Principal"
-        }
-        else if priority == "p4"{
-            
-            topLabels.text = "Student"
-        }
-        else if priority == "p2" {
-            
-            topLabels.text = "Hod"
-        }
-        else if priority == "p5"{
-        
-            topLabels.text = "Father"
-        }
-        else if priority == "p3"{
-            
-            topLabels.text = "Teacher"
-        }
-        
-        if priority == "p1" {
-            
-            print("PrincipalVieewwColor")
-            view.backgroundColor = UIColor(named: "Principal" )
-            
-           
-            
-        }else if priority == "p4" {
-            
-            print("StudentVieewwColor")
-            view.backgroundColor = UIColor(named: "studentViewColors")
-            tapBarView.backgroundColor = UIColor(named: "StudentParent" )
-            
-          
-            
-        } else if priority == "p3" ||  priority == "p2"  || priority == "p6"{
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-          
-            
-        }else if priority == "p5"{
-            
-            view.backgroundColor = UIColor(named: "FatherColor")
-            tapBarView.backgroundColor = UIColor(named: "FatherColor" )
-          
-        }
-        
-       
         let rowNib = UINib(nibName: Indentifiers, bundle: nil)
         noticesBoardTableView.register(rowNib, forCellReuseIdentifier: Indentifiers)
         
@@ -214,9 +151,7 @@ class NoticeBoardHomePageViewController:
         
     }
     
-    
     @IBAction func Searchfield() {
-    
         searchbar.isHidden  = false
         searchFullView .isHidden = false
     }
@@ -225,14 +160,10 @@ class NoticeBoardHomePageViewController:
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if noticeSegments.selectedSegmentIndex == 0{
-            
             let filtered_list : [departmentDataDetails] = cloneList
-            
             if !searchText.isEmpty{
                 let search = searchText.lowercased()
-
                 departmentRef = filtered_list.filter {
-
                     ($0.topic?.lowercased().contains(search) ?? false) ||
                     ($0.description?.lowercased().contains(search) ?? false) ||
                     ($0.noticedetailsid?.lowercased().contains(search) ?? false) ||
@@ -240,101 +171,50 @@ class NoticeBoardHomePageViewController:
                     ($0.sentbyname?.lowercased().contains(search) ?? false) ||
                     ($0.createdontime?.lowercased().contains(search) ?? false) ||
                     ($0.noticeheaderid?.lowercased().contains(search) ?? false)
-
                 }
-                
             }else{
-                 
                 departmentRef = filtered_list
-                  
             }
-            
-            if departmentRef.count > 0{
-                 
-                print ("searchListPendigCount",departmentRef.count)
-                
-                noDataView.isHidden = true
-                noDataTextLabel.isHidden = true
-                
-            }else{
-                
-                noDataView.isHidden = false
-                noDataTextLabel.isHidden = false
-                noDataTextLabel.text = "No Records Found"
-            }
-        }
-        
-        else if noticeSegments.selectedSegmentIndex == 1{
-            
+            noDataTextLabel.text = "No Records Found"
+            noDataView.isHidden = departmentRef.count > 0
+            noDataTextLabel.isHidden = departmentRef.count > 0
+        }else if noticeSegments.selectedSegmentIndex == 1{
             let filtered_list : [departmentDataDetails] =  cloneList
-            
             if !searchText.isEmpty{
-                
                 let search = searchText.lowercased()
-
                 collegeRef = filtered_list.filter { item in
-                    
-                    let fields = [
-                        item.topic,
-                        item.description,
-                        item.noticedetailsid,
-                        item.createdondate,
-                        item.sentbyname,
-                        item.createdontime,
-                        item.noticeheaderid
-                    ]
+                    let fields = [item.topic,item.description,item.noticedetailsid,item.createdondate,item.sentbyname,item.createdontime,item.noticeheaderid]
                     
                     return fields.compactMap { $0?.lowercased() }
-                                 .contains { $0.contains(search) }
+                        .contains { $0.contains(search) }
                 }
-                
             }else{
-                
                 collegeRef = filtered_list
-                print("pendingOrder")
-                
             }
             
-            if collegeRef.count > 0{
-                
-                print ("searchListPendigCount",collegeRef.count)
-                
-                noDataView.isHidden = true
-                noDataTextLabel.isHidden = true
-                
-            }else{
-                
-                noDataView.isHidden = false
-                noDataTextLabel.isHidden = false
-                noDataTextLabel.text = "No Records Found"
-            }
+            noDataTextLabel.text = "No Records Found"
+            noDataView.isHidden = collegeRef.count > 0
+            noDataTextLabel.isHidden = collegeRef.count > 0
+            
         }
         noticesBoardTableView.reloadData()
     }
     
-    
-    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        
         searchbar.endEditing(true)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
         searchbar.resignFirstResponder()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
         searchbar.isHidden  = true
         searchFullView .isHidden = true
         noDataView.isHidden = true
         noDataTextLabel.isHidden = true
-        
         searchbar.resignFirstResponder()
     }
-    
-    
     
     @IBAction func adLoad(gesture : addverisment) {
         
@@ -347,14 +227,12 @@ class NoticeBoardHomePageViewController:
     @IBAction func noticeBoardSegment(_ sender: Any) {
         
         if is_read_enabled == "1"{
-            
             if noticeSegments.selectedSegmentIndex == 0 {
                 segmentId = "1"
                 selectedCell = IndexPath()
                 noticesBoardTableView.isScrollEnabled = false
                 departRefName()
-            }
-            else if noticeSegments.selectedSegmentIndex == 1 {
+            }else if noticeSegments.selectedSegmentIndex == 1 {
                 segmentId = "2"
                 selectedCell = IndexPath()
                 noticesBoardTableView.isScrollEnabled = false
@@ -364,254 +242,115 @@ class NoticeBoardHomePageViewController:
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if noticeSegments.selectedSegmentIndex == 0 {
-            return departmentRef.count
-        }
-        else if noticeSegments.selectedSegmentIndex == 1{
-            
-            return collegeRef.count
-        }
-        
-        return 0
+        return noticeSegments.selectedSegmentIndex == 0 ? departmentRef.count:collegeRef.count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView,cellForRowAt indexPath: IndexPath) ->UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: Indentifiers, for: indexPath) as!
-        
-        NoticeBoardTableViewCellsTableViewCell
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: Indentifiers,for: indexPath) as! SenderNoticeBoardTableViewCell
         cell.selectionStyle = .none
-        
         if noticeSegments.selectedSegmentIndex == 0 {
             
-            let notice : departmentDataDetails = departmentRef[indexPath.row]
+            let notice = departmentRef[indexPath.row]
+            cell.configureCommonCell(
+                isSelected: selectedCell == indexPath,
+                createdBy: notice.createdby,
+                isAppRead: notice.isappread,
+                topic: notice.topic,
+                date: notice.createdondate,
+                time: notice.createdontime,
+                description: notice.description,
+                sentByName: notice.sentbyname,
+                hasAttachment: !(notice.filearray?.isEmpty ?? true), memberId: ""
+            )
+            setupAttachment(for: cell,index: indexPath.row)
             
-            if let selectedCells = selectedCell, selectedCells == indexPath {
-                
-                cell.descriptionCellLabel.isHidden = false
-                cell.DetailsStack.isHidden = false
-                cell.arrowImage.image = UIImage(systemName: "chevron.up")
-                
-                
-                if notice.filearray?.count == 0{
-                    
-                    cell.attchmentView.isHidden = true
+        } else {
             
-                }else{
-                    
-                    cell.attchmentView.isHidden = false
-                }
-                
-            } else {
-                
-                cell.descriptionCellLabel.isHidden = true
-                cell.DetailsStack.isHidden = true
-                cell.arrowImage.image = UIImage(systemName: "chevron.down")
-                
-                cell.attchmentView.isHidden = true
-                
-            }
-            
-            if notice.isappread == "1"{
-                
-                cell.redDotImageView.isHidden =  true
-                
-            }
-            
-            else {
-                
-                cell.redDotImageView.isHidden = false
-                
-            }
-            
-            cell.topicCellLabel.text = notice.topic?.capitalized
-            cell.dateTimeCellLabel.text = (notice.createdondate!)+" \(notice.createdontime!)"
-            cell.descriptionCellLabel.text = notice.description
-            cell.sentByCellLabel.text = notice.sentbyname
-            
-            if notice.filearray?.count == 1  {
-                
-                let  attchmentTap = NoticeImageCounts(target: self, action: #selector(AtchmentVc))
-                
-                for i in 0..<(notice.filearray?.count ?? 0){
-                    
-                    attchmentTap.img_url = notice.filearray?[i].filepath
-                    attchmentTap.img_urls.append(notice.filearray?[i].filepath ?? "")
-                    attchmentTap.imageFileType = notice.filearray?[i].filetype
-                }
-                
-                cell.attchmentView.addGestureRecognizer(attchmentTap)
-            }
-            
-            else{
-                let  attchmentTap = NoticeImageCounts(target: self, action: #selector(AtchmentVc))
-                
-                for i in 0..<(notice.filearray?.count ?? 0){
-                    
-                    attchmentTap.img_url = notice.filearray?[i].filepath
-                    attchmentTap.img_urls.append(notice.filearray?[i].filepath ?? "")
-                    attchmentTap.imageFileType = notice.filearray?[i].filetype
-                }
-                
-                cell.attchmentView.addGestureRecognizer(attchmentTap)
-            }
+            let notice = collegeRef[indexPath.row]
+            cell.configureCommonCell(
+                isSelected: selectedCell == indexPath,
+                createdBy: notice.createdby,
+                isAppRead: notice.isappread,
+                topic: notice.topic,
+                date: notice.createdondate,
+                time: notice.createdontime,
+                description: notice.description,
+                sentByName: notice.sentbyname,
+                hasAttachment: !(notice.filearray?.isEmpty ?? true), memberId: ""
+            )
+            setupAttachment(for: cell,index: indexPath.row)
         }
         
-        else if noticeSegments.selectedSegmentIndex == 1 {
-            
-            let notice : departmentDataDetails = collegeRef[indexPath.row]
-            if let selectedCells = selectedCell, selectedCells == indexPath {
-                
-                cell.descriptionCellLabel.isHidden = false
-                cell.DetailsStack.isHidden = false
-                cell.arrowImage.image = UIImage(systemName: "chevron.up")
-                
-                if notice.filearray?.count == 0{
-                    
-                    cell.attchmentView.isHidden = true
-                    
-                }else{
-                    
-                    cell.attchmentView.isHidden = false
-                    
-                }
-                
-            } else {
-                
-                cell.descriptionCellLabel.isHidden = true
-                cell.DetailsStack.isHidden = true
-                cell.arrowImage.image = UIImage(systemName: "chevron.down")
-                cell.attchmentView.isHidden = true
-            }
-            
-            if notice.isappread == "1"{
-                
-                cell.redDotImageView.isHidden =  true
-            }
-            
-            else {
-                
-                cell.redDotImageView.isHidden = false
-            }
-    
-            cell.topicCellLabel.text = notice.topic?.capitalized
-            cell.dateTimeCellLabel.text = (notice.createdondate!)+" \(notice.createdontime!)"
-            cell.descriptionCellLabel.text = notice.description
-            cell.sentByCellLabel.text = notice.sentbyname
-            
-            if notice.filearray?.count == 1  {
-                
-                let  attchmentTap = NoticeImageCounts(target: self, action: #selector(AtchmentVc))
-                
-                for i in 0..<(notice.filearray?.count ?? 0){
-                    
-                    attchmentTap.img_url = notice.filearray?[i].filepath
-                    
-                    if notice.filearray?[i].filepath != nil{
-                        attchmentTap.img_urls.append(notice.filearray?[i].filepath ?? "")
-                    }
-                  
-                    attchmentTap.imageFileType = notice.filearray?[i].filetype
-                }
-                
-                cell.attchmentView.addGestureRecognizer(attchmentTap)
-                
-            }
-            
-            else{
-                
-                let  attchmentTap = NoticeImageCounts(target: self, action: #selector(AtchmentVc))
-                
-                for i in 0..<(notice.filearray?.count ?? 0){
-                    attchmentTap.img_url = notice.filearray?[i].filepath
-                    attchmentTap.img_urls.append(notice.filearray?[i].filepath ?? "")
-                    attchmentTap.imageFileType = notice.filearray?[i].filetype
-                }
-                
-                cell.attchmentView.addGestureRecognizer(attchmentTap)
-            }
-        }
         return cell
     }
     
-    @IBAction func AtchmentVc(gesture : NoticeImageCounts){
-        
+    private func setupAttachment(
+        for cell: SenderNoticeBoardTableViewCell,
+        index: Int?
+    ) {
+        cell.attchmentView.isUserInteractionEnabled = true
+        cell.attchmentView.tag = index ?? 0
+        let tapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(AtchmentVc)
+        )
+        cell.attchmentView.addGestureRecognizer(tapGesture)
+    }
+    @objc func AtchmentVc(_ gesture: UITapGestureRecognizer) {
+        let index = gesture.view?.tag ?? 0
         let vc  = MoreImageVcViewController(nibName: nil, bundle: nil)
-        
-        vc.imageFile = gesture.img_urls
-        vc.fileType = gesture.imageFileType
-        
-        vc.TopicLbl = gesture.titee
-        vc.str = str
-        vc.strName = strName
-        vc.is_read_enabled = is_read_enabled
-        vc.is_write_enabled = is_write_enabled
+        if noticeSegments.selectedSegmentIndex == 0 {
+            vc.imageFile = departmentRef[index].filearray?.compactMap { $0.filepath } ?? []
+            vc.fileType = departmentRef[index].filearray?.first?.filetype
+            vc.TopicLbl = collegeRef[index].topic
+        } else {
+            vc.imageFile = collegeRef[index].filearray?.compactMap { $0.filepath } ?? []
+            vc.fileType = collegeRef[index].filearray?.first?.filetype
+            vc.TopicLbl = collegeRef[index].topic
+        }
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true,completion: nil)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: Indentifiers, for: indexPath) as!
-        
-        NoticeBoardTableViewCellsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Indentifiers, for: indexPath) as!SenderNoticeBoardTableViewCell
         
         if noticeSegments.selectedSegmentIndex == 0{
-            
             if let selectedCells = selectedCell, selectedCells == indexPath {
-                
                 selectedCell = nil
-                
             } else {
-                
                 selectedCell = indexPath
                 if departmentRef[indexPath.row].isappread == "0"{
-                    
                     apread(gesture : departmentRef[indexPath.row].noticedetailsid ?? "")
-                    
                     departmentRef[indexPath.row].isappread = "1"
-                    cell.redDotImageView.isHidden = true
-                    
+                    cell.redImageView.isHidden = true
                 }
             }
-        }
-        
-        else if noticeSegments.selectedSegmentIndex == 1{
-            
+        }else if noticeSegments.selectedSegmentIndex == 1{
             if let selectedCells = selectedCell, selectedCells == indexPath {
-                
                 selectedCell = nil
-                
             } else {
-                
                 selectedCell = indexPath
-                
                 if collegeRef[indexPath.row].isappread == "0"{
-                    
                     apread(gesture : collegeRef[indexPath.row].noticedetailsid ?? "")
-                    
                     collegeRef[indexPath.row].isappread = "1"
-                    cell.redDotImageView.isHidden = true
+                    cell.redImageView.isHidden = true
                 }
             }
         }
-        
         noticesBoardTableView.beginUpdates()
         noticesBoardTableView.endUpdates()
         noticesBoardTableView.reloadData()
     }
     
-    
     func apread(gesture : String){
         
         var readApiStatus  = AppReadStatusModal()
-        
         readApiStatus.msgtype = "noticeboard"
         readApiStatus.priority = priority
         readApiStatus.userid = userid
         readApiStatus.detailsid = gesture
-        print("sertt",gesture)
         
         APiCallManager.shared.callApi(url: APIEndpoints.Appreadstatus, httpMethod: .post, queryParam: nil, requestBody: readApiStatus) {[weak self]  (result:Result<ReadStausApiResponce, Error>) in
             
@@ -644,43 +383,18 @@ class NoticeBoardHomePageViewController:
             guard let self = self else {return}
             switch result{
             case .success(let success):
-                
-                if success.Status == 1 {
-                    
-                    departmentRef = success.data ?? []
-                    cloneList = success.data ?? []
-                    noDataTextLabel.isHidden = true
-                    noDataView.isHidden = true
-                    noticesBoardTableView.isScrollEnabled = true
-                    noticesBoardTableView.delegate = self
-                    noticesBoardTableView.dataSource = self
-                    noticesBoardTableView.reloadData()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                        
-                        self.loadingCustom.stopAnimating()
-                        self.loadingCustom.isHidden  = true
-                        
-                    }
-                    
-                }else{
-                    
-                    noDataView.isHidden = false
-                    noDataTextLabel.isHidden = false
-                    
-                    noDataTextLabel.text = success.Message
-                    noticesBoardTableView.isScrollEnabled = true
-                    noticesBoardTableView.delegate = self
-                    noticesBoardTableView.dataSource = self
-                    noticesBoardTableView.reloadData()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                        
-                        self.loadingCustom.stopAnimating()
-                        self.loadingCustom.isHidden  = true
-                    }
+                departmentRef = success.data ?? []
+                cloneList = success.data ?? []
+                noDataTextLabel.isHidden = success.Status == 1
+                noDataView.isHidden = success.Status == 1
+                noDataTextLabel.text = success.Message
+                noticesBoardTableView.reloadData()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
+                    self.loadingCustom.stopAnimating()
+                    self.loadingCustom.isHidden  = true
                 }
             case .failure(let error):
-                    print("Error: \(error)")
+                print("Error: \(error)")
             }
         }
         
@@ -700,25 +414,12 @@ class NoticeBoardHomePageViewController:
             guard let self = self else{return}
             switch result{
             case .success(let success):
-                if success.Status == 1{
-                    
-                    collegeRef = success.data ?? []
-                    cloneList = success.data ?? []
-                    noticesBoardTableView.isScrollEnabled = true
-                    noDataTextLabel.isHidden = true
-                    noDataView.isHidden =  true
-                    noticesBoardTableView.delegate = self
-                    noticesBoardTableView.dataSource = self
-                    noticesBoardTableView.reloadData()
-                }else{
-                    
-                    noDataTextLabel.isHidden = false
-                    noDataView.isHidden = false
-                    noDataTextLabel.text = success.Message
-                    noticesBoardTableView.delegate = self
-                    noticesBoardTableView.dataSource = self
-                    noticesBoardTableView.reloadData()
-                }
+                collegeRef = success.data ?? []
+                cloneList = success.data ?? []
+                noDataTextLabel.isHidden = success.Status == 1
+                noDataView.isHidden =  success.Status == 1
+                noDataTextLabel.text = success.Message
+                noticesBoardTableView.reloadData()
                 
             case .failure(let error):
                 print("Error: \(error)")
@@ -744,58 +445,22 @@ class NoticeBoardHomePageViewController:
             switch result{
             case .success(let success):
                 
-                if success.Status == 1{
-                    
+                if success.Status == 1 {
                     overAllRef = success.data ?? []
-                    
-                    
+                    departmentCountLabel.text = overAllRef.first?.departmentnotice ?? "0"
+                    collegeCountLabel.text = overAllRef.first?.collegenotice ?? "0"
                     for i in overAllRef {
-                        
-                        departmentCountLabel.text = i.departmentnotice
-                        collegeCountLabel.text = i.collegenotice
-                        
-                        if (i.departmentnotice == "0") && (i.collegenotice == "0"){
-                            
-                            departmentCountView.isHidden = true
-                            collegeCountView.isHidden = true
-                            noticeBoardCountView.isHidden = true
-                            
-                        }
-                        
-                        else if i.departmentnotice == "0"{
-                            
-                            departmentCountView.isHidden = true
-                            collegeCountView.isHidden = false
-                            noticeBoardCountView.isHidden = false
-                            
-                        }
-                        
-                        else if i.collegenotice == "0"{
-                            
-                            
-                            departmentCountView.isHidden = false
-                            collegeCountView.isHidden = true
-                            noticeBoardCountView.isHidden = false
-                            
-                        }
-                        
-                        else{
-                            
-                            departmentCountView.isHidden = false
-                            collegeCountView.isHidden = false
-                            noticeBoardCountView.isHidden = false
-                            
-                        }
+                        let hasDepartmentNotice = i.departmentnotice != "0"
+                        let hasCollegeNotice = i.collegenotice != "0"
+                        departmentCountView.isHidden = !hasDepartmentNotice
+                        collegeCountView.isHidden = !hasCollegeNotice
+                        noticeBoardCountView.isHidden = !hasDepartmentNotice && !hasCollegeNotice
+                        let departmentCount = Int(i.departmentnotice ?? "0") ?? 0
+                        let collegeCount = Int(i.collegenotice ?? "0") ?? 0
+                        noticeBoardCountLabel.text = String(departmentCount + collegeCount)
                     }
-                    
-                    let a =  Int(collegeCountLabel.text!)
-                    let b = Int(departmentCountLabel.text!)
-                    let c = a! + b!
-                    
-                    
-                    noticeBoardCountLabel.text = String(c)
                 }
-
+                
             case .failure(let error):
                 print("Error: \(error)")
             }
@@ -805,11 +470,9 @@ class NoticeBoardHomePageViewController:
     func addApi(){
         
         var add = AddApiModal()
-        
         let defaults = UserDefaults.standard
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
-        print("EventDefaultsKeys.DeviceToken",deviceToken)
         add.member_id = Int(userid)
         add.mobile_no = MobileNumber
         add.priority = priority
@@ -827,11 +490,8 @@ class NoticeBoardHomePageViewController:
                     addapiRef = success.data ?? []
                     
                     for i in addapiRef{
-                      
                         bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
                         smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
                         let singleTap = adds(target: self, action: #selector(adLoad))
                         singleTap.url = i.add_url
                         bigImg.isUserInteractionEnabled = true
@@ -843,44 +503,29 @@ class NoticeBoardHomePageViewController:
                 print(failure.localizedDescription)
             }
         }
-       
+        
     }
     
     @IBAction func helpRedirect() {
-        
         let vc = HelpViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
     
-    
     @IBAction func termsAndCondition() {
-        
         let vc = MenuTermsViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
-        
     }
     
     @IBAction func logoutPressed() {
-        
-    
         let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to logout", preferredStyle: UIAlertController.Style.alert)
-        
         refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
-            
-            
             UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
-            
             let vc = LoginVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
-            
             self.present(vc, animated: true, completion: nil)
-            
-            
         }))
-        
-        
         refreshAlert.addAction(UIAlertAction(title: "NO", style: .cancel, handler: { (action: UIAlertAction!) in
             print("Handle Cancel Logic here")
         }))
@@ -889,17 +534,13 @@ class NoticeBoardHomePageViewController:
         
     }
     
-    
     @IBAction func faqRedirect() {
-        print("faqRedirect")
         let vc = FaqViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
-        
     }
     
     @IBAction func privacyPolicyRedirect() {
-        
         let vc = PrivacyPolicyViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
@@ -907,50 +548,26 @@ class NoticeBoardHomePageViewController:
     }
     
     @IBAction func refreshVc() {
-        
-        print("refreshVcWork")
-        
         if  segmentId == "1"{
-            
             departRefName()
-            
-        }
-        
-        else{
-            
+        }else{
             collegeRefName()
         }
     }
     
-    
     @IBAction func notificationVc() {
-        print("NotificationViewController")
         let vc = NotificationViewController(nibName: nil, bundle: nil)
         vc.str = str
         vc.strName = strName
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: false, completion: nil)
     }
-
+    
     @IBAction func menu() {
-        
-        if sideMenuView.isHidden == true{
-            
-            sideMenuView.isHidden = false
-            print("menuVisble")
-        }
-        
-        else{
-            
-            sideMenuView.isHidden = true
-            print("mddffenuVisble")
-        }
-        
+        sideMenuView.isHidden.toggle()
     }
     
-    
     @IBAction func changePassowrdVC(){
-        
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
@@ -964,19 +581,6 @@ class NoticeBoardHomePageViewController:
     }
 }
 
-
-class ResiveNotice : UITapGestureRecognizer{
-    
-    var img_url : String!
-    var imageFileType : String!
-    var titee : String!
-    var descrttt : String!
-    var img_urls : [String] = []
-    
-}
-
-
 class addverisment : UITapGestureRecognizer {
-    
     var url : String!
 }

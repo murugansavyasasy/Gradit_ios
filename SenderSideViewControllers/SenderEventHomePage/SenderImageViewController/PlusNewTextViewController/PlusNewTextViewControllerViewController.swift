@@ -62,7 +62,7 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
     var password : String!
     var memberName : String!
     var colgImg : String!
-    var  mobileNumber : String!
+    var mobileNumber : String!
     var interval: TimeInterval = 60.0
     var editVenu : String!
     var editdate : String!
@@ -79,33 +79,18 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
     var is_read_enabled = ""
     var is_write_enabled = ""
     var selectedDate: Date?
-    
+    var placeHolder = UILabel()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if menuId == "13"{
-            
             selectRepicDeafultId.text = "Send"
             titleTextField.text = editTitle
             venuTextField.text  = editVenu
             descripitionTextField.text = editDiscreption
-            
-            let firsts = dateStr
-            let dateFormatterGet = DateFormatter()
-            
-            dateFormatterGet.dateFormat =  "dd MMM,yyyy"
-            
-            let dateFormatterPrint = DateFormatter()
-            
-            dateFormatterPrint.dateFormat = "dd-MM-yyyy"
-            
-            let dates: NSDate? = dateFormatterGet.date(from: firsts!) as NSDate?
-            
-            DateLabel.text = dateFormatterPrint.string(from: dates as! Date)
+            DateLabel.text = dateStr.dateFormater()
             timeLabel.text = TimeStr
             
         } else{
-            
             selectRepicDeafultId.text = " Select Recipients"
             DateLabel.text = "-SelectDate-"
             timeLabel.text = "-Select Time-"
@@ -114,7 +99,11 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         overrideUserInterfaceStyle = .light
         
         sideMenuView.isHidden = true
-        
+        placeHolder.text = "Type your description here"
+        placeHolder.textColor = .lightGray
+        placeHolder.translatesAutoresizingMaskIntoConstraints = false
+        descripitionTextField.addSubview(placeHolder)
+        NSLayoutConstraint.activate([placeHolder.topAnchor.constraint(equalTo:descripitionTextField.topAnchor,constant: 5),placeHolder.leadingAnchor.constraint(equalTo:descripitionTextField.leadingAnchor,constant: 10),placeHolder.trailingAnchor.constraint(equalTo:descripitionTextField.trailingAnchor,constant: -15)])
         let defaults = UserDefaults.standard
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         priority = defaults.string(forKey: DefaultsKeys.priority)
@@ -130,45 +119,16 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         
         
         smallImg.sd_setImage(with: URL(string: smallImageUrl), placeholderImage: UIImage(named: "ic_white"))
-        
-        if priority == "p1"{
-            tapBarView.backgroundColor = UIColor(named: "Principal" )
-            topLabels.text = "Principal"
-            
-        }else if priority == "p4"{
-            
-            topLabels.text = "Student"
-            
-        }else if priority == "p2" {
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            
-            topLabels.text = "HOD"
-            
-        }else if priority == "p5"{
-            
-            topLabels.text = "Father"
-    
-        } else if priority == "p3"{
-            
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            topLabels.text = "Teacher"
-            
-        }else if priority == "p7"{
-            
-            tapBarView.backgroundColor = UIColor(named: "univercityColorCod" )
-            topLabels.text = "University Head"
-            
-        }
-        
+        tapBarView.backgroundColor = .priorityColor
+        topLabels.text = .priorityRole
+        view.backgroundColor = .priorityColor
         descripitionTextField.returnKeyType = .done
         descripitionTextField.delegate = self
         titleTextField.returnKeyType = .done
         titleTextField.delegate = self
-        
         venuTextField.returnKeyType = .done
         venuTextField.delegate = self
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(adLoad))
-        
         bigImg.isUserInteractionEnabled = true
         bigImg.addGestureRecognizer(singleTap)
         
@@ -176,7 +136,6 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         cancelView.addGestureRecognizer(cancel)
         
         // tap Bar UiTapGuster.
-        
         let timess = UITapGestureRecognizer(target: self, action: #selector(SetTimeVc))
         setTimeView.addGestureRecognizer(timess)
         
@@ -220,15 +179,15 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         
     }
     
-    
-    
     func textViewDidChange(_ textView: UITextView) {
-        lblCount.text = "\(maxLenghth - descripitionTextField.text.count)/"+"\(500)"
+        lblCount.text = "\(descripitionTextField.text.count)/"+"\(500)"
+        placeHolder.isHidden = !textView.text.isEmpty
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (descripitionTextField.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.count
+        placeHolder.isHidden = !newText.isEmpty
         if text == "\n" {
             descripitionTextField.resignFirstResponder()
         }
@@ -243,7 +202,6 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
     
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
                 self.view.frame.origin.y -= keyboardSize.height-91
@@ -260,27 +218,23 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
     
     
     @IBAction func SetTimeVc(){
-        
         timeSS()
     }
     
     func timeSS(){
-        
-        // ✅ Check if date is selected
         guard let selected = selectedDate else {
             let alert = UIAlertController(title: "Select Date",
-                                              message: "Please select date first",
-                                              preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                
-                self.present(alert, animated: true, completion: nil)
+                                          message: "Please select date first",
+                                          preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
         let now = Date()
         var minTime: Date? = nil
-        
         if Calendar.current.isDate(selected, inSameDayAs: now) {
             minTime = now
         }
@@ -308,17 +262,11 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
     
     func FromDate_Action(){
         
-        RPicker.selectDate(title: "Select Date",
-                           cancelText: "Cancel",
-                           datePickerMode: .date,
-                           minDate: Date(),
-                           style: .Inline,
-                           didSelectDate: {[weak self] (today_date) in
+        RPicker.selectDate(title: "Select Date",cancelText: "Cancel",datePickerMode: .date,minDate: Date(),style: .Inline,didSelectDate: {[weak self] (today_date) in
             
             guard let self = self else { return }
             
-            self.selectedDate = today_date   // ✅ store selected date
-            
+            self.selectedDate = today_date
             self.display_date = today_date.dateString("dd/MM/yyyy")
             self.url_date = today_date.dateString("yyyy/MM/dd")
             self.DateLabel.text = self.display_date
@@ -336,9 +284,6 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         if menuId == "13"{
             
             if (descripitionTextField.text!.isEmpty) && (titleTextField.text!.isEmpty) {
-                
-                print("heloo",descripitionTextField.text.count)
-                
                 let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Details ", preferredStyle: UIAlertController.Style.alert)
                 
                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
@@ -350,10 +295,7 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                 
                 let refreshAlert = UIAlertController(title: "", message: "  Please Select Date ", preferredStyle: UIAlertController.Style.alert)
                 
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                    
-                    
-                }))
+                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
                 
                 present(refreshAlert, animated: true, completion: nil)
                 
@@ -361,21 +303,14 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                 
                 let refreshAlert = UIAlertController(title: "", message: "  Please Select Time ", preferredStyle: UIAlertController.Style.alert)
                 
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                   
-                }))
+                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
                 
                 present(refreshAlert, animated: true, completion: nil)
                 
             } else if venuTextField.text == ""{
-                
-                
                 let refreshAlert = UIAlertController(title: "", message: "  Kindly Enter Venue Details ", preferredStyle: UIAlertController.Style.alert)
                 
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                    
-                }))
-                
+                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
                 present(refreshAlert, animated: true, completion: nil)
                 
             }else{
@@ -385,27 +320,25 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
                     
                     var particular = EventParticualrModal()
-
+                    
                     particular.eventid = eventHeaderId
                     particular.eventbody = descripitionTextField.text
                     particular.eventdate = DateLabel.text
                     particular.eventvenue = venuTextField.text
                     particular.eventtime = timeLabel.text
                     particular.eventtopic = titleTextField.text
-
+                    
                     particular.processtype = "edit"
                     particular.collegeid = colgId
                     particular.staffid = UserId
                     particular.Callertype = priority
                     particular.receivertype = ""
-
+                    
                     particular.isparent = false
                     particular.isstaff = false
                     particular.isstudent = false
                     particular.receiveridlist = ""
-
-                    print("yearAndSectionModalStr", particular)
-
+                    
                     APiCallManager.shared.callApi(
                         url: APIEndpoints.ManageEvents,
                         httpMethod: .post,
@@ -418,101 +351,101 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                         switch result {
                             
                         case .success(let response):
+                            
+                            if response.Status == 1 {
                                 
-                                if response.Status == 1 {
+                                let refreshAlert = UIAlertController(
+                                    title: "",
+                                    message: response.Message,
+                                    preferredStyle: .alert
+                                )
+                                
+                                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                                     
-                                    let refreshAlert = UIAlertController(
-                                        title: "",
-                                        message: response.Message,
-                                        preferredStyle: .alert
-                                    )
-                                    
-                                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                                    if self.priority == "p2" || self.priority == "p3" {
                                         
-                                        if self.priority == "p2" || self.priority == "p3" {
-                                            
-                                            let vc = SenderEventHomePageViewController()
-                                            vc.is_read_enabled = self.is_read_enabled
-                                            vc.is_write_enabled = self.is_write_enabled
-                                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                            vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                            vc.str = self.str
-                                            vc.strName = self.strName
-                                            vc.modalPresentationStyle = .fullScreen
-                                            self.present(vc, animated: true)
-                                            
-                                        } else {
-                                            
-                                            let vc = SenderEventHomePageViewController()
-                                            vc.is_read_enabled = self.is_read_enabled
-                                            vc.is_write_enabled = self.is_write_enabled
-                                            vc.view.backgroundColor = UIColor(named: "Principal")
-                                            vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                            vc.str = self.str
-                                            vc.strName = self.strName
-                                            vc.modalPresentationStyle = .fullScreen
-                                            self.present(vc, animated: true)
-                                        }
-                                    })
-                                    
-                                    self.present(refreshAlert, animated: true)
-                                    
-                                } else {
-                                    
-                                    let refreshAlert = UIAlertController(
-                                        title: "",
-                                        message: response.Message,
-                                        preferredStyle: .alert
-                                    )
-                                    
-                                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                                        let vc = SenderEventHomePageViewController()
+                                        vc.is_read_enabled = self.is_read_enabled
+                                        vc.is_write_enabled = self.is_write_enabled
+                                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                        vc.str = self.str
+                                        vc.strName = self.strName
+                                        vc.modalPresentationStyle = .fullScreen
+                                        self.present(vc, animated: true)
                                         
-                                        if self.priority == "p2" || self.priority == "p3" {
-                                            
-                                            let vc = SenderEventHomePageViewController()
-                                            vc.is_read_enabled = self.is_read_enabled
-                                            vc.is_write_enabled = self.is_write_enabled
-                                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                            vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                            vc.str = self.str
-                                            vc.strName = self.strName
-                                            vc.modalPresentationStyle = .fullScreen
-                                            self.present(vc, animated: true)
-                                        }
+                                    } else {
                                         
-                                        if self.priority == "p7" {
-                                            
-                                            let vc = SenderEventHomePageViewController()
-                                            vc.is_read_enabled = self.is_read_enabled
-                                            vc.is_write_enabled = self.is_write_enabled
-                                            vc.view.backgroundColor = UIColor(named: "univercityColorCod")
-                                            vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                            vc.str = self.str
-                                            vc.strName = self.strName
-                                            vc.modalPresentationStyle = .fullScreen
-                                            self.present(vc, animated: true)
-                                            
-                                        } else {
-                                            
-                                            let vc = SenderEventHomePageViewController()
-                                            vc.is_read_enabled = self.is_read_enabled
-                                            vc.is_write_enabled = self.is_write_enabled
-                                            vc.view.backgroundColor = UIColor(named: "Principal")
-                                            vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                            vc.str = self.str
-                                            vc.strName = self.strName
-                                            vc.modalPresentationStyle = .fullScreen
-                                            self.present(vc, animated: true)
-                                        }
-                                    })
+                                        let vc = SenderEventHomePageViewController()
+                                        vc.is_read_enabled = self.is_read_enabled
+                                        vc.is_write_enabled = self.is_write_enabled
+                                        vc.view.backgroundColor = UIColor(named: "Principal")
+                                        vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                        vc.str = self.str
+                                        vc.strName = self.strName
+                                        vc.modalPresentationStyle = .fullScreen
+                                        self.present(vc, animated: true)
+                                    }
+                                })
+                                
+                                self.present(refreshAlert, animated: true)
+                                
+                            } else {
+                                
+                                let refreshAlert = UIAlertController(
+                                    title: "",
+                                    message: response.Message,
+                                    preferredStyle: .alert
+                                )
+                                
+                                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                                     
-                                    self.present(refreshAlert, animated: true)
-                                }
+                                    if self.priority == "p2" || self.priority == "p3" {
+                                        
+                                        let vc = SenderEventHomePageViewController()
+                                        vc.is_read_enabled = self.is_read_enabled
+                                        vc.is_write_enabled = self.is_write_enabled
+                                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
+                                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                        vc.str = self.str
+                                        vc.strName = self.strName
+                                        vc.modalPresentationStyle = .fullScreen
+                                        self.present(vc, animated: true)
+                                    }
+                                    
+                                    if self.priority == "p7" {
+                                        
+                                        let vc = SenderEventHomePageViewController()
+                                        vc.is_read_enabled = self.is_read_enabled
+                                        vc.is_write_enabled = self.is_write_enabled
+                                        vc.view.backgroundColor = UIColor(named: "univercityColorCod")
+                                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
+                                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
+                                        vc.str = self.str
+                                        vc.strName = self.strName
+                                        vc.modalPresentationStyle = .fullScreen
+                                        self.present(vc, animated: true)
+                                        
+                                    } else {
+                                        
+                                        let vc = SenderEventHomePageViewController()
+                                        vc.is_read_enabled = self.is_read_enabled
+                                        vc.is_write_enabled = self.is_write_enabled
+                                        vc.view.backgroundColor = UIColor(named: "Principal")
+                                        vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
+                                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
+                                        vc.str = self.str
+                                        vc.strName = self.strName
+                                        vc.modalPresentationStyle = .fullScreen
+                                        self.present(vc, animated: true)
+                                    }
+                                })
+                                
+                                self.present(refreshAlert, animated: true)
+                            }
                             
                             
                         case .failure(let error):
@@ -529,7 +462,7 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                     
                     
                 }))
-               
+                
             }
             
         } else{
@@ -537,22 +470,15 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
             if priority == "p1"{
                 
                 if (descripitionTextField.text!.isEmpty) && (titleTextField.text!.isEmpty) {
-                    
-                    print("heloo",descripitionTextField.text.count)
-                    
                     let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Details ", preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                    }))
-                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
                     present(refreshAlert, animated: true, completion: nil)
                 } else if  DateLabel.text ==  "-SelectDate-" {
                     
                     let refreshAlert = UIAlertController(title: "", message: "  Please Select Date ", preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                       
+                        
                     }))
                     
                     present(refreshAlert, animated: true, completion: nil)
@@ -562,7 +488,7 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                     let refreshAlert = UIAlertController(title: "", message: "  Please Select Time ", preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                       
+                        
                     }))
                     
                     present(refreshAlert, animated: true, completion: nil)
@@ -599,9 +525,6 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
             } else if priority == "p3"{
                 
                 if (descripitionTextField.text!.isEmpty) && (titleTextField.text!.isEmpty) {
-                    
-                    print("heloo",descripitionTextField.text.count)
-                    
                     let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Details ", preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
@@ -613,69 +536,20 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                 } else if  DateLabel.text ==  "-SelectDate-" {
                     
                     let refreshAlert = UIAlertController(title: "", message: "  Please Select Date ", preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                    }))
-                    
-                    
-                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
                     present(refreshAlert, animated: true, completion: nil)
                     
-                }
-                
-                
-                
-                
-                else if  timeLabel.text == "-Select Time-" {
-                    
-                    
-                    
-                    
+                }else if  timeLabel.text == "-Select Time-" {
                     let refreshAlert = UIAlertController(title: "", message: "  Please Select Time ", preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
                     present(refreshAlert, animated: true, completion: nil)
-                    
-                    
-                    
-                }
-                
-                
-                else if venuTextField.text == ""{
-                    
-                    
+                }else if venuTextField.text == ""{
                     let refreshAlert = UIAlertController(title: "", message: "  Kindly Enter Venue Details ", preferredStyle: UIAlertController.Style.alert)
                     
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
                     present(refreshAlert, animated: true, completion: nil)
                     
-                    
-                    
-                    
-                    
-                }
-                
-                
-                else{
+                }else{
                     
                     let vc = HodRespienViewController(nibName: nil, bundle: nil)
                     vc.venumtextField = venuTextField.text
@@ -693,110 +567,32 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                     
                 }
                 
-                
-                
-            }
-            
-            
-            else if priority == "p7"{
+            }else if priority == "p7"{
                 
                 if (descripitionTextField.text!.isEmpty) && (titleTextField.text!.isEmpty) {
-                    
-                    
-                    
-                    print("heloo",descripitionTextField.text.count)
-                    
                     let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Details ", preferredStyle: UIAlertController.Style.alert)
                     
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
                     present(refreshAlert, animated: true, completion: nil)
                     
-                }
-                
-                
-                
-                else if  DateLabel.text ==  "-SelectDate-" {
-                    
-                    
-                    
-                    
+                }else if  DateLabel.text ==  "-SelectDate-" {
                     let refreshAlert = UIAlertController(title: "", message: "  Please Select Date ", preferredStyle: UIAlertController.Style.alert)
                     
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
                     present(refreshAlert, animated: true, completion: nil)
                     
-                }
-                
-                
-                
-                
-                else if  timeLabel.text == "-Select Time-" {
-                    
-                    
-                    
-                    
+                }else if  timeLabel.text == "-Select Time-" {
                     let refreshAlert = UIAlertController(title: "", message: "  Please Select Time ", preferredStyle: UIAlertController.Style.alert)
                     
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
-                        
-                    }))
-                    
-                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
                     
                     present(refreshAlert, animated: true, completion: nil)
                     
-                    
-                    
-                }
-                
-                
-                else if venuTextField.text == ""{
-                    
-                    
+                }else if venuTextField.text == ""{
                     let refreshAlert = UIAlertController(title: "", message: "  Kindly Enter Venue Details ", preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
                     present(refreshAlert, animated: true, completion: nil)
-                    
-                    
-                    
-                    
-                    
-                }
-                
-                
-                else{
+                }else{
                     
                     let vc = GroupHeadViewController(nibName: nil, bundle: nil)
                     vc.venumtextField = venuTextField.text
@@ -814,109 +610,28 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                     
                 }
                 
-                
-                
-            }
-            
-            else if priority == "p2"{
+            }else if priority == "p2"{
                 
                 if (descripitionTextField.text!.isEmpty) && (titleTextField.text!.isEmpty) {
-                    
-                    
-                    
-                    print("heloo",descripitionTextField.text.count)
-                    
-                    
                     let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Details ", preferredStyle: UIAlertController.Style.alert)
                     
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
                     present(refreshAlert, animated: true, completion: nil)
-                }
-                
-                
-                else if  DateLabel.text ==  "-SelectDate-" {
-                    
-                    
-                    
-                    
+                }else if  DateLabel.text ==  "-SelectDate-" {
                     let refreshAlert = UIAlertController(title: "", message: "  Please Select Date ", preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
                     present(refreshAlert, animated: true, completion: nil)
                     
-                }
-                
-                
-                
-                
-                else if  timeLabel.text == "-Select Time-" {
-                    
-                    
-                    
-                    
+                }else if  timeLabel.text == "-Select Time-" {
                     let refreshAlert = UIAlertController(title: "", message: "  Please Select Time ", preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
                     present(refreshAlert, animated: true, completion: nil)
                     
-                    
-                    
-                }
-                
-                
-                
-                else if venuTextField.text == ""{
-                    
-                    
+                }else if venuTextField.text == ""{
                     let refreshAlert = UIAlertController(title: "", message: "  Kindly Enter Venue Details ", preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    
+                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in}))
                     present(refreshAlert, animated: true, completion: nil)
-                    
-                    
-                    
-                    
-                    
-                }
-                
-                
-                else{
+                }else{
                     
                     let vc = HodSelectResipenceViewController(nibName: nil, bundle: nil)
                     vc.venumtextField = venuTextField.text
@@ -933,58 +648,27 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                     present(vc, animated: true,completion: nil)
                     
                 }
-                
-                
             }
-            
         }
-        
-        
-        
-        
-        
-        
     }
-    
-    
     
     
     @IBAction func BtnClicked(_ sender: Any) {
-        
-        
         FromDate_Action()
-        
-        
     }
-    
-    
     
     @IBAction func adLoad( ){
-        
-        
         let vc = TotalAddLoadPageViewController(nibName: nil, bundle: nil)
-        
         vc.AddWebUrl = addWebUrl
-        
         vc.modalPresentationStyle = . fullScreen
         present(vc, animated: true,completion: nil)
-        
-        
     }
-    
-    
-    
     
     @IBAction func backbtn(_ sender: Any) {
         dismiss(animated: true)
     }
     
-    
-    
-    
-    
     func getCurrentViewController() -> UIViewController? {
-        
         if let rootController = UIApplication.shared.keyWindow?.rootViewController {
             var currentController: UIViewController! = rootController
             while( currentController.presentedViewController != nil ) {
@@ -996,159 +680,84 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         
     }
     
-    
-    // Tab Bar Nagivation
-    
-    
-    
     @IBAction func helpRedirect() {
-        
         let vc = HelpViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         let currentController = self.getCurrentViewController()
         currentController?.present(vc, animated: true, completion: nil)
-        
-        
     }
     
     
     @IBAction func termsAndCondition() {
-        
         let vc = MenuTermsViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         let currentController = self.getCurrentViewController()
         currentController?.present(vc, animated: true, completion: nil)
-        
     }
     
     @IBAction func logoutPressed() {
-        
-        
-        
-        
         let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to logout", preferredStyle: UIAlertController.Style.alert)
-        
         refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
-            
-            
             UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
-            
             let vc = LoginVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
-            
             self.present(vc, animated: true, completion: nil)
-            
-            
         }))
-        
-        
         refreshAlert.addAction(UIAlertAction(title: "NO", style: .cancel, handler: { (action: UIAlertAction!) in
             print("Handle Cancel Logic here")
         }))
-        
         present(refreshAlert, animated: true, completion: nil)
-        
     }
     
     
     @IBAction func faqRedirect() {
-        print("faqRedirect")
         let vc = FaqViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         let currentController = self.getCurrentViewController()
         currentController?.present(vc, animated: true, completion: nil)
-        
     }
     
     @IBAction func privacyPolicyRedirect() {
-        
         let vc = PrivacyPolicyViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         let currentController = self.getCurrentViewController()
         currentController?.present(vc, animated: true, completion: nil)
-        
     }
     
-    
-    
-    
-    
     @IBAction func refreshVc() {
-        
-        print("refreshVcWork")
         KRProgressHUD.show()
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            
-            
-            
-            
             KRProgressHUD.dismiss()
-            
         }
-        
-        
     }
     
     
     @IBAction func notificationVc() {
-        print("NotificationViewController")
         let vc = NotificationViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         let currentController = self.getCurrentViewController()
         currentController?.present(vc, animated: false, completion: nil)
-        
-        
-        
     }
     
-    
-    
-    
     @IBAction func menu() {
-        
-        if sideMenuView.isHidden == true{
-            
-            sideMenuView.isHidden = false
-            //
-            
-            print("menuVisble")
-        }
-        
-        else{
-            
-            sideMenuView.isHidden = true
-            
-            print("mddffenuVisble")
-        }
-        
-        
+        sideMenuView.isHidden.toggle()
     }
     
     
     @IBAction func changePassowrdVC(){
-        
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         let currentController = self.getCurrentViewController()
         currentController?.present(vc, animated: true, completion: nil)
-        
-        
-        
     }
     
     @IBAction func priorityVc() {
-        
         let vc = PriorityScreenVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true,completion: nil)
     }
     
-    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
         return range.location <= 99
     }
-    
-    
 }

@@ -1076,7 +1076,6 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
@@ -1121,7 +1120,6 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
             vc.noticeSegments.backgroundColor = UIColor(named: "FatherUnselector")
             vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "FatherSelector")
             vc.view.backgroundColor = UIColor(named: "FatherColor")
