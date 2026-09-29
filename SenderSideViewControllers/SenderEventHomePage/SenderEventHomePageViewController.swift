@@ -226,101 +226,32 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
     
     @IBAction func PlusVc() {
         
-        for i in addapiRef{
-            
-            if priority == "p2" || priority == "p3" {
-                
-                let vc = PlusNewTextViewControllerViewController(nibName: nil, bundle: nil)
-                vc.smallImageUrl = i.add_image
-                vc.backGroundImageUrl = i.background_image
-                vc.addWebUrl = i.add_url
-                vc.menuId = EventId
-                vc.strName = strName
-                vc.str = str
-                vc.is_read_enabled = is_read_enabled
-                vc.is_write_enabled = is_write_enabled
-                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true , completion: nil)
-                
-            }
-            
-            if priority == "p7" {
-                
-                let vc = PlusNewTextViewControllerViewController(nibName: nil, bundle: nil)
-                vc.smallImageUrl = i.add_image
-                vc.backGroundImageUrl = i.background_image
-                vc.addWebUrl = i.add_url
-                vc.menuId = EventId
-                vc.strName = strName
-                vc.str = str
-                vc.is_read_enabled = is_read_enabled
-                vc.is_write_enabled = is_write_enabled
-                vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true , completion: nil)
-                
-            }else{
-                
-                let vc = PlusNewTextViewControllerViewController(nibName: nil, bundle: nil)
-                vc.smallImageUrl = i.add_image
-                vc.backGroundImageUrl = i.background_image
-                vc.addWebUrl = i.add_url
-                vc.menuId = EventId
-                vc.strName = strName
-                vc.str = str
-                vc.is_read_enabled = is_read_enabled
-                vc.is_write_enabled = is_write_enabled
-                vc.view.backgroundColor = UIColor(named: "Principal" )
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true , completion: nil)
-                
-            }
+        for i in addapiRef {
+            let vc = PlusNewTextViewControllerViewController(nibName: nil,bundle: nil)
+            vc.smallImageUrl = i.add_image
+            vc.backGroundImageUrl = i.background_image
+            vc.addWebUrl = i.add_url
+            vc.menuId = EventId
+            vc.strName = strName
+            vc.str = str
+            vc.is_read_enabled = is_read_enabled
+            vc.is_write_enabled = is_write_enabled
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
         }
         
     }
     
     @IBAction func segmentAction(_ sender: UISegmentedControl) {
-        
         if is_read_enabled == "1"{
-            if priority == "p1"{
-                if eventSegmentName.selectedSegmentIndex == 0{
-                    segmentID = "1"
-                    EventTableView.isScrollEnabled = false
-                    upcoming()
-                }else if eventSegmentName.selectedSegmentIndex == 1 {
-                    segmentID = "2"
-                    EventTableView.isScrollEnabled = false
-                    past()
-                }
-            }else if priority == "p2" ||  priority == "p3"{
-                
-                
-                if eventSegmentName.selectedSegmentIndex == 0{
-                    segmentID = "1"
-                    EventTableView.isScrollEnabled = false
-                    upcoming()
-                    
-                }else if eventSegmentName.selectedSegmentIndex == 1 {
-                    segmentID = "2"
-                    
-                    EventTableView.isScrollEnabled = false
-                    past()
-                    
-                }
-            }else {
-                
-                if eventSegmentName.selectedSegmentIndex == 0{
-                    segmentID = "1"
-                    EventTableView.isScrollEnabled = false
-                    upcoming()
-                }else if eventSegmentName.selectedSegmentIndex == 1 {
-                    segmentID = "2"
-                    EventTableView.isScrollEnabled = false
-                    past()
-                    
-                }
+            if eventSegmentName.selectedSegmentIndex == 0{
+                segmentID = "1"
+                EventTableView.isScrollEnabled = false
+                upcoming()
+            }else if eventSegmentName.selectedSegmentIndex == 1 {
+                segmentID = "2"
+                EventTableView.isScrollEnabled = false
+                past()
             }
         }
     }
@@ -458,8 +389,7 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
     }
     
     
-    func viewclick(gesture : SenderPastEventsdatadetails){
-        if priority == "p1" {
+    func viewclick(gesture : SenderPastEventsdatadetails,isEdit: Bool){
             let vc = SenderEventDetailsPageViewController(nibName: nil, bundle: nil)
             vc.backGroundImg = backGroundImg
             vc.SmallImgAdd = SmallImgAdd
@@ -469,37 +399,9 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
             vc.selectedeventDetails = gesture
-            vc.view.backgroundColor = UIColor(named: "Principal" )
+            vc.is_edit_enabled = isEdit
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
-            
-        }else if priority == "p2" || priority == "p3" || priority == "p6"  || priority == "p7"{
-            let vc = SenderEventDetailsPageViewController(nibName: nil, bundle: nil)
-            vc.selectedeventDetails = gesture
-            vc.backGroundImg = backGroundImg
-            vc.SmallImgAdd = SmallImgAdd
-            vc.str = str
-            vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true, completion: nil)
-            
-        }else   if  priority == "p7"{
-            let vc = SenderEventDetailsPageViewController(nibName: nil, bundle: nil)
-            vc.selectedeventDetails = gesture
-            vc.backGroundImg = backGroundImg
-            vc.SmallImgAdd = SmallImgAdd
-            vc.str = str
-            vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true, completion: nil)
-            
-        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
@@ -517,7 +419,7 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
                     upcomming[indexPath.row].isappread = "1"
                     cell.ReadDotImageView.isHidden = true
                 }
-                viewclick(gesture: upcomming[indexPath.row])
+                viewclick(gesture: upcomming[indexPath.row], isEdit: true)
             }
         }else if eventSegmentName.selectedSegmentIndex == 1 {
             if let selectedCells = selectedCell, selectedCells == indexPath {
@@ -529,7 +431,7 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
                     pastRef[indexPath.row].isappread = "1"
                     cell.ReadDotImageView.isHidden = true
                 }
-                viewclick(gesture: pastRef[indexPath.row])
+                viewclick(gesture: pastRef[indexPath.row], isEdit: false)
             }
         }
         EventTableView.reloadData()
@@ -560,8 +462,6 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
-    
     
     func addApi(){
         
@@ -624,37 +524,18 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
                 if result.Status == 1{
                     overAllRef = result.data ?? []
                     
-                    for i in overAllRef{
+                    for i in overAllRef {
                         upcountLabel.text = i.upcomingevents
                         pastCountLabl.text = i.pastevents
-                        if (i.unread == "0") && (i.read == "0"){
-                            UpcountView.isHidden = true
-                            pastcountView.isHidden = true
-                            EventTableView.isHidden = true
-                            
-                        }else if i.unread == "0"{
-                            UpcountView.isHidden = true
-                            pastcountView.isHidden = false
-                            EventTableView.isHidden = false
-                            
-                        }else if i.read == "0"{
-                            UpcountView.isHidden = false
-                            pastcountView.isHidden = true
-                            EventTableView.isHidden = false
-                        }else {
-                            
-                            UpcountView.isHidden = false
-                            pastcountView.isHidden = false
-                            EventTableView.isHidden = false
-                        }
+                        let hasUnread = i.unread != "0"
+                        let hasRead = i.read != "0"
+
+                        UpcountView.isHidden = !hasUnread
+                        pastcountView.isHidden = !hasRead
+                        EventTableView.isHidden = !hasUnread && !hasRead
                     }
                     
-                    
-                    let a =  Int( upcountLabel.text!)
-                    let b = Int(pastCountLabl.text!)
-                    let c = a! + b!
-                    
-                    eventtopcountLabel.text = String(c)
+                    eventtopcountLabel.text = String((Int( upcountLabel.text!) ?? 0) + (Int(pastCountLabl.text!) ?? 0))
                     EventTableView.delegate = self
                     EventTableView.dataSource = self
                     EventTableView.reloadData()
@@ -746,9 +627,6 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
         
     }
     
-    
-    
-    
     @IBAction func menu() {
         sideMenuView.isHidden.toggle()
     }
@@ -765,20 +643,6 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
         present(vc, animated: true,completion: nil)
     }
 }
-
-
-//class viewcilcksender : UITapGestureRecognizer{
-//    var topic : String!
-//    var body : String!
-//    var event_time : String!
-//    var event_date : String!
-//    var venue     : String!
-//    var newfilepath : [String] = []
-//    var headerId : String!
-//    var eventCreatedId : String!
-//    
-//    
-//}
 class eventAdd: UITapGestureRecognizer{
     var url : String!
 }

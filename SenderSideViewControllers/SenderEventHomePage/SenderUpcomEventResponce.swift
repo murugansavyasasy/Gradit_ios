@@ -14,11 +14,11 @@ class senderUpcommingEventModal : Mappable{
     var appid    : String!
     var priority : String!
     var type     : String!
-  
+    
     init(){}
     
     
-   
+    
     required init?(map: Map) {
         mapping(map: map)
     }
@@ -29,31 +29,19 @@ class senderUpcommingEventModal : Mappable{
         appid   <- map["appid"]
         priority <- map["priority"]
         type     <- map["type"]
-        
-        
-        
     }
     
-
+    
     
 }
 
 class senderUpcommingEventResponce : Mappable{
-    
-    
-    
-    
     var  Status        : Int!
     var  Message       : String!
     var  data          :[SenderUpcommingEventsdatadetails]!
-  
-    
-    
-    
-    
     required init?(map: Map) {
         
-            mapping(map: map)
+        mapping(map: map)
     }
     
     func mapping(map: Map) {
@@ -61,12 +49,8 @@ class senderUpcommingEventResponce : Mappable{
         Status   <- map["Status"]
         Message  <- map["Message"]
         data     <- map["data"]
-        
-        
-        
-        
     }
- 
+    
     
 }
 
@@ -108,14 +92,14 @@ class SenderUpcommingEventsdatadetails : Mappable{
         newfilepath                 <- map["newfilepath"]
     }
     
-  
+    
     
 }
 
 
 class SenderUpcommingnewfileDataDetails : Mappable{
     
-   
+    
     
     
     required init?(map: Map) {
@@ -123,7 +107,7 @@ class SenderUpcommingnewfileDataDetails : Mappable{
     }
     func mapping(map: Map) {
         
-     
+        
         
     }
     

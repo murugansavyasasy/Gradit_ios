@@ -11,7 +11,6 @@ import ObjectMapper
 class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
  
     @IBOutlet weak var backView: UIView!
-    
     @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
     var staffId : Int!
@@ -21,23 +20,17 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     var identifier = "PunchHistTableViewCell"
     override func viewDidLoad() {
         super.viewDidLoad()
-
        let rowNiib = UINib(nibName: identifier, bundle: nil)
         tv.register(rowNiib, forCellReuseIdentifier: identifier)
-        
         noRecordLbl.isHidden = true
         punchHistory(date : date)
-        
         let back = UITapGestureRecognizer(target: self, action: #selector(backClick))
         backView.addGestureRecognizer(back)
+        backView.layer.cornerRadius = 8
     }
 
-
-
     @IBAction func backClick(){
-        
         dismiss(animated: true)
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -50,31 +43,17 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         let data : Timing  = timeData[indexPath.row]
         cell.timing.text = data.time
-        
-        
         if data.device_model == nil || data.device_model == ""{
-            
-//            cell.phoneModel.isHidden =
             cell.phoneModel.text = "Device Modal - " + "null"
         }else{
-            cell.phoneModel.isHidden = false
             cell.phoneModel.text = "Device Modal - " + (data.device_model ?? "")
         }
-        
-        
        
         if data.punch_type?.value == nil || data.punch_type?.value == "" {
-            
-//            cell.punchType.isHidden = true
             cell.punchType.text = "Punch Type - " + "null"
         }else{
-            cell.punchType.isHidden = false
             cell.punchType.text = "Punch Type - " + (data.punch_type?.value ?? "")
         }
-        
-        
-
-        
         return cell
     }
     
@@ -87,9 +66,7 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     func punchHistory(date : String){
         
         timeData.removeAll()
-        
         var  punchHistry = punchHistryModalReq()
-        
         punchHistry.CollegeId = collegeId
         punchHistry.UserId = staffId
         punchHistry.fromdate = date
@@ -108,11 +85,8 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
             case .success(let success):
                 
                 for i in success.data ?? []{
-                    
                     timeData.append(contentsOf: i.timings)
-                    
                 }
-                
                 noRecordLbl.isHidden = success.status == 1 ? true : false
                 noRecordLbl.text = success.message
                 tv.dataSource = self
@@ -126,8 +100,6 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
                 noRecordLbl.text = failure.localizedDescription
                 tv.reloadData()
             }
-            
         }
-        
     }
 }

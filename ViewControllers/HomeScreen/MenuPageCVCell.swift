@@ -165,7 +165,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                     vc.modalPresentationStyle = .fullScreen
                     currentController?.present(vc, animated: true, completion: nil)
                 }
-
                 // Routing copied from ReuseView.swift, adapted to use `slug`, `str`, and `strName`
                 if priority == "p4" {
                     if slug == "home" {

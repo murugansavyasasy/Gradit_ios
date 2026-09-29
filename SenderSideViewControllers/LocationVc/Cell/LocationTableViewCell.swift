@@ -14,7 +14,6 @@ class LocationTableViewCell: UITableViewCell {
     @IBOutlet weak var fullView: UIView!
     @IBOutlet weak var historyTimImage: UIImageView!
     @IBOutlet weak var toDateLbl: UILabel!
-    @IBOutlet weak var statusView: UIViewX!
     @IBOutlet weak var StatusLbl: UILabel!
     @IBOutlet weak var workingHrsLbl: UILabel!
     @IBOutlet weak var attendanceTypeLbl: UILabel!
@@ -25,16 +24,20 @@ class LocationTableViewCell: UITableViewCell {
     @IBOutlet weak var namelbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
-        
+        fullView.layer.cornerRadius = 10
+        calanderView.layer.cornerRadius = 10
+        calanderView.layer.masksToBounds = true
+        fullView.layer.masksToBounds = true
+        fullView.layer.shadowColor = UIColor.black.cgColor
+        fullView.layer.shadowOpacity = 0.5
+        fullView.layer.shadowOffset = CGSize(width: 2, height: 2)
+        fullView.layer.shadowRadius = 2
+        fullView.layer.masksToBounds = false
+        firstInLbl.isHidden = false
+        workingHrsLbl.isHidden = false
+        toDateLbl.isHidden = false
+        StatusLbl.layer.cornerRadius = 4
+        StatusLbl.layer.masksToBounds = true
         
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 }
