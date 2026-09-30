@@ -205,8 +205,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         present(vc)
                     } else if slug == "attendance" {
                         let vc = AttendanceViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = read
-                        vc.is_write_enabled = write
                         vc.str = str
                         vc.strName = strName
                         vc.view.backgroundColor = UIColor(named: "StudentParent")
@@ -739,8 +737,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         let vc = AttendanceViewController(nibName: nil, bundle: nil)
                         vc.str = str
                         vc.strName = strName
-                        vc.is_read_enabled = read
-                        vc.is_write_enabled = write
                         vc.view.backgroundColor = UIColor(named: "FatherColor")
                         present(vc)
                     } else if slug == "assignment" {

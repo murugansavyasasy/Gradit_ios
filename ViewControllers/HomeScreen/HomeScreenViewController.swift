@@ -1337,13 +1337,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             let vc =  AttendanceViewController(nibName: nil, bundle: nil)
             vc.str = str
             vc.strName = strName
-            for i in DefaultsKeys.MenuRefName{
-                if i.menu_slug == "attendance"{
-                    vc.is_read_enabled = String(i.is_read_enabled)
-                    vc.is_write_enabled = String(i.is_write_enabled)
-                }
-            }
-            
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
             
@@ -1404,12 +1397,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             vc.str = str
             vc.strName = strName
-            for i in DefaultsKeys.MenuRefName{
-                if i.menu_slug == "attendance"{
-                    vc.is_read_enabled = String(i.is_read_enabled)
-                    vc.is_write_enabled = String(i.is_write_enabled)
-                }
-            }
             vc.segmentName.backgroundColor = UIColor(named: "FatherUnselector")
             vc.segmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
             vc.view.backgroundColor = UIColor(named: "FatherColor" )
@@ -1783,13 +1770,8 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             
             
             let vc =  AttendanceViewController(nibName: nil, bundle: nil)
-            
-           
             vc.str = str
             vc.strName = strName
-            
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
             vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
             vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
             vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")

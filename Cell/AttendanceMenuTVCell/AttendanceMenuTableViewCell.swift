@@ -35,7 +35,25 @@ class AttendanceMenuTableViewCell: UITableViewCell {
         dateLabel.text = leaveApi.createdon
         fromDate.text = leaveApi.leavefromdate
         leaveAppiedType.text = leaveApi.leaveapplicationtype
-        numbOfDays.text = leaveApi.numofdays
+        let firstText = "No Of Days: "
+        let secondText = leaveApi.numofdays ?? ""
+        let attributedText = NSMutableAttributedString(string:firstText + secondText)
+        attributedText.addAttributes([
+            .font: UIFont.systemFont(ofSize: 14, weight: .regular),
+            .foregroundColor: UIColor.gray
+        ], range: NSRange(
+            location: 0,
+            length: (firstText as NSString).length
+        ))
+        attributedText.addAttributes([
+            .font: UIFont.systemFont(ofSize: 15, weight: .bold),
+            .foregroundColor: UIColor.black
+        ], range: NSRange(
+            location: (firstText as NSString).length,
+            length: (secondText as NSString).length
+        ))
+
+        numbOfDays.attributedText = attributedText
         toDateLabel.text = leaveApi.leavetodate
         approvedLabel.text = leaveApi.leavestatus
         reasonLabel.text = leaveApi.leavereason

@@ -1260,10 +1260,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 
                 let currentController = self.getCurrentViewController()
                 let vc = AttendanceViewController(nibName: nil, bundle: nil)
-                vc.is_read_enabled = read
-                vc.is_write_enabled = write
-                
-               
                 vc.str = str
                 vc.strName = strName
                 vc.view.backgroundColor = UIColor(named: "StudentParent")
@@ -2417,8 +2413,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
               
                 vc.str = str
                 vc.strName = strName
-                vc.is_read_enabled = read
-                vc.is_write_enabled = write
 //                vc.segmentName.backgroundColor = UIColor(named: "FatherUnselector")
 //                vc.segmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
                 vc.modalPresentationStyle = .fullScreen
