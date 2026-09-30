@@ -1,1117 +1,636 @@
-    //
-    //  LocationViewController.swift
-    //  VoicesnapSchoolApp
-    //
-    //  Created by admin on 29/08/24.
-    //  Copyright © 2024 Gayathri. All rights reserved.
-    //
+//
+//  LocationViewController.swift
+//  VoicesnapSchoolApp
+//
+//  Created by admin on 29/08/24.
+//  Copyright © 2024 Gayathri. All rights reserved.
+//
 
-    import UIKit
-    import CoreLocation
-    import ObjectMapper
-    import DropDown
-    import LocalAuthentication
-class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate {
-    
+import UIKit
+import CoreLocation
+import ObjectMapper
+import DropDown
+import LocalAuthentication
+
+
+class LocationViewController: UIViewController {
     @IBOutlet weak var topView: UIView!
-    @IBOutlet weak var plusViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var backView: UIView!
+    @IBOutlet weak var punchView: UIView!
+    @IBOutlet weak var histroyView: UIView!
     @IBOutlet weak var markAttendDfltLbl: UILabel!
     @IBOutlet weak var attendanceDefltLbl: UILabel!
-    @IBOutlet weak var faceIdDefaultLbl: UILabel!
-    @IBOutlet weak var switchBtn: UISwitch!
-    @IBOutlet weak var noRecordLbl: UILabel!
-    @IBOutlet weak var ErrorLablelView: UIView!
-    @IBOutlet weak var ErrorLablel: UIView!
-    @IBOutlet weak var errorLabel: UILabel!
-    @IBOutlet weak var selectyrDrop: NSLayoutConstraint!
-    
-    @IBOutlet weak var selectMontheight: NSLayoutConstraint!
-    @IBOutlet weak var selectMonthlbl: UILabel!
-    @IBOutlet weak var selectYearsLbl: UILabel!
-    @IBOutlet weak var selectMonth: UIViewX!
+    @IBOutlet weak var dropDownStack: UIStackView!
     @IBOutlet weak var selectYrsview: UIViewX!
+    @IBOutlet weak var selectMonth: UIViewX!
+    @IBOutlet weak var selectYearsLbl: UILabel!
+    @IBOutlet weak var selectMonthlbl: UILabel!
+    @IBOutlet weak var tv: UITableView!
+    @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var punchFullView: UIView!
     @IBOutlet weak var punchButton: UIViewX!
-    @IBOutlet weak var enabelview: UIViewX!
+    @IBOutlet weak var faceIdDefaultLbl: UILabel!
+    @IBOutlet weak var switchBtn: UISwitch!
     @IBOutlet weak var locationAlertFullView: UIViewX!
-    @IBOutlet weak var backView: UIView!
-    
+    @IBOutlet weak var enabelview: UIViewX!
+    @IBOutlet weak var ErrorLablelView: UIView!
+    @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var plusview: UIView!
-    @IBOutlet weak var tv: UITableView!
-    @IBOutlet weak var histroyView: UIView!
-    @IBOutlet weak var punchView: UIView!
+    @IBOutlet weak var plusOuterview: UIView!
     
-    var TvIdentfier = "LocationTableViewCell"
+    enum Tab { case punch, history }
     
+    let tableIdentifier = "LocationTableViewCell"
+    let defaults = UserDefaults.standard
     let locationManager = CLLocationManager()
-   
-   
-    var allowedDistance = CLLocationDistance() // 5 meters
-    let currentYear = Calendar.current.component(.year, from: Date())
-    var currentLat = ""
-    var currentLogi = ""
-    var RefrenceAddress = ""
-    var getHistorydata  : [GetHirstorydatadetails] = []
-   
-    var type : Int!
-    var years: [String] = []
-    var fetchdata : [FechdataDetails]!
     let dropDown = DropDown()
-    var selectedDictionary = NSDictionary()
-    var monthNames: [String] = []
-    
-    // DateFormatter to get the month names
-    let dateFormatter = DateFormatter()
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    var bioMatricEnable  : Int!
-    var staus : Bool!
-    
-    let firstParagraph = "Note : You are outside the institutes boundary. you will not be able to mark your attendanc"
-    
-    let secondParagraph = "Please try again when you are within the designated area."
-    
+    var currentTab: Tab = .punch
+    var isAuthenticating = false
+    var memberId = ""
+    var collegeId = ""
     var device = UIDevice.current.name
     var punch_type = 1
-    var secureId  = ""
-    var memberId  = ""
-    var collegeId  =  ""
+    var currentLat = ""
+    var currentLogi = ""
+    var referenceAddress = ""
+    var currentDistanceForPunchCheck: Double?
+    var apiDistanceForPunchCheck: Int?
     var is_read_enabled = ""
     var is_write_enabled = ""
-    var currentDistanceForPuchCheck : Double!
-   
-    var priority :  String!
-    var apiDistanceForPuchCheck :  Int!
+    var years: [String] = []
+    var monthNames: [String] = []
+    var historyData: [GetHirstorydatadetails] = []
+    
+    // Formatters are expensive – create once
+    private static let inputDateFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: "en_US_POSIX")
+        f.dateFormat = "dd/MM/yyyy"
+        return f
+    }()
+    private static let dayNameFormatter: DateFormatter = {
+        let f = DateFormatter(); f.dateFormat = "EEEE"; return f
+    }()
+    private static let monthShortFormatter: DateFormatter = {
+        let f = DateFormatter(); f.dateFormat = "MMM"; return f
+    }()
+    private static let dayNumberFormatter: DateFormatter = {
+        let f = DateFormatter(); f.dateFormat = "d"; return f
+    }()
     
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if  is_write_enabled == "1"{
-            //
-            plusview.isHidden = false
-            plusViewHeight.constant = 78
-            //
-        }else{
-            
-            
-            plusview.isHidden = true
-            plusViewHeight.constant = 0
-        }
-        
-        switchBtn.isHidden = true
-        faceIdDefaultLbl.isHidden = true
-//        locationAlertFullView.isHidden = true
-        ErrorLablelView.isHidden = true
-        noRecordLbl.isHidden = true
-        punchFullView.isHidden = true
-        errorLabel.isHidden = true
-        selectyrDrop.constant = 0
-        selectMontheight.constant = 0
-        
-      
-        let defaults = UserDefaults.standard
-        
-        memberId = defaults.string(forKey: DefaultsKeys.memberid)!
-      
-        collegeId = defaults.string(forKey: DefaultsKeys.collegeid)!
-      
-        
-      
-        priority = defaults.string(forKey: DefaultsKeys.priority)
-        
-//      let strUDID : String = Util.str_deviceid()
-        
-//        print("strUDID",strUDID)
-      
-        let deviceModel = getDeviceModelName()
-      
-        device = deviceModel
-        print("Device Model: \(deviceModel)")
-//        secureId = strUDID
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM"  // This will give the full month name
-        let monthName = dateFormatter.string(from: date)
-        print("Current Month: \(monthName)")
-        selectMonthlbl.text = monthName
-        
-        checkLocationServices()
-        
-        
-        
-        let combinedText = "\(firstParagraph)\n\n\(secondParagraph)"
-        
-        let attributedString = NSMutableAttributedString(string: combinedText)
-        
-        // Apply custom formatting if needed
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 4
-        paragraphStyle.alignment = .left
-        
-        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-        
-        // Set the attributed text to the label
-        errorLabel.attributedText = attributedString
-        let userDefaults = UserDefaults.standard
-        
-        if  type  == 1{
-            
-            
-        }else{
-            
-          
-            
-//            instituteId = userDefaults.integer(forKey: DefaultsKeys.SchoolD)
-//            staffId = userDefaults.integer(forKey: DefaultsKeys.StaffID)
-//            bioMatricEnable = userDefaults.integer(forKey: DefaultsKeys.biometricEnable)
-            
-        }
-        
-        
-        
-    
-        
-        
-        for i in 0..<21 {
-            let year = currentYear - i
-            years.append(String(year))
-            
-            
-        }
-        if priority == "p1" {
-            
-            
-            print("PrincipalVieewwColor")
-            topView.backgroundColor = UIColor(named: "Principal" )
-            
-           
-            
-        }else if priority == "p4" {
-            
-            print("StudentVieewwColor")
-            topView.backgroundColor = UIColor(named: "studentViewColors")
-            
-            
-           
-            
-        } else if priority == "p3" ||  priority == "p2" {
-            
-            print("HooodddVieewwColor")
-            topView.backgroundColor = UIColor(named: "Teaching Staff")
-            
-          
-            
-        }
-        else if priority == "p7" {
-            
-            print("HooodddVieewwColor")
-            topView.backgroundColor = UIColor(named: "univercityColorCod")
-            
-          
-            
-        }
-        else if priority == "p5"{
-            
-            
-            
-            topView.backgroundColor = UIColor(named: "FatherColor")
-            
-          
-            
-            
-        }
-        
-        else if priority == "p6"{
-            
-            
-            
-            topView.backgroundColor = UIColor(named: "Teaching Staff")
-            
-            
-            
-            
-            
-            
-        }
-        
-        
-        selectYearsLbl.text = years[0]
-        
-        dateFormatter.locale = Locale(identifier: "en_US")
-        dateFormatter.dateFormat = "MMMM"
-        for month in 1...12 {
-            var components = DateComponents()
-            components.month = month
-            if let date = Calendar.current.date(from: components) {
-                let monthName = dateFormatter.string(from: date)
-                monthNames.append(monthName)
-            }
-        }
-        
-        
-        if CLLocationManager.locationServicesEnabled() {
-            switch CLLocationManager.authorizationStatus() {
-            case .notDetermined, .restricted, .denied:
-                tv.isHidden = true
-                locationAlertFullView.isHidden = false
-                print("Location access is not available.")
-                
-                
-            case .authorizedAlways, .authorizedWhenInUse:
-                print("Location access is granted.")
-            @unknown default:
-                break
-            }
-        } else {
-            print("Location services are not enabled on this device.")
-        }
-        let rowNib = UINib(nibName: TvIdentfier, bundle: nil)
-        tv.register(rowNib, forCellReuseIdentifier: TvIdentfier)
-        
-        
-        let history = UITapGestureRecognizer(target: self, action: #selector(history))
-        histroyView.addGestureRecognizer(history)
-        
-        let punch = UITapGestureRecognizer(target: self, action: #selector(punch))
-        punchView.addGestureRecognizer(punch)
-        let punchbttn = UITapGestureRecognizer(target: self, action: #selector(punchButtonss))
-        punchButton.addGestureRecognizer(punchbttn)
-        let plus = UITapGestureRecognizer(target: self, action: #selector(plus))
-        plusview.addGestureRecognizer(plus)
-        let back = UITapGestureRecognizer(target: self, action: #selector(backviw))
-        backView.addGestureRecognizer(back)
-        let enabel = UITapGestureRecognizer(target: self, action: #selector(enabelclick))
-        enabelview.addGestureRecognizer(enabel)
-        let yearsDrops = UITapGestureRecognizer(target: self, action: #selector(selectYrsDrop))
-        selectYrsview.addGestureRecognizer(yearsDrops)
-        let MothDrops = UITapGestureRecognizer(target: self, action: #selector(selectMothDrop))
-        selectMonth.addGestureRecognizer(MothDrops)
-    }
-    
-    
-    func getDeviceModelName() -> String {
-        var systemInfo = utsname()
-        uname(&systemInfo)
-        
-        let modelCode = withUnsafePointer(to: &systemInfo.machine) { ptr in
-            return String(cString: UnsafeRawPointer(ptr).assumingMemoryBound(to: CChar.self))
-        }
-        
-        let modelMap: [String: String] = [
-            // iPhones
-            
-            
-            "iPhone14,7": "iPhone 14",
-                   "iPhone14,8": "iPhone 14 Plus",
-                   "iPhone15,2": "iPhone 14 Pro",
-                   "iPhone15,3": "iPhone 14 Pro Max",
-                   
-                   // iPhone 15 Series
-                   "iPhone15,4": "iPhone 15",
-                   "iPhone15,5": "iPhone 15 Plus",
-                   "iPhone16,1": "iPhone 15 Pro",
-                   "iPhone16,2": "iPhone 15 Pro Max",
-                   
-                   // iPhone 16 Series (expected, add more as confirmed in the future)
-                   "iPhone16,3": "iPhone 16",
-                   "iPhone16,4": "iPhone 16 Plus",
-                   "iPhone17,1": "iPhone 16 Pro",
-                   "iPhone17,2": "iPhone 16 Pro Max",
-                   
-            
-            
-            "iPhone14,2": "iPhone 13 Pro",
-            "iPhone14,3": "iPhone 13 Pro Max",
-            "iPhone14,4": "iPhone 13 mini",
-            "iPhone14,5": "iPhone 13",
-            "iPhone13,2": "iPhone 12",
-            "iPhone13,3": "iPhone 12 Pro",
-            "iPhone13,4": "iPhone 12 Pro Max",
-            "iPhone13,1": "iPhone 12 mini",
-            "iPhone12,1": "iPhone 11",
-            "iPhone12,3": "iPhone 11 Pro",
-            "iPhone12,5": "iPhone 11 Pro Max",
-            "iPhone11,8": "iPhone XR",
-            "iPhone11,2": "iPhone XS",
-            "iPhone11,4": "iPhone XS Max",
-            "iPhone11,6": "iPhone XS Max (China)",
-            "iPhone10,3": "iPhone X",
-            "iPhone10,6": "iPhone X (GSM)",
-            "iPhone10,1": "iPhone 8",
-            "iPhone10,4": "iPhone 8 (GSM)",
-            "iPhone10,2": "iPhone 8 Plus",
-            "iPhone10,5": "iPhone 8 Plus (GSM)",
-            "iPhone9,1": "iPhone 7",
-            "iPhone9,3": "iPhone 7 (GSM)",
-            "iPhone9,2": "iPhone 7 Plus",
-            "iPhone9,4": "iPhone 7 Plus (GSM)",
-            "iPhone8,1": "iPhone 6s",
-            "iPhone8,2": "iPhone 6s Plus",
-            "iPhone8,4": "iPhone SE (1st generation)",
-            "iPhone7,2": "iPhone 6",
-            "iPhone7,1": "iPhone 6 Plus",
-            "iPhone6,1": "iPhone 5s (GSM)",
-            "iPhone6,2": "iPhone 5s (Global)",
-            "iPhone5,1": "iPhone 5 (GSM)",
-            "iPhone5,2": "iPhone 5 (Global)",
-            "iPhone5,3": "iPhone 5c (GSM)",
-            "iPhone5,4": "iPhone 5c (Global)",
-            "iPhone4,1": "iPhone 4s",
-            "iPhone3,1": "iPhone 4 (GSM)",
-            "iPhone3,2": "iPhone 4 (GSM Rev A)",
-            "iPhone3,3": "iPhone 4 (CDMA)",
-            "iPhone2,1": "iPhone 3GS",
-            "iPhone1,2": "iPhone 3G",
-            "iPhone1,1": "iPhone",
-            
-            // iPads
-            "iPad13,16": "iPad Air (5th generation, WiFi)",
-            "iPad13,17": "iPad Air (5th generation, WiFi+Cellular)",
-            "iPad13,4": "iPad Pro 11 inch (3rd generation, WiFi)",
-            "iPad13,5": "iPad Pro 11 inch (3rd generation, WiFi+Cellular)",
-            "iPad13,6": "iPad Pro 11 inch (3rd generation, WiFi+Cellular)",
-            "iPad13,7": "iPad Pro 11 inch (3rd generation, WiFi+Cellular)",
-            "iPad13,8": "iPad Pro 12.9 inch (5th generation, WiFi)",
-            "iPad13,9": "iPad Pro 12.9 inch (5th generation, WiFi+Cellular)",
-            "iPad13,10": "iPad Pro 12.9 inch (5th generation, WiFi+Cellular)",
-            "iPad13,11": "iPad Pro 12.9 inch (5th generation, WiFi+Cellular)",
-            "iPad12,1": "iPad (9th generation, WiFi)",
-            "iPad12,2": "iPad (9th generation, WiFi+Cellular)",
-            "iPad11,6": "iPad (8th generation, WiFi)",
-            "iPad11,7": "iPad (8th generation, WiFi+Cellular)",
-            "iPad11,3": "iPad Air (4th generation, WiFi)",
-            "iPad11,4": "iPad Air (4th generation, WiFi+Cellular)",
-            "iPad8,1": "iPad Pro 11 inch (1st generation, WiFi)",
-            "iPad8,2": "iPad Pro 11 inch (1st generation, WiFi)",
-            "iPad8,3": "iPad Pro 11 inch (1st generation, WiFi+Cellular)",
-            "iPad8,4": "iPad Pro 11 inch (1st generation, WiFi+Cellular)",
-            "iPad8,9": "iPad Pro 11 inch (2nd generation, WiFi)",
-            "iPad8,10": "iPad Pro 11 inch (2nd generation, WiFi+Cellular)",
-            "iPad7,5": "iPad (6th generation, WiFi)",
-            "iPad7,6": "iPad (6th generation, WiFi+Cellular)",
-            // Add more as needed
-        ]
-        
-        return modelMap[modelCode] ?? modelCode // Returns modelCode if not found in the map
-    }
-    
-    func checkAuthenticationAvailability() {
-        
-        locationAlertFullView.isHidden = true
-        let context = LAContext()
-        var error: NSError?
-        
-        
-        let policy: LAPolicy = .deviceOwnerAuthentication
-        
-        // Check if biometric authentication or passcode is available
-        if context.canEvaluatePolicy(policy, error: &error) {
-            // Attempt to authenticate using biometrics or passcode
-            authenticateUser(context: context, policy: policy)
-        } else {
-            // Neither biometric authentication nor passcode is available
-            print("No biometric authentication or passcode is set.")
-            
-            punch_type = 1
-            locationVc()
-        }
-        
-        
-    }
-    
-    func authenticateUser(context: LAContext, policy: LAPolicy) {
-        context.evaluatePolicy(policy, localizedReason: "Please authenticate to proceed") { [self] success, authenticationError in
-            
-            DispatchQueue.main.async { [self] in
-                if success {
-                    print("Authentication successful")
-                    // Proceed with your functionality
-                    
-                    
-                    punch_type = 3
-                    locationVc()
-                    
-                } else {
-                    
-                    // Authentication failed
-                    if let error = authenticationError {
-                        print("Authentication failed: \(error.localizedDescription)")
-                        punch_type = 1
-                        locationVc()
-                    }
-                }
-                
-                
-                
-                
-            }
-            
-            
-        }
-        
-        
-        
-    }
-    
-    
-    func locationVc(){
-        
+        memberId = defaults.string(forKey: DefaultsKeys.memberid) ?? ""
+        collegeId = defaults.string(forKey: DefaultsKeys.collegeid) ?? ""
+        device = UIDevice.current.modelName
+        setupInitialUI()
+        setupMonthsAndYears()
+        setupTable()
+        setupGestures()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
-        
-        
-        
+        selectTab(.punch)
+        checkLocationServices()
     }
-    @IBAction func history(){
-        
-        
-        
-        plusview.isHidden = true
-        plusViewHeight.constant = 0
-        histroyView .backgroundColor = UIColor(named: "Principal")
-        attendanceDefltLbl.textColor = .white
-        punchView.backgroundColor = .white
-        markAttendDfltLbl.textColor = .black
-        selectyrDrop.constant = 30
-        selectMontheight.constant = 30
+    
+    func setupInitialUI() {
+        topView.backgroundColor = .priorityColor
+        switchBtn.isHidden = true
+        faceIdDefaultLbl.isHidden = true
+        ErrorLablelView.isHidden = true
+        errorLabel.isHidden = true
+        noRecordLbl.isHidden = true
         punchFullView.isHidden = true
-        locationAlertFullView.isHidden = true
-        
-        tv.isHidden = false
-        
-        AttendaceHistory()
+        dropDownStack.isHidden = true
+        tv.isHidden = true
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineSpacing = 4
+        paragraph.alignment = .center
+        let text = "Note: You are outside the institute's boundary. You will not be able to mark your attendance.\n\nPlease try again when you are within the designated area."
+        errorLabel.attributedText = NSAttributedString(string: text, attributes: [
+            .paragraphStyle: paragraph,
+            .font: UIFont.boldSystemFont(ofSize: 16),
+            .foregroundColor: UIColor.white
+        ])
     }
     
+    func setupMonthsAndYears() {
+        let currentYear = Calendar.current.component(.year, from: Date())
+        years = (0..<21).map { String(currentYear - $0) }
+        selectYearsLbl.text = years.first
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        monthNames = formatter.monthSymbols
+        let currentMonthIndex = Calendar.current.component(.month, from: Date()) - 1
+        selectMonthlbl.text = monthNames.indices.contains(currentMonthIndex) ? monthNames[currentMonthIndex] : monthNames.first
+    }
     
-    @IBAction func punch(){
-        
-        
-        
-        
-        
-        
-        if  is_write_enabled == "1"{
-            //
-            plusview.isHidden = false
-            plusViewHeight.constant = 78
-            //
-        }else{
-            
-            
-            plusview.isHidden = true
-            plusViewHeight.constant = 0
+    func setupTable() {
+        tv.register(UINib(nibName: tableIdentifier, bundle: nil), forCellReuseIdentifier: tableIdentifier)
+        tv.dataSource = self
+        tv.delegate = self
+        tv.rowHeight = UITableView.automaticDimension
+        tv.estimatedRowHeight = 100
+    }
+    
+    func setupGestures() {
+        func tap(_ view: UIView, _ action: Selector) {
+            view.isUserInteractionEnabled = true
+            view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: action))
         }
-        
-       
-        punchView.backgroundColor = UIColor(named: "Principal")
-        histroyView.backgroundColor = .white
-        
-        markAttendDfltLbl.textColor = .white
-        
-        attendanceDefltLbl.textColor = .black
-        
+        tap(histroyView, #selector(didTapHistoryTab))
+        tap(punchView, #selector(didTapPunchTab))
+        tap(punchButton, #selector(didTapPunchButton))
+        tap(plusview, #selector(didTapAddLocation))
+        tap(backView, #selector(didTapBack))
+        tap(enabelview, #selector(didTapEnableLocation))
+        tap(selectYrsview, #selector(didTapYearDropDown))
+        tap(selectMonth, #selector(didTapMonthDropDown))
+    }
+    
+    func selectTab(_ tab: Tab) {
+        currentTab = tab
+        let active = UIColor.priorityColor
+        let isPunch = tab == .punch
+        punchView.backgroundColor = isPunch ? active : .clear
+        markAttendDfltLbl.textColor = isPunch ? .white : .black
+        histroyView.backgroundColor = isPunch ? .clear : active
+        attendanceDefltLbl.textColor = isPunch ? .black : .white
+        updatePlusVisibility(showing: isPunch)
+    }
+    
+    func updatePlusVisibility(showing: Bool) {
+        let visible = showing && is_write_enabled == "1"
+        plusview.isHidden = !visible
+        plusOuterview.isHidden = !visible
+    }
+    
+    @objc func didTapPunchTab() {
+        selectTab(.punch)
         tv.isHidden = true
         noRecordLbl.isHidden = true
-        selectyrDrop.constant = 0
-        selectMontheight.constant = 0
-        
+        dropDownStack.isHidden = true
         checkLocationServices()
-        
-        
-        
-    }
-    func openAppSettings() {
-        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-            return
-        }
-        
-        if UIApplication.shared.canOpenURL(settingsUrl) {
-            UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
-                print("Settings opened: \(success)") // Prints true if Settings was opened successfully
-            })
-        }
-    }
-    @IBAction func enabelclick(){
-        
-        openAppSettings()
     }
     
-    @IBAction func punchButtonss(){
-        
-        // Check if the distance is smaller
-        if currentDistanceForPuchCheck <= Double(apiDistanceForPuchCheck) {
-          
-            punchFullView.isHidden = false
-            errorLabel.isHidden = true
-            ErrorLablelView.isHidden = true
-            punchAPi()
-          
-            
-        } else {
-           
-            
-            errorLabel.isHidden = false
-            punchFullView.isHidden = true
-            ErrorLablelView.isHidden = false
-        }
+    @objc func didTapHistoryTab() {
+        selectTab(.history)
+        dropDownStack.isHidden = false
+        punchFullView.isHidden = true
+        locationAlertFullView.isHidden = true
+        ErrorLablelView.isHidden = true
+        tv.isHidden = false
+        loadAttendanceHistory()
     }
     
-    func checkLocationAuthorization() {
-        switch CLLocationManager.authorizationStatus() {
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-                print("authorizedWhenInUse")
-        case .restricted, .denied:
-            // Location services are restricted or denied, prompt the user to enable them in settings
-            print("denied")
-            showAlertToEnableLocationServices()
-        case .authorizedAlways, .authorizedWhenInUse:
-            checkAuthenticationAvailability()
-            print("authorizedWhenInUse")
-            //
-        @unknown default:
-            break
-        }
-    }
-    
-    func showAlertToEnableLocationServices() {
-        
-        locationAlertFullView.isHidden = false
-        
-    }
-    
-    
-    
-    
-    @IBAction func selectYrsDrop(){
-        
-        
-        
-        let myArray = years
-        
-        dropDown.dataSource = myArray//4
-        dropDown.anchorView = selectYrsview //5
-        
-        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-        
-        dropDown.direction = .bottom
-        DropDown.appearance().backgroundColor = UIColor.white
-        dropDown.show() //7
-        
-        
-        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
-            
-            selectYearsLbl.text = item
-            
-            selectMonthlbl.text = monthNames[0]
-            AttendaceHistory()
-        }
-    }
-    
-    @IBAction func selectMothDrop(){
-        
-        
-        
-        let myArray = monthNames
-        
-        dropDown.dataSource = myArray//4
-        dropDown.anchorView = selectMonth //5
-        
-        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-        
-        dropDown.direction = .bottom
-        DropDown.appearance().backgroundColor = UIColor.white
-        dropDown.show() //7
-        
-        
-        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
-            
-            
-            selectMonthlbl.text = item
-            
-            AttendaceHistory()
-        }
-    }
-    
-    
-    func checkLocationServices() {
-        if CLLocationManager.locationServicesEnabled() {
-            // Location services are enabled, so now check the authorization status
-            print("heloo")
-//            locationAlertFullView.isHidden = true
-            checkLocationAuthorization()
-        } else {
-            
-            print("heloo11")
-            // Location services are not enabled, prompt the user to enable them
-            showAlertToEnableLocationServices()
-        }
-    }
-    
-    @IBAction func backviw(){
-        
+    @objc func didTapBack() {
         dismiss(animated: true)
     }
     
+    @objc func didTapEnableLocation() {
+        guard let url = URL(string: UIApplication.openSettingsURLString),
+              UIApplication.shared.canOpenURL(url) else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
     
-    @IBAction func plus(){
-        
+    @objc func didTapAddLocation() {
         let vc = CreateLocationViewController(nibName: nil, bundle: nil)
-        vc.latitude =  currentLat
+        vc.latitude = currentLat
         vc.longitude = currentLogi
-        vc.refrenceAddress = RefrenceAddress
+        vc.refrenceAddress = referenceAddress
         vc.collegeId = Int(collegeId)
         vc.memberId = Int(memberId)
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true)
     }
     
-   
+    @objc func didTapPunchButton() {
+        guard let current = currentDistanceForPunchCheck,
+              let allowed = apiDistanceForPunchCheck else {
+            checkLocationServices()
+            return
+        }
+        if current <= Double(allowed) {
+            updateAreaState(inside: true)
+            punchAPI()
+        } else {
+            updateAreaState(inside: false)
+        }
+    }
+    
+    func updateAreaState(inside: Bool) {
+        punchFullView.isHidden = !inside
+        errorLabel.isHidden = inside
+        ErrorLablelView.isHidden = inside
+    }
+    
+    @objc func didTapYearDropDown() {
+        showDropDown(anchor: selectYrsview, items: years) { [weak self] item in
+            guard let self = self else { return }
+            self.selectYearsLbl.text = item
+            self.selectMonthlbl.text = self.monthNames.first
+            self.loadAttendanceHistory()
+        }
+    }
+    
+    @objc func didTapMonthDropDown() {
+        showDropDown(anchor: selectMonth, items: monthNames) { [weak self] item in
+            self?.selectMonthlbl.text = item
+            self?.loadAttendanceHistory()
+        }
+    }
+    
+    func showDropDown(anchor: UIView, items: [String], onSelect: @escaping (String) -> Void) {
+        dropDown.dataSource = items
+        dropDown.anchorView = anchor
+        dropDown.bottomOffset = CGPoint(x: 0, y: anchor.bounds.height)
+        dropDown.direction = .bottom
+        DropDown.appearance().backgroundColor = UIColor.white
+        dropDown.selectionAction = { (_: Int, item: String) in onSelect(item) }
+        dropDown.show()
+    }
+    
+    var authorizationStatus: CLAuthorizationStatus {
+        if #available(iOS 14.0, *) { return locationManager.authorizationStatus }
+        return CLLocationManager.authorizationStatus()
+    }
+    
+    func checkLocationServices() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let isEnabled = CLLocationManager.locationServicesEnabled()
+            DispatchQueue.main.async {
+                guard isEnabled else {
+                    self.showLocationAlert()
+                    return
+                }
+
+                self.handleAuthorization()
+            }
+        }
+    }
+    func handleAuthorization() {
+        switch authorizationStatus {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            showLocationAlert()
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationAlertFullView.isHidden = true
+            authenticateThenLocate()
+        @unknown default:
+            break
+        }
+    }
+    
+    func showLocationAlert() {
+        locationAlertFullView.isHidden = false
+        punchFullView.isHidden = true
+        ErrorLablelView.isHidden = true
+        tv.isHidden = true
+    }
+    
+    func authenticateThenLocate() {
+        guard !isAuthenticating else { return }
+        
+        let context = LAContext()
+        let policy: LAPolicy = .deviceOwnerAuthentication
+        var error: NSError?
+        
+        guard context.canEvaluatePolicy(policy, error: &error) else {
+            punch_type = 1
+            startLocationUpdates()
+            return
+        }
+        
+        isAuthenticating = true
+        context.evaluatePolicy(policy, localizedReason: "Please authenticate to proceed") { [weak self] success, _ in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                self.isAuthenticating = false
+                self.punch_type = success ? 3 : 1
+                self.startLocationUpdates()
+            }
+        }
+    }
+    
+    func startLocationUpdates() {
+        locationManager.startUpdatingLocation()
+    }
+    
+    func fetchAllowedLocations(latitude: String, longitude: String) {
+        var request = fechRequ()
+        request.CollegeId = Int(collegeId)
+        request.userId = Int(memberId)
+        
+        APiCallManager.shared.callApi(url: APIEndpoints.GetStaffLocationDetails, httpMethod: .post, queryParam: nil, requestBody: request) { [weak self] (result: Result<fechModal, Error>) in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                case .success(let response):
+                    guard response.status == 1 else {
+                        self.ErrorLablelView.isHidden = true
+                        self.showNoRecord(response.message)
+                        return
+                    }
+                    self.noRecordLbl.isHidden = true
+                    let candidates = (response.data ?? []).map { (lat: $0.latitude, lon: $0.longitude, radius: $0.distance) }
+                    self.evaluateLocations(candidates, latitude: latitude, longitude: longitude)
+                case .failure(let error):
+                    print("Error: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func evaluateLocations(_ locations: [(lat: String?, lon: String?, radius: String?)], latitude: String, longitude: String) {
+        let userLat = Double(latitude) ?? 0
+        let userLon = Double(longitude) ?? 0
+        
+        var nearest: (distance: Double, radius: Int)?
+        var isInside = false
+        
+        for item in locations {
+            guard let lat = Double(item.lat ?? ""), let lon = Double(item.lon ?? "") else { continue }
+            let radius = Int(item.radius ?? "") ?? 0
+            let distance = haversineDistance(lat1: lat, lon1: lon, lat2: userLat, lon2: userLon)
+            
+            if distance <= Double(radius) {
+                nearest = (distance, radius)
+                isInside = true
+                break
+            }
+            if nearest == nil || distance < nearest!.distance {
+                nearest = (distance, radius)
+            }
+        }
+        
+        guard let result = nearest else {
+            showNoRecord("No punch location available.")
+            return
+        }
+        currentDistanceForPunchCheck = result.distance
+        apiDistanceForPunchCheck = result.radius
+        if currentTab == .punch { updateAreaState(inside: isInside) }
+    }
+    
+    func showNoRecord(_ message: String?) {
+        noRecordLbl.text = message
+        noRecordLbl.isHidden = false
+    }
+    
+    func haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
+        let earthRadiusMeters = 6_371_000.0
+        let dLat = degreesToRadians(lat2 - lat1)
+        let dLon = degreesToRadians(lon2 - lon1)
+        let a = sin(dLat / 2) * sin(dLat / 2)
+        + cos(degreesToRadians(lat1)) * cos(degreesToRadians(lat2)) * sin(dLon / 2) * sin(dLon / 2)
+        return earthRadiusMeters * 2 * atan2(sqrt(a), sqrt(1 - a))
+    }
+    
+    func degreesToRadians(_ degrees: Double) -> Double {
+        degrees * .pi / 180
+    }
+    
+    func convertCoordinatesToAddress(location: CLLocation) {
+        CLGeocoder().reverseGeocodeLocation(location) { [weak self] placemarks, error in
+            if let error = error {
+                print("Error in reverse geocoding: \(error.localizedDescription)")
+                return
+            }
+            guard let placemark = placemarks?.first else { return }
+            DispatchQueue.main.async {
+                self?.referenceAddress = Self.formatAddress(from: placemark)
+            }
+        }
+    }
+    
+    static func formatAddress(from placemark: CLPlacemark) -> String {
+        [placemark.name,
+         placemark.thoroughfare,
+         placemark.locality,
+         placemark.administrativeArea,
+         placemark.postalCode,
+         placemark.country]
+            .compactMap { $0 }
+            .joined(separator: ", ")
+    }
+    
+    func punchAPI() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        var request = punchModal()
+        request.CollegeId = Int(collegeId)
+        request.UserId = Int(memberId)
+        request.staff_or_student = "staff"
+        request.punch_type = punch_type
+        request.deviceId = appDelegate.DeviceToken
+        request.device_model = device
+        
+        APiCallManager.shared.callApi(url: APIEndpoints.BiometricEntryusingApp, httpMethod: .post, queryParam: nil, requestBody: request) { [weak self] (result: Result<[punchResponce], Error>) in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                case .success(let response):
+                    // Same alert for success and failure – the server message tells the user which one it was
+                    let alert = UIAlertController(title: "", message: response.first?.message, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true)
+                case .failure(let error):
+                    print("Error: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func loadAttendanceHistory() {
+        let year = selectYearsLbl.text ?? ""
+        guard let monthIndex = monthNames.firstIndex(of: selectMonthlbl.text ?? "") else {
+            print("Invalid month name.")
+            return
+        }
+        let monthParam = String(format: "%@-%02d", year, monthIndex + 1)
+        
+        var request = GethistoryModalReq()
+        request.CollegeId = Int(collegeId)
+        request.userId = Int(memberId)
+        request.attendance_month = monthParam
+        request.attendance_dt = ""
+        
+        APiCallManager.shared.callApi(url: APIEndpoints.GetBiometricPrincipalAttendance, httpMethod: .post, queryParam: nil, requestBody: request) { [weak self] (result: Result<GethistoryModal, Error>) in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                case .success(let response):
+                    if response.status == 1 {
+                        self.historyData = response.data ?? []
+                        self.noRecordLbl.isHidden = true
+                        self.tv.isHidden = false
+                        self.tv.reloadData()
+                    } else {
+                        self.tv.isHidden = true
+                        self.ErrorLablelView.isHidden = true
+                        self.showNoRecord(response.message)
+                    }
+                case .failure(let error):
+                    print("Error: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+}
+
+// MARK: - CLLocationManagerDelegate
+
+extension LocationViewController: CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        handleAuthorization()
+    }
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if #unavailable(iOS 14.0) { handleAuthorization() }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        manager.stopUpdatingLocation()
+        
+        locationAlertFullView.isHidden = true
+        if currentTab == .punch { tv.isHidden = true }
+        
+        currentLat = String(location.coordinate.latitude)
+        currentLogi = String(location.coordinate.longitude)
+        
+        convertCoordinatesToAddress(location: location)
+        fetchAllowedLocations(latitude: currentLat, longitude: currentLogi)
+    }
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         if let clError = error as? CLError {
             switch clError.code {
-                
-                
-            case .denied:
-                print("Location access denied by user.")
-            case .locationUnknown:
-                print("Location could not be determined.")
-            default:
-                print("Location Manager error: \(clError.localizedDescription)")
+            case .denied: print("Location access denied by user.")
+            case .locationUnknown: print("Location could not be determined.")
+            default: print("Location Manager error: \(clError.localizedDescription)")
             }
         } else {
             print("Location Manager error: \(error.localizedDescription)")
         }
     }
+}
+
+
+extension LocationViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        locationAlertFullView.isHidden = true
-        
-        tv.isHidden = true
-        guard let currentLocation = locations.last else { return }
-        
-        
-        
-        
-        let currentLatitude = currentLocation.coordinate.latitude
-        let currentLongitude = currentLocation.coordinate.longitude
-        
-        print("Current Latitude: \(currentLatitude)")
-        print("Current Longitude: \(currentLongitude)")
-        
-        
-        let targetLocation = CLLocation(latitude:Double(currentLatitude) , longitude: Double(currentLongitude))
-        
-        
-        let distanceInMeters = currentLocation.distance(from: targetLocation)
-        allowedDistance = distanceInMeters
-        
-        print("distanceeeewdas",distanceInMeters)
-        
-        
-        let location = CLLocation(latitude: currentLatitude, longitude: currentLongitude)
-        convertCoordinatesToAddress(location: location)
-        
-        currentLat = String(currentLatitude)
-        currentLogi = String(currentLongitude)
-        
-        loactionFech(curentLogittude : currentLogi , currentLatitute : currentLat, distance: Int(distanceInMeters))
-        
-        locationManager.stopUpdatingLocation()
-    }
-    
-    
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: "Location Alert", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
-    
-    // Handle errors
-    
-    
-    
-    func convertCoordinatesToAddress(location: CLLocation) {
-        let geocoder = CLGeocoder()
-        
-        geocoder.reverseGeocodeLocation(location) { [self] (placemarks, error) in
-            if let error = error {
-                print("Error in reverse geocoding: \(error.localizedDescription)")
-            } else if let placemarks = placemarks, let placemark = placemarks.first {
-                let address = self.formatAddress(from: placemark)
-                print("Address: \(address)")
-                
-                RefrenceAddress = address
-            }
-        }
-    }
-    
-    func formatAddress(from placemark: CLPlacemark) -> String {
-        var address = ""
-        
-        if let name = placemark.name {
-            address += name
-        }
-        
-        if let thoroughfare = placemark.thoroughfare {
-            address += ", \(thoroughfare)"
-        }
-        
-        if let locality = placemark.locality {
-            address += ", \(locality)"
-        }
-        
-        if let administrativeArea = placemark.administrativeArea {
-            address += ", \(administrativeArea)"
-        }
-        
-        if let postalCode = placemark.postalCode {
-            address += ", \(postalCode)"
-        }
-        
-        if let country = placemark.country {
-            address += ", \(country)"
-        }
-        
-        return address
-    }
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkLocationAuthorization()
-    }
-    
-    
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-        case .authorizedWhenInUse, .authorizedAlways:
-            locationManager.startUpdatingLocation()
-        case .denied, .restricted:
-            print("Location access denied or restricted.")
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-        @unknown default:
-            break
-        }
-    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return getHistorydata.count
+        historyData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: tableIdentifier, for: indexPath) as? LocationTableViewCell else {
+            return UITableViewCell()
+        }
+        let data = historyData[indexPath.row]
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: TvIdentfier, for: indexPath) as!
-        LocationTableViewCell
         cell.selectionStyle = .none
-        
-        
-        
-        cell.fullView.layer.cornerRadius = 20
-        cell.calanderView.layer.cornerRadius = 10
-        cell.calanderView.layer.masksToBounds = true
-        cell.fullView.layer.masksToBounds = true
-        cell.fullView.layer.shadowColor = UIColor.black.cgColor
-        cell.fullView.layer.shadowOpacity = 0.5
-        cell.fullView.layer.shadowOffset = CGSize(width: 4, height: 4)
-        cell.fullView.layer.shadowRadius = 5
-        cell.fullView.layer.masksToBounds = false
-        cell.firstInLbl.isHidden = false
-        cell.workingHrsLbl.isHidden = false
-        cell.toDateLbl.isHidden = false
-        let data : GetHirstorydatadetails = getHistorydata[indexPath.row]
-        
         cell.namelbl.text = data.staff_name
-        
-        cell.workingHrsLbl.text = "Working Hours - \(data.working_hours ?? 0)"
-        
-       
-        
+        cell.attendanceTypeLbl.text = data.attendance_type
+        cell.StatusLbl.text = data.leave_type
         cell.StatusLbl.layer.cornerRadius = 5
         cell.StatusLbl.layer.masksToBounds = true
+        cell.StatusLbl.backgroundColor = (data.leave_type == "Absent") ? .red : UIColor(named: "presentGreen")
         
-        let eventDate = data.attendance_dt
-        let dateFormatter = DateFormatter()
-        // Input format
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        
-        if let date = dateFormatter.date(from: eventDate!) {
-            
-            dateFormatter.dateFormat = "EEEE"
-            let formattedDate1 = dateFormatter.string(from: date)
-            
-            dateFormatter.dateFormat = "MMM"
-            let formattedDate2 = dateFormatter.string(from: date)
-            
-            dateFormatter.dateFormat = "d"
-            let formattedDate = dateFormatter.string(from: date)
-            
-            cell.dayLbl.text =  formattedDate1
-            cell.datelbl.text = formattedDate
-            cell.mnthLbl.text =  formattedDate2
-            
-            print(formattedDate)
-        } else {
-            print("Invalid date format")
-        } // date converstion End
-        
-        
-        
-        
-        if data.leave_type == "Absent"{
-            
-            cell.StatusLbl.text = data.leave_type
-            cell.StatusLbl.backgroundColor = .red
-            
-            cell.attendanceTypeLbl.text = data.attendance_type
-            
-            
-        }else{
-            cell.namelbl.text = data.staff_name
-            
-            cell.StatusLbl.backgroundColor  = UIColor(named: "presentGreen")
-            cell.attendanceTypeLbl.text = data.attendance_type
-            cell.StatusLbl.text = data.leave_type
-            
-            
+        if let dateString = data.attendance_dt,
+           let date = Self.inputDateFormatter.date(from: dateString) {
+            cell.dayLbl.text = Self.dayNameFormatter.string(from: date)
+            cell.datelbl.text = Self.dayNumberFormatter.string(from: date)
+            cell.mnthLbl.text = Self.monthShortFormatter.string(from: date)
         }
         
-        cell.firstInLbl.text =  "First in - \(data.in_time ?? "0")"
-        if data.in_time ?? "" == "" {
-            cell.firstInLbl.isHidden = true
-        }
-        
-        cell.namelbl.text = data.staff_name
-        if data.working_hours ?? 0 == 0 {
-            cell.workingHrsLbl.isHidden = true
-        }
+        cell.workingHrsLbl.text = "Working Hours - \(data.working_hours ?? 0)"
+        cell.workingHrsLbl.isHidden = (data.working_hours ?? 0) == 0
+        cell.firstInLbl.text = "First in - \(data.in_time ?? "0")"
+        cell.firstInLbl.isHidden = (data.in_time ?? "").isEmpty
         cell.toDateLbl.text = "Last out - \(data.out_time ?? "0")"
-        if data.out_time ?? "" == "" {
-            cell.toDateLbl.isHidden = true
-        }
-        cell.attendanceTypeLbl.text = data.attendance_type
-        cell.namelbl.text =
-            data.staff_name
-    
-        
-        let click = imageClick(target: self, action: #selector(click))
-        click.date = data.attendance_dt
-        click.staffId = data.staff_id
-       
-        cell.fullView.addGestureRecognizer(click)
+        cell.toDateLbl.isHidden = (data.out_time ?? "").isEmpty
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
-    
-    @IBAction func click(ges : imageClick){
-       
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let data = historyData[indexPath.row]
+        
         let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
-        vc.date = ges.date
+        vc.date = data.attendance_dt ?? ""
         vc.collegeId = Int(collegeId)
-        vc.staffId = ges.staffId
+        vc.staffId = data.staff_id
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true)
-        
     }
-    
-    func punchAPi(){
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let myOtherVariable = appDelegate.DeviceToken
-        
-        var punchModal = punchModal()
-        
-        punchModal.CollegeId = Int(collegeId)
-        punchModal.UserId = Int(memberId)
-        punchModal.staff_or_student = "staff"
-        punchModal.punch_type = punch_type
-        punchModal.deviceId = myOtherVariable
-        punchModal.device_model = device
-        APiCallManager.shared.callApi(url: APIEndpoints.BiometricEntryusingApp, httpMethod: .post, queryParam: nil, requestBody: punchModal) { [weak self] (result :Result<[punchResponce],Error>) in
-            guard let self = self else{return}
-            switch result {
-            case .success(let PunchRes):
-                if PunchRes.first?.status == 1 {
-                    
-                    let refreshAlert = UIAlertController(title: "", message: PunchRes.first?.message, preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                        
-
-                        
-                    }))
-                    present(refreshAlert, animated: true, completion: nil)
-                }else{
-                    
-                    
-                    let refreshAlert = UIAlertController(title: "", message: PunchRes.first?.message, preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                        
-
-                        
-                    }))
-                    present(refreshAlert, animated: true, completion: nil)
-                    
-                }
-            case .failure(let error):
-                print("Error: \(error.localizedDescription)")
-            }
-        }
-        
-    }
-    
-    
-    func AttendaceHistory(){
-        
-        let year = selectYearsLbl.text!
-        var YearLbl = ""
-        let monthName = selectMonthlbl.text!
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM" // Full month name format
-        
-        if let date = dateFormatter.date(from: monthName) {
-            let calendar = Calendar.current
-            let monthNumber = calendar.component(.month, from: date)
-            print("The month number for \(monthName) is \(monthNumber).")
-            
-            if  monthNumber == 1 || monthNumber == 2 || monthNumber == 3 || monthNumber == 4 || monthNumber == 5 || monthNumber == 6 || monthNumber == 7 || monthNumber == 8 || monthNumber == 9 {
-                YearLbl = year +  "-" + "0" + String(monthNumber)
-            }else{
-                YearLbl = year +  "-"  + String(monthNumber)
-                
-            }
-            
-        } else {
-            print("Invalid month name.")
-        }
-        
-      
-        var history = GethistoryModalReq()
-
-        history.CollegeId = Int(collegeId)
-       
-        history.userId = Int(memberId)
-        history.attendance_month = YearLbl
-        history.attendance_dt = ""
-
-        APiCallManager.shared.callApi(url: APIEndpoints.GetBiometricPrincipalAttendance, httpMethod: .post, queryParam: nil, requestBody: history) { [weak self] (result:Result<GethistoryModal,Error>) in
-            guard let self = self else{return}
-            switch result{
-            case .success(let getattendace):
-                if getattendace.status == 1  {
-                    tv.isHidden  = false
-                    
-                    getHistorydata = getattendace.data ?? []
-                    noRecordLbl.isHidden = true
-                    tv.dataSource = self
-                    tv.delegate = self
-                    tv.reloadData()
-                    
-                }else{
-                    tv.isHidden  = true
-                    noRecordLbl.isHidden = false
-                    ErrorLablelView.isHidden = true
-                    noRecordLbl.text = getattendace.message
-                    
-                }
-            case .failure(let error):
-                print("Error: \(error.localizedDescription)")
-            }
-        }
-        
-    }
-    
-    
-    func haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
-        let earthRadiusKm: Double = 6371.0
-        
-        let dLat = degreesToRadians(lat2 - lat1)
-        let dLon = degreesToRadians(lon2 - lon1)
-        
-        let a = sin(dLat / 2) * sin(dLat / 2) + cos(degreesToRadians(lat1)) * cos(degreesToRadians(lat2)) * sin(dLon / 2) * sin(dLon / 2)
-        let c = 2 * atan2(sqrt(a), sqrt(1 - a))
-        
-        return earthRadiusKm * c * 1000 // Convert to meters
-    }
-    
-    // Helper function to convert degrees to radians
-    func degreesToRadians(_ degrees: Double) -> Double {
-        return degrees * .pi / 180
-    }
-    
-    func loactionFech(curentLogittude : String , currentLatitute : String, distance : Int  ){
-        
-        
-      
-        var fechLocation = fechRequ()
-
-        fechLocation.CollegeId = Int(collegeId)
-       
-        fechLocation.userId = Int(memberId)
-
-
-        APiCallManager.shared.callApi(url: APIEndpoints.GetStaffLocationDetails, httpMethod: .post, queryParam: nil, requestBody: fechLocation) { [weak self] (result:Result<fechModal,Error>) in
-            guard let self = self else{return}
-            switch result{
-            case .success(let getattendace):
-                
-                if getattendace.status == 1  {
-                    noRecordLbl.isHidden = true
-                    for i in getattendace.data ?? []{
-                        var distanceInt = Int(i.distance ?? "")
-                        let distance = haversineDistance(lat1: Double(i.latitude ?? "") ?? 0, lon1: Double(i.longitude ?? "") ?? 0, lat2: Double(currentLatitute) ?? 0, lon2: Double(curentLogittude) ?? 0)
-                        currentDistanceForPuchCheck = distance
-                        apiDistanceForPuchCheck = distanceInt
-                        // Check if the distance is smaller
-                        if distance <= Double(distanceInt ?? 0) {
-                            print("The existing are within 5 meters of the current location.")
-                            punchFullView.isHidden = false
-                            errorLabel.isHidden = true
-                            ErrorLablelView.isHidden = true
-                            
-                            break
-                            
-                        } else {
-                            print("The existing are more than 5 meters away.")
-                            
-                            errorLabel.isHidden = false
-                            punchFullView.isHidden = true
-                            ErrorLablelView.isHidden = false
-                        }
-                        
-                    }
-                    
-                }else{
-                    
-                    ErrorLablelView.isHidden = true
-                    noRecordLbl.text = getattendace.message
-                    noRecordLbl.isHidden = false
-                    
-                }
-            case .failure(let error):
-                print("Error: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    
-  
 }
 
-class imageClick : UITapGestureRecognizer{
+// MARK: - Device model name
+
+extension UIDevice {
+    var modelName: String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        let code = withUnsafePointer(to: &systemInfo.machine) {
+            String(cString: UnsafeRawPointer($0).assumingMemoryBound(to: CChar.self))
+        }
+        return Self.modelMap[code] ?? code
+    }
     
-   var  date  : String!
-    var staffId : Int!
+    static let modelMap: [String: String] = [
+        // iPhone 16 / 15 / 14
+        "iPhone17,1": "iPhone 16 Pro", "iPhone17,2": "iPhone 16 Pro Max",
+        "iPhone16,3": "iPhone 16", "iPhone16,4": "iPhone 16 Plus",
+        "iPhone16,1": "iPhone 15 Pro", "iPhone16,2": "iPhone 15 Pro Max",
+        "iPhone15,4": "iPhone 15", "iPhone15,5": "iPhone 15 Plus",
+        "iPhone15,2": "iPhone 14 Pro", "iPhone15,3": "iPhone 14 Pro Max",
+        "iPhone14,7": "iPhone 14", "iPhone14,8": "iPhone 14 Plus",
+        // iPhone 13 / 12 / 11
+        "iPhone14,2": "iPhone 13 Pro", "iPhone14,3": "iPhone 13 Pro Max",
+        "iPhone14,4": "iPhone 13 mini", "iPhone14,5": "iPhone 13",
+        "iPhone13,1": "iPhone 12 mini", "iPhone13,2": "iPhone 12",
+        "iPhone13,3": "iPhone 12 Pro", "iPhone13,4": "iPhone 12 Pro Max",
+        "iPhone12,1": "iPhone 11", "iPhone12,3": "iPhone 11 Pro", "iPhone12,5": "iPhone 11 Pro Max",
+        // iPhone X series and older
+        "iPhone11,8": "iPhone XR", "iPhone11,2": "iPhone XS",
+        "iPhone11,4": "iPhone XS Max", "iPhone11,6": "iPhone XS Max (China)",
+        "iPhone10,3": "iPhone X", "iPhone10,6": "iPhone X (GSM)",
+        "iPhone10,1": "iPhone 8", "iPhone10,4": "iPhone 8 (GSM)",
+        "iPhone10,2": "iPhone 8 Plus", "iPhone10,5": "iPhone 8 Plus (GSM)",
+        "iPhone9,1": "iPhone 7", "iPhone9,3": "iPhone 7 (GSM)",
+        "iPhone9,2": "iPhone 7 Plus", "iPhone9,4": "iPhone 7 Plus (GSM)",
+        "iPhone8,1": "iPhone 6s", "iPhone8,2": "iPhone 6s Plus", "iPhone8,4": "iPhone SE (1st generation)",
+        "iPhone7,2": "iPhone 6", "iPhone7,1": "iPhone 6 Plus",
+        "iPhone6,1": "iPhone 5s (GSM)", "iPhone6,2": "iPhone 5s (Global)",
+        "iPhone5,1": "iPhone 5 (GSM)", "iPhone5,2": "iPhone 5 (Global)",
+        "iPhone5,3": "iPhone 5c (GSM)", "iPhone5,4": "iPhone 5c (Global)",
+        "iPhone4,1": "iPhone 4s", "iPhone3,1": "iPhone 4 (GSM)", "iPhone3,2": "iPhone 4 (GSM Rev A)",
+        "iPhone3,3": "iPhone 4 (CDMA)", "iPhone2,1": "iPhone 3GS", "iPhone1,2": "iPhone 3G", "iPhone1,1": "iPhone",
+        // iPad
+        "iPad13,16": "iPad Air (5th generation, WiFi)", "iPad13,17": "iPad Air (5th generation, WiFi+Cellular)",
+        "iPad13,4": "iPad Pro 11 inch (3rd generation, WiFi)",
+        "iPad13,5": "iPad Pro 11 inch (3rd generation, WiFi+Cellular)",
+        "iPad13,6": "iPad Pro 11 inch (3rd generation, WiFi+Cellular)",
+        "iPad13,7": "iPad Pro 11 inch (3rd generation, WiFi+Cellular)",
+        "iPad13,8": "iPad Pro 12.9 inch (5th generation, WiFi)",
+        "iPad13,9": "iPad Pro 12.9 inch (5th generation, WiFi+Cellular)",
+        "iPad13,10": "iPad Pro 12.9 inch (5th generation, WiFi+Cellular)",
+        "iPad13,11": "iPad Pro 12.9 inch (5th generation, WiFi+Cellular)",
+        "iPad12,1": "iPad (9th generation, WiFi)", "iPad12,2": "iPad (9th generation, WiFi+Cellular)",
+        "iPad11,6": "iPad (8th generation, WiFi)", "iPad11,7": "iPad (8th generation, WiFi+Cellular)",
+        "iPad11,3": "iPad Air (4th generation, WiFi)", "iPad11,4": "iPad Air (4th generation, WiFi+Cellular)",
+        "iPad8,1": "iPad Pro 11 inch (1st generation, WiFi)", "iPad8,2": "iPad Pro 11 inch (1st generation, WiFi)",
+        "iPad8,3": "iPad Pro 11 inch (1st generation, WiFi+Cellular)",
+        "iPad8,4": "iPad Pro 11 inch (1st generation, WiFi+Cellular)",
+        "iPad8,9": "iPad Pro 11 inch (2nd generation, WiFi)",
+        "iPad8,10": "iPad Pro 11 inch (2nd generation, WiFi+Cellular)",
+        "iPad7,5": "iPad (6th generation, WiFi)", "iPad7,6": "iPad (6th generation, WiFi+Cellular)"
+    ]
 }
-
-
+class imageClick: UITapGestureRecognizer {
+    var date: String!
+    var staffId: Int!
+}

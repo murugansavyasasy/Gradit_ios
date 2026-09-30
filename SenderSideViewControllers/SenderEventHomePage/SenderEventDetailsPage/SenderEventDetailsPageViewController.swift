@@ -88,6 +88,7 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
     var str : [String] = []
     var is_read_enabled = ""
     var is_write_enabled = ""
+    var is_edit_enabled :Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
@@ -109,43 +110,20 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
         
         bigImg.sd_setImage(with: URL(string: backGroundImg), placeholderImage: UIImage(named: "ic_white"))
         smallImg.sd_setImage(with: URL(string: SmallImgAdd), placeholderImage: UIImage(named: "ic_white"))
-        
-        
         sideMenuView.isHidden = true
         venueLabel.text = selectedeventDetails?.venue ?? ""
         dateLabel.text = selectedeventDetails?.event_date ?? ""
         timeLabel.text = selectedeventDetails?.event_time ?? ""
         bodyLabel.text = selectedeventDetails?.body ?? ""
         topicLabel.text = selectedeventDetails?.topic ?? ""
-        if selectedeventDetails?.createdby == meberID{
+        if selectedeventDetails?.createdby == meberID && is_edit_enabled{
             editView.isHidden = false
         }else{
             editView.isHidden = true
         }
-        
-        if priority == "p1"{
-            tapBarView.backgroundColor = UIColor(named: "Principal" )
-            topLabels.text = "Principal"
-            
-        }else if priority == "p4"{
-            
-            topLabels.text = "Student"
-            
-        }else if priority == "p2" {
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            topLabels.text = "Hod"
-            
-        }else if priority == "p5"{
-            topLabels.text = "Father"
-        }else if priority == "p3"{
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            topLabels.text = "Teacher"
-            
-        }else if priority == "p7"{
-            tapBarView.backgroundColor = UIColor(named: "univercityColorCod" )
-            topLabels.text = "University Head"
-            
-        }
+        view.backgroundColor = .priorityColor
+        tapBarView.backgroundColor = .priorityColor
+        topLabels.text = .priorityRole
         
         
         let rowNib = UINib(nibName: identifers, bundle: nil)
@@ -195,69 +173,24 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
     }
     
     @IBAction func EditVc(){
-        
-        if priority == "p2" || priority == "p3" {
-            let vc = PlusNewTextViewControllerViewController(nibName: nil, bundle: nil)
-            vc.smallImageUrl =  SmallImgAdd
-            vc.backGroundImageUrl = backGroundImg
-            vc.addWebUrl = addWebUrl
-            vc.menuId = "13"
-            vc.editTitle = selectedeventDetails?.topic
-            vc.editVenu = selectedeventDetails?.venue
-            vc.editDiscreption = selectedeventDetails?.body
-            vc.strName = strName
-            vc.str = str
-            vc.dateStr = selectedeventDetails?.event_date
-            vc.TimeStr = selectedeventDetails?.event_time
-            vc.eventHeaderId = selectedeventDetails?.eventid
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true , completion: nil)
-            
-        }else if priority == "p7" {
-            
-            let vc = PlusNewTextViewControllerViewController(nibName: nil, bundle: nil)
-            vc.smallImageUrl =  SmallImgAdd
-            vc.backGroundImageUrl = backGroundImg
-            vc.addWebUrl = addWebUrl
-            vc.menuId = "13"
-            vc.editTitle = selectedeventDetails?.topic
-            vc.editVenu = selectedeventDetails?.venue
-            vc.editDiscreption = selectedeventDetails?.body
-            vc.strName = strName
-            vc.str = str
-            vc.dateStr = selectedeventDetails?.event_date
-            vc.TimeStr = selectedeventDetails?.event_time
-            vc.eventHeaderId = selectedeventDetails?.eventid
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true , completion: nil)
-            
-        }else{
-            let vc = PlusNewTextViewControllerViewController(nibName: nil, bundle: nil)
-            vc.smallImageUrl = SmallImgAdd
-            vc.backGroundImageUrl = backGroundImg
-            vc.addWebUrl = addWebUrl
-            vc.editTitle = selectedeventDetails?.topic
-            vc.editVenu = selectedeventDetails?.venue
-            vc.editDiscreption = selectedeventDetails?.body
-            vc.dateStr = selectedeventDetails?.event_date
-            vc.TimeStr = selectedeventDetails?.event_time
-            vc.menuId = "13"
-            vc.strName = strName
-            vc.str = str
-            vc.eventHeaderId = selectedeventDetails?.eventid
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            vc.view.backgroundColor = UIColor(named: "Principal" )
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true , completion: nil)
-            
-        }
+        let vc = PlusNewTextViewControllerViewController(nibName: nil,bundle: nil)
+        vc.smallImageUrl = SmallImgAdd
+        vc.backGroundImageUrl = backGroundImg
+        vc.addWebUrl = addWebUrl
+        vc.menuId = "13"
+        vc.editTitle = selectedeventDetails?.topic
+        vc.editVenu = selectedeventDetails?.venue
+        vc.editDiscreption = selectedeventDetails?.body
+        vc.strName = strName
+        vc.str = str
+        vc.dateStr = selectedeventDetails?.event_date
+        vc.TimeStr = selectedeventDetails?.event_time
+        vc.eventHeaderId = selectedeventDetails?.eventid
+
+        vc.is_read_enabled = is_read_enabled
+        vc.is_write_enabled = is_write_enabled
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     @IBAction func addImageEventView( ){
         let AddimagId = "1"
@@ -282,8 +215,6 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
     @IBAction func backbtn(_ sender: Any) {
         dismiss(animated: true)
     }
-    
-    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectedeventDetails?.newfilepath?.count ?? 0
@@ -433,8 +364,7 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
                 }
                 self?.dismiss(animated: true, completion: nil)
             }
-            present(camera_controller, animated: true, completion: nil)
-              }else{
+            present(camera_controller, animated: true, completion: nil)}else{
                 noCamera()
             }
     }
@@ -444,7 +374,7 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
         let alertVC = UIAlertController(title: "No Camera", message: "Sorry, this device has no camera",preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style:.default, handler: nil)
         alertVC.addAction(okAction)
-          present(alertVC,animated: true,completion: nil)
+        present(alertVC,animated: true,completion: nil)
         
     }
     
@@ -532,15 +462,12 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
         ) { [self] result in
             switch result {
             case .success(let awsResponse):
-                
-                print("Presigned URL fetched: \(awsResponse.data?.presignedUrl ?? "")")
                 let presignedURL = awsResponse.data?.presignedUrl
                 let Uploadimages = awsResponse.data?.fileUrl
                 
                 AWSUploadManager.shared.uploadImageToAWS(image: image, presignedURL: presignedURL!) { result in
                     switch result {
                     case .success(let uploadedURL):
-                        print("Image uploaded successfully: \(uploadedURL)")
                         self.AwsfilePath.append(Uploadimages ?? "")
                         self.TotalAws = self.AwsfilePath.joined(separator: ",")
                         
@@ -553,7 +480,6 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
                         
                         DispatchQueue.main.async {
                             self.getImageURL(images: self.originalImagesArray)
-                            print("getImageURL",self.getImageURL)
                         }
                     } else {
                         self.convertedImagesUrlArray = self.imageUrlArray
@@ -614,40 +540,27 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
                             
                             guard let self = self else { return }
                             
+                            let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
+                            vc.is_read_enabled = is_read_enabled
+                            vc.is_write_enabled = is_write_enabled
+                            vc.str = str
+                            vc.strName = strName
+
                             if priority == "p2" || priority == "p3" {
-                                let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = is_read_enabled
-                                vc.is_write_enabled = is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                                 vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
                                 vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.str  = str
-                                vc.strName = strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
+
                             } else if priority == "p7" {
-                                
-                                let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                                vc.view.backgroundColor = UIColor(named: "univercityColorCod")
                                 vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
                                 vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.str  = str
-                                vc.strName = strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
-                            }else{
-                                
-                                let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = is_read_enabled
-                                vc.is_write_enabled = is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Principal")
+
+                            } else {
                                 vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
                                 vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.str  = str
-                                vc.strName = strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true , completion: nil)
                             }
+
+                            vc.modalPresentationStyle = .fullScreen
+                            present(vc, animated: true)
                         }))
                         
                         self.present(refreshAlert, animated: true, completion: nil)
@@ -671,8 +584,7 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
             
         }))
         
-        refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .default, handler: { [self] (action: UIAlertAction!) in }))
-        
+        refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .default, handler: {(action: UIAlertAction!) in }))
         self.present(refreshAlert, animated: true, completion: nil)
     }
     

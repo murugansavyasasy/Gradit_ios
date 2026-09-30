@@ -9,36 +9,49 @@ import UIKit
 
 class AttendanceMenuTableViewCell: UITableViewCell {
 
-    
+    @IBOutlet weak var editStack: UIStackView!
+    @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var deleteView: UIViewX!
-    
     @IBOutlet weak var EditView: UIViewX!
     @IBOutlet weak var reasonLabel: UILabel!
     @IBOutlet weak var numbOfDays: UILabel!
-    
     @IBOutlet weak var dateLabel: UILabel!
-    
-    
     @IBOutlet weak var leaveAppiedType: UILabel!
-    
     @IBOutlet weak var approvedLabel: UILabel!
-    
-    
     @IBOutlet weak var fromDate: UILabel!
-    
-    
     @IBOutlet weak var toDateLabel: UILabel!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        editStack.isHidden = true
+        statusView.layer.cornerRadius = statusView.frame.height/2
     }
     
+    func confic(leaveApi:leaveDataDetails,isSeletcted:Bool?){
+        if leaveApi.leavestatus == "WaitingForApproval" && isSeletcted ?? false{
+            approvedLabel.textColor = UIColor(named: "ViewLineColor")
+            editStack.isHidden = !(isSeletcted ?? true)
+        }
+        dateLabel.text = leaveApi.createdon
+        fromDate.text = leaveApi.leavefromdate
+        leaveAppiedType.text = leaveApi.leaveapplicationtype
+        numbOfDays.text = leaveApi.numofdays
+        toDateLabel.text = leaveApi.leavetodate
+        approvedLabel.text = leaveApi.leavestatus
+        reasonLabel.text = leaveApi.leavereason
+        
+        let color:UIColor!
+        switch leaveApi.leavestatus{
+        case "Approved":
+            color = UIColor(named: "ConfirmColor")
+        case "WaitingForApproval":
+            color = UIColor(named: "ViewLineColor")
+        default:
+            color = UIColor(named: "CountColor")
+        }
+        approvedLabel.textColor = color
+        statusView.backgroundColor = color.withAlphaComponent(0.12)
+        statusView.layer.borderColor = color.cgColor
+        statusView.layer.borderWidth = 1
+    }
 }
