@@ -1444,11 +1444,7 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
                 let currentController = self.getCurrentViewController()
                 vc.str = str
                 vc.strName = strName
-                vc.is_read_enabled = is_read_enabled
-                vc.is_write_enabled = is_write_enabled
-                
                 vc.modalPresentationStyle = .fullScreen
-                
                 currentController?.present(vc, animated: false, completion: nil)
                 
                 
