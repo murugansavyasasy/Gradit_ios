@@ -698,103 +698,24 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     else if notify.module_type == "Videos"{
         
         
-        
-        if priority == "p4"{
-            
-            
+        if priority == "p4" || priority == "p5"{
             
             let vc = VideoViewController(nibName: nil, bundle: nil)
-            
-            vc.view.backgroundColor = UIColor(named: "StudentParent")
-            vc.str = str
-            vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
-            
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: false, completion: nil)
-         
-        }
-        
-        
-        
-        
-        else if priority == "p1"{
-            
-            
-            let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
-            
-            vc.view.backgroundColor = UIColor(named: "Principal" )
-            vc.str = str
-            vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
-            
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: false, completion: nil)
-          
-        }
-        
-        
-        
-        
-        else if priority == "p2" || priority == "p3" {
-            
-            
-            let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
-            
             vc.str = str
             vc.strName = strName
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false, completion: nil)
          
-        }
-        
-        
-        
-        else if priority == "p7" {
-            
-            
+        }else {
             let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
             
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
-            
-            vc.str = str
-            vc.strName = strName
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: false, completion: nil)
-        
-        }
-        
-        
-        else if priority == "p5"{
-            
-            
-            let vc = VideoViewController(nibName: nil, bundle: nil)
-            
-            vc.view.backgroundColor = UIColor(named: "FatherColor")
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
-            
-            
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false, completion: nil)
-        
         }
-        
-        
         
     }
     

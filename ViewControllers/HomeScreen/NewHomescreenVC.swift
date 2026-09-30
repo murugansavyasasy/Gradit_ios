@@ -8,17 +8,11 @@
 import UIKit
 
 @available(iOS 16.0, *)
-class NewHomescreenVC: UIViewController {
+class NewHomescreenVC: UIViewController, CustomTabBarDelegate {
     
     @IBOutlet weak var tv: UITableView!
-    @IBOutlet weak var topNameview: UIView!
-    @IBOutlet weak var tapBarView: UIViewX!
+    @IBOutlet weak var customTabBar: CustomTabBar!
     @IBOutlet weak var loadingCustom: UIActivityIndicatorView!
-    @IBOutlet weak var UserNameLabels: UILabel!
-    @IBOutlet weak var PersonIconView: UIView!
-    @IBOutlet weak var RoleNameLabel: UILabel!
-    @IBOutlet weak var LogoImageBaseview: UIViewX!
-    @IBOutlet weak var clgLogoImg: UIImageView!
     @IBOutlet weak var sideMenuView: UIView!
     @IBOutlet weak var profileBtn: UIButton!
     @IBOutlet weak var clearCacheBtn: UIButton!
@@ -85,91 +79,28 @@ class NewHomescreenVC: UIViewController {
         
         loadingCustom.startAnimating()
         sideMenuView.isHidden = true
-        let topnameview = UITapGestureRecognizer(target: self, action: #selector(ChangeRoleBtnAct))
-        topNameview.addGestureRecognizer(topnameview)
-        let showSideMenuTap = UITapGestureRecognizer(target: self, action: #selector(showSideMenu))
-        PersonIconView.addGestureRecognizer(showSideMenuTap)
-        
+        customTabBar.delegate = self
     }
     
     private func loadUserDefaults() {
         
         let defaults = UserDefaults.standard
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        memberName = defaults.string(forKey: DefaultsKeys.memberName)
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
         memberId = defaults.string(forKey: DefaultsKeys.memberid)
         priority = defaults.string(forKey: DefaultsKeys.priority)
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
-        UserNameLabels.text = memberName
-        
-        if colgImg != "" {
-            clgLogoImg.sd_setImage(
-                with: URL(string: colgImg),
-                placeholderImage: UIImage(named: "EmptyCollegeIcon")
-            )
-            
-        } else {
-            clgLogoImg.image = UIImage(named: "EmptyCollegeIcon")
-        }
     }
     
     private func configureUIForPriority() {
         
-        switch priority {
-            
-        case "p1":
-            tapBarView.backgroundColor = UIColor(named: "Principal")
-            view.backgroundColor = UIColor(named: "Principal")
-            RoleNameLabel.text = "Principal"
-            profileBtn.isHidden = true
-            clearCacheBtn.isHidden = true
-            
-        case "p2":
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            RoleNameLabel.text = "Hod"
-            profileBtn.isHidden = true
-            clearCacheBtn.isHidden = true
-            
-        case "p3":
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            RoleNameLabel.text = "Teacher"
-            profileBtn.isHidden = true
-            clearCacheBtn.isHidden = true
-            
-        case "p4":
-            tapBarView.backgroundColor = UIColor(named: "StudentParent")
-            view.backgroundColor = UIColor(named: "studentViewColors")
-            RoleNameLabel.text = "Student"
+        view.backgroundColor = .priorityColor
+        profileBtn.isHidden = true
+        clearCacheBtn.isHidden = true
+        
+        if priority == "p4" || priority == "p5"{
             profileBtn.isHidden = false
-            clearCacheBtn.isHidden = true
-            
-        case "p5":
-            tapBarView.backgroundColor = UIColor(named: "FatherColor")
-            view.backgroundColor = UIColor(named: "FatherColor")
-            RoleNameLabel.text = "Father"
-            profileBtn.isHidden = false
-            clearCacheBtn.isHidden = true
-            
-        case "p6":
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            RoleNameLabel.text = "NonTeachingStaff"
-            profileBtn.isHidden = true
-            clearCacheBtn.isHidden = true
-            
-        case "p7":
-            tapBarView.backgroundColor = UIColor(named: "univercityColorCod")
-            view.backgroundColor = UIColor(named: "univercityColorCod")
-            RoleNameLabel.text = "UnivesityHead"
-            profileBtn.isHidden = true
-            clearCacheBtn.isHidden = true
-            
-        default:
-            break
         }
+       
     }
     
     private func registerTableViewCells() {
@@ -401,15 +332,11 @@ class NewHomescreenVC: UIViewController {
         )
     }
     
-    @IBAction func NotificationBtnAct(_ sender: UIButton) {
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        vc.str = str
-        vc.strName = strName
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true,completion: nil)
+    func didTapSearch() {
+        
     }
     
-    @IBAction func showSideMenu(_ sender: Any) {
+    func didTapSideMenu() {
         sideMenuView.isHidden.toggle()
     }
     
@@ -1360,68 +1287,5 @@ class BackButton: UIButton {
     
     @objc private func backTapped() {
         parentViewController?.dismiss(animated: true)
-    }
-}
-
-extension UIColor {
-    
-    static var priorityColor: UIColor {
-        let priority = UserDefaults.standard
-            .string(forKey: DefaultsKeys.priority)?
-            .lowercased()
-        
-        switch priority {
-        case "p1":
-            return UIColor(named: "Principal") ?? .systemBackground
-            
-        case "p2", "p3", "p6":
-            return UIColor(named: "Teaching Staff") ?? .systemBackground
-            
-        case "p4":
-            return UIColor(named: "studentViewColors") ?? .systemBackground
-            
-        case "p5":
-            return UIColor(named: "FatherColor") ?? .systemBackground
-            
-        case "p7":
-            return UIColor(named: "univercityColorCod") ?? .systemBackground
-            
-        default:
-            return UIColor(named: "Principal") ?? .systemBackground
-        }
-    }
-}
-
-extension String {
-    
-    static var priorityRole: String {
-        let priority = UserDefaults.standard
-            .string(forKey: DefaultsKeys.priority)?
-            .lowercased()
-        
-        switch priority {
-        case "p1":
-            return "Principal"
-            
-        case "p2":
-            return "Hod"
-            
-        case "p3":
-            return "Teacher"
-            
-        case "p4":
-            return "Student"
-            
-        case "p5":
-            return "Father"
-            
-        case "p6":
-            return "Non Teaching"
-            
-        case "p7":
-            return "University Head"
-        default:
-            return ""
-        }
     }
 }

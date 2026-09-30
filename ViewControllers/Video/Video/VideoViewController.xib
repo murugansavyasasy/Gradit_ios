@@ -20,7 +20,6 @@
                 <outlet property="clgLogoImg" destination="2Ef-lJ-Wx2" id="5iF-Ju-hi2"/>
                 <outlet property="faqView" destination="q94-kq-exM" id="o7E-Zz-zCD"/>
                 <outlet property="helpView" destination="DUT-uM-qXl" id="upi-uJ-DcJ"/>
-                <outlet property="loadingCustom" destination="uWp-qp-wxC" id="Kbk-oj-ohr"/>
                 <outlet property="logoutView" destination="onn-BD-ub9" id="vC9-hU-KVF"/>
                 <outlet property="noDataTextLabel" destination="5mb-zh-3fX" id="OK7-5G-CIb"/>
                 <outlet property="noDataView" destination="gdd-fX-1Ph" id="FhP-Bh-s5n"/>
@@ -356,9 +355,6 @@
                                         <constraint firstItem="5mb-zh-3fX" firstAttribute="leading" secondItem="gdd-fX-1Ph" secondAttribute="leading" id="lY7-bg-WG7"/>
                                     </constraints>
                                 </view>
-                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="uWp-qp-wxC">
-                                    <rect key="frame" x="197" y="461" width="20" height="20"/>
-                                </activityIndicatorView>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
@@ -366,11 +362,9 @@
                                 <constraint firstItem="yjh-it-2A7" firstAttribute="top" secondItem="09n-fy-Kuz" secondAttribute="bottom" constant="15" id="BHp-0e-0Fi"/>
                                 <constraint firstAttribute="trailing" secondItem="yjh-it-2A7" secondAttribute="trailing" id="Cyn-k6-jKo"/>
                                 <constraint firstItem="09n-fy-Kuz" firstAttribute="leading" secondItem="kuH-Bu-rih" secondAttribute="leading" id="H29-xq-R1q"/>
-                                <constraint firstItem="uWp-qp-wxC" firstAttribute="top" secondItem="gdd-fX-1Ph" secondAttribute="bottom" constant="80" id="O9b-XF-ZMt"/>
                                 <constraint firstItem="09n-fy-Kuz" firstAttribute="top" secondItem="owO-75-xJB" secondAttribute="bottom" id="OsI-T4-sRN"/>
                                 <constraint firstAttribute="bottom" secondItem="yjh-it-2A7" secondAttribute="bottom" id="QQ6-fP-9Wy"/>
                                 <constraint firstItem="09n-fy-Kuz" firstAttribute="leading" secondItem="kuH-Bu-rih" secondAttribute="leading" id="SGm-XI-FWL"/>
-                                <constraint firstItem="uWp-qp-wxC" firstAttribute="leading" secondItem="kuH-Bu-rih" secondAttribute="leading" constant="197" id="Shy-jL-bqb"/>
                                 <constraint firstAttribute="trailing" secondItem="09n-fy-Kuz" secondAttribute="trailing" id="alh-PV-SXt"/>
                                 <constraint firstItem="owO-75-xJB" firstAttribute="top" secondItem="6sF-3W-SCF" secondAttribute="bottom" id="cYW-pg-On9"/>
                                 <constraint firstItem="owO-75-xJB" firstAttribute="leading" secondItem="kuH-Bu-rih" secondAttribute="leading" id="egq-Mp-6gf"/>

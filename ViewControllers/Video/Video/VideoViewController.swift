@@ -16,7 +16,6 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     @IBOutlet weak var topNameview: UIView!
     @IBOutlet weak var tapBarView: UIViewX!
-    @IBOutlet weak var loadingCustom: UIActivityIndicatorView!
     @IBOutlet weak var redirectLoginView: UIViewX!
     @IBOutlet weak var logoutView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
@@ -29,86 +28,45 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var helpView: UIView!
     @IBOutlet weak var sideMenuView: UIView!
     @IBOutlet weak var viewTap: UIView!
-    
     @IBOutlet weak var refreshView: UIView!
     @IBOutlet weak var SearchView: UIView!
-    
     @IBOutlet weak var faqView: UIView!
-    
-    
     @IBOutlet weak var searchFullView: UIViewX!
-    
-    
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var noDataTextLabel: UILabel!
-    
     @IBOutlet weak var adView: UIView!
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var videoTableView: UITableView!
-    
     @IBOutlet weak var noDataView: UIView!
     @IBOutlet weak var bigImg: UIImageView!
-   
     @IBOutlet weak var searchbar: UISearchBar!
- 
-    
     @IBOutlet weak var privacyPolicyView: UIView!
-   
+    
     var identifers = "VideoTableViewCell"
-    
-    
-    
     var addapiRef : [AddDataDeatils] = []
-    var videoRef     : [videoDataDetails] = []
-    let menuIdentifier = "MenuCollectionViewCell"
-    var MenuRefName :[menuApiDataDetails] = []
-    
-    var loginDatas : [datalogin]!
-    var logindataprinci :[datalogin]!
-    var selectedIndex = -1
-    var isclosaps = false
     var selectedCell : IndexPath?
     var collegeid : String!
     var userid : String!
     var priority : String!
-    var loginType : String!
     var memberName : String!
     var colgImg : String!
     var MobileNumber : String!
-    
-    
     var PreviousAddId : Int = 0
-    
     var password : String!
-    
     var str : [String] = []
-    
     var strName : [String] = []
-    
-    var cloneList  : [videoDataDetails] = []
-    
-    var is_read_enabled = ""
-    var is_write_enabled = ""
-    
-    
+    var VideoDataList  : [videoDataDetails] = []
+    var FiltervideoDataList    : [videoDataDetails] = []
     
     override func viewDidAppear(_ animated: Bool) {
         
-        print("kljjjjjjjjj")
-        
-        
         PreviousAddId = PreviousAddId+1
-        
         addApi()
-        
-        print("jkkkkkkk",PreviousAddId)
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
-        loadingCustom.startAnimating()
         noDataView.isHidden =  true
         noDataTextLabel.isHidden = true
         sideMenuView.isHidden = true
@@ -121,7 +79,6 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         collegeid = defaults.string(forKey: DefaultsKeys.collegeid)
         userid = defaults.string(forKey: DefaultsKeys.memberid)
         priority = defaults.string(forKey:DefaultsKeys.priority)
-        loginType = defaults.string(forKey: DefaultsKeys.loginAsType)
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
         clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
@@ -129,70 +86,14 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         topMessageLabel.text = memberName
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         
-        
-        
         videoModals()
         
-        
-        
-        
-        if priority == "p1"{
-            
-            topLabels.text = "Principal"
-            
-        }
-        
-        else if priority == "p4"{
-            tapBarView.backgroundColor = UIColor(named: "StudentParent" )
-            topLabels.text = "Student"
-            
-        }
-        
-        else if priority == "p2" || priority == "p3"{
-            
-            
-            topLabels.text = "Teacher"
-            
-        }
-        
-        else if priority == "p5"{
-            
-            tapBarView.backgroundColor = UIColor(named: "FatherColor" )
-            topLabels.text = "Father"
-            
-            
-            
-        }
-        
-        if priority == "p1" {
-            
-            
-            print("PrincipalVieewwColor")
-            view.backgroundColor = UIColor(named: "Principal" )
-            
-        }else if priority == "p4" {
-            
-            print("StudentVieewwColor")
-            view.backgroundColor = UIColor(named: "studentViewColors")
-            
-        } else if priority == "p3" ||  priority == "p2" {
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-        }
-        else if priority == "p5"{
-            
-            
-            
-            view.backgroundColor = UIColor(named: "FatherColor")
-            
-        }
+        view.backgroundColor = .priorityColor
+        tapBarView.backgroundColor = .priorityColor
+        topLabels.text = .priorityRole
         
         let rownib = UINib(nibName: identifers, bundle: nil)
         videoTableView.register(rownib, forCellReuseIdentifier: identifers)
-        
-        
         
         // tap Bar UiTapGuster.
         
@@ -202,19 +103,14 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let profileGesture = UITapGestureRecognizer(target: self, action: #selector(profileRedirect))
         profileView.addGestureRecognizer(profileGesture)
         
-        
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
-        
         
         let topnam = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         topNameview.addGestureRecognizer(topnam)
         
-        
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
-        
-        
         
         let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
         viewTap.addGestureRecognizer(menuGestureHide)
@@ -225,10 +121,8 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
         refreshView.addGestureRecognizer(refreshGesture)
         
-        
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
-        
         
         let helpGesture = UITapGestureRecognizer(target: self, action: #selector(helpRedirect))
         helpView.addGestureRecognizer(helpGesture)
@@ -239,117 +133,62 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
         termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
         
-        
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
-        
-        
         
         let Serach = UITapGestureRecognizer(target: self, action: #selector(Searchfield))
         SearchView.addGestureRecognizer(Serach)
         
-        
-        
+        videoTableView.dataSource = self
+        videoTableView.delegate = self
     }
     
     
     @IBAction func Searchfield() {
         
-        
         searchbar.isHidden  = false
         searchFullView .isHidden = false
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         
-        let filtered_list : [videoDataDetails] = cloneList
-        
-        
-        if !searchText.isEmpty{
-            let search = searchText.lowercased()
-
-            videoRef = filtered_list.filter {
-
-                ($0.createdon?.lowercased().contains(search) ?? false) ||
-                ($0.title?.lowercased().contains(search) ?? false) ||
-                ($0.description?.lowercased().contains(search) ?? false) ||
-                ($0.createdby?.lowercased().contains(search) ?? false)
-
-            }
+        if searchText.isEmpty {
+            FiltervideoDataList = VideoDataList
+        }else {
             
-        }else{
-            videoRef = filtered_list
+            let search = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+            
+            FiltervideoDataList = VideoDataList.filter({
+                $0.title?.lowercased().contains(search) ?? false ||
+                $0.description?.lowercased().contains(search) ?? false ||
+                $0.createdby?.lowercased().contains(search) ?? false ||
+                $0.createdon?.lowercased().contains(search) ?? false
+            })
         }
         
-        
-        
-        
-        
-        
-        
-        if videoRef.count > 0{
-            
-            
-            
-            print ("searchListPendigCount",videoRef.count)
-            
-            noDataView.isHidden = true
-            noDataTextLabel.isHidden = true
-            
-            
-        }else{
-            
-            
-            
+        if FiltervideoDataList.isEmpty{
             
             noDataView.isHidden = false
             noDataTextLabel.isHidden = false
             noDataTextLabel.text = "No Records Found"
             
+        }else{
+            noDataView.isHidden = true
+            noDataTextLabel.isHidden = true
         }
         
-        
         videoTableView.reloadData()
-        
-        
     }
-    
-    
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
-        
-        
         searchbar.endEditing(true)
-        
-        
-        
     }
     
-    
-    
-    
-    
-    
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        
-        
         searchbar.resignFirstResponder()
-        
-        
-        
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -358,11 +197,7 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         searchFullView .isHidden = true
         noDataView.isHidden = true
         noDataTextLabel.isHidden = true
-        
         searchbar.resignFirstResponder()
-        
-        
-        
     }
     
     
@@ -399,7 +234,7 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     addapiRef = success.data ?? []
                     
                     for i in addapiRef{
-                      
+                        
                         bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
                         
                         smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
@@ -418,10 +253,8 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return videoRef.count
+        return FiltervideoDataList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -429,91 +262,56 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let cell = tableView.dequeueReusableCell(withIdentifier: identifers, for: indexPath) as!
         VideoTableViewCell
         
-        
         cell.selectionStyle = .none
+        
+        let video : videoDataDetails = FiltervideoDataList[indexPath.row]
+        
+        cell.sentByLableCell.text = video.createdby
+        cell.descriptionLableCell.text = video.description
+        cell.titleLableCell.text  = video.title?.capitalized
+        cell.redDotImageView.isHidden = video.isappviewed == "1" ? true : false
+        
+        let value = video.createdon ?? ""
+
+        let inputFormatter = DateFormatter()
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        inputFormatter.dateFormat = "dd MMM yyyy hh:mm a"
+
+        if let date = inputFormatter.date(from: value) {
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            dateFormatter.dateFormat = "dd MMM yyyy"
+
+            let timeFormatter = DateFormatter()
+            timeFormatter.locale = Locale(identifier: "en_US_POSIX")
+            timeFormatter.dateFormat = "hh:mm a"
+
+            cell.dateLabel.text = dateFormatter.string(from: date)
+            cell.timeLabel.text = timeFormatter.string(from: date)
+        }
+        
         if let selectedCells = selectedCell, selectedCells == indexPath {
-            
             cell.descriptionLableCell.isHidden = false
-            
-            cell.downArrowImage.image = UIImage(named: "Ups")
+            cell.downArrowImage.image = UIImage(systemName: "chevron.up")
             cell.sendByview.isHidden = false
             
         } else {
-            
             cell.descriptionLableCell.isHidden = true
-            cell.downArrowImage.image = UIImage(named: "downs")
+            cell.downArrowImage.image = UIImage(systemName: "chevron.down")
             cell.sendByview.isHidden = true
             
         }
         
-        let Shopres : videoDataDetails = videoRef[indexPath.row]
-        
-        let  a = Shopres.createdby?.count ?? 0*2
-        
-        let b = a+170
-        
-        cell.sendbyWidth.constant = CGFloat(b)
-        cell.sentByLableCell.text = Shopres.createdby
-        cell.descriptionLableCell.text = Shopres.description
-        cell.titleLableCell.text  = Shopres.title?.capitalized
-        cell.dateTimeLabelCell.text = Shopres.createdon
-        
-        if Shopres.isappviewed == "1"{
-            
-            
-            cell.redDotImageView.isHidden = true
-            
-            
-        }
-        
-        else {
-            
-            cell.redDotImageView.isHidden = false
-        }
-        
-        
-        
-        let nexts : videoDataDetails = videoRef[indexPath.row]
-        
-        
         let  play = videoGesture(target: self, action: #selector(connected))
-        play.title = nexts.title
-        play.desc = nexts.description
-        play.videoUrl = nexts.iframe
-        play.videoid = nexts.vimeoid
+        play.title = video.title
+        play.desc = video.description
+        play.videoUrl = video.iframe
+        play.videoid = video.vimeoid
         cell.playView.addGestureRecognizer(play)
         
-        
         return cell
-        
     }
-    
-    @IBAction func connected( gesture : videoGesture) {
-        
-        let vc = VideoPlayerViewController(nibName: nil, bundle: nil)
-        vc.titlesss = gesture.title
-        vc.descriptionszs = gesture.desc
-        vc.url = gesture.videoUrl
-        vc.videoid = gesture.videoid
-        
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
-        
-        
-    }
-    
-    
-    @IBAction func adLoad(gesture : addGesture) {
-        
-        let vc =  AddVideoViewController(nibName: nil, bundle: nil)
-        
-        vc.AddImageUrl = gesture.urls
-        
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true,completion: nil)
-        
-    }
-    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         videoTableView.deselectRow(at: indexPath, animated: true)
@@ -528,23 +326,35 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             
             selectedCell = indexPath
             
-            if videoRef[indexPath.row].isappviewed == "0"{
-                
-                apread(gesture : videoRef[indexPath.row].detailid ?? "")
-                
-                videoRef[indexPath.row].isappviewed = "1"
+            if FiltervideoDataList[indexPath.row].isappviewed == "0"{
+                apread(gesture : FiltervideoDataList[indexPath.row].detailid ?? "")
+                FiltervideoDataList[indexPath.row].isappviewed = "1"
                 cell.redDotImageView.isHidden = true
-                
             }
-             
         }
         
-        videoTableView.beginUpdates()
-        videoTableView.endUpdates()
         videoTableView.reloadData()
     }
     
+    @IBAction func connected( gesture : videoGesture) {
+        
+        let vc = VideoPlayerViewController(nibName: nil, bundle: nil)
+        vc.titlesss = gesture.title
+        vc.descriptionszs = gesture.desc
+        vc.url = gesture.videoUrl
+        vc.videoid = gesture.videoid
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
     
+    @IBAction func adLoad(gesture : addGesture) {
+        
+        let vc =  AddVideoViewController(nibName: nil, bundle: nil)
+        vc.AddImageUrl = gesture.urls
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true,completion: nil)
+        
+    }
     
     func apread(gesture : String){
         var readApiStatus  = AppReadStatusModal()
@@ -559,9 +369,7 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             guard let self = self else {return}
             
             switch result {
-            case .success(let success):
-                videoTableView.delegate = self
-                videoTableView.dataSource = self
+            case .success(_):
                 videoTableView.reloadData()
             case .failure(let failure):
                 print(failure.localizedDescription)
@@ -570,7 +378,7 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-       
+        
         return UITableView.automaticDimension
     }
     
@@ -578,50 +386,25 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         var vedi = videoModal()
         
-        vedi.userid       =   userid
-        vedi.collegeid     =  collegeid
-        vedi.priority      =   priority
+        vedi.userid = userid
+        vedi.collegeid = collegeid
+        vedi.priority = priority
         
         APiCallManager.shared.callApi(url: APIEndpoints.GetVideoList, httpMethod: .post, queryParam: nil, requestBody: vedi) { [weak self] (result:Result<videoResponce,Error>) in
+            
             guard let self = self else{return}
+            
             switch result{
+                
             case .success(let VideoResp):
-                if VideoResp.Status == 1 {
-                    videoRef = VideoResp.data ?? []
-                    
-                    cloneList = VideoResp.data ?? []
-                    noDataView.isHidden = true
-                    noDataTextLabel.isHidden = true
-                    
-                    videoTableView.dataSource = self
-                    videoTableView.delegate = self
-                    
-                    videoTableView.reloadData()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                        
-                        self.loadingCustom.stopAnimating()
-                        
-                        
-                        self.loadingCustom.isHidden  = true
-                        
-                    }
-                    
-                }else{
-                    
-                    noDataView.isHidden = false
-                    noDataTextLabel.isHidden = false
-                    noDataTextLabel.text = VideoResp.Message
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                        
-                        self.loadingCustom.stopAnimating()
-                        
-                        
-                        self.loadingCustom.isHidden  = true
-                        
-                    }
-                }
-
+                
+                VideoDataList = VideoResp.data ?? []
+                FiltervideoDataList = VideoResp.data ?? []
+                noDataTextLabel.text = VideoResp.Message
+                noDataView.isHidden = !FiltervideoDataList.isEmpty
+                noDataTextLabel.isHidden = !FiltervideoDataList.isEmpty
+                videoTableView.reloadData()
+                
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
             }
@@ -634,7 +417,6 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
-    
     
     @IBAction func termsAndCondition() {
         
@@ -650,7 +432,6 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
             
-            
             UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
             
             let vc = LoginVc(nibName: nil, bundle: nil)
@@ -660,22 +441,17 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             
         }))
         
-        
         refreshAlert.addAction(UIAlertAction(title: "NO", style: .cancel, handler: { (action: UIAlertAction!) in
-            print("Handle Cancel Logic here")
         }))
         
         present(refreshAlert, animated: true, completion: nil)
         
     }
     
-    
     @IBAction func faqRedirect() {
-        print("faqRedirect")
         let vc = FaqViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
-        
     }
     
     @IBAction func privacyPolicyRedirect() {
@@ -688,61 +464,33 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     @IBAction func refreshVc() {
         
-        print("refreshVcWork")
         KRProgressHUD.show()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             
             KRProgressHUD.dismiss()
-            
         }
         
         videoModals()
-        
     }
     
-    
     @IBAction func notificationVc() {
-        print("NotificationViewController")
         let vc = NotificationViewController(nibName: nil, bundle: nil)
         vc.str = str
         vc.strName = strName
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: false, completion: nil)
-        
     }
-    
-    
-    
     
     @IBAction func menu() {
-        
-        if sideMenuView.isHidden == true{
-            
-            sideMenuView.isHidden = false
-            //
-            
-            print("menuVisble")
-        }
-        
-        else{
-            
-            sideMenuView.isHidden = true
-            
-        }
-        
-        
+        sideMenuView.isHidden.toggle()
     }
-    
     
     @IBAction func changePassowrdVC(){
         
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
-        
-        
-        
     }
     
     
@@ -752,7 +500,7 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         vc.str = str
         vc.strName = strName
         vc.modalPresentationStyle = .fullScreen
-       present(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
         
     }
     
@@ -764,8 +512,6 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
 }
 
-
-
 class videoGesture : UITapGestureRecognizer {
     
     var title : String!
@@ -773,11 +519,8 @@ class videoGesture : UITapGestureRecognizer {
     var videoUrl : String!
     var videoid : String!
     var url : String!
-    
 }
 
 class addGesture : UITapGestureRecognizer{
-    
-    
     var urls : String!
 }

@@ -1525,29 +1525,14 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     let refreshAlert = UIAlertController(title: "", message: particular.Message, preferredStyle: .alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-                        
-                        if self.priority == "p2" || self.priority == "p3" {
-                            
+                       
                             let vc = SenderVideoHomePageViewController()
                             vc.is_read_enabled = self.is_read_enabled
                             vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                             vc.str = self.str
                             vc.strName = self.strName
                             vc.modalPresentationStyle = .fullScreen
                             self.present(vc, animated: true)
-                            
-                        } else {
-                            
-                            let vc = SenderVideoHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Principal")
-                            vc.str = self.str
-                            vc.strName = self.strName
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                        }
                     })
                     
                     self.present(refreshAlert, animated: true)
@@ -1562,28 +1547,13 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                         
-                        if self.priority == "p2" || self.priority == "p3" {
-                            
                             let vc = SenderVideoHomePageViewController()
                             vc.is_read_enabled = self.is_read_enabled
                             vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                             vc.str = self.str
                             vc.strName = self.strName
                             vc.modalPresentationStyle = .fullScreen
                             self.present(vc, animated: true)
-                            
-                        } else {
-                            
-                            let vc = SenderVideoHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Principal")
-                            vc.str = self.str
-                            vc.strName = self.strName
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                        }
                     })
                     
                     self.present(refreshAlert, animated: true)
@@ -1846,7 +1816,6 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
             targetTop.constant = -40
             entierDepartView.backgroundColor = UIColor(named: "selectColor")
             
-            print("eniertviewwww",entierDepartView.backgroundColor)
             courseView.backgroundColor = UIColor.white
             courseLabel.textColor = UIColor(named: "clickView")
             YearView.backgroundColor = UIColor.white
@@ -2022,7 +1991,6 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 
             }
             
-            print("revisserfrfrffc",nameString)
             gestur.MyDepartcheckBoxss.isChecked = false
             
             nameString = resiverId.joined(separator: "~")
@@ -2310,35 +2278,15 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         let refreshAlert = UIAlertController(title: "", message:particular.Message, preferredStyle: UIAlertController.Style.alert)
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
-                            
-                            if self?.priority == "p2" ||  self?.priority == "p3" {
-                                
+                                                            
                                 let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
                                 vc.is_read_enabled =  self?.is_read_enabled ?? ""
                                 vc.is_write_enabled =  self?.is_write_enabled ?? ""
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
                                 vc.str =  self?.str ?? []
                                 vc.strName =  self?.strName ?? []
                                 vc.modalPresentationStyle = .fullScreen
                                 self?.present(vc, animated: true , completion: nil)
                                 
-                            }else{
-                                
-                                let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                                
-                                vc.is_read_enabled =  self?.is_read_enabled ?? ""
-                                vc.is_write_enabled =  self?.is_write_enabled ?? ""
-                                vc.view.backgroundColor = UIColor(named: "Principal" )
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.str =  self?.str ?? []
-                                vc.strName =  self?.strName ?? []
-                                vc.modalPresentationStyle = .fullScreen
-                                self?.present(vc, animated: true , completion: nil)
-                                
-                            }
                         }))
                         
                         present(refreshAlert, animated: true, completion: nil)
@@ -2351,36 +2299,15 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         let refreshAlert = UIAlertController(title: "", message:particular.Message, preferredStyle: UIAlertController.Style.alert)
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
-                            
-                            if  self?.priority == "p2" ||  self?.priority == "p3" {
-                                
+                                                            
                                 let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
                                 vc.is_read_enabled =  self?.is_read_enabled ?? ""
                                 vc.is_write_enabled =  self?.is_write_enabled ?? ""
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
                                 vc.str =  self?.str ?? []
                                 vc.strName =  self?.strName ?? []
                                 vc.modalPresentationStyle = .fullScreen
                                 self?.present(vc, animated: true , completion: nil)
                                 
-                            }else{
-                                
-                                let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled =  self?.is_read_enabled ?? ""
-                                vc.is_write_enabled =  self?.is_write_enabled ?? ""
-                                
-                                vc.view.backgroundColor = UIColor(named: "Principal" )
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.str =  self?.str ?? []
-                                vc.strName =  self?.strName ?? []
-                                vc.modalPresentationStyle = .fullScreen
-                                self?.present(vc, animated: true , completion: nil)
-                                
-                            }
-                            
                         }))
                         
                         present(refreshAlert, animated: true, completion: nil)
@@ -2985,32 +2912,16 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                         
-                        if self.priority == "p2" || self.priority == "p3" {
-                            
                             let vc = SenderVideoHomePageViewController()
                             vc.is_read_enabled = self.is_read_enabled
                             vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                             vc.str = self.str
                             vc.strName = self.strName
                             vc.modalPresentationStyle = .fullScreen
                             self.present(vc, animated: true)
-                            
-                        } else {
-                            
-                            let vc = SenderVideoHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Principal")
-                            vc.str = self.str
-                            vc.strName = self.strName
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                        }
                     }))
                     
                     self.present(refreshAlert, animated: true)
-                    
                     self.tv.dataSource = self
                     self.tv.delegate = self
                     
@@ -3023,29 +2934,15 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     )
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-                        
-                        if self.priority == "p2" || self.priority == "p3" {
-                            
+                       
                             let vc = SenderVideoHomePageViewController()
                             vc.is_read_enabled = self.is_read_enabled
                             vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                             vc.str = self.str
                             vc.strName = self.strName
                             vc.modalPresentationStyle = .fullScreen
                             self.present(vc, animated: true)
                             
-                        } else {
-                            
-                            let vc = SenderVideoHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Principal")
-                            vc.str = self.str
-                            vc.strName = self.strName
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                        }
                     }))
                     
                     self.present(refreshAlert, animated: true)
@@ -3098,23 +2995,14 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         let refreshAlert = UIAlertController(title: "", message:success.Message, preferredStyle: UIAlertController.Style.alert)
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
-                            
-                            if self?.priority == "p2" || self?.priority == "p3" {
                                 
                                 let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
                                 vc.is_read_enabled = self?.is_read_enabled ?? ""
                                 vc.is_write_enabled = self?.is_write_enabled ?? ""
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                                
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                
                                 vc.str = self?.str ?? []
                                 vc.strName = self?.strName ?? []
                                 vc.modalPresentationStyle = .fullScreen
                                 self?.present(vc, animated: true , completion: nil)
-                                
-                            }
                             
                         }))
                         

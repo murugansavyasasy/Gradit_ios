@@ -1346,12 +1346,8 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
             
             let vc = VideoViewController(nibName: nil, bundle: nil)
             let currentController = self.getCurrentViewController()
-            vc.view.backgroundColor = UIColor(named: "StudentParent")
             vc.str = str
             vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: false, completion: nil)
             
@@ -1634,16 +1630,11 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
         
         else if str[indexPath.row] == "video"{
             
-            
             let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
             vc.is_read_enabled = read
             vc.is_write_enabled = write
-            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-            
             vc.str = str
             vc.strName = strName
-            
-            
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false, completion: nil)
             
@@ -1856,7 +1847,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
             
             let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
             let currentController = self.getCurrentViewController()
-            vc.view.backgroundColor = UIColor(named: "Principal" )
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
@@ -2065,8 +2055,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
             
             
             let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
@@ -2281,12 +2269,8 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
             
             let vc = VideoViewController(nibName: nil, bundle: nil)
             let currentController = self.getCurrentViewController()
-            vc.view.backgroundColor = UIColor(named: "FatherColor")
             vc.str = str
             vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: false, completion: nil)
             
@@ -2573,9 +2557,7 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
         else if str[indexPath.row] == "video"{
             
             
-            let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            
+            let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)            
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled

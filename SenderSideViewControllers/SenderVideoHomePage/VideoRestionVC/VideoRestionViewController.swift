@@ -11,25 +11,16 @@ import ObjectMapper
 @available(iOS 16.0, *)
 class VideoRestionViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
-    
-    
-    var idenfier = "VideoRestionTableViewCell"
-    
-    var restionData : [RestionDataDetails] = []
     @IBOutlet weak var tv: UITableView!
-    
     @IBOutlet weak var confirmView: UIViewX!
     
+    var idenfier = "VideoRestionTableViewCell"
+    var restionData : [RestionDataDetails] = []
     var addImageBackGroundurl : String!
-    
     var smallImageUrl  : String!
-    
     var imageWebUrl : String!
-    
     var videoMenuId : String!
-    
     var str : [String] = []
-    
     var strName : [String] = []
     var is_read_enabled = ""
     var is_write_enabled = ""
@@ -37,28 +28,19 @@ class VideoRestionViewController: UIViewController,UITableViewDelegate,UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         overrideUserInterfaceStyle = .light
         
         restion()
         
-        
         let rowNib = UINib(nibName: idenfier, bundle: nil)
         tv.register(rowNib, forCellReuseIdentifier: idenfier)
         
-        
         let confirm  = UITapGestureRecognizer(target: self, action: #selector(conifrmVC))
         confirmView.addGestureRecognizer(confirm)
-        
     }
     
-    
-    
-    
     @IBAction func conifrmVC(){
-        
-        
-        
+      
         let vc = VideoPlusPageViewController(nibName: nil, bundle: nil)
         
         vc.addImageBackGroundurl = addImageBackGroundurl
@@ -73,8 +55,6 @@ class VideoRestionViewController: UIViewController,UITableViewDelegate,UITableVi
         vc.modalPresentationStyle = .fullScreen
         
         present(vc, animated: true,completion: nil)
-        
-        
     }
     
     func restion() {
@@ -106,56 +86,32 @@ class VideoRestionViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        
-        
+         
         return restionData.count
         
     }
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: idenfier , for: indexPath) as!
-        
-        
-        VideoRestionTableViewCell
-        
-        
-        //  
+        let cell = tableView.dequeueReusableCell(withIdentifier: idenfier , for: indexPath) as! VideoRestionTableViewCell
+          
         let rest  : RestionDataDetails = restionData[indexPath.row]
         
         let str = String(indexPath.row+1)
         
         cell.numberLabel.text = str
-        
-        
-        
         cell.contentLabel.text = rest.content
-        
-        
-        
-        
         
         return cell
     }
-    
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return UITableView.automaticDimension
     }
     
-    
-    
-    
     @IBAction func backbtn(_ sender: Any) {
-        
-        
         dismiss(animated: true)
     }
     

@@ -15,7 +15,6 @@ import AVFoundation
 protocol VideoPlusPageViewControllerDelegate: AnyObject {
     func vimeouploaderSucces(_ response: [String: Any], methodName: String)
     func failedResponse(_ error: Error)
-    
     func vimeouploaderError(_ error: Error, methodName: String)
 }
 
@@ -23,7 +22,9 @@ protocol VideoPlusPageViewControllerDelegate: AnyObject {
 @available(iOS 16.0, *)
 class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UITextViewDelegate,UITextFieldDelegate, URLSessionDelegate,URLSessionTaskDelegate,URLSessionDataDelegate{
     
-    
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var textviewBaseview: UIView!
+    @IBOutlet weak var textFieldBaseView: UIView!
     @IBOutlet weak var lblCount: UILabel!
     @IBOutlet weak var tapBarView: UIViewX!
     @IBOutlet weak var uploadfileNameLabel: UILabel!
@@ -36,7 +37,6 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
     @IBOutlet weak var bigImg: UIImageView!
     @IBOutlet weak var logoutView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
-    @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var topLabels: UILabel!
     @IBOutlet weak var topMessageLabel: UILabel!
     @IBOutlet weak var clgLogoImg: UIImageView!
@@ -59,24 +59,15 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
     var imageWebUrl : String!
     var smallImageUrl  : String!
     var videoMenuId : String!
-    var videourl : URL!
     var videe : String!
     var mobileNumber : String!
-    var GetVimeoData : VimeoData!
-    var getVimeoEmbed : VimeoEmbed!
     var VimeoURL : URL!
     var videoSize : Int!
-    var iframes : String!
-    var videoUploadUrl : String!
     var is_read_enabled = ""
     var is_write_enabled = ""
     var uploadTask: URLSessionUploadTask!
     var password : String!
-    var loginDatas : [datalogin]!
-    var logindataprinci :[datalogin]!
     let maxLenghth = 500
-    var VimeoIframe : String!
-    var VimeoVideoUrl : String!
     var VideoSucessId = 0
     var authToken = ""
     var str : [String] = []
@@ -98,59 +89,26 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
         let defaults = UserDefaults.standard
         
         priority = defaults.string(forKey: DefaultsKeys.priority)
-        
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
-        
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        
         clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        
         password = defaults.string(forKey: DefaultsKeys.Password)
-        
         topMessageLabel.text = memberName
-        
         mobileNumber  = defaults.string(forKey: DefaultsKeys.mobileNumber)
-        
         authToken = defaults.string(forKey: DefaultsKeys.vimeoAccessToken)!
         print("authTokenauthToken11111",authToken)
-        if priority == "p1"{
-            
-            view.backgroundColor = UIColor(named: "Principal" )
-            
-            tapBarView.backgroundColor = UIColor(named: "Principal" )
-            
-            topLabels.text = "Principal"
-        }else if priority == "p7" {
-            
-            tapBarView.backgroundColor = UIColor(named: "univercityColorCod" )
-            view.backgroundColor = UIColor(named: "univercityColorCod" )
-            topLabels.text = "university Head"
-            
-        }else if priority == "p4"{
-            
-            topLabels.text = "Student"
-            
-        }else if priority == "p2"{
-            
-            view.backgroundColor = UIColor(named: "Teaching Staff" )
-            
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            
-            topLabels.text = "Hod"
-            
-        }else if priority == "p3"{
-            
-            view.backgroundColor = UIColor(named: "Teaching Staff" )
-            
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            
-            topLabels.text = "Teacher"
-            
-        }else if priority == "p5"{
-            
-            topLabels.text = "Father"
-            
-        }
+        
+        view.backgroundColor = .priorityColor
+        tapBarView.backgroundColor = .priorityColor
+        topLabels.text = .priorityRole
+        
+        textFieldBaseView.layer.cornerRadius = 10
+        textFieldBaseView.layer.borderWidth = 1
+        textFieldBaseView.layer.borderColor = UIColor.lightGray.cgColor
+        
+        textviewBaseview.layer.cornerRadius = 10
+        textviewBaseview.layer.borderWidth = 1
+        textviewBaseview.layer.borderColor = UIColor.lightGray.cgColor
         
         videoDiscreption.text = "Enter the Description"
         videoDiscreption.textColor = UIColor.lightGray
@@ -162,71 +120,59 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
         let uploadviewss = UITapGestureRecognizer(target: self, action: #selector(uploadViewVc))
         
         uploadView.addGestureRecognizer(uploadviewss)
-        
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(adLoad))
         
         bigImg.isUserInteractionEnabled = true
-        
         bigImg.addGestureRecognizer(singleTap)
         
-        
         let cancel = UITapGestureRecognizer(target: self, action: #selector(CancelVc))
-        
         cancelView.addGestureRecognizer(cancel)
         
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        
         changeRolesView.addGestureRecognizer(changeRolesGesture)
         
         let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        
         redirectLoginView.addGestureRecognizer(loginRediectGesture)
         
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
-        
         logoutView.addGestureRecognizer(logoutGesture)
         
         let confirmGesture = UITapGestureRecognizer(target: self, action: #selector(ConfirmVc))
-        
         confirmView.addGestureRecognizer(confirmGesture)
         
         let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        
         viewTap.addGestureRecognizer(menuGestureHide)
         
         let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        
         refreshView.addGestureRecognizer(refreshGesture)
         
         
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
-        
         faqView.addGestureRecognizer(faqGesture)
         
         
         let helpGesture = UITapGestureRecognizer(target: self, action: #selector(helpRedirect))
-        
         helpView.addGestureRecognizer(helpGesture)
         
         let privacyPolicyGesture = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyRedirect))
-        
         privacyPolicyView.addGestureRecognizer(privacyPolicyGesture)
         
-        
-        
         let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
-        
         termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
-        
-        
         
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         
         changePasswordView.addGestureRecognizer(chagePassword)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         videoTitelText.resignFirstResponder()
@@ -241,16 +187,13 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
             videoDiscreption.text = ""
             
             videoDiscreption.textColor = UIColor.black
-             
         }
         
     }
     
-    
-    
     func textViewDidChange(_ textView: UITextView) {
         
-        lblCount.text = "\(maxLenghth - videoDiscreption.text.count)/"+"\(500)"
+        lblCount.text = "\(videoDiscreption.text.count)/"+"\(maxLenghth)"
         
     }
     
@@ -267,7 +210,7 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
             
         }
         
-        return numberOfChars < 500
+        return numberOfChars <= 500
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -282,6 +225,20 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
         
     }
     
+    @objc func keyboardWillShow(notification: NSNotification) {
+        
+        guard let frame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return  }
+        
+        let keyboardHeight = frame.height + 20
+        
+        scrollView.contentInset.bottom = keyboardHeight
+        scrollView.verticalScrollIndicatorInsets.bottom = keyboardHeight
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        scrollView.contentInset.bottom = 0
+        scrollView.verticalScrollIndicatorInsets.bottom = 0
+    }
     
     @IBAction func CancelVc() {
         
@@ -292,19 +249,9 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
     
     @IBAction func ConfirmVc() {
         
-        if   videoTitelText.text == ""{
+        if videoTitelText.text == ""{
             
-            let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Title", preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                
-            }))
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-        } else if videoDiscreption.text == "Enter the Description"{
-            
-            let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Description", preferredStyle: UIAlertController.Style.alert)
+            let refreshAlert = UIAlertController(title: "", message: "Please Enter the Title", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 
@@ -312,9 +259,9 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
             
             present(refreshAlert, animated: true, completion: nil)
             
-        } else if videoDiscreption.text == ""{
+        } else if videoDiscreption.text == "Enter the Description" || videoDiscreption.text == "" {
             
-            let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Description", preferredStyle: UIAlertController.Style.alert)
+            let refreshAlert = UIAlertController(title: "", message: "Please Enter the Description", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 
@@ -327,8 +274,6 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
             let refreshAlert = UIAlertController(title: "", message: "Kindly Upload Video", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                
-
                 
             }))
             
@@ -437,8 +382,6 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
             
         } else if videoDiscreption.text == "Enter the Description"{
             
-            
-            
             let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Description", preferredStyle: UIAlertController.Style.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
@@ -453,7 +396,6 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                 
             }))
-            
             
             present(refreshAlert, animated: true, completion: nil)
             
@@ -512,70 +454,6 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
         }
         return nil
     }
-    
-//    func createVimeoUploadURL(authToken: String, videoFilePath: URL, completion: @escaping (UploadResult) -> Void) {
-//        
-//        KRProgressHUD.show(withMessage: "Uploading Video....")
-//        
-//        //        KRProgressHUD.show()
-//        guard let fileSize = getFileSize(at: videoFilePath) else {
-//            completion(.failure(NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to get file size"])))
-//            return
-//        }
-//        
-//        let headers: HTTPHeaders = [
-//            "Authorization": "Bearer \(authToken)",
-//            "Content-Type": "application/json",
-//            "Accept": "application/vnd.vimeo.*+json;version=3.4"
-//        ]
-//        
-//        let parameters: [String: Any] = [
-//            "upload": [
-//                "approach": "tus",
-//                "size": "\(fileSize)" // Use the actual video file size
-//            ],
-//            "name": videoTitelText.text, // Replace with actual video name
-//            "description": videoDiscreption.text // Replace with actual video description
-//            
-//        ]
-//        
-//        AF.request("https://api.vimeo.com/me/videos", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
-//            .responseJSON { [self] response in
-//                switch response.result {
-//                case .success(let value):
-//                    print("Vimeo API Response: \(value)") // Print the full JSON
-//                    if let json = value as? [String: Any],
-//                       let upload = json["upload"] as? [String: Any],
-//                       let uploadLink = upload["upload_link"] as? String {
-//                        
-//                        let embedUrl = json["player_embed_url"] as! String
-//                        
-//                        let embed = json["embed"]! as AnyObject
-//                        IFrameLink = embed["html"]  as! String
-//                        videe = embedUrl as! String
-//                        print("videe = embedUrl",videe)
-//                        print("IFrameLink",IFrameLink)
-//                        
-//                        VideoSucessId = 1
-//                        VideoStatus()
-//                        completion(.success(uploadLink))
-//                        
-//                        
-//                    } else {
-//                        completion(.failure(NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Upload link not found"])))
-//                        
-//                        VideoSucessId = 0
-//                        VideoStatus()
-//                    }
-//                case .failure(let error):
-//                    completion(.failure(error))
-//                    
-//                    
-//                    VideoSucessId = 0
-//                    VideoStatus()
-//                }
-//            }
-//    }
     
     func createVimeoUploadURL(authToken: String, videoFilePath: URL, completion: @escaping (UploadResult) -> Void) {
         
@@ -862,8 +740,6 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
        
     }
     
-    
-    
     @IBAction func logoutPressed() {
         
         let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to logout", preferredStyle: UIAlertController.Style.alert)
@@ -905,8 +781,6 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
         currentController?.present(vc, animated: true, completion: nil)
         
     }
-    
-    
     
     @IBAction func privacyPolicyRedirect() {
         
@@ -951,19 +825,8 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
     
     @IBAction func menu() {
         
-        if sideMenuView.isHidden == true{
-            
-            sideMenuView.isHidden = false
-            
-            print("menuVisble")
-            
-        } else{
-            
-            sideMenuView.isHidden = true
-            
-            print("mddffenuVisble")
-            
-        }
+        sideMenuView.isHidden.toggle()
+    
     }
     
     
@@ -978,7 +841,6 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
         currentController?.present(vc, animated: true, completion: nil)
         
     }
-    
    
     @IBAction func priorityVc() {
         
@@ -986,7 +848,6 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true,completion: nil)
     }
-    
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         

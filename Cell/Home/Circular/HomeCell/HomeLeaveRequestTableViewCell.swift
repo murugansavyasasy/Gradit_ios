@@ -203,83 +203,17 @@
     }
 
 
-    @IBAction func LeaveViewsVc(){
-
-
-
-
-
-    if priority == "p1" {
-
-    let vc =  SenderAttendanceVcViewController(nibName: nil, bundle: nil)
-    vc.HomepageLeaveHistoryId = leaveID
-    vc.view.backgroundColor = UIColor(named: "Principal")
-    vc.segmentName.backgroundColor = UIColor(named: "UnSelector")
-    vc.segmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-    vc.str = str
-    vc.strName = strName
-    vc.is_read_enabled = is_read_enabled
-    vc.is_write_enabled = is_write_enabled
-
-    let currentController = self.getViewController()
-
-    vc.modalPresentationStyle = .fullScreen
-    currentController?.present(vc, animated: true, completion: nil)
-
-
-
-    }
-
-
-    else if priority == "p2" || priority == "p3" {
-
-
-    let vc =  SenderAttendanceVcViewController(nibName: nil, bundle: nil)
-
-    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-    vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
-    vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-    vc.str = str
-    vc.strName = strName
-    vc.is_read_enabled = is_read_enabled
-    vc.is_write_enabled = is_write_enabled
-
-    let currentController = self.getViewController()
-    vc.HomepageLeaveHistoryId = leaveID
-    vc.modalPresentationStyle = .fullScreen
-    currentController?.present(vc, animated: true, completion: nil)
-
-
-
-    }
-
-
-    else if priority == "p6" {
-
-
-    let vc =  SenderAttendanceVcViewController(nibName: nil, bundle: nil)
-
-    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-    vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
-    vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-    vc.str = str
-    vc.strName = strName
-    vc.is_read_enabled = is_read_enabled
-    vc.is_write_enabled = is_write_enabled
-
-    let currentController = self.getViewController()
-    vc.HomepageLeaveHistoryId = leaveID
-    vc.modalPresentationStyle = .fullScreen
-    currentController?.present(vc, animated: true, completion: nil)
-
-
-
-    }
-
-
-
-
-    }
+        @IBAction func LeaveViewsVc(){
+            
+            let vc =  SenderAttendanceVcViewController(nibName: nil, bundle: nil)
+            vc.str = str
+            vc.strName = strName
+            vc.is_read_enabled = is_read_enabled
+            vc.is_write_enabled = is_write_enabled
+            let currentController = self.getViewController()
+            vc.modalPresentationStyle = .fullScreen
+            currentController?.present(vc, animated: true, completion: nil)
+        }
 
 
 

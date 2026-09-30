@@ -12,32 +12,22 @@ import WebKit
 import KRProgressHUD
 
 @available(iOS 16.0, *)
-class SenderCommunicationHomePageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
-    
-    
+class SenderCommunicationHomePageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, CustomTabBarDelegate {
   
     @IBOutlet weak var searchFullView: UIViewX!
     @IBOutlet weak var searchbar: UISearchBar!
-    @IBOutlet weak var topNameview: UIView!
-    @IBOutlet weak var tapBarView: UIViewX!
-    @IBOutlet weak var notificationView: UIView!
+    @IBOutlet weak var customTabBar: CustomTabBar!
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
     @IBOutlet weak var logoutView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
-    @IBOutlet weak var SearchView: UIView!
-    @IBOutlet weak var topLabels: UILabel!
     @IBOutlet weak var micRecordView: UIViewX!
-    @IBOutlet weak var clgLogoImg: UIImageView!
-    @IBOutlet weak var topMessageLabel: UILabel!
     @IBOutlet weak var privacyPolicyView: UIView!
     @IBOutlet weak var faqView: UIView!
-    @IBOutlet weak var viewTap: UIView!
     @IBOutlet weak var helpView: UIView!
     @IBOutlet weak var changePasswordView: UIView!
     @IBOutlet weak var termsAndConditionView: UIView!
     @IBOutlet weak var sideMenuView: UIView!
-    @IBOutlet weak var refreshView: UIView!
     @IBOutlet weak var communicationcountViews: UIViewX!
     @IBOutlet weak var unreadCountView: UIViewX!
     @IBOutlet weak var communiTableView: UITableView!
@@ -48,82 +38,38 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
     @IBOutlet weak var noDataView: UIView!
     @IBOutlet weak var unreadCountLabel: UILabel!
     @IBOutlet weak var noDataTextLabel: UILabel!
-    @IBOutlet weak var loadingCustom: UIActivityIndicatorView!
-    @IBOutlet weak var redirectLoginView: UIViewX!
     
-    var ComunimenuId : String!
-    var NoticeBoardId = "1"
-    var videoId = "2"
-    var EventId = "3"
     var communicationId = "4"
-    var imagePdfId = "5"
-    var Assigment = "6"
     var previousAddId : Int = 0
     var Textidentifier = "SenderCommuTextTableViewCell"
-    var ReadData : [SenderCommuniReadDataDetails] = []
-    var UnReadData : [SenderCommuniUnReadDataDetails] = []
+    var ReadData : [SenderCommunicationDataDetails] = []
+    var UnReadData : [SenderCommunicationDataDetails] = []
     var overAllRef    : [overAllDataDetails] = []
     var addapiRef : [AddDataDeatils] = []
-    let menuIdentifier = "MenuCollectionViewCell"
-    var MenuRefName :[menuApiDataDetails] = []
-    var loginDatas : [datalogin]!
-    var logindataprinci :[datalogin]!
-    fileprivate let seekDuration: Float64 = 10
-    var UnReadvoiceMsgUrl : String!
-    var readVoiceMgURl : String!
-    var UnReademergencyVoiceMsgUrl    : String!
-    var  readEmergencyVoiceMessageURl : String!
     var selectedCell:IndexPath?
     var memberId : String!
     var priority : String!
     var collegeId : String!
     var departmentId : String!
     var sectionId : String!
-    var loginType : String!
-    var memberName : String!
-    var colgImg    : String!
     var MobileNumber : String!
-    var  password : String!
+    var password : String!
     var str : [String] = []
     var strName : [String] = []
     var type = ""
     var audioFile : String!
-    var audioRecorder: AVAudioRecorder!
-    var audioPlayer : AVAudioPlayer!
-    var meterTimer:Timer!
-    var isAudioRecordingGranted: Bool!
-    var durationLable : String!
-    var secondsLabel  : String!
-    var strPlayStatus : NSString = ""
-    var playerItem: AVPlayerItem?
-    var player: AVPlayer?
-    var timer = Timer()
-    var time : Float64 = 0;
-    var sliderIndex : NSInteger = NSInteger()
-    var strFilePath : String = String()
     var indexPathss : Int!
     var indexPathsections : Int!
-    var segmentype : String!
-    var cloneList :  [SenderCommuniUnReadDataDetails] = []
-    var segTyp : String! = "1"
-    var cloneList1 : [SenderCommuniReadDataDetails] = []
+    var cloneList :  [SenderCommunicationDataDetails] = []
+    var cloneList1 : [SenderCommunicationDataDetails] = []
     var is_read_enabled = ""
     var is_write_enabled = ""
-    var is_read : String!
-    var is_write : String!
-    var menuSlug = ""
-    var messageAndVoiceArray : [menuApiDataDetails] = []
-    var heigts : Int!
-    var CallEnabel : String!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         overrideUserInterfaceStyle = .light
-        print("is_write_enabled",is_write_enabled)
-        print("strNamestrNamestrNamestrName",strName)
-        
+       
         sideMenuView.isHidden = true
         searchbar.delegate = self
         micRecordView.isHidden = true
@@ -134,181 +80,50 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         collegeId = defaults.string(forKey: DefaultsKeys.collegeid)
         departmentId = defaults.string(forKey: DefaultsKeys.deptid)
         sectionId = defaults.string(forKey: DefaultsKeys.sectionid)
-        loginType = defaults.string(forKey: DefaultsKeys.loginAsType)
-        memberName = defaults.string(forKey: DefaultsKeys.memberName)
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         password  = defaults.string(forKey: DefaultsKeys.Password)
-        
-        print("mobileeess",MobileNumber)
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        
-        topMessageLabel.text = memberName
-        
+            
         searchFullView .isHidden = true
-        
-        
-        
+       
         if sectionId == ""{
             
             sectionId = "0"
-            
         }
         
         previousAddId = previousAddId + 1
-        
-        print("menuSlugmenuSlug",menuSlug)
         addApi()
         
-        
-        
+        communiTableView.delegate = self
+        communiTableView.dataSource = self
         
         if is_read_enabled == "1"{
-            
             unReadModal()
             overAllRefName()
-        }else{}
-        
-        
-        
-        if is_write_enabled == "1"{
-            
-            micRecordView.isHidden = false
-            
-        }
-        else{
-            
-            
-            micRecordView.isHidden = true
-        }
-    
-        
-        if priority == "p1"{
-            tapBarView.backgroundColor = UIColor(named: "Principal" )
-            topLabels.text = "Principal"
-            
         }
         
-        else if priority == "p4"{
-            
-            topLabels.text = "Student"
-            
-            
-        }
+        micRecordView.isHidden = is_write_enabled == "1" ? false : true
         
-        else if priority == "p2" {
-            
-            micRecordView.backgroundColor = UIColor(named: "messagecolor")
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            topLabels.text = "Hod"
-            
-            
-        }
-        else if priority == "p7" {
-            
-            micRecordView.backgroundColor = UIColor(named: "univercityColorCod")
-            tapBarView.backgroundColor = UIColor(named: "univercityColorCod" )
-            topLabels.text = "university Head"
-            
-            
-        }
+        customTabBar.delegate = self
         
-        else if priority == "p5"{
-            
-            
-            topLabels.text = "Father"
-            
-        }
+        view.backgroundColor = .priorityColor
+        micRecordView.backgroundColor = UIColor(named: "messagecolor")
         
-        else if priority == "p3"{
-            micRecordView.backgroundColor = UIColor(named: "messagecolor")
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            topLabels.text = "Teacher"
-            
-        }
-        
-        else if priority == "p6"{
-            
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            
+        if priority == "p6"{
+                        
             readCountView.isHidden = true
             unreadCountView.isHidden = true
             communicationcountViews.isHidden = true
-            
             micRecordView.isHidden = true
-            
-            topLabels.text = "Non Teaching"
-            
         }
-        
-        
-        if priority == "p1" {
-            
-            
-            print("PrincipalVieewwColor")
-            view.backgroundColor = UIColor(named: "Principal" )
-            
-            
-        }else if priority == "p4" {
-            
-            print("StudentVieewwColor")
-            view.backgroundColor = UIColor(named: "studentViewColors")
-            
-            
-            
-        } else if priority == "p3" ||  priority == "p2" {
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-            
-        }
-        else if priority == "p7" {
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "univercityColorCod")
-            
-            
-        }
-        else if priority == "p5"{
-            
-            
-            
-            view.backgroundColor = UIColor(named: "FatherColor")
-            
-            
-            
-        }
-        
-        else if priority == "p6"{
-            
-            
-            
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-            
-            
-            
-            
-        }
-        
         
         let TextRownib = UINib(nibName: Textidentifier, bundle: nil)
         communiTableView.register(TextRownib, forCellReuseIdentifier: Textidentifier)
         
-        
-        
         noDataView.isHidden = true
         noDataTextLabel.isHidden = true
         
-        
-        
-        
         let plusAddViews = UITapGestureRecognizer(target: self, action: #selector(PlusVc))
         
-        
-        let Serach = UITapGestureRecognizer(target: self, action: #selector(Searchfield))
-        SearchView.addGestureRecognizer(Serach)
         
         let voiceRecord = UITapGestureRecognizer(target: self, action:#selector(voiceRecordVc))
         micRecordView.addGestureRecognizer(voiceRecord)
@@ -316,43 +131,17 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         
         // tap Bar UiTapGuster.
         
-        
-        
-        
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
-        
-        
-        
-        let topname = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        topNameview.addGestureRecognizer(topname)
-        
-        
         
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
         
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
-        
-        
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
-        
-        
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
         
-        
         let helpGesture = UITapGestureRecognizer(target: self, action: #selector(helpRedirect))
         helpView.addGestureRecognizer(helpGesture)
-        
         
         let privacyPolicyGesture = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyRedirect))
         privacyPolicyView.addGestureRecognizer(privacyPolicyGesture)
@@ -360,94 +149,31 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
         termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
         
-        
-        
-        
-        
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
-        
-                
-        
+       
     }
-    
-    
-    
     
     
     @IBAction func voiceRecordVc(){
-        if priority == "p2" || priority == "p3" {
-            let vc = VoiceRecoredViewController(nibName: nil, bundle: nil)
-            vc.previousAddId = previousAddId
-            vc.str = str
-            vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
-            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true,completion: nil)
-        }
         
-        else if priority == "p7" {
-            let vc = VoiceRecoredViewController(nibName: nil, bundle: nil)
-            vc.previousAddId = previousAddId
-            vc.str = str
-            vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
-            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true,completion: nil)
-        }
-        else{
-            
-            
-            
-            let vc = VoiceRecoredViewController(nibName: nil, bundle: nil)
-            vc.previousAddId = previousAddId
-            vc.str = str
-            vc.strName = strName
-            vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
-            
-            vc.view.backgroundColor = UIColor(named: "Principal" )
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true,completion: nil)
-            
-        }
-    }
-    
-    
-    
-    @IBAction func Searchfield() {
-        
-        
-        searchbar.isHidden  = false
-        searchFullView .isHidden = false
-        
-        
-        
-        
-        
-        
-        
+        let vc = VoiceRecoredViewController(nibName: nil, bundle: nil)
+        vc.previousAddId = previousAddId
+        vc.str = str
+        vc.strName = strName
+        vc.is_read_enabled = is_read_enabled
+        vc.is_write_enabled = is_write_enabled
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true,completion: nil)
         
     }
-    
-    
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        
         if CommuniSegementName.selectedSegmentIndex == 0{
             
-            
-            let filtered_list : [SenderCommuniUnReadDataDetails] = cloneList
-            
-            
+            let filtered_list : [SenderCommunicationDataDetails] = cloneList
             
             if !searchText.isEmpty {
                 
@@ -463,68 +189,24 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
                     ($0.sentby ?? "").lowercased().contains(search)
                 }
                 
-                
             }else{
                 
-                
-                
                 UnReadData = filtered_list
-                
-                
-                
-                print("pendingOrder")
-                
-                
-                
             }
             
-            
-            
-            
-            
-            
-            
             if UnReadData.count > 0{
-                
-                
-                
-                print ("searchListPendigCount",UnReadData.count)
-                
-                
                 
                 noDataView.isHidden = true
                 noDataTextLabel.isHidden = true
                 
-                
-                
-                
-                
             }else{
-                
-                
-                
                 noDataView.isHidden = false
                 noDataTextLabel.isHidden = false
                 noDataTextLabel.text = "No Records Found"
-                
-                
-                
-                
-                
             }
+        } else if CommuniSegementName.selectedSegmentIndex == 1{
             
-            
-            
-        }
-        
-        
-        
-        else if CommuniSegementName.selectedSegmentIndex == 1{
-            
-            
-            
-            
-            let filtered_list : [SenderCommuniReadDataDetails] = cloneList1
+            let filtered_list : [SenderCommunicationDataDetails] = cloneList1
     
             if !searchText.isEmpty{
                 
@@ -542,93 +224,38 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
                 
             }else{
                 
-                
-                
                 ReadData = filtered_list
-                
-                
-                
-                print("pendingOrder")
-                
-                
-                
             }
-            
-            
-            
-            
-            
             
             
             if ReadData.count > 0{
                 
-                
-                
-                print ("searchListPendigCount",ReadData.count)
-                
-                
-                
                 noDataView.isHidden = true
                 noDataTextLabel.isHidden = true
                 
-                
-                
-                
-                
             }else{
-                
-                
                 
                 noDataView.isHidden = false
                 noDataTextLabel.isHidden = false
                 noDataTextLabel.text = "No Records Found"
                 
             }
-            
-            
-            
-            
-            
         }
-        
-        
         
         communiTableView.reloadData()
         
-        
-        
-        
-        
-        
-        
     }
-    
     
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
-        
-        
         searchbar.endEditing(true)
-        
-        
         
     }
     
-    
-    
-    
-    
-    
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        
-        
         searchbar.resignFirstResponder()
-        
-        
-        
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -637,159 +264,60 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         searchFullView .isHidden = true
         noDataView.isHidden = true
         noDataTextLabel.isHidden = true
-        
         searchbar.resignFirstResponder()
-        
-        
         
     }
     
     
     @IBAction func PlusVc() {
         
-        for i in addapiRef{
-            
-            if priority == "p2" || priority == "p3" {
-                
-                let vc = SenderComunicationPlusNextPageViewController(nibName: nil, bundle: nil)
-                
-                vc.comuncationMenuId = communicationId
-                vc.backGroundImage = i.background_image
-                vc.addWebUrl = i.add_url
-                vc.smallImageUrl = i.add_image
-                vc.str = str
-                vc.strName = strName
-                vc.is_read_enabled = is_read_enabled
-                vc.is_write_enabled = is_write_enabled
-                
-                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true , completion: nil)
-                
-            }
-            
-            
-            else if priority == "p7" {
-                
-                let vc = SenderComunicationPlusNextPageViewController(nibName: nil, bundle: nil)
-                
-                vc.comuncationMenuId = communicationId
-                vc.backGroundImage = i.background_image
-                vc.addWebUrl = i.add_url
-                vc.smallImageUrl = i.add_image
-                vc.str = str
-                vc.strName = strName
-                vc.is_read_enabled = is_read_enabled
-                vc.is_write_enabled = is_write_enabled
-                
-                vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true , completion: nil)
-                
-            }
-            
-            
-            
-            
-            
-            else{
-                
-                let vc = SenderComunicationPlusNextPageViewController(nibName: nil, bundle: nil)
-                
-                vc.backGroundImage = i.background_image
-                
-                vc.comuncationMenuId = communicationId
-                vc.str = str
-                vc.strName = strName
-                vc.addWebUrl = i.add_url
-                vc.smallImageUrl = i.add_image
-                vc.is_read_enabled = is_read_enabled
-                vc.is_write_enabled = is_write_enabled
-                
-                vc.view.backgroundColor = UIColor(named: "Principal" )
-                
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true , completion: nil)
-                
-            }
-        }
+        let add = addapiRef.last
         
+        let vc = SenderComunicationPlusNextPageViewController(nibName: nil, bundle: nil)
         
+        vc.comuncationMenuId = communicationId
+        vc.backGroundImage = add?.background_image
+        vc.addWebUrl = add?.add_url
+        vc.smallImageUrl = add?.add_image
+        vc.str = str
+        vc.strName = strName
+        vc.is_read_enabled = is_read_enabled
+        vc.is_write_enabled = is_write_enabled
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true , completion: nil)
     }
     
     
-    
-    
     @IBAction func adLoad(gesture : CommuniAdd) {
-        
         
         let vc = SendercomuniAddViewController(nibName: nil, bundle: nil)
         vc.AddWebUrl = gesture.url
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true,completion: nil)
-        
-        
-        
+         
     }
     
     @IBAction func communiSegmentAction(_ sender: Any) {
         
         if is_read_enabled == "1"{
-            if priority == "p6"{
-                
-                if CommuniSegementName.selectedSegmentIndex == 0{
-                    
-                    segmentype = "1"
-                    
-                    selectedCell = IndexPath()
-                    communiTableView.isScrollEnabled = false
-                    unReadModal()
-                    
-                }
-                
-                else if CommuniSegementName.selectedSegmentIndex == 1{
-                    
-                    segTyp = "2"
-                    segmentype = "2"
-                    selectedCell = IndexPath()
-                    communiTableView.isScrollEnabled = false
-                    ReadApi()
-                    
-                }
-            }
             
-            
-            else {
+            if CommuniSegementName.selectedSegmentIndex == 0{
                 
+                selectedCell = IndexPath()
+                unReadModal()
                 
-                if CommuniSegementName.selectedSegmentIndex == 0{
-                    segmentype = "1"
-                    selectedCell = IndexPath()
-                    communiTableView.isScrollEnabled = false
-                    unReadModal()
-                    
-                    
-                }
+            } else if CommuniSegementName.selectedSegmentIndex == 1{
                 
-                else if CommuniSegementName.selectedSegmentIndex == 1{
-                    segTyp = "2"
-                    segmentype = "2"
-                    selectedCell = IndexPath()
-                    communiTableView.isScrollEnabled = false
-                    ReadApi()
-                    
-                    
-                }
+                selectedCell = IndexPath()
+                ReadApi()
                 
             }
-        }else{}
+        }
     }
     
     func ReadApi() {
         
-        var Commu = SenderCommuniReadModal()
+        var Commu = SenderCommunicationModal()
         
         Commu.userid = memberId
         Commu.priority = priority
@@ -801,7 +329,7 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
             httpMethod: .post,
             queryParam: nil,
             requestBody: Commu
-        ) {[weak self] (result:Result<SenderCommuniReadResponce , Error>) in
+        ) {[weak self] (result:Result<SenderCommunicationResponse , Error>) in
             
             guard let self = self else {return}
             switch result {
@@ -809,23 +337,16 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
                 if communicationResp.Status == 1{
                     ReadData = communicationResp.data ?? []
                     cloneList1 = communicationResp.data ?? []
-                    communiTableView.isScrollEnabled = true
                     noDataView.isHidden = true
                     noDataTextLabel.isHidden = true
-                    communiTableView.delegate = self
-                    communiTableView.dataSource = self
                     communiTableView.isHidden = false
                     communiTableView.reloadData()
-                    
-                    
                     
                 }else{
                     
                     noDataView.isHidden = false
                     noDataTextLabel.isHidden = false
                     noDataTextLabel.text = communicationResp.Message
-                    communiTableView.delegate = self
-                    communiTableView.dataSource = self
                     communiTableView.isHidden = true
                     communiTableView.reloadData()
                     
@@ -839,9 +360,7 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
     
     func unReadModal() {
         
-        var unreads = SenderCommuniUnReadModal()
-        
-        
+        var unreads = SenderCommunicationModal()
         
         unreads.userid = memberId
         unreads.priority = priority
@@ -853,58 +372,28 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
             httpMethod: .post,
             queryParam: nil,
             requestBody: unreads
-        ) {[weak self] (result:Result<SenderCommuniUnReadResponce , Error>) in
+        ) {[weak self] (result:Result<SenderCommunicationResponse , Error>) in
             
             guard let self = self else {return}
             switch result {
             case .success(let UnReadcommunicationResp):
                 if UnReadcommunicationResp.Status == 1{
                     
-                    
                     UnReadData = UnReadcommunicationResp.data ?? []
                     cloneList = UnReadcommunicationResp.data ?? []
                     noDataView.isHidden = true
                     noDataTextLabel.isHidden = true
                     communiTableView.isScrollEnabled = true
-                    communiTableView.delegate = self
-                    communiTableView.dataSource = self
                     communiTableView.isHidden = false
                     communiTableView.reloadData()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                        
-                        self.loadingCustom.stopAnimating()
-                        
-                        self.loadingCustom.isHidden  = true
-                        
-                        
-                        KRProgressHUD.dismiss()
-                        
-                        
-                    }
-                    
-                    
-                    
+                  
                 }else{
                     
                     noDataTextLabel.text = UnReadcommunicationResp.Message
                     noDataView.isHidden = false
                     noDataTextLabel.isHidden = false
-                    
-                    communiTableView.delegate = self
-                    communiTableView.dataSource = self
-                    
                     communiTableView.isHidden = true
-                    
                     communiTableView.reloadData()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                        
-                        self.loadingCustom.stopAnimating()
-                        
-                        self.loadingCustom.isHidden  = true
-                        
-                    }
                     
                 }
             case .failure(let error):
@@ -913,9 +402,6 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         }
         
     }
-    
-    
-    
     
     func overAllRefName() {
         
@@ -1029,24 +515,11 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
                 print(failure.localizedDescription)
             }
         }
-        
     }
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if CommuniSegementName.selectedSegmentIndex == 0 {
-            
-            
-            return UnReadData.count
-            
-        }
         
-        else if CommuniSegementName.selectedSegmentIndex == 1{
-            
-            return ReadData.count
-        }
-        
-        return 0
+        return CommuniSegementName.selectedSegmentIndex == 0 ? UnReadData.count : ReadData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -1066,14 +539,14 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
             cell.msgContentLabel.isHidden = false
             cell.voiceView.isHidden = false
             cell.playView.isHidden = true
-            cell.arrowImage.image = UIImage(named: "up")
+            cell.arrowImage.image = UIImage(systemName: "chevron.up")
             cell.sendByLabel.isHidden = false
             cell.sendByView.isHidden = false
         } else {
             cell.sendByLabel.isHidden = true
             cell.voiceView.isHidden = true
             cell.playView.isHidden = false
-            cell.arrowImage.image = UIImage(named: "down")
+            cell.arrowImage.image = UIImage(systemName: "chevron.down")
             cell.sendByView.isHidden = true
             cell.player?.pause()
             cell.btnName.setImage(
@@ -1162,7 +635,7 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         
         
         if CommuniSegementName.selectedSegmentIndex == 0{
-            var comuCell : SenderCommuniUnReadDataDetails = UnReadData[indexPath.row]
+            var comuCell : SenderCommunicationDataDetails = UnReadData[indexPath.row]
             if let selectedCells = selectedCell, selectedCells == indexPath {
                 
                 
@@ -1226,19 +699,6 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         
     }
     
-    
-    func showTemporaryMessage(message: String, duration: TimeInterval = 5.0) {
-        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        present(alertController, animated: true, completion: nil)
-        
-        // Automatically dismiss the alert after the specified duration
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-            alertController.dismiss(animated: true, completion: nil)
-        }
-    }
-    
-    
-    
     func apread(gesture : String){
         
         var readApiStatus  = AppReadStatusModal()
@@ -1261,10 +721,16 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         }
     }
     
-    
-    // This part full  is swipe bottom view
-    
     // Tab Bar Nagivation
+    
+    func didTapSearch() {
+        searchbar.isHidden  = false
+        searchFullView.isHidden = false
+    }
+    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
     
     @IBAction func helpRedirect() {
         
@@ -1272,9 +738,7 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         vc.modalPresentationStyle = .fullScreen
      present(vc, animated: true, completion: nil)
         
-        
     }
-    
     
     @IBAction func termsAndCondition() {
         
@@ -1285,10 +749,6 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
     }
     
     @IBAction func logoutPressed() {
-        
-        
-        
-        
         let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to logout", preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
@@ -1330,80 +790,13 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         
     }
     
-    
-    
-    
-    
-    @IBAction func refreshVc() {
-        
-        print("refreshVcWork")
-      
-        
-        
-        
-        if segTyp == "1"{
-            
-            unReadModal()
-            
-        }
-        else{
-            
-            
-            ReadApi()
-        }
-        
-    }
-    
-    
-    @IBAction func notificationVc() {
-        print("NotificationViewController")
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        vc.str = str
-        vc.strName = strName
-        vc.modalPresentationStyle = .fullScreen
-      present(vc, animated: false, completion: nil)
-        
-        
-        
-    }
-    
-    
-    
-    
-    @IBAction func menu() {
-        
-        if sideMenuView.isHidden == true{
-            
-            sideMenuView.isHidden = false
-            
-            
-            print("menuVisble")
-        }
-        
-        else{
-            
-            sideMenuView.isHidden = true
-            
-            print("mddffenuVisble")
-        }
-        
-        
-    }
-    
-    
     @IBAction func changePassowrdVC(){
         
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
      present(vc, animated: true, completion: nil)
         
-        
     }
-    
-    
-    
-    
-    
     
     @IBAction func priorityVc() {
         
@@ -1415,16 +808,10 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
 }
 
 class VoiceMessagesse : UITapGestureRecognizer {
-    
-    
-    
-    
+   
     var sliders : UISlider!
-    
     var timeLbl : UILabel!
-    
     var img : UIImageView!
-    
     var url : String!
     var button : UIButton!
     var tag : Int!
@@ -1433,15 +820,11 @@ class VoiceMessagesse : UITapGestureRecognizer {
 
 class EmargencyVoices : UITapGestureRecognizer {
     
-    
-    
     var EmergencyVoiceimg : UIImageView!
-    
 }
 
 
 class CommuniAdd:UITapGestureRecognizer{
-    
     
     var url : String!
     

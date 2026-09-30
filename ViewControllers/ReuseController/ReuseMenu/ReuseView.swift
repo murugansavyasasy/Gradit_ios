@@ -1394,14 +1394,8 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
             else if str[indexPath.row] == "video"{
                 let currentController = self.getCurrentViewController()
                 let vc = VideoViewController(nibName: nil, bundle: nil)
-                
-                vc.is_read_enabled = read
-                vc.is_write_enabled = write
-                
                 vc.str = str
                 vc.strName = strName
-                
-                vc.view.backgroundColor = UIColor(named: "StudentParent")
                 vc.modalPresentationStyle = .fullScreen
                 currentController?.present(vc, animated: true, completion: nil)
                 
@@ -1532,7 +1526,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 
                 vc.is_read_enabled = read
                 vc.is_write_enabled = write
-                vc.MenuRefName = MenuRefName
                 vc.view.backgroundColor = UIColor(named: "Principal" )
                 
                 vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
@@ -1556,7 +1549,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 
                 vc.is_read_enabled = read
                 vc.is_write_enabled = write
-                vc.MenuRefName = MenuRefName
                 vc.view.backgroundColor = UIColor(named: "Principal" )
                 
                 vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
@@ -1719,7 +1711,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 
                 vc.str = str
                 vc.strName = strName
-                vc.view.backgroundColor = UIColor(named: "Principal" )
                 vc.modalPresentationStyle = .fullScreen
                 currentController?.present(vc, animated: true, completion: nil)
                 
@@ -1826,9 +1817,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
                 vc.is_read_enabled = read
                 vc.is_write_enabled = write
-                
-                
-                vc.ComunimenuId = communicationId
                 vc.str = str
                 vc.strName = strName
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
@@ -1845,9 +1833,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
                 vc.is_read_enabled = read
                 vc.is_write_enabled = write
-                
-                
-                vc.ComunimenuId = communicationId
                 vc.str = str
                 vc.strName = strName
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
@@ -1992,13 +1977,10 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 
                 let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
                
-                
-                vc.VideoMenuId = videoId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = read
                 vc.is_write_enabled = write
-                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
                 vc.modalPresentationStyle = .fullScreen
                 currentController?.present(vc, animated: true, completion: nil)
                 
@@ -2097,9 +2079,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
                 vc.is_read_enabled = read
                 vc.is_write_enabled = write
-                
-                
-                vc.ComunimenuId = communicationId
                 vc.str = str
                 vc.strName = strName
                 vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
@@ -2116,9 +2095,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
                 vc.is_read_enabled = read
                 vc.is_write_enabled = write
-                
-                
-                vc.ComunimenuId = communicationId
                 vc.str = str
                 vc.strName = strName
                 vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
@@ -2269,13 +2245,10 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 
                 let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
                
-                
-                vc.VideoMenuId = videoId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = read
                 vc.is_write_enabled = write
-                vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
                 vc.modalPresentationStyle = .fullScreen
                 currentController?.present(vc, animated: true, completion: nil)
                 
@@ -2525,13 +2498,8 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
             else if str[indexPath.row] == "video"{
                 
                 let vc = VideoViewController(nibName: nil, bundle: nil)
-                
-               
                 vc.str = str
                 vc.strName = strName
-                vc.is_read_enabled = read
-                vc.is_write_enabled = write
-                vc.view.backgroundColor = UIColor(named: "FatherColor")
                 vc.modalPresentationStyle = .fullScreen
                 currentController?.present(vc, animated: true, completion: nil)
                 
@@ -2668,7 +2636,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 
                 let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
               
-                vc.ComunimenuId = communicationId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = read
@@ -2687,7 +2654,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 
                 let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
                 
-                vc.ComunimenuId = communicationId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = read
@@ -2831,9 +2797,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 vc.strName = strName
                 vc.is_read_enabled = read
                 vc.is_write_enabled = write
-                
-                vc.VideoMenuId = videoId
-                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
                 vc.modalPresentationStyle = .fullScreen
                 currentController?.present(vc, animated: true, completion: nil)
                 

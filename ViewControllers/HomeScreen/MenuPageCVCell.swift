@@ -265,11 +265,8 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         present(vc)
                     } else if slug == "video" {
                         let vc = VideoViewController(nibName: nil, bundle: nil)
-                        vc.is_read_enabled = read
-                        vc.is_write_enabled = write
                         vc.str = str
                         vc.strName = strName
-                        vc.view.backgroundColor = UIColor(named: "StudentParent")
                         present(vc)
                     } else if slug == "chat" {
                         let vc = ChatHomePageViewController(nibName: nil, bundle: nil)
@@ -327,7 +324,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         vc.strName = strName
                         vc.is_read_enabled = read
                         vc.is_write_enabled = write
-                        vc.MenuRefName = menuList
                         vc.view.backgroundColor = UIColor(named: "Principal")
                         vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
                         vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
@@ -338,7 +334,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         vc.strName = strName
                         vc.is_read_enabled = read
                         vc.is_write_enabled = write
-                        vc.MenuRefName = menuList
                         vc.view.backgroundColor = UIColor(named: "Principal")
                         vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
                         vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
@@ -416,7 +411,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         vc.is_write_enabled = write
                         vc.str = str
                         vc.strName = strName
-                        vc.view.backgroundColor = UIColor(named: "Principal")
                         present(vc)
                     } else if slug == "chat" {
                         let vc = ChatSenderViewController(nibName: nil, bundle: nil)
@@ -451,7 +445,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
                         vc.is_read_enabled = read
                         vc.is_write_enabled = write
-                        vc.ComunimenuId = communicationId
                         vc.str = str
                         vc.strName = strName
                         vc.view.backgroundColor = UIColor(named: "Teaching Staff")
@@ -462,7 +455,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
                         vc.is_read_enabled = read
                         vc.is_write_enabled = write
-                        vc.ComunimenuId = communicationId
                         vc.str = str
                         vc.strName = strName
                         vc.view.backgroundColor = UIColor(named: "Teaching Staff")
@@ -539,12 +531,10 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         present(vc)
                     } else if slug == "video" {
                         let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
-                        vc.VideoMenuId = videoId
                         vc.str = str
                         vc.strName = strName
                         vc.is_read_enabled = read
                         vc.is_write_enabled = write
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                         present(vc)
                     } else if slug == "chat" {
                         let vc = ChatSenderViewController(nibName: nil, bundle: nil)
@@ -581,7 +571,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
                         vc.is_read_enabled = read
                         vc.is_write_enabled = write
-                        vc.ComunimenuId = communicationId
                         vc.str = str
                         vc.strName = strName
                         vc.view.backgroundColor = UIColor(named: "univercityColorCod")
@@ -592,7 +581,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
                         vc.is_read_enabled = read
                         vc.is_write_enabled = write
-                        vc.ComunimenuId = communicationId
                         vc.str = str
                         vc.strName = strName
                         vc.view.backgroundColor = UIColor(named: "univercityColorCod")
@@ -669,12 +657,10 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         present(vc)
                     } else if slug == "video" {
                         let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
-                        vc.VideoMenuId = videoId
                         vc.str = str
                         vc.strName = strName
                         vc.is_read_enabled = read
                         vc.is_write_enabled = write
-                        vc.view.backgroundColor = UIColor(named: "univercityColorCod")
                         present(vc)
                     } else if slug == "chat" {
                         let vc = ChatSenderViewController(nibName: nil, bundle: nil)
@@ -789,9 +775,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         let vc = VideoViewController(nibName: nil, bundle: nil)
                         vc.str = str
                         vc.strName = strName
-                        vc.is_read_enabled = read
-                        vc.is_write_enabled = write
-                        vc.view.backgroundColor = UIColor(named: "FatherColor")
                         present(vc)
                     } else if slug == "chat" {
                         let vc = ChatHomePageViewController(nibName: nil, bundle: nil)
@@ -847,7 +830,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         present(vc)
                     } else if slug == "voice" {
                         let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                        vc.ComunimenuId = communicationId
                         vc.str = str
                         vc.strName = strName
                         vc.is_read_enabled = read
@@ -858,7 +840,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         present(vc)
                     } else if slug == "text" {
                         let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                        vc.ComunimenuId = communicationId
                         vc.str = str
                         vc.strName = strName
                         vc.is_read_enabled = read
@@ -941,8 +922,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         vc.strName = strName
                         vc.is_read_enabled = read
                         vc.is_write_enabled = write
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                        vc.VideoMenuId = videoId
                         present(vc)
                     } else if slug == "chat" {
                         let vc = ChatSenderViewController(nibName: nil, bundle: nil)

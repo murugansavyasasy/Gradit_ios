@@ -2379,40 +2379,14 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                         let refreshAlert = UIAlertController(title: "", message: particular.Message, preferredStyle: .alert)
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-                            
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
+                          
                                 let vc = SenderVideoHomePageViewController()
                                 vc.is_read_enabled = self.is_read_enabled
                                 vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                                 vc.str = self.str
                                 vc.strName = self.strName
                                 vc.modalPresentationStyle = .fullScreen
                                 self.present(vc, animated: true)
-                                
-                            } else if self.priority == "p7" {
-                                
-                                let vc = SenderVideoHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "univercityColorCod")
-                                vc.str = self.str
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else {
-                                
-                                let vc = SenderVideoHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.str = self.str
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -2427,39 +2401,13 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
                                 let vc = SenderVideoHomePageViewController()
                                 vc.is_read_enabled = self.is_read_enabled
                                 vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                                 vc.str = self.str
                                 vc.strName = self.strName
                                 vc.modalPresentationStyle = .fullScreen
                                 self.present(vc, animated: true)
-                                
-                            } else if self.priority == "p7" {
-                                
-                                let vc = SenderVideoHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "univercityColorCod")
-                                vc.str = self.str
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else {
-                                
-                                let vc = SenderVideoHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.str = self.str
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
                         })
                         
                         self.present(refreshAlert, animated: true)

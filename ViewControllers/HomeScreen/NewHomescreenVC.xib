@@ -6,23 +6,16 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewHomescreenVC" customModule="Gradit" customModuleProvider="target">
             <connections>
-                <outlet property="LogoImageBaseview" destination="XBS-fC-8H8" id="gow-tJ-Cfl"/>
-                <outlet property="PersonIconView" destination="u9T-Fb-brS" id="VSb-LO-2os"/>
-                <outlet property="RoleNameLabel" destination="25C-Ip-l84" id="vnS-b6-2HH"/>
-                <outlet property="UserNameLabels" destination="wLt-GH-ATZ" id="Dmp-LG-ZDU"/>
                 <outlet property="clearCacheBtn" destination="vj2-9H-l3k" id="OLv-qj-m2t"/>
-                <outlet property="clgLogoImg" destination="guP-Y8-e8V" id="CBX-nt-JcP"/>
+                <outlet property="customTabBar" destination="dVH-Kx-ZFb" id="1Gg-mH-BAl"/>
                 <outlet property="loadingCustom" destination="ime-EH-RcF" id="hzW-BF-6wy"/>
                 <outlet property="profileBtn" destination="J40-Ua-bIm" id="cfk-IB-Eto"/>
                 <outlet property="sideMenuView" destination="dLK-Gc-O7C" id="t1o-mT-KK9"/>
-                <outlet property="tapBarView" destination="dVH-Kx-ZFb" id="l2y-gp-R7F"/>
-                <outlet property="topNameview" destination="U3e-rJ-Gyn" id="nc2-XZ-drS"/>
                 <outlet property="tv" destination="e6p-2N-bt0" id="GJW-DC-hYl"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -35,155 +28,19 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4h2-NP-hSr">
                     <rect key="frame" x="0.0" y="118" width="393" height="734"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dVH-Kx-ZFb" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
+                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dVH-Kx-ZFb" customClass="CustomTabBar" customModule="Gradit" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
-                            <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="OWb-Ua-Hoj">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U3e-rJ-Gyn">
-                                            <rect key="frame" x="0.0" y="0.0" width="111.66666666666667" height="50"/>
-                                            <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="uaR-8b-Mwg">
-                                                    <rect key="frame" x="11" y="4" width="100.66666666666667" height="41"/>
-                                                    <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBS-fC-8H8" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="41" height="41"/>
-                                                            <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EmptyCollegeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="guP-Y8-e8V" customClass="UIImageViewX" customModule="Gradit" customModuleProvider="target">
-                                                                    <rect key="frame" x="3" y="3" width="35" height="35"/>
-                                                                    <userDefinedRuntimeAttributes>
-                                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                            <real key="value" value="12"/>
-                                                                        </userDefinedRuntimeAttribute>
-                                                                    </userDefinedRuntimeAttributes>
-                                                                </imageView>
-                                                            </subviews>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                            <constraints>
-                                                                <constraint firstItem="guP-Y8-e8V" firstAttribute="leading" secondItem="XBS-fC-8H8" secondAttribute="leading" constant="3" id="1Ih-tj-FW3"/>
-                                                                <constraint firstAttribute="trailing" secondItem="guP-Y8-e8V" secondAttribute="trailing" constant="3" id="Khf-qC-ETp"/>
-                                                                <constraint firstAttribute="width" constant="41" id="T5l-FD-e5T"/>
-                                                                <constraint firstAttribute="bottom" secondItem="guP-Y8-e8V" secondAttribute="bottom" constant="3" id="VB6-c7-jBq"/>
-                                                                <constraint firstAttribute="height" constant="41" id="pCM-El-Lnu"/>
-                                                                <constraint firstItem="guP-Y8-e8V" firstAttribute="top" secondItem="XBS-fC-8H8" secondAttribute="top" constant="3" id="yRy-p0-sVR"/>
-                                                            </constraints>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                    <color key="value" name="topViewColor"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                    <real key="value" value="17"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                    <real key="value" value="0.0"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </view>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="STm-Gf-qIb">
-                                                            <rect key="frame" x="49" y="0.0" width="51.666666666666657" height="41"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wLt-GH-ATZ">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="51.666666666666664" height="24"/>
-                                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25C-Ip-l84">
-                                                                    <rect key="frame" x="0.0" y="24" width="51.666666666666664" height="17"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                            </subviews>
-                                                        </stackView>
-                                                    </subviews>
-                                                </stackView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstItem="uaR-8b-Mwg" firstAttribute="top" secondItem="U3e-rJ-Gyn" secondAttribute="top" constant="4" id="4Vp-1F-9s2"/>
-                                                <constraint firstItem="uaR-8b-Mwg" firstAttribute="leading" secondItem="U3e-rJ-Gyn" secondAttribute="leading" constant="11" id="MHI-F6-ab8"/>
-                                                <constraint firstAttribute="bottom" secondItem="uaR-8b-Mwg" secondAttribute="bottom" constant="5" id="eSV-Y4-uf2"/>
-                                                <constraint firstAttribute="trailing" secondItem="uaR-8b-Mwg" secondAttribute="trailing" id="fMu-TN-Y96"/>
-                                            </constraints>
-                                        </view>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="dj1-MS-3wy">
-                                            <rect key="frame" x="203" y="5" width="190" height="40"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="GraditWhiteLogo" translatesAutoresizingMaskIntoConstraints="NO" id="W2d-5O-aqP">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="40"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="8bo-pX-Ret"/>
-                                                        <constraint firstAttribute="height" constant="40" id="iet-Qq-fjB"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kAX-Vh-EqX">
-                                                    <rect key="frame" x="105" y="0.0" width="40" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="60N-NT-pTE"/>
-                                                        <constraint firstAttribute="width" constant="40" id="sOx-HF-L4q"/>
-                                                    </constraints>
-                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" image="bell.fill" catalog="system">
-                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="15" scale="large" weight="bold"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="NotificationBtnAct:" destination="-1" eventType="touchUpInside" id="UUx-Kk-UNK"/>
-                                                    </connections>
-                                                </button>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u9T-Fb-brS">
-                                                    <rect key="frame" x="150" y="0.0" width="40" height="40"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="man" translatesAutoresizingMaskIntoConstraints="NO" id="pBk-f4-xpo">
-                                                            <rect key="frame" x="6" y="6" width="28" height="28"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="28" id="MjW-Iy-oyb"/>
-                                                                <constraint firstAttribute="height" constant="28" id="o5b-50-rwu"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="40" id="fAp-Fy-Bwp"/>
-                                                        <constraint firstItem="pBk-f4-xpo" firstAttribute="centerX" secondItem="u9T-Fb-brS" secondAttribute="centerX" id="gqR-3C-6Tz"/>
-                                                        <constraint firstItem="pBk-f4-xpo" firstAttribute="centerY" secondItem="u9T-Fb-brS" secondAttribute="centerY" id="ngO-Wv-sPX"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
-                                        </stackView>
-                                    </subviews>
-                                </stackView>
-                            </subviews>
                             <color key="backgroundColor" name="topViewColor"/>
-                            <constraints>
-                                <constraint firstItem="OWb-Ua-Hoj" firstAttribute="leading" secondItem="dVH-Kx-ZFb" secondAttribute="leading" id="3Sb-HP-R66"/>
-                                <constraint firstAttribute="bottom" secondItem="OWb-Ua-Hoj" secondAttribute="bottom" constant="10" id="EDe-sN-bF2"/>
-                                <constraint firstItem="OWb-Ua-Hoj" firstAttribute="top" secondItem="dVH-Kx-ZFb" secondAttribute="top" id="OCt-c6-7ld"/>
-                                <constraint firstAttribute="trailing" secondItem="OWb-Ua-Hoj" secondAttribute="trailing" id="vBN-Ay-h4n"/>
-                            </constraints>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                    <real key="value" value="9"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                    <real key="value" value="0.0"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="shadowOffsetY">
-                                    <real key="value" value="5"/>
-                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="showSearch" value="NO"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="showBackButton" value="NO"/>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="e6p-2N-bt0">
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="e6p-2N-bt0">
                             <rect key="frame" x="0.0" y="60" width="393" height="606"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dLK-Gc-O7C">
+                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dLK-Gc-O7C">
                             <rect key="frame" x="232" y="60" width="161" height="380"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="WJx-5P-sdi">
@@ -206,7 +63,6 @@
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </state>
                                             <connections>
-                                                <action selector="ChangeRoleBtnAct:" destination="-1" eventType="touchUpInside" id="Kjd-cb-hzy"/>
                                                 <action selector="profileBtnAct:" destination="-1" eventType="touchUpInside" id="uhx-1L-dwh"/>
                                             </connections>
                                         </button>
@@ -328,15 +184,8 @@
         </view>
     </objects>
     <resources>
-        <image name="EmptyCollegeIcon" width="511" height="511"/>
-        <image name="GraditWhiteLogo" width="512" height="512"/>
-        <image name="bell.fill" catalog="system" width="123" height="128"/>
-        <image name="man" width="512" height="512"/>
         <namedColor name="topViewColor">
             <color red="0.56499999761581421" green="0.14499999582767487" blue="0.46700000762939453" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

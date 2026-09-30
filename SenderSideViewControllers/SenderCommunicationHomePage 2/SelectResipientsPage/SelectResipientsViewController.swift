@@ -3758,30 +3758,13 @@ func CommunicationEntierSms(){
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                         
-                        if self.priority == "p2" || self.priority == "p3" {
-                            
                             let vc = SenderVideoHomePageViewController()
                             vc.is_read_enabled = self.is_read_enabled
                             vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                             vc.strName = self.strName
                             vc.str = self.str
                             vc.modalPresentationStyle = .fullScreen
-                            
                             self.present(vc, animated: true)
-                            
-                        } else {
-                            
-                            let vc = SenderVideoHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Principal")
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            
-                            self.present(vc, animated: true)
-                        }
                     }))
                     
                     self.present(refreshAlert, animated: true)
@@ -5036,39 +5019,13 @@ func HistoryVoiceSendParticular() {
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                         
-                        if self.priority == "p2" || self.priority == "p3" {
-                            
                             let vc = SenderVideoHomePageViewController()
                             vc.is_read_enabled = self.is_read_enabled
                             vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                             vc.strName = self.strName
                             vc.str = self.str
                             vc.modalPresentationStyle = .fullScreen
                             self.present(vc, animated: true)
-                            
-                        } else if self.priority == "p7" {
-                            
-                            let vc = SenderVideoHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "univercityColorCod")
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                            
-                        } else {
-                            
-                            let vc = SenderVideoHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Principal")
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                        }
                     })
                     
                     self.present(refreshAlert, animated: true)

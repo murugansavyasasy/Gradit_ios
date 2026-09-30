@@ -119,7 +119,6 @@
 		18E8902A2A27571900DF9BF2 /* VoiceRecoredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18E8901B2A27571900DF9BF2 /* VoiceRecoredViewController.xib */; };
 		18E8902B2A27571900DF9BF2 /* VoiceRecoredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E8901C2A27571900DF9BF2 /* VoiceRecoredViewController.swift */; };
 		18E8902C2A27571900DF9BF2 /* SenderCommunicationHomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E8901D2A27571900DF9BF2 /* SenderCommunicationHomePageViewController.swift */; };
-		18E8902D2A27571900DF9BF2 /* SenderCommuniUnreadResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E8901E2A27571900DF9BF2 /* SenderCommuniUnreadResponce.swift */; };
 		18E890302A27571900DF9BF2 /* SenderComunicationPlusNextPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18E890232A27571900DF9BF2 /* SenderComunicationPlusNextPageViewController.xib */; };
 		18E890312A27571900DF9BF2 /* SenderComunicationPlusNextPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E890242A27571900DF9BF2 /* SenderComunicationPlusNextPageViewController.swift */; };
 		2712B5DD712FA34CBCA73BD3 /* Pods_Vs_GradItCollegeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 065F0F78D161AE084415EDC5 /* Pods_Vs_GradItCollegeTests.framework */; };
@@ -158,8 +157,6 @@
 		5245E44F293F4F3800925CBC /* SenderVideoHomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E44B293F4F3700925CBC /* SenderVideoHomePageViewController.swift */; };
 		5245E453293F4F4700925CBC /* SenderPlayingVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E451293F4F4700925CBC /* SenderPlayingVideoViewController.swift */; };
 		5245E454293F4F4700925CBC /* SenderPlayingVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5245E452293F4F4700925CBC /* SenderPlayingVideoViewController.xib */; };
-		5245E458293F4F7A00925CBC /* SenderVideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E456293F4F7A00925CBC /* SenderVideoTableViewCell.swift */; };
-		5245E459293F4F7A00925CBC /* SenderVideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5245E457293F4F7A00925CBC /* SenderVideoTableViewCell.xib */; };
 		5245E460293F542D00925CBC /* SenderAssigmentUpcomingResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E45B293F542D00925CBC /* SenderAssigmentUpcomingResponce.swift */; };
 		5245E461293F542D00925CBC /* SenderAssigmentPastResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245E45C293F542D00925CBC /* SenderAssigmentPastResponce.swift */; };
 		5245E468293F544700925CBC /* SenderAssigmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5245E466293F544700925CBC /* SenderAssigmentTableViewCell.xib */; };
@@ -860,7 +857,6 @@
 		18E8901B2A27571900DF9BF2 /* VoiceRecoredViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VoiceRecoredViewController.xib; sourceTree = "<group>"; };
 		18E8901C2A27571900DF9BF2 /* VoiceRecoredViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceRecoredViewController.swift; sourceTree = "<group>"; };
 		18E8901D2A27571900DF9BF2 /* SenderCommunicationHomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderCommunicationHomePageViewController.swift; sourceTree = "<group>"; };
-		18E8901E2A27571900DF9BF2 /* SenderCommuniUnreadResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderCommuniUnreadResponce.swift; sourceTree = "<group>"; };
 		18E890232A27571900DF9BF2 /* SenderComunicationPlusNextPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderComunicationPlusNextPageViewController.xib; sourceTree = "<group>"; };
 		18E890242A27571900DF9BF2 /* SenderComunicationPlusNextPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderComunicationPlusNextPageViewController.swift; sourceTree = "<group>"; };
 		23DE86799E2CBA09785FF406 /* Pods-Vs_GradItCollege.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vs_GradItCollege.release.xcconfig"; path = "Target Support Files/Pods-Vs_GradItCollege/Pods-Vs_GradItCollege.release.xcconfig"; sourceTree = "<group>"; };
@@ -898,8 +894,6 @@
 		5245E44B293F4F3700925CBC /* SenderVideoHomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderVideoHomePageViewController.swift; sourceTree = "<group>"; };
 		5245E451293F4F4700925CBC /* SenderPlayingVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderPlayingVideoViewController.swift; sourceTree = "<group>"; };
 		5245E452293F4F4700925CBC /* SenderPlayingVideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderPlayingVideoViewController.xib; sourceTree = "<group>"; };
-		5245E456293F4F7A00925CBC /* SenderVideoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderVideoTableViewCell.swift; sourceTree = "<group>"; };
-		5245E457293F4F7A00925CBC /* SenderVideoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderVideoTableViewCell.xib; sourceTree = "<group>"; };
 		5245E45B293F542D00925CBC /* SenderAssigmentUpcomingResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderAssigmentUpcomingResponce.swift; sourceTree = "<group>"; };
 		5245E45C293F542D00925CBC /* SenderAssigmentPastResponce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderAssigmentPastResponce.swift; sourceTree = "<group>"; };
 		5245E466293F544700925CBC /* SenderAssigmentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderAssigmentTableViewCell.xib; sourceTree = "<group>"; };
@@ -2226,7 +2220,6 @@
 				5289B2072A627512002D63CB /* SelectResipientsPage */,
 				18E890152A27571900DF9BF2 /* SendercomuniAddVc */,
 				18E890182A27571900DF9BF2 /* SenderCommuniReadResponce.swift */,
-				18E8901E2A27571900DF9BF2 /* SenderCommuniUnreadResponce.swift */,
 				18E8901D2A27571900DF9BF2 /* SenderCommunicationHomePageViewController.swift */,
 				84E502AE2C12F65C008836C9 /* SenderCommunicationHomePageViewController.xib */,
 				18E8901A2A27571900DF9BF2 /* VoiceRecoredViewController */,
@@ -2448,7 +2441,6 @@
 				5245E4AD293F62A300925CBC /* SenderEventCollectionViewCell  */,
 				5245E484293F57EA00925CBC /* SenderExaminationTeabelViewCell */,
 				5245E465293F544700925CBC /* AssigmentCell */,
-				5245E455293F4F7A00925CBC /* SenderVideoTabelViewCell */,
 			);
 			path = SenderSideTabelViewCell;
 			sourceTree = "<group>";
@@ -2473,15 +2465,6 @@
 				5245E452293F4F4700925CBC /* SenderPlayingVideoViewController.xib */,
 			);
 			path = SenderPlayingVideoViewController;
-			sourceTree = "<group>";
-		};
-		5245E455293F4F7A00925CBC /* SenderVideoTabelViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				5245E456293F4F7A00925CBC /* SenderVideoTableViewCell.swift */,
-				5245E457293F4F7A00925CBC /* SenderVideoTableViewCell.xib */,
-			);
-			path = SenderVideoTabelViewCell;
 			sourceTree = "<group>";
 		};
 		5245E45A293F542D00925CBC /* SenderAssigmentHomePage */ = {
@@ -4851,7 +4834,6 @@
 				84F6FC7F2B32B738006E768B /* Nunito-Italic.ttf in Resources */,
 				5284BD73292E4A9A00120C74 /* SemesterHomePageViewController.xib in Resources */,
 				5245E46E293F546900925CBC /* PlusScreenNextPageViewController.xib in Resources */,
-				5245E459293F4F7A00925CBC /* SenderVideoTableViewCell.xib in Resources */,
 				84F6FC7E2B32B738006E768B /* OFL.txt in Resources */,
 				52AAA7A629727A480047A696 /* PickPDFViewController.xib in Resources */,
 				188F78072912452C000CB50F /* AssignmentCollectionViewCell.xib in Resources */,
@@ -5477,7 +5459,6 @@
 				FA25AEB12DE9755B00A0BE3F /* EditAcademicVc.swift in Sources */,
 				84B25FAB2AB58985006159C6 /* AttendanceViewController.swift in Sources */,
 				52FE201D29DE3A98008D548B /* AssigmentSubmissionTableViewCell.swift in Sources */,
-				18E8902D2A27571900DF9BF2 /* SenderCommuniUnreadResponce.swift in Sources */,
 				18914624290A69E700034317 /* LoginViewController.swift in Sources */,
 				FA3717962E5C40EC0089D831 /* PlacementTrainingVC.swift in Sources */,
 				52F1D45D29D1B38700CD5E86 /* EditAndDeleteExamResponce.swift in Sources */,
@@ -5501,7 +5482,6 @@
 				84F6FC602B31C31A006E768B /* LoginNewViewController.swift in Sources */,
 				52A699D829AC8A240072C0D6 /* SenderAttendanceTableViewCell.swift in Sources */,
 				84B05B9F2B9068EA0003A2D3 /* PutMarkResp.swift in Sources */,
-				5245E458293F4F7A00925CBC /* SenderVideoTableViewCell.swift in Sources */,
 				842787F92BD8E0C400DD780D /* SenderEventHomePageViewController.swift in Sources */,
 				52CF616C29C05BA300053BC9 /* SpecifyTutorMntorResponce.swift in Sources */,
 				527027D629C965DC007C34FD /* ChatSenderViewController.swift in Sources */,

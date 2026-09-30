@@ -1552,12 +1552,8 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
                 
                 let vc = VideoViewController(nibName: nil, bundle: nil)
                 let currentController = self.getCurrentViewController()
-                vc.view.backgroundColor = UIColor(named: "StudentParent")
                 vc.str = str
                 vc.strName = strName
-                vc.is_read_enabled = is_read_enabled
-                vc.is_write_enabled = is_write_enabled
-                
                 vc.modalPresentationStyle = .fullScreen
                 currentController?.present(vc, animated: false, completion: nil)
                 
@@ -1689,7 +1685,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
                 vc.view.backgroundColor = UIColor(named: "Principal" )
                 vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
                 vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                vc.ComunimenuId = communicationId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = is_read_enabled
@@ -1707,7 +1702,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
                 vc.view.backgroundColor = UIColor(named: "Principal" )
                 vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
                 vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                vc.ComunimenuId = communicationId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = is_read_enabled
@@ -1864,7 +1858,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
                 
                 let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
                 let currentController = self.getCurrentViewController()
-                vc.view.backgroundColor = UIColor(named: "Principal" )
                 vc.videoId = videoId
                 vc.str = str
                 vc.strName = strName
@@ -1927,7 +1920,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
                 vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
                 vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                vc.ComunimenuId = communicationId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = is_read_enabled
@@ -1946,7 +1938,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
                 vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
                 vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                vc.ComunimenuId = communicationId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = is_read_enabled
@@ -2089,12 +2080,8 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
                 
                 
                 let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
-                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                
-                
                 vc.str = str
                 vc.strName = strName
-                vc.VideoMenuId = videoId
                 vc.is_read_enabled = is_read_enabled
                 vc.is_write_enabled = is_write_enabled
                 
@@ -2151,7 +2138,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
                 vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
                 vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                vc.ComunimenuId = communicationId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = is_read_enabled
@@ -2168,7 +2154,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
                 vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
                 vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                vc.ComunimenuId = communicationId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = is_read_enabled
@@ -2315,9 +2300,7 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
                 
                 
                 let vc = SenderVideoHomePageViewController(nibName: nil, bundle: nil)
-                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
                 
-                vc.VideoMenuId = videoId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = is_read_enabled

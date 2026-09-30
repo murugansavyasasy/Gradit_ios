@@ -18,9 +18,6 @@ class SenderPlayingVideoViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     
-    var viewBgColor : String!
-     
-    
      
      var titlesss : String!
       var descriptionszs: String!
@@ -30,7 +27,7 @@ class SenderPlayingVideoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
-        view.backgroundColor = UIColor(named: viewBgColor)
+        view.backgroundColor = .priorityColor
         
         titleLabel.text = titlesss
         descriptionLabel.text = descriptionszs
