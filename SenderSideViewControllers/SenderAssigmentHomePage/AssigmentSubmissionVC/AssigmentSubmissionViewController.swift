@@ -1517,8 +1517,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = is_read_enabled
-                vc.is_write_enabled = is_write_enabled
-                
                 vc.modalPresentationStyle = .fullScreen
                 currentController?.present(vc, animated: false, completion: nil)
                 
@@ -1820,7 +1818,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
                 vc.view.backgroundColor = UIColor(named: "Principal" )
                 vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
                 vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                vc.EventMenuId = EventId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = is_read_enabled
@@ -2045,7 +2042,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
                 vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
                 vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                vc.EventMenuId = EventId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = is_read_enabled
@@ -2265,7 +2261,6 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
                 vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
                 vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                vc.EventMenuId = EventId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = is_read_enabled

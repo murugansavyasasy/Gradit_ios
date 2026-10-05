@@ -13,25 +13,16 @@ import KRProgressHUD
 
 @available(iOS 16.0, *)
 class AttendanceViewController: UIViewController,FSCalendarDataSource, FSCalendarDelegate, UITableViewDelegate,UITableViewDataSource, UIGestureRecognizerDelegate{
-    
-    
-    
-    @IBOutlet weak var topNameview: UIView!
-    @IBOutlet weak var tapBarView: UIViewX!
+
+
+    @IBOutlet weak var tapBarView: CustomTabBar!
     @IBOutlet weak var attendaneLblCount: UILabel!
-    @IBOutlet weak var redirectLoginView: UIViewX!
     @IBOutlet weak var Tv: UITableView!
     @IBOutlet weak var logoutView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
     @IBOutlet weak var profileView: UIView!
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var clgLogoImg: UIImageView!
-    @IBOutlet weak var notificationView: UIView!
     @IBOutlet weak var privacyPolicyView: UIView!
-    @IBOutlet weak var topMemberLabel: UILabel!
     @IBOutlet weak var faqView: UIView!
-    @IBOutlet weak var refreshView: UIView!
-    @IBOutlet weak var viewTap: UIView!
     @IBOutlet weak var sideMenuView: UIView!
     @IBOutlet weak var helpView: UIView!
     @IBOutlet weak var termsAndConditionView: UIView!
@@ -75,21 +66,17 @@ class AttendanceViewController: UIViewController,FSCalendarDataSource, FSCalenda
         attendaneLblCount.layer.cornerRadius = 13
         attendaneLblCount.layer.masksToBounds = true
         overrideUserInterfaceStyle = .light
+        tapBarView.delegate = self
         sideMenuView.isHidden = true
         pluPageView.isHidden = true
         collegeid = defaults.string(forKey: DefaultsKeys.collegeid)
         userid = defaults.string(forKey: DefaultsKeys.memberid)
         priority = defaults.string(forKey:DefaultsKeys.priority)
         sectionId = defaults.string(forKey: DefaultsKeys.sectionid)
-        memberName = defaults.string(forKey: DefaultsKeys.memberName)
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        topMemberLabel.text = memberName
+       
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         addApi()
         view.backgroundColor = .priorityColor
-        topLabels.text = .priorityRole
-        tapBarView.backgroundColor = .priorityColor
         
         let rownib = UINib(nibName: identifers, bundle: nil)
         Tv.register(rownib, forCellReuseIdentifier: identifers)
@@ -101,19 +88,8 @@ class AttendanceViewController: UIViewController,FSCalendarDataSource, FSCalenda
         Tv.dataSource = self
         
         Attendance()
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
         let plusPage = UITapGestureRecognizer(target: self, action: #selector(PlusPageVc))
         pluPageView.addGestureRecognizer(plusPage)
-        
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
         
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
@@ -132,9 +108,6 @@ class AttendanceViewController: UIViewController,FSCalendarDataSource, FSCalenda
         
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
-        
-        let tapvoe = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        topNameview.addGestureRecognizer(tapvoe)
         
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
@@ -245,7 +218,7 @@ class AttendanceViewController: UIViewController,FSCalendarDataSource, FSCalenda
         
         var add = AddApiModal()
         let defaults = UserDefaults.standard
-        var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
+        var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken)
         add.device_token = deviceToken
         add.member_id = Int(userid)
         add.mobile_no = MobileNumber
@@ -262,13 +235,9 @@ class AttendanceViewController: UIViewController,FSCalendarDataSource, FSCalenda
             case .success(let success):
                 if success.Status == 1 {
                     addapiRef = success.data ?? []
-                    
                     for i in addapiRef{
-                        
                         bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
                         smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
                         let singleTap = adds(target: self, action: #selector(adLoad))
                         singleTap.url = i.add_url
                         bigImg.isUserInteractionEnabled = true
@@ -307,7 +276,7 @@ class AttendanceViewController: UIViewController,FSCalendarDataSource, FSCalenda
             
             let leaveApi : leaveDataDetails = LeaveRefName[indexPath.row]
             
-            cell.confic(leaveApi: leaveApi, isSeletcted: selectedCell == indexPath)
+            cell.confic(leaveApi: leaveApi, isSeletcted: leaveApi.isSelect ?? false)
             let delets = deleteClick(target: self, action: #selector(deletesVc))
             delets.fromdate = leaveApi.leavefromdate
             delets.reason  = leaveApi.leavereason
@@ -332,32 +301,26 @@ class AttendanceViewController: UIViewController,FSCalendarDataSource, FSCalenda
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+
         if segmentName.selectedSegmentIndex == 0 {
-            let attendance : attendanceAbesentDataDetails = adttendanceRef[indexPath.row]
+
+            let attendance = adttendanceRef[indexPath.row]
             let vc = AttendanceDetailsViewController(nibName: nil, bundle: nil)
             vc.StaffId = attendance.staff_id
             vc.subjectId = attendance.subject_id
             vc.SubjctName = attendance.subjectname
             vc.staffName = attendance.staff_name
             vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true,completion: nil)
-            
-        }else {
-            
-            if let selectedCells = selectedCell, selectedCells == indexPath {
-                selectedCell = nil
-            } else {
-                selectedCell = indexPath
+            present(vc, animated: true)
+
+        } else {
+            for index in LeaveRefName.indices {
+                LeaveRefName[index].isSelect = index == indexPath.row ? LeaveRefName[indexPath.row].isSelect ?? false : false
             }
+            LeaveRefName[indexPath.row].isSelect?.toggle()
+            tableView.reloadData()
         }
-//        Tv.beginUpdates()
-//        Tv.endUpdates()
-        Tv.reloadData()
     }
-    
-    
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -458,27 +421,6 @@ class AttendanceViewController: UIViewController,FSCalendarDataSource, FSCalenda
         present(vc, animated: true, completion: nil)
     }
     
-    @IBAction func refreshVc() {
-        KRProgressHUD.show()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            KRProgressHUD.dismiss()
-            
-        }
-    }
-    
-    
-    @IBAction func notificationVc() {
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        vc.str = str
-        vc.strName = strName
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: false, completion: nil)
-    }
-    
-    @IBAction func menu() {
-        sideMenuView.isHidden.toggle()
-    }
-    
     @IBAction func changePassowrdVC(){
         
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
@@ -502,7 +444,16 @@ class AttendanceViewController: UIViewController,FSCalendarDataSource, FSCalenda
     }
     
 }
-
+@available(iOS 16.0, *)
+extension AttendanceViewController :CustomTabBarDelegate{
+    func didTapSearch() {}
+    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
+    
+    
+}
 class addvertisement : UITapGestureRecognizer{
     var url : String!
 }

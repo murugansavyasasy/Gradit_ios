@@ -31,6 +31,8 @@ class AttendanceMenuTableViewCell: UITableViewCell {
         if leaveApi.leavestatus == "WaitingForApproval" && isSeletcted ?? false{
             approvedLabel.textColor = UIColor(named: "ViewLineColor")
             editStack.isHidden = !(isSeletcted ?? true)
+        }else{
+            editStack.isHidden = true
         }
         dateLabel.text = leaveApi.createdon
         fromDate.text = leaveApi.leavefromdate

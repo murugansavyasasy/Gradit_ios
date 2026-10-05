@@ -338,7 +338,6 @@ struct leaveResponce : Codable{
 }
 
 struct leaveDataDetails : Codable{
-    
     var createdon : String?
     var applicationid : String?
     var leaveapplicationtype : String?
@@ -348,6 +347,7 @@ struct leaveDataDetails : Codable{
     var leavereason : String?
     var leavestatus : String?
     var leavestatusid : String?
+    var isSelect: Bool?
 }
 
 //MARK: Get leave type

@@ -14,8 +14,9 @@ import ALCameraViewController
 import BSImagePicker
 
 @available(iOS 16.0, *)
-class SenderNoticeBoardNextPageViewController: UIViewController, UITextViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentMenuDelegate,UIDocumentPickerDelegate{
+class SenderNoticeBoardNextPageViewController: UIViewController, UITextViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate{
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var uploadImageView: RectangularDashedView!
     @IBOutlet weak var lblCount: UILabel!
     @IBOutlet weak var tapNameview: UIView!
@@ -135,6 +136,19 @@ class SenderNoticeBoardNextPageViewController: UIViewController, UITextViewDeleg
         
         bigImg.isUserInteractionEnabled = true
         bigImg.addGestureRecognizer(singleTap)
+        NotificationCenter.default.addObserver(
+               self,
+               selector: #selector(keyboardWillShow),
+               name: UIResponder.keyboardWillShowNotification,
+               object: nil
+           )
+
+           NotificationCenter.default.addObserver(
+               self,
+               selector: #selector(keyboardWillHide),
+               name: UIResponder.keyboardWillHideNotification,
+               object: nil
+           )
         
     }
 
@@ -224,7 +238,24 @@ class SenderNoticeBoardNextPageViewController: UIViewController, UITextViewDeleg
         }
     }
     
-    
+    @objc func keyboardWillShow(_ notification: Notification) {
+
+        guard let keyboardFrame = notification.userInfo?[
+            UIResponder.keyboardFrameEndUserInfoKey
+        ] as? CGRect else {
+            return
+        }
+
+        let keyboardHeight = keyboardFrame.height
+
+        scrollView.contentInset.bottom = keyboardHeight
+        scrollView.verticalScrollIndicatorInsets.bottom = keyboardHeight
+    }
+    @objc func keyboardWillHide(_ notification: Notification) {
+
+        scrollView.contentInset.bottom = 0
+        scrollView.verticalScrollIndicatorInsets.bottom = 0
+    }
     @IBAction func adLoad(){
         let vc = SenderNoticeAddViewController(nibName: nil, bundle: nil)
         vc.AddWebUrl = addWebUrl
@@ -517,8 +548,6 @@ class SenderNoticeBoardNextPageViewController: UIViewController, UITextViewDeleg
     }
     
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
-        
-        let fileurl: URL = url as URL
         do {
             pdfData = try Data(contentsOf: url, options: NSData.ReadingOptions())
             self.uploadFileLabel.text = "number of file selected :" + "1"
@@ -539,7 +568,6 @@ class SenderNoticeBoardNextPageViewController: UIViewController, UITextViewDeleg
     }
     
     func clickFunction(){
-        
         photoArray.removeAll()
         SelectedAssets.removeAll()
         arrSelectedFilePath.removeAll()

@@ -50,7 +50,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     let defaults = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
-        noRecordLbl.isHidden = true
         yearsView.isHidden = true
         monthView.isHidden = true
         searchbar.delegate = self
@@ -60,6 +59,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         collegeId = defaults.string(forKey: DefaultsKeys.collegeid)!
         priority = defaults.string(forKey: DefaultsKeys.priority)
         topView.backgroundColor = .priorityColor
+        tv.dataSource = self
+        tv.delegate = self
         
         let currentDate = Date()
         let dateFormatter = DateFormatter()
@@ -130,14 +131,12 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let formattedDate = dateFormatter.string(from: currentDate)
         display_date = formattedDate
-        noRecordLbl.isHidden = true
         RefId = 1
         AttendaceHistory()
         
     }
     
     @IBAction func allStaffVIew(){
-        noRecordLbl.isHidden = true
         allsatffView.backgroundColor = .priorityColor
         todayStaffView.backgroundColor = .white
         staffWiseDefaultLbl.textColor = .white
@@ -323,21 +322,12 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             guard let self = self else{return}
             switch result{
             case .success(let getattendace):
-                
-                if getattendace.status == 1  {
-                    getHistorydata = getattendace.data ?? []
-                    searchtodayHistiry = getattendace.data ?? []
-                    noRecordLbl.isHidden = true
-                    tv.dataSource = self
-                    tv.delegate = self
-                    tv.reloadData()
-                    searchbar.isHidden = getHistorydata.count > 1
-                }else{
-                    noRecordLbl.isHidden = false
-                    noRecordLbl.text = getattendace.message
-                }
-                
-                
+                getHistorydata = getattendace.data ?? []
+                searchtodayHistiry = getattendace.data ?? []
+                noRecordLbl.text = getattendace.message
+                searchbar.isHidden = getHistorydata.count < 1
+                noRecordLbl.isHidden = getHistorydata.count != 0
+                tv.reloadData()
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
             }
@@ -348,9 +338,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     func staffList(){
         
         var staffListReq = staffListModalReq()
-        
         staffListReq.CollegeId = Int(collegeId ?? "")
-        
         APiCallManager.shared.callApi(url: APIEndpoints.GetStaffListforBiometric, httpMethod: .post, queryParam: nil, requestBody: staffListReq) { [weak self] (result:Result<staffListModal,Error>) in
             guard let self = self else{return}
             switch result{
@@ -359,7 +347,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                     stafflistdata = getattendace.data ?? []
                     stafNameLbl.text = stafflistdata.first?.staff_name
                     memberId = (stafflistdata.first?.staff_id ?? 0)
-                    searchbar.isHidden = stafflistdata.count > 1
+                    searchbar.isHidden = stafflistdata.count < 1
                 }else{
                     
                     

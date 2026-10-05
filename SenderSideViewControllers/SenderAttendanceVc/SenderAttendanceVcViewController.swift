@@ -315,11 +315,9 @@ class SenderAttendanceVcViewController: UIViewController,FSCalendarDataSource, F
                 swipeImg.isHidden = false
                 
             } else if segmentName.selectedSegmentIndex == 1 {
-                
                 leaveApi(id : "0")
                 calendarImgView.isHidden = true
                 clanderView.isHidden = true
-                Tv.isHidden = false
                 attendanceTV.isHidden = true
                 swipeImg.isHidden = true
                 

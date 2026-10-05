@@ -14,99 +14,39 @@ import KRProgressHUD
 class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
     
-    @IBOutlet weak var topNamelbl: UIView!
     @IBOutlet weak var tapBarView: UIViewX!
-    @IBOutlet weak var topMessageLabel: UILabel!
-    @IBOutlet weak var clgLogoImg: UIImageView!
-    @IBOutlet weak var topLabels: UILabel!
-    
     @IBOutlet weak var sideMenuView: UIView!
-    
-    
-    
     @IBOutlet weak var logoutView: UIView!
-    
     @IBOutlet weak var changeRolesView: UIView!
-    
-    
-    
     @IBOutlet weak var changePasswordView: UIView!
-    
     @IBOutlet weak var termsAndConditionView: UIView!
     @IBOutlet weak var privacyPolicyView: UIView!
-    
-    
     @IBOutlet weak var helpView: UIView!
-    
-    
     @IBOutlet weak var faqView: UIView!
-    
-    
-    
-    @IBOutlet weak var notificationView: UIView!
-    @IBOutlet weak var viewTap: UIView!
-    
-    
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
-    
-    
-    
-    
     @IBOutlet weak var topicLabel: UILabel!
-    
-    
     @IBOutlet weak var venueLabel: UILabel!
-    
-    
     @IBOutlet weak var imageCollectionView: UICollectionView!
-    
     @IBOutlet weak var dateLabel: UILabel!
-    
     @IBOutlet weak var timeLabel: UILabel!
-    
     @IBOutlet weak var bodyLabel: UILabel!
-    
-    
     @IBOutlet weak var noImageTextView: UIView!
-    
     @IBOutlet weak var noImagLabel: UILabel!
     
-    
-    
     var identifier = "MenuEventCollectionViewCell"
-    
-    
-    
-    
-    
-    
-    
-    
     
     var venuestr : String!
     var topistr  : String!
     var datestr  : String!
     var timestr  : String!
     var bodystr  : String!
-    var str      : String!
     var priority : String!
     var filePath : [String] = []
     var addapiRef : [AddDataDeatils] = []
     var collegeid : String!
     var userid    : String!
-    
-    var sectionId : String!
-    var departmentId : String!
-    
-    var loginType : String!
-    
-    var memberName : String!
-    
-    var colgImg : String!
-    
     var MobileNumber : String!
-    
     var previousAdId : Int!
     
     @IBOutlet weak var refreshView: UIView!
@@ -125,19 +65,9 @@ class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICo
         bodyLabel.text = bodystr
         
         let defaults = UserDefaults.standard
-        
-        
         collegeid = defaults.string(forKey: DefaultsKeys.collegeid)
         userid = defaults.string(forKey: DefaultsKeys.memberid)
-        
         priority = defaults.string(forKey: DefaultsKeys.priority)
-        loginType = defaults.string(forKey: DefaultsKeys.loginAsType)
-        memberName = defaults.string(forKey: DefaultsKeys.memberName)
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        
-        topMessageLabel.text = memberName
-        
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         
         let rowNib = UINib(nibName: identifier, bundle: nil)
@@ -150,68 +80,11 @@ class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICo
         noImagLabel.isHidden = true
         
         if filePath.count == 0{
-            
             noImageTextView.isHidden = false
             noImagLabel.isHidden = false
         }
         
         addApi()
-        
-        
-        if priority == "p1"{
-            
-            topLabels.text = "Principal"
-            
-        }
-        
-        else if priority == "p4"{
-            tapBarView.backgroundColor = UIColor(named: "StudentParent" )
-            topLabels.text = "Student"
-            
-        }
-        
-        else if priority == "p2" || priority == "p3"{
-            
-            
-            topLabels.text = "Teacher"
-            
-        }
-        
-        else if priority == "p5"{
-            
-            tapBarView.backgroundColor = UIColor(named: "FatherColor" )
-            topLabels.text = "Father"
-            
-            
-            
-        }
-        
-        
-        
-        // tap Bar UiTapGuster.
-        
-        
-        
-        
-        let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        changeRolesView.addGestureRecognizer(changeRolesGesture)
-        
-        
-        let top = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        topNamelbl.addGestureRecognizer(top)
-        
-        
-        
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
-        
-        
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
         
@@ -220,24 +93,17 @@ class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICo
         
         let helpGesture = UITapGestureRecognizer(target: self, action: #selector(helpRedirect))
         helpView.addGestureRecognizer(helpGesture)
-        //
-        
+     
         let privacyPolicyGesture = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyRedirect))
         privacyPolicyView.addGestureRecognizer(privacyPolicyGesture)
         
         let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
         termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
-        
-        
-        
+
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
-        
-        
     }
-    
-    
-    
+
     @objc func tapDetected(gesture : AddGusters) {
         
         let vc = AddEventsViewController(nibName: nil, bundle: nil)
@@ -247,30 +113,9 @@ class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICo
         
     }
     
-    
-    @IBAction func adLoad(gesture : AddGusters) {
-        
-        
-        
-        
-    }
-    
-    
-    
-    
-    
-    
-    @IBAction func backbtn(_ sender: Any) {
-        
-        dismiss(animated: true)
-    }
-    
-    
     func addApi(){
         
-        
         var add = AddApiModal()
-        
         let defaults = UserDefaults.standard
         var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
         add.device_token = deviceToken
@@ -291,15 +136,9 @@ class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICo
                     addapiRef = success.data ?? []
                     
                     for i in addapiRef{
-                      
                         bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
                         smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-                        let singleTap = adds(target: self, action: #selector(adLoad))
-                        singleTap.url = i.add_url
                         bigImg.isUserInteractionEnabled = true
-                        bigImg.addGestureRecognizer(singleTap)
                     }
                 }
                 
@@ -310,65 +149,31 @@ class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICo
         
     }
      
-    
+    @IBAction func backbtn(_ sender: Any) {
+        dismiss(animated: true)
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        print("coutsss",filePath.count)
-        
-        
         return filePath.count
-        
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! MenuEventCollectionViewCell
-        
-        
-        
-        
-        
         cell.EventCellImageView.sd_setImage(with: URL(string: filePath[indexPath.row]), placeholderImage: UIImage(named: "placeHolder.png"))
-        
-        
-        
         return cell
         
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        
         let vc = EventImageViewController(nibName: nil, bundle: nil)
-        
-        
         vc.imgfilePath = filePath[indexPath.row]
-        
-        
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
-        
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        
-        
-        
-        
         return CGSize(width: collectionView.frame.size.width / 3, height:100)
-        
-        
-        
-        
-        
     }
-    
-    
-    
-    
     
     func getCurrentViewController() -> UIViewController? {
         
@@ -456,59 +261,6 @@ class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICo
         
     }
     
-    
-    
-    
-    
-    @IBAction func refreshVc() {
-        
-        print("refreshVcWork")
-        KRProgressHUD.show()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            
-            KRProgressHUD.dismiss()
-            
-        }
-        
-        
-    }
-    
-    
-    @IBAction func notificationVc() {
-        print("NotificationViewController")
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        
-        vc.modalPresentationStyle = .fullScreen
-        let currentController = self.getCurrentViewController()
-        currentController?.present(vc, animated: false, completion: nil)
-        
-    }
-    
-    
-    
-    
-    @IBAction func menu() {
-        
-        if sideMenuView.isHidden == true{
-            
-            sideMenuView.isHidden = false
-            //
-            
-            print("menuVisble")
-        }
-        
-        else{
-            
-            sideMenuView.isHidden = true
-            
-            print("mddffenuVisble")
-        }
-        
-        
-    }
-    
-    
     @IBAction func changePassowrdVC(){
         
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
@@ -518,26 +270,11 @@ class EventDetailsViewController: UIViewController,UICollectionViewDelegate,UICo
         
     }
     
-    
-    
-    @IBAction func priorityVc() {
-        
-        
-        print("clik ok")
-        
-        
-    }
-    
 }
 
 
 
 
 class AddGusters : UITapGestureRecognizer{
-    
     var urlss : String!
-    
-    
-    
-    
 }

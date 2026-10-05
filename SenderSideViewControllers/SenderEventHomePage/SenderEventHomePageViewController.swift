@@ -11,35 +11,26 @@ import WebKit
 import KRProgressHUD
 
 @available(iOS 16.0, *)
-class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate {
+class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate{
+    
     
     @IBOutlet weak var searchbar: UISearchBar!
-    @IBOutlet weak var topNameview: UIView!
-    @IBOutlet weak var tapBarView: UIViewX!
+    @IBOutlet weak var tapBarView: CustomTabBar!
     @IBOutlet weak var eventTopCountView: UIViewX!
-    @IBOutlet weak var SearchView: UIView!
     @IBOutlet weak var eventtopcountLabel: UILabel!
     @IBOutlet weak var pastCountLabl: UILabel!
     @IBOutlet weak var pastcountView: UIViewX!
     @IBOutlet weak var upcountLabel: UILabel!
     @IBOutlet weak var UpcountView: UIViewX!
-    @IBOutlet weak var redirectLoginView: UIViewX!
-    @IBOutlet weak var notificationView: UIView!
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
-    @IBOutlet weak var topMessageLabel: UILabel!
-    @IBOutlet weak var clgLogoImg: UIImageView!
     @IBOutlet weak var logoutView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
-    @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var changePasswordView: UIView!
     @IBOutlet weak var termsAndConditionView: UIView!
     @IBOutlet weak var helpView: UIView!
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var viewTap: UIView!
     @IBOutlet weak var faqView: UIView!
     @IBOutlet weak var privacyPolicyView: UIView!
-    @IBOutlet weak var refreshView: UIView!
     @IBOutlet weak var sideMenuView: UIView!
     @IBOutlet weak var plussView: UIViewX!
     @IBOutlet weak var searchFullView: UIViewX!
@@ -49,43 +40,26 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
     @IBOutlet weak var noDataLabel: UILabel!
     @IBOutlet weak var EventTableView: UITableView!
     
-    var EventMenuId : String!
-    var identifers = "SenderEventTableViewCell"
+    var identifers = "EventTableViewCell"
     var pastRef     : [SenderPastEventsdatadetails] = []
     var upcomming : [SenderPastEventsdatadetails] = []
-    let menuIdentifier = "MenuCollectionViewCell"
-    var MenuRefName :[menuApiDataDetails] = []
     var addapiRef : [AddDataDeatils] = []
     var overAllRef    : [overAllDataDetails] = []
-    var NoticeBoardId = "1"
-    var videoId = "2"
     var EventId = "3"
-    var communicationId = "4"
-    var imagePdfId = "5"
-    var Assigment = "6"
     var memberId : String!
     var priority : String!
-    var loginType : String!
     var collegeId : String!
-    var memberName : String!
-    var colgImg : String!
-    var headerId : String!
     var departmentId : String!
     var sectionId : String!
     var PreviousAddId : Int = 0
     var mobileNumber : String!
-    var loginDatas : [datalogin]!
-    var logindataprinci :[datalogin]!
     var password : String!
     var str : [String] = []
     var strName : [String] = []
     var is_read_enabled = ""
     var is_write_enabled = ""
-    var selectedCell:IndexPath?
     var backGroundImg : String!
     var SmallImgAdd : String!
-    var segmentID : String!
-    
     var cloneList : [SenderPastEventsdatadetails] = []
     
     override func viewDidAppear(_ animated: Bool) {
@@ -98,101 +72,52 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
         PreviousAddId = PreviousAddId+1
         sideMenuView.isHidden = true
         searchbar.delegate = self
-        searchbar.isHidden  = true
+        tapBarView.delegate = self
         searchFullView .isHidden = true
         let defaults = UserDefaults.standard
         memberId = defaults.string(forKey: DefaultsKeys.memberid)
         priority = defaults.string(forKey: DefaultsKeys.priority)
-        loginType = defaults.string(forKey: DefaultsKeys.loginAsType)
         collegeId = defaults.string(forKey: DefaultsKeys.collegeid)
-        memberName = defaults.string(forKey: DefaultsKeys.memberName)
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
         departmentId = defaults.string(forKey: DefaultsKeys.deptid)
         sectionId = defaults.string(forKey: DefaultsKeys.sectionid)
         mobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         password = defaults.string(forKey: DefaultsKeys.Password)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        topMessageLabel.text = memberName
         addApi()
-        
-        
         if is_read_enabled == "1"{
             upcoming()
         }
-        
         plussView.isHidden = is_write_enabled != "1"
-        tapBarView.backgroundColor = .priorityColor
         view.backgroundColor = .priorityColor
-        topLabels.text = .priorityRole
         plussView.isHidden = priority == "p6"
         overAllRefName()
- 
         let rownib = UINib(nibName: identifers, bundle: nil)
         EventTableView .register(rownib, forCellReuseIdentifier: identifers)
         EventTableView.delegate = self
         EventTableView.dataSource = self
         
-        
         let plusAddViews = UITapGestureRecognizer(target: self, action: #selector(PlusVc))
         plussView.addGestureRecognizer(plusAddViews)
-        
         noDataLabel.isHidden = true
         noDataTextView.isHidden = true
-
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
-        
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
-        
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
-        
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
-        
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
-        
         let helpGesture = UITapGestureRecognizer(target: self, action: #selector(helpRedirect))
         helpView.addGestureRecognizer(helpGesture)
-        
         let privacyPolicyGesture = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyRedirect))
         privacyPolicyView.addGestureRecognizer(privacyPolicyGesture)
-        
         let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
         termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
-        
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
-        
-        let topname = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        topNameview.addGestureRecognizer(topname)
-        
-        let Serach = UITapGestureRecognizer(target: self, action: #selector(Searchfield))
-        SearchView.addGestureRecognizer(Serach)
-        
-    }
-    
-    
-    
-    
-    @IBAction func Searchfield() {
-        searchbar.isHidden  = false
-        searchFullView .isHidden = false
     }
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         let filtered_list : [SenderPastEventsdatadetails] = cloneList
-        
         if !searchText.isEmpty{
             
             upcomming = filtered_list.filter {
@@ -205,9 +130,7 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
         }
         EventTableView.reloadData()
     }
-    
-    
-    
+
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchbar.endEditing(true)
     }
@@ -218,7 +141,6 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchbar.isHidden  = true
         searchFullView .isHidden = true
         searchbar.resignFirstResponder()
     }
@@ -245,12 +167,8 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
     @IBAction func segmentAction(_ sender: UISegmentedControl) {
         if is_read_enabled == "1"{
             if eventSegmentName.selectedSegmentIndex == 0{
-                segmentID = "1"
-                EventTableView.isScrollEnabled = false
                 upcoming()
             }else if eventSegmentName.selectedSegmentIndex == 1 {
-                segmentID = "2"
-                EventTableView.isScrollEnabled = false
                 past()
             }
         }
@@ -358,36 +276,24 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
         
         return 0
     }
-    
-    
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifers, for: indexPath) as! SenderEventTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifers, for: indexPath) as!
+        EventTableViewCell
         
         cell.selectionStyle = .none
-        if eventSegmentName.selectedSegmentIndex == 0 {
-            let Upcommimgsevent : SenderPastEventsdatadetails = upcomming[indexPath.row]
-            cell.ReadDotImageView.isHidden =  Upcommimgsevent.isappread == "1"
-            cell.topicCellLabel.text = Upcommimgsevent.topic?.capitalized
-            cell.eventDateCellLabel.text = Upcommimgsevent.event_date
-            cell.timeDateCellLabel.text = Upcommimgsevent.event_time
-            cell.createrNameCellLabel.text = Upcommimgsevent.createdbyname
-            cell.discreptionlbl.text = Upcommimgsevent.body
-            
-        }else if eventSegmentName.selectedSegmentIndex == 1{
-            
-            let Pastsevent : SenderPastEventsdatadetails = pastRef[indexPath.row]
-            cell.ReadDotImageView.isHidden =  Pastsevent.isappread == "1"
-            cell.topicCellLabel.text = Pastsevent.topic?.capitalized
-            cell.eventDateCellLabel.text = Pastsevent.event_date
-            cell.timeDateCellLabel.text = Pastsevent.event_time
-            cell.createrNameCellLabel.text = Pastsevent.createdbyname
-            cell.discreptionlbl.text = Pastsevent.body
-        }
+        
+        let event = eventSegmentName.selectedSegmentIndex == 0 ? upcomming[indexPath.row]: pastRef[indexPath.row]
+        cell.readImageView.backgroundColor =  event.isappread == "1" ? .clear : .red.withAlphaComponent(0.3)
+        cell.topicCellLabel.text = event.topic?.capitalized
+        cell.eventDateCellLabel.text = event.event_date
+        cell.timeDateCellLabel.text = event.event_time
+        cell.createrNameCellLabel.text = event.createdbyname
+        cell.discreptionlabl.text = event.body
+        
         return cell
         
     }
-    
     
     func viewclick(gesture : SenderPastEventsdatadetails,isEdit: Bool){
             let vc = SenderEventDetailsPageViewController(nibName: nil, bundle: nil)
@@ -405,36 +311,21 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-    
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifers, for: indexPath) as!SenderEventTableViewCell
-        
         if eventSegmentName.selectedSegmentIndex == 0{
-            if let selectedCells = selectedCell, selectedCells == indexPath {
-                selectedCell = nil
-            }else{
-                
-                selectedCell = indexPath
-                if upcomming[indexPath.row].isappread == "0"{
-                    apread(gesture : upcomming[indexPath.row].eventdetailsid ?? "")
-                    upcomming[indexPath.row].isappread = "1"
-                    cell.ReadDotImageView.isHidden = true
-                }
-                viewclick(gesture: upcomming[indexPath.row], isEdit: true)
+            if upcomming[indexPath.row].isappread == "0"{
+                apread(gesture : upcomming[indexPath.row].eventdetailsid ?? "")
+                upcomming[indexPath.row].isappread = "1"
             }
         }else if eventSegmentName.selectedSegmentIndex == 1 {
-            if let selectedCells = selectedCell, selectedCells == indexPath {
-                selectedCell = nil
-            }else{
-                selectedCell = indexPath
-                if pastRef[indexPath.row].isappread == "0"{
-                    apread(gesture : pastRef[indexPath.row].eventdetailsid ?? "")
-                    pastRef[indexPath.row].isappread = "1"
-                    cell.ReadDotImageView.isHidden = true
-                }
-                viewclick(gesture: pastRef[indexPath.row], isEdit: false)
+            if pastRef[indexPath.row].isappread == "0"{
+                apread(gesture : pastRef[indexPath.row].eventdetailsid ?? "")
+                pastRef[indexPath.row].isappread = "1"
             }
         }
+        let event = eventSegmentName.selectedSegmentIndex == 0 ? upcomming[indexPath.row]: pastRef[indexPath.row]
+        viewclick(gesture: event, isEdit: eventSegmentName.selectedSegmentIndex == 0)
         EventTableView.reloadData()
+        
     }
     
     
@@ -609,7 +500,7 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
     }
     
     @IBAction func refreshVc() {
-        if segmentID == "1"{
+        if eventSegmentName.selectedSegmentIndex == 0{
             upcoming()
         }else{
             past()
@@ -641,6 +532,16 @@ class SenderEventHomePageViewController: UIViewController,UITableViewDataSource,
         let vc = PriorityScreenVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true,completion: nil)
+    }
+}
+@available(iOS 16.0, *)
+extension SenderEventHomePageViewController:CustomTabBarDelegate {
+    func didTapSearch() {
+        searchFullView.isHidden.toggle()
+    }
+    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
     }
 }
 class eventAdd: UITapGestureRecognizer{
