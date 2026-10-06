@@ -103,7 +103,6 @@ class EventsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true, completion: nil)
             
@@ -140,7 +139,6 @@ class EventsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
             vc.eventSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
             vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
             vc.view.backgroundColor = UIColor(named: "FatherColor" )

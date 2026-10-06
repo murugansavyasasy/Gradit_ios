@@ -519,7 +519,6 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
             
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false, completion: nil)
@@ -594,7 +593,6 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             vc.str = str
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
-            vc.is_write_enabled = is_write_enabled
             
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false, completion: nil)

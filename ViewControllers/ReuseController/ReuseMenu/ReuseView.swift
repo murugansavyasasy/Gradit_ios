@@ -1356,9 +1356,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 vc.modalPresentationStyle = .fullScreen
                 
                 vc.is_read_enabled = read
-                vc.is_write_enabled = write
-                
-                
                 vc.str = str
                 vc.strName = strName
                 vc.view.backgroundColor = UIColor(named: "StudentParent")
@@ -1940,8 +1937,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
                 vc.is_read_enabled = read
                 vc.is_write_enabled = write
-                
-                vc.EventMenuId = EventId
                 vc.str = str
                 vc.strName = strName
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
@@ -2205,9 +2200,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
                 vc.is_read_enabled = read
                 vc.is_write_enabled = write
-                
-                
-                vc.EventMenuId = EventId
                 vc.str = str
                 vc.strName = strName
                 vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
@@ -2454,8 +2446,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = read
-                vc.is_write_enabled = write
-                
                 vc.view.backgroundColor = UIColor(named: "FatherColor")
                 vc.eventSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
                 vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
@@ -2745,10 +2735,7 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
             
             else if str[indexPath.row] == "events"{
                 
-                
                 let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-               
-                vc.EventMenuId = EventId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = read

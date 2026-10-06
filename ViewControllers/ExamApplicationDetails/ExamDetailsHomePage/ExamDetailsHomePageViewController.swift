@@ -11,96 +11,47 @@ import ObjectMapper
 @available(iOS 16.0, *)
 class ExamDetailsHomePageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
-    
-   
     @IBOutlet weak var noDataTextLabel: UILabel!
     @IBOutlet weak var noDataView: UIView!
-    
-    
     @IBOutlet weak var examDetailsTabelView: UITableView!
     
    
     var identifers = "ExamesApplicationTableViewCell"
     var examRef : [examesDataDetails] = []
-    let menuIdentifier = "MenuCollectionViewCell"
-    var MenuRefName :[menuApiDataDetails] = []
-    
     var colgId  : String!
     var courseid : String!
     var memberId : String!
     var semesterid : String!
-    var  priority : String!
+    var priority : String!
     var str : [String] = []
-    
     var strName : [String] = []
-    
     var is_read_enabled = ""
     var is_write_enabled = ""
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         noDataView.isHidden = true
         noDataTextLabel.isHidden = true
         overrideUserInterfaceStyle = .light
-        
-        
         let defaults = UserDefaults.standard
-        
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
-        
         courseid = defaults.string(forKey: DefaultsKeys.courseid)
         memberId = defaults.string(forKey: DefaultsKeys.memberid)
         semesterid  = defaults.string(forKey: DefaultsKeys.semesterid)
         priority = defaults.string(forKey: DefaultsKeys.priority)
-        
         let rowNib = UINib(nibName: identifers, bundle: nil)
         examDetailsTabelView.register(rowNib, forCellReuseIdentifier: identifers)
         examDetailsTabelView.delegate = self
         examDetailsTabelView.dataSource = self
         examRefname ()
-        
-     
-        if priority == "p1" {
-            
-            
-            print("PrincipalVieewwColor")
-            view.backgroundColor = UIColor(named: "Principal" )
-            
-            
-        }else if priority == "p4" {
-            
-            print("StudentVieewwColor")
-            view.backgroundColor = UIColor(named: "studentViewColors")
-            
-            
-        } else if priority == "p3" ||  priority == "p2" {
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-            
-        }
-        else if priority == "p5"{
-            
-            
-            
-            view.backgroundColor = UIColor(named: "FatherColor")
-            
-            
-        }
+        view.backgroundColor = .priorityColor
     }
     
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        
         return examRef.count
-        
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,22 +65,14 @@ class ExamDetailsHomePageViewController: UIViewController,UITableViewDelegate,UI
         cell.cellFeeAmountLabel.text = exam.amount
         cell.cellSemNumberLabel.text = exam.sem_number
         cell.cellSubjectNameLabel.text = exam.subject_name
-        
-        
         return cell
         
     }
-    
-    
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return UITableView.automaticDimension
     }
-    
-    
-    
     
     func examRefname () {
         
@@ -169,18 +112,6 @@ class ExamDetailsHomePageViewController: UIViewController,UITableViewDelegate,UI
             }
         }
     }
-    
-    // this part  bottom swipe  view.
-    
-    
-    
-    
-    
-   
-    
-    
-    
-    
     
     @IBAction func back(_ sender: Any) {
         

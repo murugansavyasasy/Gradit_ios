@@ -13,39 +13,25 @@ import KRProgressHUD
 class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     
     @IBOutlet weak var searchbar: UISearchBar!
-    @IBOutlet weak var topNameview: UIView!
-    @IBOutlet weak var SearchView: UIView!
     @IBOutlet weak var searchFullView: UIViewX!
-    @IBOutlet weak var redirectLoginView: UIViewX!
-    @IBOutlet weak var notificationView: UIView!
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
     @IBOutlet weak var logoutView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
     @IBOutlet weak var tapBarView: UIViewX!
-    @IBOutlet weak var profileView: UIView!
-    @IBOutlet weak var topMessageLabel: UILabel!
-    @IBOutlet weak var clgLogoImg: UIImageView!
     @IBOutlet weak var helpView: UIView!
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var viewTap: UIView!
     @IBOutlet weak var faqView: UIView!
     @IBOutlet weak var privacyPolicyView: UIView!
-    @IBOutlet weak var refreshView: UIView!
     @IBOutlet weak var sideMenuView: UIView!
     @IBOutlet weak var termsAndConditionView: UIView!
     @IBOutlet weak var changePasswordView: UIView!
     @IBOutlet weak var plusImageView: UIImageView!
     @IBOutlet weak var noticeBoardCountViews: UIViewX!
-    @IBOutlet weak var collegeCountView: UIViewX!
-    @IBOutlet weak var departmentCountView: UIViewX!
     @IBOutlet weak var noRecordLbl: UILabel!
-    @IBOutlet weak var departmentCountLabel: UILabel!
     @IBOutlet weak var noticeBoardCountLabel: UILabel!
     @IBOutlet weak var noticesBoardTableView: UITableView!
-    @IBOutlet weak var noticeSegments: UISegmentedControl!
+    @IBOutlet weak var noticeSegments: BadgedSegmentedControl!
     @IBOutlet weak var plusAddView: UIViewX!
-    @IBOutlet weak var collegeCountLabel: UILabel!
     @IBOutlet weak var noRecordView: UIView!
     
     var Indentifiers = "SenderNoticeBoardTableViewCell"
@@ -93,28 +79,22 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
         if sectionID == ""{
             sectionID = "0"
         }
-        memberName = defaults.string(forKey: DefaultsKeys.memberName)
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        topMessageLabel.text = memberName
         addApi()
         if is_read_enabled == "1"{
             departRefName()
         }
+        noticeSegments.setTitle("Department      ", forSegmentAt: 0)
+        noticeSegments.setTitle("College        ", forSegmentAt: 1)
         plusAddView.isHidden = is_write_enabled != "1"
         noticesBoardTableView.allowsSelection = true
         noticesBoardTableView.dataSource =  self
         noticesBoardTableView.delegate =  self
         tapBarView.backgroundColor = .priorityColor
-        topLabels.text = .priorityRole
         view.backgroundColor = .priorityColor
         overAllRefName()
         
         let rowNib = UINib(nibName: Indentifiers, bundle: nil)
         noticesBoardTableView.register(rowNib, forCellReuseIdentifier: Indentifiers)
-        
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
         
         let plusAddViews = UITapGestureRecognizer(target: self, action: #selector(PlusVc))
         plusAddView.addGestureRecognizer(plusAddViews)
@@ -125,20 +105,10 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
         
-        let topname = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        topNameview.addGestureRecognizer(topname)
         
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
         
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
         
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
@@ -154,9 +124,6 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
         
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
-        
-        let Serach = UITapGestureRecognizer(target: self, action: #selector(Searchfield))
-        SearchView.addGestureRecognizer(Serach)
         
     }
     
@@ -574,24 +541,19 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
             case .success(let result):
                 if result.Status == 1{
                     overAllRef = result.data ?? []
-                    
+                    noticeSegments.collegeCount = Int(result.data?.first?.collegenotice ?? "0") ?? 0
+                    noticeSegments.departmentCount = Int(result.data?.first?.departmentcircular ?? "0") ?? 0
                     for i in overAllRef{
-                        departmentCountLabel.text = i.departmentnotice
-                        collegeCountLabel.text = i.collegenotice
                         let hasDepartmentNotice = i.departmentnotice != "0"
                         let hasCollegeNotice = i.collegenotice != "0"
-                        departmentCountView.isHidden = !hasDepartmentNotice
-                        collegeCountView.isHidden = !hasCollegeNotice
                         noticeBoardCountViews.isHidden = !hasDepartmentNotice && !hasCollegeNotice
                     }
                     
-                    noticeBoardCountLabel.text = String((Int( departmentCountLabel.text!) ?? 0) + (Int(collegeCountLabel.text!) ?? 0))
+                    noticeBoardCountLabel.text = String((Int( overAllRef.first?.departmentnotice ?? "0") ?? 0) + (Int(overAllRef.first?.collegecircular ?? "0") ?? 0))
                     noticesBoardTableView.delegate = self
                     noticesBoardTableView.dataSource = self
                     noticesBoardTableView.reloadData()
                 }else{
-                    departmentCountView.isHidden = true
-                    collegeCountView.isHidden = true
                     noticeBoardCountViews.isHidden = true
                 }
             case .failure(let error):
@@ -729,3 +691,117 @@ class CollegeNoticeDelete : UITapGestureRecognizer{
     var noticeBoardId : String!
 }
 
+
+final class BadgedSegmentedControl: UISegmentedControl {
+
+    var departmentCount: Int = 14 { didSet { updateBadgeTexts() } }
+    var collegeCount: Int = 217 { didSet { updateBadgeTexts() } }
+
+    /// Distance from the right edge of each segment to the badge.
+    var badgeTrailingInset: CGFloat = 8 { didSet { setNeedsLayout() } }
+
+    private var badgeLabels: [PaddedBadgeLabel] = []
+
+    private var counts: [Int] { [departmentCount, collegeCount] }
+
+    override init(items: [Any]?) {
+        super.init(items: items)
+        setupBadges()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupBadges()
+    }
+
+    override func insertSegment(withTitle title: String?, at segment: Int, animated: Bool) {
+        super.insertSegment(withTitle: title, at: segment, animated: animated)
+        setupBadges()
+    }
+
+    override func removeSegment(at segment: Int, animated: Bool) {
+        super.removeSegment(at: segment, animated: animated)
+        setupBadges()
+    }
+
+    // MARK: - Badges
+
+    /// Creates badges only when the segment count changes (not on every layout pass).
+    private func setupBadges() {
+        guard badgeLabels.count != numberOfSegments else {
+            updateBadgeTexts()
+            return
+        }
+
+        badgeLabels.forEach { $0.removeFromSuperview() }
+        badgeLabels = (0..<numberOfSegments).map { _ in
+            let label = PaddedBadgeLabel()
+            label.backgroundColor = UIColor(red: 255/255, green: 90/255, blue: 95/255, alpha: 1)
+            label.textColor = .white
+            label.font = .systemFont(ofSize: 11, weight: .bold)
+            label.textAlignment = .center
+            label.clipsToBounds = true
+            label.isUserInteractionEnabled = false   // don't block segment taps
+            label.isAccessibilityElement = false
+            addSubview(label)
+            return label
+        }
+        updateBadgeTexts()
+        setNeedsLayout()
+    }
+
+    private func updateBadgeTexts() {
+        for (i, label) in badgeLabels.enumerated() {
+            if i < counts.count {
+                label.text = "\(counts[i])"
+                label.isHidden = false
+            } else {
+                label.isHidden = true      // avoids index-out-of-range for extra segments
+            }
+        }
+        setNeedsLayout()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        guard numberOfSegments > 0, badgeLabels.count == numberOfSegments else { return }
+
+        let segmentWidth = bounds.width / CGFloat(numberOfSegments)
+        let isRTL = effectiveUserInterfaceLayoutDirection == .rightToLeft
+
+        for (i, label) in badgeLabels.enumerated() {
+            let size = label.intrinsicContentSize
+            let segmentIndex = isRTL ? numberOfSegments - 1 - i : i
+            let segmentMaxX = segmentWidth * CGFloat(segmentIndex + 1)
+            let segmentMinX = segmentWidth * CGFloat(segmentIndex)
+
+            let x = isRTL
+                ? segmentMinX + badgeTrailingInset
+                : segmentMaxX - badgeTrailingInset - size.width
+
+            label.frame = CGRect(x: x,
+                                 y: (bounds.height - size.height) / 2,
+                                 width: size.width,
+                                 height: size.height).integral
+            label.layer.cornerRadius = label.bounds.height / 2
+            bringSubviewToFront(label)    // segment views can be reordered on selection
+        }
+    }
+}
+
+/// UILabel with built-in padding so no Auto Layout container view is needed.
+private final class PaddedBadgeLabel: UILabel {
+    private let insets = UIEdgeInsets(top: 2, left: 6, bottom: 2, right: 6)
+
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.inset(by: insets))
+    }
+
+    override var intrinsicContentSize: CGSize {
+        let base = super.intrinsicContentSize
+        let width = max(base.width + insets.left + insets.right,
+                        base.height + insets.top + insets.bottom) // keep it at least circular
+        return CGSize(width: width, height: base.height + insets.top + insets.bottom)
+    }
+}

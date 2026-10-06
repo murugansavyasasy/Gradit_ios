@@ -247,7 +247,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                     } else if slug == "events" {
                         let vc = EventsViewController(nibName: nil, bundle: nil)
                         vc.is_read_enabled = read
-                        vc.is_write_enabled = write
                         vc.str = str
                         vc.strName = strName
                         vc.view.backgroundColor = UIColor(named: "StudentParent")
@@ -512,7 +511,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
                         vc.is_read_enabled = read
                         vc.is_write_enabled = write
-                        vc.EventMenuId = EventId
                         vc.str = str
                         vc.strName = strName
                         vc.view.backgroundColor = UIColor(named: "Teaching Staff")
@@ -637,7 +635,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
                         vc.is_read_enabled = read
                         vc.is_write_enabled = write
-                        vc.EventMenuId = EventId
                         vc.str = str
                         vc.strName = strName
                         vc.view.backgroundColor = UIColor(named: "univercityColorCod")
@@ -751,7 +748,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         vc.str = str
                         vc.strName = strName
                         vc.is_read_enabled = read
-                        vc.is_write_enabled = write
                         vc.view.backgroundColor = UIColor(named: "FatherColor")
                         vc.eventSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
                         vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "FatherSelector")
@@ -893,7 +889,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         present(vc)
                     } else if slug == "events" {
                         let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                        vc.EventMenuId = EventId
                         vc.str = str
                         vc.strName = strName
                         vc.is_read_enabled = read

@@ -16,29 +16,22 @@ import AWSCore
 import AWSS3
 
 @available(iOS 16.0, *)
-class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate & UINavigationControllerDelegate{
     
-    @IBOutlet weak var tapBarView: UIViewX!
+    
+    @IBOutlet weak var tapBarView: CustomTabBar!
     @IBOutlet weak var editView: UIViewX!
-    @IBOutlet weak var redirectLoginView: UIViewX!
     @IBOutlet weak var confirmView: UIViewX!
     @IBOutlet weak var addView: UIViewX!
-    @IBOutlet weak var notificationView: UIView!
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
-    @IBOutlet weak var topMessageLabel: UILabel!
-    @IBOutlet weak var clgLogoImg: UIImageView!
     @IBOutlet weak var logoutView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
-    @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var changePasswordView: UIView!
     @IBOutlet weak var termsAndConditionView: UIView!
     @IBOutlet weak var helpView: UIView!
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var viewTap: UIView!
     @IBOutlet weak var faqView: UIView!
     @IBOutlet weak var privacyPolicyView: UIView!
-    @IBOutlet weak var refreshView: UIView!
     @IBOutlet weak var sideMenuView: UIView!
     @IBOutlet weak var venueLabel: UILabel!
     @IBOutlet weak var topicLabel: UILabel!
@@ -47,39 +40,23 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
     @IBOutlet weak var bodyLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var noImageLabel: UILabel!
-    @IBOutlet weak var venueView: UIView!
-    @IBOutlet weak var dateView: UIView!
     
     var identifers = "SenderEventCollectionViewCell"
-    var image_choose: Bool = false
-    var selectedImageUrl: URL!
     var SelectedAssets = [PHAsset]()
     var photoArray = [UIImage]()
     var arrSelectedFilePath : [Any] = []
     var image = UIImagePickerController()
-    var AwsUrl : String!
-    var sendImageEvent : [sendImageEventDataDetails] = []
-    var addapiRef : [AddDataDeatils] = []
     var AwsfilePath : [String] = []
     var priority : String!
     var meberID : String!
-    var memberName : String!
-    var colgImg : String!
     var coldId : String!
     var userId : String!
     var TotalAws : String!
-    var loginDatas : [datalogin]!
-    var logindataprinci :[datalogin]!
     var MobileNumber : String!
     var password : String!
-    var AddButtonId : String = "0"
-    var previousAdId : String!
     var currentImageCount = 0
     var totalImageCount = 0
     var originalImagesArray = [UIImage]()
-    var absoluteStringImg : String!
-    var imageUrlArray = NSMutableArray()
-    var convertedImagesUrlArray = NSMutableArray()
     var selectedeventDetails:SenderPastEventsdatadetails?
     var backGroundImg : String!
     var SmallImgAdd : String!
@@ -93,24 +70,17 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         confirmView.isHidden = true
-        venueView.layer.cornerRadius = venueView.frame.height/2
-        dateView.layer.cornerRadius = dateView.frame.height/2
         let defaults = UserDefaults.standard
-        memberName = defaults.string(forKey: DefaultsKeys.memberName)
         meberID = defaults.string(forKey: DefaultsKeys.memberid)
         coldId = defaults.string(forKey: DefaultsKeys.collegeid)
         priority = defaults.string(forKey: DefaultsKeys.priority)
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         userId = defaults.string(forKey: DefaultsKeys.memberid)
         password = defaults.string(forKey: DefaultsKeys.Password)
         MobileNumber = defaults.string(forKey: DefaultsKeys.Password)
-        
-        topMessageLabel.text = memberName
-        
         bigImg.sd_setImage(with: URL(string: backGroundImg), placeholderImage: UIImage(named: "ic_white"))
         smallImg.sd_setImage(with: URL(string: SmallImgAdd), placeholderImage: UIImage(named: "ic_white"))
         sideMenuView.isHidden = true
+        tapBarView.delegate = self
         venueLabel.text = selectedeventDetails?.venue ?? ""
         dateLabel.text = selectedeventDetails?.event_date ?? ""
         timeLabel.text = selectedeventDetails?.event_time ?? ""
@@ -122,10 +92,6 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
             editView.isHidden = true
         }
         view.backgroundColor = .priorityColor
-        tapBarView.backgroundColor = .priorityColor
-        topLabels.text = .priorityRole
-        
-        
         let rowNib = UINib(nibName: identifers, bundle: nil)
         imageCollectionView.register(rowNib, forCellWithReuseIdentifier: identifers)
         imageCollectionView.delegate = self
@@ -145,20 +111,12 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
         let addImage = UITapGestureRecognizer(target: self, action: #selector(addImageEventView))
         addView.addGestureRecognizer(addImage)
         
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
-        
+       
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
+
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
         
@@ -193,12 +151,9 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
         present(vc, animated: true)
     }
     @IBAction func addImageEventView( ){
-        let AddimagId = "1"
-        AddButtonId = AddimagId
         let alert = UIAlertController(title: "Add Photo", message: "", preferredStyle: .actionSheet)
         for i in ["Camera", "Gallery"] {
             alert.addAction(UIAlertAction(title: i, style: .default, handler: choose_image_handler))
-            
         }
         alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -227,8 +182,6 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
         cell.cellImageView.sd_setImage(with: URL(string: filepath?[indexPath.row] ?? ""), placeholderImage: UIImage(named: "placeHolder.png"))
         return cell
     }
-    
-    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = SenderImageViewController(nibName: nil, bundle: nil)
@@ -273,19 +226,13 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
     }
     
     @IBAction func logoutPressed() {
-        let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to logout", preferredStyle: UIAlertController.Style.alert)
-        refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
+        AlertHelper.showOKCancelAlert(on: self, title: "", message: "Are you sure do you want to logout",okTitle: "YES",cancelTitle: "NO",okAction: {
             UserDefaults.standard.removeObject(forKey: DefaultsKeys.mobileNumber)
             let vc = LoginVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
-        }))
-        refreshAlert.addAction(UIAlertAction(title: "NO", style: .cancel, handler: { (action: UIAlertAction!) in
-            print("Handle Cancel Logic here")
-        }))
-        present(refreshAlert, animated: true, completion: nil)
+        })
     }
-    
     
     @IBAction func faqRedirect() {
         let vc = FaqViewController(nibName: nil, bundle: nil)
@@ -300,13 +247,7 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
         let currentController = self.getCurrentViewController()
         currentController?.present(vc, animated: true, completion: nil)
     }
-    
-    @IBAction func refreshVc() {
-        KRProgressHUD.show()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            KRProgressHUD.dismiss()
-        }
-    }
+
     
     @IBAction func notificationVc() {
         let vc = NotificationViewController(nibName: nil, bundle: nil)
@@ -315,10 +256,6 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
         vc.modalPresentationStyle = .fullScreen
         let currentController = self.getCurrentViewController()
         currentController?.present(vc, animated: false, completion: nil)
-    }
-    
-    @IBAction func menu() {
-        sideMenuView.isHidden.toggle()
     }
     
     
@@ -375,7 +312,6 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
         let okAction = UIAlertAction(title: "OK", style:.default, handler: nil)
         alertVC.addAction(okAction)
         present(alertVC,animated: true,completion: nil)
-        
     }
     
     func open_gallery(){
@@ -387,9 +323,6 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
         imagePicker.settings.selection.max = 5
         imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
         presentImagePicker(imagePicker, animated: true, select:{ (asset: PHAsset) -> Void in}, deselect: { (assets : PHAsset) -> Void in}, cancel: {(assets: [PHAsset]) -> Void in}, finish: {(assets: [PHAsset]) -> Void in
-            
-            
-            self.image_choose = true
             
             for i in 0..<assets.count{
                 let resource = PHAssetResource.assetResources(for: assets[i]).first
@@ -481,9 +414,6 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
                         DispatchQueue.main.async {
                             self.getImageURL(images: self.originalImagesArray)
                         }
-                    } else {
-                        self.convertedImagesUrlArray = self.imageUrlArray
-                        
                     }
                 }
                 
@@ -533,9 +463,7 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
                 switch result {
                 case .success(let particularss):
     
-                    if particularss.Status == 1{
-                        self.sendImageEvent = particularss.data ?? []
-                        let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: UIAlertController.Style.alert)
+                    if particularss.Status == 1{                        let refreshAlert = UIAlertController(title: "", message: particularss.Message, preferredStyle: UIAlertController.Style.alert)
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
                             
                             guard let self = self else { return }
@@ -589,5 +517,11 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
     }
     
 }
-
-
+@available(iOS 16.0, *)
+extension SenderEventDetailsPageViewController:CustomTabBarDelegate {
+    func didTapSearch() {}
+    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
+}

@@ -1214,7 +1214,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             for i in DefaultsKeys.MenuRefName{
                 if i.menu_slug == "events"{
                     vc.is_read_enabled = String(i.is_read_enabled)
-                    vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
             
@@ -1293,7 +1292,6 @@ class HomeScreenViewController: UIViewController,UITableViewDataSource,UITableVi
             for i in DefaultsKeys.MenuRefName{
                 if i.menu_slug == "events"{
                     vc.is_read_enabled = String(i.is_read_enabled)
-                    vc.is_write_enabled = String(i.is_write_enabled)
                 }
             }
             vc.eventSegmentName.backgroundColor = UIColor(named: "FatherUnselector")
