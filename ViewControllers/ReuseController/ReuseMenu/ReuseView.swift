@@ -1907,7 +1907,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 vc.is_write_enabled = write
                 
                
-                vc.imagePdfMenuIdType = imagePdfId
                 vc.str = str
                 vc.strName = strName
                 vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
@@ -2171,7 +2170,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
                 vc.is_write_enabled = write
                 
                
-                vc.imagePdfMenuIdType = imagePdfId
                 vc.str = str
                 vc.strName = strName
                 vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
@@ -2719,7 +2717,6 @@ class ReuseView  : UIView,UICollectionViewDelegate,UICollectionViewDataSource,UI
             }else if str[indexPath.row] == "circular"{
                 
                 let vc = SenderImagePdfHomePageViewController(nibName: nil, bundle: nil)
-                vc.imagePdfMenuIdType = imagePdfId
                 vc.str = str
                 vc.strName = strName
                 vc.is_read_enabled = read

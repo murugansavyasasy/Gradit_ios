@@ -773,7 +773,6 @@ class SenderCommunicationHomePageViewController: UIViewController,UITableViewDel
         
     }
     
-    
     @IBAction func faqRedirect() {
         print("faqRedirect")
         let vc = FaqViewController(nibName: nil, bundle: nil)

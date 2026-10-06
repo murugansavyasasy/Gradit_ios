@@ -108,15 +108,12 @@ class CircularTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollecti
         cell.createTime.text = circular.createddate?.dateFormater(input: "hh:mm:ss a",output:"hh:mm a")
         cell.discreption.text = circular.description
         cell.title.text = circular.title
-        cell.CircularFullView.backgroundColor = UIColor(red: 190/255, green: 174/255, blue: 255/255, alpha: 0.23)
         let  play = Attchment(target: self, action: #selector(attachmentVc))
         for i in circular.filepaths ?? [] {
             play.img_url =  i
         }
         
-        
         cell.attachementView.addGestureRecognizer(play)
-        
         
         let  viewClick = UITapGestureRecognizer(target: self, action: #selector(viewClickVc))
         cell.CircularFullView.addGestureRecognizer(viewClick)

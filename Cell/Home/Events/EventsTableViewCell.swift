@@ -75,13 +75,6 @@ class EventsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
         cell.timeLabel.text = circular.eventtime?.dateFormater(input: "HH:mm:ss",output: "hh:mm a")
         cell.eventTopic.text = circular.eventtopic
         
-        
-        if (indexPath.row % 2 == 0){
-            cell.fullView.backgroundColor = UIColor(red: 184/255, green: 242/255, blue: 200/255, alpha: 0.10)
-        }else{
-            cell.fullView.backgroundColor = UIColor(red: 184/255, green: 242/255, blue: 200/255, alpha: 0.10)
-        }
-        
         let  viewClick = UITapGestureRecognizer(target: self, action: #selector(EventViewVc))
         cell.fullView.addGestureRecognizer(viewClick)
         

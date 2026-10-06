@@ -16,8 +16,9 @@ class MenuCVCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         imageBaseView.layer.cornerRadius = imageBaseView.frame.height/2
-        imageBaseView.layer.borderWidth = 0.6
-        imageBaseView.layer.borderColor = UIColor.lightGray.cgColor
+        imageBaseView.layer.borderWidth = 1.5
+        let color: UIColor = .priorityColor.withAlphaComponent(0.1)
+        imageBaseView.layer.borderColor = color.cgColor
         
 //        imageBaseView.layer.cornerRadius = imageBaseView.frame.height/2
 //        imageBaseView.layer.shadowColor = UIColor.black.cgColor

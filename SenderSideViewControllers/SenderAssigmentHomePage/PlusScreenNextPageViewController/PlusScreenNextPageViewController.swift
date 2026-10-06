@@ -22,24 +22,18 @@ class PlusScreenNextPageViewController: UIViewController,UITextViewDelegate,UIIm
 @IBOutlet weak var titleBaseView: UIView!
 @IBOutlet weak var descrpitonDefltLbl: UILabel!
 @IBOutlet weak var lblCount: UILabel!
-@IBOutlet weak var tapBarView: UIViewX!
-@IBOutlet weak var redirectLoginView: UIViewX!
+@IBOutlet weak var customTabBar: CustomTabBar!
 @IBOutlet weak var dateLabel: UILabel!
 @IBOutlet weak var uploadFileLabel: UILabel!
 @IBOutlet weak var titleTextField: UITextField!
 @IBOutlet weak var smallImg: UIImageView!
 @IBOutlet weak var bigImg: UIImageView!
-@IBOutlet weak var topMessageLabel: UILabel!
-@IBOutlet weak var clgLogoImg: UIImageView!
 @IBOutlet weak var logoutView: UIView!
 @IBOutlet weak var changeRolesView: UIView!
-@IBOutlet weak var topLabels: UILabel!
-@IBOutlet weak var refreshView: UIView!
 @IBOutlet weak var privacyPolicyView: UIView!
 @IBOutlet weak var faqView: UIView!
 @IBOutlet weak var submisionSelection: UIView!
 @IBOutlet weak var helpView: UIView!
-@IBOutlet weak var viewTap: UIView!
 @IBOutlet weak var changePasswordView: UIView!
 @IBOutlet weak var termsAndConditionView: UIView!
 @IBOutlet weak var sideMenuView: UIView!
@@ -107,20 +101,16 @@ var is_write_enabled : String!
         )
 
         sideMenuView.isHidden = true
-        refreshView.isHidden = true
 
         let defaults = UserDefaults.standard
         priority = defaults.string(forKey: DefaultsKeys.priority)
-        memberName = defaults.string(forKey: DefaultsKeys.memberName)
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string: colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         mobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         password = defaults.string(forKey: DefaultsKeys.Password)
 
-        topMessageLabel.text = memberName
-
         if Assigment == "6" {
             assigmentTopLbl.text = "New Assignment"
+            descripitionTextField.text = "Enter the Description"
+            descripitionTextField.textColor = UIColor.lightGray
             descriptionBaseView.isHidden = false
             uploadView.isHidden = false
         } else {
@@ -128,29 +118,16 @@ var is_write_enabled : String!
             titleTextField.isUserInteractionEnabled = false
             selectTypeDropDownView.isUserInteractionEnabled = false
             descriptionBaseView.isHidden = true
+            lblCount.isHidden = true
             uploadView.isHidden = true
             descrpitonDefltLbl.isHidden = true
             titleTextField.text = titleText
+            descripitionTextField.text = forwadDiscreption
             dropDownTextLabel.text = ImgeType
         }
 
-        if priority == "p1" {
-            view.backgroundColor = UIColor(named: "Principal")
-            tapBarView.backgroundColor = UIColor(named: "Principal")
-            topLabels.text = "Principal"
-        } else if priority == "p4" {
-            topLabels.text = "Student"
-        } else if priority == "p2" {
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff")
-            topLabels.text = "Hod"
-        } else if priority == "p5" {
-            topLabels.text = "Father"
-        } else if priority == "p3" {
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff")
-            topLabels.text = "Teacher"
-        }
+        view.backgroundColor = .priorityColor
+        customTabBar.delegate = self
 
         submisionSelection.layer.cornerRadius = 10
         submisionSelection.layer.borderWidth = 1
@@ -168,8 +145,6 @@ var is_write_enabled : String!
         descriptionBaseView.layer.borderWidth = 1
         descriptionBaseView.layer.borderColor = UIColor.systemGray5.cgColor
 
-        descripitionTextField.text = "Enter the Description"
-        descripitionTextField.textColor = UIColor.lightGray
         descripitionTextField.returnKeyType = .done
         descripitionTextField.delegate = self
         titleTextField.returnKeyType = .done
@@ -199,15 +174,6 @@ var is_write_enabled : String!
 
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
-
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
-
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
 
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
@@ -366,74 +332,12 @@ var is_write_enabled : String!
     }
 
     @IBAction func respienceVc() {
-        if Assigment == "6" {
-            if dateLabel.text == "DD/MM/YY" {
-                let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Date Filed", preferredStyle: .alert)
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in }))
-                present(refreshAlert, animated: true, completion: nil)
-            } else if dropDownTextLabel.text == "selectType" {
-                let refreshAlert = UIAlertController(title: "", message: "Kindly Select Type", preferredStyle: .alert)
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in }))
-                present(refreshAlert, animated: true, completion: nil)
-            } else if titleTextField.text == "" {
-                let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Title", preferredStyle: .alert)
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in }))
-                present(refreshAlert, animated: true, completion: nil)
-            } else if descripitionTextField.text == "Enter the Description" {
-                let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Description ", preferredStyle: .alert)
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in }))
-                present(refreshAlert, animated: true, completion: nil)
-            } else if descripitionTextField.text == "" {
-                let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Details Description", preferredStyle: .alert)
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in }))
-                present(refreshAlert, animated: true, completion: nil)
-            } else if uploadFileLabel.text == "Upload Files" {
-                let refreshAlert = UIAlertController(title: "", message: "Please Select Image Or Pdf", preferredStyle: .alert)
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in }))
-                present(refreshAlert, animated: true, completion: nil)
-            } else {
-                if priority == "p1" {
-                    let vc = HodRespienViewController(nibName: nil, bundle: nil)
-                    vc.resivre = Assigment
-                    vc.AssigmentMenuAwsUrl = TotalAws
-                    vc.AssigmentFileType = fileType
-                    vc.titlesTextField = titleTextField.text
-                    vc.discreptionss = descripitionTextField.text
-                    vc.videoURL = videe
-                    vc.videoIframe = iframes
-                    vc.videoType = videoTypee
-                    vc.awsArry = awsPdfURl
-                    vc.str = str
-                    vc.strName = strName
-                    vc.assigmentHeaderId = assigmentHeaderId
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.assigmentDate = dateLabel.text
-                    vc.photoArray = photoArray
-                    vc.pdfData = pdfData
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true, completion: nil)
-                } else if priority == "p3" {
-                    let vc = HodRespienViewController(nibName: nil, bundle: nil)
-                    vc.resivre = Assigment
-                    vc.AssigmentMenuAwsUrl = TotalAws
-                    vc.AssigmentFileType = fileType
-                    vc.titlesTextField = titleTextField.text
-                    vc.discreptionss = descripitionTextField.text
-                    vc.videoURL = videe
-                    vc.videoIframe = iframes
-                    vc.assigmentDate = dateLabel.text
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.str = str
-                    vc.strName = strName
-                    vc.awsArry = awsPdfURl
-                    vc.photoArray = photoArray
-                    vc.pdfData = pdfData
-                    vc.assigmentHeaderId = assigmentHeaderId
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true, completion: nil)
-                } else if priority == "p2" {
+        
+        if validateFields() {
+            
+            if Assigment == "6" {
+                
+                if priority == "p1" || priority == "p2" || priority == "p3" {
                     let vc = HodRespienViewController(nibName: nil, bundle: nil)
                     vc.resivre = Assigment
                     vc.AssigmentMenuAwsUrl = TotalAws
@@ -455,22 +359,9 @@ var is_write_enabled : String!
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true, completion: nil)
                 }
-            }
-        } else {
-            if dateLabel.text == "DD/MM/YY" {
-                let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Date Filed", preferredStyle: .alert)
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in }))
-                present(refreshAlert, animated: true, completion: nil)
-            } else if dropDownTextLabel.text == "selectType" {
-                let refreshAlert = UIAlertController(title: "", message: "Kindly Select Type", preferredStyle: .alert)
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in }))
-                present(refreshAlert, animated: true, completion: nil)
-            } else if titleTextField.text == "" {
-                let refreshAlert = UIAlertController(title: "", message: "Kindly Enter Title", preferredStyle: .alert)
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in }))
-                present(refreshAlert, animated: true, completion: nil)
+                
             } else {
-                if priority == "p1" {
+                if priority == "p1" || priority == "p3" {
                     let vc = HodRespienViewController(nibName: nil, bundle: nil)
                     vc.resivre = Assigment
                     vc.AssigmentMenuAwsUrl = TotalAws
@@ -491,27 +382,7 @@ var is_write_enabled : String!
                     vc.pdfData = pdfData
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true, completion: nil)
-                } else if priority == "p3" {
-                    let vc = HodRespienViewController(nibName: nil, bundle: nil)
-                    vc.resivre = Assigment
-                    vc.AssigmentMenuAwsUrl = TotalAws
-                    vc.AssigmentFileType = fileType
-                    vc.titlesTextField = titleTextField.text
-                    vc.discreptionss = forwadDiscreption
-                    vc.videoURL = videe
-                    vc.videoIframe = iframes
-                    vc.assigmentDate = dateLabel.text
-                    vc.is_read_enabled = is_read_enabled
-                    vc.is_write_enabled = is_write_enabled
-                    vc.str = str
-                    vc.strName = strName
-                    vc.awsArry = awsPdfURl
-                    vc.assigmentHeaderId = assigmentHeaderId
-                    vc.photoArray = photoArray
-                    vc.pdfData = pdfData
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true, completion: nil)
-                } else if priority == "p2" {
+                }else if priority == "p2" {
                     let vc = HodSelectResipenceViewController(nibName: nil, bundle: nil)
                     vc.resivre = Assigment
                     vc.AssigmentMenuAwsUrl = TotalAws
@@ -554,6 +425,59 @@ var is_write_enabled : String!
                 }
             }
         }
+    }
+    
+    func validateFields() -> Bool {
+        
+
+        if dateLabel.text == "DD/MM/YY" {
+            showAlert(message: "Kindly Enter Date Filed")
+            return false
+        }
+
+        if dropDownTextLabel.text == "selectType" {
+            showAlert(message: "Kindly Select Type")
+            return false
+        }
+
+        if titleTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true {
+            showAlert(message: "Kindly Enter Title")
+            return false
+        }
+
+        if descripitionTextField.text == "Enter the Description" {
+            showAlert(message: "Kindly Enter Description")
+            return false
+        }
+
+        if descripitionTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true {
+            showAlert(message: "Kindly Enter Details Description")
+            return false
+        }
+        
+        if Assigment == "6" {
+            
+            if uploadFileLabel.text == "Upload Files" {
+                showAlert(message: "Please Select Image Or Pdf")
+                return false
+            }
+        }
+
+        return true
+    }
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(
+            title: "",
+            message: message,
+            preferredStyle: .alert
+        )
+
+        alert.addAction(
+            UIAlertAction(title: "OK", style: .default)
+        )
+
+        present(alert, animated: true)
     }
 
     @IBAction func backbtn(_ sender: Any) {
@@ -610,27 +534,6 @@ var is_write_enabled : String!
         let vc = PrivacyPolicyViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
-    }
-
-    @IBAction func refreshVc() {
-        KRProgressHUD.show()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            KRProgressHUD.dismiss()
-        }
-    }
-
-    @IBAction func notificationVc() {
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-    }
-
-    @IBAction func menu() {
-        if sideMenuView.isHidden == true {
-            sideMenuView.isHidden = false
-        } else {
-            sideMenuView.isHidden = true
-        }
     }
 
     @IBAction func changePassowrdVC() {
@@ -751,7 +654,6 @@ var is_write_enabled : String!
     }
 
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        print("view was cancelled")
         dismiss(animated: true, completion: nil)
     }
 
@@ -769,3 +671,13 @@ var is_write_enabled : String!
     }
 }
 
+@available(iOS 16.0, *)
+extension PlusScreenNextPageViewController : CustomTabBarDelegate {
+    func didTapSearch() {
+        
+    }
+    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
+}

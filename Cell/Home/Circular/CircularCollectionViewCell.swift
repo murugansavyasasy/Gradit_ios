@@ -19,7 +19,9 @@ class CircularCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var attachementView: UIViewX!
     override func awakeFromNib() {
         super.awakeFromNib()
-        CircularFullView.borderColor = UIColor(red: 190/255, green: 174/255, blue: 255/255, alpha: 0.40)
+        CircularFullView.backgroundColor = .systemBlue.withAlphaComponent(0.1)
+        CircularFullView.borderColor = .systemBlue.withAlphaComponent(0.12)
+        //UIColor(red: 190/255, green: 174/255, blue: 255/255, alpha: 0.40)
         CircularFullView.borderWidth = 1
         CircularFullView.cornerRadius = 16
         

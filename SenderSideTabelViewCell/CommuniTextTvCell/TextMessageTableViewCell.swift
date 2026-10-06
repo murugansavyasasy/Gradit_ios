@@ -10,19 +10,16 @@ import UIKit
 class TextMessageTableViewCell: UITableViewCell {
 
     @IBOutlet weak var TextImgView: UIImageView!
-    
     @IBOutlet weak var textImageBaseview: UIView!
     @IBOutlet weak var sendByView: UIViewX!
     @IBOutlet weak var arrowImage: UIImageView!
     @IBOutlet weak var redDotImgView: UIImageView!
-    
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var timeLbl: UILabel!
     @IBOutlet weak var MsgContentLbl: UILabel!
-    
     @IBOutlet weak var SendByLbl: UILabel!
-    
     @IBOutlet weak var discreptionsLbl: UILabel!
+    @IBOutlet weak var sentbyStack: UIStackView!
     
     
     override func awakeFromNib() {

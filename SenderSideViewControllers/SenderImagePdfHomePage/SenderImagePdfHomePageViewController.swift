@@ -13,101 +13,38 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate {
     
-    @IBOutlet weak var SearchView: UIView!
     @IBOutlet weak var searchFullView: UIViewX!
     @IBOutlet weak var searchbar: UISearchBar!
-    @IBOutlet weak var topNameview: UIView!
-    @IBOutlet weak var tapBarView: UIViewX!
     @IBOutlet weak var loadingCustom: UIActivityIndicatorView!
-    
-    @IBOutlet weak var redirectLoginView: UIViewX!
-    @IBOutlet weak var notificationView: UIView!
     @IBOutlet weak var smallImg: UIImageView!
-    
     @IBOutlet weak var bigImg: UIImageView!
     @IBOutlet weak var logoutView: UIView!
-    
     @IBOutlet weak var changeRolesView: UIView!
-    
-    
-    @IBOutlet weak var profileView: UIView!
-    
-    
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var topMessageLabel: UILabel!
-    
-    
-    @IBOutlet weak var clgLogoImg: UIImageView!
-    @IBOutlet weak var refreshView: UIView!
-    
     @IBOutlet weak var sideMenuView: UIView!
-    
-    
     @IBOutlet weak var termsAndConditionView: UIView!
-    
-    
-    
     @IBOutlet weak var changePasswordView: UIView!
-    
-    
-    
     @IBOutlet weak var privacyPolicyView: UIView!
-    
-    
     @IBOutlet weak var faqView: UIView!
-    
-    
-    @IBOutlet weak var viewTap: UIView!
-    
-    
-    
-    
     @IBOutlet weak var helpView: UIView!
-    
-    
-    
-    
-    
-    
     @IBOutlet weak var plusImageView: UIImageView!
-    
-    
     @IBOutlet weak var imageCountView: UIViewX!
-    
-    
     @IBOutlet weak var collegeCountView: UIViewX!
-    
-    
     @IBOutlet weak var departmetCountView: UIViewX!
-    
-    
-    
-    
     @IBOutlet weak var noDataLabel: UILabel!
     @IBOutlet weak var departmentCountLabel: UILabel!
     @IBOutlet weak var collegeCountLabel: UILabel!
     @IBOutlet weak var imageTableView: UITableView!
-    
     @IBOutlet weak var imageTopCountLabel: UILabel!
-    
     @IBOutlet weak var imageSegmentName: UISegmentedControl!
-    
     @IBOutlet weak var noDataTextView: UIView!
-    
-    
     @IBOutlet weak var plusView: UIViewX!
+    @IBOutlet weak var customtabBar: CustomTabBar!
     
-    var iscolap = false
     var imageFileType : String!
     
-    var  imagePdfMenuIdType : String!
+
     
-    var NoticeBoardId = "1"
-    var videoId = "2"
-    var EventId = "3"
-    var communicationId = "4"
     var imagePdfId = "5"
-    var Assigment = "6"
     
     
     var departmentRef     : [SenderDepartmentImageDataDetails] = []
@@ -115,11 +52,8 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
     var overAllRef    : [overAllDataDetails] = []
     
     var identifers = "SenderImagePdfTableViewCell"
-    let menuIdentifier = "MenuCollectionViewCell"
-    var MenuRefName :[menuApiDataDetails] = []
     var addapiRef : [AddDataDeatils] = []
     var selectedCell : IndexPath?
-    var isColapes = false
     var filePathStr : [String] = []
     
     var memberId : String!
@@ -127,16 +61,8 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
     var collegId  : String!
     var departmentId : String!
     var sectionId : String!
-    var loginType : String!
-    
-    var memberName : String!
-    var colgImg :String!
-    
     var mobileNumber : String!
-    
-    var loginDatas : [datalogin]!
-    var logindataprinci :[datalogin]!
-    
+   
     var PreviousAddId : Int = 0
     
     
@@ -148,28 +74,14 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
     var is_read_enabled = " "
     var is_write_enabled = " "
     
-    var segmentType : String!
     
     var cloneList   : [SenderDepartmentImageDataDetails] = []
     
     
     override func viewDidAppear(_ animated: Bool) {
-        
-        print("kljjjjjjjjj")
-        
-        
+      
         PreviousAddId = PreviousAddId+1
-        
-        //        addApi()
-        
-        print("jkkkkkkk",PreviousAddId)
-        
     }
-    
-    
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -181,6 +93,9 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         searchFullView.isHidden = true
         searchbar.delegate = self
         PreviousAddId = PreviousAddId+1
+        
+        customtabBar.delegate = self
+        
         let defaults = UserDefaults.standard
         
         memberId = defaults.string(forKey: DefaultsKeys.memberid)
@@ -188,20 +103,11 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         collegId = defaults.string(forKey: DefaultsKeys.collegeid)
         departmentId = defaults.string(forKey: DefaultsKeys.deptid)
         sectionId = defaults.string(forKey: DefaultsKeys.sectionid)
-        loginType = defaults.string(forKey: DefaultsKeys.loginAsType)
         mobileNumber  = defaults.string(forKey: DefaultsKeys.mobileNumber)
-        
         password = defaults.string(forKey: DefaultsKeys.Password)
         if sectionId == ""{
-            
             sectionId = "0"
-            
         }
-        memberName = defaults.string(forKey: DefaultsKeys.memberName)
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        
-        topMessageLabel.text = memberName
         
         addApi()
         
@@ -209,131 +115,29 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         print("is_read_enabled345678", is_write_enabled)
         if is_read_enabled == "1"{
             departRefName()
-        }else{}
+        }
         
         if is_write_enabled == "1"{
-            
             plusView.isHidden = false
         }else{
-            
             plusView.isHidden = true
         }
         
+        overAllRefName()
         
-        
-        
-        
-        if priority == "p1"{
-            tapBarView.backgroundColor = UIColor(named: "Principal" )
-            topLabels.text = "Principal"
-            
-            overAllRefName()
-            
-        }
-        
-        else if priority == "p4"{
-            
-            topLabels.text = "Student"
-            overAllRefName()
-            
-        }
-        
-        else if priority == "p2" {
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            plusView.backgroundColor = UIColor(named: "messagecolor")
-            topLabels.text = "Hod"
-            plusView.isHidden = false
-            overAllRefName()
-        }
-        
-        else if priority == "p7" {
-            tapBarView.backgroundColor = UIColor(named: "univercityColorCod" )
-            plusView.backgroundColor = UIColor(named: "messagecolor")
-            topLabels.text = "University Head"
-            plusView.isHidden = false
-            overAllRefName()
-        }
-        
-        else if priority == "p5"{
-            
-            
-            topLabels.text = "Father"
-            overAllRefName()
-            
-            
-            
-        }
-        
-        else if priority == "p3"{
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            plusView.backgroundColor = UIColor(named: "messagecolor")
-            topLabels.text = "Teacher"
-            plusView.isHidden = false
-            overAllRefName()
-        }
-        
-        
-        else if priority == "p6"{
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            topLabels.text = "Non Teaching"
+        if priority == "p4" || priority == "p5" || priority == "p6"{
             plusView.isHidden = true
+        }
+         
+        if priority == "p6"{
             imageCountView.isHidden = true
             collegeCountView.isHidden = true
             departmetCountView.isHidden = true
             
         }
-        
-        
-        
-        if priority == "p1" {
-            
-            
-            print("PrincipalVieewwColor")
-            view.backgroundColor = UIColor(named: "Principal" )
-            
-            
-        }else if priority == "p4" {
-            
-            print("StudentVieewwColor")
-            view.backgroundColor = UIColor(named: "studentViewColors")
-            
-            
-            
-        } else if priority == "p3" ||  priority == "p2" {
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-            
-        }
-        else if priority == "p5"{
-            
-            
-            
-            view.backgroundColor = UIColor(named: "FatherColor")
-            
-            
-            
-        }
-        
-        
-        else if priority == "p6"{
-            
-            
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-            
-        }
-        
-        else if priority == "p7"{
-            
-            
-            view.backgroundColor = UIColor(named: "univercityColorCod")
-            
-            
-        }
-        
-        
+           
+        view.backgroundColor = .priorityColor
+     
         let rownib = UINib(nibName: identifers, bundle: nil)
         imageTableView.register(rownib, forCellReuseIdentifier: identifers)
         
@@ -346,49 +150,17 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         
         // tap Bar UiTapGuster.
         
-        
-        let Serach = UITapGestureRecognizer(target: self, action: #selector(Searchfield))
-        SearchView.addGestureRecognizer(Serach)
-        
-        
-        
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
-        
-        
-        
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
-        
-        
-        let topname = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        topNameview.addGestureRecognizer(topname)
-        
-        
-        
         
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
         
-        
-        
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
-        
-        
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
         
-        
         let helpGesture = UITapGestureRecognizer(target: self, action: #selector(helpRedirect))
         helpView.addGestureRecognizer(helpGesture)
-        //
         
         let privacyPolicyGesture = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyRedirect))
         privacyPolicyView.addGestureRecognizer(privacyPolicyGesture)
@@ -396,22 +168,11 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
         termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
         
-        
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
     }
     
-    @IBAction func Searchfield() {
-        searchbar.isHidden  = false
-        searchFullView .isHidden = false
-    }
-    
-    
-    
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        
         
         if imageSegmentName.selectedSegmentIndex == 0{
             
@@ -443,27 +204,14 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
-        
-        
         searchbar.endEditing(true)
-        
-        
         
     }
     
     
-    
-    
-    
-    
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        
-        
         searchbar.resignFirstResponder()
-        
-        
         
     }
     
@@ -471,102 +219,45 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         
         searchbar.isHidden  = true
         searchFullView .isHidden = true
-        
         searchbar.resignFirstResponder()
-        
-        
         
     }
     
     @IBAction func PlusVc() {
         
+        let ad = addapiRef.first
         
-        for i in addapiRef{
-            if priority == "p3" || priority == "p2" {
-                let vc = SenderImagePdfPlusNextPageViewController(nibName: nil, bundle: nil)
-                vc.backGroungImageUrl = i.background_image
-                vc.SmallImageUrl = i.add_image
-                vc.addWebUrl = i.add_url
-                vc.resiveMenuId =  imagePdfId
-                vc.str = str
-                vc.strName = strName
-                vc.is_read_enabled = is_read_enabled
-                vc.is_write_enabled = is_write_enabled
-                
-                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true , completion: nil)
-                
-            } else if priority == "p7" {
-                let vc = SenderImagePdfPlusNextPageViewController(nibName: nil, bundle: nil)
-                vc.backGroungImageUrl = i.background_image
-                vc.SmallImageUrl = i.add_image
-                vc.addWebUrl = i.add_url
-                vc.resiveMenuId =  imagePdfId
-                vc.str = str
-                vc.strName = strName
-                vc.is_read_enabled = is_read_enabled
-                vc.is_write_enabled = is_write_enabled
-                
-                vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true , completion: nil)
-                
-            }else{
-                
-                let vc = SenderImagePdfPlusNextPageViewController(nibName: nil, bundle: nil)
-                vc.backGroungImageUrl = i.background_image
-                vc.SmallImageUrl = i.add_image
-                vc.addWebUrl = i.add_url
-                vc.resiveMenuId =  imagePdfId
-                vc.str = str
-                vc.strName = strName
-                vc.is_read_enabled = is_read_enabled
-                vc.is_write_enabled = is_write_enabled
-                
-                vc.view.backgroundColor = UIColor(named: "Principal" )
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true , completion: nil)
-                
-                
-            }
-        }
+        let vc = SenderImagePdfPlusNextPageViewController(nibName: nil, bundle: nil)
+        vc.backGroungImageUrl = ad?.background_image
+        vc.SmallImageUrl = ad?.add_image
+        vc.addWebUrl = ad?.add_url
+        vc.resiveMenuId =  imagePdfId
+        vc.str = str
+        vc.strName = strName
+        vc.is_read_enabled = is_read_enabled
+        vc.is_write_enabled = is_write_enabled
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true , completion: nil)
         
     }
-    
-    
     
     
     @IBAction func imageSegment(_ sender: Any) {
         
         if is_read_enabled == "1"{
             
-            
             if imageSegmentName.selectedSegmentIndex == 0 {
-                print("ok")
-                
-                segmentType = "1"
                 selectedCell = IndexPath()
                 imageTableView.isScrollEnabled = false
                 departRefName()
                 
-            }
-            
-            else if imageSegmentName.selectedSegmentIndex == 1{
+            }else if imageSegmentName.selectedSegmentIndex == 1{
                 
-                segmentType = "2"
                 selectedCell = IndexPath()
                 imageTableView.isScrollEnabled = false
                 collegeRefName()
                 
-                
-                
             }
-            
-            
-            
-        }else{
-            
         }
     }
     
@@ -591,29 +282,25 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         
         SenderImagePdfTableViewCell
         
-        
         if let selectedCell = selectedCell, selectedCell == indexPath {
             
             cell.sendByDefaultLabel.isHidden = false
             cell.sendByCellLabel.isHidden = false
             cell.imageCellDescripitionLabel.isHidden = false
-            cell.upArrowssImages.image = UIImage(named: "up")
-            cell.sndByView.isHidden = false
+            cell.upArrowssImages.image = UIImage(systemName: "chevron.up")
+            cell.sendByCellLabel.isHidden = false
+            cell.sendByDefaultLabel.isHidden = false
             
-        }
-        
-        else{
-            
+        }else{
             
             cell.sendByDefaultLabel.isHidden = true
             cell.sendByCellLabel.isHidden = true
             cell.imageCellDescripitionLabel.isHidden = true
-            cell.sndByView.isHidden = true
-            cell.upArrowssImages.image = UIImage(named: "down")
-            
+            cell.sendByCellLabel.isHidden = true
+            cell.sendByDefaultLabel.isHidden = true
+            cell.upArrowssImages.image = UIImage(systemName: "chevron.down")
         }
-        
-        
+
         
         if imageSegmentName.selectedSegmentIndex == 0 {
             
@@ -654,7 +341,7 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
             
             cell.imageCellDescripitionLabel.text = image.description
             cell.sendByCellLabel.text = image.sentbyname
-            cell.imageCellTitelLabel.text = image.title?.capitalized
+            cell.imageCellTitelLabel.text = image.title
             
             if image.newfilepath == [""] || image.newfilepath == ["[]"]{
                 
@@ -675,34 +362,30 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
             
             if image.file_path == "" {
                 
-                
-                
                 cell.viewTap.isHidden = true
                 
-            }
-            
-            else {
+            }else {
                 
                 cell.viewTap.isHidden = false
                 let parsed = image.file_path?.replacingOccurrences(of: "https://college-app-files.s3.amazonaws.com/", with: "")
                 
                 
-                let s = parsed ?? ""
-                let start = s.endIndex
-                let end = s.index(s.startIndex, offsetBy: 13)
-                let substring = s[end..<start] // www.stackoverflow
-                
-                let strrr = String(substring)
+//                let s = parsed ?? ""
+//                let start = s.endIndex
+//                let end = s.index(s.startIndex, offsetBy: 13)
+//                let substring = s[end..<start] // www.stackoverflow
+//                
+//                let strrr = String(substring)
                 
                 
             }
             
-            let  plusoneCount  = image.newfilepath?.count ?? 0-1
+            let  plusoneCount  = image.newfilepath?.count ?? 0
             let stringconvert = String(plusoneCount)
             cell.plusoneLabel.text = "+" + stringconvert
             
             
-            if image.newfilepath?.count == 1{
+            if (image.newfilepath?.count ?? 0) <= 1{
                 
                 cell.countImageView.isHidden = true
                 let  play = viewClickGesture(target: self, action: #selector(connected))
@@ -715,24 +398,9 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 
                 cell.viewTap.addGestureRecognizer(play)
                 
-                
-                
-            }
-            
-            
-            
-            
-            
-            else{
-                
-                
-                
-                
+            }else{
+               
                 cell.countImageView.isHidden = false
-                
-                
-                
-                
                 
                 let  play = SenderImageGesturess(target: self, action: #selector(connected))
                 
@@ -744,8 +412,6 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 
                 cell.viewTap.addGestureRecognizer(play)
                 
-                
-                
                 let  viewCount = SenderImageGesturess(target: self, action: #selector(connected))
                 
                 viewCount.imageFileType = image.filetype
@@ -756,61 +422,35 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 
                 cell.countImageView.addGestureRecognizer(viewCount)
                 
-                
-                
             }
-            
-            
-            
-            
-            
-            
             return cell
-        }
-        
-        
-        
-        else if imageSegmentName.selectedSegmentIndex == 1 {
+        } else if imageSegmentName.selectedSegmentIndex == 1 {
             
             
             let images : SenderDepartmentImageDataDetails = collegeRef[indexPath.row]
             
-            
-            
             if images.newfilepath == [""]{
-                
                 
                 cell.viewTap.isHidden = true
                 
-                
-            }
-            
-            else{
-                
-                
+            }else{
                 cell.viewTap.isHidden = false
-                
             }
             
             if images.isappread == "1"{
                 
                 cell.redDotImageView.isHidden =  true
                 
-                
-            }
-            
-            else {
+            } else {
                 
                 cell.redDotImageView.isHidden = false
             }
             
             cell.imageCellTimeLabel.text = images.createdontime
             cell.imageCellDateLabel.text = images.createdondate
-            
             cell.imageCellDescripitionLabel.text = images.description
             cell.sendByCellLabel.text = images.sentbyname
-            cell.imageCellTitelLabel.text = images.title?.capitalized
-            
+            cell.imageCellTitelLabel.text = images.title
             let  plusoneCount  = images.newfilepath?.count ?? 0-1
             let stringconvert = String(plusoneCount)
             cell.plusoneLabel.text = "+" + stringconvert
@@ -818,36 +458,22 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
             
             if images.newfilepath == [""] || images.newfilepath == ["[]"]{
                 
-                print("vfdscds")
-                
                 cell.viewTap.isHidden = true
-            }
-            
-            
-            else{
-                
-                
-                print("12344")
-                
+            }else{
+               
                 cell.viewTap.isHidden = false
             }
             
             let parsed = images.file_path?.replacingOccurrences(of: "https://college-app-files.s3.amazonaws.com/", with: "")
             
-            
-            //
             let cutss = parsed?.suffix(43) ?? ""
-            //
             let strss = String(cutss)
-            
             
             if images.isappread == "1"{
                 
                 cell.redDotImageView.isHidden =  true
                 
-            }
-            
-            else {
+            }else {
                 
                 cell.redDotImageView.isHidden = false
             }
@@ -866,20 +492,9 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 
                 cell.viewTap.addGestureRecognizer(play)
                 
-                
-            }
-            
-            
-            
-            
-            else{
-                
-                
-                
+            }else{
                 
                 cell.countImageView.isHidden = false
-                
-                
                 
                 let  play = SenderImageGesturess(target: self, action: #selector(connected))
                 
@@ -891,10 +506,6 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 
                 cell.viewTap.addGestureRecognizer(play)
                 
-                
-                
-                
-                
                 let  countView = SenderImageGesturess(target: self, action: #selector(connected))
                 
                 countView.imageFileType = images.filetype
@@ -905,12 +516,9 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 
                 cell.countImageView.addGestureRecognizer(countView)
                 
-                
             }
-            
-            
         }
-        
+            
         return cell
     }
     
@@ -934,17 +542,8 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true, completion: nil)
-                
-                
-                
-                
-            }
-            
-            
-            else{
-                
-                
-                
+               
+            }else{
                 
                 let vc  = MoreImageViewController(nibName: nil, bundle: nil)
                 
@@ -955,51 +554,23 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 vc.strName = strName
                 vc.is_read_enabled = is_read_enabled
                 vc.is_write_enabled = is_write_enabled
-                
                 vc.modalPresentationStyle = .fullScreen
-                
                 present(vc, animated: true,completion: nil)
-                
-                
             }
-            
-            
-        }
-        
-        
-        
-        
-        else if imageSegmentName.selectedSegmentIndex == 1 {
+        }else if imageSegmentName.selectedSegmentIndex == 1 {
             
             
             if gesture.img_urls.count == 1 {
                 
-                
-                
-                
                 let vc = ImageDownloadViewController(nibName: nil, bundle: nil)
                 print("view")
-                
-                
                 vc.fileType = gesture.imageFileType
-                
                 vc.imgfilePath = gesture.img_url
                 print("gesture.img_url",gesture.img_url.count)
-                
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true, completion: nil)
                 
-                
-                
-                
-                
-            }
-            
-            
-            else{
-                
-                
-                
+            }else{
                 
                 let vc  = MoreImageViewController(nibName: nil, bundle: nil)
                 
@@ -1010,21 +581,13 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 vc.strName = strName
                 vc.is_read_enabled = is_read_enabled
                 vc.is_write_enabled = is_write_enabled
-                
                 vc.modalPresentationStyle = .fullScreen
-                
                 present(vc, animated: true,completion: nil)
                 
                 
                 
             }
-            
-            
-            
-            
         }
-        
-        
     }
     
     
@@ -1191,8 +754,6 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
     
     func collegeRefName() {
         
-        
-        
         var college = SenderDeparmentImageModal()
         
         college.userid   =  memberId
@@ -1208,21 +769,16 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
                 
                 if collegeResp.Status == 1 {
                     
-                    print("order data",collegeResp)
-                    
-                    
                     collegeRef = collegeResp.data ?? []
                     
                     noDataLabel.isHidden = true
                     noDataTextView.isHidden = true
-                    
                     imageTableView.isScrollEnabled = true
                     imageTableView.delegate = self
                     imageTableView.dataSource = self
                     imageTableView.reloadData()
                     
                 }else{
-                    
                     
                     noDataLabel.isHidden = false
                     noDataTextView.isHidden = false
@@ -1394,8 +950,6 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         let vc = HelpViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
-        
-        
     }
     
     
@@ -1408,8 +962,6 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
     }
     
     @IBAction func logoutPressed() {
-        
-        
         
         let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to logout", preferredStyle: UIAlertController.Style.alert)
         
@@ -1452,31 +1004,6 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         
     }
     
-    
-    
-    
-    
-    @IBAction func refreshVc() {
-        
-        print("refreshVcWork")
-        
-        
-        if segmentType == "1"{
-            
-            departRefName()
-            
-        }
-        
-        else{
-            
-            
-            collegeRefName()
-        }
-        
-        
-    }
-    
-    
     @IBAction func notificationVc() {
         print("NotificationViewController")
         let vc = NotificationViewController(nibName: nil, bundle: nil)
@@ -1486,37 +1013,12 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         present(vc, animated: false, completion: nil)
         
     }
-    
-    
-    
-    
-    @IBAction func menu() {
-        
-        if sideMenuView.isHidden == true{
-            
-            sideMenuView.isHidden = false
-            //
-            
-            print("menuVisble")
-        }
-        
-        else{
-            
-            sideMenuView.isHidden = true
-            
-        }
-        
-        
-    }
-    
-    
+   
     @IBAction func changePassowrdVC(){
         
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
-        
-        
     }
     
     @IBAction func priorityVc() {
@@ -1526,6 +1028,21 @@ class SenderImagePdfHomePageViewController: UIViewController,UITableViewDataSour
         present(vc, animated: true,completion: nil)
     }
 }
+
+@available(iOS 16.0, *)
+extension SenderImagePdfHomePageViewController : CustomTabBarDelegate {
+    func didTapSearch() {
+        searchbar.isHidden  = false
+        searchFullView .isHidden = false
+    }
+    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
+    
+    
+}
+
 class SenderImageGesturess : UITapGestureRecognizer {
     
     var url : String!

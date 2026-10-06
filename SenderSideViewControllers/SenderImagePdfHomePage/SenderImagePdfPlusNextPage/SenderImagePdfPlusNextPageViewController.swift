@@ -15,9 +15,7 @@ import BSImagePicker
 @available(iOS 16.0, *)
 class SenderImagePdfPlusNextPageViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate, UIDocumentPickerDelegate, UITextFieldDelegate {
     
-    @IBOutlet weak var tapBarView: UIViewX!
-    @IBOutlet weak var redirectLoginView: UIViewX!
-    @IBOutlet weak var notificationView: UIView!
+    @IBOutlet weak var customTabBar: CustomTabBar!
     @IBOutlet weak var cancelView: UIViewX!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var selectRespinsView: UIViewX!
@@ -29,16 +27,11 @@ class SenderImagePdfPlusNextPageViewController: UIViewController, UITextViewDele
     @IBOutlet weak var uploadFileLabel: UILabel!
     @IBOutlet weak var logoutView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var topMessageLabel: UILabel!
-    @IBOutlet weak var clgLogoImg: UIImageView!
-    @IBOutlet weak var refreshView: UIView!
     @IBOutlet weak var sideMenuView: UIView!
     @IBOutlet weak var termsAndConditionView: UIView!
     @IBOutlet weak var changePasswordView: UIView!
     @IBOutlet weak var privacyPolicyView: UIView!
     @IBOutlet weak var faqView: UIView!
-    @IBOutlet weak var viewTap: UIView!
     @IBOutlet weak var helpView: UIView!
     @IBOutlet weak var textFieldBaseview: UIView!
     @IBOutlet weak var textViewBaseview: UIView!
@@ -71,19 +64,17 @@ class SenderImagePdfPlusNextPageViewController: UIViewController, UITextViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
+        
+        customTabBar.delegate = self
         sideMenuView.isHidden = true
         
         let defaults = UserDefaults.standard
         priority = defaults.string(forKey: DefaultsKeys.priority)
-        cologLog = defaults.string(forKey: DefaultsKeys.colglogo)
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         password = defaults.string(forKey: DefaultsKeys.Password)
-        
         bigImg.sd_setImage(with: URL(string: backGroungImageUrl), placeholderImage: UIImage(named: "ic_white"))
         smallImg.sd_setImage(with: URL(string: SmallImageUrl), placeholderImage: UIImage(named: "ic_white"))
-        topMessageLabel.text = defaults.string(forKey: DefaultsKeys.memberName)
-        clgLogoImg.sd_setImage(with: URL(string: cologLog), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        
+       
         textFieldBaseview.layer.cornerRadius = 10
         textFieldBaseview.layer.borderWidth = 1
         textFieldBaseview.layer.borderColor = UIColor.lightGray.cgColor
@@ -101,33 +92,14 @@ class SenderImagePdfPlusNextPageViewController: UIViewController, UITextViewDele
         titleTextField.returnKeyType = .done
         titleTextField.delegate = self
         
-        if priority == "p1" {
-            tapBarView.backgroundColor = UIColor(named: "Principal")
-            topLabels.text = "Principal"
-        } else if priority == "p4" {
-            topLabels.text = "Student"
-        } else if priority == "p2" {
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff")
-            topLabels.text = "Hod"
-        } else if priority == "p7" {
-            tapBarView.backgroundColor = UIColor(named: "univercityColorCod")
-            topLabels.text = "University Head"
-        } else if priority == "p5" {
-            topLabels.text = "Father"
-        } else if priority == "p3" {
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff")
-            topLabels.text = "Teacher"
-        }
+        view.backgroundColor = .priorityColor
         
         let cancelV = UITapGestureRecognizer(target: self, action: #selector(CancelVc))
         cancelView.addGestureRecognizer(cancelV)
         
         let select = UITapGestureRecognizer(target: self, action: #selector(selectVc))
         selectRespinsView.addGestureRecognizer(select)
-        
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
-        
+      
         let tapToUpload = UITapGestureRecognizer(target: self, action: #selector(GalleryVc))
         uploadImageView.addGestureRecognizer(tapToUpload)
         
@@ -140,15 +112,6 @@ class SenderImagePdfPlusNextPageViewController: UIViewController, UITextViewDele
         
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
-        
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
         
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
@@ -412,29 +375,6 @@ class SenderImagePdfPlusNextPageViewController: UIViewController, UITextViewDele
         present(vc, animated: true, completion: nil)
     }
 
-    @IBAction func refreshVc() {
-        KRProgressHUD.show()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            KRProgressHUD.dismiss()
-        }
-    }
-
-    @IBAction func notificationVc() {
-        print("NotificationViewController")
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
-    }
-
-    @IBAction func menu() {
-        if sideMenuView.isHidden == true {
-            sideMenuView.isHidden = false
-            print("menuVisble")
-        } else {
-            sideMenuView.isHidden = true
-        }
-    }
-
     @IBAction func changePassowrdVC() {
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
@@ -611,4 +551,16 @@ class SenderImagePdfPlusNextPageViewController: UIViewController, UITextViewDele
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return range.location <= 99
     }
+}
+
+@available(iOS 16.0, *)
+extension SenderImagePdfPlusNextPageViewController: CustomTabBarDelegate {
+    func didTapSearch() {
+        
+    }
+    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
+    
 }

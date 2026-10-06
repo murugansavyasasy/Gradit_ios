@@ -20,7 +20,8 @@ class EventsCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        fullView.borderColor = .lightGray.withAlphaComponent(0.5)
+        fullView.backgroundColor = .systemGreen.withAlphaComponent(0.1)
+        fullView.borderColor = .systemGreen.withAlphaComponent(0.12)
         fullView.borderWidth = 1
         fullView.cornerRadius = 10
     }

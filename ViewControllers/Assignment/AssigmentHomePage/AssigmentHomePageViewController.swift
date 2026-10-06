@@ -803,7 +803,6 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
         
         if priority == "p4" || priority == "p5"{
             
-            if assigmentSegmentName.selectedSegmentIndex == 0{
                 let vc = AssigmentSubmissionViewController(nibName: nil, bundle: nil)
                 vc.assigmentId = gesture.assigmentHeaderId
                 vc.assigmentFileType = gesture.fileType
@@ -811,25 +810,9 @@ class AssigmentHomePageViewController: UIViewController,UITableViewDelegate,UITa
                 vc.str = str
                 vc.is_read_enabled = is_read_enabled
                 vc.is_write_enabled = is_write_enabled
-                
-                vc.view.backgroundColor = UIColor(named: "StudentParent")
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true,completion: nil)
-            }else{
-                
-                let vc = AssigmentSubmissionViewController(nibName: nil, bundle: nil)
-                vc.assigmentId = gesture.assigmentHeaderId
-                vc.assigmentFileType = gesture.fileType
-                vc.strName = strName
-                vc.str = str
-                vc.is_read_enabled = is_read_enabled
-                vc.is_write_enabled = is_write_enabled
-                
-                vc.view.backgroundColor = UIColor(named: "StudentParent")
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true,completion: nil)
                 
-            }
         }
     }
     

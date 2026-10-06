@@ -16,6 +16,7 @@ class MoreImageCCCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var cellwith: NSLayoutConstraint!
     @IBOutlet weak var cellHeight: NSLayoutConstraint!
     @IBOutlet weak var CellmageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         

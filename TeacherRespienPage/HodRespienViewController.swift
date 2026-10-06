@@ -1415,19 +1415,14 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                     
                     let refreshAlert = UIAlertController(title: "", message: "Are you sure you want to submit?", preferredStyle: UIAlertController.Style.alert)
                     
-                    
-                    
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                        
-                        
-                        
-                        
                         
                         
                         if AssigmentFileType == "pdf"{
                             
-                            
-                            uploadPDFFileToAWS(pdfData: pdfData! as NSData )
+                            if let pdfData = self.pdfData {
+                                uploadPDFFileToAWS(pdfData: pdfData as NSData )
+                            }
                             
                         }
                         
@@ -1446,11 +1441,6 @@ class HodRespienViewController: UIViewController,UITableViewDataSource,UITableVi
                             DispatchQueue.main.asyncAfter(deadline: .now()+4.3) { [self] in
                                 
                                 KRProgressHUD.dismiss()
-                                
-                                
-                                
-                                
-                                
                                 assigmentImagePdf(imageArry:awsArry )
                                 
                             }

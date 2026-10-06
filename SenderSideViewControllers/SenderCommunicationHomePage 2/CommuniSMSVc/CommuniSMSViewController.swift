@@ -275,11 +275,11 @@ class CommuniSMSViewController: UIViewController, UITableViewDelegate, UITableVi
         if let selectedCell = selectedCell, selectedCell == indexPath {
             cell.discreptionsLbl.isHidden = false
             cell.arrowImage.image = UIImage(systemName: "chevron.up")
-            cell.sendByView.isHidden = false
+            cell.sentbyStack.isHidden = false
         } else {
             cell.arrowImage.image = UIImage(systemName: "chevron.down")
             cell.discreptionsLbl.isHidden = true
-            cell.sendByView.isHidden = true
+            cell.sentbyStack.isHidden = true
         }
         
         if CommuniSegementName.selectedSegmentIndex == 0 {

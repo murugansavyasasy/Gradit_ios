@@ -15,15 +15,9 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class CommunicationHomePageViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     
-    @IBOutlet weak var topNameview: UIView!
-    @IBOutlet weak var tapBarView: UIViewX!
+    @IBOutlet weak var tapBarView: CustomTabBar!
     @IBOutlet weak var searchFullView: UIViewX!
     @IBOutlet weak var searchbar: UISearchBar!
-    @IBOutlet weak var loadingCustom: UIActivityIndicatorView!
-    @IBOutlet weak var redirectLoginView: UIViewX!
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var notificationView: UIView!
-    @IBOutlet weak var SearchView: UIView!
     @IBOutlet weak var privacyPolicyView: UIView!
     @IBOutlet weak var faqView: UIView!
     @IBOutlet weak var changePasswordView: UIView!
@@ -32,10 +26,7 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var termsAndConditionView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
-    @IBOutlet weak var topMessageLabel: UILabel!
-    @IBOutlet weak var clgLogoImg: UIImageView!
     @IBOutlet weak var sideMenuView: UIView!
-    @IBOutlet weak var viewTap: UIView!
     @IBOutlet weak var communicationCountView: UIViewX!
     @IBOutlet weak var unreadCountView: UIViewX!
     @IBOutlet weak var readCountView: UIViewX!
@@ -55,50 +46,30 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
     var ReadData : [ReadCommunicationDetails] = []
     var UnReadData : [ReadCommunicationDetails] = []
     var overAllRef    : [overAllDataDetails] = []
-    let menuIdentifier = "MenuCollectionViewCell"
-    var MenuRefName :[menuApiDataDetails] = []
     var readApiRef : readStatusResponce!
-    var loginDatas : [datalogin]!
-    var logindataprinci :[datalogin]!
-    var webview: WKWebView!
     var player:AVPlayer?
-    var playerItem:AVPlayerItem?
-    fileprivate let seekDuration: Float64 = 10
-    var UnReadvoiceMsgUrl : String!
-    var readVoiceMgURl : String!
-    var UnReademergencyVoiceMsgUrl    : String!
-    var  readEmergencyVoiceMessageURl : String!
     var selectedCell : IndexPath?
-    var time : String!
-    var addWebUrlRef : String!
     var memberId : String!
     var priority : String!
     var collegeId : String!
     var departmentId : String!
     var sectionId : String!
-    var loginType : String!
-    var colgImg : String!
-    var memberName : String!
     var MobileNumber : String!
     var PreviousAddId : Int = 0
     var password : String!
     var str : [String] = []
     var strName : [String] = []
     var type = ""
-    var segmentId : String!
     var cloneList :  [ReadCommunicationDetails] = []
-    var segTyp : String! = "1"
     var is_read_enabled : String!
     var is_write_enabled : String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadingCustom.startAnimating()
         overrideUserInterfaceStyle = .light
         
         PreviousAddId = PreviousAddId+1
-        print("trrrr",is_read_enabled)
         searchbar.delegate = self
         searchbar.isHidden  = true
         searchFullView .isHidden = true
@@ -113,79 +84,23 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         collegeId = defaults.string(forKey: DefaultsKeys.collegeid)
         departmentId = defaults.string(forKey: DefaultsKeys.deptid)
         sectionId = defaults.string(forKey: DefaultsKeys.sectionid)
-        loginType = defaults.string(forKey: DefaultsKeys.loginAsType)
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        memberName = defaults.string(forKey: DefaultsKeys.memberName)
-        topMessageLabel.text = memberName
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         
         password = defaults.string(forKey: DefaultsKeys.Password)
         PreviousAddId = PreviousAddId+1
+        
+        tapBarView.delegate = self
+        
+        communiTableView.delegate = self
+        communiTableView.dataSource = self
         
         addApi()
         
         overAllRefName()
         
         unReadModal()
-        
-        if priority == "p1"{
-            tapBarView.backgroundColor = UIColor(named: "Principal" )
-            topLabels.text = "Principal"
-            
-        }
-        
-        else if priority == "p4"{
-            
-            tapBarView.backgroundColor = UIColor(named: "StudentParent" )
-            topLabels.text = "Student"
-            
-        }
-        
-        else if priority == "p2" || priority == "p3"{
-            
-            
-            topLabels.text = "Teacher"
-        }
-        
-        else if priority == "p5"{
-            
-            tapBarView.backgroundColor = UIColor(named: "FatherColor" )
-            topLabels.text = "Father"
-        }
-        
-        if priority == "p1" {
-            
-            
-            print("PrincipalVieewwColor")
-            view.backgroundColor = UIColor(named: "Principal" )
-            
-           
-            
-        }else if priority == "p4" {
-            
-            print("StudentVieewwColor")
-            view.backgroundColor = UIColor(named: "studentViewColors")
-            
-            
-           
-            
-        } else if priority == "p3" ||  priority == "p2" {
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-           
-            
-        }
-        else if priority == "p5"{
-            
-            view.backgroundColor = UIColor(named: "FatherColor")
-            
-          
-        }
-        
        
+        view.backgroundColor = .priorityColor
         
         let TextRownib = UINib(nibName: Textidentifier, bundle: nil)
         communiTableView.register(TextRownib, forCellReuseIdentifier: Textidentifier)
@@ -193,20 +108,8 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         communiTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 85, right: 0)
         communiTableView.rowHeight = UITableView.automaticDimension
         
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
-        
-        
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
-        
-        
-        let topname = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        topNameview.addGestureRecognizer(topname)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
         
         let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
         termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
@@ -220,31 +123,21 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
         
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
         
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
+        
         let privacyPolicyGesture = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyRedirect))
         privacyPolicyView.addGestureRecognizer(privacyPolicyGesture)
         
-        let Serach = UITapGestureRecognizer(target: self, action: #selector(Searchfield))
-        SearchView.addGestureRecognizer(Serach)
     }
     
     @objc func dismissKeyboards() {
         
         sideMenuView.isHidden = true
         view.endEditing(true)
-    }
-    
-    @IBAction func Searchfield() {
-        
-        searchbar.isHidden  = false
-        searchFullView .isHidden = false
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -274,9 +167,6 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
             
             
             if UnReadData.count > 0{
-                
-                
-                print ("searchListPendigCount",UnReadData.count)
                 
                 noDataView.isHidden = true
                 noDataTextLabel.isHidden = true
@@ -359,29 +249,20 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
     
     @IBAction func communiSegmentAction(_ sender: Any) {
         
+        searchbar.searchTextField.text = ""
         if is_read_enabled == "1"{
             
             if CommuniSegementName.selectedSegmentIndex == 0{
-                segmentId = "1"
-                segTyp = "1"
                 communiTableView.isScrollEnabled = false
                 selectedCell = IndexPath()
-                
                 overAllRefName()
                 unReadModal()
-            }
-            
-            else if CommuniSegementName.selectedSegmentIndex ==  1 {
-                segmentId = "2"
-                segTyp = "2"
+            }else if CommuniSegementName.selectedSegmentIndex ==  1 {
                 communiTableView.isScrollEnabled = false
                 selectedCell = IndexPath()
                 overAllRefName()
-                
                 ReadApi()
             }
-        }else{
-            
         }
     }
     
@@ -409,17 +290,12 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
                     noDataView.isHidden = true
                     communiTableView.isScrollEnabled = true
                     noDataTextLabel.isHidden = true
-                    communiTableView.delegate = self
-                    communiTableView.dataSource = self
                     communiTableView.reloadData()
                 }else{
                     
                     noDataView.isHidden = false
                     noDataTextLabel.isHidden = false
-                    
                     noDataTextLabel.text = communicationResp.Message
-                    communiTableView.delegate = self
-                    communiTableView.dataSource = self
                     communiTableView.reloadData()
                 }
             case .failure(let error):
@@ -448,41 +324,20 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
             case .success(let UnReadcommunicationResp):
                 if UnReadcommunicationResp.Status == 1{
                     
-                    
                     UnReadData = UnReadcommunicationResp.data ?? []
                     cloneList = UnReadcommunicationResp.data ?? []
-                    KRProgressHUD.dismiss()
-                    
                     communiTableView.isScrollEnabled = true
                     noDataView.isHidden = true
                     noDataTextLabel.isHidden = true
-                    communiTableView.delegate = self
-                    communiTableView.dataSource = self
                     communiTableView.reloadData()
                     
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                        
-                        self.loadingCustom.stopAnimating()
-                        self.loadingCustom.isHidden  = true
-                        
-                    }
                 }else{
                     
                     noDataView.isHidden = false
                     noDataTextLabel.isHidden = false
-                    
                     noDataTextLabel.text = UnReadcommunicationResp.Message
-                    communiTableView.delegate = self
-                    communiTableView.dataSource = self
                     communiTableView.reloadData()
                     
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3 ){ [self] in
-                        
-                        self.loadingCustom.stopAnimating()
-                        self.loadingCustom.isHidden  = true
-                    }
                 }
             case .failure(let error):
                 print("Erro: \(error.localizedDescription)")
@@ -496,7 +351,7 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         var overall = overAllModal()
         
         overall.userid   =  memberId
-        overall.menuid       = "2"
+        overall.menuid       = "16"
         overall.collegeid    =  collegeId
         overall.departmentid =  departmentId
         overall.sectionid    =   sectionId
@@ -618,19 +473,8 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if CommuniSegementName.selectedSegmentIndex == 0 {
-            
-            
-            return UnReadData.count
-            
-        }
         
-        else if CommuniSegementName.selectedSegmentIndex == 1{
-            
-            return ReadData.count
-        }
-        
-        return 0
+        return CommuniSegementName.selectedSegmentIndex == 0 ? UnReadData.count : ReadData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -847,102 +691,41 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
     }
     
     @IBAction func Voice(gesture : VoiceMessage) {
-        
-        
-        
-        print("play Button")
-        
-        
-        
-        if player?.rate == 0
-            
-            
-            
-        {
+    
+        if player?.rate == 0 {
             
             player!.play()
             
             gesture.img.image = UIImage(named: "pause")
             
-            
-            
         } else {
             
-            
-            
             player!.pause()
-            
-            
-            
             gesture.img.image = UIImage(named: "play")
             
-            
-            
         }
-        
-        
-        
     }
-    
-    
     
     
     @IBAction func Emergncy(gesture : EmargencyVoice) {
-        
-        
-        
-        print("play Button")
-        
-        
-        
-        if player?.rate == 0
-            
-            
-            
-        {
+     
+        if player?.rate == 0{
             
             player!.play()
-            
             gesture.EmergencyVoiceimg.image = UIImage(named: "pause")
-            
-            
             
         } else {
             
-            
-            
             player!.pause()
-            
-            
-            
             gesture.EmergencyVoiceimg.image = UIImage(named: "play")
-            
-            
-            
         }
-        
-        
-        
-        
-        
     }
-    
-    
     
     
     @objc func ordersFinishedPlaying( _ myNotification:NSNotification) {
         
-        
-        
         let selectedTime: CMTime = CMTimeMake(value: Int64(0 * 1000 as Float64), timescale: 1000)
-        
         player?.seek(to: selectedTime)
-        
-        
-        
-        print("Player finished")
-        
-        
         
     }
     
@@ -1009,27 +792,6 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
     
     
     // tap Nivagation
-    
-    @IBAction func menu() {
-        
-        if sideMenuView.isHidden == true{
-            
-            sideMenuView.isHidden = false
-            
-            
-            print("menuVisble")
-        }
-        
-        else{
-            
-            sideMenuView.isHidden = true
-            
-            print("mddffenuVisble")
-        }
-    }
-    
-    
-    
     
     @IBAction func changePassowrdVC(){
         
@@ -1100,8 +862,6 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
     }
     
     
-    
-    
     @IBAction func profileRedirect() {
         
         let vc = ProfileViewController(nibName: nil, bundle: nil)
@@ -1113,21 +873,6 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
     }
     
     
-    
-    
-    @IBAction func notificationVc() {
-        
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        vc.str = str
-        vc.strName = strName
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true,completion: nil)
-        
-        
-    }
-    
-    
-    
     @IBAction func termsAndCondition() {
         
         let vc = MenuTermsViewController(nibName: nil, bundle: nil)
@@ -1135,10 +880,18 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         present(vc, animated: true, completion: nil)
         
     }
+}
+
+@available(iOS 16.0, *)
+extension CommunicationHomePageViewController : CustomTabBarDelegate {
+    func didTapSearch() {
+        searchbar.isHidden  = false
+        searchFullView .isHidden = false
+    }
     
-    
-    
-    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
 }
 
 class VoiceMessage : UITapGestureRecognizer {

@@ -11,10 +11,7 @@ class SenderImagePdfTableViewCell: UITableViewCell {
 
     @IBOutlet weak var sendByCellLabel: UILabel!
     @IBOutlet weak var imageCellTitelLabel: UILabel!
-    
     @IBOutlet weak var imageCellTimeLabel: UILabel!
-    
-    @IBOutlet weak var sndByView: UIViewX!
     @IBOutlet weak var viewTap: UIViewX!
     
     @IBOutlet weak var plusoneLabel: UILabel!
@@ -23,8 +20,6 @@ class SenderImagePdfTableViewCell: UITableViewCell {
     @IBOutlet weak var imageCellDateLabel: UILabel!
     
     @IBOutlet weak var imageCellDescripitionLabel: UILabel!
-    
-    @IBOutlet weak var sendbyViewwidth: NSLayoutConstraint!
     @IBOutlet weak var fileAtchNamelabl: UILabel!
     
     @IBOutlet weak var upArrowssImages: UIImageView!

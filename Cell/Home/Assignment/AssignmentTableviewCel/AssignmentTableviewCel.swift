@@ -127,16 +127,12 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
     
     @IBAction func attachmentVc( gesture : Attchment){
         
-        
         let currentController = self.getViewController()
         
         let vc =  DashBordShwViewController (nibName: nil, bundle: nil)
         vc.imgfilePath = gesture.img_url
-        
         vc.modalPresentationStyle = .fullScreen
         currentController?.present(vc, animated: true, completion: nil)
-        
-        
     }
     
     
@@ -162,7 +158,6 @@ class AssignmentTableviewCel: UITableViewCell, UICollectionViewDelegateFlowLayou
             vc.strName = strName
             vc.is_read_enabled = is_read_enabled
             vc.is_write_enabled = is_write_enabled
-            
             vc.modalPresentationStyle = .fullScreen
             currentController?.present(vc, animated: true, completion: nil)
             

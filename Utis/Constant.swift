@@ -13,7 +13,7 @@ import Foundation
 
 class Constant {
     
-    //   static var baseUrl : String = "http://192.168.10.50:3013/api/AppDetailsBal/"
+//  static var baseUrl : String = "http://192.168.10.81:3013/api/AppDetailsBal/"
     
     static var baseUrl: String {
         guard let url = UserDefaults.standard.string(forKey: DefaultsKeys.baseUrl),
