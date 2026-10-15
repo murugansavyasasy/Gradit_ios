@@ -11,6 +11,7 @@ import ObjectMapper
 @available(iOS 16.0, *)
 class ExamDetailsHomePageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var noDataTextLabel: UILabel!
     @IBOutlet weak var noDataView: UIView!
     @IBOutlet weak var examDetailsTabelView: UITableView!
@@ -46,6 +47,7 @@ class ExamDetailsHomePageViewController: UIViewController,UITableViewDelegate,UI
         examDetailsTabelView.dataSource = self
         examRefname ()
         view.backgroundColor = .priorityColor
+        topView.backgroundColor = .priorityColor
     }
     
     
@@ -60,7 +62,7 @@ class ExamDetailsHomePageViewController: UIViewController,UITableViewDelegate,UI
         ExamesApplicationTableViewCell
         
         let exam : examesDataDetails = examRef[indexPath.row]
-        
+        cell.lineView.backgroundColor = indexPath.row % 2 == 0 ? UIColor(named: "even"): UIColor(named: "odd")
         cell.cellCodeLabel.text = exam.subject_code
         cell.cellFeeAmountLabel.text = exam.amount
         cell.cellSemNumberLabel.text = exam.sem_number

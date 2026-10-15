@@ -30,45 +30,34 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Pl-jK-nEC">
                     <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H7c-4w-Xyh">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="65"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ss-XJ-f4t">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ss-XJ-f4t">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FEA-pi-c0f">
-                                            <rect key="frame" x="15" y="15" width="348" height="30"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="30" id="u7D-hv-i3G"/>
-                                            </constraints>
-                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" title="Placement Events">
-                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <imageReference key="image" image="arrow.left" catalog="system" symbolScale="large"/>
-                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="medium"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="BackBtnAct:" destination="-1" eventType="touchUpInside" id="UFz-1b-oAY"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FEA-pi-c0f">
+                                    <rect key="frame" x="15" y="15" width="348" height="30"/>
                                     <constraints>
-                                        <constraint firstItem="FEA-pi-c0f" firstAttribute="top" secondItem="6ss-XJ-f4t" secondAttribute="top" constant="15" id="4DO-gw-wqZ"/>
-                                        <constraint firstAttribute="bottom" secondItem="FEA-pi-c0f" secondAttribute="bottom" constant="15" id="UOm-b1-CTq"/>
-                                        <constraint firstAttribute="trailing" secondItem="FEA-pi-c0f" secondAttribute="trailing" constant="30" id="rty-ch-zFS"/>
-                                        <constraint firstItem="FEA-pi-c0f" firstAttribute="leading" secondItem="6ss-XJ-f4t" secondAttribute="leading" constant="15" id="uLN-l3-IKk"/>
+                                        <constraint firstAttribute="height" constant="30" id="u7D-hv-i3G"/>
                                     </constraints>
-                                </view>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Placement Events">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <imageReference key="image" image="arrow.left" catalog="system" symbolScale="large"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="BackBtnAct:" destination="-1" eventType="touchUpInside" id="UFz-1b-oAY"/>
+                                    </connections>
+                                </button>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="backgroundColor" name="StudentParent"/>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="6ss-XJ-f4t" secondAttribute="bottom" constant="5" id="4B8-p4-KiA"/>
-                                <constraint firstAttribute="trailing" secondItem="6ss-XJ-f4t" secondAttribute="trailing" id="90Y-fA-tEN"/>
-                                <constraint firstItem="6ss-XJ-f4t" firstAttribute="top" secondItem="H7c-4w-Xyh" secondAttribute="top" id="WWc-xj-yeS"/>
-                                <constraint firstItem="6ss-XJ-f4t" firstAttribute="leading" secondItem="H7c-4w-Xyh" secondAttribute="leading" id="dr1-V9-yFr"/>
+                                <constraint firstItem="FEA-pi-c0f" firstAttribute="top" secondItem="6ss-XJ-f4t" secondAttribute="top" constant="15" id="4DO-gw-wqZ"/>
+                                <constraint firstAttribute="bottom" secondItem="FEA-pi-c0f" secondAttribute="bottom" constant="15" id="UOm-b1-CTq"/>
+                                <constraint firstAttribute="trailing" secondItem="FEA-pi-c0f" secondAttribute="trailing" constant="30" id="rty-ch-zFS"/>
+                                <constraint firstItem="FEA-pi-c0f" firstAttribute="leading" secondItem="6ss-XJ-f4t" secondAttribute="leading" constant="15" id="uLN-l3-IKk"/>
                             </constraints>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="G4z-4E-ilk">
@@ -108,29 +97,37 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
+                        <constraint firstItem="6ss-XJ-f4t" firstAttribute="top" secondItem="3Pl-jK-nEC" secondAttribute="top" id="0jr-qt-LeJ"/>
+                        <constraint firstItem="G4z-4E-ilk" firstAttribute="top" secondItem="6ss-XJ-f4t" secondAttribute="bottom" constant="5" id="60g-OZ-AFe"/>
                         <constraint firstAttribute="bottom" secondItem="8ke-Ju-17L" secondAttribute="bottom" id="86h-Lk-0GJ"/>
+                        <constraint firstItem="6ss-XJ-f4t" firstAttribute="leading" secondItem="3Pl-jK-nEC" secondAttribute="leading" id="8Kj-Wo-1rQ"/>
                         <constraint firstAttribute="trailing" secondItem="8ke-Ju-17L" secondAttribute="trailing" id="9w7-UP-ty9"/>
-                        <constraint firstItem="H7c-4w-Xyh" firstAttribute="leading" secondItem="3Pl-jK-nEC" secondAttribute="leading" id="Ine-aM-ZTQ"/>
                         <constraint firstItem="8ke-Ju-17L" firstAttribute="top" secondItem="G4z-4E-ilk" secondAttribute="bottom" constant="15" id="OJc-bT-2WD"/>
                         <constraint firstAttribute="trailing" secondItem="G4z-4E-ilk" secondAttribute="trailing" id="Px2-ex-FkS"/>
                         <constraint firstItem="x53-hU-lyg" firstAttribute="leading" secondItem="3Pl-jK-nEC" secondAttribute="leading" constant="15" id="V9s-d7-7xQ"/>
-                        <constraint firstItem="G4z-4E-ilk" firstAttribute="top" secondItem="H7c-4w-Xyh" secondAttribute="bottom" id="YRg-qs-9JR"/>
+                        <constraint firstAttribute="trailing" secondItem="6ss-XJ-f4t" secondAttribute="trailing" id="VdC-9x-ihf"/>
                         <constraint firstItem="8ke-Ju-17L" firstAttribute="leading" secondItem="3Pl-jK-nEC" secondAttribute="leading" id="apW-26-jWh"/>
                         <constraint firstItem="x53-hU-lyg" firstAttribute="centerY" secondItem="3Pl-jK-nEC" secondAttribute="centerY" id="dHi-jT-z8e"/>
-                        <constraint firstAttribute="trailing" secondItem="H7c-4w-Xyh" secondAttribute="trailing" id="dNB-hJ-kT6"/>
                         <constraint firstItem="G4z-4E-ilk" firstAttribute="leading" secondItem="3Pl-jK-nEC" secondAttribute="leading" id="hkv-A0-yt5"/>
-                        <constraint firstItem="H7c-4w-Xyh" firstAttribute="top" secondItem="3Pl-jK-nEC" secondAttribute="top" id="m20-2I-TKX"/>
                         <constraint firstAttribute="trailing" secondItem="x53-hU-lyg" secondAttribute="trailing" constant="15" id="wab-PE-y0l"/>
                     </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3uH-Lp-LA9">
+                    <rect key="frame" x="0.0" y="784" width="393" height="68"/>
+                    <color key="backgroundColor" systemColor="systemGray6Color"/>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="StudentParent"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3uH-Lp-LA9" secondAttribute="trailing" id="RGN-ak-SPb"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="3Pl-jK-nEC" secondAttribute="bottom" id="YNb-yX-2Th"/>
+                <constraint firstAttribute="bottom" secondItem="3uH-Lp-LA9" secondAttribute="bottom" id="d0K-fN-LL8"/>
                 <constraint firstItem="3Pl-jK-nEC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fnt-hq-cQC"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3Pl-jK-nEC" secondAttribute="trailing" id="g5g-py-cXp"/>
+                <constraint firstItem="3uH-Lp-LA9" firstAttribute="top" secondItem="3Pl-jK-nEC" secondAttribute="bottom" id="h4q-bc-Qff"/>
                 <constraint firstItem="3Pl-jK-nEC" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="j6t-My-nUK"/>
+                <constraint firstItem="3uH-Lp-LA9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="rdq-Dw-cgT"/>
             </constraints>
             <point key="canvasLocation" x="139" y="21"/>
         </view>
@@ -140,9 +137,6 @@
         <namedColor name="StudentParent">
             <color red="0.075999997556209564" green="0.13199999928474426" blue="0.21500000357627869" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

@@ -9,11 +9,8 @@ import UIKit
 
 class NotificationTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLbl: UILabel!
-    
     @IBOutlet weak var timeLbl: UILabel!
-    
     @IBOutlet weak var contentLbl: UILabel!
-    
     @IBOutlet weak var datelabel: UILabel!
     
     override func awakeFromNib() {

@@ -14,19 +14,9 @@ import KRProgressHUD
 class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     
     
-    @IBOutlet weak var tapBarView: UIViewX!
-    
-    @IBOutlet weak var topMemberLabel: UILabel!
-    
+    @IBOutlet weak var customTabBar: CustomTabBar!
     @IBOutlet weak var noDataTextLabel: UILabel!
-    
     @IBOutlet weak var noDataTextView: UIView!
-    
-    
-    
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var notificationView: UIView!
-    
     @IBOutlet weak var privacyPolicyView: UIView!
     
     @IBOutlet weak var faqView: UIView!
@@ -40,30 +30,10 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
     
     
     @IBOutlet weak var termsAndConditionView: UIView!
-    
-    @IBOutlet weak var redirectLoginView: UIView!
-    
-    @IBOutlet weak var refreshView: UIView!
-    
     @IBOutlet weak var changeRolesView: UIView!
-    
-    @IBOutlet weak var topMessageLabel: UILabel!
-    
-    
-    
-    @IBOutlet weak var clgLogoImg: UIImageView!
-    
     @IBOutlet weak var sideMenuView: UIView!
-    
-    @IBOutlet weak var viewTap: UIView!
-    
-    
-    
-    
-    
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
-    @IBOutlet weak var adView: UIView!
     @IBOutlet weak var chatCollectionView: UICollectionView!
     var Indentifiers = "ChatsCollectionViewCell"
     
@@ -96,6 +66,8 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        customTabBar.delegate = self
+        
         overrideUserInterfaceStyle = .light
         sideMenuView.isHidden = true
         noDataTextView.isHidden = true
@@ -114,10 +86,9 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
         colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
         
         passwords = defaults.string(forKey: DefaultsKeys.Password)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        mem = defaults.string(forKey: DefaultsKeys.memberName)
+        
         mobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
-        topMemberLabel.text = mem
+      
         
         addApi()
         
@@ -130,83 +101,8 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
         let rowNib = UINib(nibName: Indentifiers, bundle: nil)
         chatCollectionView.register(rowNib, forCellWithReuseIdentifier: Indentifiers)
         
-        
-        if priority == "p1"{
-            
-            topLabels.text = "Principal"
-            
-        }
-        
-        else if priority == "p4"{
-            tapBarView.backgroundColor = UIColor(named: "StudentParent" )
-            topLabels.text = "Student"
-            
-        }
-        
-        else if priority == "p2" || priority == "p3"{
-            
-            
-            topLabels.text = "Teacher"
-            
-        }
-        
-        else if priority == "p5"{
-            
-            tapBarView.backgroundColor = UIColor(named: "FatherColor" )
-            topLabels.text = "Father"
-            
-            
-            
-        }
-        
-        
-        if priority == "p1" {
-            
-            
-            print("PrincipalVieewwColor")
-            view.backgroundColor = UIColor(named: "Principal" )
-            
-            
-        }else if priority == "p4" {
-            
-            print("StudentVieewwColor")
-            view.backgroundColor = UIColor(named: "studentViewColors")
-            
-            
-            
-        } else if priority == "p3" ||  priority == "p2" {
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-            
-        }
-        else if priority == "p5"{
-            
-            
-            
-            view.backgroundColor = UIColor(named: "FatherColor")
-            
-            
-            
-        }
-        
-      
-        
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
-        
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
-        
-        
+        view.backgroundColor = .priorityColor
+       
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
         
@@ -320,42 +216,45 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
             
             switch result {
             case .success(let success):
-                if success.Status == 1 {
+         
                     addapiRef = success.data ?? []
                     
-                    for i in addapiRef{
-                        
-                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-                        let singleTap = adds(target: self, action: #selector(adLoad))
-                        singleTap.url = i.add_url
-                        bigImg.isUserInteractionEnabled = true
-                        bigImg.addGestureRecognizer(singleTap)
-                    }
-                }
+                    let ad = addapiRef.first
+                  
+                    bigImg.setAdImage(
+                        imageURL: ad?.background_image,
+                        adURL: ad?.add_url,
+                        from: self
+                    )
+
+                    smallImg.setAdImage(
+                        imageURL: ad?.add_image,
+                        adURL: ad?.add_url,
+                        placeholder: UIImage(named: "Default_Ad_small"),
+                        from: self
+                    )
+                
                 
             case .failure(let failure):
                 print(failure.localizedDescription)
+                
+                bigImg.setAdImage(
+                    imageURL: "",
+                    adURL: "",
+                    from: self
+                )
+
+                smallImg.setAdImage(
+                    imageURL:"",
+                    adURL: "",
+                    placeholder: UIImage(named: "Default_Ad_small"),
+                    from: self
+                )
             }
         }
         
     }
-    
-    
-    @objc func adLoad( gesture : adds){
-        
-        let vc = ChatAddViewController(nibName: nil, bundle: nil)
-        vc.addWeurl = gesture.url
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true,completion: nil)
-        
-        
-        
-        
-        
-    }
+
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -551,49 +450,13 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
         currentController?.present(vc, animated: true, completion: nil)
         
     }
-    
-    
-    
-    
-    
-    @IBAction func refreshVc() {
-        
-        print("refreshVcWork")
-       
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.chatfortPage()
-            self.chatCollectionView.reloadData()
-            
-            
-        }
-        
-        
-    }
-    
-    
-    @IBAction func notificationVc() {
-        print("NotificationViewController")
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        vc.str = str
-        vc.strName = strName
-        vc.modalPresentationStyle = .fullScreen
-        let currentController = self.getCurrentViewController()
-        currentController?.present(vc, animated: false, completion: nil)
-        
-        
-    }
-    
-    
-    
+ 
     @IBAction func changePassowrdVC(){
         
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         let currentController = self.getCurrentViewController()
         currentController?.present(vc, animated: true, completion: nil)
-        
-        
         
     }
     
@@ -605,34 +468,6 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
         present(vc, animated: true,completion: nil)
     }
     
-    @IBAction func menu() {
-        
-        if sideMenuView.isHidden == true{
-            
-            sideMenuView.isHidden = false
-            //
-            
-            print("menuVisble")
-        }
-        
-        else{
-            
-            sideMenuView.isHidden = true
-            
-            print("mddffenuVisble")
-        }
-        
-        
-    }
-    
-    
-    
-    @IBAction func chngeVc(){
-        
-        
-        print("sarannn")
-        
-    }
     
     @IBAction func profileRedirect() {
         
@@ -645,10 +480,16 @@ class ChatHomePageViewController: UIViewController, UICollectionViewDataSource, 
     
 }
 
-
-class adds : UITapGestureRecognizer{
+@available(iOS 16.0, *)
+extension ChatHomePageViewController : CustomTabBarDelegate {
+    func didTapSearch() {
+        
+    }
     
-    var url : String!
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
+    
     
 }
 

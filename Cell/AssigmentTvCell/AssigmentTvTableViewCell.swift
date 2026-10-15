@@ -10,11 +10,8 @@ import UIKit
 class AssigmentTvTableViewCell: UITableViewCell {
 
     @IBOutlet weak var sendByLbl: UILabel!
-    @IBOutlet weak var topicLblHeight: NSLayoutConstraint!
     @IBOutlet weak var ReadDotImageView: UIImageView!
-    
     @IBOutlet weak var subDateView: UIViewX!
-    
     @IBOutlet weak var submissiondefaultLbl: UILabel!
     @IBOutlet weak var attachFileLabel: UILabel!
     @IBOutlet weak var cellArrowImage: UIImageView!
@@ -24,14 +21,12 @@ class AssigmentTvTableViewCell: UITableViewCell {
     
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var plusoneLabel: UILabel!
-    @IBOutlet weak var dateTimeLabel: UILabel!
-    
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var submitionView: UIViewX!
-    
     @IBOutlet weak var prevSubmissionView: UIViewX!
     @IBOutlet weak var attchmentView: UIViewX!
     @IBOutlet weak var submitionDateLabel: UILabel!
-    
     @IBOutlet weak var dotHeight: NSLayoutConstraint!
     @IBOutlet weak var creatonLabel: UILabel!
     

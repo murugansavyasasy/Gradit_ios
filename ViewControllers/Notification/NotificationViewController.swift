@@ -14,15 +14,10 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class NotificationViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
-@IBOutlet weak var topNameview: UIView!
-@IBOutlet weak var topLabels: UILabel!
-@IBOutlet weak var tapBarView: UIViewX!
-@IBOutlet weak var topMessageLabel: UILabel!
-@IBOutlet weak var viewTap: UIView!
+@IBOutlet weak var CustomTabBar: CustomTabBar!
 @IBOutlet weak var changePasswordView: UIView!
 @IBOutlet weak var termsAndConditionView: UIView!
 @IBOutlet weak var helpView: UIView!
-@IBOutlet weak var clgLogoImg: UIImageView!
 @IBOutlet weak var loginView: UIView!
 @IBOutlet weak var sideMenuView: UIView!
 @IBOutlet weak var faqView: UIView!
@@ -32,8 +27,6 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
 @IBOutlet weak var profileView: UIView!
 @IBOutlet weak var changeRolesView: UIView!
 
-let menuIdentifier = "MenuCollectionViewCell"
-var MenuRefName :[menuApiDataDetails] = []
 var notificationDataList : [NotificationData] = []
 let rowIdentifier = "NotificationTableViewCell"
 var colgId : String!
@@ -42,8 +35,6 @@ var priority : String!
 var colgLog : String!
 var MobileNumber : String!
 var passwords : String!
-var loginDatas : [datalogin]!
-var logindataprinci :[datalogin]!
 var str : [String] = []
 var strName : [String] = []
 var is_read_enabled = ""
@@ -51,6 +42,8 @@ var is_write_enabled = ""
 
 override func viewDidLoad() {
     super.viewDidLoad()
+    
+    CustomTabBar.delegate = self
     
     sideMenuView.isHidden = true
     noRecordLbl.isHidden = true
@@ -60,106 +53,27 @@ override func viewDidLoad() {
     colgId = defaults.string(forKey: DefaultsKeys.collegeid)
     memberId = defaults.string(forKey: DefaultsKeys.memberid)
     priority = defaults.string(forKey: DefaultsKeys.priority)
-    topMessageLabel.text = defaults.string(forKey: DefaultsKeys.memberName)
     passwords = defaults.string(forKey: DefaultsKeys.Password)
     MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
     
-    colgLog = defaults.string(forKey: DefaultsKeys.colglogo)
-    clgLogoImg.sd_setImage(with: URL(string:  colgLog), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
     tv.dataSource = self
     tv.delegate = self
     
-    
-    if priority == "p1"{
-        tapBarView.backgroundColor = UIColor(named: "Principal" )
-        topLabels.text = "Principal"
-        
-        profileView.isHidden = true
-    }
-    
-    else if priority == "p4"{
-        
-        topLabels.text = "Student"
-        tapBarView.backgroundColor = UIColor(named: "StudentParent" )
+    if priority == "p4" || priority == "p5" {
         profileView.isHidden = false
-    }
-    
-    else if priority == "p2" || priority == "p3"{
-        
-        tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-        topLabels.text = "Teacher"
-        
+    }else{
         profileView.isHidden = true
     }
     
-    else if priority == "p5"{
-        
-        tapBarView.backgroundColor = UIColor(named: "FatherColor" )
-        topLabels.text = "Father"
-        
-        profileView.isHidden = false
-        
-    }
-    
-    else if priority == "p6"{
-        
-        tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-        topLabels.text = "Non Teaching"
-        
-        profileView.isHidden = true
-        
-    }
-    
-    
-    else if priority == "p7"{
-        
-        tapBarView.backgroundColor = UIColor(named: "univercityColorCod" )
-        topLabels.text = "GroupHead"
-        
-        profileView.isHidden = true
-        
-    }
     
     dashBoardList()
     
-    if priority == "p1" {
-        
-        print("PrincipalVieewwColor")
-        view.backgroundColor = UIColor(named: "Principal" )
-        
-    }else if priority == "p4" {
-        
-        print("StudentVieewwColor")
-        view.backgroundColor = UIColor(named: "studentViewColors")
-        
-    } else if priority == "p3" ||  priority == "p2" || priority == "p6" {
-        
-        print("HooodddVieewwColor")
-        view.backgroundColor = UIColor(named: "Teaching Staff")
-        
-    }
-    else if priority == "p5"{
-        
-        view.backgroundColor = UIColor(named: "FatherColor")
-        
-    }
-    
-    else if priority == "p7"{
-        
-        
-        view.backgroundColor = UIColor(named: "univercityColorCod")
-        
-    }
-    
+    view.backgroundColor = .priorityColor
+   
     let testVC = NewHomescreenVC()
     
     let rowNib = UINib(nibName: rowIdentifier, bundle: nil)
     tv.register(rowNib, forCellReuseIdentifier: rowIdentifier)
-    
-    
-    let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-    viewTap.addGestureRecognizer(menuGestureHide)
-    
     
     let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
     faqView.addGestureRecognizer(faqGesture)
@@ -181,21 +95,12 @@ override func viewDidLoad() {
     let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
     changeRolesView.addGestureRecognizer(changeRolesGesture)
     
-    let tops = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-    topNameview.addGestureRecognizer(tops)
-    
-    
-    
-    
     let profileGesture = UITapGestureRecognizer(target: self, action: #selector(profileRedirect))
     profileView.addGestureRecognizer(profileGesture)
     
     
     let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
     changePasswordView.addGestureRecognizer(chagePassword)
-    
-    
-    
     
 }
 
@@ -900,55 +805,6 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
     
 }
 
-
-
-
-
-@IBAction func refreshVc() {
-    
-    print("refreshVcWork")
-    KRProgressHUD.show()
-    
-    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-     
-        KRProgressHUD.dismiss()
-        
-    }
-    
-    
-}
-
-
-@IBAction func notificationVc() {
-    print("NotificationViewController")
-    let vc = NotificationViewController(nibName: nil, bundle: nil)
-    vc.modalPresentationStyle = .fullScreen
-    present(vc, animated: false, completion: nil)
-  
-}
-
-
-
-
-@IBAction func menu() {
-    
-    if sideMenuView.isHidden == true{
-        
-        sideMenuView.isHidden = false
-     
-        print("menuVisble")
-    }
-    
-    else{
-        
-        sideMenuView.isHidden = true
-     
-    }
-    
-    
-}
-
-
 @IBAction func changePassowrdVC(){
     
     let vc = ChangePasswordVC(nibName: nil, bundle: nil)
@@ -957,23 +813,18 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
  
 }
 
-
 @IBAction func priorityVc() {
         let vc = PriorityScreenVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true,completion: nil)
 }
 
-
 @IBAction func priortyScreenVc(){
     
    
     let vc = PriorityScreenVC(nibName: nil, bundle: nil)
     vc.modalPresentationStyle = .fullScreen
-    //
     let defaults = UserDefaults.standard
-    
-    
     present(vc, animated: true,completion: nil)
     
 }
@@ -987,6 +838,17 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
     present(vc, animated: true, completion: nil)
     
 }
+}
 
-
+@available(iOS 16.0, *)
+extension NotificationViewController : CustomTabBarDelegate {
+    func didTapSearch() {
+        
+    }
+    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
+    
+    
 }

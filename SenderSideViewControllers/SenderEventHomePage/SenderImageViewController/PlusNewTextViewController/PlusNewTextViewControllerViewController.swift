@@ -16,31 +16,24 @@ import ObjectMapper
 class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelegate,UITextFieldDelegate {
     
     @IBOutlet weak var lblCount: UILabel!
-    @IBOutlet weak var tapBarView: UIViewX!
-    @IBOutlet weak var redirectLoginView: UIViewX!
+    @IBOutlet weak var customTabBar: CustomTabBar!
     @IBOutlet weak var selectRepicDeafultId: UILabel!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var selectRespView: UIViewX!
-    @IBOutlet weak var notificationView: UIView!
     @IBOutlet weak var calanderView: UIViewX!
     @IBOutlet weak var DateLabel: UILabel!
     @IBOutlet weak var venuTextField: UITextField!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
-    @IBOutlet weak var topMessageLabel: UILabel!
-    @IBOutlet weak var clgLogoImg: UIImageView!
     @IBOutlet weak var cancelView: UIViewX!
     @IBOutlet weak var logoutView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
     @IBOutlet weak var changePasswordView: UIView!
     @IBOutlet weak var termsAndConditionView: UIView!
     @IBOutlet weak var helpView: UIView!
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var viewTap: UIView!
     @IBOutlet weak var faqView: UIView!
     @IBOutlet weak var privacyPolicyView: UIView!
-    @IBOutlet weak var refreshView: UIView!
     @IBOutlet weak var sideMenuView: UIView!
     @IBOutlet weak var setTimeView: UIViewX!
     @IBOutlet weak var descripitionTextField: UITextView!
@@ -80,6 +73,7 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
     var is_write_enabled = ""
     var selectedDate: Date?
     var placeHolder = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if menuId == "13"{
@@ -98,6 +92,8 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         
         overrideUserInterfaceStyle = .light
         
+        customTabBar.delegate = self
+        
         sideMenuView.isHidden = true
         placeHolder.text = "Type your description here"
         placeHolder.textColor = .lightGray
@@ -107,20 +103,24 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         let defaults = UserDefaults.standard
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
         priority = defaults.string(forKey: DefaultsKeys.priority)
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         mobileNumber  = defaults.string(forKey: DefaultsKeys.mobileNumber)
         password  = defaults.string(forKey: DefaultsKeys.Password)
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
         UserId = defaults.string(forKey: DefaultsKeys.memberid)
-        topMessageLabel.text = memberName
         
-        bigImg.sd_setImage(with: URL(string: backGroundImageUrl), placeholderImage: UIImage(named: "ic_white"))
+        bigImg.setAdImage(
+            imageURL: backGroundImageUrl,
+            adURL: addWebUrl,
+            from: self
+        )
         
+        smallImg.setAdImage(
+            imageURL: smallImageUrl,
+            adURL: addWebUrl,
+            placeholder: UIImage(named: "Default_Ad_small"),
+            from: self
+        )
         
-        smallImg.sd_setImage(with: URL(string: smallImageUrl), placeholderImage: UIImage(named: "ic_white"))
-        tapBarView.backgroundColor = .priorityColor
-        topLabels.text = .priorityRole
         view.backgroundColor = .priorityColor
         descripitionTextField.returnKeyType = .done
         descripitionTextField.delegate = self
@@ -128,10 +128,7 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         titleTextField.delegate = self
         venuTextField.returnKeyType = .done
         venuTextField.delegate = self
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(adLoad))
-        bigImg.isUserInteractionEnabled = true
-        bigImg.addGestureRecognizer(singleTap)
-        
+    
         let cancel = UITapGestureRecognizer(target: self, action: #selector(cancelVc))
         cancelView.addGestureRecognizer(cancel)
         
@@ -144,20 +141,9 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
         
         let selectResp = UITapGestureRecognizer(target: self, action: #selector(SelectVc))
         selectRespView.addGestureRecognizer(selectResp)
-        
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
         
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
@@ -362,32 +348,9 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                                 
                                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                                     
-                                    if self.priority == "p2" || self.priority == "p3" {
-                                        
-                                        let vc = SenderEventHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                        
-                                    } else {
-                                        
-                                        let vc = SenderEventHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Principal")
-                                        vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                    }
+                                    let vc = NewHomescreenVC()
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
                                 })
                                 
                                 self.present(refreshAlert, animated: true)
@@ -402,46 +365,9 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
                                 
                                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                                     
-                                    if self.priority == "p2" || self.priority == "p3" {
-                                        
-                                        let vc = SenderEventHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                    }
-                                    
-                                    if self.priority == "p7" {
-                                        
-                                        let vc = SenderEventHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "univercityColorCod")
-                                        vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                        
-                                    } else {
-                                        
-                                        let vc = SenderEventHomePageViewController()
-                                        vc.is_read_enabled = self.is_read_enabled
-                                        vc.is_write_enabled = self.is_write_enabled
-                                        vc.view.backgroundColor = UIColor(named: "Principal")
-                                        vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                        vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                        vc.str = self.str
-                                        vc.strName = self.strName
-                                        vc.modalPresentationStyle = .fullScreen
-                                        self.present(vc, animated: true)
-                                    }
+                                    let vc = NewHomescreenVC()
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
                                 })
                                 
                                 self.present(refreshAlert, animated: true)
@@ -657,13 +583,6 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         FromDate_Action()
     }
     
-    @IBAction func adLoad( ){
-        let vc = TotalAddLoadPageViewController(nibName: nil, bundle: nil)
-        vc.AddWebUrl = addWebUrl
-        vc.modalPresentationStyle = . fullScreen
-        present(vc, animated: true,completion: nil)
-    }
-    
     @IBAction func backbtn(_ sender: Any) {
         dismiss(animated: true)
     }
@@ -724,26 +643,6 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
         currentController?.present(vc, animated: true, completion: nil)
     }
     
-    @IBAction func refreshVc() {
-        KRProgressHUD.show()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            KRProgressHUD.dismiss()
-        }
-    }
-    
-    
-    @IBAction func notificationVc() {
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        let currentController = self.getCurrentViewController()
-        currentController?.present(vc, animated: false, completion: nil)
-    }
-    
-    @IBAction func menu() {
-        sideMenuView.isHidden.toggle()
-    }
-    
-    
     @IBAction func changePassowrdVC(){
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
@@ -759,5 +658,16 @@ class PlusNewTextViewControllerViewController: UIViewController,UITextViewDelega
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return range.location <= 99
+    }
+}
+
+@available(iOS 16.0, *)
+extension PlusNewTextViewControllerViewController: CustomTabBarDelegate {
+    func didTapSearch() {
+        
+    }
+    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
     }
 }

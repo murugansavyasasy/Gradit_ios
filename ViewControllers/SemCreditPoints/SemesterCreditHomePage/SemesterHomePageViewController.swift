@@ -12,6 +12,7 @@ import DropDown
 @available(iOS 16.0, *)
 class SemesterHomePageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var headingView: UIView!
     @IBOutlet weak var noDataTextView: UIView!
@@ -50,48 +51,21 @@ class SemesterHomePageViewController: UIViewController,UITableViewDelegate,UITab
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
         memberId = defaults.string(forKey: DefaultsKeys.memberid)
         deptid     = defaults.string(forKey: DefaultsKeys.deptid)
-        
         sectionid = defaults.string(forKey: DefaultsKeys.sectionid)
-        
-        
         semesterid  = defaults.string(forKey: DefaultsKeys.semesterid)
         courseid = defaults.string(forKey: DefaultsKeys.courseid)
         priority = defaults.string(forKey: DefaultsKeys.priority)
         
-     
         semCreditDropDown()
+      
+        view.backgroundColor = .priorityColor
+        topView.backgroundColor = .priorityColor
        
-        if priority == "p1" {
-            
-            
-            print("PrincipalVieewwColor")
-            view.backgroundColor = UIColor(named: "Principal" )
-            
-        }else if priority == "p4" {
-            
-            print("StudentVieewwColor")
-            view.backgroundColor = UIColor(named: "studentViewColors")
-            
-         
-        } else if priority == "p3" ||  priority == "p2" {
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-        }
-        else if priority == "p5"{
-           
-            view.backgroundColor = UIColor(named: "FatherColor")
-           
-        }
-        
         let rowNib = UINib(nibName: identiers, bundle: nil)
         tv.register(rowNib, forCellReuseIdentifier: identiers)
         
-        
         let  selectCategory = UITapGestureRecognizer(target: self, action: #selector(open_url))
         semCreditDropDownView.addGestureRecognizer(selectCategory)
-        
         
         noDataLabel.isHidden = true
         noDataTextView.isHidden = true

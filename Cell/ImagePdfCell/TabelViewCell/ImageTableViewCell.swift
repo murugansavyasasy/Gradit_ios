@@ -9,7 +9,6 @@ import UIKit
 
 class ImageTableViewCell: UITableViewCell {
     
-    
     @IBOutlet weak var SendbyStack: UIStackView!
     @IBOutlet weak var AttachmentStack: UIStackView!
     @IBOutlet weak var DetailsStackview: UIStackView!

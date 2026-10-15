@@ -22,29 +22,23 @@ class plusPageViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var fromDateLabel: UILabel!
     @IBOutlet weak var calanderTopHeight: NSLayoutConstraint!
     @IBOutlet weak var calandViewss: UIView!
-    @IBOutlet weak var tapBarView: UIViewX!
+    @IBOutlet weak var customTabBar: CustomTabBar!
     @IBOutlet weak var reason: UITextView!
     @IBOutlet weak var toDateView: UIView!
     @IBOutlet weak var fromDateView: UIView!
-    @IBOutlet weak var topMemberLabel: UILabel!
     @IBOutlet weak var changeRolesView: UIView!
     @IBOutlet weak var profileView: UIView!
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var clgLogoImg: UIImageView!
-    @IBOutlet weak var notificationView: UIView!
     @IBOutlet weak var privacyPolicyView: UIView!
     @IBOutlet weak var cancelssView: UIViewX!
     @IBOutlet weak var faqView: UIView!
-    @IBOutlet weak var refreshView: UIView!
-    @IBOutlet weak var viewTap: UIView!
     @IBOutlet weak var sideMenuView: UIView!
     @IBOutlet weak var helpView: UIView!
     @IBOutlet weak var termsAndConditionView: UIView!
     @IBOutlet weak var changePasswordView: UIView!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var bigImg: UIImageView!
-    @IBOutlet weak var redirectLoginView: UIViewX!
     @IBOutlet weak var smallImg: UIImageView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     private enum Text {
         static let reasonPlaceholder = "Enter the Reason"
@@ -81,6 +75,7 @@ class plusPageViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
+        customTabBar.delegate = self
         sideMenuView.isHidden = true
         lblCount.text = ""
         reason.delegate = self
@@ -111,15 +106,18 @@ class plusPageViewController: UIViewController, UITextViewDelegate {
         stafId = defaults.string(forKey: DefaultsKeys.memberid)
         collegeId = defaults.string(forKey: DefaultsKeys.collegeid)
         section = defaults.string(forKey: DefaultsKeys.sectionid)
-        topMemberLabel.text = defaults.string(forKey: DefaultsKeys.memberName)
-        let colgImg = defaults.string(forKey: DefaultsKeys.colglogo) ?? ""
-        clgLogoImg.sd_setImage(with: URL(string: colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        topLabels.text = .priorityRole
-        tapBarView.backgroundColor = .priorityColor
-        
+    
         addApi()
         LeavedropDrop()
         setupGestures()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     private func addTap(to view: UIView, action: Selector) {
@@ -132,9 +130,6 @@ class plusPageViewController: UIViewController, UITextViewDelegate {
         addTap(to: fromDateView, action: #selector(FromdateVc))
         addTap(to: toDateView, action: #selector(TodateVc))
         addTap(to: cancelssView, action: #selector(BackBtn(_:)))
-        addTap(to: viewTap, action: #selector(menu))
-        addTap(to: notificationView, action: #selector(notificationVc))
-        addTap(to: refreshView, action: #selector(refreshVc))
         addTap(to: faqView, action: #selector(faqRedirect))
         addTap(to: loginView, action: #selector(logoutPressed))
         addTap(to: helpView, action: #selector(helpRedirect))
@@ -143,7 +138,6 @@ class plusPageViewController: UIViewController, UITextViewDelegate {
         addTap(to: profileView, action: #selector(profileRedirect))
         addTap(to: changePasswordView, action: #selector(changePassowrdVC))
         addTap(to: changeRolesView, action: #selector(priorityVc))
-        addTap(to: redirectLoginView, action: #selector(priorityVc))
     }
     
     private func presentFullScreen(_ vc: UIViewController, animated: Bool = true) {
@@ -173,10 +167,6 @@ class plusPageViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func dropDownVc() {
         dropDown.show()
-    }
-    
-    @IBAction func menu() {
-        sideMenuView.isHidden.toggle()
     }
     
     @IBAction func done(_ sender: Any) {
@@ -287,18 +277,35 @@ class plusPageViewController: UIViewController, UITextViewDelegate {
             
             switch result {
             case .success(let success):
-                guard success.Status == 1 else { return }
-                for ad in success.data ?? [] {
-                    self.bigImg.sd_setImage(with: URL(string: ad.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                    self.smallImg.sd_setImage(with: URL(string: ad.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                    
-                    let singleTap = addvertisementPlus(target: self, action: #selector(self.adLoad))
-                    singleTap.url = ad.add_url
-                    self.bigImg.isUserInteractionEnabled = true
-                    self.bigImg.addGestureRecognizer(singleTap)
-                }
+                
+                let ad = success.data?.first
+                
+                bigImg.setAdImage(
+                    imageURL: ad?.background_image,
+                    adURL: ad?.add_url,
+                    from: self
+                )
+                
+                smallImg.setAdImage(
+                    imageURL: ad?.add_image,
+                    adURL: ad?.add_url,
+                    placeholder: UIImage(named: "Default_Ad_small"),
+                    from: self
+                )
             case .failure(let failure):
                 print(failure.localizedDescription)
+                bigImg.setAdImage(
+                    imageURL: "",
+                    adURL: "",
+                    from: self
+                )
+                
+                smallImg.setAdImage(
+                    imageURL: "",
+                    adURL:"",
+                    placeholder: UIImage(named: "Default_Ad_small"),
+                    from: self
+                )
             }
         }
     }
@@ -374,12 +381,6 @@ class plusPageViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    @IBAction func adLoad(gesture: addvertisementPlus) {
-        let vc = ShowExaminationAddViewController(nibName: nil, bundle: nil)
-        vc.addString = gesture.url
-        presentFullScreen(vc)
-    }
-    
     @IBAction func helpRedirect() {
         presentFullScreen(HelpViewController(nibName: nil, bundle: nil))
     }
@@ -394,10 +395,6 @@ class plusPageViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func privacyPolicyRedirect() {
         presentFullScreen(PrivacyPolicyViewController(nibName: nil, bundle: nil))
-    }
-    
-    @IBAction func notificationVc() {
-        presentFullScreen(NotificationViewController(nibName: nil, bundle: nil), animated: false)
     }
     
     @IBAction func changePassowrdVC() {
@@ -419,14 +416,30 @@ class plusPageViewController: UIViewController, UITextViewDelegate {
         })
     }
     
-    @IBAction func refreshVc() {
-        KRProgressHUD.show()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            KRProgressHUD.dismiss()
-        }
+    @objc func keyboardWillShow(notification: NSNotification) {
+        
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        
+        let keyboardHeight = keyboardFrame.height + 20
+        
+        scrollView.contentInset.bottom = keyboardHeight
+        scrollView.verticalScrollIndicatorInsets.bottom = keyboardHeight
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        
+        scrollView.contentInset.bottom = 0
+        scrollView.verticalScrollIndicatorInsets.bottom = 0
     }
 }
 
-class addvertisementPlus: UITapGestureRecognizer {
-    var url: String!
+@available(iOS 16.0, *)
+extension plusPageViewController: CustomTabBarDelegate {
+    func didTapSearch() {
+        
+    }
+    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
 }

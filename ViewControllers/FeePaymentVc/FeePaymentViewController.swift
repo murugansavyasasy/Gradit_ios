@@ -18,6 +18,8 @@ class FeePaymentViewController: UIViewController,WKNavigationDelegate {
     var feeUrl = ""
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .priorityColor
         webView.navigationDelegate = self
         let defaults = UserDefaults.standard
         

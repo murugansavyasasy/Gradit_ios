@@ -259,32 +259,9 @@ class HodSelectResipenceViewController: UIViewController {
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = "1"
-                                vc.is_write_enabled = "1"
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else {
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = "1"
-                                vc.is_write_enabled = "1"
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                             
                         }))
                         
@@ -326,186 +303,7 @@ class HodSelectResipenceViewController: UIViewController {
         voiceUpload.isparent = parentchck.isChecked
         voiceUpload.isstaff = staffChck.isChecked
         voiceUpload.isstudent = studentChck.isChecked
-        
-//        let voiceUploadStr = voiceUpload.toJSONString()
-//        
-//        print("chatSenderStr",voiceUpload)
-//        
-//        AF.upload(multipartFormData: { [self] (multipartFormData) in
-//            
-//            KRProgressHUD.show()
-//            
-//            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//                
-//                
-//                
-//                
-//                KRProgressHUD.dismiss()
-//                
-//            }
-//            
-//            var videoU : String!
-//            
-//            let pathURL = voiceUrl
-//            
-//            let pathString = pathURL!.path
-//            
-//            multipartFormData.append(URL(fileURLWithPath: pathString), withName: "file")
-//            
-//            multipartFormData.append(Data(voiceUploadStr!.description.utf8), withName: "info")
-//            
-//            
-//            
-//            print("parameters.description.utf8",voiceUploadStr!.description.utf8)
-//            
-            
-//        },to: vimeoVideoEndpoint).responseJSON{
-//            //
-//            res in
-//            
-//            
-//            let json_str = String(data: res.data!, encoding: .utf8)
-//            
-//            print("json \(json_str!)")
-//            
-//            
-//            
-//            do {
-//                if let json = try JSONSerialization.jsonObject(with: res.data!, options: []) as? [String: Any] {
-//                    if let status = json["Status"] as? Int {
-//                        print("Status: \(status)")
-//                        
-//                        if status == 1 {
-//                            
-//                            
-//                            let a = json["Message"]
-//                            
-//                            
-//                            let refreshAlert = UIAlertController(title: "", message: a as! String, preferredStyle: UIAlertController.Style.alert)
-//                            
-//                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-//                                
-//                                if priority == "p2" || priority == "p3" {
-//                                    
-//                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                    
-//                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-//                                    
-//                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-//                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-//                                    vc.strName = self.strName
-//                                    vc.str = self.str
-//                                    
-//                                    vc.modalPresentationStyle = .fullScreen
-//                                    self.present(vc, animated: true , completion: nil)
-//                                    
-//                                }
-//                                
-//                                
-//                                else{
-//                                    
-//                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                    
-//                                    vc.view.backgroundColor = UIColor(named: "Principal" )
-//                                    
-//                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-//                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-//                                    
-//                                    vc.strName = self.strName
-//                                    vc.str = self.str
-//                                    vc.modalPresentationStyle = .fullScreen
-//                                    self.present(vc, animated: true , completion: nil)
-//                                    
-//                                }
-//                                
-//                                
-//                            }))
-//                            
-//                            
-//                            refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { (action: UIAlertAction!) in
-//                                print("Handle Cancel Logic here")
-//                            }))
-//                            
-//                            self.present(refreshAlert, animated: true, completion: nil)
-//                            
-//                            
-//                            
-//                            
-//                        }
-//                        else {
-//                            
-//                            
-//                            
-//                            let a = json["Message"]
-//                            
-//                            let refreshAlert = UIAlertController(title: "", message: a as! String, preferredStyle: UIAlertController.Style.alert)
-//                            
-//                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-//                                
-//                                if priority == "p2" || priority == "p3" {
-//                                    
-//                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                    
-//                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-//                                    
-//                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-//                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-//                                    vc.strName = self.strName
-//                                    vc.str = self.str
-//                                    
-//                                    vc.modalPresentationStyle = .fullScreen
-//                                    self.present(vc, animated: true , completion: nil)
-//                                    
-//                                }
-//                                
-//                                
-//                                else{
-//                                    
-//                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                    
-//                                    vc.view.backgroundColor = UIColor(named: "Principal" )
-//                                    
-//                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-//                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-//                                    
-//                                    vc.strName = self.strName
-//                                    vc.str = self.str
-//                                    vc.modalPresentationStyle = .fullScreen
-//                                    self.present(vc, animated: true , completion: nil)
-//                                    
-//                                }
-//                                
-//                                
-//                            }))
-//                            
-//                            
-//                            refreshAlert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { (action: UIAlertAction!) in
-//                                print("Handle Cancel Logic here")
-//                            }))
-//                            
-//                            self.present(refreshAlert, animated: true, completion: nil)
-//                            
-//                            
-//                            
-//                            
-//                        }
-//                        
-//                    }
-//                }
-//            } catch {
-//                print("Error parsing JSON: \(error)")
-//            }
-//            
-//            
-//            
-//            
-//            
-//        }
-        
-        
-        
-        
+                
     }
     
     
@@ -556,11 +354,9 @@ class HodSelectResipenceViewController: UIViewController {
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                             
-                            let vc = SenderVideoHomePageViewController()
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
                             
                     }))
                     
@@ -576,11 +372,9 @@ class HodSelectResipenceViewController: UIViewController {
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                         
-                            let vc = SenderVideoHomePageViewController()
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
                             
                     }))
                     
@@ -732,9 +526,7 @@ class HodSelectResipenceViewController: UIViewController {
                             
                             if self?.priority == "p2" || self?.priority == "p3" {
                                 
-                                let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                                vc.str = self?.str ?? []
-                                vc.strName = self?.strName ?? []
+                                let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                                 vc.modalPresentationStyle = .fullScreen
                                 self?.present(vc, animated: true , completion: nil)
                             }
@@ -810,18 +602,9 @@ class HodSelectResipenceViewController: UIViewController {
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderGraditNoticeBoardMenuViewController()
-                                
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -838,18 +621,9 @@ class HodSelectResipenceViewController: UIViewController {
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderGraditNoticeBoardMenuViewController()
-                                
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -911,19 +685,9 @@ class HodSelectResipenceViewController: UIViewController {
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -940,19 +704,9 @@ class HodSelectResipenceViewController: UIViewController {
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -1016,20 +770,9 @@ class HodSelectResipenceViewController: UIViewController {
                 
                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                     
-                    if self.priority == "p2" || self.priority == "p3" {
-                        
-                        let vc = SenderImagePdfHomePageViewController()
-                        
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                        
-                        vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.strName = self.strName
-                        vc.str = self.str
-                        vc.modalPresentationStyle = .fullScreen
-                        
-                        self.present(vc, animated: true)
-                    }
+                    let vc = NewHomescreenVC()
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
                 })
                 
                 self.present(refreshAlert, animated: true)
@@ -1099,20 +842,9 @@ class HodSelectResipenceViewController: UIViewController {
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                         
-                        if self.priority == "p2" || self.priority == "p3" {
-                            
-                            let vc = SenderAssigmentHomePageViewController()
-                            
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                            
-                            vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            
-                            self.present(vc, animated: true)
-                        }
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
                     })
                     
                     self.present(refreshAlert, animated: true)

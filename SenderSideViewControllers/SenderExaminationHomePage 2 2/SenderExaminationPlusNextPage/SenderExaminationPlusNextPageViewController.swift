@@ -128,11 +128,18 @@ class SenderExaminationPlusNextPageViewController: UIViewController, UITextField
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("sert5",smallImageUrl)
+        bigImg.setAdImage(
+            imageURL: addImageBackGroundurl,
+            adURL: imageWebUrl,
+            from: self
+        )
         
-        bigImg.sd_setImage(with: URL(string: addImageBackGroundurl ?? ""), placeholderImage: UIImage(named: "ic_white"))
-        smallImg.sd_setImage(with: URL(string: smallImageUrl ), placeholderImage: UIImage(named: "ic_white"))
-        
+        smallImg.setAdImage(
+            imageURL: smallImageUrl,
+            adURL: imageWebUrl,
+            placeholder: UIImage(named: "Default_Ad_small"),
+            from: self
+        )
         
         fromDateLabel.text = "-SelectDate-"
         toDateLabel.text = "-SelectDate-"
@@ -183,12 +190,7 @@ class SenderExaminationPlusNextPageViewController: UIViewController, UITextField
         }
         examNameTextField.returnKeyType = .done
         examNameTextField.delegate = self
-        
-        
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(adLoad))
-        
-        bigImg.isUserInteractionEnabled = true
-        bigImg.addGestureRecognizer(singleTap)
+    
         
         let departMentDropDown = UITapGestureRecognizer(target: self, action: #selector(departmentDropDownVc))
         
@@ -700,21 +702,6 @@ class SenderExaminationPlusNextPageViewController: UIViewController, UITextField
         
         dropDowns()
     }
-    
-    @IBAction func adLoad(){
-        
-        
-        
-        let vc = TotalAddLoadPageViewController(nibName: nil, bundle: nil)
-        
-        vc.AddWebUrl = imageWebUrl
-        
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true,completion: nil)
-        
-        
-    }
-    
     
     
     @IBAction func calanderClickVc(){

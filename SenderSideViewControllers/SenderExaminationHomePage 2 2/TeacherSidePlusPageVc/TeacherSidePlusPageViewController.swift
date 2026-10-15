@@ -78,9 +78,18 @@ class TeacherSidePlusPageViewController: UIViewController,UITableViewDelegate,UI
         
         sideMenuView.isHidden = true
         
-        bigImg.sd_setImage(with: URL(string: addImageBackGroundurl), placeholderImage: UIImage(named: "ic_white"))
-        smallImg.sd_setImage(with: URL(string: smallImageUrl ), placeholderImage: UIImage(named: "ic_white"))
+        bigImg.setAdImage(
+            imageURL: addImageBackGroundurl,
+            adURL: imageWebUrl,
+            from: self
+        )
         
+        smallImg.setAdImage(
+            imageURL: smallImageUrl,
+            adURL: imageWebUrl,
+            placeholder: UIImage(named: "Default_Ad_small"),
+            from: self
+        )
         
         let defaults = UserDefaults.standard
         

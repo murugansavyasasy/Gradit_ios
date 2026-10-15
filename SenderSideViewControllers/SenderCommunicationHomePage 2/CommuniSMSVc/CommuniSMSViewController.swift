@@ -125,8 +125,6 @@ class CommuniSMSViewController: UIViewController, UITableViewDelegate, UITableVi
         
         // tap Bar UiTapGuster.
         
-        bigImg.sd_setImage(with: URL(string: "https://gradit.voicesnap.com/files/ads/SchoolChimes_ad.png"), placeholderImage: UIImage(named: "ic_white"))
-        
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
         
@@ -534,17 +532,40 @@ class CommuniSMSViewController: UIViewController, UITableViewDelegate, UITableVi
             
             switch result {
             case .success(let success):
-                if success.Status == 1 {
+         
                     addapiRef = success.data ?? []
                     
-                    for i in addapiRef {
-                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                    }
-                }
+                    let ad = addapiRef.first
+                  
+                    bigImg.setAdImage(
+                        imageURL: ad?.background_image,
+                        adURL: ad?.add_url,
+                        from: self
+                    )
+
+                    smallImg.setAdImage(
+                        imageURL: ad?.add_image,
+                        adURL: ad?.add_url,
+                        placeholder: UIImage(named: "Default_Ad_small"),
+                        from: self
+                    )
+                
+                
             case .failure(let failure):
                 print(failure.localizedDescription)
+                
+                bigImg.setAdImage(
+                    imageURL: "",
+                    adURL: "",
+                    from: self
+                )
+
+                smallImg.setAdImage(
+                    imageURL:"",
+                    adURL: "",
+                    placeholder: UIImage(named: "Default_Ad_small"),
+                    from: self
+                )
             }
         }
     }

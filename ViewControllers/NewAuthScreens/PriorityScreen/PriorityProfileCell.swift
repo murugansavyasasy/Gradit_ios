@@ -117,7 +117,7 @@ class PriorityProfileCell: UITableViewCell, UITableViewDelegate, UITableViewData
             color = colors[indexPath.row % colors.count]
         }
         
-        cell.firstLetterBaseview.backgroundColor = color.withAlphaComponent(0.15)
+        cell.firstLetterBaseview.backgroundColor = color.withAlphaComponent(0.5)
         
         cell.FirstLetterLbl.text = user.membername?.first?.uppercased()
         cell.nameLbl.text = user.membername

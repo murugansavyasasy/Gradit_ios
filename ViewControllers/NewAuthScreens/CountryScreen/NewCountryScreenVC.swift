@@ -228,7 +228,7 @@ extension NewCountryScreenVC : UITableViewDelegate, UITableViewDataSource {
         let country = FiltercountryList[indexPath.row]
         cell.countryNameLbl.text = country.country
         let flag_url = URL(string: "https://www.worldometers.info//img/flags/small/tn_in-flag.gif")
-        cell.flagImageView.sd_setImage(with: flag_url, placeholderImage: UIImage(named: "gradit_logo"))
+        cell.flagImageView.sd_setImage(with: flag_url, placeholderImage: UIImage(named: "IndiaFlag"))
         if let selectedCountry = selectedCountry,
            selectedCountry.country == country.country
         {

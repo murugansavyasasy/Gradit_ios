@@ -97,7 +97,6 @@ class CircularTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as!
         
         CircularCollectionViewCell

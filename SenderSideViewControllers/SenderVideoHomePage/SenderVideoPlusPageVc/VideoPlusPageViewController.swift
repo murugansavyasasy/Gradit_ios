@@ -26,9 +26,8 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
     @IBOutlet weak var textviewBaseview: UIView!
     @IBOutlet weak var textFieldBaseView: UIView!
     @IBOutlet weak var lblCount: UILabel!
-    @IBOutlet weak var tapBarView: UIViewX!
+    @IBOutlet weak var customTabBar: CustomTabBar!
     @IBOutlet weak var uploadfileNameLabel: UILabel!
-    @IBOutlet weak var redirectLoginView: UIViewX!
     @IBOutlet weak var videoTitelText: UITextField!
     @IBOutlet weak var cancelView: UIViewX!
     @IBOutlet weak var videoDiscreption: UITextView!
@@ -37,16 +36,11 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
     @IBOutlet weak var bigImg: UIImageView!
     @IBOutlet weak var logoutView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var topMessageLabel: UILabel!
-    @IBOutlet weak var clgLogoImg: UIImageView!
-    @IBOutlet weak var refreshView: UIView!
     @IBOutlet weak var sideMenuView: UIView!
     @IBOutlet weak var termsAndConditionView: UIView!
     @IBOutlet weak var changePasswordView: UIView!
     @IBOutlet weak var privacyPolicyView: UIView!
     @IBOutlet weak var faqView: UIView!
-    @IBOutlet weak var viewTap: UIView!
     @IBOutlet weak var helpView: UIView!
     @IBOutlet weak var confirmView: UIViewX!
     
@@ -77,12 +71,23 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        customTabBar.delegate = self
         overrideUserInterfaceStyle = .light
         
         print("authTokenauthToken",authToken)
-        bigImg.sd_setImage(with: URL(string: addImageBackGroundurl), placeholderImage: UIImage(named: "ic_white"))
         
-        smallImg.sd_setImage(with: URL(string: smallImageUrl ), placeholderImage: UIImage(named: "ic_white"))
+        bigImg.setAdImage(
+            imageURL: addImageBackGroundurl,
+            adURL: imageWebUrl,
+            from: self
+        )
+        
+        smallImg.setAdImage(
+            imageURL: smallImageUrl,
+            adURL: imageWebUrl,
+            placeholder: UIImage(named: "Default_Ad_small"),
+            from: self
+        )
         
         sideMenuView.isHidden = true
         
@@ -90,17 +95,12 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
         
         priority = defaults.string(forKey: DefaultsKeys.priority)
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         password = defaults.string(forKey: DefaultsKeys.Password)
-        topMessageLabel.text = memberName
         mobileNumber  = defaults.string(forKey: DefaultsKeys.mobileNumber)
         authToken = defaults.string(forKey: DefaultsKeys.vimeoAccessToken)!
         print("authTokenauthToken11111",authToken)
         
         view.backgroundColor = .priorityColor
-        tapBarView.backgroundColor = .priorityColor
-        topLabels.text = .priorityRole
         
         textFieldBaseView.layer.cornerRadius = 10
         textFieldBaseView.layer.borderWidth = 1
@@ -120,36 +120,21 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
         let uploadviewss = UITapGestureRecognizer(target: self, action: #selector(uploadViewVc))
         
         uploadView.addGestureRecognizer(uploadviewss)
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(adLoad))
-        
-        bigImg.isUserInteractionEnabled = true
-        bigImg.addGestureRecognizer(singleTap)
         
         let cancel = UITapGestureRecognizer(target: self, action: #selector(CancelVc))
         cancelView.addGestureRecognizer(cancel)
         
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
-        
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
-        
+       
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
         
         let confirmGesture = UITapGestureRecognizer(target: self, action: #selector(ConfirmVc))
         confirmView.addGestureRecognizer(confirmGesture)
         
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
-        
-        
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
-        
         
         let helpGesture = UITapGestureRecognizer(target: self, action: #selector(helpRedirect))
         helpView.addGestureRecognizer(helpGesture)
@@ -354,18 +339,6 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
         }
     }
    
-    
-    @IBAction func adLoad(){
-        
-        let vc = TotalAddLoadPageViewController(nibName: nil, bundle: nil)
-        
-        vc.AddWebUrl = imageWebUrl
-        
-        vc.modalPresentationStyle = .fullScreen
-        
-        present(vc, animated: true,completion: nil)
-        
-    }
     
     @IBAction func  uploadViewVc(){
         
@@ -793,43 +766,7 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
         currentController?.present(vc, animated: true, completion: nil)
        
     }
-    
-    
-    @IBAction func refreshVc() {
-        
-        print("refreshVcWork")
-        
-        KRProgressHUD.show()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            
-            KRProgressHUD.dismiss()
-            
-        }
-    }
-    
-    @IBAction func notificationVc() {
-        
-        print("NotificationViewController")
-        
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        
-        vc.modalPresentationStyle = .fullScreen
-        
-        let currentController = self.getCurrentViewController()
-        
-        currentController?.present(vc, animated: false, completion: nil)
-        
-    }
-    
-    
-    @IBAction func menu() {
-        
-        sideMenuView.isHidden.toggle()
-    
-    }
-    
-    
+     
     @IBAction func changePassowrdVC(){
         
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
@@ -856,3 +793,13 @@ class VideoPlusPageViewController: UIViewController, UIImagePickerControllerDele
     
 }
 
+@available(iOS 16.0, *)
+extension VideoPlusPageViewController: CustomTabBarDelegate {
+    func didTapSearch() {
+        
+    }
+    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
+}

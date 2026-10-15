@@ -86,8 +86,18 @@ class GetSectionAndViewController: UIViewController, UITextFieldDelegate, UIGest
     }
     
     private func loadImages() {
-        bigImg.sd_setImage(with: URL(string: addImageBackGroundurl ?? ""), placeholderImage: UIImage(named: "ic_white"))
-        smallImg.sd_setImage(with: URL(string: smallImageUrl ?? ""), placeholderImage: UIImage(named: "ic_white"))
+        bigImg.setAdImage(
+            imageURL: addImageBackGroundurl,
+            adURL: imageWebUrl,
+            from: self
+        )
+        
+        smallImg.setAdImage(
+            imageURL: smallImageUrl,
+            adURL: imageWebUrl,
+            placeholder: UIImage(named: "Default_Ad_small"),
+            from: self
+        )
     }
     
     private func setupInitialVisibility() {
@@ -132,9 +142,6 @@ class GetSectionAndViewController: UIViewController, UITextFieldDelegate, UIGest
     }
     
     private func attachGestureRecognizers() {
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(adLoad))
-        bigImg.isUserInteractionEnabled = true
-        bigImg.addGestureRecognizer(singleTap)
         
         let confirm = UITapGestureRecognizer(target: self, action: #selector(ConfirmVc))
         confirmView.addGestureRecognizer(confirm)
@@ -172,13 +179,6 @@ class GetSectionAndViewController: UIViewController, UITextFieldDelegate, UIGest
         let toplabelclick = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         topLabels.isUserInteractionEnabled = true
         topLabels.addGestureRecognizer(toplabelclick)
-    }
-    
-    @IBAction func adLoad() {
-        let vc = TotalAddLoadPageViewController(nibName: nil, bundle: nil)
-        vc.AddWebUrl = imageWebUrl
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
     }
     
     @IBAction func ConfirmVc() {

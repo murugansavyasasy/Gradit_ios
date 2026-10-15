@@ -66,8 +66,18 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
         descripitionTextField.addDoneBtn()
         descripitionTextField.delegate = self
         
-        bigImg.sd_setImage(with: URL(string: backGroundImage), placeholderImage: UIImage(named: "ic_white"))
-        smallImg.sd_setImage(with: URL(string: smallImageUrl), placeholderImage: UIImage(named: "ic_white"))
+        bigImg.setAdImage(
+            imageURL: backGroundImage,
+            adURL: addWebUrl,
+            from: self
+        )
+        
+        smallImg.setAdImage(
+            imageURL:smallImageUrl,
+            adURL: addWebUrl,
+            placeholder: UIImage(named: "Default_Ad_small"),
+            from: self
+        )
         
         tv.delegate = self
         tv.dataSource = self
@@ -123,10 +133,6 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
         
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(adLoad))
-        bigImg.isUserInteractionEnabled = true
-        bigImg.addGestureRecognizer(singleTap)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -153,16 +159,6 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
         selectRecipientsView.isHidden = false
         newTextMessageBtn.setImage(UIImage(systemName: "inset.filled.circle"), for: .normal)
         selectFromHistoryBtn.setImage(UIImage(systemName: "circle"), for: .normal)
-    }
-   
-    @IBAction func adLoad(){
-        
-        let vc = SendercomuniAddViewController(nibName: nil, bundle: nil)
-        
-        vc.AddWebUrl = addWebUrl
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true,completion: nil)
-        
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -431,24 +427,40 @@ class SenderComunicationPlusNextPageViewController: UIViewController,UITextViewD
             
             switch result {
             case .success(let success):
-                if success.Status == 1 {
+         
                     addapiRef = success.data ?? []
                     
-                    for i in addapiRef{
-                      
-                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-                        let singleTap = adds(target: self, action: #selector(adLoad))
-                        singleTap.url = i.add_url
-                        bigImg.isUserInteractionEnabled = true
-                        bigImg.addGestureRecognizer(singleTap)
-                    }
-                }
+                    let ad = addapiRef.first
+                  
+                    bigImg.setAdImage(
+                        imageURL: ad?.background_image,
+                        adURL: ad?.add_url,
+                        from: self
+                    )
+
+                    smallImg.setAdImage(
+                        imageURL: ad?.add_image,
+                        adURL: ad?.add_url,
+                        placeholder: UIImage(named: "Default_Ad_small"),
+                        from: self
+                    )
+                
                 
             case .failure(let failure):
                 print(failure.localizedDescription)
+                
+                bigImg.setAdImage(
+                    imageURL: "",
+                    adURL: "",
+                    from: self
+                )
+
+                smallImg.setAdImage(
+                    imageURL:"",
+                    adURL: "",
+                    placeholder: UIImage(named: "Default_Ad_small"),
+                    from: self
+                )
             }
         }
     }

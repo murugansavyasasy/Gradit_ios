@@ -179,18 +179,30 @@ struct AnyCodable: Codable {
     }
     
     func encode(to encoder: Encoder) throws {
-        
         var container = encoder.singleValueContainer()
-        
+
         switch value {
-        case let int as Int:
-            try container.encode(int)
-        case let double as Double:
-            try container.encode(double)
-        case let string as String:
-            try container.encode(string)
-        case let bool as Bool:
-            try container.encode(bool)
+        case let value as String:
+            try container.encode(value)
+
+        case let value as Bool:
+            try container.encode(value)
+
+        case let value as Int:
+            try container.encode(value)
+
+        case let value as Double:
+            try container.encode(value)
+
+        case let value as [AnyCodable]:
+            try container.encode(value)
+
+        case let value as [String: AnyCodable]:
+            try container.encode(value)
+
+        case is NSNull:
+            try container.encodeNil()
+
         default:
             try container.encodeNil()
         }
@@ -739,4 +751,59 @@ struct datalogin : Codable{
     var loginas                               : String?
     var is_parent_target_enabled              : String?
     var is_allow_to_make_call                 : Int?
+}
+
+struct changePasswordModal: Codable {
+
+    var mobilenumber: String?
+    var oldpassword: String?
+    var newpassword: String?
+
+}
+
+struct changePasswordResponse: Codable {
+
+    var Status: Int?
+    var Message: String?
+
+}
+
+struct forgetModal: Codable {
+    var mobilenumber: String?
+}
+
+struct forgetResponce: Codable {
+
+    var Status: Int?
+    var Message: String?
+    var data: [dataForgetDetails]?
+
+}
+
+struct dataForgetDetails: Codable {
+
+    var ivrnumbers: [String]?
+}
+
+
+struct recentOTPModal: Codable {
+
+    var mobilenumber: String?
+    var otp: String?
+}
+
+struct recentOTPResponce: Codable {
+
+    var Status: Int?
+    var Message: String?
+}
+
+struct confirmPasswordModal : Codable{
+    var mobilenumber : String!
+    var newpassword  : String!
+}
+
+struct ConfirmPassResp : Codable{
+    var Status : Int?
+    var Message : String?
 }

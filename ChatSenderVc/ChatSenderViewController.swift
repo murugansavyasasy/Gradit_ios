@@ -12,21 +12,10 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
-
-    @IBOutlet weak var tapNameview: UIView!
-    @IBOutlet weak var tapBarView: UIViewX!
-    @IBOutlet weak var topMemberLabel: UILabel!
-    
+    @IBOutlet weak var customTabBar: CustomTabBar!
     @IBOutlet weak var noDataTextLabel: UILabel!
     
     @IBOutlet weak var noDataTextView: UIView!
-    
-    @IBOutlet weak var redirectLoginView: UIViewX!
-    
-    
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var notificationView: UIView!
-    
     @IBOutlet weak var privacyPolicyView: UIView!
     
     @IBOutlet weak var faqView: UIView!
@@ -36,25 +25,10 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
     
     @IBOutlet weak var helpView: UIView!
     
-    
-    
     @IBOutlet weak var termsAndConditionView: UIView!
-    
-    
-    @IBOutlet weak var refreshView: UIView!
-    
+ 
     @IBOutlet weak var changeRolesView: UIView!
-    
-    
-    
-    
-    @IBOutlet weak var clgLogoImg: UIImageView!
-    
     @IBOutlet weak var sideMenuView: UIView!
-    
-    @IBOutlet weak var viewTap: UIView!
-    
-   
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
     @IBOutlet weak var chatCollectionView: UICollectionView!
@@ -112,6 +86,8 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        customTabBar.delegate = self
         overrideUserInterfaceStyle = .light
         PreviousAddId = PreviousAddId+1
         sideMenuView.isHidden = true
@@ -125,10 +101,6 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
         priority = defaults.string(forKey: DefaultsKeys.priority)
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
         sectionid  = defaults.string(forKey: DefaultsKeys.sectionid)
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        mem = defaults.string(forKey: DefaultsKeys.memberName)
-        topMemberLabel.text = mem
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         password = defaults.string(forKey: DefaultsKeys.Password)
         
@@ -143,132 +115,12 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
             noDataTextLabel.isHidden = false
             noDataTextLabel.text = "No Data Found"
         }
-       
-        
         
         let rowNib = UINib(nibName: Indentifiers, bundle: nil)
         chatCollectionView.register(rowNib, forCellWithReuseIdentifier: Indentifiers)
         
-        
-        if priority == "p1"{
-            
-            tapBarView.backgroundColor = UIColor(named: "Principal" )
-            topLabels.text = "Principal"
-            
-        }
-        
-        else if priority == "p4"{
-            
-            topLabels.text = "Student"
-            
-        }
-        
-        else if priority == "p2" {
-            
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            topLabels.text = "Hod"
-            
-        }
-        
-        
-        else if  priority == "p3"{
-            
-            
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            topLabels.text = "Teacher"
-            
-            
-        }
-        else if priority == "p5"{
-            
-            
-            topLabels.text = "Father"
-            
-            
-            
-        }
-        
-        
-        
-        else if priority == "p6"{
-            
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            topLabels.text = "Non Teaching"
-            
-            
-            
-        }
-        
-        
-        if priority == "p1" {
-            
-            
-            print("PrincipalVieewwColor")
-            view.backgroundColor = UIColor(named: "Principal" )
-            
-        }else if priority == "p4" {
-            
-            print("StudentVieewwColor")
-            view.backgroundColor = UIColor(named: "studentViewColors")
-            
-            
-           
-            
-        } else if priority == "p3" ||  priority == "p2" {
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-          
-            
-        }
-        else if priority == "p5"{
-            
-            
-            
-            view.backgroundColor = UIColor(named: "FatherColor")
-            
-         
-            
-            
-        }
-        
-        else if priority == "p6"{
-            
-            
-            
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-          
-            
-            
-        }
-        
-        
-        else if priority == "p7"{
-            
-            
-            
-            view.backgroundColor = UIColor(named: "univercityColorCod")
-            
-           
-            
-            
-        }
+        view.backgroundColor = .priorityColor
       
-     
-        
-        
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
-        
-        
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
         
@@ -283,12 +135,6 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
         
         let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
         termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
-        
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
-        
-        let tpname = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        tapNameview.addGestureRecognizer(tpname)
         
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
@@ -357,9 +203,8 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
         var add = AddApiModal()
         
         let defaults = UserDefaults.standard
-        var deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
+        let deviceToken = defaults.string(forKey:DefaultsKeys.DeviceToken )
        
-        print("EventDefaultsKeys.DeviceToken",deviceToken)
         add.device_token = deviceToken
         add.member_id = Int(memberId)
         add.mobile_no = MobileNumber
@@ -374,39 +219,43 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
             
             switch result {
             case .success(let success):
-                if success.Status == 1 {
+         
                     addapiRef = success.data ?? []
                     
-                    for i in addapiRef{
-                      
-                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "Default_Ad"))
-                        
-                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "Default_Ad"))
-                        
-                        let singleTap = adds(target: self, action: #selector(adLoad))
-                        singleTap.url = i.add_url
-                        bigImg.isUserInteractionEnabled = true
-                        bigImg.addGestureRecognizer(singleTap)
-                    }
-                }
+                    let ad = addapiRef.first
+                  
+                    bigImg.setAdImage(
+                        imageURL: ad?.background_image,
+                        adURL: ad?.add_url,
+                        from: self
+                    )
+
+                    smallImg.setAdImage(
+                        imageURL: ad?.add_image,
+                        adURL: ad?.add_url,
+                        placeholder: UIImage(named: "Default_Ad_small"),
+                        from: self
+                    )
+                
                 
             case .failure(let failure):
                 print(failure.localizedDescription)
+                
+                bigImg.setAdImage(
+                    imageURL: "",
+                    adURL: "",
+                    from: self
+                )
+
+                smallImg.setAdImage(
+                    imageURL:"",
+                    adURL: "",
+                    placeholder: UIImage(named: "Default_Ad_small"),
+                    from: self
+                )
             }
         }
     }
-    
-    
-    @objc func adLoad( gesture : addss){
-        
-        let vc = ChatAddViewController(nibName: nil, bundle: nil)
-        vc.addWeurl = gesture.url
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true,completion: nil)
-    }
-   
-    
-    
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -601,43 +450,7 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
         currentController?.present(vc, animated: true, completion: nil)
         
     }
-    
-    
-    
-    
-    
-    @IBAction func refreshVc() {
-        
-        print("refreshVcWork")
-        KRProgressHUD.show()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            
-            KRProgressHUD.dismiss()
-            
-        }
-        
-        
-    }
-    
-    
-    @IBAction func notificationVc() {
-        print("NotificationViewController")
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        vc.str = str
-        vc.strName = strName
-        vc.modalPresentationStyle = .fullScreen
-        let currentController = self.getCurrentViewController()
-        currentController?.present(vc, animated: false, completion: nil)
-        
-        
-    }
-    
-    
-    
-    
-    
-    
+ 
     @IBAction func changePassowrdVC(){
         
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
@@ -646,42 +459,7 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
         currentController?.present(vc, animated: true, completion: nil)
         
     }
-    
-    
-    
-    
-    @IBAction func priortyScreenVc(){
- 
-        
-    }
-    
-    
-    @IBAction func priorityV() {
-        
-        
-    }
-    
-    @IBAction func menu() {
-        
-        if sideMenuView.isHidden == true{
-            
-            sideMenuView.isHidden = false
-            //
-            
-            print("menuVisble")
-        }
-        
-        else{
-            
-            sideMenuView.isHidden = true
-            
-        }
-        
-        
-    }
-    
-    
-    
+
     @IBAction func priorityVc() {
         let vc = PriorityScreenVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
@@ -698,6 +476,19 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
     }
     
 }
+
+@available(iOS 16.0, *)
+extension ChatSenderViewController : CustomTabBarDelegate {
+    func didTapSearch() {
+        
+    }
+    
+    func didTapSideMenu() {
+        
+        sideMenuView.isHidden.toggle()
+    }
+}
+
 //extension UIDevice {
 //       var modelName: String {
 //           var systemInfo = utsname()
@@ -710,13 +501,6 @@ class ChatSenderViewController: UIViewController,UICollectionViewDelegate,UIColl
 //           return identifier
 //       }
 //   }
-
-class addss : UITapGestureRecognizer{
-    
-    var url : String!
-    
-}
-
 
 class intractClick : UITapGestureRecognizer{
     

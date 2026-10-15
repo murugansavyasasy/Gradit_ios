@@ -11,9 +11,6 @@ import ObjectMapper
 
 class GetAddsForCollegeModal : Mappable {
     
-    
-  
-    
     var device_token : String!
     var member_id : String!
     var mobile_no : String!
@@ -21,9 +18,6 @@ class GetAddsForCollegeModal : Mappable {
     var priority : String!
     var previous_add_id : String!
 
-    
-    
-    
     required init?(map: Map) {
         mapping(map: map)
     }
@@ -38,26 +32,14 @@ class GetAddsForCollegeModal : Mappable {
         previous_add_id <- map["previous_add_id"]
     }
     
-    
-    
 }
 
-
-
-
-
 class GetAddsForCollegeResponse : Mappable {
-    
-    
-  
     
     var Status : Int!
     var Message : String!
     var data : [GetAddsForCollegeData]!
    
-    
-    
-    
     required init?(map: Map) {
         mapping(map: map)
     }
@@ -67,22 +49,11 @@ class GetAddsForCollegeResponse : Mappable {
         Status <- map["Status"]
         Message <- map["Message"]
         data <- map["data"]
-   
-        
     }
-    
-    
-    
 }
 
 
-
-
-
 class GetAddsForCollegeData : Mappable {
-    
-    
-  
     
     var add_id : String!
     var add_title : String!
@@ -90,14 +61,10 @@ class GetAddsForCollegeData : Mappable {
     var company : String!
     var background_image : String!
     var add_image : String!
-
     var add_url : String!
     var video_url : String!
     var titlecolor : String!
 
-    
-    
-    
     required init?(map: Map) {
         mapping(map: map)
     }
@@ -115,7 +82,5 @@ class GetAddsForCollegeData : Mappable {
         titlecolor <- map["titlecolor"]
         
     }
-    
-    
     
 }

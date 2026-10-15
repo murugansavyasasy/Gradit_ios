@@ -985,32 +985,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else {
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                             
                         }))
                         
@@ -1034,186 +1011,6 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
-    
-    
-//    func multypartAudio() {
-//        
-//        
-//        var vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToParticularType"
-//        
-//        var voiceUpload = particularVoiceUploadMoad()
-//        
-//        voiceUpload.staffid = memberId
-//        voiceUpload.description = discreptionsTextField
-//        voiceUpload.callertype = priority
-//        voiceUpload.collegeid = collegeId
-//        voiceUpload.fileduration = voiceDuration
-//        voiceUpload.filetype = "1"
-//        voiceUpload.isemergencyvoice = voiceReplyType
-//        voiceUpload.isparent = parentchck.isChecked
-//        voiceUpload.isstaff = false
-//        voiceUpload.isstudent = studentChck.isChecked
-//        
-//        if EntierdepartId == "1"{
-//            
-//            voiceUpload.receiverid = departmentId
-//            
-//            voiceUpload.receivertype = "3"
-//        }
-//        
-//        else if EntierdepartId == "2"{
-//            
-//            voiceUpload.receivertype = "2"
-//            voiceUpload.receiverid = nameString
-//        }
-//        
-//        else if EntierdepartId == "3"{
-//            
-//            voiceUpload.receiverid = nameString
-//            
-//            voiceUpload.receivertype = "5"
-//        }
-//        
-//        let voiceUploadStr = voiceUpload.toJSONString()
-//        
-//        print("chatSenderStr",voiceUpload)
-//        
-//        
-//        AF.upload(multipartFormData: { [self] (multipartFormData) in
-//            
-//            KRProgressHUD.show()
-//            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//                
-//                KRProgressHUD.dismiss()
-//                
-//            }
-//            
-//            var videoU : String!
-//            
-//            let pathURL = voiceURl
-//            
-//            let pathString = pathURL!.path
-//            
-//            multipartFormData.append(URL(fileURLWithPath: pathString), withName: "file")
-//            
-//            multipartFormData.append(Data(voiceUploadStr!.description.utf8), withName: "info")
-//            
-//            print("parameters.description.utf8",voiceUploadStr!.description.utf8)
-//            
-//            
-//        },to: vimeoVideoEndpoint).responseJSON{
-//           
-//            res in
-//            
-//            let json_str = String(data: res.data!, encoding: .utf8)
-//            
-//            print("json \(json_str!)")
-//            
-//            do {
-//                if let json = try JSONSerialization.jsonObject(with: res.data!, options: []) as? [String: Any] {
-//                    if let status = json["Status"] as? Int {
-//                        print("Status: \(status)")
-//                        
-//                        if status == 1 {
-//                            
-//                            
-//                            let a = json["Message"]
-//                            
-//                            let refreshAlert = UIAlertController(title: "", message: a as! String, preferredStyle: UIAlertController.Style.alert)
-//                            
-//                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-//                                
-//                                if priority == "p2" || priority == "p3" {
-//                                    
-//                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                    vc.is_read_enabled = is_read_enabled
-//                                    vc.is_write_enabled = is_write_enabled
-//                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-//                                    
-//                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-//                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-//                                    vc.strName = self.strName
-//                                    vc.str = self.str
-//                                    
-//                                    vc.modalPresentationStyle = .fullScreen
-//                                    self.present(vc, animated: true , completion: nil)
-//                                    
-//                                }else{
-//                                    
-//                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                    vc.is_read_enabled = is_read_enabled
-//                                    vc.is_write_enabled = is_write_enabled
-//                                    vc.view.backgroundColor = UIColor(named: "Principal" )
-//                                    
-//                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-//                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-//                                    
-//                                    vc.strName = self.strName
-//                                    vc.str = self.str
-//                                    vc.modalPresentationStyle = .fullScreen
-//                                    self.present(vc, animated: true , completion: nil)
-//                                    
-//                                }
-//                            }))
-//                            
-//                            self.present(refreshAlert, animated: true, completion: nil)
-//                            
-//                        }
-//                        else {
-//                            
-//                            let a = json["Message"]
-//                            
-//                            let refreshAlert = UIAlertController(title: "", message: a as! String, preferredStyle: UIAlertController.Style.alert)
-//                            
-//                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-//                                
-//                                if priority == "p2" || priority == "p3" {
-//                                    
-//                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                    vc.is_read_enabled = is_read_enabled
-//                                    vc.is_write_enabled = is_write_enabled
-//                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-//                                    
-//                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-//                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-//                                    vc.strName = self.strName
-//                                    vc.str = self.str
-//                                    
-//                                    vc.modalPresentationStyle = .fullScreen
-//                                    self.present(vc, animated: true , completion: nil)
-//                                    
-//                                }else{
-//                                    
-//                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                    vc.is_read_enabled = is_read_enabled
-//                                    vc.is_write_enabled = is_write_enabled
-//                                    vc.view.backgroundColor = UIColor(named: "Principal" )
-//                                    
-//                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-//                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-//                                    
-//                                    vc.strName = self.strName
-//                                    vc.str = self.str
-//                                    vc.modalPresentationStyle = .fullScreen
-//                                    self.present(vc, animated: true , completion: nil)
-//                                    
-//                                }
-//                            }))
-//                            
-//                            self.present(refreshAlert, animated: true, completion: nil)
-//                            
-//                        }
-//                        
-//                    }
-//                }
-//            } catch {
-//                print("Error parsing JSON: \(error)")
-//            }
-//            
-//        }
-//        
-//    }
     
     func multypartAudio() {
         
@@ -1294,32 +1091,10 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                 
                                 guard let self = self else { return }
                                 
-                                if priority == "p2" || priority == "p3" {
-                                    
-                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                    vc.is_read_enabled = is_read_enabled
-                                    vc.is_write_enabled = is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                    vc.strName = self.strName
-                                    vc.str = self.str
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                    
-                                } else {
-                                    
-                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                    vc.is_read_enabled = is_read_enabled
-                                    vc.is_write_enabled = is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Principal")
-                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                    vc.strName = self.strName
-                                    vc.str = self.str
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                }
+                                let vc = NewHomescreenVC()
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                           
                             }))
                             
                             self.present(refreshAlert, animated: true)
@@ -1333,33 +1108,11 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
                                 
                                 guard let self = self else { return }
-                                
-                                if priority == "p2" || priority == "p3" {
-                                    
-                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                    vc.is_read_enabled = is_read_enabled
-                                    vc.is_write_enabled = is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                    vc.strName = self.strName
-                                    vc.str = self.str
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                    
-                                } else {
-                                    
-                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                    vc.is_read_enabled = is_read_enabled
-                                    vc.is_write_enabled = is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Principal")
-                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                    vc.strName = self.strName
-                                    vc.str = self.str
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                }
+                           
+                                let vc = NewHomescreenVC()
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                           
                             }))
                             
                             self.present(refreshAlert, animated: true)
@@ -1431,32 +1184,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                         
-                        if self.priority == "p2" || self.priority == "p3" {
-                            
-                            let vc = SenderAssigmentHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                            vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            vc.str = self.str
-                            vc.strName = self.strName
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                            
-                        } else {
-                            
-                            let vc = SenderAssigmentHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Principal")
-                            vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                            vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                            vc.str = self.str
-                            vc.strName = self.strName
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                        }
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
                     })
                     
                     self.present(refreshAlert, animated: true)
@@ -1526,13 +1256,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                        
-                            let vc = SenderVideoHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.str = self.str
-                            vc.strName = self.strName
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
                     })
                     
                     self.present(refreshAlert, animated: true)
@@ -1547,13 +1273,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                         
-                            let vc = SenderVideoHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.str = self.str
-                            vc.strName = self.strName
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
                     })
                     
                     self.present(refreshAlert, animated: true)
@@ -2279,13 +2001,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
                                                             
-                                let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled =  self?.is_read_enabled ?? ""
-                                vc.is_write_enabled =  self?.is_write_enabled ?? ""
-                                vc.str =  self?.str ?? []
-                                vc.strName =  self?.strName ?? []
-                                vc.modalPresentationStyle = .fullScreen
-                                self?.present(vc, animated: true , completion: nil)
+                            let vc = NewHomescreenVC(nibName: nil, bundle: nil)
+                            vc.modalPresentationStyle = .fullScreen
+                            self?.present(vc, animated: true , completion: nil)
                                 
                         }))
                         
@@ -2300,13 +2018,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
                                                             
-                                let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled =  self?.is_read_enabled ?? ""
-                                vc.is_write_enabled =  self?.is_write_enabled ?? ""
-                                vc.str =  self?.str ?? []
-                                vc.strName =  self?.strName ?? []
-                                vc.modalPresentationStyle = .fullScreen
-                                self?.present(vc, animated: true , completion: nil)
+                            let vc = NewHomescreenVC(nibName: nil, bundle: nil)
+                            vc.modalPresentationStyle = .fullScreen
+                            self?.present(vc, animated: true , completion: nil)
                                 
                         }))
                         
@@ -2398,34 +2112,10 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 
                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                     
-                    if self.priority == "p2" || self.priority == "p3" {
-                        
-                        let vc = SenderImagePdfHomePageViewController()
-                        vc.is_read_enabled = self.is_read_enabled
-                        vc.is_write_enabled = self.is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                        vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.str = self.str
-                        vc.strName = self.strName
-                        vc.modalPresentationStyle = .fullScreen
-                        
-                        self.present(vc, animated: true)
-                        
-                    } else {
-                        
-                        let vc = SenderImagePdfHomePageViewController()
-                        vc.is_read_enabled = self.is_read_enabled
-                        vc.is_write_enabled = self.is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Principal")
-                        vc.imageSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                        vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                        vc.str = self.str
-                        vc.strName = self.strName
-                        vc.modalPresentationStyle = .fullScreen
-                        
-                        self.present(vc, animated: true)
-                    }
+                    let vc = NewHomescreenVC()
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                    
                 }))
                 
                 self.present(refreshAlert, animated: true)
@@ -2513,32 +2203,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                         
-                        if self.priority == "p2" || self.priority == "p3" {
-                            
-                            let vc = SenderGraditNoticeBoardMenuViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                            vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            vc.str = self.str
-                            vc.strName = self.strName
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                            
-                        } else {
-                            
-                            let vc = SenderGraditNoticeBoardMenuViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Principal")
-                            vc.noticeSegments.backgroundColor = UIColor(named: "UnSelector")
-                            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "Selector")
-                            vc.str = self.str
-                            vc.strName = self.strName
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                        }
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
                     })
                     
                     self.present(refreshAlert, animated: true)
@@ -2628,32 +2295,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.str = self.str
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.str = self.str
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -2671,32 +2315,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.str = self.str
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.str = self.str
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -2912,13 +2533,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                         
-                            let vc = SenderVideoHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.str = self.str
-                            vc.strName = self.strName
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
                     }))
                     
                     self.present(refreshAlert, animated: true)
@@ -2935,14 +2552,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                        
-                            let vc = SenderVideoHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.str = self.str
-                            vc.strName = self.strName
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                            
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
                     }))
                     
                     self.present(refreshAlert, animated: true)
@@ -2996,13 +2608,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
                                 
-                                let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = self?.is_read_enabled ?? ""
-                                vc.is_write_enabled = self?.is_write_enabled ?? ""
-                                vc.str = self?.str ?? []
-                                vc.strName = self?.strName ?? []
-                                vc.modalPresentationStyle = .fullScreen
-                                self?.present(vc, animated: true , completion: nil)
+                            let vc = NewHomescreenVC(nibName: nil, bundle: nil)
+                            vc.modalPresentationStyle = .fullScreen
+                            self?.present(vc, animated: true , completion: nil)
                             
                         }))
                         
@@ -3082,19 +2690,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderGraditNoticeBoardMenuViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -3112,19 +2710,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderGraditNoticeBoardMenuViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -3194,19 +2782,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -3216,19 +2794,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                     } else {
                         
-                        if self.priority == "p2" || self.priority == "p3" {
-                            
-                            let vc = SenderEventHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                            vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                        }
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
                         
                         self.tv.dataSource = self
                         self.tv.delegate = self
@@ -3303,22 +2871,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 
                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                     
-                    if self.priority == "p2" || self.priority == "p3" {
-                        
-                        let vc = SenderImagePdfHomePageViewController()
-                        vc.is_read_enabled = self.is_read_enabled
-                        vc.is_write_enabled = self.is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                        
-                        vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        
-                        vc.strName = self.strName
-                        vc.str = self.str
-                        vc.modalPresentationStyle = .fullScreen
-                        
-                        self.present(vc, animated: true)
-                    }
+                    let vc = NewHomescreenVC()
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
                 })
                 
                 self.present(refreshAlert, animated: true)
@@ -3387,19 +2942,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderAssigmentHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -3417,19 +2962,9 @@ class MyDeparmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderAssigmentHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)

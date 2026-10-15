@@ -18,8 +18,7 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
     
     @IBOutlet weak var menubottom: NSLayoutConstraint!
     
-    @IBOutlet weak var tapBarView: UIViewX!
-    @IBOutlet weak var redirectLoginView: UIViewX!
+    @IBOutlet weak var customTabBar: CustomTabBar!
     @IBOutlet weak var messageTextfield: UITextField!
     
     @IBOutlet weak var tv: UITableView!
@@ -27,21 +26,9 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
     @IBOutlet weak var sendMessageView: UIView!
     
     @IBOutlet weak var backView: UIView!
-    
-    
-    @IBOutlet weak var topMemberLabel: UILabel!
-    
-    @IBOutlet weak var noDataTextLabel: UILabel!
-    
-    @IBOutlet weak var noDataTextView: UIView!
-    
-    
+ 
     @IBOutlet weak var stafLabel: UILabel!
     @IBOutlet weak var subjectLabel: UILabel!
-    
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var notificationView: UIView!
-    
     @IBOutlet weak var privacyPolicyView: UIView!
     
     @IBOutlet weak var faqView: UIView!
@@ -55,20 +42,10 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
     
     
     @IBOutlet weak var termsAndConditionView: UIView!
-    
-    
-    @IBOutlet weak var refreshView: UIView!
-    
+   
     @IBOutlet weak var changeRolesView: UIView!
-    
-    @IBOutlet weak var topMessageLabel: UILabel!
-    
-    
-    
-    @IBOutlet weak var clgLogoImg: UIImageView!
-    
+  
     @IBOutlet weak var sideMenuView: UIView!
-    @IBOutlet weak var viewTap: UIView!
     @IBOutlet weak var noDataLbl: UILabel!
     
   
@@ -126,6 +103,8 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
         
         overrideUserInterfaceStyle = .light
         
+        customTabBar.delegate = self
+        
         originalViewY = view.frame.origin.y
         
         noDataLbl.isHidden = true
@@ -140,25 +119,12 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
         
         let defaults = UserDefaults.standard
         
-        
-        
         userID = defaults.string(forKey: DefaultsKeys.memberid)
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
-        
         priority = defaults.string(forKey: DefaultsKeys.priority)
-        
-        topMessageLabel.text = defaults.string(forKey: DefaultsKeys.memberName)
         mobileNumber  = defaults.string(forKey: DefaultsKeys.mobileNumber)
         password = defaults.string(forKey: DefaultsKeys.Password)
-        
-        
-        
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        
-        
-        
+      
         
         let rowNib = UINib(nibName: chatIdentifier, bundle: nil)
         tv.register(rowNib, forCellReuseIdentifier: chatIdentifier)
@@ -191,81 +157,12 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
         
         messageTextfield.returnKeyType = .done
         messageTextfield.delegate = self
-        if priority == "p1"{
-            
-            topLabels.text = "Principal"
-            
-        }
-        
-        else if priority == "p4"{
-            tapBarView.backgroundColor = UIColor(named: "StudentParent" )
-            topLabels.text = "Student"
-            
-        }
-        
-        else if priority == "p2" || priority == "p3"{
-            
-            
-            topLabels.text = "Teacher"
-            
-        }
-        
-        else if priority == "p5"{
-            
-            tapBarView.backgroundColor = UIColor(named: "FatherColor" )
-            topLabels.text = "Father"
-            
-            
-            
-        }
-        
-        
-        if priority == "p1" {
-            
-            
-            print("PrincipalVieewwColor")
-            view.backgroundColor = UIColor(named: "Principal" )
-            
-            
-        }else if priority == "p4" {
-            
-            print("StudentVieewwColor")
-            view.backgroundColor = UIColor(named: "studentViewColors")
-            
-            
-            
-        } else if priority == "p3" ||  priority == "p2" {
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-            
-        }
-        else if priority == "p5"{
-            
-            
-            
-            view.backgroundColor = UIColor(named: "FatherColor")
-            
-        }
+
+        view.backgroundColor = .priorityColor
         
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         tv.refreshControl = refreshControl
-        
-       
-        
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
-        
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
-        
+     
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
         
@@ -911,25 +808,7 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
         }
         
     }
-    
-    
-    @IBAction func notificationVc() {
-        print("NotificationViewController")
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        vc.str = str
-        vc.strName = strName
-        vc.modalPresentationStyle = .fullScreen
-        
-        present(vc, animated: false, completion: nil)
-        
-    
-    }
-    
-    
-    
-    
-    
-    
+  
     @IBAction func changePassowrdVC(){
         
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
@@ -940,47 +819,13 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
         
     }
     
-    
-    
     @IBAction func priorityVc() {
            
            let vc = PriorityScreenVC(nibName: nil, bundle: nil)
            vc.modalPresentationStyle = .fullScreen
            present(vc, animated: true,completion: nil)
        }
-    
-    
-    
-    
-    @IBAction func menu() {
-        
-        if sideMenuView.isHidden == true{
-            
-            sideMenuView.isHidden = false
-            //
-            
-            print("menuVisble")
-        }
-        
-        else{
-            
-            sideMenuView.isHidden = true
-            
-            print("mddffenuVisble")
-        }
-        
-        
-    }
-    
-    
-    
-    @IBAction func chngeVc(){
-        
-        
-        print("sarannn")
-        
-    }
-    
+ 
     @IBAction func profileRedirect() {
         
         let vc = ProfileViewController(nibName: nil, bundle: nil)
@@ -990,4 +835,16 @@ class ChatReceiverInteractViewController: UIViewController,UITableViewDelegate,U
         
     }
     
+}
+
+@available(iOS 16.0, *)
+extension ChatReceiverInteractViewController : CustomTabBarDelegate {
+    func didTapSearch() {
+        
+    }
+    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
+
 }

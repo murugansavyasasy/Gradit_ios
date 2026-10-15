@@ -542,14 +542,14 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
                 if result.Status == 1{
                     overAllRef = result.data ?? []
                     noticeSegments.collegeCount = Int(result.data?.first?.collegenotice ?? "0") ?? 0
-                    noticeSegments.departmentCount = Int(result.data?.first?.departmentcircular ?? "0") ?? 0
+                    noticeSegments.departmentCount = Int(result.data?.first?.departmentnotice ?? "0") ?? 0
                     for i in overAllRef{
                         let hasDepartmentNotice = i.departmentnotice != "0"
                         let hasCollegeNotice = i.collegenotice != "0"
                         noticeBoardCountViews.isHidden = !hasDepartmentNotice && !hasCollegeNotice
                     }
                     
-                    noticeBoardCountLabel.text = String((Int( overAllRef.first?.departmentnotice ?? "0") ?? 0) + (Int(overAllRef.first?.collegecircular ?? "0") ?? 0))
+                    noticeBoardCountLabel.text = String((Int( overAllRef.first?.departmentnotice ?? "0") ?? 0) + (Int(overAllRef.first?.collegenotice ?? "0") ?? 0))
                     noticesBoardTableView.delegate = self
                     noticesBoardTableView.dataSource = self
                     noticesBoardTableView.reloadData()
@@ -580,29 +580,42 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
             
             switch result {
             case .success(let success):
-                if success.Status == 1 {
+         
                     addapiRef = success.data ?? []
-                    for i in addapiRef{
-                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        let singleTap = adds(target: self, action: #selector(adLoad))
-                        singleTap.url = i.add_url
-                        bigImg.isUserInteractionEnabled = true
-                        bigImg.addGestureRecognizer(singleTap)
-                    }
-                }
+                    
+                    let ad = addapiRef.first
+                  
+                    bigImg.setAdImage(
+                        imageURL: ad?.background_image,
+                        adURL: ad?.add_url,
+                        from: self
+                    )
+
+                    smallImg.setAdImage(
+                        imageURL: ad?.add_image,
+                        adURL: ad?.add_url,
+                        placeholder: UIImage(named: "Default_Ad_small"),
+                        from: self
+                    )
+                
                 
             case .failure(let failure):
                 print(failure.localizedDescription)
+                
+                bigImg.setAdImage(
+                    imageURL: "",
+                    adURL: "",
+                    from: self
+                )
+
+                smallImg.setAdImage(
+                    imageURL:"",
+                    adURL: "",
+                    placeholder: UIImage(named: "Default_Ad_small"),
+                    from: self
+                )
             }
         }
-    }
-    
-    @IBAction func adLoad( gesture : noticeBoardAdd){
-        let vc = SenderNoticeAddViewController(nibName: nil, bundle: nil)
-        vc.AddWebUrl = gesture.url
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true,completion: nil)
     }
     
     @IBAction func helpRedirect() {
@@ -678,11 +691,6 @@ class SenderGraditNoticeBoardMenuViewController: UIViewController,UITableViewDel
     }
 }
 
-
-class noticeBoardAdd : UITapGestureRecognizer{
-    var url : String!
-}
-
 class departmentNoticeDelete : UITapGestureRecognizer{
     var noticeBoardId : String!
 }
@@ -694,8 +702,8 @@ class CollegeNoticeDelete : UITapGestureRecognizer{
 
 final class BadgedSegmentedControl: UISegmentedControl {
 
-    var departmentCount: Int = 14 { didSet { updateBadgeTexts() } }
-    var collegeCount: Int = 217 { didSet { updateBadgeTexts() } }
+    var departmentCount: Int = 0 { didSet { updateBadgeTexts() } }
+    var collegeCount: Int = 0 { didSet { updateBadgeTexts() } }
 
     /// Distance from the right edge of each segment to the badge.
     var badgeTrailingInset: CGFloat = 8 { didSet { setNeedsLayout() } }

@@ -84,25 +84,13 @@ class ShowSelectedImageViewController: UIViewController,UICollectionViewDelegate
                         
                         guard let self = self else { return }
                         
-                        if priority == "p2" || priority == "p3" {
-                            let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
+                            let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                             vc.modalPresentationStyle = .fullScreen
                             self.present(vc, animated: true , completion: nil)
                             
-                        }else{
-                            let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                            vc.view.backgroundColor = UIColor(named: "Principal" )
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true , completion: nil)
-                            
-                        }
                     }))
                     
                     self.present(refreshAlert, animated: true, completion: nil)
-                    self.cv.delegate = self
-                    self.cv.dataSource = self
-                    self.cv.reloadData()
                     
                 }else{
                     

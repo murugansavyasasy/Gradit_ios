@@ -2169,32 +2169,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                             
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                                 
-                                if self.piroty == "p2" || self.piroty == "p3" {
-                                    
-                                    let vc = SenderGraditNoticeBoardMenuViewController()
-                                    vc.is_read_enabled = self.is_read_enabled
-                                    vc.is_write_enabled = self.is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                    vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                                    vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                    vc.str = self.strs
-                                    vc.strName = self.strName
+                                    let vc = NewHomescreenVC()
                                     vc.modalPresentationStyle = .fullScreen
                                     self.present(vc, animated: true)
-                                    
-                                } else {
-                                    
-                                    let vc = SenderGraditNoticeBoardMenuViewController()
-                                    vc.is_read_enabled = self.is_read_enabled
-                                    vc.is_write_enabled = self.is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Principal")
-                                    vc.noticeSegments.backgroundColor = UIColor(named: "UnSelector")
-                                    vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "Selector")
-                                    vc.str = self.strs
-                                    vc.strName = self.strName
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                }
                             })
                             
                             self.present(refreshAlert, animated: true)
@@ -2205,32 +2182,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                             
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                                 
-                                if self.piroty == "p2" || self.piroty == "p3" {
-                                    
-                                    let vc = SenderGraditNoticeBoardMenuViewController()
-                                    vc.is_read_enabled = self.is_read_enabled
-                                    vc.is_write_enabled = self.is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                    vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                                    vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                    vc.str = self.strs
-                                    vc.strName = self.strName
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                    
-                                } else {
-                                    
-                                    let vc = SenderGraditNoticeBoardMenuViewController()
-                                    vc.is_read_enabled = self.is_read_enabled
-                                    vc.is_write_enabled = self.is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Principal")
-                                    vc.noticeSegments.backgroundColor = UIColor(named: "UnSelector")
-                                    vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "Selector")
-                                    vc.str = self.strs
-                                    vc.strName = self.strName
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                }
+                                let vc = NewHomescreenVC()
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
                             })
                             
                             self.present(refreshAlert, animated: true)
@@ -2265,32 +2219,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                             
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                                 
-                                if self.piroty == "p2" || self.piroty == "p3" {
-                                    
-                                    let vc = SenderGraditNoticeBoardMenuViewController()
-                                    vc.is_read_enabled = self.is_read_enabled
-                                    vc.is_write_enabled = self.is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                    vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                                    vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                    vc.str = self.strs
-                                    vc.strName = self.strName
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                    
-                                } else {
-                                    
-                                    let vc = SenderGraditNoticeBoardMenuViewController()
-                                    vc.is_read_enabled = self.is_read_enabled
-                                    vc.is_write_enabled = self.is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Principal")
-                                    vc.noticeSegments.backgroundColor = UIColor(named: "UnSelector")
-                                    vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "Selector")
-                                    vc.str = self.strs
-                                    vc.strName = self.strName
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                }
+                                let vc = NewHomescreenVC()
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
                             })
                             
                             self.present(refreshAlert, animated: true)
@@ -2301,32 +2232,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                             
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                                 
-                                if self.piroty == "p2" || self.piroty == "p3" {
-                                    
-                                    let vc = SenderGraditNoticeBoardMenuViewController()
-                                    vc.is_read_enabled = self.is_read_enabled
-                                    vc.is_write_enabled = self.is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                    vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                                    vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                    vc.str = self.strs
-                                    vc.strName = self.strName
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                    
-                                } else {
-                                    
-                                    let vc = SenderGraditNoticeBoardMenuViewController()
-                                    vc.is_read_enabled = self.is_read_enabled
-                                    vc.is_write_enabled = self.is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Principal")
-                                    vc.noticeSegments.backgroundColor = UIColor(named: "UnSelector")
-                                    vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "Selector")
-                                    vc.str = self.strs
-                                    vc.strName = self.strName
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                }
+                                let vc = NewHomescreenVC()
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
                             })
                             
                             self.present(refreshAlert, animated: true)
@@ -2552,9 +2460,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                 present(refreshAlert, animated: true, completion: nil)
                  
                 
-            }
-            
-            else if self.MenuType == "10"{
+            }else if self.MenuType == "10"{
                 
                 
                 if selected_edit_hourAndPeriod == nil/*attendanceDropLbl.text == "Select hours"*/{
@@ -2637,14 +2543,11 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                             
                             uploadPDFFileToAWS(pdfData: pdfData! as NSData)
                             
-                        }
-                        
-                        else if AssigmentFileType == "Text"{
+                        }else if AssigmentFileType == "Text"{
                             
                             assigmentText()
                             
-                        }
-                        else{
+                        }else{
                             
                             getImageURL(images: photoArray)
                             
@@ -2666,36 +2569,19 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                     present(refreshAlert, animated: true, completion: nil)
                     
                 }
-                if  MenuType == "8" ||  HodYearSpefiy == "12" {
-                    
+                if  MenuType == "8"{
                     
                     let refreshAlert = UIAlertController(title: "", message: "Are you sure you want to submit?", preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
                         
-                        if AssigmentFileType == "pdf"{
-                            
-                            uploadPDFFileToAWS(pdfData: pdfData! as NSData)
-                            
-                        }
-                        
-                        else if AssigmentFileType == "Text"{
+                       if AssigmentFileType == "Text"{
                             
                             assigmentText()
                             
-                        }
-                        else{
+                        }else{
                             
-                            getImageURL(images: photoArray)
-                            
-                            DispatchQueue.main.asyncAfter(deadline: .now()+4.3) { [self] in
-                                
-                                KRProgressHUD.dismiss()
-                                
-                                assigmentImagePdf(imageArry:awsArry )
-                                
-                            }
-                            
+                            assigmentImagePdf(imageArry : awsArry)
                         }
                         
                     }))
@@ -2764,50 +2650,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
                             
-                            if self?.piroty == "p2" || self?.piroty == "p3" {
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = "1"
-                                vc.is_write_enabled = "1"
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                                
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self?.strName ?? []
-                                vc.str = self?.strs ?? []
-                                
-                                vc.modalPresentationStyle = .fullScreen
-                                self?.present(vc, animated: true , completion: nil)
-                                
-                            }else  if self?.piroty == "p7" {
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = "1"
-                                vc.is_write_enabled = "1"
-                                vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                                
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self?.strName ?? []
-                                vc.str = self?.strs ?? []
-                                
-                                vc.modalPresentationStyle = .fullScreen
-                                self?.present(vc, animated: true , completion: nil)
-                            }else{
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = "1"
-                                vc.is_write_enabled = "1"
-                                vc.view.backgroundColor = UIColor(named: "Principal" )
-                                
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                
-                                vc.strName = self?.strName ?? []
-                                vc.str = self?.strs ?? []
-                                vc.modalPresentationStyle = .fullScreen
-                                self?.present(vc, animated: true , completion: nil)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self?.present(vc, animated: true)
                             
                         }))
                         
@@ -2915,32 +2760,10 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                             
                             guard let self = self else { return }
                             
-                            if piroty == "p2" || piroty == "p3" {
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = is_read_enabled
-                                vc.is_write_enabled = is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.strs
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else {
-                                
-                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                vc.is_read_enabled = is_read_enabled
-                                vc.is_write_enabled = is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.strName = self.strName
-                                vc.str = self.strs
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                          
                         }))
                         
                         self.present(refreshAlert, animated: true)
@@ -3002,11 +2825,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default){ _ in
                                 
-                                let vc = SenderVideoHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.str = self.strs
-                                vc.strName = self.strName
+                                let vc = NewHomescreenVC()
                                 vc.modalPresentationStyle = .fullScreen
                                 self.present(vc, animated: true)
                         })
@@ -3019,13 +2838,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default){ _ in
                             
-                                let vc = SenderVideoHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.str = self.strs
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -3059,11 +2874,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default){ _ in
                             
-                            let vc = SenderVideoHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.str = self.strs
-                            vc.strName = self.strName
+                            let vc = NewHomescreenVC()
                             vc.modalPresentationStyle = .fullScreen
                             self.present(vc, animated: true)
                             
@@ -3077,11 +2888,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default){ _ in
                             
-                            let vc = SenderVideoHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.str = self.strs
-                            vc.strName = self.strName
+                            let vc = NewHomescreenVC()
                             vc.modalPresentationStyle = .fullScreen
                             self.present(vc, animated: true)
                         })
@@ -3149,32 +2956,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                             
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default){ _ in
                                 
-                                if self.piroty == "p2" || self.piroty == "p3" {
-                                    
-                                    let vc = SenderEventHomePageViewController()
-                                    vc.is_read_enabled = self.is_read_enabled
-                                    vc.is_write_enabled = self.is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                    vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                    vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                    vc.str = self.strs
-                                    vc.strName = self.strName
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                    
-                                } else {
-                                    
-                                    let vc = SenderEventHomePageViewController()
-                                    vc.is_read_enabled = self.is_read_enabled
-                                    vc.is_write_enabled = self.is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Principal")
-                                    vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                    vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                    vc.str = self.strs
-                                    vc.strName = self.strName
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                }
+                                let vc = NewHomescreenVC()
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
                             })
                             
                             self.present(refreshAlert, animated: true)
@@ -3188,33 +2972,10 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                             let refreshAlert = UIAlertController(title: "", message: response.Message, preferredStyle: .alert)
                             
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default){ _ in
-                                
-                                if self.piroty == "p2" || self.piroty == "p3" {
-                                    
-                                    let vc = SenderEventHomePageViewController()
-                                    vc.is_read_enabled = self.is_read_enabled
-                                    vc.is_write_enabled = self.is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                    vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                    vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                    vc.str = self.strs
-                                    vc.strName = self.strName
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                    
-                                } else {
-                                    
-                                    let vc = SenderEventHomePageViewController()
-                                    vc.is_read_enabled = self.is_read_enabled
-                                    vc.is_write_enabled = self.is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Principal")
-                                    vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                    vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                    vc.str = self.strs
-                                    vc.strName = self.strName
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                }
+                             
+                                let vc = NewHomescreenVC()
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
                             })
                             
                             self.present(refreshAlert, animated: true)
@@ -3251,32 +3012,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                                 
                                 guard let self = self else { return }
                                 
-                                if self.piroty == "p2" || self.piroty == "p3" {
-                                    
-                                    let vc = SenderEventHomePageViewController()
-                                    vc.is_read_enabled = self.is_read_enabled
-                                    vc.is_write_enabled = self.is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                    vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                    vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                    vc.str = self.strs
-                                    vc.strName = self.strName
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                    
-                                } else {
-                                    
-                                    let vc = SenderEventHomePageViewController()
-                                    vc.is_read_enabled = self.is_read_enabled
-                                    vc.is_write_enabled = self.is_write_enabled
-                                    vc.view.backgroundColor = UIColor(named: "Principal")
-                                    vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                    vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                    vc.str = self.strs
-                                    vc.strName = self.strName
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                }
+                                let vc = NewHomescreenVC()
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
                                 
                             }))
                             
@@ -3474,11 +3212,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                             
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
                                     
-                                    let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                                    vc.is_read_enabled = self?.is_read_enabled ?? ""
-                                    vc.is_write_enabled = self?.is_write_enabled ?? ""
-                                    vc.str = self?.strs ?? []
-                                    vc.strName = self?.strName ?? []
+                                    let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                                     vc.modalPresentationStyle = .fullScreen
                                     self?.present(vc, animated: true , completion: nil)
                             }))
@@ -3492,11 +3226,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                             
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
                                     
-                                    let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                                    vc.is_read_enabled = self?.is_read_enabled ?? ""
-                                    vc.is_write_enabled = self?.is_write_enabled ?? ""
-                                    vc.str = self?.strs ?? []
-                                    vc.strName = self?.strName ?? []
+                                    let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                                     vc.modalPresentationStyle = .fullScreen
                                     self?.present(vc, animated: true , completion: nil)
                                 
@@ -3535,13 +3265,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                             
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: {[weak self] (action: UIAlertAction!) in
                                 
-                                    let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                                    vc.is_read_enabled = self?.is_read_enabled ?? ""
-                                    vc.is_write_enabled = self?.is_write_enabled ?? ""
-                                    vc.str = self?.strs ?? []
-                                    vc.strName = self?.strName ?? []
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self?.present(vc, animated: true , completion: nil)
+                                let vc = NewHomescreenVC(nibName: nil, bundle: nil)
+                                vc.modalPresentationStyle = .fullScreen
+                                self?.present(vc, animated: true , completion: nil)
                                     
                             }))
                             
@@ -3553,13 +3279,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                             
                             refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: {[weak self] (action: UIAlertAction!) in
                                 
-                                    let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                                    vc.is_read_enabled = self?.is_read_enabled ?? ""
-                                    vc.is_write_enabled = self?.is_write_enabled ?? ""
-                                    vc.str = self?.strs ?? []
-                                    vc.strName = self?.strName ?? []
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self?.present(vc, animated: true , completion: nil)
+                                let vc = NewHomescreenVC(nibName: nil, bundle: nil)
+                                vc.modalPresentationStyle = .fullScreen
+                                self?.present(vc, animated: true , completion: nil)
                                 
                             }))
                             self.present(refreshAlert, animated: true, completion: nil)
@@ -3631,32 +3353,12 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.piroty == "p2" || self.piroty == "p3" {
                                 
-                                let vc = SenderAssigmentHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.str = self.strs
-                                vc.strName = self.strName
+                                let vc = NewHomescreenVC()
                                 vc.modalPresentationStyle = .fullScreen
                                 self.present(vc, animated: true)
                                 
-                            } else {
-                                
-                                let vc = SenderAssigmentHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.str = self.strs
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -3720,32 +3422,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.piroty == "p2" || self.piroty == "p3" {
-                                
-                                let vc = SenderAssigmentHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.str = self.strs
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else {
-                                
-                                let vc = SenderAssigmentHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.str = self.strs
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -3812,32 +3491,9 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.piroty == "p2" || self.piroty == "p3" {
-                                
-                                let vc = SenderAssigmentHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.str = self.strs
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else {
-                                
-                                let vc = SenderAssigmentHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.str = self.strs
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -3902,32 +3558,10 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.piroty == "p2" || self.piroty == "p3" {
-                                
-                                let vc = SenderAssigmentHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.assigmentSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.str = self.strs
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else {
-                                
-                                let vc = SenderAssigmentHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.assigmentSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.assigmentSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.str = self.strs
-                                vc.strName = self.strName
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                            
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -4025,36 +3659,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         
                         guard let self = self else { return }
                         
-                        if piroty == "p2" || piroty == "p3" {
-                            
-                            let vc = SenderAttendanceVcViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = is_read_enabled
-                            vc.is_write_enabled = is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            vc.str = strs
-                            vc.strName = strName
-                            
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true , completion: nil)
-                            
-                        }
-                        else{
-                            
-                            let vc = SenderAttendanceVcViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = is_read_enabled
-                            vc.is_write_enabled = is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Principal" )
-                            vc.segmentName.backgroundColor = UIColor(named: "UnSelector")
-                            vc.segmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                            vc.str = strs
-                            vc.strName = strName
-                            
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true , completion: nil)
-                            
-                        }
+                          dismiss(animated: true)
                         
                     }))
                     
@@ -4069,38 +3674,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         
                         guard let self = self else { return }
                         
-                        if piroty == "p2" || piroty == "p3" {
-                            
-                            let vc = SenderAttendanceVcViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = is_read_enabled
-                            vc.is_write_enabled = is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            vc.str = strs
-                            vc.strName = strName
-                            
-                            
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true , completion: nil)
-                            
-                        }
-                        
-                        else{
-                            
-                            let vc = SenderAttendanceVcViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = is_read_enabled
-                            vc.is_write_enabled = is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Principal" )
-                            vc.segmentName.backgroundColor = UIColor(named: "UnSelector")
-                            vc.segmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                            vc.str = strs
-                            vc.strName = strName
-                            
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true , completion: nil)
-                            
-                        }
+                    dismiss(animated: true)
                         
                     }))
                     
@@ -4210,35 +3784,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         
                         guard let self = self else { return }
                         
-                        if piroty == "p2" || piroty == "p3" {
-                            
-                            let vc = SenderAttendanceVcViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = is_read_enabled
-                            vc.is_write_enabled = is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            vc.str = strs
-                            vc.strName = strName
-                            
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true , completion: nil)
-                            
-                        } else{
-                            
-                            let vc = SenderAttendanceVcViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = is_read_enabled
-                            vc.is_write_enabled = is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Principal" )
-                            vc.segmentName.backgroundColor = UIColor(named: "UnSelector")
-                            vc.segmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                            vc.str = strs
-                            vc.strName = strName
-                            
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true , completion: nil)
-                            
-                        }
+                        dismiss(animated: true)
                         
                     }))
                     
@@ -4253,39 +3799,8 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         
                         guard let self = self else { return }
                         
-                        if piroty == "p2" || piroty == "p3" {
-                            
-                            let vc = SenderAttendanceVcViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = is_read_enabled
-                            vc.is_write_enabled = is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                            vc.segmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.segmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            vc.str = strs
-                            vc.strName = strName
-                            
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true , completion: nil)
-                            
-                        }
-                        
-                        
-                        else{
-                            
-                            let vc = SenderAttendanceVcViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = is_read_enabled
-                            vc.is_write_enabled = is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Principal" )
-                            vc.segmentName.backgroundColor = UIColor(named: "UnSelector")
-                            vc.segmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                            vc.str = strs
-                            vc.strName = strName
-                            
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true , completion: nil)
-                            
-                        }
-                        
+                        dismiss(animated: true)
+
                     }))
                     
                     self.present(refreshAlert, animated: true, completion: nil)
@@ -4360,32 +3875,10 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
 
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
 
-                        if self.piroty == "p2" || self.piroty == "p3" {
-
-                            let vc = SenderImagePdfHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                            vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            vc.str = self.strs
-                            vc.strName = self.strName
+                            let vc = NewHomescreenVC()
                             vc.modalPresentationStyle = .fullScreen
                             self.present(vc, animated: true)
 
-                        } else {
-
-                            let vc = SenderImagePdfHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Principal")
-                            vc.imageSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                            vc.str = self.strs
-                            vc.strName = self.strName
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                        }
                     }))
 
                     self.present(refreshAlert, animated: true)
@@ -4420,32 +3913,10 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
 
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
 
-                        if self.piroty == "p2" || self.piroty == "p3" {
-
-                            let vc = SenderImagePdfHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                            vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            vc.str = self.strs
-                            vc.strName = self.strName
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-
-                        } else {
-
-                            let vc = SenderImagePdfHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Principal")
-                            vc.imageSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                            vc.str = self.strs
-                            vc.strName = self.strName
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                        }
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                        
                     }))
 
                     self.present(refreshAlert, animated: true)
@@ -4846,7 +4317,7 @@ class SpecificStudentViewController: UIViewController,UITableViewDelegate,UITabl
                         
                         ImagePdfParticular(ImageFile: awsArry)
                         
-                    } else if MenuType == "6"      ||   MenuType == "6" {
+                    } else if MenuType == "6"{
                         
                         
                         assigmentImagePdf(imageArry : awsArry)

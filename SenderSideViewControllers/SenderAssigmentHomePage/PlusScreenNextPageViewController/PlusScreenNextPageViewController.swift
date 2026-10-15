@@ -63,9 +63,6 @@ var awsPdfURl :[String] = []
 var fileType : String!
 var TotalAws : String!
 var Assigment = "6"
-var videe : String!
-var iframes : String!
-var videoTypee  : String!
 var mobileNumber : String!
 var password : String!
 var str : [String] = []
@@ -82,9 +79,19 @@ var is_write_enabled : String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        bigImg.sd_setImage(with: URL(string: addImageBackGroundurl ?? ""), placeholderImage: UIImage(named: "ic_white"))
-        smallImg.sd_setImage(with: URL(string: smallImageUrl ?? ""), placeholderImage: UIImage(named: "ic_white"))
+        
+        bigImg.setAdImage(
+            imageURL: addImageBackGroundurl,
+            adURL: imageWebUrl,
+            from: self
+        )
+        
+        smallImg.setAdImage(
+            imageURL: smallImageUrl,
+            adURL: imageWebUrl,
+            placeholder: UIImage(named: "Default_Ad_small"),
+            from: self
+        )
 
         NotificationCenter.default.addObserver(
             self,
@@ -190,9 +197,6 @@ var is_write_enabled : String!
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
 
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(adLoad))
-        bigImg.isUserInteractionEnabled = true
-        bigImg.addGestureRecognizer(singleTap)
     }
 
     deinit {
@@ -219,14 +223,6 @@ var is_write_enabled : String!
             self?.dateLabel.textColor = .black
             self?.dates = today_date
         })
-    }
-
-
-    @IBAction func adLoad() {
-        let vc = SenderExamAddVcViewController(nibName: nil, bundle: nil)
-        vc.AddWebUrl = imageWebUrl
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
     }
 
     @objc func keyboardWillShow(notification: Notification) {
@@ -344,9 +340,6 @@ var is_write_enabled : String!
                     vc.AssigmentFileType = fileType
                     vc.titlesTextField = titleTextField.text
                     vc.discreptionss = descripitionTextField.text
-                    vc.videoURL = videe
-                    vc.videoIframe = iframes
-                    vc.videoType = videoTypee
                     vc.awsArry = awsPdfURl
                     vc.str = str
                     vc.strName = strName
@@ -368,9 +361,6 @@ var is_write_enabled : String!
                     vc.AssigmentFileType = fileType
                     vc.titlesTextField = titleTextField.text
                     vc.discreptionss = forwadDiscreption
-                    vc.videoURL = videe
-                    vc.videoIframe = iframes
-                    vc.videoType = videoTypee
                     vc.awsArry = awsPdfURl
                     vc.str = str
                     vc.strName = strName
@@ -389,9 +379,6 @@ var is_write_enabled : String!
                     vc.AssigmentFileType = fileType
                     vc.titlesTextField = titleTextField.text
                     vc.discreptionss = forwadDiscreption
-                    vc.videoUrl = videe
-                    vc.iframeUrl = iframes
-                    vc.videoType = videoTypee
                     vc.awsArry = awsPdfURl
                     vc.str = str
                     vc.strName = strName
@@ -410,7 +397,6 @@ var is_write_enabled : String!
                     vc.AssigmentFileType = fileType
                     vc.titlesTextField = titleTextField.text
                     vc.discreptionss = forwadDiscreption
-                    vc.videoType = videoTypee
                     vc.awsArry = awsPdfURl
                     vc.str = str
                     vc.strName = strName

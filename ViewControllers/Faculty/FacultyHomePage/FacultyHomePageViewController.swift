@@ -14,24 +14,16 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
-    @IBOutlet weak var tapNameview: UIView!
-    @IBOutlet weak var tapBarView: UIViewX!
-    @IBOutlet weak var redirectLoginView: UIViewX!
+    @IBOutlet weak var customTabBar: CustomTabBar!
     @IBOutlet weak var sectionDropDownLabel: UILabel!
     @IBOutlet weak var sectionDropDownView: UIView!
     @IBOutlet weak var logoutView: UIView!
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var notificationView: UIView!
-    @IBOutlet weak var topMessageLabel: UILabel!
-    @IBOutlet weak var clgLogoImg: UIImageView!
     @IBOutlet weak var changePasswordView: UIView!
     @IBOutlet weak var termsAndConditionView: UIView!
     @IBOutlet weak var helpView: UIView!
     @IBOutlet weak var sideMenuView: UIView!
-    @IBOutlet weak var viewTap: UIView!
-    @IBOutlet weak var refreshView: UIView!
     @IBOutlet weak var faqView: UIView!
     @IBOutlet weak var privacyPolicyView: UIView!
     @IBOutlet weak var smallImg: UIImageView!
@@ -72,6 +64,7 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        customTabBar.delegate = self
         noDataLabel.text = "No data found"
         
         sideMenuView.isHidden = true
@@ -93,19 +86,11 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
         memberId = defaults.string(forKey: DefaultsKeys.memberid)
         priority = defaults.string(forKey: DefaultsKeys.priority)
-        memberName = defaults.string(forKey: DefaultsKeys.memberName)
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        
-        topMessageLabel.text = memberName
-        
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         
         password = defaults.string(forKey: DefaultsKeys.Password)
         addApi()
-        
-        topLabels.text = .priorityRole
-        tapBarView.backgroundColor = .priorityColor
+    
         view.backgroundColor = .priorityColor
         
         let rowNib = UINib(nibName: identifers, bundle: nil)
@@ -121,43 +106,23 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
         let profileGesture = UITapGestureRecognizer(target: self, action: #selector(profileRedirect))
         profileView.addGestureRecognizer(profileGesture)
         
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
-        
-        
-        let tops = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        tapNameview.addGestureRecognizer(tops)
         
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
         
-        
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
-        
-        
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
         
-        
         let helpGesture = UITapGestureRecognizer(target: self, action: #selector(helpRedirect))
         helpView.addGestureRecognizer(helpGesture)
-        //
         
         let privacyPolicyGesture = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyRedirect))
         privacyPolicyView.addGestureRecognizer(privacyPolicyGesture)
         
         let termsAndConditionGesture = UITapGestureRecognizer(target: self, action: #selector(termsAndCondition))
         termsAndConditionView.addGestureRecognizer(termsAndConditionGesture)
-        
         
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
@@ -195,24 +160,40 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
             
             switch result {
             case .success(let success):
-                if success.Status == 1 {
+         
                     addapiRef = success.data ?? []
                     
-                    for i in addapiRef{
-                        
-                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "Default_Ad"))
-                        
-                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "Default_Ad"))
-                        
-                        let singleTap = adds(target: self, action: #selector(adLoad))
-                        singleTap.url = i.add_url
-                        bigImg.isUserInteractionEnabled = true
-                        bigImg.addGestureRecognizer(singleTap)
-                    }
-                }
+                    let ad = addapiRef.first
+                  
+                    bigImg.setAdImage(
+                        imageURL: ad?.background_image,
+                        adURL: ad?.add_url,
+                        from: self
+                    )
+
+                    smallImg.setAdImage(
+                        imageURL: ad?.add_image,
+                        adURL: ad?.add_url,
+                        placeholder: UIImage(named: "Default_Ad_small"),
+                        from: self
+                    )
+                
                 
             case .failure(let failure):
                 print(failure.localizedDescription)
+                
+                bigImg.setAdImage(
+                    imageURL: "",
+                    adURL: "",
+                    from: self
+                )
+
+                smallImg.setAdImage(
+                    imageURL:"",
+                    adURL: "",
+                    placeholder: UIImage(named: "Default_Ad_small"),
+                    from: self
+                )
             }
         }
     }
@@ -341,15 +322,6 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
         }
     }
     
-    @IBAction func adLoad(gesture : addClick) {
-        
-        let vc = FacultyVcViewController(nibName: nil, bundle: nil)
-        vc.AddImageView = gesture.url
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true,completion: nil)
-        
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return facultyRef.count
@@ -446,27 +418,6 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
         present(vc, animated: true, completion: nil)
     }
     
-    @IBAction func refreshVc() {
-    }
-    
-    
-    @IBAction func notificationVc() {
-        print("NotificationViewController")
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        vc.str = str
-        vc.strName = strName
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: false, completion: nil)
-        
-    }
-    
-    @IBAction func menu() {
-        
-        sideMenuView.isHidden.toggle()
-        
-    }
-    
-    
     @IBAction func changePassowrdVC(){
         
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
@@ -492,7 +443,12 @@ class FacultyHomePageViewController: UIViewController,UITableViewDelegate,UITabl
     }
 }
 
-class addClick : UITapGestureRecognizer {
+@available(iOS 16.0, *)
+extension FacultyHomePageViewController : CustomTabBarDelegate {
+    func didTapSearch() {
+    }
     
-    var url : String!
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
 }

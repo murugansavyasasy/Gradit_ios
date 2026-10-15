@@ -219,7 +219,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         present(vc)
                     } else if slug == "feedetails" {
                         let vc = FeePaymentViewController(nibName: nil, bundle: nil)
-                        vc.view.backgroundColor = UIColor(named: "StudentParent")
                         present(vc)
                     } else if slug == "circular" {
                         let vc = ImageViewController(nibName: nil, bundle: nil)
@@ -312,7 +311,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         present(vc)
                     } else if slug == "feedetails" {
                         let vc = FeePaymentViewController(nibName: nil, bundle: nil)
-                        vc.view.backgroundColor = UIColor(named: "Principal")
                         present(vc)
                     } else if slug == "voice" {
                         let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
@@ -435,7 +433,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         present(vc)
                     } else if slug == "feedetails" {
                         let vc = FeePaymentViewController(nibName: nil, bundle: nil)
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                         present(vc)
                     } else if slug == "voice" {
                         let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
@@ -542,7 +539,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         let vc = LocationViewController(nibName: nil, bundle: nil)
                         vc.is_read_enabled = read
                         vc.is_write_enabled = write
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                         present(vc)
                     } else if slug == "attendance_report" {
                         let vc = LocationHistoryVc(nibName: nil, bundle: nil)
@@ -559,7 +555,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         present(vc)
                     } else if slug == "feedetails" {
                         let vc = FeePaymentViewController(nibName: nil, bundle: nil)
-                        vc.view.backgroundColor = UIColor(named: "univercityColorCod")
                         present(vc)
                     } else if slug == "voice" {
                         let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
@@ -666,7 +661,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         let vc = LocationViewController(nibName: nil, bundle: nil)
                         vc.is_read_enabled = read
                         vc.is_write_enabled = write
-                        vc.view.backgroundColor = UIColor(named: "univercityColorCod")
                         present(vc)
                     }
                 } else if priority == "p5" {
@@ -676,7 +670,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         currentController?.present(vc, animated: false, completion: nil)
                     } else if slug == "feedetails" {
                         let vc = FeePaymentViewController(nibName: nil, bundle: nil)
-                        vc.view.backgroundColor = UIColor(named: "FatherColor")
                         present(vc)
                     } else if slug == "voice" {
                         let vc = CommunicationHomePageViewController(nibName: nil, bundle: nil)
@@ -815,7 +808,6 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         present(vc)
                     } else if slug == "feedetails" {
                         let vc = FeePaymentViewController(nibName: nil, bundle: nil)
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                         present(vc)
                     } else if slug == "voice" {
                         let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
@@ -922,13 +914,11 @@ class MenuPageCVCell: UICollectionViewCell, UICollectionViewDelegate, UICollecti
                         let vc = LocationViewController(nibName: nil, bundle: nil)
                         vc.is_read_enabled = read
                         vc.is_write_enabled = write
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                         present(vc)
                     } else if slug == "attendance_report" {
                         let vc = LocationHistoryVc(nibName: nil, bundle: nil)
                         vc.is_read_enabled = read
                         vc.is_write_enabled = write
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
                         present(vc)
                     }
                 }

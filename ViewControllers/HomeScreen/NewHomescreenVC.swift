@@ -442,12 +442,19 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
             }
             
             for i in dashBoardList.dashSubData {
-                cell.bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                cell.smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
                 
-                let loadGesture = HomeViewGesture(target: self, action: #selector(adLoad))
-                loadGesture.url = i.add_url
-                cell.adView.addGestureRecognizer(loadGesture)
+                cell.bigImg.setAdImage(
+                    imageURL: i.background_image,
+                    adURL: i.add_url,
+                    from: self
+                )
+                
+                cell.smallImg.setAdImage(
+                    imageURL: i.add_image,
+                    adURL: i.add_url,
+                    placeholder: UIImage(named: "Default_Ad_small"),
+                    from: self
+                )
             }
             
             return cell
@@ -1222,14 +1229,6 @@ extension NewHomescreenVC : UITableViewDelegate, UITableViewDataSource {
         default:
             break
         }
-    }
-    
-    @IBAction func adLoad(gesture : HomeViewGesture) {
-        
-        let vc = HomePageAddViewController(nibName: nil, bundle: nil)
-        vc.AddWebUrl = gesture.url
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true,completion: nil)
     }
     
 }

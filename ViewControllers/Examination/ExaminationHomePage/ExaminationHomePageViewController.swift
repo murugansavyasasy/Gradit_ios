@@ -454,23 +454,7 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
         
         
     }
-    @IBAction func adLoad(gesture : addViewGesture) {
-        
-        
-        
-        let vc = ShowExaminationAddViewController(nibName: nil, bundle: nil)
-        
-        
-        vc.addString = gesture.url
-        print("adssdedd",gesture.url)
-        vc.modalPresentationStyle = .fullScreen
-        
-        present(vc, animated: true,completion: nil)
-        
-    }
-    
-    
-    
+   
     
     @IBAction func examSegment(_ sender: Any) {
         
@@ -951,24 +935,40 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
             
             switch result {
             case .success(let success):
-                if success.Status == 1 {
+         
                     addapiRef = success.data ?? []
                     
-                    for i in addapiRef{
-                      
-                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-                        let singleTap = adds(target: self, action: #selector(adLoad))
-                        singleTap.url = i.add_url
-                        bigImg.isUserInteractionEnabled = true
-                        bigImg.addGestureRecognizer(singleTap)
-                    }
-                }
+                    let ad = addapiRef.first
+                  
+                    bigImg.setAdImage(
+                        imageURL: ad?.background_image,
+                        adURL: ad?.add_url,
+                        from: self
+                    )
+
+                    smallImg.setAdImage(
+                        imageURL: ad?.add_image,
+                        adURL: ad?.add_url,
+                        placeholder: UIImage(named: "Default_Ad_small"),
+                        from: self
+                    )
+                
                 
             case .failure(let failure):
                 print(failure.localizedDescription)
+                
+                bigImg.setAdImage(
+                    imageURL: "",
+                    adURL: "",
+                    from: self
+                )
+
+                smallImg.setAdImage(
+                    imageURL:"",
+                    adURL: "",
+                    placeholder: UIImage(named: "Default_Ad_small"),
+                    from: self
+                )
             }
         }
         
@@ -1102,13 +1102,6 @@ class ExaminationHomePageViewController: UIViewController,UITableViewDelegate,UI
     
 }
 
-
-
-class addViewGesture : UITapGestureRecognizer {
-    
-    
-    var url : String!
-}
 
 
 class ExamViewPageGesture : UITapGestureRecognizer {

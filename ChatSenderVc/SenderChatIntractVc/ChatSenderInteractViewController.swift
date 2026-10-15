@@ -20,12 +20,7 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
     
     @IBOutlet weak var replyViewHeight: NSLayoutConstraint!
     @IBOutlet weak var chatMsgHight: NSLayoutConstraint!
-    
-    
-    
-    @IBOutlet weak var tapBarView: UIView!
-    @IBOutlet weak var redirectLoginView: UIViewX!
-    
+    @IBOutlet weak var CustomTabBar: CustomTabBar!
     @IBOutlet weak var subLabel: UILabel!
     
     @IBOutlet weak var subjectNameLabel: UILabel!
@@ -34,19 +29,10 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
     
     @IBOutlet weak var semLabel: UILabel!
     @IBOutlet weak var secLabel: UILabel!
-    
-    @IBOutlet weak var viewTap: UIView!
-    
-    
     @IBOutlet weak var noDataTextLabel: UILabel!
     
     @IBOutlet weak var noDataTextView: UIView!
-    
-    
-    
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var notificationView: UIView!
-    
+   
     @IBOutlet weak var privacyPolicyView: UIView!
     
     @IBOutlet weak var faqView: UIView!
@@ -61,17 +47,8 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
     
     @IBOutlet weak var termsAndConditionView: UIView!
     
-    
-    @IBOutlet weak var refreshView: UIView!
-    
     @IBOutlet weak var changeRolesView: UIView!
-    
-    @IBOutlet weak var topMessageLabel: UILabel!
-    
-    
-    
-    @IBOutlet weak var clgLogoImg: UIImageView!
-    
+   
     @IBOutlet weak var sideMenuView: UIView!
     
     @IBOutlet weak var chatReplyShowView: UIView!
@@ -148,6 +125,8 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
         
         super.viewDidLoad()
         
+        CustomTabBar.delegate = self
+        
         overrideUserInterfaceStyle = .light
         
         originalViewY = view.frame.origin.y
@@ -175,63 +154,8 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
         
         userID = defaults.string(forKey: DefaultsKeys.memberid)
         priority = defaults.string(forKey: DefaultsKeys.priority)
-        
-        topMessageLabel.text = defaults.string(forKey: DefaultsKeys.memberName)
-        
-        
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
-        
-        print("   chatMsgHight.constant = 150",   chatMsgHight.constant)
-        if priority == "p1"{
-            view.backgroundColor = UIColor(named: "Principal" )
-            tapBarView.backgroundColor = UIColor(named: "Principal" )
-            topLabels.text = "Principal"
-            
-        }
-        
-        else if priority == "p4"{
-            
-            topLabels.text = "Student"
-            
-        }
-        
-        else if priority == "p2"{
-            view.backgroundColor = UIColor(named: "Teaching Staff" )
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            topLabels.text = "Hod"
-            
-        }
-        
-        else if  priority == "p3" {
-            view.backgroundColor = UIColor(named: "Teaching Staff" )
-            tapBarView.backgroundColor = UIColor(named: "Teaching Staff" )
-            topLabels.text = "Teacher"
-        }
-        
-        
-        
-        
-        else if priority == "p5"{
-            
-            
-            topLabels.text = "Father"
-            
-            
-            
-        }
-        
-        else if priority == "p7"{
-            
-            
-            topLabels.text = "univercityColorCod"
-            
-            
-            
-        }
-        
-        
-        
+      
+        view.backgroundColor = .priorityColor
         
         if is_read_enabled == "1"{
             
@@ -315,16 +239,6 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
         
         backView.addGestureRecognizer(backGesture)
         
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
-        
-        
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
         
@@ -353,9 +267,6 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
         
         let changeRol = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRol)
-        
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
         
         chatIntView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideReplyView)))
         
@@ -775,21 +686,6 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
         
     }
     
-    
-    @IBAction func refreshVc() {
-        
-        print("refreshVcWork")
-        KRProgressHUD.show()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            
-            KRProgressHUD.dismiss()
-            
-        }
-        
-        scrollToBottom()
-    }
-    
     func scrollToBottom(){
         
         DispatchQueue.main.async { [self] in
@@ -805,14 +701,6 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
     }
 
     
-    @IBAction func notificationVc() {
-        print("NotificationViewController")
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: false, completion: nil)
-       
-    }
-    
     @IBAction func changePassowrdVC(){
         
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
@@ -820,19 +708,7 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
         present(vc, animated: true, completion: nil)
         
     }
-    
-    @IBAction func menu() {
-        
-        if sideMenuView.isHidden == true{
-            
-            sideMenuView.isHidden = false
-        } else{
-            
-            sideMenuView.isHidden = true
-        }
-    }
-    
-    
+   
     @IBAction func priorityVc() {
         let vc = PriorityScreenVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
@@ -848,7 +724,18 @@ class ChatSenderInteractViewController: UIViewController,UITableViewDataSource,U
     
 }
 
-
+@available(iOS 16.0, *)
+extension ChatSenderInteractViewController : CustomTabBarDelegate {
+    func didTapSearch() {
+        
+    }
+    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
+    
+    
+}
 
 
 class ReplyGesture: UITapGestureRecognizer {

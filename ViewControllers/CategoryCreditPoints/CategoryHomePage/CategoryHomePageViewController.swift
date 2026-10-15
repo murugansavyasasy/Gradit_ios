@@ -13,6 +13,7 @@ import ObjectMapper
 class CategoryHomePageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var upArrowImageView: UIImageView!
     @IBOutlet weak var headingView: UIView!
@@ -25,8 +26,6 @@ class CategoryHomePageViewController: UIViewController,UITableViewDelegate,UITab
     var identiers = "CategoryTableViewCell"
     var creditRef : [creditDataDetails] = []
     var dropDownArr : [categoryDataDetails] = []
-    let menuIdentifier = "MenuCollectionViewCell"
-    var MenuRefName :[menuApiDataDetails] = []
     var credsEc : String!
     var colgId : String!
     var memberId : String!
@@ -46,11 +45,8 @@ class CategoryHomePageViewController: UIViewController,UITableViewDelegate,UITab
         
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
         memberId = defaults.string(forKey: DefaultsKeys.memberid)
-        
         sectionid = defaults.string(forKey: DefaultsKeys.sectionid)
-        
         courseid = defaults.string(forKey: DefaultsKeys.courseid)
-        
         priority = defaults.string(forKey: DefaultsKeys.priority)
         
         tv.delegate = self
@@ -64,22 +60,8 @@ class CategoryHomePageViewController: UIViewController,UITableViewDelegate,UITab
         let  selectCategory = UITapGestureRecognizer(target: self, action: #selector(open_url))
         selectedCategoryView.addGestureRecognizer(selectCategory)
         
-        if priority == "p1" {
-            
-            view.backgroundColor = UIColor(named: "Principal" )
-            
-        }else if priority == "p4" {
-            
-            view.backgroundColor = UIColor(named: "studentViewColors")
-            
-        }else if priority == "p3" ||  priority == "p2" {
-            
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-            
-        }else if priority == "p5"{
-            
-            view.backgroundColor = UIColor(named: "FatherColor")
-        }
+        view.backgroundColor = .priorityColor
+        topView.backgroundColor = .priorityColor
         
         noDataTextView.isHidden = true
         noDataLabel.isHidden = true

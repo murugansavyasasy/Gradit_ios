@@ -19,28 +19,19 @@ class SenderNoticeBoardNextPageViewController: UIViewController, UITextViewDeleg
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var uploadImageView: RectangularDashedView!
     @IBOutlet weak var lblCount: UILabel!
-    @IBOutlet weak var tapNameview: UIView!
-    @IBOutlet weak var tapBarView: UIViewX!
+    @IBOutlet weak var CustomTabBar: CustomTabBar!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var SelectRespicView: UIViewX!
-    @IBOutlet weak var notificationView: UIView!
     @IBOutlet weak var smallImg: UIImageView!
     @IBOutlet weak var bigImg: UIImageView!
     @IBOutlet weak var logoutView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
-    @IBOutlet weak var profileView: UIView!
-    @IBOutlet weak var redirectLoginView: UIViewX!
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var topMessageLabel: UILabel!
-    @IBOutlet weak var clgLogoImg: UIImageView!
-    @IBOutlet weak var refreshView: UIView!
     @IBOutlet weak var sideMenuView: UIView!
     @IBOutlet weak var termsAndConditionView: UIView!
     @IBOutlet weak var changePasswordView: UIView!
     @IBOutlet weak var uploadFileLabel: UILabel!
     @IBOutlet weak var privacyPolicyView: UIView!
     @IBOutlet weak var faqView: UIView!
-    @IBOutlet weak var viewTap: UIView!
     @IBOutlet weak var helpView: UIView!
     @IBOutlet weak var cancelsView: UIViewX!
     @IBOutlet weak var descripitionTextField: UITextView!
@@ -66,18 +57,25 @@ class SenderNoticeBoardNextPageViewController: UIViewController, UITextViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
+        CustomTabBar.delegate = self
         sideMenuView.isHidden = true
         let defaults = UserDefaults.standard
         priority = defaults.string(forKey: DefaultsKeys.priority)
-        bigImg.sd_setImage(with: URL(string: BackGroundImageUrl), placeholderImage: UIImage(named: "ic_white"))
-        smallImg.sd_setImage(with: URL(string: SmallImageUrl), placeholderImage: UIImage(named: "ic_white"))
-        topMessageLabel.text = defaults.string(forKey: DefaultsKeys.memberName)
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
+      
+        bigImg.setAdImage(
+            imageURL: BackGroundImageUrl,
+            adURL: addWebUrl,
+            from: self
+        )
         
+        smallImg.setAdImage(
+            imageURL: SmallImageUrl,
+            adURL: addWebUrl,
+            placeholder: UIImage(named: "Default_Ad_small"),
+            from: self
+        )
+      
         view.backgroundColor = .priorityColor
-        tapBarView.backgroundColor = .priorityColor
-        topLabels.text = .priorityRole
         descripitionTextField.text = "Enter the Description"
         descripitionTextField.textColor = UIColor.lightGray
         descripitionTextField.font = UIFont(name: "verdana", size: 13.0)
@@ -94,26 +92,13 @@ class SenderNoticeBoardNextPageViewController: UIViewController, UITextViewDeleg
         
         let cancels = UITapGestureRecognizer(target: self, action: #selector(cancelVc))
         cancelsView.addGestureRecognizer(cancels)
-        
-        
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
-        
+   
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
         
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
-        
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
-        
+     
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
         
@@ -128,14 +113,7 @@ class SenderNoticeBoardNextPageViewController: UIViewController, UITextViewDeleg
         
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
-        
-        let topname = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
-        tapNameview.addGestureRecognizer(topname)
-        
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(adLoad))
-        
-        bigImg.isUserInteractionEnabled = true
-        bigImg.addGestureRecognizer(singleTap)
+       
         NotificationCenter.default.addObserver(
                self,
                selector: #selector(keyboardWillShow),
@@ -256,12 +234,6 @@ class SenderNoticeBoardNextPageViewController: UIViewController, UITextViewDeleg
         scrollView.contentInset.bottom = 0
         scrollView.verticalScrollIndicatorInsets.bottom = 0
     }
-    @IBAction func adLoad(){
-        let vc = SenderNoticeAddViewController(nibName: nil, bundle: nil)
-        vc.AddWebUrl = addWebUrl
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true,completion: nil)
-    }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if descripitionTextField.text == "Enter the Description" {
@@ -370,33 +342,6 @@ class SenderNoticeBoardNextPageViewController: UIViewController, UITextViewDeleg
         let currentController = self.getCurrentViewController()
         currentController?.present(vc, animated: true, completion: nil)
         
-    }
-    
-    @IBAction func refreshVc() {
-        KRProgressHUD.show()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            KRProgressHUD.dismiss()
-        }
-    }
-    
-    
-    @IBAction func notificationVc() {
-        print("NotificationViewController")
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        vc.str = str
-        vc.strName = strName
-        vc.is_read_enabled = is_read_enabled
-        vc.is_write_enabled = is_write_enabled
-        vc.modalPresentationStyle = .fullScreen
-        let currentController = self.getCurrentViewController()
-        currentController?.present(vc, animated: false, completion: nil)
-    }
-    
-    
-    
-    
-    @IBAction func menu() {
-        sideMenuView.isHidden.toggle()
     }
     
     @IBAction func changePassowrdVC(){
@@ -580,4 +525,16 @@ class SenderNoticeBoardNextPageViewController: UIViewController, UITextViewDeleg
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return range.location <= 99
     }
+}
+
+@available(iOS 16.0, *)
+extension SenderNoticeBoardNextPageViewController: CustomTabBarDelegate {
+    func didTapSearch() {
+        
+    }
+    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
+    
 }

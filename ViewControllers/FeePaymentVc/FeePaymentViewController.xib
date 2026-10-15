@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XnB-pP-lzk">
-                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dsC-7U-0Zp" customClass="UIViewX" customModule="Gradit" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
@@ -69,7 +70,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lrq-9h-ZJV">
-                            <rect key="frame" x="0.0" y="50" width="393" height="709"/>
+                            <rect key="frame" x="0.0" y="50" width="393" height="616"/>
                             <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <wkWebViewConfiguration key="configuration">
                                 <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -88,13 +89,21 @@
                         <constraint firstItem="Lrq-9h-ZJV" firstAttribute="top" secondItem="dsC-7U-0Zp" secondAttribute="bottom" id="wbQ-QV-0OM"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ng-PO-qTd">
+                    <rect key="frame" x="0.0" y="784" width="393" height="68"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="Principal"/>
             <constraints>
                 <constraint firstItem="XnB-pP-lzk" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="44o-sw-nx6"/>
+                <constraint firstAttribute="trailing" secondItem="4Ng-PO-qTd" secondAttribute="trailing" id="AOr-zT-C3b"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="XnB-pP-lzk" secondAttribute="bottom" id="CJ7-Yg-YAe"/>
                 <constraint firstItem="XnB-pP-lzk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="CuH-1c-YZw"/>
+                <constraint firstItem="4Ng-PO-qTd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Nrc-GP-y5M"/>
+                <constraint firstItem="4Ng-PO-qTd" firstAttribute="top" secondItem="XnB-pP-lzk" secondAttribute="bottom" id="Wm5-AC-fb2"/>
+                <constraint firstAttribute="bottom" secondItem="4Ng-PO-qTd" secondAttribute="bottom" id="fQm-eS-NPK"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="XnB-pP-lzk" secondAttribute="trailing" id="oMR-YC-H5V"/>
             </constraints>
             <point key="canvasLocation" x="113.74045801526717" y="-11.267605633802818"/>
@@ -106,5 +115,8 @@
         <namedColor name="Principal">
             <color red="0.56499999761581421" green="0.14100000262260437" blue="0.46299999952316284" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

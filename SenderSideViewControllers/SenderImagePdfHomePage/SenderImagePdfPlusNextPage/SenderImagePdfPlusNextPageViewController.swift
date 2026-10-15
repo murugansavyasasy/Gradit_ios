@@ -72,8 +72,19 @@ class SenderImagePdfPlusNextPageViewController: UIViewController, UITextViewDele
         priority = defaults.string(forKey: DefaultsKeys.priority)
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         password = defaults.string(forKey: DefaultsKeys.Password)
-        bigImg.sd_setImage(with: URL(string: backGroungImageUrl), placeholderImage: UIImage(named: "ic_white"))
-        smallImg.sd_setImage(with: URL(string: SmallImageUrl), placeholderImage: UIImage(named: "ic_white"))
+        
+        bigImg.setAdImage(
+            imageURL:backGroungImageUrl,
+            adURL: addWebUrl,
+            from: self
+        )
+        
+        smallImg.setAdImage(
+            imageURL: SmallImageUrl,
+            adURL: addWebUrl,
+            placeholder: UIImage(named: "Default_Ad_small"),
+            from: self
+        )
        
         textFieldBaseview.layer.cornerRadius = 10
         textFieldBaseview.layer.borderWidth = 1
@@ -102,10 +113,6 @@ class SenderImagePdfPlusNextPageViewController: UIViewController, UITextViewDele
       
         let tapToUpload = UITapGestureRecognizer(target: self, action: #selector(GalleryVc))
         uploadImageView.addGestureRecognizer(tapToUpload)
-        
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(adLoad))
-        bigImg.isUserInteractionEnabled = true
-        bigImg.addGestureRecognizer(singleTap)
         
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
@@ -323,13 +330,6 @@ class SenderImagePdfPlusNextPageViewController: UIViewController, UITextViewDele
                 present(vc, animated: true, completion: nil)
             }
         }
-    }
-
-    @IBAction func adLoad() {
-        let vc = SendercomuniAddViewController(nibName: nil, bundle: nil)
-        vc.AddWebUrl = addWebUrl
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
     }
 
     @IBAction func backbtn(_ sender: Any) {

@@ -238,15 +238,6 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
         searchbar.resignFirstResponder()
     }
     
-    
-    @IBAction func adLoad(gesture : VoiceMessage) {
-        
-        let vc = ShowAdvertisementViewController(nibName: nil, bundle: nil)
-        vc.addUrl = gesture.url
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true,completion: nil)
-    }
-    
     @IBAction func communiSegmentAction(_ sender: Any) {
         
         searchbar.searchTextField.text = ""
@@ -451,22 +442,26 @@ class CommunicationHomePageViewController: UIViewController, UITableViewDelegate
             
             switch result {
             case .success(let success):
-                if success.Status == 1 {
+         
                     addapiRef = success.data ?? []
                     
-                    for i in addapiRef{
-                      
-                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-                        let singleTap = adds(target: self, action: #selector(adLoad))
-                        singleTap.url = i.add_url
-                        bigImg.isUserInteractionEnabled = true
-                        bigImg.addGestureRecognizer(singleTap)
-                    }
-                }
-                
+                    let ad = addapiRef.first
+                  
+                    bigImg.setAdImage(
+                        imageURL: ad?.background_image,
+                        adURL: ad?.add_url,
+                        from: self
+                    )
+
             case .failure(let failure):
                 print(failure.localizedDescription)
+                
+                bigImg.setAdImage(
+                    imageURL: "",
+                    adURL: "",
+                    from: self
+                )
+
             }
         }
     }

@@ -14,22 +14,13 @@ import KRProgressHUD
 @available(iOS 16.0, *)
 class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,AVPlayerViewControllerDelegate,UISearchBarDelegate{
     
-    @IBOutlet weak var topNameview: UIView!
-    @IBOutlet weak var tapBarView: UIViewX!
-    @IBOutlet weak var redirectLoginView: UIViewX!
+    @IBOutlet weak var customTabBar: CustomTabBar!
     @IBOutlet weak var logoutView: UIView!
     @IBOutlet weak var changeRolesView: UIView!
-    @IBOutlet weak var topLabels: UILabel!
-    @IBOutlet weak var notificationView: UIView!
-    @IBOutlet weak var clgLogoImg: UIImageView!
     @IBOutlet weak var changePasswordView: UIView!
-    @IBOutlet weak var topMessageLabel: UILabel!
     @IBOutlet weak var termsAndConditionView: UIView!
     @IBOutlet weak var helpView: UIView!
     @IBOutlet weak var sideMenuView: UIView!
-    @IBOutlet weak var viewTap: UIView!
-    @IBOutlet weak var refreshView: UIView!
-    @IBOutlet weak var SearchView: UIView!
     @IBOutlet weak var faqView: UIView!
     @IBOutlet weak var searchFullView: UIViewX!
     @IBOutlet weak var profileView: UIView!
@@ -66,6 +57,7 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        customTabBar.delegate = self
         overrideUserInterfaceStyle = .light
         noDataView.isHidden =  true
         noDataTextLabel.isHidden = true
@@ -80,47 +72,27 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         userid = defaults.string(forKey: DefaultsKeys.memberid)
         priority = defaults.string(forKey:DefaultsKeys.priority)
         memberName = defaults.string(forKey: DefaultsKeys.memberName)
-        colgImg = defaults.string(forKey: DefaultsKeys.colglogo)
-        clgLogoImg.sd_setImage(with: URL(string:  colgImg), placeholderImage: UIImage(named: "EmptyCollegeIcon"))
         password = defaults.string(forKey: DefaultsKeys.Password)
-        topMessageLabel.text = memberName
         MobileNumber = defaults.string(forKey: DefaultsKeys.mobileNumber)
         
         videoModals()
         
         view.backgroundColor = .priorityColor
-        tapBarView.backgroundColor = .priorityColor
-        topLabels.text = .priorityRole
         
         let rownib = UINib(nibName: identifers, bundle: nil)
         videoTableView.register(rownib, forCellReuseIdentifier: identifers)
         
         // tap Bar UiTapGuster.
         
-        let loginRediectGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        redirectLoginView.addGestureRecognizer(loginRediectGesture)
-        
         let profileGesture = UITapGestureRecognizer(target: self, action: #selector(profileRedirect))
         profileView.addGestureRecognizer(profileGesture)
         
         let changeRolesGesture = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
         changeRolesView.addGestureRecognizer(changeRolesGesture)
-        
-        let topnam = UITapGestureRecognizer(target: self, action: #selector(priorityVc))
-        topNameview.addGestureRecognizer(topnam)
-        
+       
         let logoutGesture = UITapGestureRecognizer(target: self, action: #selector(logoutPressed))
         logoutView.addGestureRecognizer(logoutGesture)
-        
-        let menuGestureHide = UITapGestureRecognizer(target: self, action: #selector(menu))
-        viewTap.addGestureRecognizer(menuGestureHide)
-        
-        let notificationGesture = UITapGestureRecognizer(target: self, action: #selector(notificationVc))
-        notificationView.addGestureRecognizer(notificationGesture)
-        
-        let refreshGesture = UITapGestureRecognizer(target: self, action: #selector(refreshVc))
-        refreshView.addGestureRecognizer(refreshGesture)
-        
+       
         let faqGesture = UITapGestureRecognizer(target: self, action: #selector(faqRedirect))
         faqView.addGestureRecognizer(faqGesture)
         
@@ -135,10 +107,7 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         let chagePassword = UITapGestureRecognizer(target: self, action: #selector(changePassowrdVC))
         changePasswordView.addGestureRecognizer(chagePassword)
-        
-        let Serach = UITapGestureRecognizer(target: self, action: #selector(Searchfield))
-        SearchView.addGestureRecognizer(Serach)
-        
+       
         videoTableView.dataSource = self
         videoTableView.delegate = self
     }
@@ -230,24 +199,40 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             
             switch result {
             case .success(let success):
-                if success.Status == 1 {
+         
                     addapiRef = success.data ?? []
                     
-                    for i in addapiRef{
-                        
-                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-                        let singleTap = adds(target: self, action: #selector(adLoad))
-                        singleTap.url = i.add_url
-                        bigImg.isUserInteractionEnabled = true
-                        bigImg.addGestureRecognizer(singleTap)
-                    }
-                }
+                    let ad = addapiRef.first
+                  
+                    bigImg.setAdImage(
+                        imageURL: ad?.background_image,
+                        adURL: ad?.add_url,
+                        from: self
+                    )
+
+                    smallImg.setAdImage(
+                        imageURL: ad?.add_image,
+                        adURL: ad?.add_url,
+                        placeholder: UIImage(named: "Default_Ad_small"),
+                        from: self
+                    )
+                
                 
             case .failure(let failure):
                 print(failure.localizedDescription)
+                
+                bigImg.setAdImage(
+                    imageURL: "",
+                    adURL: "",
+                    from: self
+                )
+
+                smallImg.setAdImage(
+                    imageURL:"",
+                    adURL: "",
+                    placeholder: UIImage(named: "Default_Ad_small"),
+                    from: self
+                )
             }
         }
     }
@@ -346,15 +331,7 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
-    
-    @IBAction func adLoad(gesture : addGesture) {
-        
-        let vc =  AddVideoViewController(nibName: nil, bundle: nil)
-        vc.AddImageUrl = gesture.urls
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true,completion: nil)
-        
-    }
+ 
     
     func apread(gesture : String){
         var readApiStatus  = AppReadStatusModal()
@@ -462,30 +439,6 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
     }
     
-    @IBAction func refreshVc() {
-        
-        KRProgressHUD.show()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            
-            KRProgressHUD.dismiss()
-        }
-        
-        videoModals()
-    }
-    
-    @IBAction func notificationVc() {
-        let vc = NotificationViewController(nibName: nil, bundle: nil)
-        vc.str = str
-        vc.strName = strName
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: false, completion: nil)
-    }
-    
-    @IBAction func menu() {
-        sideMenuView.isHidden.toggle()
-    }
-    
     @IBAction func changePassowrdVC(){
         
         let vc = ChangePasswordVC(nibName: nil, bundle: nil)
@@ -512,6 +465,18 @@ class VideoViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
 }
 
+@available(iOS 16.0, *)
+extension VideoViewController : CustomTabBarDelegate {
+    func didTapSearch() {
+        searchbar.isHidden = false
+        searchFullView.isHidden = false
+    }
+    
+    func didTapSideMenu() {
+        sideMenuView.isHidden.toggle()
+    }
+}
+
 class videoGesture : UITapGestureRecognizer {
     
     var title : String!
@@ -519,8 +484,4 @@ class videoGesture : UITapGestureRecognizer {
     var videoUrl : String!
     var videoid : String!
     var url : String!
-}
-
-class addGesture : UITapGestureRecognizer{
-    var urls : String!
 }

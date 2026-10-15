@@ -181,12 +181,18 @@ class ViewController: UIViewController {
                     }
                 } else {
                     
-                    presentVC(LoginVc())
+                    AlertHelper.showOKAlert(on: self, title: "Failed", message: success.Message) {
+                        self.presentVC(LoginVc())
+                    }
+                   
                 }
                 
             case .failure(let error):
                 print("Error:", error.localizedDescription)
-                presentVC(LoginVc())
+                
+                AlertHelper.showOKAlert(on: self, title: "Failed", message: error.localizedDescription) {
+                    self.presentVC(LoginVc())
+                }
             }
         }
     }

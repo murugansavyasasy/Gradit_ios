@@ -253,18 +253,6 @@ class GetSubjectVcViewController: UIViewController,UITableViewDataSource,UITable
         
     }
     
-    @IBAction func adLoad(gesture:SenderExamAddsse){
-        
-        
-        let vc = SenderExamAddVcViewController(nibName: nil, bundle: nil)
-        
-        vc.AddWebUrl = gesture.addUrls
-        
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true,completion: nil)
-        
-        
-    }
     @IBAction func backBtn(_ sender: Any) {
         
         dismiss(animated: true)
@@ -410,24 +398,40 @@ class GetSubjectVcViewController: UIViewController,UITableViewDataSource,UITable
             
             switch result {
             case .success(let success):
-                if success.Status == 1 {
+         
                     addapiRef = success.data ?? []
                     
-                    for i in addapiRef{
-                      
-                        bigImg.sd_setImage(with: URL(string: i.background_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-                        smallImg.sd_setImage(with: URL(string: i.add_image ?? ""), placeholderImage: UIImage(named: "ic_white"))
-                        
-                        let singleTap = adds(target: self, action: #selector(adLoad))
-                        singleTap.url = i.add_url
-                        bigImg.isUserInteractionEnabled = true
-                        bigImg.addGestureRecognizer(singleTap)
-                    }
-                }
+                    let ad = addapiRef.first
+                  
+                    bigImg.setAdImage(
+                        imageURL: ad?.background_image,
+                        adURL: ad?.add_url,
+                        from: self
+                    )
+
+                    smallImg.setAdImage(
+                        imageURL: ad?.add_image,
+                        adURL: ad?.add_url,
+                        placeholder: UIImage(named: "Default_Ad_small"),
+                        from: self
+                    )
+                
                 
             case .failure(let failure):
                 print(failure.localizedDescription)
+                
+                bigImg.setAdImage(
+                    imageURL: "",
+                    adURL: "",
+                    from: self
+                )
+
+                smallImg.setAdImage(
+                    imageURL:"",
+                    adURL: "",
+                    placeholder: UIImage(named: "Default_Ad_small"),
+                    from: self
+                )
             }
         }
     }
@@ -594,12 +598,5 @@ class GetSubjectVcViewController: UIViewController,UITableViewDataSource,UITable
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true,completion: nil)
     }
-    
-}
-class SenderExamAddsse : UITapGestureRecognizer{
-    
-    
-    var addUrls : String!
-    
     
 }

@@ -77,8 +77,20 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
         userId = defaults.string(forKey: DefaultsKeys.memberid)
         password = defaults.string(forKey: DefaultsKeys.Password)
         MobileNumber = defaults.string(forKey: DefaultsKeys.Password)
-        bigImg.sd_setImage(with: URL(string: backGroundImg), placeholderImage: UIImage(named: "ic_white"))
-        smallImg.sd_setImage(with: URL(string: SmallImgAdd), placeholderImage: UIImage(named: "ic_white"))
+        
+        bigImg.setAdImage(
+            imageURL: backGroundImg,
+            adURL: addWebUrl,
+            from: self
+        )
+        
+        smallImg.setAdImage(
+            imageURL: SmallImgAdd,
+            adURL: addWebUrl,
+            placeholder: UIImage(named: "Default_Ad_small"),
+            from: self
+        )
+        
         sideMenuView.isHidden = true
         tapBarView.delegate = self
         venueLabel.text = selectedeventDetails?.venue ?? ""
@@ -101,10 +113,6 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
         if selectedeventDetails?.newfilepath?.count ?? 0 == 0 {
             noImageLabel.isHidden = false
         }
-        
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(adLoad))
-        bigImg.isUserInteractionEnabled = true
-        bigImg.addGestureRecognizer(singleTap)
         
         let Edit = UITapGestureRecognizer(target: self, action: #selector(EditVc))
         editView.addGestureRecognizer(Edit)
@@ -157,13 +165,6 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
         }
         alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
         self.present(alert, animated: true, completion: nil)
-    }
-    
-    @IBAction func adLoad( ){
-        let vc = TotalAddLoadPageViewController(nibName: nil, bundle: nil)
-        vc.AddWebUrl = addWebUrl
-        vc.modalPresentationStyle = . fullScreen
-        present(vc, animated: true,completion: nil)
     }
     
     
@@ -468,27 +469,10 @@ class SenderEventDetailsPageViewController: UIViewController,UICollectionViewDel
                             
                             guard let self = self else { return }
                             
-                            let vc = SenderEventHomePageViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = is_read_enabled
-                            vc.is_write_enabled = is_write_enabled
-                            vc.str = str
-                            vc.strName = strName
-
-                            if priority == "p2" || priority == "p3" {
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-
-                            } else if priority == "p7" {
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-
-                            } else {
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                            }
-
+                            let vc = NewHomescreenVC(nibName: nil, bundle: nil)
                             vc.modalPresentationStyle = .fullScreen
                             present(vc, animated: true)
+                            
                         }))
                         
                         self.present(refreshAlert, animated: true, completion: nil)

@@ -30,45 +30,34 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VrX-OG-f6R">
                     <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZyQ-og-oYh">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="65"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jus-LX-sIr">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jus-LX-sIr">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5En-YL-QlX">
-                                            <rect key="frame" x="15" y="15" width="348" height="30"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="30" id="vpx-zA-wXj"/>
-                                            </constraints>
-                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" title="Placement Trainings">
-                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <imageReference key="image" image="arrow.left" catalog="system" symbolScale="large"/>
-                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="medium"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="BackBtnAct:" destination="-1" eventType="touchUpInside" id="frF-wH-lnM"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5En-YL-QlX">
+                                    <rect key="frame" x="15" y="15" width="348" height="30"/>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="5En-YL-QlX" secondAttribute="trailing" constant="30" id="HNX-no-cf4"/>
-                                        <constraint firstAttribute="bottom" secondItem="5En-YL-QlX" secondAttribute="bottom" constant="15" id="WXw-4I-j9J"/>
-                                        <constraint firstItem="5En-YL-QlX" firstAttribute="top" secondItem="Jus-LX-sIr" secondAttribute="top" constant="15" id="Zg3-jO-Ftg"/>
-                                        <constraint firstItem="5En-YL-QlX" firstAttribute="leading" secondItem="Jus-LX-sIr" secondAttribute="leading" constant="15" id="lEF-6k-qjp"/>
+                                        <constraint firstAttribute="height" constant="30" id="vpx-zA-wXj"/>
                                     </constraints>
-                                </view>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Placement Trainings">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <imageReference key="image" image="arrow.left" catalog="system" symbolScale="large"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="medium"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="BackBtnAct:" destination="-1" eventType="touchUpInside" id="frF-wH-lnM"/>
+                                    </connections>
+                                </button>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="backgroundColor" name="StudentParent"/>
                             <constraints>
-                                <constraint firstItem="Jus-LX-sIr" firstAttribute="top" secondItem="ZyQ-og-oYh" secondAttribute="top" id="DXg-Cd-GT1"/>
-                                <constraint firstItem="Jus-LX-sIr" firstAttribute="leading" secondItem="ZyQ-og-oYh" secondAttribute="leading" id="Dcv-od-Tu6"/>
-                                <constraint firstAttribute="bottom" secondItem="Jus-LX-sIr" secondAttribute="bottom" constant="5" id="KXn-2x-XuF"/>
-                                <constraint firstAttribute="trailing" secondItem="Jus-LX-sIr" secondAttribute="trailing" id="d6F-7D-wVk"/>
+                                <constraint firstAttribute="trailing" secondItem="5En-YL-QlX" secondAttribute="trailing" constant="30" id="HNX-no-cf4"/>
+                                <constraint firstAttribute="bottom" secondItem="5En-YL-QlX" secondAttribute="bottom" constant="15" id="WXw-4I-j9J"/>
+                                <constraint firstItem="5En-YL-QlX" firstAttribute="top" secondItem="Jus-LX-sIr" secondAttribute="top" constant="15" id="Zg3-jO-Ftg"/>
+                                <constraint firstItem="5En-YL-QlX" firstAttribute="leading" secondItem="Jus-LX-sIr" secondAttribute="leading" constant="15" id="lEF-6k-qjp"/>
                             </constraints>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="MXF-uq-zhh">
@@ -109,30 +98,38 @@
                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
                         <constraint firstItem="b6X-Oc-ND6" firstAttribute="top" secondItem="MXF-uq-zhh" secondAttribute="bottom" constant="15" id="0AV-qd-Hpa"/>
-                        <constraint firstItem="ZyQ-og-oYh" firstAttribute="top" secondItem="VrX-OG-f6R" secondAttribute="top" id="57B-3v-TBF"/>
-                        <constraint firstItem="ZyQ-og-oYh" firstAttribute="leading" secondItem="VrX-OG-f6R" secondAttribute="leading" id="8pL-VM-vq7"/>
+                        <constraint firstItem="MXF-uq-zhh" firstAttribute="top" secondItem="Jus-LX-sIr" secondAttribute="bottom" constant="5" id="7y0-o2-w5T"/>
                         <constraint firstAttribute="trailing" secondItem="IGV-TN-lVc" secondAttribute="trailing" constant="15" id="9zo-Z0-eMp"/>
                         <constraint firstItem="IGV-TN-lVc" firstAttribute="leading" secondItem="VrX-OG-f6R" secondAttribute="leading" constant="15" id="LPl-68-Y2M"/>
                         <constraint firstItem="b6X-Oc-ND6" firstAttribute="leading" secondItem="VrX-OG-f6R" secondAttribute="leading" id="MRU-cU-yWR"/>
                         <constraint firstItem="MXF-uq-zhh" firstAttribute="leading" secondItem="VrX-OG-f6R" secondAttribute="leading" id="TyY-Cp-gUm"/>
+                        <constraint firstAttribute="trailing" secondItem="Jus-LX-sIr" secondAttribute="trailing" id="Y9w-Nm-nzv"/>
+                        <constraint firstItem="Jus-LX-sIr" firstAttribute="top" secondItem="VrX-OG-f6R" secondAttribute="top" id="a0i-gp-TtP"/>
                         <constraint firstAttribute="bottom" secondItem="b6X-Oc-ND6" secondAttribute="bottom" id="bS2-h6-3Ii"/>
+                        <constraint firstItem="Jus-LX-sIr" firstAttribute="leading" secondItem="VrX-OG-f6R" secondAttribute="leading" id="dFL-l5-41a"/>
                         <constraint firstItem="IGV-TN-lVc" firstAttribute="centerY" secondItem="VrX-OG-f6R" secondAttribute="centerY" id="fhy-8X-NrL"/>
-                        <constraint firstAttribute="trailing" secondItem="ZyQ-og-oYh" secondAttribute="trailing" id="ibY-fk-75d"/>
-                        <constraint firstItem="MXF-uq-zhh" firstAttribute="top" secondItem="ZyQ-og-oYh" secondAttribute="bottom" id="j5I-xJ-MbH"/>
                         <constraint firstAttribute="trailing" secondItem="b6X-Oc-ND6" secondAttribute="trailing" id="lGr-Sp-gGM"/>
                         <constraint firstAttribute="trailing" secondItem="MXF-uq-zhh" secondAttribute="trailing" id="mIr-dE-eBG"/>
                     </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dVb-E6-8Sj">
+                    <rect key="frame" x="0.0" y="784" width="393" height="68"/>
+                    <color key="backgroundColor" systemColor="systemGray6Color"/>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="StudentParent"/>
             <constraints>
+                <constraint firstItem="dVb-E6-8Sj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2kW-jY-sg9"/>
                 <constraint firstItem="VrX-OG-f6R" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Ekx-wi-Oj9"/>
+                <constraint firstAttribute="bottom" secondItem="dVb-E6-8Sj" secondAttribute="bottom" id="L4l-aE-BlE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="VrX-OG-f6R" secondAttribute="bottom" id="NtJ-9P-ekM"/>
                 <constraint firstItem="VrX-OG-f6R" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="bRW-cs-Zhc"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="VrX-OG-f6R" secondAttribute="trailing" id="bia-Wi-W1Q"/>
+                <constraint firstItem="dVb-E6-8Sj" firstAttribute="top" secondItem="VrX-OG-f6R" secondAttribute="bottom" id="eR1-a0-Q9H"/>
+                <constraint firstAttribute="trailing" secondItem="dVb-E6-8Sj" secondAttribute="trailing" id="k9y-yH-x46"/>
             </constraints>
-            <point key="canvasLocation" x="138" y="20"/>
+            <point key="canvasLocation" x="136.64122137404578" y="19.718309859154932"/>
         </view>
     </objects>
     <resources>
@@ -140,9 +137,6 @@
         <namedColor name="StudentParent">
             <color red="0.075999997556209564" green="0.13199999928474426" blue="0.21500000357627869" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

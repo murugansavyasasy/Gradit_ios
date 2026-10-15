@@ -3532,38 +3532,9 @@ func CommunicationEntierSms(){
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
                         
-                        if self?.priority == "p2" || self?.priority == "p3" {
-                            
-                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = self?.is_read_enabled ?? ""
-                            vc.is_write_enabled = self?.is_write_enabled ?? ""
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                            
-                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            vc.strName = self?.strName ?? []
-                            vc.str = self?.str ?? []
-                            
-                            vc.modalPresentationStyle = .fullScreen
-                            self?.present(vc, animated: true , completion: nil)
-                            
-                        } else{
-                            
-                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = self?.is_read_enabled ?? ""
-                            vc.is_write_enabled = self?.is_write_enabled ?? ""
-                            vc.view.backgroundColor = UIColor(named: "Principal" )
-                            
-                            vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                            
-                            vc.strName = self?.strName ?? []
-                            vc.str = self?.str ?? []
-                            
-                            vc.modalPresentationStyle = .fullScreen
-                            self?.present(vc, animated: true , completion: nil)
-                            
-                        }
+                        let vc = NewHomescreenVC(nibName: nil, bundle: nil)
+                        vc.modalPresentationStyle = .fullScreen
+                        self?.present(vc, animated: true , completion: nil)
                         
                     }))
                     
@@ -3657,25 +3628,7 @@ func CommunicationEntierSms(){
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            let vc = SenderGraditNoticeBoardMenuViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                
-                            } else {
-                                
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.noticeSegments.backgroundColor = UIColor(named: "UnSelector")
-                                vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "Selector")
-                            }
-                            
+                            let vc = NewHomescreenVC()
                             vc.modalPresentationStyle = .fullScreen
                             self.present(vc, animated: true)
                         })
@@ -3758,13 +3711,9 @@ func CommunicationEntierSms(){
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                         
-                            let vc = SenderVideoHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
                     }))
                     
                     self.present(refreshAlert, animated: true)
@@ -3850,32 +3799,10 @@ func CommunicationEntierSms(){
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                         
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -3890,32 +3817,9 @@ func CommunicationEntierSms(){
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -3930,231 +3834,6 @@ func CommunicationEntierSms(){
             }
         }
     }
-
-
-//func multypartAudio() {
-//    
-//    print("voiceReplyTypevoiceReplyType",discreptionss)
-//    
-//    
-//    let vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToEntireCollege"
-//    
-//    var voiceUpload = voiceUploadEntierModal()
-//    //        discreptionss
-//    
-//    voiceUpload.staffid = memberId
-//    voiceUpload.description = discreptionss
-//    voiceUpload.callertype = priority
-//    voiceUpload.collegeid = collegeId
-//    voiceUpload.fileduration = voiceDuration
-//    voiceUpload.filetype = "1"
-//    
-//    if parentTargetEnagbel == "0"{
-//        
-//        
-//        voiceUpload.isparent = false
-//    }
-//    
-//    else{
-//        
-//        
-//        voiceUpload.isparent = parentsCheckBoxView.isChecked
-//    }
-//    voiceUpload.isemergencyvoice = voiceReplyType
-//    
-//    voiceUpload.isstaff = staffCheckBoxView.isChecked
-//    voiceUpload.isstudent = studentCheckBoxView.isChecked
-//    
-//    let voiceUploadStr = voiceUpload.toJSONString()
-//    
-//    print("chatSenderStr",voiceUpload)
-//    
-//    
-//    AF.upload(multipartFormData: { [self] (multipartFormData) in
-//        
-//        KRProgressHUD.show()
-//        
-//        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//            
-//            
-//            
-//            KRProgressHUD.dismiss()
-//            
-//        }
-//        
-//        
-//        
-//        let pathURL = voiceUrl
-//        
-//        let pathString = pathURL!.path
-//        
-//        multipartFormData.append(URL(fileURLWithPath: pathString), withName: "file")
-//        
-//        multipartFormData.append(Data(voiceUploadStr!.description.utf8), withName: "info")
-//        
-//        
-//        
-//        print("parameters.description.utf8",voiceUploadStr!.description.utf8)
-//        
-//        
-//    },to: vimeoVideoEndpoint).responseJSON{
-//        //
-//        
-//        
-//        
-//        //
-//        res in
-//        
-//        
-//        
-//        
-//        let json_str = String(data: res.data!, encoding: .utf8)
-//        
-//        print("json \(json_str!)")
-//        
-//        
-//        
-//        do {
-//            if let json = try JSONSerialization.jsonObject(with: res.data!, options: []) as? [String: Any] {
-//                if let status = json["Status"] as? Int {
-//                    print("Status: \(status)")
-//                    
-//                    if status == 1 {
-//                        
-//                        
-//                        let a = json["Message"]
-//                        
-//                        
-//                        
-//                        
-//                        
-//                        
-//                        let refreshAlert = UIAlertController(title: "", message:  a as! String, preferredStyle: UIAlertController.Style.alert)
-//                        
-//                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-//                            
-//                            if priority == "p2" || priority == "p3" {
-//                                
-//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                vc.is_read_enabled = "1"
-//                                vc.is_write_enabled = "1"
-//                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-//                                
-//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-//                                vc.strName = self.strName
-//                                vc.str = self.str
-//                                
-//                                vc.modalPresentationStyle = .fullScreen
-//                                self.present(vc, animated: true , completion: nil)
-//                                
-//                            }
-//                            
-//                            
-//                            else{
-//                                
-//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                vc.is_read_enabled = "1"
-//                                vc.is_write_enabled = "1"
-//                                vc.view.backgroundColor = UIColor(named: "Principal" )
-//                                
-//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-//                                
-//                                vc.strName = self.strName
-//                                vc.str = self.str
-//                                
-//                                vc.modalPresentationStyle = .fullScreen
-//                                self.present(vc, animated: true , completion: nil)
-//                                
-//                            }
-//                            
-//                            
-//                            
-//                            
-//                            
-//                        }))
-//                        
-//                        
-//                        
-//                        self.present(refreshAlert, animated: true, completion: nil)
-//                        
-//                        
-//                        
-//                        
-//                    }
-//                    else {
-//                        
-//                        
-//                        
-//                        let a = json["Message"]
-//                        
-//                        
-//                        let refreshAlert = UIAlertController(title: "", message:  a as! String, preferredStyle: UIAlertController.Style.alert)
-//                        
-//                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-//                            
-//                            if priority == "p2" || priority == "p3" {
-//                                
-//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                vc.is_read_enabled = "1"
-//                                vc.is_write_enabled = "1"
-//                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-//                                
-//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-//                                vc.strName = self.strName
-//                                vc.str = self.str
-//                                
-//                                vc.modalPresentationStyle = .fullScreen
-//                                self.present(vc, animated: true , completion: nil)
-//                                
-//                            }
-//                            
-//                            
-//                            else{
-//                                
-//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                vc.is_read_enabled = "1"
-//                                vc.is_write_enabled = "1"
-//                                vc.view.backgroundColor = UIColor(named: "Principal" )
-//                                
-//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-//                                
-//                                vc.strName = self.strName
-//                                vc.str = self.str
-//                                
-//                                vc.modalPresentationStyle = .fullScreen
-//                                self.present(vc, animated: true , completion: nil)
-//                                
-//                            }
-//                            
-//                            
-//                            
-//                            
-//                            
-//                        }))
-//                        
-//                        
-//                        
-//                        self.present(refreshAlert, animated: true, completion: nil)
-//                        
-//                        
-//                        
-//                        
-//                    }
-//                    
-//                }
-//            }
-//        } catch {
-//            print("Error parsing JSON: \(error)")
-//        }
-//        
-//    }
-//   
-//}
 
 
     func multypartAudio() {
@@ -4227,32 +3906,10 @@ func CommunicationEntierSms(){
                         
                         guard let self = self else { return }
                         
-                        if priority == "p2" || priority == "p3" {
-                            
-                            let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = "1"
-                            vc.is_write_enabled = "1"
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                            
-                        } else {
-                            
-                            let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = "1"
-                            vc.is_write_enabled = "1"
-                            vc.view.backgroundColor = UIColor(named: "Principal")
-                            vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                        }
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                   
                     }))
                     
                     self.present(refreshAlert, animated: true)
@@ -4301,32 +3958,9 @@ func HistoryVoiceSend() {
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
-                        if self.priority == "p2" || self.priority == "p3" {
-                            
-                            let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = "1"
-                            vc.is_write_enabled = "1"
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                            
-                        } else {
-                            
-                            let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = "1"
-                            vc.is_write_enabled = "1"
-                            vc.view.backgroundColor = UIColor(named: "Principal")
-                            vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                        }
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
                         
                     }))
                     
@@ -4394,32 +4028,9 @@ func HistoryVoiceSendParticular() {
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
                         
-                        if self.priority == "p2" || self.priority == "p3" {
-                            
-                            let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = "1"
-                            vc.is_write_enabled = "1"
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                            
-                        } else {
-                            
-                            let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = "1"
-                            vc.is_write_enabled = "1"
-                            vc.view.backgroundColor = UIColor(named: "Principal")
-                            vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                        }
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
                         
                     }))
                     
@@ -4506,35 +4117,9 @@ func HistoryVoiceSendParticular() {
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                         
-                        if self.priority == "p2" || self.priority == "p3" {
-                            
-                            let vc = SenderImagePdfHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                            
-                            vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            
-                            self.present(vc, animated: true)
-                            
-                        } else {
-                            
-                            let vc = SenderImagePdfHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.view.backgroundColor = UIColor(named: "Principal")
-                            vc.imageSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                            vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            
-                            self.present(vc, animated: true)
-                        }
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
                     })
                     
                     self.present(refreshAlert, animated: true)
@@ -4563,217 +4148,6 @@ func HistoryVoiceSendParticular() {
         }
     }
 
-
-
-//func multypartAudioParticular() {
-//    
-//    
-//    var vimeoVideoEndpoint = "https://gradit.voicesnap.com/api/AppDetailsBal/SendFileToParticularType"
-//    
-//    var voiceUpload = particularVoiceUploadMoad()
-//    
-//    voiceUpload.staffid = memberId
-//    voiceUpload.description = discreptionss
-//    voiceUpload.callertype = priority
-//    voiceUpload.collegeid = collegeId
-//    voiceUpload.fileduration = voiceDuration
-//    voiceUpload.filetype = "1"
-//    voiceUpload.isemergencyvoice = voiceReplyType
-//    
-//    if IDforStaffCheck == "1"{
-//        
-//        voiceUpload.isstaff = false
-//        
-//    }else{
-//        
-//        voiceUpload.isstaff = staffCheckBoxView.isChecked
-//    }
-//    
-//    if parentTargetEnagbel == "0"{
-//
-//        voiceUpload.isparent = false
-//    }else{
-//        
-//        voiceUpload.isparent = parentsCheckBoxView.isChecked
-//    }
-//    
-//    
-//    voiceUpload.isstudent = studentCheckBoxView.isChecked
-//    voiceUpload.receiverid = nameString
-//    voiceUpload.receivertype = resiverType
-//    
-//    
-//    let voiceUploadStr = voiceUpload.toJSONString()
-//    
-//    print("chatSenderStr",voiceUpload)
-//    
-//    AF.upload(multipartFormData: { [self] (multipartFormData) in
-//        
-//        KRProgressHUD.show()
-//        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//            
-//            KRProgressHUD.dismiss()
-//            
-//        }
-//        
-//        let pathURL = voiceUrl
-//        
-//        let pathString = pathURL!.path
-//        
-//        multipartFormData.append(URL(fileURLWithPath: pathString), withName: "file")
-//        
-//        multipartFormData.append(Data(voiceUploadStr!.description.utf8), withName: "info")
-//        
-//        print("parameters.description.utf8",voiceUploadStr!.description.utf8)
-//        
-//        
-//    },to: vimeoVideoEndpoint).responseJSON{
-//        
-//        res in
-//        
-//        let json_str = String(data: res.data!, encoding: .utf8)
-//        
-//        print("json \(json_str!)")
-//        
-//        do {
-//            if let json = try JSONSerialization.jsonObject(with: res.data!, options: []) as? [String: Any] {
-//                if let status = json["Status"] as? Int {
-//                    print("Status: \(status)")
-//                    
-//                    if status == 1 {
-//                        
-//                        let a = json["Message"]
-//                        
-//                        let refreshAlert = UIAlertController(title: "", message:  a as! String, preferredStyle: UIAlertController.Style.alert)
-//                        
-//                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-//                            
-//                            if priority == "p2" || priority == "p3" {
-//                                
-//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                vc.is_read_enabled = "1"
-//                                vc.is_write_enabled = "1"
-//                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-//                                
-//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-//                                vc.strName = self.strName
-//                                vc.str = self.str
-//                                
-//                                vc.modalPresentationStyle = .fullScreen
-//                                self.present(vc, animated: true , completion: nil)
-//                                
-//                            } else if priority == "p7" {
-//                                
-//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                vc.is_read_enabled = "1"
-//                                vc.is_write_enabled = "1"
-//                                vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-//                                
-//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-//                                vc.strName = self.strName
-//                                vc.str = self.str
-//                                
-//                                vc.modalPresentationStyle = .fullScreen
-//                                self.present(vc, animated: true , completion: nil)
-//                                
-//                            }else{
-//                                
-//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                vc.is_read_enabled = "1"
-//                                vc.is_write_enabled = "1"
-//                                vc.view.backgroundColor = UIColor(named: "Principal" )
-//                                
-//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-//                                
-//                                vc.strName = self.strName
-//                                vc.str = self.str
-//                                vc.modalPresentationStyle = .fullScreen
-//                                self.present(vc, animated: true , completion: nil)
-//                                
-//                            }
-//                            
-//                        }))
-//                        
-//                        self.present(refreshAlert, animated: true, completion: nil)
-//                        
-//                    }
-//                    else {
-//                        
-//                        let a = json["Message"]
-//                        
-//                        
-//                        let refreshAlert = UIAlertController(title: "", message:  a as! String, preferredStyle: UIAlertController.Style.alert)
-//                        
-//                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-//                            
-//                            if priority == "p2" || priority == "p3" {
-//                                
-//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                vc.is_read_enabled = "1"
-//                                vc.is_write_enabled = "1"
-//                                vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-//                                
-//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-//                                vc.strName = self.strName
-//                                vc.str = self.str
-//                                
-//                                vc.modalPresentationStyle = .fullScreen
-//                                self.present(vc, animated: true , completion: nil)
-//                                
-//                            }
-//                            
-//                            else if priority == "p7" {
-//                                
-//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                vc.is_read_enabled = "1"
-//                                vc.is_write_enabled = "1"
-//                                vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-//                                
-//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-//                                vc.strName = self.strName
-//                                vc.str = self.str
-//                                
-//                                vc.modalPresentationStyle = .fullScreen
-//                                self.present(vc, animated: true , completion: nil)
-//                                
-//                            }
-//                            
-//                            else{
-//                                
-//                                let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-//                                vc.is_read_enabled = "1"
-//                                vc.is_write_enabled = "1"
-//                                vc.view.backgroundColor = UIColor(named: "Principal" )
-//                                
-//                                vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-//                                vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-//                                
-//                                vc.strName = self.strName
-//                                vc.str = self.str
-//                                vc.modalPresentationStyle = .fullScreen
-//                                self.present(vc, animated: true , completion: nil)
-//                                
-//                            }
-//                            
-//                        }))
-//                        
-//                        self.present(refreshAlert, animated: true, completion: nil)
-//                        
-//                    }
-//                    
-//                }
-//            }
-//        } catch {
-//            print("Error parsing JSON: \(error)")
-//        }
-//    }
-//}
     
     func multypartAudioParticular() {
         
@@ -4855,45 +4229,9 @@ func HistoryVoiceSendParticular() {
                                 
                                 guard let self = self else { return }
                                 
-                                if priority == "p2" || priority == "p3" {
-                                    
-                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                    vc.is_read_enabled = "1"
-                                    vc.is_write_enabled = "1"
-                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                    vc.strName = self.strName
-                                    vc.str = self.str
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                    
-                                } else if priority == "p7" {
-                                    
-                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                    vc.is_read_enabled = "1"
-                                    vc.is_write_enabled = "1"
-                                    vc.view.backgroundColor = UIColor(named: "univercityColorCod")
-                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                    vc.strName = self.strName
-                                    vc.str = self.str
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                    
-                                } else {
-                                    
-                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                    vc.is_read_enabled = "1"
-                                    vc.is_write_enabled = "1"
-                                    vc.view.backgroundColor = UIColor(named: "Principal")
-                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                    vc.strName = self.strName
-                                    vc.str = self.str
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                }
+                                let vc = NewHomescreenVC()
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
                                 
                             }))
                             
@@ -4910,45 +4248,9 @@ func HistoryVoiceSendParticular() {
                                 
                                 guard let self = self else { return }
                                 
-                                if priority == "p2" || priority == "p3" {
-                                    
-                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                    vc.is_read_enabled = "1"
-                                    vc.is_write_enabled = "1"
-                                    vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                    vc.strName = self.strName
-                                    vc.str = self.str
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                    
-                                } else if priority == "p7" {
-                                    
-                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                    vc.is_read_enabled = "1"
-                                    vc.is_write_enabled = "1"
-                                    vc.view.backgroundColor = UIColor(named: "univercityColorCod")
-                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                    vc.strName = self.strName
-                                    vc.str = self.str
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                    
-                                } else {
-                                    
-                                    let vc = SenderCommunicationHomePageViewController(nibName: nil, bundle: nil)
-                                    vc.is_read_enabled = "1"
-                                    vc.is_write_enabled = "1"
-                                    vc.view.backgroundColor = UIColor(named: "Principal")
-                                    vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                                    vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                    vc.strName = self.strName
-                                    vc.str = self.str
-                                    vc.modalPresentationStyle = .fullScreen
-                                    self.present(vc, animated: true)
-                                }
+                                let vc = NewHomescreenVC()
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
                                 
                             }))
                             
@@ -5019,13 +4321,9 @@ func HistoryVoiceSendParticular() {
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                         
-                            let vc = SenderVideoHomePageViewController()
-                            vc.is_read_enabled = self.is_read_enabled
-                            vc.is_write_enabled = self.is_write_enabled
-                            vc.strName = self.strName
-                            vc.str = self.str
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
+                        let vc = NewHomescreenVC()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
                     })
                     
                     self.present(refreshAlert, animated: true)
@@ -5108,51 +4406,11 @@ func SendSmsToParticular() {
                     let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
-                        if self?.priority == "p2" || self?.priority == "p3" {
-                            
-                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = self?.is_read_enabled ?? ""
-                            vc.is_write_enabled = self?.is_write_enabled ?? ""
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                            
-                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            
-                            vc.strName = self?.strName ?? []
-                            vc.str = self?.str ?? []
-                            vc.modalPresentationStyle = .fullScreen
-                            self?.present(vc, animated: true , completion: nil)
-                            
-                        }else if self?.priority == "p7" {
-                            
-                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = self?.is_read_enabled ?? ""
-                            vc.is_write_enabled = self?.is_write_enabled ?? ""
-                            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                            
-                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            
-                            vc.strName = self?.strName ?? []
-                            vc.str = self?.str ?? []
-                            vc.modalPresentationStyle = .fullScreen
-                            self?.present(vc, animated: true , completion: nil)
-                            
-                        } else{
-                            
-                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = self?.is_read_enabled ?? ""
-                            vc.is_write_enabled = self?.is_write_enabled ?? ""
-                            vc.view.backgroundColor = UIColor(named: "Principal" )
-                            
-                            vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                            
-                            vc.strName = self?.strName ?? []
-                            vc.str = self?.str ?? []
-                            vc.modalPresentationStyle = .fullScreen
-                            self?.present(vc, animated: true , completion: nil)
-                        }
+                      
+                        let vc = NewHomescreenVC(nibName: nil, bundle: nil)
+                        vc.modalPresentationStyle = .fullScreen
+                        self?.present(vc, animated: true , completion: nil)
+                        
                     }))
                     
                     present(refreshAlert, animated: true, completion: nil)
@@ -5162,56 +4420,10 @@ func SendSmsToParticular() {
                     let refreshAlert = UIAlertController(title: "", message: success.Message, preferredStyle: UIAlertController.Style.alert)
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
-                        if self?.priority == "p2" || self?.priority == "p3" {
-                            
-                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = self?.is_read_enabled ?? ""
-                            vc.is_write_enabled = self?.is_write_enabled ?? ""
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff" )
-                            
-                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            
-                            vc.strName = self?.strName ?? []
-                            vc.str = self?.str ?? []
-                            
-                            vc.modalPresentationStyle = .fullScreen
-                            self?.present(vc, animated: true , completion: nil)
-                        }
-                        
-                        
-                        else if self?.priority == "p7" {
-                            
-                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = self?.is_read_enabled ?? ""
-                            vc.is_write_enabled = self?.is_write_enabled ?? ""
-                            vc.view.backgroundColor = UIColor(named: "univercityColorCod" )
-                            
-                            vc.CommuniSegementName.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            
-                            vc.strName = self?.strName ?? []
-                            vc.str = self?.str ?? []
-                            
-                            vc.modalPresentationStyle = .fullScreen
-                            self?.present(vc, animated: true , completion: nil)
-                            
-                        }else{
-                            
-                            let vc = CommuniSMSViewController(nibName: nil, bundle: nil)
-                            vc.is_read_enabled = self?.is_read_enabled ?? ""
-                            vc.is_write_enabled = self?.is_write_enabled ?? ""
-                            vc.view.backgroundColor = UIColor(named: "Principal" )
-                            
-                            vc.CommuniSegementName.backgroundColor = UIColor(named: "UnSelector")
-                            vc.CommuniSegementName.selectedSegmentTintColor = UIColor(named: "Selector")
-                            
-                            vc.strName = self?.strName ?? []
-                            vc.str = self?.str ?? []
-                            vc.modalPresentationStyle = .fullScreen
-                            self?.present(vc, animated: true , completion: nil)
-                            
-                        }
+                   
+                        let vc = NewHomescreenVC(nibName: nil, bundle: nil)
+                        vc.modalPresentationStyle = .fullScreen
+                        self?.present(vc, animated: true , completion: nil)
                         
                     }))
                     
@@ -5295,32 +4507,7 @@ func SendSmsToParticular() {
                     
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                         
-                        let vc = SenderGraditNoticeBoardMenuViewController()
-                        
-                        vc.is_read_enabled = self.is_read_enabled
-                        vc.is_write_enabled = self.is_write_enabled
-                        vc.strName = self.strName
-                        vc.str = self.str
-                        
-                        if self.priority == "p2" || self.priority == "p3" {
-                            
-                            vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                            vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            
-                        } else if self.priority == "p7" {
-                            
-                            vc.view.backgroundColor = UIColor(named: "univercityColorCod")
-                            vc.noticeSegments.backgroundColor = UIColor(named: "HodUnSelector")
-                            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                            
-                        } else {
-                            
-                            vc.view.backgroundColor = UIColor(named: "Principal")
-                            vc.noticeSegments.backgroundColor = UIColor(named: "UnSelector")
-                            vc.noticeSegments.selectedSegmentTintColor = UIColor(named: "Selector")
-                        }
-                        
+                        let vc = NewHomescreenVC()
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true)
                     })
@@ -5390,45 +4577,9 @@ func SendSmsToParticular() {
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else if self.priority == "p7" {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "univercityColorCod")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -5439,45 +4590,9 @@ func SendSmsToParticular() {
                         
                         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                             
-                            if self.priority == "p2" || self.priority == "p3" {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else if self.priority == "p7" {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "univercityColorCod")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                                
-                            } else {
-                                
-                                let vc = SenderEventHomePageViewController()
-                                vc.is_read_enabled = self.is_read_enabled
-                                vc.is_write_enabled = self.is_write_enabled
-                                vc.view.backgroundColor = UIColor(named: "Principal")
-                                vc.eventSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                                vc.eventSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                                vc.strName = self.strName
-                                vc.str = self.str
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
+                            let vc = NewHomescreenVC()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
                         })
                         
                         self.present(refreshAlert, animated: true)
@@ -5554,52 +4669,10 @@ func SendSmsToParticular() {
                 
                 refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                     
-                    if self.priority == "p2" || self.priority == "p3" {
-                        
-                        let vc = SenderImagePdfHomePageViewController()
-                        vc.is_read_enabled = self.is_read_enabled
-                        vc.is_write_enabled = self.is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Teaching Staff")
-                        
-                        vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.strName = self.strName
-                        vc.str = self.str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true)
-                        
-                    }
-                    else if self.priority == "p7" {
-                        
-                        let vc = SenderImagePdfHomePageViewController()
-                        vc.is_read_enabled = self.is_read_enabled
-                        vc.is_write_enabled = self.is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "univercityColorCod")
-                        
-                        vc.imageSegmentName.backgroundColor = UIColor(named: "HodUnSelector")
-                        vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "HodSelector")
-                        vc.strName = self.strName
-                        vc.str = self.str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true)
-                        
-                    }
-                    else{
-                        
-                        let vc = SenderImagePdfHomePageViewController()
-                        vc.is_read_enabled = self.is_read_enabled
-                        vc.is_write_enabled = self.is_write_enabled
-                        vc.view.backgroundColor = UIColor(named: "Principal")
-                        vc.imageSegmentName.backgroundColor = UIColor(named: "UnSelector")
-                        vc.imageSegmentName.selectedSegmentTintColor = UIColor(named: "Selector")
-                        vc.strName = self.strName
-                        vc.str = self.str
-                        
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true)
-                    }
+                    let vc = NewHomescreenVC()
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                    
                 }))
                 
                 self.present(refreshAlert, animated: true)

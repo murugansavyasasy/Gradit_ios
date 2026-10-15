@@ -13,30 +13,20 @@ class CourseHomePageViewController: UIViewController,UITableViewDelegate,UITable
     
     @IBOutlet weak var noDataTextLabel: UILabel!
     @IBOutlet weak var noDataView: UIView!
-    
-    
     @IBOutlet weak var courseTabelView: UITableView!
+    @IBOutlet weak var topView: UIView!
+    
   
     var identifers = "CourseTableViewCell"
-    
     var courseRefName : [courseDataDetails] = []
-    let menuIdentifier = "MenuCollectionViewCell"
-    var MenuRefName :[menuApiDataDetails] = []
-    
-    
     var colgId : String!
     var memberId : String!
     var deptid      : String!
-    
     var sectionid   : String!
-    
     var semesterid  : String!
     var priority : String!
-    
     var str : [String] = []
-    
     var strName : [String] = []
-    
     var is_read_enabled = ""
     var is_write_enabled = ""
     
@@ -49,67 +39,26 @@ class CourseHomePageViewController: UIViewController,UITableViewDelegate,UITable
         
         colgId = defaults.string(forKey: DefaultsKeys.collegeid)
         memberId = defaults.string(forKey: DefaultsKeys.memberid)
-        deptid     = defaults.string(forKey: DefaultsKeys.deptid)
-        
+        deptid   = defaults.string(forKey: DefaultsKeys.deptid)
         sectionid = defaults.string(forKey: DefaultsKeys.sectionid)
-        
-        
         semesterid  = defaults.string(forKey: DefaultsKeys.semesterid)
         priority = defaults.string(forKey: DefaultsKeys.priority)
-        
-        
-        
-        
-        
-        
-        
+         
         CourseRefModals()
-        
-        
-        
         
         let rownib = UINib(nibName: identifers, bundle: nil)
         courseTabelView.register(rownib, forCellReuseIdentifier: identifers)
         
-        
         courseTabelView.delegate = self
         courseTabelView.dataSource = self
         
-        
-        
         noDataView.isHidden = true
         noDataTextLabel.isHidden = true
-        
-        if priority == "p1" {
-            
-            
-            print("PrincipalVieewwColor")
-            view.backgroundColor = UIColor(named: "Principal" )
-           
-        }else if priority == "p4" {
-            
-            print("StudentVieewwColor")
-            view.backgroundColor = UIColor(named: "studentViewColors")
-           
-        } else if priority == "p3" ||  priority == "p2" {
-            
-            print("HooodddVieewwColor")
-            view.backgroundColor = UIColor(named: "Teaching Staff")
-          
-        }
-        else if priority == "p5"{
-            
-            
-            
-            view.backgroundColor = UIColor(named: "FatherColor")
-          
-            
-        }
-        
+       
+        view.backgroundColor = .priorityColor
+        topView.backgroundColor = .priorityColor
+      
     }
-    
-    
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return courseRefName.count
@@ -120,19 +69,10 @@ class CourseHomePageViewController: UIViewController,UITableViewDelegate,UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: identifers, for: indexPath) as!
         CourseTableViewCell
         
-        
-        
-        
         if indexPath.row % 2 == 0{
-            
-            
-        }
-        
-        
-        else{
-            
+            cell.lineView.backgroundColor = UIColor(named: "even")
+        } else{
             cell.lineView.backgroundColor = UIColor(named: "odd")
-            
         }
         
         let Shopres : courseDataDetails = courseRefName[indexPath.row]
@@ -143,7 +83,6 @@ class CourseHomePageViewController: UIViewController,UITableViewDelegate,UITable
         cell.creditsLabel.text = Shopres.subject_credits
         cell.codeLabel.text = Shopres.subject_code
         cell.requirementLabel.text = Shopres.subject_requirement
-        
         
         return cell
         
