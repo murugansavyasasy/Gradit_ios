@@ -292,6 +292,8 @@ class ViewController: UIViewController {
                 
                 defaults.set(versionCheck.first?.versionalertcontent, forKey: DefaultsKeys.versionalertcontent)
                 
+                defaults.set(versionCheck.first?.resumebuilder_baseurl ?? "", forKey: DefaultsKeys.PlacementBaseUrl)
+                
                 isversionupdateavailable = defaults.integer(forKey: DefaultsKeys.isversionupdateavailable)
                 
                 isforceupdaterequired = defaults.integer(forKey: DefaultsKeys.isforceupdaterequired)

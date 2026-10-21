@@ -78,6 +78,8 @@ class TermsViewController: UIViewController {
                 
                 defaults.set(versionCheck.first?.videosizealert, forKey: DefaultsKeys.videosizealert)
                 
+                defaults.set(versionCheck.first?.resumebuilder_baseurl ?? "", forKey: DefaultsKeys.PlacementBaseUrl)
+                
                 
             case .failure(let failure):
                 print("Error:", failure.localizedDescription)

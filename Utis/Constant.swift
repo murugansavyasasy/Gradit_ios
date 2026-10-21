@@ -27,19 +27,24 @@ class Constant {
     static let CountryResponse : String = "Getcountrylist"
     static let VimeoUrl : String = "https://api.vimeo.com/"
     static let keyId : String = "LoginFromApp"
-    static let Resume_baseUrl : String = "http://placement.thegradit.com/v1/api/"
     
+    static var Resume_baseUrl : String {
+        guard let url = UserDefaults.standard.string(forKey: DefaultsKeys.PlacementBaseUrl),
+              !url.isEmpty else {
+            return "https://placement.thegradit.com/v1/api/"
+        }
+        return url
+    }
 }
 
 struct DefaultsKeys {
     
     //MARK: Version id should be updated with +1 before Moving to Upate
-    static let versionID = 42
-    ///Whats added in this version :  Web view url for Terms&condition,privacy policy, Faq and help was changed,Profile menu bug fixed
-     
-    //static let versionID = 41
-    ///Whats added in this version :Api calles changed from Alomofire to Url session. base url changed to https://www.thegradit.com/mobileapp/, Period wise attendance added
+    static let versionID = 43
+    ///Whats added in this version :  Resume builder and placement modules base urls changed from http to https and also got the placement base url from version check api
     
+    //static let versionID = 42
+    ///Whats added in this version :  Web view url for Terms&condition,privacy policy, Faq and help was changed,Profile menu bug fixed
     
     static let Password = "Password"
     static let loginDataList = "loginDataList"
@@ -70,6 +75,7 @@ struct DefaultsKeys {
     static let feepaymentlink = "feepaymentlink"
     static let  vimeoAccessToken = "vimeoAccessToken"
     static let baseUrl = "baseUrl"
+    static let PlacementBaseUrl = "PlacementBaseUrl"
     static let   videosizelimit = " videosizelimit"
     static let   DEVICETOKEN = "deviceToken"
     static let   videosizealert = "videosizealert"

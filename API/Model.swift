@@ -35,6 +35,7 @@ struct VersionCheckData : Codable{
     var videosizelimit : String?
     var videosizealert : String?
     var feepaymentlink : String?
+    var resumebuilder_baseurl : String?
 }
 
 //MARK: Country List
